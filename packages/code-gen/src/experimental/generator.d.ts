@@ -10,12 +10,7 @@ export class Generator {
   /**
    * @type {import("./generated/common/types").ExperimentalStructure}
    */
-  initialStructure: import("./generated/common/types").ExperimentalStructure;
-  /**
-   * @private
-   * @type {import("./generated/common/types").ExperimentalStructure[]}
-   */
-  private structures;
+  internalStructure: import("./generated/common/types").ExperimentalStructure;
   /**
    * Add new type definitions to this generator
    *

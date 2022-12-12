@@ -57,7 +57,7 @@ export function generateExecute(generator, options) {
   // TODO: migrate to new validators
   const validationResultOptions = validateExperimentalGenerateOptions(options);
   const validationResultStructure = validateExperimentalStructure(
-    generator.initialStructure,
+    generator.internalStructure,
   );
 
   if (validationResultOptions.error) {
@@ -83,8 +83,8 @@ export function generateExecute(generator, options) {
   // TODO: support generate presets
   // TODO: write migration docs between old and new code gen
 
-  structureValidateReferences(generator.initialStructure);
-  const structure = structureCopyAndSort(generator.initialStructure);
+  structureValidateReferences(generator.internalStructure);
+  const structure = structureCopyAndSort(generator.internalStructure);
 
   const generateContext = {
     log: generator.logger,

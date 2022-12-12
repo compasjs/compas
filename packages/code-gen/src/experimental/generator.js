@@ -21,13 +21,7 @@ export class Generator {
     /**
      * @type {import("./generated/common/types").ExperimentalStructure}
      */
-    this.initialStructure = {};
-
-    /**
-     * @private
-     * @type {import("./generated/common/types").ExperimentalStructure[]}
-     */
-    this.structures = [this.initialStructure];
+    this.internalStructure = {};
   }
 
   /**
@@ -40,7 +34,7 @@ export class Generator {
     for (let i = 0; i < builders.length; i++) {
       const builder = builders[i];
       try {
-        structureAddType(this.initialStructure, buildOrInfer(builder), {
+        structureAddType(this.internalStructure, buildOrInfer(builder), {
           skipReferenceExtraction: false,
         });
       } catch (/** @type {any} */ e) {
@@ -75,19 +69,16 @@ export class Generator {
         );
       }
 
-      this.structures.push(
-        JSON.parse(readFileSync(structureOrDirectory, "utf-8")),
+      structureOrDirectory = JSON.parse(
+        readFileSync(structureOrDirectory, "utf-8"),
       );
-    } else {
-      this.structures.push(structureOrDirectory);
     }
 
-    // TODO: run validation
-
-    /** @type {import("./generated/common/types").ExperimentalStructure} */
-    const newStructure = this.structures.at(-1) ?? {};
-    for (const namedDefinition of structureNamedTypes(newStructure)) {
-      structureAddType(this.initialStructure, namedDefinition, {
+    // @ts-expect-error
+    //
+    // We already converted a string to a valid structure above.
+    for (const namedDefinition of structureNamedTypes(structureOrDirectory)) {
+      structureAddType(this.internalStructure, namedDefinition, {
         skipReferenceExtraction: true,
       });
     }
@@ -104,8 +95,8 @@ export class Generator {
    */
   selectGroups(groups) {
     const nextGenerator = new Generator(this.logger);
-    nextGenerator.initialStructure = structureExtractGroups(
-      this.initialStructure,
+    nextGenerator.internalStructure = structureExtractGroups(
+      this.internalStructure,
       groups,
     );
 
