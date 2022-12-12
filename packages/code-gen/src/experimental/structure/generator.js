@@ -12,14 +12,6 @@ export function structureGenerator(generateContext) {
     return;
   }
 
-  generateContext.structure.compas = generateContext.structure.compas ?? {};
-
-  // @ts-expect-error
-  //
-  // The provided options are not a valid type definition, but we need to keep them in
-  // the structure, so we just force assign it.
-  generateContext.structure.compas.$options = generateContext.options;
-
   const file = fileContextCreateGeneric(
     generateContext,
     "common/structure.json",
@@ -29,8 +21,6 @@ export function structureGenerator(generateContext) {
   );
 
   fileWriteRaw(file, JSON.stringify(generateContext.structure, null, 2));
-
-  delete generateContext.structure.compas.$options;
 }
 
 /**

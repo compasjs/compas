@@ -35,29 +35,6 @@ test("code-gen/experimental/structure/generator", (t) => {
       t.ok(fileContextGet(generateContext, "common/structure.json"));
     });
 
-    t.test("includes the provided options in the output", (t) => {
-      const generateContext = testExperimentalGenerateContext(t, {
-        generators: {
-          structure: {},
-          types: {
-            useGlobalTypes: true,
-          },
-        },
-        targetLanguage: "js",
-      });
-
-      structureGenerator(generateContext);
-
-      const file = fileContextGet(generateContext, "common/structure.json");
-      const contents = fileContextFinalizeGenerateFile(file);
-      const parsedContents = JSON.parse(contents);
-
-      t.equal(
-        parsedContents.compas.$options.generators.types.useGlobalTypes,
-        true,
-      );
-    });
-
     t.test("dumps the structure", (t) => {
       const generateContext = testExperimentalGenerateContext(t, {
         generators: {
