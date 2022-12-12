@@ -282,18 +282,29 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
     fileWrite(file, `if (!${anyOfMatchVariable}) {`);
     fileContextSetIndent(file, 1);
 
-    fileWrite(file, `const intermediateErrorMap = {};`);
-    fileWrite(file, `let intermediateResult = undefined;`);
-    fileWrite(file, `const intermediateValue = ${valuePath};\n`);
+    validatorState.reusedVariableIndex++;
+
+    fileWrite(
+      file,
+      `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
+    );
+    fileWrite(
+      file,
+      `let intermediateResult${validatorState.reusedVariableIndex} = undefined;`,
+    );
+    fileWrite(
+      file,
+      `const intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
+    );
 
     /** @type {import("./generator").ValidatorState} */
     const validatorStateCopy = {
       ...validatorState,
 
       validatedValuePath: [{ type: "root" }],
-      inputVariableName: "intermediateValue",
-      outputVariableName: "intermediateResult",
-      errorMapVariableName: "intermediateErrorMap",
+      inputVariableName: `intermediateValue${validatorState.reusedVariableIndex}`,
+      outputVariableName: `intermediateResult${validatorState.reusedVariableIndex}`,
+      errorMapVariableName: `intermediateErrorMap${validatorState.reusedVariableIndex}`,
     };
 
     const nestedResultPath = formatResultPath(validatorStateCopy);
@@ -333,6 +344,8 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
     fileContextSetIndent(file, -1);
     fileWrite(file, `}`);
+
+    validatorState.reusedVariableIndex--;
   }
 
   validatorState.reusedVariableIndex--;
