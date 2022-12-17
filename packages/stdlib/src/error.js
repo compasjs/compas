@@ -172,19 +172,52 @@ export class AppError extends Error {
           code: e?.code,
           position: e?.position,
           routine: e?.routine,
+          severity_local: e?.severity_local,
+          file: e?.file,
+          line: e?.line,
+
+          detail: e?.detail,
+          hint: e?.hint,
+          internal_position: e?.internal_position,
+          internal_query: e?.internal_query,
+          where: e?.where,
+          schema_name: e?.schema_name,
+          table_name: e?.table_name,
+          column_name: e?.column_name,
+          data: e?.data,
+          type_name: e?.type_name,
+          constraint_name: e?.constraint_name,
+
+          query: e?.query,
+          parameters: e?.parameters,
         },
         stack,
       };
     } else if (e.isAxiosError) {
+      // Dumping is most of the time not what the user expects, so prevent these from
+      // being added to the result.
+      const body =
+        typeof e.response?.data?.pipe === "function" && // @ts-ignore
+        typeof e.response?.data?._read === "function"
+          ? {
+              message:
+                "Response was a stream, which can not be serialized by AppError#format. Use a try-catch and 'streamToBuffer(e.response?.data)' to get the provided response.",
+            }
+          : e.response?.data;
+
       return {
         name: e.name,
         message: e.message,
         axios: {
-          requestPath: e.request?.path,
-          requestMethod: e.request?.method,
-          responseStatus: e.response?.status,
-          responseHeaders: e.response?.headers,
-          responseBody: e.response?.data,
+          request: {
+            path: e.request?.path,
+            method: e.request?.method,
+            baseUrl: e.request?.baseURL,
+          },
+          response: {
+            status: e.response?.status,
+            body,
+          },
         },
         stack,
       };

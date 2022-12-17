@@ -112,11 +112,10 @@ test("server/app", (t) => {
     } catch (e) {
       const formatted = AppError.format(e);
       t.equal(formatted.name, "AxiosError");
-      t.ok(isPlainObject(formatted.axios.responseHeaders));
-      t.ok(isPlainObject(formatted.axios.responseBody));
-      t.equal(formatted.axios.responseStatus, 500);
-      t.equal(formatted.axios.requestPath, "/wrap-500");
-      t.equal(formatted.axios.requestMethod, "GET");
+      t.ok(isPlainObject(formatted.axios.response.body));
+      t.equal(formatted.axios.response.status, 500);
+      t.equal(formatted.axios.request.path, "/wrap-500");
+      t.equal(formatted.axios.request.method, "GET");
     }
   });
 
