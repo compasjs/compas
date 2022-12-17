@@ -231,16 +231,26 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
     }
   }
 
-  if (deletingSet.length > 0) {
-    await s3Client.send(
-      new DeleteObjectsCommand({
-        Bucket: options.bucketName,
-        Delete: {
-          Objects: deletingSet,
-        },
-      }),
-    );
+  if (deletingSet.length === 0) {
+    return;
   }
+
+  // S3 supports up to 1000 deletions in a single request
+  const maxSetSize = 999;
+  const deleteCommands = [];
+
+  while (deletingSet.length) {
+    deleteCommands.push({
+      Bucket: options.bucketName,
+      Delete: {
+        Objects: deletingSet.splice(0, maxSetSize),
+      },
+    });
+  }
+
+  await Promise.all(
+    deleteCommands.map((it) => s3Client.send(new DeleteObjectsCommand(it))),
+  );
 }
 
 /**
