@@ -1,6 +1,5 @@
 // @ts-nocheck
 
-import { Readable } from "stream";
 import { inspect } from "util";
 import { isNil, isPlainObject } from "./lodash.js";
 
