@@ -4,6 +4,46 @@ editLink: false
 
 # Changelog
 
+### [v0.0.220](https://github.com/compasjs/compas/releases/tag/v0.0.220)
+
+##### Changes
+
+- build(deps): bump @aws-sdk/client-s3 from 3.226.0 to 3.231.0
+  ([#2262](https://github.com/compasjs/compas/pull/2262))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.226.0 to 3.231.0
+  ([#2260](https://github.com/compasjs/compas/pull/2260))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump crc from 4.1.1 to 4.2.0
+  ([#2269](https://github.com/compasjs/compas/pull/2269))
+  - [Release notes](https://github.com/alexgorbatchev/crc/releases)
+- build(deps): bump eslint from 8.29.0 to 8.30.0
+  ([#2266](https://github.com/compasjs/compas/pull/2266))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump pino from 8.7.0 to 8.8.0
+  ([#2263](https://github.com/compasjs/compas/pull/2263))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump recast from 0.21.5 to 0.22.0
+  ([#2255](https://github.com/compasjs/compas/pull/2255))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- feat(stdlib): completer Axios and Postgres error formatting by AppError#format
+  ([#2264](https://github.com/compasjs/compas/pull/2264))
+- fix(store): batch object deletes in `fileSyncDeletedWithObjectStorage`
+  ([#2265](https://github.com/compasjs/compas/pull/2265))
+
+##### Breaking changes
+
+- **deps**: bump recast from 0.21.5 to 0.22.0
+  - Major version bump
+- **stdlib**: completer Axios and Postgres error formatting by AppError
+  - `axios.requestPath` and `axios.requestMethod` are replaced by
+    `axios.request.path` and `axios.request.method`.
+  - `axios.responseStatus`and `axios.responseBody` are replaced by
+    `axios.response.status` and `axios.response.body`.
+  - `axios.responseHeaders` is removed from the error to prevent session tokens
+    in the logs. Make sure to explicitly catch the error if you need custom
+    properties from the Axios error.
+
 ### [v0.0.219](https://github.com/compasjs/compas/releases/tag/v0.0.219)
 
 ##### Changes
