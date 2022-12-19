@@ -6,9 +6,6 @@ mainFn(import.meta, main);
 /**
  * @typedef {object} ChangelogCommit
  * @property {string} title  Full commit title
- * @property {string|undefined} [subject] Subject of the commit, like in conventional
- *    commits
- * @property {string|undefined} [message] Message in the title, not including subject
  * @property {string} body Full commit body
  * @property {string|undefined} [breakingChange] Commit body breaking change or major
  *    bumps
@@ -19,7 +16,6 @@ mainFn(import.meta, main);
  * @param {Logger} logger
  */
 async function main(logger) {
-  // Used for getting commits since last release
   const currentVersion = JSON.parse(
     await readFile(
       pathJoin(process.cwd(), "packages/stdlib/package.json"),
@@ -45,20 +41,18 @@ async function main(logger) {
   const proposedVersion = proposeVersionBump(currentVersion, commits);
   const changelogPath = pathJoin(process.cwd(), "changelog.md");
   const changelog = await readFile(changelogPath, "utf8");
-  const { header, source } = getChangelogHeaderAndSource(changelog);
-  const trimmedChangelog = stripChangelogOfUnreleased(source);
+  const { header, existingChangelog } = getChangelogHeaderAndSource(changelog);
   const unreleasedChangelog = makeChangelog(logger, commits, proposedVersion);
 
   await writeFile(
     changelogPath,
-    `${header}\n\n${unreleasedChangelog}\n\n${trimmedChangelog}`,
+    `${header}\n\n${unreleasedChangelog}\n\n${existingChangelog}`,
     "utf8",
   );
 }
 
 /**
- * Uses `git log` to quickly get the first commit line of all commits since the provided
- * version
+ * Use `git log` to get the commits already separating the title from the commit body.
  *
  * @param {Logger} logger
  * @param {string} version
@@ -88,14 +82,15 @@ async function getListOfCommitsSinceTag(logger, version) {
       };
     })
     .filter((it) => it.title?.length > 0)
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .reverse();
 }
 
 /**
- * Get changelog header including front matter
+ * Get changelog header including front matter. We need to write our changes between the
+ * returned header and source.
  *
  * @param {string} changelog
- * @returns {{ header: string, source: string }}
+ * @returns {{ header: string, existingChangelog: string }}
  */
 function getChangelogHeaderAndSource(changelog) {
   const string = "# Changelog";
@@ -103,31 +98,13 @@ function getChangelogHeaderAndSource(changelog) {
 
   return {
     header: changelog.substring(0, splitIndex),
-    source: changelog.substring(splitIndex),
+    existingChangelog: changelog.substring(splitIndex).trim(),
   };
 }
 
 /**
- * Remove initial changelog contents, including the already existing 'unreleased' part
- *
- * @param {string} changelog
- * @returns {string}
- */
-function stripChangelogOfUnreleased(changelog) {
-  let result = changelog.trim();
-
-  if (result.indexOf("### [vx.x.x") !== -1) {
-    result = result.substr(
-      result.indexOf("### [v", result.indexOf("### [vx.x.x") + 1),
-    );
-  }
-
-  return result.trim();
-}
-
-/**
- * Tries to combine the dependency bump commits
- * Resorts before returning the new array
+ * Tries to combine the dependency bump commits. This is useful for things like aws-sdk
+ * which can have 10 bumps in a single Compas release.
  *
  * @param {ChangelogCommit[]} commits
  * @returns {ChangelogCommit[]}
@@ -193,29 +170,20 @@ function combineCommits(commits) {
     });
   }
 
-  return result.sort((a, b) => a.title.localeCompare(b.title));
+  return result;
 }
 
 /**
- * Fill other 'ChangelogCommit' properties
+ * Fill other 'ChangelogCommit' properties.
+ *
+ * - Breaking changes
+ * - Inline commit references / closes
+ * - Major version bumps
  *
  * @param {ChangelogCommit[]} commits
  */
 function decorateCommits(commits) {
   for (const commit of commits) {
-    // feat(xxx,yy-zz):
-    // feat(xxxx):
-    // chore:
-    const subjectMatch = commit.title.match(/^\w+(\(([\w,-]+)\))?: ([^#(]+)/i);
-
-    if (subjectMatch?.[2]?.length > 0) {
-      commit.subject = subjectMatch[2];
-    }
-
-    if (subjectMatch?.[3]?.length > 0) {
-      commit.message = subjectMatch[3].trim();
-    }
-
     if (
       commit.body.includes("BREAKING CHANGE:") ||
       commit.body.includes("BREAKING CHANGES:")
@@ -234,50 +202,42 @@ function decorateCommits(commits) {
       /^build\((deps|deps-dev)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)/i,
     );
 
-    // depsCommitMatch[3] is the first mentioned version
+    // depsCommitMatch[3] is the first mentioned version, if that one exists, we also
+    // expect the second one to be there.
     if (!isNil(depsCommitMatch) && !isNil(depsCommitMatch[3])) {
       const [, , , fromVersion, toVersion] = depsCommitMatch;
 
       if (semverIsMajor(fromVersion, toVersion)) {
-        commit.breakingChange = `- Major version bump`;
+        commit.notes.push(`- Major version bump`);
       }
     }
 
-    // Handling of the various ways of notes
-
-    // We can have multiple 'Referneces' or 'references' in a commit
     if (
-      commit.body.includes("References") ||
-      commit.body.includes("references") ||
       commit.body.includes("Reference") ||
       commit.body.includes("reference")
     ) {
       const refMatches = commit.body.matchAll(/References? #(\d+)/gi);
 
       if (refMatches) {
+        // We can have multiple 'References' or 'references' in a commit
         for (const match of refMatches) {
           commit.notes.push(`- References #${match[1]}`);
         }
       }
     }
 
-    // We can have multiple 'Closes' or 'closes' in a commit
-    if (
-      commit.body.includes("Closes") ||
-      commit.body.includes("closes") ||
-      commit.body.includes("Close") ||
-      commit.body.includes("close")
-    ) {
+    if (commit.body.includes("Close") || commit.body.includes("close")) {
       const closeMatches = commit.body.matchAll(/Closes? #(\d+)/gi);
 
       if (closeMatches) {
+        // We can have multiple 'Closes' or 'closes' in a commit
         for (const match of closeMatches) {
           commit.notes.push(`- Closes #${match[1]}`);
         }
       }
     }
 
-    // Add link to release notes of dependencies
+    // Add a link to release notes of dependencies
     if (commit.body.includes("- [Release notes]")) {
       const bodyParts = commit.body.split("\n");
       for (const part of bodyParts) {
@@ -287,8 +247,8 @@ function decorateCommits(commits) {
       }
     }
 
-    // Replace issue and pull references with a github url
-    // We can always use 'pull', github will automatically redirect to issue if necessary
+    // Replace issue and pull references with a GitHub url
+    // We can always use 'pull', GitHub will automatically redirect to issue if necessary
     const replacer = (obj, key) => {
       if (obj[key]) {
         obj[key] = obj[key].replace(
@@ -310,7 +270,7 @@ function decorateCommits(commits) {
 }
 
 /**
- * Create the changelog based on the provided comits
+ * Create the changelog based on the provided commits
  *
  * @param {Logger} logger
  * @param {ChangelogCommit[]} commits
@@ -318,43 +278,122 @@ function decorateCommits(commits) {
  * @returns {string}
  */
 function makeChangelog(logger, commits, version) {
-  const result = [
+  const changelog = [
     `### [v${version}](https://github.com/compasjs/compas/releases/tag/v${version})`,
-    ``,
-    `##### Changes`,
-    ``,
   ];
 
-  const breakingChanges = [];
+  const handledCommits = new Set();
+  /**
+   * @returns {ChangelogCommit[]}
+   */
+  const availableCommits = () =>
+    commits.filter((it) => !handledCommits.has(it));
 
-  for (const commit of commits) {
-    result.push(`- ${commit.title}`);
+  // Write breaking changes
+  if (availableCommits().find((it) => it.breakingChange)) {
+    changelog.push(``);
+    changelog.push(`#### Breaking changes`);
+    changelog.push(``);
+  }
+
+  for (const commit of availableCommits()) {
+    if (!commit.breakingChange) {
+      continue;
+    }
+
+    handledCommits.add(commit);
+
+    changelog.push(`- ${commit.title}`);
 
     for (const note of commit.notes) {
-      result.push(`  ${note}`);
+      changelog.push(`  ${note}`);
     }
 
-    if (commit.breakingChange) {
-      breakingChanges.push(
-        `- **${commit.subject ?? "all"}**: ${commit.message}`,
-      );
-      for (const line of commit.breakingChange.split("\n")) {
-        breakingChanges.push(`  ${line}`);
-      }
+    for (const line of commit.breakingChange.split("\n")) {
+      changelog.push(`  ${line}`);
     }
   }
 
-  if (breakingChanges.length > 0) {
-    result.push(``, `##### Breaking changes`, ``);
-    result.push(...breakingChanges);
+  // Write features
+  if (availableCommits().find((it) => it.title.startsWith("feat"))) {
+    changelog.push(``);
+    changelog.push(`#### Features`);
+    changelog.push(``);
   }
 
-  result.push(
-    "",
-    `For a detailed description and more details about this release,\nplease read the [release notes](https://compasjs.com/releases/${version}.html).`,
-  );
+  for (const commit of availableCommits()) {
+    if (!commit.title.startsWith("feat")) {
+      continue;
+    }
 
-  return result.join("\n");
+    handledCommits.add(commit);
+
+    changelog.push(`- ${commit.title}`);
+
+    for (const note of commit.notes) {
+      changelog.push(`  ${note}`);
+    }
+  }
+
+  // Write fixes
+  if (availableCommits().find((it) => it.title.startsWith("fix"))) {
+    changelog.push(``);
+    changelog.push(`#### Bug fixes`);
+    changelog.push(``);
+  }
+
+  for (const commit of availableCommits()) {
+    if (!commit.title.startsWith("fix")) {
+      continue;
+    }
+
+    handledCommits.add(commit);
+
+    changelog.push(`- ${commit.title}`);
+
+    for (const note of commit.notes) {
+      changelog.push(`  ${note}`);
+    }
+  }
+
+  // Write others
+  // Everything that is left and is not a dependency bump can go here.
+  if (availableCommits().find((it) => !it.title.startsWith("build(deps)"))) {
+    changelog.push(``);
+    changelog.push(`#### Other`);
+    changelog.push(``);
+  }
+
+  for (const commit of availableCommits()) {
+    if (commit.title.startsWith("build(deps)")) {
+      continue;
+    }
+
+    handledCommits.add(commit);
+
+    changelog.push(`- ${commit.title}`);
+
+    for (const note of commit.notes) {
+      changelog.push(`  ${note}`);
+    }
+  }
+
+  // Write dependency bumps
+  if (availableCommits().length) {
+    changelog.push(``);
+    changelog.push(`#### Dependency updates`);
+    changelog.push(``);
+  }
+
+  for (const commit of availableCommits()) {
+    changelog.push(`- ${commit.title}`);
+
+    for (const note of commit.notes) {
+      changelog.push(`  ${note}`);
+    }
+  }
+
+  return changelog.join("\n");
 }
 
 /**
