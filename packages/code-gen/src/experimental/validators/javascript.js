@@ -7,7 +7,7 @@ import {
   fileContextSetIndent,
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/format.js";
-import { fileWrite } from "../file/write.js";
+import { fileWrite, fileWriteInline } from "../file/write.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesCacheGet } from "../types/cache.js";
@@ -294,7 +294,7 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
     );
     fileWrite(
       file,
-      `const intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
+      `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
     );
 
     /** @type {import("./generator").ValidatorState} */
@@ -740,18 +740,94 @@ export function validatorJavascriptNumber(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  // TODO: implement
+  fileWrite(file, `if (typeof ${valuePath} !== "number") {`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `${valuePath} = Number(${valuePath});`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, "}");
+
+  const conditionPartial = !type.validator.floatingPoint
+    ? `|| !Number.isInteger(${valuePath})`
+    : "";
+  const subType = type.validator.floatingPoint ? "float" : "int";
+
   fileWrite(
     file,
-    fileFormatInlineComment(
-      file,
-      `
-${valuePath}
-${resultPath}
-${errorKey}
-`,
-    ),
+    `if ( isNaN(${valuePath}) || !isFinite(${valuePath}) ${conditionPartial}) {`,
   );
+  fileContextSetIndent(file, 1);
+
+  fileWrite(
+    file,
+    `${errorKey} = {
+  key: "validator.number",
+  subType: "${subType}",
+};`,
+  );
+
+  fileContextSetIndent(file, -1);
+  fileWriteInline(file, "} else ");
+
+  if (!isNil(type.validator.min)) {
+    fileWrite(file, `if (${valuePath} < ${type.validator.min}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.range",
+  minValue: ${type.validator.min},
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else `);
+  }
+
+  if (!isNil(type.validator.max)) {
+    fileWrite(file, `if (${valuePath} > ${type.validator.max}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.range",
+  maxValue: ${type.validator.max}
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else `);
+  }
+
+  if (type.oneOf) {
+    const condition = type.oneOf
+      .map((it) => `${valuePath} !== ${it}`)
+      .join(" && ");
+
+    fileWrite(file, `if (${condition}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.oneOf",
+  allowedValues: [${type.oneOf.join(", ")}]
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else`);
+  }
+
+  fileWrite(file, `{`);
+  fileContextSetIndent(file, 1);
+  fileWrite(file, `${resultPath} = ${valuePath};`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, "} ");
 }
 
 /**

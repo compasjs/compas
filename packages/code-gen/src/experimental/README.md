@@ -60,10 +60,10 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Support extracting a few types;
   - Like `Generator#selectGroups`
 - [ ] Finish up validators
-  - number
-  - string
-  - uuid
-  - generic
+  - [x] number
+  - [ ] string
+  - [ ] uuid
+  - [ ] generic
 - [ ] Self-host code-gen/experimental
 - [ ] Self-host existing code-gen with experimental
 - [ ] Create sql types to the structure
