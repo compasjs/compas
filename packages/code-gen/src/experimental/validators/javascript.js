@@ -971,18 +971,141 @@ export function validatorJavascriptString(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  // TODO: implement
-  fileWrite(
-    file,
-    fileFormatInlineComment(
+  fileWrite(file, `if (typeof ${valuePath} !== "string") {`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `${valuePath} = String(${valuePath});`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, "}");
+
+  if (type.validator.trim) {
+    fileWrite(file, `${valuePath} = ${valuePath}.trim();`);
+  }
+
+  if (type.isOptional) {
+    fileWrite(file, `if (${valuePath}.length === 0) {`);
+    fileContextSetIndent(file, 1);
+
+    if (!isNil(type.defaultValue)) {
+      fileWrite(file, `${resultPath} = ${type.defaultValue};`);
+    } else {
+      fileWrite(
+        file,
+        `${resultPath} = ${type.validator.allowNull ? "null" : "undefined"};`,
+      );
+    }
+
+    fileContextSetIndent(file, -1);
+    fileWrite(file, "} else {");
+    fileContextSetIndent(file, 1);
+  }
+
+  if (type.validator.upperCase) {
+    fileWrite(file, `${valuePath} = ${valuePath}.toUpperCase();`);
+  }
+  if (type.validator.lowerCase) {
+    fileWrite(file, `${valuePath} = ${valuePath}.toLowerCase();`);
+  }
+
+  if (!isNil(type.validator.min)) {
+    fileWrite(file, `if (${valuePath}.length < ${type.validator.min}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
       file,
-      `
-${valuePath}
-${resultPath}
-${errorKey}
-`,
-    ),
-  );
+      `${errorKey} = {
+  key: "validator.length",
+  minLength: ${type.validator.min}
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else `);
+  }
+
+  if (!isNil(type.validator.max)) {
+    fileWrite(file, `if (${valuePath}.length > ${type.validator.max}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.length",
+  maxLength: ${type.validator.max}
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else `);
+  }
+
+  if (type.oneOf) {
+    const condition = type.oneOf
+      .map((it) => `${valuePath} !== "${it}"`)
+      .join(" && ");
+
+    fileWrite(file, `if (${condition}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.oneOf",
+  allowedValues: ${JSON.stringify(type.oneOf)},
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else`);
+  }
+
+  if (type.validator.pattern) {
+    fileWrite(file, `if (!${type.validator.pattern}.test(${valuePath})) {`);
+    fileContextSetIndent(file, 1);
+
+    // TODO: Pattern name
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.pattern",
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else`);
+  }
+
+  if (type.validator.disallowedCharacters) {
+    const conditional = type.validator.disallowedCharacters
+      .map((it) => `${valuePath}.includes(${JSON.stringify(it)})`)
+      .join(" || ");
+    fileWrite(file, `if (${conditional}) {`);
+    fileContextSetIndent(file, 1);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.disallowedCharacters",
+  disallowedCharacters: ${JSON.stringify(type.validator.disallowedCharacters)},
+};`,
+    );
+
+    fileContextSetIndent(file, -1);
+    fileWriteInline(file, `} else`);
+  }
+
+  fileWrite(file, `{`);
+  fileContextSetIndent(file, 1);
+  fileWrite(file, `${resultPath} = ${valuePath};`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, "} ");
+
+  if (type.isOptional) {
+    fileContextSetIndent(file, -1);
+    fileWrite(file, "}");
+  }
 }
 
 /**
