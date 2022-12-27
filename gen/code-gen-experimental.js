@@ -3,9 +3,9 @@ import { TypeCreator } from "@compas/code-gen";
 /**
  * Structure for types that are user input.
  *
- * @param {App} app
+ * @param {import("@compas/code-gen/experimental").Generator} generator
  */
-export function extendWithCodeGenExperimental(app) {
+export function extendWithCodeGenExperimental(generator) {
   const T = new TypeCreator("experimental");
 
   const namePart = T.string("namePart")
@@ -34,7 +34,7 @@ export function extendWithCodeGenExperimental(app) {
     ...typeDefinitionBase,
   };
 
-  app.add(
+  generator.add(
     T.generic("structure")
       .keys(namePart)
       .values(

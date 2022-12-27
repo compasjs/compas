@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import { readdir } from "node:fs/promises";
-import { AppError, exec } from "@compas/stdlib";
+import { Generator } from "@compas/code-gen/experimental";
+import { AppError, exec, newLogger } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
 import { extendWithCodeGenExperimental } from "../gen/code-gen-experimental.js";
 import { applyCodeGenStructure } from "../gen/code-gen.js";
@@ -52,18 +53,19 @@ export async function generateCodeGen() {
     declareGlobalTypes: false,
   });
 
-  const app2 = new App({
-    verbose: true,
-  });
+  const generator = new Generator(newLogger());
 
-  extendWithCodeGenExperimental(app2);
+  extendWithCodeGenExperimental(generator);
 
-  await app2.generate({
-    outputDirectory: `packages/code-gen/src/experimental/generated`,
-    isNode: true,
-    enabledGenerators: ["type", "validator"],
-    dumpStructure: true,
-    declareGlobalTypes: false,
+  generator.generate({
+    targetLanguage: "js",
+    outputDirectory: "packages/code-gen/src/experimental/generated",
+    generators: {
+      structure: {},
+      validators: {
+        includeBaseTypes: true,
+      },
+    },
   });
 }
 

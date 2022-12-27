@@ -263,7 +263,9 @@ export function typesTypescriptFormatType(
       typesTypescriptFormatType(generateContext, file, type.values, options);
     }
 
-    fileWriteInline(file, optionalStr);
+    if (isOptional) {
+      fileWriteInline(file, optionalStr);
+    }
   } else if (type.type === "boolean") {
     if (!isNil(type.oneOf)) {
       fileWriteInline(file, `${type.oneOf}`);
@@ -331,10 +333,6 @@ export function typesTypescriptFormatType(
       }
     } else {
       fileWriteInline(file, `number`);
-
-      if (options.validatorState === "input") {
-        fileWriteInline(file, `|string`);
-      }
     }
 
     if (isOptional) {

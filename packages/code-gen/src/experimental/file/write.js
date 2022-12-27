@@ -1,3 +1,5 @@
+import { fileBlockCheck } from "./block.js";
+
 /**
  * Raw append the contents to the file.
  *
@@ -48,6 +50,8 @@ export function fileWriteNewLine(file) {
  * @param {string} contents
  */
 export function fileWrite(file, contents) {
+  fileBlockCheck(file, contents);
+
   for (const line of contents.split("\n")) {
     fileWriteLinePrefix(file);
     fileWriteRaw(file, line);

@@ -25,7 +25,7 @@ export function validatorJavascriptHasValidatorForOutputTypeName(
   outputTypeName: string,
 ): boolean;
 /**
- * Write docs, and declare the validator function for the provided type.
+ * Write docs and declare the validator function for the provided type.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
