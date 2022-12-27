@@ -61,26 +61,24 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Like `Generator#selectGroups`
 - [ ] Finish up validators
   - [x] number
-  - [ ] string
-  - [ ] uuid
+  - [x] string
+  - [x] uuid
   - [ ] generic
 - [ ] Self-host code-gen/experimental
-- [ ] Self-host existing code-gen with experimental
 - [ ] Create sql types to the structure
   - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,
     `createPartialTypes` and `createQueryBuilderTypes`
 - [ ] Create database generator
-- [ ] Self-host store package
+  - Inline `query` and the 'helpers'
 - [ ] `crud` checks
   - See `crudPreprocess`
 - [ ] `crud` route expansion
   - See `crudCreateRoutes`
 - [ ] Validate route invalidations + query & param converts
-
   - See `processRouteInvalidations`
-
 - [ ] Update `T.any()` to be more inline with the new target system.
 - [ ] Update `T.string().pattern()` with `patternExplanation`
+- [ ] Self-host store package
 
 ## Issue
 

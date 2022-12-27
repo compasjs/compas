@@ -1119,18 +1119,31 @@ export function validatorJavascriptUuid(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  // TODO: implement
+  const regex =
+    "/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi";
+
   fileWrite(
     file,
-    fileFormatInlineComment(
-      file,
-      `
-${valuePath}
-${resultPath}
-${errorKey}
-`,
-    ),
+    `if (typeof ${valuePath} !== "string" || !${regex}.test(${valuePath})) {`,
   );
+  fileContextSetIndent(file, 1);
+
+  fileWrite(
+    file,
+    `${errorKey} = {
+  key: "validator.pattern",
+  patternExplanation: "UUID (v4)",
+};`,
+  );
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `} else {`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `${resultPath} = ${valuePath};`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `}`);
 }
 
 /**
