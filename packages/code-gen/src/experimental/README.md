@@ -59,11 +59,11 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Setup import system in the generate files
 - [x] Support extracting a few types;
   - Like `Generator#selectGroups`
-- [ ] Finish up validators
+- [x] Finish up validators
   - [x] number
   - [x] string
   - [x] uuid
-  - [ ] generic
+  - [x] generic
 - [ ] Self-host code-gen/experimental
 - [ ] Create sql types to the structure
   - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,

@@ -715,18 +715,92 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  // TODO: implement
+  const keyVariable = `genericKeyInput${validatorState.reusedVariableIndex++}`;
+  const resultVariable = `genericKeyResult${validatorState.reusedVariableIndex++}`;
+  const errorMapVariable = `genericKeyErrorMap${validatorState.reusedVariableIndex++}`;
+
+  /** @type {import("./generator").ValidatorState} */
+  const nestedKeyState = {
+    ...validatorState,
+    inputVariableName: keyVariable,
+    outputVariableName: resultVariable,
+    errorMapVariableName: errorMapVariable,
+    validatedValuePath: [{ type: "root" }],
+  };
+
+  // Already set the nested validator path for generic values
+  validatorState.validatedValuePath.push({
+    type: "dynamicKey",
+    key: resultVariable,
+  });
+
+  fileWrite(file, `${resultPath} = {};`);
+
+  fileWrite(file, `for (let ${keyVariable} of Object.keys(${valuePath})) {`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `let ${resultVariable} = undefined;`);
+  fileWrite(file, `const ${errorMapVariable} = {};`);
+
+  validatorGeneratorGenerateBody(
+    validatorState.generateContext,
+    file,
+
+    // @ts-expect-error
+    type.keys,
+    nestedKeyState,
+  );
+
+  fileWrite(file, `if (Object.keys(${errorMapVariable}).length !== 0) {`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `if (${errorKey}) {`);
+  fileContextSetIndent(file, 1);
+
   fileWrite(
     file,
-    fileFormatInlineComment(
-      file,
-      `
-${valuePath}
-${resultPath}
-${errorKey}
-`,
-    ),
+    `${errorKey}.inputs.push({ key: ${keyVariable}, errors: ${errorMapVariable} });`,
   );
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `} else {`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(
+    file,
+    `${errorKey} = {
+  key: "validator.generic",
+  inputs: [{ key: ${keyVariable}, errors: ${errorMapVariable} }],
+};`,
+  );
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `}`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `} else {`);
+  fileContextSetIndent(file, 1);
+
+  validatorGeneratorGenerateBody(
+    validatorState.generateContext,
+    file,
+
+    // @ts-expect-error
+    type.values,
+    validatorState,
+  );
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `}`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `}`);
+
+  validatorState.validatedValuePath.pop();
+
+  validatorState.reusedVariableIndex--;
+  validatorState.reusedVariableIndex--;
+  validatorState.reusedVariableIndex--;
 }
 
 /**
