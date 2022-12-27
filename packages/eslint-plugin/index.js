@@ -82,6 +82,12 @@ module.exports = {
           },
         ],
 
+        // https://github.com/import-js/eslint-plugin-import/issues/1810:
+        "import/no-unresolved": [
+          "error",
+          { ignore: ["@compas/code-gen/experimental"] },
+        ],
+
         // ESLint plugin jsdoc
         "jsdoc/check-alignment": "error",
         "jsdoc/check-examples": "off",
