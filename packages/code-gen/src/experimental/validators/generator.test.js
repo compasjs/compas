@@ -9,9 +9,7 @@ test("code-gen/experimental/validators/generator", (t) => {
       testExperimentalGenerateFiles(t, {
         outputDirectory: "./.cache/experimental",
         generators: {
-          structure: {}, // types: {
-          //   // declareGlobalTypes: true,
-          // },
+          structure: {},
           validators: {
             includeBaseTypes: true,
           },

@@ -11145,9 +11145,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
             value["target"]["name"] === null ||
             value["target"]["name"] === undefined
           ) {
-            errorMap[`$.target.name`] = {
-              key: "validator.undefined",
-            };
+            result["target"]["name"] = undefined;
           } else {
             const refResult0 = validateExperimentalNamePartOptional(
               value["target"]["name"],

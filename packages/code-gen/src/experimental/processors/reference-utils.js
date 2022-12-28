@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import { structureResolveReference } from "./structure.js";
 
 /**
@@ -25,14 +26,17 @@ export function referenceUtilsGetProperty(
     return type;
   };
 
+  const result = [resolvePath(type, accessPath)];
+
   if (type.type === "reference") {
     const ref = structureResolveReference(generateContext.structure, type);
 
-    return (
-      resolvePath(type, accessPath) ??
-      resolvePath(ref, accessPath) ??
-      defaultValue
-    );
+    result.push(resolvePath(ref, accessPath));
   }
-  return resolvePath(type, accessPath) ?? defaultValue;
+
+  if (!isNil(defaultValue)) {
+    result.push(defaultValue);
+  }
+
+  return result[0] || result[1] || result[2];
 }

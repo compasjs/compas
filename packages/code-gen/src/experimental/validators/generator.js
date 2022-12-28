@@ -234,18 +234,17 @@ export function validatorGeneratorGenerateBody(
       file,
       validatorState,
       {
-        isOptional: typesGeneratorIsOptional(
-          generateContext,
-          type,
-          validatorState.outputTypeOptions,
-        ),
+        isOptional: typesGeneratorIsOptional(generateContext, type, {
+          ...validatorState.outputTypeOptions,
+          validatorState: "input",
+        }),
         defaultValue: referenceUtilsGetProperty(generateContext, type, [
           "defaultValue",
         ]),
         allowNull: referenceUtilsGetProperty(
           generateContext,
           type,
-          ["allowNull"],
+          ["validator", "allowNull"],
           false,
         ),
       },

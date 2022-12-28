@@ -962,7 +962,7 @@ export type ExperimentalRouteInvalidationDefinition = {
   type: "routeInvalidation";
   target: {
     group: ExperimentalNamePart;
-    name: ExperimentalNamePartOptional;
+    name?: ExperimentalNamePartOptional | undefined;
   };
   properties: {
     useSharedParams?: boolean | undefined;
@@ -1030,7 +1030,7 @@ export type ExperimentalRouteInvalidationDefinitionInput = {
   type: "routeInvalidation";
   target: {
     group: ExperimentalNamePartInput;
-    name: ExperimentalNamePartOptionalInput;
+    name?: ExperimentalNamePartOptionalInput | undefined;
   };
   properties: {
     useSharedParams?: boolean | "true" | "false" | undefined;
