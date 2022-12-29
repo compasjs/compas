@@ -64,18 +64,41 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] string
   - [x] uuid
   - [x] generic
-- [ ] Self-host code-gen/experimental
-- [ ] Create sql types to the structure
-  - See `createWhereTypes`, `createUpdateTypes`, `createOrderByTypes`,
-    `createPartialTypes` and `createQueryBuilderTypes`
-- [ ] Create database generator
-  - Inline `query` and the 'helpers'
-- [ ] `crud` checks
-  - See `crudPreprocess`
-- [ ] `crud` route expansion
-  - See `crudCreateRoutes`
-- [ ] Validate route invalidations + query & param converts
-  - See `processRouteInvalidations`
+- [x] Self-host code-gen/experimental
+- [ ] Database generator
+  - [ ] SQL types
+    - [ ] `xxxWhere`
+    - [ ] `xxxUpdate`
+    - [ ] `xxxOrderBy`
+    - [ ] `xxxInsert`
+    - [ ] `QueryBuilder`
+  - [ ] Base queries
+    - `update`
+    - `insert`
+    - `delete`
+    - `upsertOnId`
+  - [ ] Query builder
+  - [ ] Helpers
+    - [ ] `query`
+    - [ ] `whereHelper`
+    - [ ] `queryBuilderHelper`
+  - [ ] Run all query results through validators
+- [ ] Router generator
+  - [ ] Check conflicting routes
+  - [ ] Build sorted route trie
+  - [ ] Generate generic route selecter
+  - [ ] Generate Koa target
+- [ ] API client generator
+  - [ ] Check route invalidations
+  - [ ] Generate Axios target
+  - [ ] Generate react-query wrapper
+  - [ ] Validate responses
+- [ ] CRUD generator
+  - [ ] Static checks
+  - [ ] Generate specific types
+  - [ ] Generate routes
+  - [ ] Generate implementation
+- [ ] `T.file()` specific types and validations
 - [ ] Update `T.any()` to be more inline with the new target system.
 - [ ] Update `T.string().pattern()` with `patternExplanation`
 - [ ] Self-host store package
