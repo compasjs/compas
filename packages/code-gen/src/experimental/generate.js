@@ -19,6 +19,10 @@ import {
   modelSortAllKeys,
   modelSortAllRelations,
 } from "./processors/model-sort.js";
+import {
+  modelWhereBuildWhereInformation,
+  modelWhereBuildWhereTypes,
+} from "./processors/model-where.js";
 import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
@@ -108,12 +112,15 @@ export function generateExecute(generator, options) {
   modelSortAllRelations(generateContext);
   modelSortAllKeys(generateContext);
 
+  modelWhereBuildWhereInformation(generateContext);
+  modelWhereBuildWhereTypes(generateContext);
+
   docStringCleanup(generateContext);
 
   typesGeneratorInit(generateContext);
   validatorGeneratorGenerateBaseTypes(generateContext);
 
-  // All other logic should be between here (A)
+  // All other generator output logic should be between here (A)
 
   typesGeneratorFinalize(generateContext);
 

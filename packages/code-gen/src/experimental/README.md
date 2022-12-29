@@ -67,7 +67,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Self-host code-gen/experimental
 - [ ] Database generator
   - [ ] SQL types
-    - [ ] `xxxWhere`
+    - [x] `xxxWhere`
     - [ ] `xxxUpdate`
     - [ ] `xxxOrderBy`
     - [ ] `xxxInsert`

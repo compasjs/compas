@@ -1,4 +1,4 @@
-import { isNil } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 
 /**
  * A collection of all traversal paths per type.
@@ -178,6 +178,15 @@ export function typeDefinitionTraverse(typeToTraverse, callback, options) {
       options?.beforeTraversal && options.beforeTraversal(currentType);
 
       const pathSpecs = typeDefinitionTraversePaths[currentType.type];
+
+      if (!Array.isArray(pathSpecs)) {
+        throw AppError.serverError({
+          message: `Can't iterate over pathSpecs. This is probably a bug in Compas.`,
+          pathSpecs,
+          currentType,
+          typeToTraverse,
+        });
+      }
 
       for (const spec of pathSpecs) {
         if (spec.amount === "single" && !isNil(currentType[spec.key])) {

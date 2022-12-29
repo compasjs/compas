@@ -83,7 +83,9 @@ export function modelRelationGetInverse(model) {
 }
 
 /**
- * Get the related information for a the provided relation.
+ * Get the related information for the provided relation.
+ * This object is always built through the eyes of the owning model. So when an inverse
+ * relation is passed in, the 'modelOwn' will be of the owning side.
  *
  * By returning both models and both relations, other code only needs to pass in a
  * relation to get the full picture.

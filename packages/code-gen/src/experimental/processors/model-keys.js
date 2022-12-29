@@ -3,6 +3,7 @@ import { DateType, UuidType } from "../../builders/index.js";
 import { errorsThrowCombinedError } from "../errors.js";
 import { stringFormatNameForError } from "../string-format.js";
 import { structureModels } from "./models.js";
+import { referenceUtilsGetProperty } from "./reference-utils.js";
 
 /**
  * Cache primary key lookups, based on the model.
@@ -13,6 +14,13 @@ import { structureModels } from "./models.js";
  * }>}
  */
 const primaryKeyCache = new WeakMap();
+
+/**
+ * Cache searchable keys, based on the model.
+ *
+ * @type {WeakMap<object, string[]>}
+ */
+const searchableKeyCache = new WeakMap();
 
 /**
  * Add or resolve the primary key of a model.
@@ -131,4 +139,40 @@ export function modelKeyGetPrimary(model) {
       model,
     )}. Either add a primary key to the definition like: 'T.uuid().primary()' or remove 'withPrimaryKey: false' from the '.enableQueries()' call.`,
   });
+}
+
+/**
+ * Get the searchable model keys for the provided model.
+ *
+ * The result is cached and early returned in the next call with the same model.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generated/common/types").ExperimentalObjectDefinition} model
+ * @returns {string[]}
+ */
+export function modelKeyGetSearchable(generateContext, model) {
+  if (searchableKeyCache.has(model)) {
+    // @ts-expect-error
+    //
+    // This pretty much can't go wrong...
+    // One of the reasons why I don't use TS.
+    return searchableKeyCache.get(model);
+  }
+
+  const fields = [];
+
+  for (const key of Object.keys(model.keys)) {
+    if (
+      referenceUtilsGetProperty(generateContext, model.keys[key], [
+        "sql",
+        "searchable",
+      ])
+    ) {
+      fields.push(key);
+    }
+  }
+
+  searchableKeyCache.set(model, fields);
+
+  return fields;
 }
