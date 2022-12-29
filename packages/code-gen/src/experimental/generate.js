@@ -11,6 +11,10 @@ import {
   modelKeyAddPrimary,
 } from "./processors/model-keys.js";
 import {
+  modelPartialInsertTypes,
+  modelPartialReturningTypes,
+} from "./processors/model-partials.js";
+import {
   modelRelationAddKeys,
   modelRelationBuildRelationInformationCache,
   modelRelationCheckAllRelations,
@@ -114,6 +118,9 @@ export function generateExecute(generator, options) {
 
   modelWhereBuildWhereInformation(generateContext);
   modelWhereBuildWhereTypes(generateContext);
+
+  modelPartialReturningTypes(generateContext);
+  modelPartialInsertTypes(generateContext);
 
   docStringCleanup(generateContext);
 

@@ -70,7 +70,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - [x] `xxxWhere`
     - [ ] `xxxUpdate`
     - [ ] `xxxOrderBy`
-    - [ ] `xxxInsert`
+    - [x] `xxxInsert`
     - [ ] `QueryBuilder`
   - [ ] Base queries
     - `update`
