@@ -21,8 +21,9 @@ import { referenceUtilsGetProperty } from "./reference-utils.js";
 import { structureAddType, structureResolveReference } from "./structure.js";
 
 /**
- * @typedef {
- *   "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|"like"|"iLike"|"notLike"|"notILike"|"isNull"|"isNotNull"|"includeNotNull"
+ * @typedef {"equal"|"notEqual"|"in"|"notIn"|"greaterThan"
+ * |"lowerThan"|"like"|"iLike"|"notLike"|"notILike"
+ * |"isNull"|"isNotNull"|"includeNotNull"
  * } ModelWhereVariant
  */
 
@@ -115,7 +116,7 @@ export function modelWhereBuildWhereInformation(generateContext) {
         });
       }
 
-      if (modelKey === "deletedAt" && model.queryOptions.withSoftDeletes) {
+      if (modelKey === "deletedAt" && model.queryOptions?.withSoftDeletes) {
         whereInformation.fields.push({
           modelKey,
           whereKey: `${modelKey}IncludeNotNull`,
@@ -221,7 +222,7 @@ export function modelWhereBuildWhereTypes(generateContext) {
       type.keys[`via${upperCaseFirst(relationInfo.keyNameOwn)}`] =
         new ObjectType()
           .keys({
-            where: new ReferenceType(
+            where: new ReferenceType( // @ts-expect-error
               relationInfo.modelInverse.group,
               `${relationInfo.modelInverse.name}Where`,
             ).default("{}"),
@@ -238,7 +239,7 @@ export function modelWhereBuildWhereTypes(generateContext) {
       type.keys[`via${upperCaseFirst(relationInfo.relationInverse.ownKey)}`] =
         new ObjectType()
           .keys({
-            where: new ReferenceType(
+            where: new ReferenceType( // @ts-expect-error
               relationInfo.modelOwn.group,
               `${relationInfo.modelOwn.name}Where`,
             ).default("{}"),
@@ -249,7 +250,7 @@ export function modelWhereBuildWhereTypes(generateContext) {
           .build();
 
       type.keys[`${relationInfo.relationInverse.ownKey}NotExists`] =
-        new ReferenceType(
+        new ReferenceType( // @ts-expect-error
           relationInfo.modelOwn.group,
           `${relationInfo.modelOwn.name}Where`,
         )

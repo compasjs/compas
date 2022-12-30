@@ -68,7 +68,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Database generator
   - [ ] SQL types
     - [x] `xxxWhere`
-    - [ ] `xxxUpdate`
+    - [x] `xxxUpdate`
     - [ ] `xxxOrderBy`
     - [x] `xxxInsert`
     - [ ] `QueryBuilder`

@@ -38,4 +38,17 @@ export function modelKeyGetPrimary(
   primaryKeyName: string;
   primaryKeyDefinition: import("../generated/common/types").ExperimentalTypeSystemDefinition;
 };
+/**
+ * Get the searchable model keys for the provided model.
+ *
+ * The result is cached and early returned in the next call with the same model.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generated/common/types").ExperimentalObjectDefinition} model
+ * @returns {string[]}
+ */
+export function modelKeyGetSearchable(
+  generateContext: import("../generate").GenerateContext,
+  model: import("../generated/common/types").ExperimentalObjectDefinition,
+): string[];
 //# sourceMappingURL=model-keys.d.ts.map
