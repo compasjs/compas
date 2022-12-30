@@ -13,6 +13,7 @@ import {
   fileWriteNewLine,
   fileWriteRaw,
 } from "../file/write.js";
+import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { typeDefinitionTraverse } from "../processors/type-definition-traverse.js";
 import { TypescriptImportCollector } from "../target/typescript.js";
@@ -189,10 +190,9 @@ export function typesTypescriptFormatType(
 
   let optionalStr = `|undefined`;
 
-  // @ts-expect-error
-  //
-  // Not all types have support for `allowNull` in their validators.
-  if (type?.validator?.allowNull) {
+  if (
+    referenceUtilsGetProperty(generateContext, type, ["validator", "allowNull"])
+  ) {
     optionalStr += "|null";
   }
 
@@ -237,17 +237,38 @@ export function typesTypescriptFormatType(
   } else if (type.type === "anyOf") {
     fileContextSetIndent(file, 1);
 
+    let didWriteOptional = false;
+    let didWriteNull = false;
     for (const value of type.values) {
+      didWriteOptional =
+        didWriteOptional ||
+        referenceUtilsGetProperty(generateContext, value, ["isOptional"]);
+      didWriteNull =
+        didWriteNull ||
+        referenceUtilsGetProperty(generateContext, value, [
+          "validator",
+          "allowNull",
+        ]);
+
       fileWriteNewLine(file);
       fileWriteInline(file, `|`);
       typesTypescriptFormatType(generateContext, file, value, options);
     }
 
-    if (isOptional) {
-      // Note that one the of the underlying types could be optional as well. At this
-      // point we are then just writing a duplicated case.
+    if (isOptional && !didWriteOptional) {
       fileWriteNewLine(file);
-      fileWriteInline(file, optionalStr);
+      fileWriteInline(file, `|undefined`);
+    }
+
+    if (
+      referenceUtilsGetProperty(generateContext, type, [
+        "validator",
+        "allowNull",
+      ]) &&
+      !didWriteNull
+    ) {
+      fileWriteNewLine(file);
+      fileWriteInline(file, `|null`);
     }
 
     fileContextSetIndent(file, -1);

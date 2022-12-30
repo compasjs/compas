@@ -27,7 +27,7 @@ export function modelPartialReturningTypes(generateContext) {
           new StringType().oneOf(...Object.keys(model.keys)),
         ),
       )
-      .default(`"*"`)
+      .optional()
       .build();
 
     structureAddType(generateContext.structure, type, {
@@ -121,9 +121,7 @@ export function modelPartialUpdateTypes(generateContext) {
 
     const type = new ObjectType(model.group, `${model.name}Update`)
       .keys({
-        update: new ArrayType().values(
-          new ReferenceType(model.group, `${model.name}UpdatePartial`),
-        ),
+        update: new ReferenceType(model.group, `${model.name}UpdatePartial`),
         where: new ReferenceType(model.group, `${model.name}Where`),
         returning: new ReferenceType(model.group, `${model.name}Returning`),
       })
