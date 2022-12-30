@@ -25,4 +25,13 @@ export function modelPartialInsertTypes(
 export function modelPartialUpdateTypes(
   generateContext: import("../generate").GenerateContext,
 ): void;
+/**
+ * Build the 'orderBy' types for all models.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {void}
+ */
+export function modelPartialOrderByTypes(
+  generateContext: import("../generate").GenerateContext,
+): void;
 //# sourceMappingURL=model-partials.d.ts.map

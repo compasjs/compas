@@ -69,7 +69,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [ ] SQL types
     - [x] `xxxWhere`
     - [x] `xxxUpdate`
-    - [ ] `xxxOrderBy`
+    - [x] `xxxOrderBy`
     - [x] `xxxInsert`
     - [ ] `QueryBuilder`
   - [ ] Base queries
@@ -78,7 +78,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - `delete`
     - `upsertOnId`
   - [ ] Query builder
-  - [ ] Helpers
+  - [ ] Helpers `common/database.js`
     - [ ] `query`
     - [ ] `whereHelper`
     - [ ] `queryBuilderHelper`

@@ -8,6 +8,7 @@ import {
   ReferenceType,
   StringType,
 } from "../../builders/index.js";
+import { modelKeyGetSearchable } from "./model-keys.js";
 import { structureModels } from "./models.js";
 import { referenceUtilsGetProperty } from "./reference-utils.js";
 import { structureAddType, structureResolveReference } from "./structure.js";
@@ -251,6 +252,63 @@ export function modelPartialUpdateTypes(generateContext) {
       skipReferenceExtraction: true,
     });
     structureAddType(generateContext.structure, type, {
+      skipReferenceExtraction: true,
+    });
+  }
+}
+
+/**
+ * Build the 'orderBy' types for all models.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {void}
+ */
+export function modelPartialOrderByTypes(generateContext) {
+  const orderByField = new StringType("compas", "orderBy")
+    .oneOf("ASC", "DESC")
+    .optional();
+
+  const orderByOptionalField = new StringType("compas", "orderByOptional")
+    .oneOf("ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST")
+    .optional();
+
+  for (const model of structureModels(generateContext)) {
+    const orderByType = new AnyOfType(model.group, `${model.name}OrderBy`)
+      .values(
+        new AnyType().raw(`import("@compas/store").QueryPart<any>`),
+        new ArrayType().values("foo"),
+      )
+      .build();
+    const orderBySpecType = new ObjectType(
+      model.group,
+      `${model.name}OrderBySpec`,
+    ).build();
+
+    orderByType.values[1].values.oneOf = [];
+
+    for (const modelKey of modelKeyGetSearchable(generateContext, model)) {
+      orderByType.values[1].values.oneOf.push(modelKey);
+
+      const isOptional = referenceUtilsGetProperty(
+        generateContext,
+        model.keys[modelKey],
+        ["isOptional"],
+      );
+      const isSystemField =
+        (model.queryOptions?.withDates ||
+          model.queryOptions?.withSoftDeletes) &&
+        (modelKey === "createdAt" || modelKey === "updatedAt");
+
+      orderBySpecType.keys[modelKey] =
+        isOptional && !isSystemField
+          ? orderByOptionalField.build()
+          : orderByField.build();
+    }
+
+    structureAddType(generateContext.structure, orderByType, {
+      skipReferenceExtraction: true,
+    });
+    structureAddType(generateContext.structure, orderBySpecType, {
       skipReferenceExtraction: true,
     });
   }

@@ -12,6 +12,7 @@ import {
 } from "./processors/model-keys.js";
 import {
   modelPartialInsertTypes,
+  modelPartialOrderByTypes,
   modelPartialReturningTypes,
   modelPartialUpdateTypes,
 } from "./processors/model-partials.js";
@@ -123,6 +124,7 @@ export function generateExecute(generator, options) {
   modelPartialReturningTypes(generateContext);
   modelPartialInsertTypes(generateContext);
   modelPartialUpdateTypes(generateContext);
+  modelPartialOrderByTypes(generateContext);
 
   docStringCleanup(generateContext);
 
