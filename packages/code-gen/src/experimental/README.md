@@ -66,23 +66,19 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] generic
 - [x] Self-host code-gen/experimental
 - [ ] Database generator
-  - [ ] SQL types
+  - [x] SQL types
     - [x] `xxxWhere`
     - [x] `xxxUpdate`
     - [x] `xxxOrderBy`
     - [x] `xxxInsert`
-    - [ ] `QueryBuilder`
+    - [x] `QueryBuilder`
   - [ ] Base queries
     - `update`
     - `insert`
     - `delete`
     - `upsertOnId`
   - [ ] Query builder
-  - [ ] Helpers `common/database.js`
-    - [ ] `query`
-    - [ ] `whereHelper`
-    - [ ] `queryBuilderHelper`
-  - [ ] Run all query results through validators
+    - [ ] Run all query results through validators
 - [ ] Router generator
   - [ ] Check conflicting routes
   - [ ] Build sorted route trie
@@ -102,6 +98,9 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Update `T.any()` to be more inline with the new target system.
 - [ ] Update `T.string().pattern()` with `patternExplanation`
 - [ ] Self-host store package
+- Future ideas;
+  - Include `query` + where & builder helpers in the output instead of requiring
+    @compas/store. We could probably generate them at `common/database.js`
 
 ## Issue
 
