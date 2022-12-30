@@ -22,6 +22,7 @@ import { structureNamedTypes, structureResolveReference } from "./structure.js";
  *   keyNameOwn: string,
  *   keyDefinitionOwn:
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition,
+ *   virtualKeyNameInverse: string,
  *   primaryKeyNameInverse: string,
  *   primaryKeyDefinitionInverse:
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition,
@@ -432,6 +433,7 @@ export function modelRelationBuildRelationInformationCache(generateContext) {
         relationInverse,
         keyNameOwn: relation.ownKey,
         keyDefinitionOwn: model.keys[relation.ownKey],
+        virtualKeyNameInverse: relation.referencedKey ?? "",
         primaryKeyNameInverse: primaryKeyName,
         primaryKeyDefinitionInverse: primaryKeyDefinition,
       });
@@ -469,6 +471,7 @@ export function modelRelationBuildRelationInformationCache(generateContext) {
         // Referenced key is already resolved here.
         keyNameOwn: relation.referencedKey,
         keyDefinitionOwn: modelOwn.keys[relation.referencedKey ?? ""],
+        virtualKeyNameInverse: relation.ownKey,
         primaryKeyNameInverse: primaryKeyName,
         primaryKeyDefinitionInverse: primaryKeyDefinition,
       });

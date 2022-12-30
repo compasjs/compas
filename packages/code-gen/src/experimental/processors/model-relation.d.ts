@@ -75,6 +75,7 @@ export type ModelRelationInformation = {
   relationInverse: import("../generated/common/types").ExperimentalRelationDefinition;
   keyNameOwn: string;
   keyDefinitionOwn: import("../generated/common/types").ExperimentalTypeSystemDefinition;
+  virtualKeyNameInverse: string;
   primaryKeyNameInverse: string;
   primaryKeyDefinitionInverse: import("../generated/common/types").ExperimentalTypeSystemDefinition;
 };

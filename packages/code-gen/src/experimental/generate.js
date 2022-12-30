@@ -17,6 +17,10 @@ import {
   modelPartialUpdateTypes,
 } from "./processors/model-partials.js";
 import {
+  modelQueryBuilderTypes,
+  modelQueryResultTypes,
+} from "./processors/model-query.js";
+import {
   modelRelationAddKeys,
   modelRelationBuildRelationInformationCache,
   modelRelationCheckAllRelations,
@@ -125,6 +129,9 @@ export function generateExecute(generator, options) {
   modelPartialInsertTypes(generateContext);
   modelPartialUpdateTypes(generateContext);
   modelPartialOrderByTypes(generateContext);
+
+  modelQueryBuilderTypes(generateContext);
+  modelQueryResultTypes(generateContext);
 
   docStringCleanup(generateContext);
 
