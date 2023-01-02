@@ -17,15 +17,4 @@ export function fileBlockStart(
  * @returns {void}
  */
 export function fileBlockEnd(file: import("./context").GenerateFile): void;
-/**
- * Check if we need to finish the line of block ends.
- *
- * @param {import("./context").GenerateFile} file
- * @param {string} contents
- * @returns {void}
- */
-export function fileBlockCheck(
-  file: import("./context").GenerateFile,
-  contents: string,
-): void;
 //# sourceMappingURL=block.d.ts.map

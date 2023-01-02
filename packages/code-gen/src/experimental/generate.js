@@ -1,5 +1,6 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
+import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
 import {
   validateExperimentalGenerateOptions,
@@ -139,6 +140,7 @@ export function generateExecute(generator, options) {
   validatorGeneratorGenerateBaseTypes(generateContext);
 
   // All other generator output logic should be between here (A)
+  databaseGenerator(generateContext);
 
   typesGeneratorFinalize(generateContext);
 
@@ -164,7 +166,9 @@ export function generateWriteOutputFiles(generateContext, outputFiles) {
     force: true,
   });
 
-  mkdirSync(generateContext.options.outputDirectory);
+  mkdirSync(generateContext.options.outputDirectory, {
+    recursive: true,
+  });
 
   for (const file of outputFiles) {
     if (file.relativePath.includes("/")) {

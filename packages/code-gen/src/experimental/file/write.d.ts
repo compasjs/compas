@@ -44,7 +44,6 @@ export function fileWrite(
 /**
  * Write contents inline. Does not have a special handling of newline characters.
  *
- *
  * @param {import("./context").GenerateFile} file
  * @param {string} contents
  */

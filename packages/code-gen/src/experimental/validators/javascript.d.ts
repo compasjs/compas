@@ -14,16 +14,21 @@ export function validatorJavascriptGetFile(
   >,
 ): import("../file/context").GenerateFile;
 /**
- * Check if the provided file already contains a generator for the provided output name.
  *
  * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<
+ *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ * >} type
  * @param {string} outputTypeName
- * @returns {boolean}
+ * @returns {string}
  */
-export function validatorJavascriptHasValidatorForOutputTypeName(
+export function validatorJavascriptGetNameAndImport(
   file: import("../file/context").GenerateFile,
+  type: import("../types").NamedType<
+    import("../generated/common/types").ExperimentalTypeSystemDefinition
+  >,
   outputTypeName: string,
-): boolean;
+): string;
 /**
  * Write docs and declare the validator function for the provided type.
  *

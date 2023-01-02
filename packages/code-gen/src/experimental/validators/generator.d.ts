@@ -33,6 +33,26 @@ export function validatorGeneratorGenerateBaseTypes(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
+ * Provides the validator function name and adds the import to the provided file for the
+ * type.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<
+ *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ * >} type
+ * @param {string} outputTypeName
+ * @returns {string}
+ */
+export function validatorGetNameAndImport(
+  generateContext: import("../generate").GenerateContext,
+  file: import("../file/context").GenerateFile,
+  type: import("../types").NamedType<
+    import("../generated/common/types").ExperimentalTypeSystemDefinition
+  >,
+  outputTypeName: string,
+): string;
+/**
  * Generate a named type for the target language. Skips if the cache already has a name
  * registered for the provided type and options.
  *

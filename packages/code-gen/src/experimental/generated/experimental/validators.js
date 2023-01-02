@@ -9281,7 +9281,7 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["database"],
               };
             } else {
-              const knownKeys0 = new Set(["target", "skipValidatorGeneration"]);
+              const knownKeys0 = new Set(["target"]);
               for (const key of Object.keys(value["generators"]["database"])) {
                 if (!knownKeys0.has(key)) {
                   errorMap[`$.generators.database`] = {
@@ -9382,42 +9382,6 @@ export function validateExperimentalGenerateOptions(value) {
                     result["generators"]["database"]["target"] =
                       intermediateResult2;
                   }
-                }
-              }
-              if (
-                value["generators"]["database"]["skipValidatorGeneration"] ===
-                  null ||
-                value["generators"]["database"]["skipValidatorGeneration"] ===
-                  undefined
-              ) {
-                result["generators"]["database"]["skipValidatorGeneration"] =
-                  false;
-              } else {
-                if (
-                  value["generators"]["database"]["skipValidatorGeneration"] ===
-                    true ||
-                  value["generators"]["database"]["skipValidatorGeneration"] ===
-                    "true" ||
-                  value["generators"]["database"]["skipValidatorGeneration"] ===
-                    1
-                ) {
-                  result["generators"]["database"]["skipValidatorGeneration"] =
-                    true;
-                } else if (
-                  value["generators"]["database"]["skipValidatorGeneration"] ===
-                    false ||
-                  value["generators"]["database"]["skipValidatorGeneration"] ===
-                    "false" ||
-                  value["generators"]["database"]["skipValidatorGeneration"] ===
-                    0
-                ) {
-                  result["generators"]["database"]["skipValidatorGeneration"] =
-                    false;
-                } else {
-                  errorMap[`$.generators.database.skipValidatorGeneration`] = {
-                    key: "validator.type",
-                    expectedType: "boolean",
-                  };
                 }
               }
             }

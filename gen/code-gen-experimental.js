@@ -101,12 +101,6 @@ export function extendWithCodeGenExperimental(generator) {
                 .docs(
                   "Select one of the supported dialects to generate queries for.",
                 ),
-
-              skipValidatorGeneration: T.bool()
-                .default(false)
-                .docs(
-                  `Unsafe skip generating and using validators to automatically convert the database result of the query builders to Compas valid types.`,
-                ),
             })
             .optional()
             .docs("Generate one of the compatible database interfaces."),

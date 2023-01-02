@@ -2341,17 +2341,6 @@
                       "relations": []
                     }
                   ]
-                },
-                "skipValidatorGeneration": {
-                  "type": "boolean",
-                  "docString": "Unsafe skip generating and using validators to automatically convert the database result of the query builders to Compas valid types.",
-                  "isOptional": true,
-                  "defaultValue": "false",
-                  "validator": {
-                    "convert": false,
-                    "allowNull": false
-                  },
-                  "sql": {}
                 }
               },
               "relations": []

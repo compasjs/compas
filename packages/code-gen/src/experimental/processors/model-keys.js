@@ -77,12 +77,12 @@ export function modelKeyAddDateKeys(generateContext) {
     // Add date fields if necessary
     if (model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes) {
       model.keys["createdAt"] = new DateType()
-        .defaultToNow()
+        .sqlDefault()
         .searchable()
         .docs("Automatically generated 'createdAt' key.")
         .build();
       model.keys["updatedAt"] = new DateType()
-        .defaultToNow()
+        .sqlDefault()
         .searchable()
         .docs("Automatically generated 'updatedAt' key.")
         .build();

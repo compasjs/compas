@@ -819,9 +819,6 @@ export type ExperimentalGenerateOptions = {
           target: {
             dialect: "postgres";
           };
-
-          // Unsafe skip generating and using validators to automatically convert the database result of the query builders to Compas valid types.
-          skipValidatorGeneration: boolean;
         }
       | undefined;
 
@@ -904,9 +901,6 @@ export type ExperimentalGenerateOptionsInput = {
           target: {
             dialect: "postgres";
           };
-
-          // Unsafe skip generating and using validators to automatically convert the database result of the query builders to Compas valid types.
-          skipValidatorGeneration?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 

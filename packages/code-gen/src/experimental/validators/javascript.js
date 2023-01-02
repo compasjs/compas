@@ -25,12 +25,16 @@ function formatValuePath(validatorState) {
   let result = "";
 
   for (const path of validatorState.validatedValuePath) {
-    if (path.type === "root") {
-      result += validatorState.inputVariableName;
-    } else if (path.type === "stringKey") {
-      result += `["${path.key}"]`;
-    } else if (path.type === "dynamicKey") {
-      result += `[${path.key}]`;
+    switch (path.type) {
+      case "root":
+        result += validatorState.inputVariableName;
+        break;
+      case "stringKey":
+        result += `["${path.key}"]`;
+        break;
+      case "dynamicKey":
+        result += `[${path.key}]`;
+        break;
     }
   }
 
@@ -111,17 +115,27 @@ export function validatorJavascriptGetFile(generateContext, type) {
 }
 
 /**
- * Check if the provided file already contains a generator for the provided output name.
  *
  * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<
+ *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ * >} type
  * @param {string} outputTypeName
- * @returns {boolean}
+ * @returns {string}
  */
-export function validatorJavascriptHasValidatorForOutputTypeName(
+export function validatorJavascriptGetNameAndImport(
   file,
+  type,
   outputTypeName,
 ) {
-  return file.contents.includes(` function validate${outputTypeName}`);
+  const importCollector = JavascriptImportCollector.getImportCollector(file);
+
+  importCollector.destructure(
+    `../${type.group}/validators.js`,
+    `validate${outputTypeName}`,
+  );
+
+  return `validate${outputTypeName}`;
 }
 
 /**

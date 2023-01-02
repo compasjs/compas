@@ -58,9 +58,9 @@ export function modelPartialInsertTypes(generateContext) {
 
     const type = new ObjectType(model.group, `${model.name}Insert`)
       .keys({
-        insert: new ArrayType().values(
-          new ReferenceType(model.group, `${model.name}InsertPartial`),
-        ),
+        insert: new ArrayType()
+          .values(new ReferenceType(model.group, `${model.name}InsertPartial`))
+          .max(50000),
         returning: new ReferenceType(model.group, `${model.name}Returning`),
       })
       .build();

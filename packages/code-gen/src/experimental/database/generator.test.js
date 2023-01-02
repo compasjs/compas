@@ -3,15 +3,17 @@ import { testExperimentalGenerateFiles } from "../testing.js";
 
 mainTestFn(import.meta);
 
-test("code-gen/experimental/validators/generator", (t) => {
-  t.test("validatorGenerator", (t) => {
+test("code-gen/experimental/database/generator", (t) => {
+  t.test("databaseGenerator", (t) => {
     t.test("test", (t) => {
       testExperimentalGenerateFiles(t, {
-        outputDirectory: "./.cache/experimental/validators",
+        outputDirectory: "./.cache/experimental/database",
         generators: {
           structure: {},
-          validators: {
-            includeBaseTypes: true,
+          database: {
+            target: {
+              dialect: "postgres",
+            },
           },
         },
         targetLanguage: "js",

@@ -1,4 +1,3 @@
-import { isNil } from "@compas/stdlib";
 import { structureResolveReference } from "./structure.js";
 
 /**
@@ -18,6 +17,8 @@ export function referenceUtilsGetProperty(
   accessPath,
   defaultValue,
 ) {
+  // TODO(perf): a quick optimization may be to create specialized functions for specific
+  //   'accessPaths'. This way we skip this dynamic function + loop.
   const resolvePath = (type, path) => {
     for (const p of path) {
       type = type?.[p];
@@ -26,17 +27,15 @@ export function referenceUtilsGetProperty(
     return type;
   };
 
-  const result = [resolvePath(type, accessPath)];
+  const valueA = resolvePath(type, accessPath);
+  let valueB;
+  const valueC = defaultValue;
 
   if (type.type === "reference") {
     const ref = structureResolveReference(generateContext.structure, type);
 
-    result.push(resolvePath(ref, accessPath));
+    valueB = resolvePath(ref, accessPath);
   }
 
-  if (!isNil(defaultValue)) {
-    result.push(defaultValue);
-  }
-
-  return result[0] || result[1] || result[2];
+  return valueA || valueB || valueC;
 }

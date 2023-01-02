@@ -21,7 +21,7 @@ import {
   validatorJavascriptFinishElseBlock,
   validatorJavascriptGeneric,
   validatorJavascriptGetFile,
-  validatorJavascriptHasValidatorForOutputTypeName,
+  validatorJavascriptGetNameAndImport,
   validatorJavascriptNilCheck,
   validatorJavascriptNumber,
   validatorJavascriptObject,
@@ -31,6 +31,15 @@ import {
   validatorJavascriptString,
   validatorJavascriptUuid,
 } from "./javascript.js";
+
+/**
+ * Cache for which type names we have written a validator in a file.
+ *
+ * File references are unique per generate context, so we use that as the cache key.
+ *
+ * @type {WeakMap<object, Set<string>>}
+ */
+const validatorCache = new WeakMap();
 
 /**
  * @typedef {{ type: "root"}
@@ -81,6 +90,35 @@ export function validatorGeneratorGenerateBaseTypes(generateContext) {
       nameSuffix: "",
     });
   }
+}
+
+/**
+ * Provides the validator function name and adds the import to the provided file for the
+ * type.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<
+ *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ * >} type
+ * @param {string} outputTypeName
+ * @returns {string}
+ */
+export function validatorGetNameAndImport(
+  generateContext,
+  file,
+  type,
+  outputTypeName,
+) {
+  // @ts-expect-error
+  return targetLanguageSwitch(
+    generateContext,
+    {
+      js: validatorJavascriptGetNameAndImport,
+      ts: noop,
+    },
+    [file, type, outputTypeName],
+  );
 }
 
 /**
@@ -142,17 +180,14 @@ export function validatorGeneratorGenerateValidator(
     });
   }
 
-  if (
-    targetLanguageSwitch(
-      generateContext,
-      {
-        js: validatorJavascriptHasValidatorForOutputTypeName,
-        ts: noop,
-      },
-      [file, outputTypeName],
-    ) === true
-  ) {
+  if (validatorCache.get(file)?.has(outputTypeName)) {
     return;
+  }
+
+  if (!validatorCache.has(file)) {
+    validatorCache.set(file, new Set([outputTypeName]));
+  } else {
+    validatorCache.get(file)?.add(outputTypeName);
   }
 
   /**

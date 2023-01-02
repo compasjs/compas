@@ -18,3 +18,25 @@ export function targetLanguageSwitch(generateContext, functions, args) {
 
   return fn(...args);
 }
+
+/**
+ * Execute a function based on the provided target.
+ *
+ * @template {(...args: any) => any} F
+ * @template {string} Targets
+ *
+ * @param {Record<Targets, F|(() =>
+ *   void)>} functions
+ * @param {Targets} target
+ * @param {[...Parameters<F>]} args
+ * @returns {ReturnType<F>|undefined}
+ */
+export function targetCustomSwitch(functions, target, args) {
+  const fn = functions[target];
+
+  if (!fn) {
+    return;
+  }
+
+  return fn(...args);
+}
