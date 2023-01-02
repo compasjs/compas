@@ -43,9 +43,10 @@ export function jsPostgresGenerateUtils(generateContext) {
  *
  * @param {import("@compas/store").QueryPart<any>} queryPart
  * @param {T} validator
+ * @param {{ hasCustomReturning: boolean }} options
  * @returns {WrappedQueryPart<ReturnType<T>["value"]>}
  */
-export function wrapQueryPart(queryPart, validator) {
+export function wrapQueryPart(queryPart, validator, options) {
   return {
     queryPart,
     then: () => {
@@ -55,6 +56,12 @@ export function wrapQueryPart(queryPart, validator) {
       });
     },
     exec: async (sql) => {
+      if (options.hasCustomReturning) {
+        throw AppError.serverError({
+          message: "A custom value for the returned columns is used. This can't be used with '.exec', because it validates the full model. Please use '.execRaw' instead.",
+        });
+      }
+    
       const queryResult = await queryPart.exec(sql);
       const validatedResult = Array.from({ length: queryResult.length });
       
@@ -249,10 +256,29 @@ export function jsPostgresGenerateInsert(
 
   fileBlockEnd(file);
 
+  fileBlockStart(file, `if(validatedInput.returning === "*")`);
+  fileWrite(
+    file,
+    `str.push(\` RETURNING ${JSON.stringify(Object.keys(model.keys)).slice(
+      1,
+      -1,
+    )}\`);`,
+  );
+  fileWrite(file, `args.push(undefined);`);
+  fileBlockEnd(file);
+
+  fileBlockStart(file, `else if (Array.isArray(validatedInput.returning))`);
+  fileWrite(
+    file,
+    `str.push(\` RETURNING $\{JSON.stringify(validatedInput.returning).slice(1, -1)}\`);`,
+  );
+  fileWrite(file, `args.push(undefined);`);
+  fileBlockEnd(file);
+
   fileWrite(file, `qb.append(query(str, args));`);
   fileWrite(
     file,
-    `return wrapQueryPart(qb, ${contextNames.insertType.validatorFunction});`,
+    `return wrapQueryPart(qb, ${contextNames.insertType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
   );
 
   fileContextSetIndent(file, -1);
