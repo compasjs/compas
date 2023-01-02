@@ -1,4 +1,3 @@
-import { merge } from "@compas/stdlib";
 import { buildOrInfer } from "./utils.js";
 
 export class RelationType {
@@ -27,7 +26,7 @@ export class RelationType {
    * @returns {Record<string, any>}
    */
   build() {
-    const result = merge({}, this.data);
+    const result = { ...this.data };
     result.reference = buildOrInfer(this.reference);
 
     return result;

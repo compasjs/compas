@@ -1,4 +1,4 @@
-import { isNil, merge } from "@compas/stdlib";
+import { isNil } from "@compas/stdlib";
 import { RelationType } from "./RelationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
@@ -46,7 +46,10 @@ export class ObjectType extends TypeBuilder {
    * @returns {ObjectType}
    */
   keys(obj) {
-    this.internalKeys = merge(this.internalKeys, obj);
+    this.internalKeys = {
+      ...this.internalKeys,
+      ...obj,
+    };
 
     return this;
   }

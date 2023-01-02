@@ -1,4 +1,4 @@
-import { AppError, isNil, merge } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 
 export class RouteInvalidationType {
   constructor(group, name, properties) {
@@ -33,6 +33,6 @@ export class RouteInvalidationType {
    * @returns {Record<string, any>}
    */
   build() {
-    return merge({}, this.data);
+    return JSON.parse(JSON.stringify(this.data));
   }
 }

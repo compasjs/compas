@@ -1,4 +1,4 @@
-import { AppError, isNil, merge } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { lowerCaseFirst } from "../utils.js";
 
@@ -50,7 +50,7 @@ export class TypeBuilder {
   }
 
   static getBaseData() {
-    return merge({}, this.baseData);
+    return JSON.parse(JSON.stringify(this.baseData));
   }
 
   /**
@@ -146,6 +146,6 @@ export class TypeBuilder {
       this.data.group = lowerCaseFirst(this.data.group);
     }
 
-    return merge({}, this.data);
+    return JSON.parse(JSON.stringify(this.data));
   }
 }

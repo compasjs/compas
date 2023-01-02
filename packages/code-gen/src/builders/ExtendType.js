@@ -1,4 +1,4 @@
-import { AppError, merge, uuid } from "@compas/stdlib";
+import { AppError, uuid } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -43,7 +43,10 @@ export class ExtendType extends TypeBuilder {
    * @returns {ExtendType}
    */
   keys(obj) {
-    this.internalKeys = merge(this.internalKeys, obj);
+    this.internalKeys = {
+      ...this.internalKeys,
+      ...obj,
+    };
 
     return this;
   }

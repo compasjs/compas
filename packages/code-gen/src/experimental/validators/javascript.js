@@ -285,6 +285,9 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
+  // TODO(perf): a way to generate a quicker validator here, would be by searching for a
+  //   quick denominator. Ie a `type` key that is always a a oneOf string.
+
   const anyOfMatchVariable = `hasAnyOfMatch${validatorState.reusedVariableIndex++}`;
 
   fileWrite(file, `let ${anyOfMatchVariable} = false;`);
