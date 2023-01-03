@@ -52,6 +52,19 @@ export function modelNameValidation(generateContext) {
     }
 
     shortNames[model.shortName] = model;
+
+    // @ts-expect-error
+    model.queryOptions.schema ??= "";
+
+    if (model.queryOptions?.schema.length) {
+      if (!model.queryOptions?.schema.startsWith(`"`)) {
+        model.queryOptions.schema = `"${model.queryOptions.schema}"`;
+      }
+
+      if (!model.queryOptions?.schema.endsWith(".")) {
+        model.queryOptions.schema += ".";
+      }
+    }
   }
 
   errorsThrowCombinedError(errors);

@@ -12,6 +12,7 @@ import {
 import {
   jsPostgresCreateFile,
   jsPostgresGenerateInsert,
+  jsPostgresGenerateUpdate,
   jsPostgresGenerateUtils,
   jsPostgresGenerateWhere,
 } from "./js-postgres.js";
@@ -193,6 +194,15 @@ export function databaseGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsPostgres: jsPostgresGenerateInsert,
+          tsPostgres: noop,
+        },
+        target,
+        [generateContext, file, model, contextNames],
+      );
+
+      targetCustomSwitch(
+        {
+          jsPostgres: jsPostgresGenerateUpdate,
           tsPostgres: noop,
         },
         target,

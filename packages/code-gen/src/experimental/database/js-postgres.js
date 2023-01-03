@@ -117,7 +117,9 @@ export function jsPostgresCreateFile(generateContext, model) {
   importCollector.destructure("../common/database.js", "wrapQueryPart");
   importCollector.destructure("@compas/store", "query");
   importCollector.destructure("@compas/store", "generatedWhereBuilderHelper");
+  importCollector.destructure("@compas/store", "generatedUpdateHelper");
   importCollector.destructure("@compas/stdlib", "isNil");
+  importCollector.destructure("@compas/stdlib", "AppError");
 
   return file;
 }
@@ -306,10 +308,7 @@ export function jsPostgresGenerateWhere(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(
-    file,
-    `export function ${model.name}Where(where, options = {})`,
-  );
+  fileBlockStart(file, `function ${model.name}Where(where, options = {})`);
 
   fileWrite(file, `options.shortName ??= "${model.shortName}."`);
   fileWrite(
@@ -357,10 +356,6 @@ export function jsPostgresGenerateInsert(
   model,
   contextNames,
 ) {
-  // Dependencies
-  const importCollector = JavascriptImportCollector.getImportCollector(file);
-  importCollector.destructure("@compas/stdlib", "AppError");
-
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
@@ -395,7 +390,7 @@ export function jsPostgresGenerateInsert(
   fileBlockEnd(file);
 
   fileWrite(file, `const qb = query\``);
-  fileWrite(file, `INSERT INTO "${model.name}"`);
+  fileWrite(file, `INSERT INTO ${model.queryOptions?.schema}"${model.name}"`);
   fileContextSetIndent(file, 1);
   fileWrite(file, `(${JSON.stringify(Object.keys(model.keys)).slice(1, -1)})`);
   fileContextSetIndent(file, -1);
@@ -508,6 +503,118 @@ export function jsPostgresGenerateInsert(
   fileWrite(
     file,
     `return wrapQueryPart(qb, ${contextNames.insertType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
+  );
+
+  fileBlockEnd(file);
+}
+
+/**
+ * Generate the update query function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateUpdate(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  // Generate the spec
+  const entityUpdateSpec = {
+    schemaName: model.queryOptions?.schema,
+    name: model.name,
+    shortName: model.shortName,
+    columns: Object.keys(model.keys),
+    where: `$$${model.name}WhereSpec$$`,
+    injectUpdatedAt:
+      model.queryOptions?.withDates ??
+      model.queryOptions?.withSoftDeletes ??
+      false,
+    fields: {},
+  };
+
+  for (const key of Object.keys(model.keys)) {
+    const type =
+      model.keys[key].type === "reference"
+        ? structureResolveReference(generateContext.structure, model.keys[key])
+            .type
+        : model.keys[key].type;
+
+    const subType = ["number", "boolean", "string", "date", "uuid"].includes(
+      type,
+    )
+      ? type
+      : "jsonb";
+
+    entityUpdateSpec.fields[key] = {
+      type: subType,
+      atomicUpdates: [],
+    };
+
+    if (type === "number") {
+      entityUpdateSpec.fields[key].atomicUpdates = [
+        "$add",
+        "$subtract",
+        "$multiply",
+        "$divide",
+      ];
+    } else if (type === "date") {
+      entityUpdateSpec.fields[key].atomicUpdates = ["$add", "$subtract"];
+    } else if (type === "string") {
+      entityUpdateSpec.fields[key].atomicUpdates = ["$append"];
+    } else if (type === "boolean") {
+      entityUpdateSpec.fields[key].atomicUpdates = ["$negate"];
+    } else if (subType === "jsonb") {
+      entityUpdateSpec.fields[key].atomicUpdates = ["$set", "$remove"];
+    }
+  }
+
+  fileWrite(
+    file,
+    `const ${model.name}UpdateSpec = ${JSON.stringify(entityUpdateSpec, null, 2)
+      .replaceAll(`"$$`, "")
+      .replaceAll(`$$"`, "")};\n`,
+  );
+
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Update records in the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {${contextNames.updateType.inputType}} input`);
+  fileWrite(
+    file,
+    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.model.outputType}>}`,
+  );
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(file, `function ${model.name}Update(input)`);
+
+  // Input validation
+  fileWrite(
+    file,
+    `const { error, value: validatedInput } = ${contextNames.updateType.validatorFunction}(input);`,
+  );
+  fileBlockStart(file, `if (error)`);
+  fileWrite(
+    file,
+    `throw AppError.serverError({
+  message: "Update input validation failed",
+  error,
+});`,
+  );
+  fileBlockEnd(file);
+
+  fileWrite(
+    file,
+    `return wrapQueryPart(generatedUpdateHelper(${model.name}UpdateSpec, validatedInput), ${contextNames.updateType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
   );
 
   fileBlockEnd(file);

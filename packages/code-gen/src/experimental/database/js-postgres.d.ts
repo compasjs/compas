@@ -51,4 +51,20 @@ export function jsPostgresGenerateInsert(
   >,
   contextNames: import("./generator").DatabaseContextNames,
 ): void;
+/**
+ * Generate the update query function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateUpdate(
+  generateContext: import("../generate").GenerateContext,
+  file: import("../file/context").GenerateFile,
+  model: import("../types").NamedType<
+    import("../generated/common/types").ExperimentalObjectDefinition
+  >,
+  contextNames: import("./generator").DatabaseContextNames,
+): void;
 //# sourceMappingURL=js-postgres.d.ts.map

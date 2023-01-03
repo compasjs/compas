@@ -73,10 +73,11 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - [x] `xxxInsert`
     - [x] `QueryBuilder`
   - [ ] Base queries
-    - `update`
-    - `insert`
-    - `delete`
-    - `upsertOnId`
+    - [ ] `count`
+    - [x] `update`
+    - [x] `insert`
+    - [ ] `delete`
+    - [ ] `upsertOnId`
   - [ ] Query builder
     - [ ] Run all query results through validators
 - [ ] Router generator
