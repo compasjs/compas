@@ -11,6 +11,7 @@ import {
   modelKeyAddDateKeys,
   modelKeyAddPrimary,
 } from "./processors/model-keys.js";
+import { modelNameValidation } from "./processors/model-name.js";
 import {
   modelPartialInsertTypes,
   modelPartialOrderByTypes,
@@ -112,6 +113,8 @@ export function generateExecute(generator, options) {
 
   structureNameChecks(generateContext);
   objectExpansionExecute(generateContext);
+
+  modelNameValidation(generateContext);
 
   modelKeyAddPrimary(generateContext);
   modelKeyAddDateKeys(generateContext);
