@@ -1,3 +1,5 @@
+import { isNil } from "@compas/stdlib";
+import { upperCaseFirst } from "../../utils.js";
 import { fileBlockEnd, fileBlockStart } from "../file/block.js";
 import {
   fileContextAddLinePrefix,
@@ -7,6 +9,12 @@ import {
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite } from "../file/write.js";
+import {
+  modelRelationGetInformation,
+  modelRelationGetInverse,
+  modelRelationGetOwn,
+} from "../processors/model-relation.js";
+import { modelWhereGetInformation } from "../processors/model-where.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
@@ -108,9 +116,231 @@ export function jsPostgresCreateFile(generateContext, model) {
 
   importCollector.destructure("../common/database.js", "wrapQueryPart");
   importCollector.destructure("@compas/store", "query");
+  importCollector.destructure("@compas/store", "generatedWhereBuilderHelper");
   importCollector.destructure("@compas/stdlib", "isNil");
 
   return file;
+}
+
+/**
+ * Generate the where query function and specification
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateWhere(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  const whereInformation = modelWhereGetInformation(model);
+  const ownRelations = modelRelationGetOwn(model);
+  const inverseRelations = modelRelationGetInverse(model);
+
+  const importCollector = JavascriptImportCollector.getImportCollector(file);
+
+  const fieldSpecs = {};
+
+  // TODO: abstract this logic in the generator, instead of here.
+  for (const info of whereInformation.fields) {
+    const fieldType =
+      model.keys[info.modelKey].type === "reference"
+        ? structureResolveReference(
+            generateContext.structure,
+            model.keys[info.modelKey],
+          )?.type
+        : model.keys[info.modelKey].type;
+    const isFloat =
+      fieldType === "number" &&
+      referenceUtilsGetProperty(
+        generateContext,
+        model.keys[info.modelKey],
+        ["validator", "floatingPoint"],
+        false,
+      );
+
+    const dateOnly =
+      fieldType === "date" && // @ts-expect-error
+      model.keys[info.modelKey].specifier === "date";
+    const timeOnly =
+      fieldType === "date" && // @ts-expect-error
+      model.keys[info.modelKey].specifier === "time";
+
+    if (isNil(fieldSpecs[info.modelKey])) {
+      fieldSpecs[info.modelKey] = {
+        tableKey: info.modelKey,
+        keyType:
+          fieldType === "number" && !isFloat
+            ? "int"
+            : fieldType === "number" && isFloat
+            ? "float"
+            : fieldType === "string"
+            ? "varchar"
+            : fieldType === "date" && dateOnly
+            ? "date"
+            : fieldType === "date" && timeOnly
+            ? "time"
+            : fieldType === "date"
+            ? "timestamptz"
+            : "uuid",
+        matchers: [],
+      };
+    }
+
+    fieldSpecs[info.modelKey].matchers.push({
+      matcherKey: info.whereKey,
+      matcherType: info.variant,
+    });
+  }
+
+  for (const relation of ownRelations) {
+    const relationInfo = modelRelationGetInformation(relation);
+
+    const isSelfReferencing =
+      relationInfo.modelOwn === relationInfo.modelInverse;
+
+    if (!isSelfReferencing) {
+      importCollector.destructure(
+        `./${relationInfo.modelInverse.name}.js`,
+        `${relationInfo.modelInverse.name}WhereSpec`,
+      );
+    }
+
+    // The own key already exists on the spec since it is a real field.
+    fieldSpecs[relationInfo.keyNameOwn].matchers.push({
+      matcherKey: `via${upperCaseFirst(relationInfo.keyNameOwn)}`,
+      matcherType: "via",
+      relation: {
+        entityName: relationInfo.modelInverse.name,
+        shortName: `${relationInfo.modelInverse.shortName}${
+          isSelfReferencing ? "2" : ""
+        }`,
+        entityKey: relationInfo.primaryKeyNameInverse,
+        referencedKey: relationInfo.keyNameOwn,
+        where: `$$()=> ${relationInfo.modelInverse.name}WhereSpec$$`,
+      },
+    });
+  }
+
+  for (const relation of inverseRelations) {
+    const relationInfo = modelRelationGetInformation(relation);
+
+    const isSelfReferencing =
+      relationInfo.modelOwn === relationInfo.modelInverse;
+
+    if (!isSelfReferencing) {
+      importCollector.destructure(
+        `./${relationInfo.modelOwn.name}.js`,
+        `${relationInfo.modelOwn.name}WhereSpec`,
+      );
+    }
+
+    fieldSpecs[relationInfo.virtualKeyNameInverse] = {
+      tableKey: relationInfo.virtualKeyNameInverse,
+      matchers: [
+        {
+          matcherKey: `via${upperCaseFirst(
+            relationInfo.virtualKeyNameInverse,
+          )}`,
+          matcherType: "via",
+          relation: {
+            entityName: relationInfo.modelOwn.name,
+            shortName: `${relationInfo.modelOwn.shortName}${
+              isSelfReferencing ? "2" : ""
+            }`,
+            entityKey: relationInfo.keyNameOwn,
+            referencedKey: relationInfo.primaryKeyNameInverse,
+            where: `$$()=> ${relationInfo.modelOwn.name}WhereSpec$$`,
+          },
+        },
+        {
+          matcherKey: `${relationInfo.virtualKeyNameInverse}NotExists`,
+          matcherType: "notExists",
+          relation: {
+            entityName: relationInfo.modelOwn.name,
+            shortName: `${relationInfo.modelOwn.shortName}${
+              isSelfReferencing ? "2" : ""
+            }`,
+            entityKey: relationInfo.keyNameOwn,
+            referencedKey: relationInfo.primaryKeyNameInverse,
+            where: `$$()=> ${relationInfo.modelOwn.name}WhereSpec$$`,
+          },
+        },
+      ],
+    };
+  }
+
+  fileWrite(
+    file,
+    `export const ${model.name}WhereSpec = ${JSON.stringify(
+      {
+        fieldSpecification: Object.values(fieldSpecs),
+      },
+      null,
+      2,
+    )
+      .replaceAll(`"$$`, "")
+      .replaceAll(`$$"`, "")};`,
+  );
+
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, " *");
+
+  fileWrite(
+    file,
+    " Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.",
+  );
+  fileWrite(file, "");
+  fileWrite(file, ` @param {${contextNames.whereType.inputType}} [where]`);
+  fileWrite(
+    file,
+    ` @param {{ skipValidator?: boolean, shortName?: string }} [options]`,
+  );
+  fileWrite(file, ` @returns {QueryPart<any>}`);
+  fileWrite(file, `/`);
+
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(
+    file,
+    `export function ${model.name}Where(where, options = {})`,
+  );
+
+  fileWrite(file, `options.shortName ??= "${model.shortName}."`);
+  fileWrite(
+    file,
+    `if (!options.shortName.endsWith(".")) { options.shortName += "."; }`,
+  );
+
+  fileBlockStart(file, `if (!options.skipValidator)`);
+
+  fileWrite(
+    file,
+    `const { error, value } = ${contextNames.whereType.validatorFunction}(where ?? {});`,
+  );
+
+  fileBlockStart(file, `if (error)`);
+  fileWrite(
+    file,
+    `throw AppError.serverError({ message: "Invalid where object", error, });`,
+  );
+  fileBlockEnd(file);
+
+  fileWrite(file, `where = value`);
+
+  fileBlockEnd(file);
+
+  fileWrite(
+    file,
+    `return generatedWhereBuilderHelper(${model.name}WhereSpec, where ?? {}, options.shortName);`,
+  );
+
+  fileBlockEnd(file);
 }
 
 /**
@@ -171,7 +401,6 @@ export function jsPostgresGenerateInsert(
   fileContextSetIndent(file, -1);
   fileWrite(file, `VALUES`);
   fileWrite(file, `\`;`);
-  fileContextSetIndent(file, 1);
 
   fileWrite(file, `const str = [];`);
   fileWrite(file, `const args = [];`);
@@ -281,6 +510,5 @@ export function jsPostgresGenerateInsert(
     `return wrapQueryPart(qb, ${contextNames.insertType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
   );
 
-  fileContextSetIndent(file, -1);
   fileBlockEnd(file);
 }

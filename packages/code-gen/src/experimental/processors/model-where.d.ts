@@ -35,7 +35,6 @@ export type ModelWhereVariant =
   | "like"
   | "iLike"
   | "notLike"
-  | "notILike"
   | "isNull"
   | "isNotNull"
   | "includeNotNull";

@@ -13,6 +13,7 @@ import {
   jsPostgresCreateFile,
   jsPostgresGenerateInsert,
   jsPostgresGenerateUtils,
+  jsPostgresGenerateWhere,
 } from "./js-postgres.js";
 
 /**
@@ -178,6 +179,15 @@ export function databaseGenerator(generateContext) {
         ),
       };
     }
+
+    targetCustomSwitch(
+      {
+        jsPostgres: jsPostgresGenerateWhere,
+        tsPostgres: noop,
+      },
+      target,
+      [generateContext, file, model, contextNames],
+    );
 
     if (!model.queryOptions?.isView) {
       targetCustomSwitch(

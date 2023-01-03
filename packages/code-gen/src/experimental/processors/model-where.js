@@ -22,7 +22,7 @@ import { structureAddType, structureResolveReference } from "./structure.js";
 
 /**
  * @typedef {"equal"|"notEqual"|"in"|"notIn"|"greaterThan"
- * |"lowerThan"|"like"|"iLike"|"notLike"|"notILike"
+ * |"lowerThan"|"like"|"iLike"|"notLike"
  * |"isNull"|"isNotNull"|"includeNotNull"
  * } ModelWhereVariant
  */
@@ -40,16 +40,7 @@ const modelWhereTypeTable = {
   number: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   date: ["equal", "notEqual", "in", "notIn", "greaterThan", "lowerThan"],
   uuid: ["equal", "notEqual", "in", "notIn"],
-  string: [
-    "equal",
-    "notEqual",
-    "in",
-    "notIn",
-    "like",
-    "iLike",
-    "notLike",
-    "notILike",
-  ],
+  string: ["equal", "notEqual", "in", "notIn", "like", "iLike", "notLike"],
   boolean: ["equal"],
 };
 

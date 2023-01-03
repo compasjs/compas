@@ -20,14 +20,31 @@ export function jsPostgresCreateFile(
   >,
 ): import("../file/context").GenerateFile;
 /**
+ * Generate the where query function and specification
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateWhere(
+  generateContext: import("../generate").GenerateContext,
+  file: import("../file/context").GenerateFile,
+  model: import("../types").NamedType<
+    import("../generated/common/types").ExperimentalObjectDefinition
+  >,
+  contextNames: import("./generator").DatabaseContextNames,
+): void;
+/**
  * Generate the insert query function
  *
+ * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
  * @param {import("./generator").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateInsert(
-  generateContext: any,
+  generateContext: import("../generate").GenerateContext,
   file: import("../file/context").GenerateFile,
   model: import("../types").NamedType<
     import("../generated/common/types").ExperimentalObjectDefinition
