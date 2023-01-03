@@ -27,6 +27,8 @@ export class RelationType {
    */
   build() {
     const result = { ...this.data };
+
+    // @ts-expect-error
     result.reference = buildOrInfer(this.reference);
 
     return result;

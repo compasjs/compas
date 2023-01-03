@@ -11,7 +11,7 @@ export namespace typeTable {
   const anyOf: string;
   const array: string;
   const boolean: string;
-  function date(type: any): "date" | "timestamptz" | "time";
+  function date(type: any): "date" | "time" | "timestamptz";
   const generic: string;
   function number(type: CodeGenNumberType, skipPrimary: boolean): string;
   const object: string;
