@@ -377,18 +377,41 @@ export function validatorJavascriptArray(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  const intermediateVariable = `convertedArray${validatorState.reusedVariableIndex++}`;
+  validatorState.reusedVariableIndex++;
+  fileWrite(
+    file,
+    `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
+  );
+  fileWrite(
+    file,
+    `let intermediateResult${validatorState.reusedVariableIndex} = [];`,
+  );
+  fileWrite(
+    file,
+    `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
+  );
 
-  fileWrite(file, `let ${intermediateVariable} = ${valuePath};`);
+  /** @type {import("./generator").ValidatorState} */
+  const validatorStateCopy = {
+    ...validatorState,
 
-  fileBlockStart(file, `if (!Array.isArray(${intermediateVariable}))`);
-  fileWrite(file, `${intermediateVariable} = [${intermediateVariable}];`);
+    validatedValuePath: [{ type: "root" }],
+    inputVariableName: `intermediateValue${validatorState.reusedVariableIndex}`,
+    outputVariableName: `intermediateResult${validatorState.reusedVariableIndex}`,
+    errorMapVariableName: `intermediateErrorMap${validatorState.reusedVariableIndex}`,
+  };
+
+  const currentValuePath = formatValuePath(validatorStateCopy);
+  const currentResultPath = formatResultPath(validatorStateCopy);
+
+  fileBlockStart(file, `if (!Array.isArray(${currentValuePath}))`);
+  fileWrite(file, `${currentValuePath} = [${currentValuePath}];`);
   fileBlockEnd(file);
 
   if (!isNil(type.validator.min)) {
     fileBlockStart(
       file,
-      `if (${intermediateVariable}.length < ${type.validator.min})`,
+      `if (${currentValuePath}.length < ${type.validator.min})`,
     );
 
     fileWrite(
@@ -405,7 +428,7 @@ export function validatorJavascriptArray(file, type, validatorState) {
   if (!isNil(type.validator.max)) {
     fileBlockStart(
       file,
-      `if (${intermediateVariable}.length > ${type.validator.max})`,
+      `if (${currentValuePath}.length > ${type.validator.max})`,
     );
 
     fileWrite(
@@ -422,19 +445,19 @@ export function validatorJavascriptArray(file, type, validatorState) {
   // Initialize result array
   fileWrite(
     file,
-    `${resultPath} = Array.from({ length: ${intermediateVariable}.length });`,
+    `${resultPath} = Array.from({ length: ${currentValuePath}.length });`,
   );
 
   // Loop through array
   const idxVariable = `i${validatorState.reusedVariableIndex++}`;
-  validatorState.validatedValuePath.push({
+  validatorStateCopy.validatedValuePath.push({
     type: "dynamicKey",
     key: idxVariable,
   });
 
   fileBlockStart(
     file,
-    `for (let ${idxVariable} = 0; ${idxVariable} < ${intermediateVariable}.length; ++${idxVariable})`,
+    `for (let ${idxVariable} = 0; ${idxVariable} < ${currentValuePath}.length; ++${idxVariable})`,
   );
 
   validatorGeneratorGenerateBody(
@@ -445,13 +468,39 @@ export function validatorJavascriptArray(file, type, validatorState) {
     //
     // Ref is always a system type here
     type.values,
-    validatorState,
+    validatorStateCopy,
   );
 
   fileBlockEnd(file);
 
+  fileBlockStart(
+    file,
+    `if (Object.keys(${validatorStateCopy.errorMapVariableName}).length)`,
+  );
+
+  fileBlockStart(
+    file,
+    `for (const errorKey of Object.keys(${validatorStateCopy.errorMapVariableName}))`,
+  );
+
+  fileWrite(
+    file,
+    `${errorKey.substring(
+      0,
+      errorKey.length - 2,
+    )}$\{errorKey.substring(1)}\`] = ${
+      validatorStateCopy.errorMapVariableName
+    }[errorKey];`,
+  );
+
+  fileBlockEnd(file);
+  fileBlockEnd(file);
+
+  fileBlockStart(file, "else");
+  fileWrite(file, `${resultPath} = ${currentResultPath};`);
+  fileBlockEnd(file);
+
   // Reset state;
-  validatorState.validatedValuePath.pop();
   validatorState.reusedVariableIndex--;
   validatorState.reusedVariableIndex--;
 }
@@ -800,7 +849,10 @@ export function validatorJavascriptNumber(file, type, validatorState) {
 
   fileWrite(file, `let ${intermediateVariable} = ${valuePath};`);
 
-  fileBlockStart(file, `if (typeof ${intermediateVariable} !== "number")`);
+  fileBlockStart(
+    file,
+    `if (typeof ${intermediateVariable} !== "number" && typeof ${intermediateVariable} === "string")`,
+  );
 
   fileWrite(file, `${intermediateVariable} = Number(${intermediateVariable});`);
 
@@ -813,7 +865,7 @@ export function validatorJavascriptNumber(file, type, validatorState) {
 
   fileBlockStart(
     file,
-    `if ( isNaN(${intermediateVariable}) || !isFinite(${intermediateVariable}) ${conditionPartial})`,
+    `if (typeof ${intermediateVariable} !== "number" || isNaN(${intermediateVariable}) || !isFinite(${intermediateVariable}) ${conditionPartial})`,
   );
 
   fileWrite(
@@ -1010,7 +1062,6 @@ export function validatorJavascriptReference(file, type, validatorState) {
     file,
     `for (const errorKey of Object.keys(${intermediateVariable}.error))`,
   );
-  fileContextSetIndent(file, 1);
 
   fileWrite(
     file,
@@ -1045,9 +1096,15 @@ export function validatorJavascriptString(file, type, validatorState) {
 
   fileBlockStart(file, `if (typeof ${intermediateVariable} !== "string")`);
 
-  fileWrite(file, `${intermediateVariable} = String(${intermediateVariable});`);
+  fileWrite(
+    file,
+    `${errorKey} = {
+  key: "validator.string",
+};`,
+  );
 
   fileBlockEnd(file);
+  fileBlockStart(file, `else`);
 
   if (type.validator.trim) {
     fileWrite(
@@ -1188,6 +1245,8 @@ export function validatorJavascriptString(file, type, validatorState) {
   if (type.isOptional) {
     fileBlockEnd(file);
   }
+
+  fileBlockEnd(file);
 
   validatorState.reusedVariableIndex--;
 }

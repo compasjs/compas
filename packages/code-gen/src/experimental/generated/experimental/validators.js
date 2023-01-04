@@ -30,20 +30,23 @@ export function validateExperimentalAnyDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "any") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["any"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "any") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["any"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -51,18 +54,21 @@ export function validateExperimentalAnyDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -71,18 +77,21 @@ export function validateExperimentalAnyDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -93,10 +102,13 @@ export function validateExperimentalAnyDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -146,15 +158,18 @@ export function validateExperimentalAnyDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -213,10 +228,14 @@ export function validateExperimentalAnyDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -390,18 +409,21 @@ export function validateExperimentalAnyDefinition(value) {
       } else {
         let convertedString0 = value["rawValue"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["rawValue"] = undefined;
+          errorMap[`$.rawValue`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.rawValue`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["rawValue"] = undefined;
           } else {
-            result["rawValue"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.rawValue`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["rawValue"] = convertedString0;
+            }
           }
         }
       }
@@ -433,18 +455,21 @@ export function validateExperimentalAnyDefinition(value) {
           } else {
             let convertedString0 = value["rawValueImport"]["javaScript"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["rawValueImport"]["javaScript"] = undefined;
+              errorMap[`$.rawValueImport.javaScript`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.rawValueImport.javaScript`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
+              if (convertedString0.length === 0) {
+                result["rawValueImport"]["javaScript"] = undefined;
               } else {
-                result["rawValueImport"]["javaScript"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.rawValueImport.javaScript`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  result["rawValueImport"]["javaScript"] = convertedString0;
+                }
               }
             }
           }
@@ -456,18 +481,21 @@ export function validateExperimentalAnyDefinition(value) {
           } else {
             let convertedString0 = value["rawValueImport"]["typeScript"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["rawValueImport"]["typeScript"] = undefined;
+              errorMap[`$.rawValueImport.typeScript`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.rawValueImport.typeScript`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
+              if (convertedString0.length === 0) {
+                result["rawValueImport"]["typeScript"] = undefined;
               } else {
-                result["rawValueImport"]["typeScript"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.rawValueImport.typeScript`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  result["rawValueImport"]["typeScript"] = convertedString0;
+                }
               }
             }
           }
@@ -481,18 +509,21 @@ export function validateExperimentalAnyDefinition(value) {
       } else {
         let convertedString0 = value["rawValidator"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["rawValidator"] = undefined;
+          errorMap[`$.rawValidator`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.rawValidator`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["rawValidator"] = undefined;
           } else {
-            result["rawValidator"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.rawValidator`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["rawValidator"] = convertedString0;
+            }
           }
         }
       }
@@ -524,18 +555,21 @@ export function validateExperimentalAnyDefinition(value) {
           } else {
             let convertedString0 = value["rawValidatorImport"]["javaScript"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["rawValidatorImport"]["javaScript"] = undefined;
+              errorMap[`$.rawValidatorImport.javaScript`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.rawValidatorImport.javaScript`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
+              if (convertedString0.length === 0) {
+                result["rawValidatorImport"]["javaScript"] = undefined;
               } else {
-                result["rawValidatorImport"]["javaScript"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.rawValidatorImport.javaScript`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  result["rawValidatorImport"]["javaScript"] = convertedString0;
+                }
               }
             }
           }
@@ -547,18 +581,21 @@ export function validateExperimentalAnyDefinition(value) {
           } else {
             let convertedString0 = value["rawValidatorImport"]["typeScript"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["rawValidatorImport"]["typeScript"] = undefined;
+              errorMap[`$.rawValidatorImport.typeScript`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.rawValidatorImport.typeScript`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
+              if (convertedString0.length === 0) {
+                result["rawValidatorImport"]["typeScript"] = undefined;
               } else {
-                result["rawValidatorImport"]["typeScript"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.rawValidatorImport.typeScript`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  result["rawValidatorImport"]["typeScript"] = convertedString0;
+                }
               }
             }
           }
@@ -601,20 +638,23 @@ export function validateExperimentalAnyOfDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "anyOf") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["anyOf"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "anyOf") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["anyOf"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -622,18 +662,21 @@ export function validateExperimentalAnyOfDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -642,18 +685,21 @@ export function validateExperimentalAnyOfDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -664,10 +710,13 @@ export function validateExperimentalAnyOfDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -717,15 +766,18 @@ export function validateExperimentalAnyOfDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -784,10 +836,14 @@ export function validateExperimentalAnyOfDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -933,38 +989,49 @@ export function validateExperimentalAnyOfDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["values"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["values"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        if (convertedArray0.length < 1) {
+        if (intermediateValue1.length < 1) {
           errorMap[`$.values`] = {
             key: "validator.length",
             minLength: 1,
           };
         }
-        result["values"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+        result["values"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
           if (
-            value["values"][i1] === null ||
-            value["values"][i1] === undefined
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
           ) {
-            errorMap[`$.values.${i1}`] = {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 = validateExperimentalTypeSystemDefinition(
-              value["values"][i1],
+            const refResult1 = validateExperimentalTypeSystemDefinition(
+              intermediateValue1[i1],
             );
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                errorMap[`$.values.${i1}${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult1.error) {
+              for (const errorKey of Object.keys(refResult1.error)) {
+                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
+                  refResult1.error[errorKey];
               }
             }
-            result["values"][i1] = refResult2.value;
+            intermediateResult1[i1] = refResult1.value;
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.values${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["values"] = intermediateResult1;
         }
       }
     }
@@ -1495,20 +1562,23 @@ export function validateExperimentalArrayDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "array") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["array"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "array") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["array"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -1516,18 +1586,21 @@ export function validateExperimentalArrayDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -1536,18 +1609,21 @@ export function validateExperimentalArrayDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -1558,10 +1634,13 @@ export function validateExperimentalArrayDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -1611,15 +1690,18 @@ export function validateExperimentalArrayDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -1678,10 +1760,14 @@ export function validateExperimentalArrayDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -1855,10 +1941,14 @@ export function validateExperimentalArrayDefinition(value) {
             result["validator"]["min"] = undefined;
           } else {
             let convertedNumber0 = value["validator"]["min"];
-            if (typeof convertedNumber0 !== "number") {
+            if (
+              typeof convertedNumber0 !== "number" &&
+              typeof convertedNumber0 === "string"
+            ) {
               convertedNumber0 = Number(convertedNumber0);
             }
             if (
+              typeof convertedNumber0 !== "number" ||
               isNaN(convertedNumber0) ||
               !isFinite(convertedNumber0) ||
               !Number.isInteger(convertedNumber0)
@@ -1888,10 +1978,14 @@ export function validateExperimentalArrayDefinition(value) {
             result["validator"]["max"] = undefined;
           } else {
             let convertedNumber0 = value["validator"]["max"];
-            if (typeof convertedNumber0 !== "number") {
+            if (
+              typeof convertedNumber0 !== "number" &&
+              typeof convertedNumber0 === "string"
+            ) {
               convertedNumber0 = Number(convertedNumber0);
             }
             if (
+              typeof convertedNumber0 !== "number" ||
               isNaN(convertedNumber0) ||
               !isFinite(convertedNumber0) ||
               !Number.isInteger(convertedNumber0)
@@ -1970,20 +2064,23 @@ export function validateExperimentalBooleanDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "boolean") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["boolean"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "boolean") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["boolean"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -1991,18 +2088,21 @@ export function validateExperimentalBooleanDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -2011,18 +2111,21 @@ export function validateExperimentalBooleanDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -2033,10 +2136,13 @@ export function validateExperimentalBooleanDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -2086,15 +2192,18 @@ export function validateExperimentalBooleanDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -2153,10 +2262,14 @@ export function validateExperimentalBooleanDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -2411,20 +2524,23 @@ export function validateExperimentalCrudDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "crud") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["crud"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "crud") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["crud"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -2432,18 +2548,21 @@ export function validateExperimentalCrudDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -2452,18 +2571,21 @@ export function validateExperimentalCrudDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -2474,10 +2596,13 @@ export function validateExperimentalCrudDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -2527,15 +2652,18 @@ export function validateExperimentalCrudDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -2594,10 +2722,14 @@ export function validateExperimentalCrudDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -2743,18 +2875,21 @@ export function validateExperimentalCrudDefinition(value) {
       } else {
         let convertedString0 = value["basePath"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["basePath"] = undefined;
+          errorMap[`$.basePath`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.basePath`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["basePath"] = undefined;
           } else {
-            result["basePath"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.basePath`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["basePath"] = convertedString0;
+            }
           }
         }
       }
@@ -2798,15 +2933,18 @@ export function validateExperimentalCrudDefinition(value) {
           } else {
             let convertedString0 = value["fromParent"]["field"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length < 1) {
               errorMap[`$.fromParent.field`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              result["fromParent"]["field"] = convertedString0;
+              if (convertedString0.length < 1) {
+                errorMap[`$.fromParent.field`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                result["fromParent"]["field"] = convertedString0;
+              }
             }
           }
           if (
@@ -2835,18 +2973,22 @@ export function validateExperimentalCrudDefinition(value) {
               } else {
                 let convertedString0 = value["fromParent"]["options"]["name"];
                 if (typeof convertedString0 !== "string") {
-                  convertedString0 = String(convertedString0);
-                }
-                if (convertedString0.length === 0) {
-                  result["fromParent"]["options"]["name"] = undefined;
+                  errorMap[`$.fromParent.options.name`] = {
+                    key: "validator.string",
+                  };
                 } else {
-                  if (convertedString0.length < 1) {
-                    errorMap[`$.fromParent.options.name`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
+                  if (convertedString0.length === 0) {
+                    result["fromParent"]["options"]["name"] = undefined;
                   } else {
-                    result["fromParent"]["options"]["name"] = convertedString0;
+                    if (convertedString0.length < 1) {
+                      errorMap[`$.fromParent.options.name`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      result["fromParent"]["options"]["name"] =
+                        convertedString0;
+                    }
                   }
                 }
               }
@@ -3045,38 +3187,52 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["readable"]["$omit"] = undefined;
               } else {
-                let convertedArray0 =
+                const intermediateErrorMap1 = {};
+                let intermediateResult1 = [];
+                let intermediateValue1 =
                   value["fieldOptions"]["readable"]["$omit"];
-                if (!Array.isArray(convertedArray0)) {
-                  convertedArray0 = [convertedArray0];
+
+                if (!Array.isArray(intermediateValue1)) {
+                  intermediateValue1 = [intermediateValue1];
                 }
                 result["fieldOptions"]["readable"]["$omit"] = Array.from({
-                  length: convertedArray0.length,
+                  length: intermediateValue1.length,
                 });
-                for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
                   if (
-                    value["fieldOptions"]["readable"]["$omit"][i1] === null ||
-                    value["fieldOptions"]["readable"]["$omit"][i1] === undefined
+                    intermediateValue1[i1] === null ||
+                    intermediateValue1[i1] === undefined
                   ) {
-                    errorMap[`$.fieldOptions.readable.$omit.${i1}`] = {
+                    intermediateErrorMap1[`$.${i1}`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    let convertedString2 =
-                      value["fieldOptions"]["readable"]["$omit"][i1];
-                    if (typeof convertedString2 !== "string") {
-                      convertedString2 = String(convertedString2);
-                    }
-                    if (convertedString2.length < 1) {
-                      errorMap[`$.fieldOptions.readable.$omit.${i1}`] = {
-                        key: "validator.length",
-                        minLength: 1,
+                    let convertedString1 = intermediateValue1[i1];
+                    if (typeof convertedString1 !== "string") {
+                      intermediateErrorMap1[`$.${i1}`] = {
+                        key: "validator.string",
                       };
                     } else {
-                      result["fieldOptions"]["readable"]["$omit"][i1] =
-                        convertedString2;
+                      if (convertedString1.length < 1) {
+                        intermediateErrorMap1[`$.${i1}`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        intermediateResult1[i1] = convertedString1;
+                      }
                     }
                   }
+                }
+                if (Object.keys(intermediateErrorMap1).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                    errorMap[
+                      `$.fieldOptions.readable.$omit${errorKey.substring(1)}`
+                    ] = intermediateErrorMap1[errorKey];
+                  }
+                } else {
+                  result["fieldOptions"]["readable"]["$omit"] =
+                    intermediateResult1;
                 }
               }
               if (
@@ -3085,38 +3241,52 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["readable"]["$pick"] = undefined;
               } else {
-                let convertedArray0 =
+                const intermediateErrorMap1 = {};
+                let intermediateResult1 = [];
+                let intermediateValue1 =
                   value["fieldOptions"]["readable"]["$pick"];
-                if (!Array.isArray(convertedArray0)) {
-                  convertedArray0 = [convertedArray0];
+
+                if (!Array.isArray(intermediateValue1)) {
+                  intermediateValue1 = [intermediateValue1];
                 }
                 result["fieldOptions"]["readable"]["$pick"] = Array.from({
-                  length: convertedArray0.length,
+                  length: intermediateValue1.length,
                 });
-                for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
                   if (
-                    value["fieldOptions"]["readable"]["$pick"][i1] === null ||
-                    value["fieldOptions"]["readable"]["$pick"][i1] === undefined
+                    intermediateValue1[i1] === null ||
+                    intermediateValue1[i1] === undefined
                   ) {
-                    errorMap[`$.fieldOptions.readable.$pick.${i1}`] = {
+                    intermediateErrorMap1[`$.${i1}`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    let convertedString2 =
-                      value["fieldOptions"]["readable"]["$pick"][i1];
-                    if (typeof convertedString2 !== "string") {
-                      convertedString2 = String(convertedString2);
-                    }
-                    if (convertedString2.length < 1) {
-                      errorMap[`$.fieldOptions.readable.$pick.${i1}`] = {
-                        key: "validator.length",
-                        minLength: 1,
+                    let convertedString1 = intermediateValue1[i1];
+                    if (typeof convertedString1 !== "string") {
+                      intermediateErrorMap1[`$.${i1}`] = {
+                        key: "validator.string",
                       };
                     } else {
-                      result["fieldOptions"]["readable"]["$pick"][i1] =
-                        convertedString2;
+                      if (convertedString1.length < 1) {
+                        intermediateErrorMap1[`$.${i1}`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        intermediateResult1[i1] = convertedString1;
+                      }
                     }
                   }
+                }
+                if (Object.keys(intermediateErrorMap1).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                    errorMap[
+                      `$.fieldOptions.readable.$pick${errorKey.substring(1)}`
+                    ] = intermediateErrorMap1[errorKey];
+                  }
+                } else {
+                  result["fieldOptions"]["readable"]["$pick"] =
+                    intermediateResult1;
                 }
               }
             }
@@ -3145,38 +3315,52 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["writable"]["$omit"] = undefined;
               } else {
-                let convertedArray0 =
+                const intermediateErrorMap1 = {};
+                let intermediateResult1 = [];
+                let intermediateValue1 =
                   value["fieldOptions"]["writable"]["$omit"];
-                if (!Array.isArray(convertedArray0)) {
-                  convertedArray0 = [convertedArray0];
+
+                if (!Array.isArray(intermediateValue1)) {
+                  intermediateValue1 = [intermediateValue1];
                 }
                 result["fieldOptions"]["writable"]["$omit"] = Array.from({
-                  length: convertedArray0.length,
+                  length: intermediateValue1.length,
                 });
-                for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
                   if (
-                    value["fieldOptions"]["writable"]["$omit"][i1] === null ||
-                    value["fieldOptions"]["writable"]["$omit"][i1] === undefined
+                    intermediateValue1[i1] === null ||
+                    intermediateValue1[i1] === undefined
                   ) {
-                    errorMap[`$.fieldOptions.writable.$omit.${i1}`] = {
+                    intermediateErrorMap1[`$.${i1}`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    let convertedString2 =
-                      value["fieldOptions"]["writable"]["$omit"][i1];
-                    if (typeof convertedString2 !== "string") {
-                      convertedString2 = String(convertedString2);
-                    }
-                    if (convertedString2.length < 1) {
-                      errorMap[`$.fieldOptions.writable.$omit.${i1}`] = {
-                        key: "validator.length",
-                        minLength: 1,
+                    let convertedString1 = intermediateValue1[i1];
+                    if (typeof convertedString1 !== "string") {
+                      intermediateErrorMap1[`$.${i1}`] = {
+                        key: "validator.string",
                       };
                     } else {
-                      result["fieldOptions"]["writable"]["$omit"][i1] =
-                        convertedString2;
+                      if (convertedString1.length < 1) {
+                        intermediateErrorMap1[`$.${i1}`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        intermediateResult1[i1] = convertedString1;
+                      }
                     }
                   }
+                }
+                if (Object.keys(intermediateErrorMap1).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                    errorMap[
+                      `$.fieldOptions.writable.$omit${errorKey.substring(1)}`
+                    ] = intermediateErrorMap1[errorKey];
+                  }
+                } else {
+                  result["fieldOptions"]["writable"]["$omit"] =
+                    intermediateResult1;
                 }
               }
               if (
@@ -3185,38 +3369,52 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["writable"]["$pick"] = undefined;
               } else {
-                let convertedArray0 =
+                const intermediateErrorMap1 = {};
+                let intermediateResult1 = [];
+                let intermediateValue1 =
                   value["fieldOptions"]["writable"]["$pick"];
-                if (!Array.isArray(convertedArray0)) {
-                  convertedArray0 = [convertedArray0];
+
+                if (!Array.isArray(intermediateValue1)) {
+                  intermediateValue1 = [intermediateValue1];
                 }
                 result["fieldOptions"]["writable"]["$pick"] = Array.from({
-                  length: convertedArray0.length,
+                  length: intermediateValue1.length,
                 });
-                for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
                   if (
-                    value["fieldOptions"]["writable"]["$pick"][i1] === null ||
-                    value["fieldOptions"]["writable"]["$pick"][i1] === undefined
+                    intermediateValue1[i1] === null ||
+                    intermediateValue1[i1] === undefined
                   ) {
-                    errorMap[`$.fieldOptions.writable.$pick.${i1}`] = {
+                    intermediateErrorMap1[`$.${i1}`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    let convertedString2 =
-                      value["fieldOptions"]["writable"]["$pick"][i1];
-                    if (typeof convertedString2 !== "string") {
-                      convertedString2 = String(convertedString2);
-                    }
-                    if (convertedString2.length < 1) {
-                      errorMap[`$.fieldOptions.writable.$pick.${i1}`] = {
-                        key: "validator.length",
-                        minLength: 1,
+                    let convertedString1 = intermediateValue1[i1];
+                    if (typeof convertedString1 !== "string") {
+                      intermediateErrorMap1[`$.${i1}`] = {
+                        key: "validator.string",
                       };
                     } else {
-                      result["fieldOptions"]["writable"]["$pick"][i1] =
-                        convertedString2;
+                      if (convertedString1.length < 1) {
+                        intermediateErrorMap1[`$.${i1}`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        intermediateResult1[i1] = convertedString1;
+                      }
                     }
                   }
+                }
+                if (Object.keys(intermediateErrorMap1).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                    errorMap[
+                      `$.fieldOptions.writable.$pick${errorKey.substring(1)}`
+                    ] = intermediateErrorMap1[errorKey];
+                  }
+                } else {
+                  result["fieldOptions"]["writable"]["$pick"] =
+                    intermediateResult1;
                 }
               }
             }
@@ -3231,34 +3429,45 @@ export function validateExperimentalCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["inlineRelations"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["inlineRelations"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
         result["inlineRelations"] = Array.from({
-          length: convertedArray0.length,
+          length: intermediateValue1.length,
         });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
           if (
-            value["inlineRelations"][i1] === null ||
-            value["inlineRelations"][i1] === undefined
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
           ) {
-            errorMap[`$.inlineRelations.${i1}`] = {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 = validateExperimentalCrudDefinition(
-              value["inlineRelations"][i1],
+            const refResult1 = validateExperimentalCrudDefinition(
+              intermediateValue1[i1],
             );
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                errorMap[`$.inlineRelations.${i1}${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult1.error) {
+              for (const errorKey of Object.keys(refResult1.error)) {
+                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
+                  refResult1.error[errorKey];
               }
             }
-            result["inlineRelations"][i1] = refResult2.value;
+            intermediateResult1[i1] = refResult1.value;
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.inlineRelations${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["inlineRelations"] = intermediateResult1;
         }
       }
       if (
@@ -3269,34 +3478,45 @@ export function validateExperimentalCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["nestedRelations"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["nestedRelations"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
         result["nestedRelations"] = Array.from({
-          length: convertedArray0.length,
+          length: intermediateValue1.length,
         });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
           if (
-            value["nestedRelations"][i1] === null ||
-            value["nestedRelations"][i1] === undefined
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
           ) {
-            errorMap[`$.nestedRelations.${i1}`] = {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 = validateExperimentalCrudDefinition(
-              value["nestedRelations"][i1],
+            const refResult1 = validateExperimentalCrudDefinition(
+              intermediateValue1[i1],
             );
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                errorMap[`$.nestedRelations.${i1}${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult1.error) {
+              for (const errorKey of Object.keys(refResult1.error)) {
+                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
+                  refResult1.error[errorKey];
               }
             }
-            result["nestedRelations"][i1] = refResult2.value;
+            intermediateResult1[i1] = refResult1.value;
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.nestedRelations${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["nestedRelations"] = intermediateResult1;
         }
       }
     }
@@ -3336,20 +3556,23 @@ export function validateExperimentalReferenceDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "reference") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["reference"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "reference") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["reference"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
@@ -3359,10 +3582,13 @@ export function validateExperimentalReferenceDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -3412,15 +3638,18 @@ export function validateExperimentalReferenceDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -3479,10 +3708,14 @@ export function validateExperimentalReferenceDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -3705,19 +3938,22 @@ export function validateExperimentalNamePart(value) {
   } else {
     let convertedString0 = value;
     if (typeof convertedString0 !== "string") {
-      convertedString0 = String(convertedString0);
-    }
-    if (convertedString0.length < 1) {
       errorMap[`$`] = {
-        key: "validator.length",
-        minLength: 1,
-      };
-    } else if (!/^[a-zA-Z$][a-zA-Z\d]+$/g.test(convertedString0)) {
-      errorMap[`$`] = {
-        key: "validator.pattern",
+        key: "validator.string",
       };
     } else {
-      result = convertedString0;
+      if (convertedString0.length < 1) {
+        errorMap[`$`] = {
+          key: "validator.length",
+          minLength: 1,
+        };
+      } else if (!/^[a-zA-Z$][a-zA-Z\d]+$/g.test(convertedString0)) {
+        errorMap[`$`] = {
+          key: "validator.pattern",
+        };
+      } else {
+        result = convertedString0;
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
@@ -3755,20 +3991,23 @@ export function validateExperimentalDateDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "date") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["date"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "date") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["date"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -3776,18 +4015,21 @@ export function validateExperimentalDateDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -3796,18 +4038,21 @@ export function validateExperimentalDateDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -3818,10 +4063,13 @@ export function validateExperimentalDateDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -3871,15 +4119,18 @@ export function validateExperimentalDateDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -3938,10 +4189,14 @@ export function validateExperimentalDateDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -4223,26 +4478,29 @@ export function validateExperimentalDateDefinition(value) {
       } else {
         let convertedString0 = value["specifier"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["specifier"] = undefined;
+          errorMap[`$.specifier`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.specifier`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
-          } else if (
-            convertedString0 !== "dateOnly" &&
-            convertedString0 !== "timeOnly"
-          ) {
-            errorMap[`$.specifier`] = {
-              key: "validator.oneOf",
-              allowedValues: ["dateOnly", "timeOnly"],
-            };
+          if (convertedString0.length === 0) {
+            result["specifier"] = undefined;
           } else {
-            result["specifier"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.specifier`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else if (
+              convertedString0 !== "dateOnly" &&
+              convertedString0 !== "timeOnly"
+            ) {
+              errorMap[`$.specifier`] = {
+                key: "validator.oneOf",
+                allowedValues: ["dateOnly", "timeOnly"],
+              };
+            } else {
+              result["specifier"] = convertedString0;
+            }
           }
         }
       }
@@ -4283,20 +4541,23 @@ export function validateExperimentalExtendDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "extend") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["extend"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "extend") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["extend"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -4304,18 +4565,21 @@ export function validateExperimentalExtendDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -4324,18 +4588,21 @@ export function validateExperimentalExtendDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -4346,10 +4613,13 @@ export function validateExperimentalExtendDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -4399,15 +4669,18 @@ export function validateExperimentalExtendDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -4466,10 +4739,14 @@ export function validateExperimentalExtendDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -4626,15 +4903,18 @@ export function validateExperimentalExtendDefinition(value) {
           } else {
             let convertedString3 = genericKeyInput0;
             if (typeof convertedString3 !== "string") {
-              convertedString3 = String(convertedString3);
-            }
-            if (convertedString3.length < 1) {
               genericKeyErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              genericKeyResult1 = convertedString3;
+              if (convertedString3.length < 1) {
+                genericKeyErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                genericKeyResult1 = convertedString3;
+              }
             }
           }
           if (Object.keys(genericKeyErrorMap2).length !== 0) {
@@ -4730,20 +5010,23 @@ export function validateExperimentalFileDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "file") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["file"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "file") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["file"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -4751,18 +5034,21 @@ export function validateExperimentalFileDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -4771,18 +5057,21 @@ export function validateExperimentalFileDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -4793,10 +5082,13 @@ export function validateExperimentalFileDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -4846,15 +5138,18 @@ export function validateExperimentalFileDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -4913,10 +5208,14 @@ export function validateExperimentalFileDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -5062,35 +5361,49 @@ export function validateExperimentalFileDefinition(value) {
           ) {
             result["validator"]["mimeTypes"] = undefined;
           } else {
-            let convertedArray0 = value["validator"]["mimeTypes"];
-            if (!Array.isArray(convertedArray0)) {
-              convertedArray0 = [convertedArray0];
+            const intermediateErrorMap1 = {};
+            let intermediateResult1 = [];
+            let intermediateValue1 = value["validator"]["mimeTypes"];
+
+            if (!Array.isArray(intermediateValue1)) {
+              intermediateValue1 = [intermediateValue1];
             }
             result["validator"]["mimeTypes"] = Array.from({
-              length: convertedArray0.length,
+              length: intermediateValue1.length,
             });
-            for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+            for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
               if (
-                value["validator"]["mimeTypes"][i1] === null ||
-                value["validator"]["mimeTypes"][i1] === undefined
+                intermediateValue1[i1] === null ||
+                intermediateValue1[i1] === undefined
               ) {
-                errorMap[`$.validator.mimeTypes.${i1}`] = {
+                intermediateErrorMap1[`$.${i1}`] = {
                   key: "validator.undefined",
                 };
               } else {
-                let convertedString2 = value["validator"]["mimeTypes"][i1];
-                if (typeof convertedString2 !== "string") {
-                  convertedString2 = String(convertedString2);
-                }
-                if (convertedString2.length < 1) {
-                  errorMap[`$.validator.mimeTypes.${i1}`] = {
-                    key: "validator.length",
-                    minLength: 1,
+                let convertedString1 = intermediateValue1[i1];
+                if (typeof convertedString1 !== "string") {
+                  intermediateErrorMap1[`$.${i1}`] = {
+                    key: "validator.string",
                   };
                 } else {
-                  result["validator"]["mimeTypes"][i1] = convertedString2;
+                  if (convertedString1.length < 1) {
+                    intermediateErrorMap1[`$.${i1}`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult1[i1] = convertedString1;
+                  }
                 }
               }
+            }
+            if (Object.keys(intermediateErrorMap1).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                errorMap[`$.validator.mimeTypes${errorKey.substring(1)}`] =
+                  intermediateErrorMap1[errorKey];
+              }
+            } else {
+              result["validator"]["mimeTypes"] = intermediateResult1;
             }
           }
         }
@@ -5132,20 +5445,23 @@ export function validateExperimentalGenericDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "generic") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["generic"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "generic") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["generic"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -5153,18 +5469,21 @@ export function validateExperimentalGenericDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -5173,18 +5492,21 @@ export function validateExperimentalGenericDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -5195,10 +5517,13 @@ export function validateExperimentalGenericDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -5248,15 +5573,18 @@ export function validateExperimentalGenericDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -5315,10 +5643,14 @@ export function validateExperimentalGenericDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -5530,20 +5862,23 @@ export function validateExperimentalNumberDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "number") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["number"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "number") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["number"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -5551,18 +5886,21 @@ export function validateExperimentalNumberDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -5571,18 +5909,21 @@ export function validateExperimentalNumberDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -5593,10 +5934,13 @@ export function validateExperimentalNumberDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -5646,15 +5990,18 @@ export function validateExperimentalNumberDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -5713,10 +6060,14 @@ export function validateExperimentalNumberDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -5917,10 +6268,14 @@ export function validateExperimentalNumberDefinition(value) {
             result["validator"]["min"] = undefined;
           } else {
             let convertedNumber0 = value["validator"]["min"];
-            if (typeof convertedNumber0 !== "number") {
+            if (
+              typeof convertedNumber0 !== "number" &&
+              typeof convertedNumber0 === "string"
+            ) {
               convertedNumber0 = Number(convertedNumber0);
             }
             if (
+              typeof convertedNumber0 !== "number" ||
               isNaN(convertedNumber0) ||
               !isFinite(convertedNumber0) ||
               !Number.isInteger(convertedNumber0)
@@ -5950,10 +6305,14 @@ export function validateExperimentalNumberDefinition(value) {
             result["validator"]["max"] = undefined;
           } else {
             let convertedNumber0 = value["validator"]["max"];
-            if (typeof convertedNumber0 !== "number") {
+            if (
+              typeof convertedNumber0 !== "number" &&
+              typeof convertedNumber0 === "string"
+            ) {
               convertedNumber0 = Number(convertedNumber0);
             }
             if (
+              typeof convertedNumber0 !== "number" ||
               isNaN(convertedNumber0) ||
               !isFinite(convertedNumber0) ||
               !Number.isInteger(convertedNumber0)
@@ -6008,44 +6367,62 @@ export function validateExperimentalNumberDefinition(value) {
       if (value["oneOf"] === null || value["oneOf"] === undefined) {
         result["oneOf"] = undefined;
       } else {
-        let convertedArray0 = value["oneOf"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["oneOf"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        result["oneOf"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
-          if (value["oneOf"][i1] === null || value["oneOf"][i1] === undefined) {
-            errorMap[`$.oneOf.${i1}`] = {
+        result["oneOf"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+          if (
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
+          ) {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = value["oneOf"][i1];
-            if (typeof convertedNumber2 !== "number") {
-              convertedNumber2 = Number(convertedNumber2);
+            let convertedNumber1 = intermediateValue1[i1];
+            if (
+              typeof convertedNumber1 !== "number" &&
+              typeof convertedNumber1 === "string"
+            ) {
+              convertedNumber1 = Number(convertedNumber1);
             }
             if (
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber1 !== "number" ||
+              isNaN(convertedNumber1) ||
+              !isFinite(convertedNumber1) ||
+              !Number.isInteger(convertedNumber1)
             ) {
-              errorMap[`$.oneOf.${i1}`] = {
+              intermediateErrorMap1[`$.${i1}`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              errorMap[`$.oneOf.${i1}`] = {
+            } else if (convertedNumber1 < -2147483647) {
+              intermediateErrorMap1[`$.${i1}`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              errorMap[`$.oneOf.${i1}`] = {
+            } else if (convertedNumber1 > 2147483647) {
+              intermediateErrorMap1[`$.${i1}`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["oneOf"][i1] = convertedNumber2;
+              intermediateResult1[i1] = convertedNumber1;
             }
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.oneOf${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["oneOf"] = intermediateResult1;
         }
       }
     }
@@ -6085,20 +6462,23 @@ export function validateExperimentalObjectDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "object") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["object"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "object") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["object"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -6106,18 +6486,21 @@ export function validateExperimentalObjectDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -6126,18 +6509,21 @@ export function validateExperimentalObjectDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -6148,10 +6534,13 @@ export function validateExperimentalObjectDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -6201,15 +6590,18 @@ export function validateExperimentalObjectDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -6268,10 +6660,14 @@ export function validateExperimentalObjectDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -6472,18 +6868,21 @@ export function validateExperimentalObjectDefinition(value) {
       } else {
         let convertedString0 = value["shortName"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["shortName"] = undefined;
+          errorMap[`$.shortName`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.shortName`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["shortName"] = undefined;
           } else {
-            result["shortName"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.shortName`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["shortName"] = convertedString0;
+            }
           }
         }
       }
@@ -6503,15 +6902,18 @@ export function validateExperimentalObjectDefinition(value) {
           } else {
             let convertedString3 = genericKeyInput0;
             if (typeof convertedString3 !== "string") {
-              convertedString3 = String(convertedString3);
-            }
-            if (convertedString3.length < 1) {
               genericKeyErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              genericKeyResult1 = convertedString3;
+              if (convertedString3.length < 1) {
+                genericKeyErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                genericKeyResult1 = convertedString3;
+              }
             }
           }
           if (Object.keys(genericKeyErrorMap2).length !== 0) {
@@ -6706,18 +7108,21 @@ export function validateExperimentalObjectDefinition(value) {
           } else {
             let convertedString0 = value["queryOptions"]["schema"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["queryOptions"]["schema"] = undefined;
+              errorMap[`$.queryOptions.schema`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.queryOptions.schema`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
+              if (convertedString0.length === 0) {
+                result["queryOptions"]["schema"] = undefined;
               } else {
-                result["queryOptions"]["schema"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.queryOptions.schema`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  result["queryOptions"]["schema"] = convertedString0;
+                }
               }
             }
           }
@@ -6728,32 +7133,43 @@ export function validateExperimentalObjectDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["relations"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["relations"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        result["relations"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+        result["relations"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
           if (
-            value["relations"][i1] === null ||
-            value["relations"][i1] === undefined
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
           ) {
-            errorMap[`$.relations.${i1}`] = {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 = validateExperimentalRelationDefinition(
-              value["relations"][i1],
+            const refResult1 = validateExperimentalRelationDefinition(
+              intermediateValue1[i1],
             );
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                errorMap[`$.relations.${i1}${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult1.error) {
+              for (const errorKey of Object.keys(refResult1.error)) {
+                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
+                  refResult1.error[errorKey];
               }
             }
-            result["relations"][i1] = refResult2.value;
+            intermediateResult1[i1] = refResult1.value;
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.relations${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["relations"] = intermediateResult1;
         }
       }
     }
@@ -6793,20 +7209,23 @@ export function validateExperimentalRelationDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "relation") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["relation"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "relation") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["relation"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["subType"] === null || value["subType"] === undefined) {
@@ -6816,30 +7235,33 @@ export function validateExperimentalRelationDefinition(value) {
       } else {
         let convertedString0 = value["subType"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.subType`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (
-          convertedString0 !== "manyToOne" &&
-          convertedString0 !== "oneToMany" &&
-          convertedString0 !== "oneToOne" &&
-          convertedString0 !== "oneToOneReverse"
-        ) {
-          errorMap[`$.subType`] = {
-            key: "validator.oneOf",
-            allowedValues: [
-              "manyToOne",
-              "oneToMany",
-              "oneToOne",
-              "oneToOneReverse",
-            ],
+            key: "validator.string",
           };
         } else {
-          result["subType"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.subType`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (
+            convertedString0 !== "manyToOne" &&
+            convertedString0 !== "oneToMany" &&
+            convertedString0 !== "oneToOne" &&
+            convertedString0 !== "oneToOneReverse"
+          ) {
+            errorMap[`$.subType`] = {
+              key: "validator.oneOf",
+              allowedValues: [
+                "manyToOne",
+                "oneToMany",
+                "oneToOne",
+                "oneToOneReverse",
+              ],
+            };
+          } else {
+            result["subType"] = convertedString0;
+          }
         }
       }
       if (value["reference"] === null || value["reference"] === undefined) {
@@ -6866,15 +7288,18 @@ export function validateExperimentalRelationDefinition(value) {
       } else {
         let convertedString0 = value["ownKey"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.ownKey`] = {
-            key: "validator.length",
-            minLength: 1,
+            key: "validator.string",
           };
         } else {
-          result["ownKey"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.ownKey`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else {
+            result["ownKey"] = convertedString0;
+          }
         }
       }
       if (
@@ -6885,18 +7310,21 @@ export function validateExperimentalRelationDefinition(value) {
       } else {
         let convertedString0 = value["referencedKey"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["referencedKey"] = undefined;
+          errorMap[`$.referencedKey`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.referencedKey`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["referencedKey"] = undefined;
           } else {
-            result["referencedKey"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.referencedKey`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["referencedKey"] = convertedString0;
+            }
           }
         }
       }
@@ -6961,20 +7389,23 @@ export function validateExperimentalOmitDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "omit") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["omit"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "omit") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["omit"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -6982,18 +7413,21 @@ export function validateExperimentalOmitDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -7002,18 +7436,21 @@ export function validateExperimentalOmitDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -7024,10 +7461,13 @@ export function validateExperimentalOmitDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -7077,15 +7517,18 @@ export function validateExperimentalOmitDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -7144,10 +7587,14 @@ export function validateExperimentalOmitDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -7348,30 +7795,47 @@ export function validateExperimentalOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["keys"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["keys"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        result["keys"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
-          if (value["keys"][i1] === null || value["keys"][i1] === undefined) {
-            errorMap[`$.keys.${i1}`] = {
+        result["keys"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+          if (
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
+          ) {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedString2 = value["keys"][i1];
-            if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
-              errorMap[`$.keys.${i1}`] = {
-                key: "validator.length",
-                minLength: 1,
+            let convertedString1 = intermediateValue1[i1];
+            if (typeof convertedString1 !== "string") {
+              intermediateErrorMap1[`$.${i1}`] = {
+                key: "validator.string",
               };
             } else {
-              result["keys"][i1] = convertedString2;
+              if (convertedString1.length < 1) {
+                intermediateErrorMap1[`$.${i1}`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult1[i1] = convertedString1;
+              }
             }
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.keys${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["keys"] = intermediateResult1;
         }
       }
       if (value["reference"] === null || value["reference"] === undefined) {
@@ -7428,20 +7892,23 @@ export function validateExperimentalPickDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "pick") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["pick"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "pick") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["pick"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -7449,18 +7916,21 @@ export function validateExperimentalPickDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -7469,18 +7939,21 @@ export function validateExperimentalPickDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -7491,10 +7964,13 @@ export function validateExperimentalPickDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -7544,15 +8020,18 @@ export function validateExperimentalPickDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -7611,10 +8090,14 @@ export function validateExperimentalPickDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -7815,30 +8298,47 @@ export function validateExperimentalPickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["keys"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["keys"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        result["keys"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
-          if (value["keys"][i1] === null || value["keys"][i1] === undefined) {
-            errorMap[`$.keys.${i1}`] = {
+        result["keys"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+          if (
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
+          ) {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedString2 = value["keys"][i1];
-            if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
-              errorMap[`$.keys.${i1}`] = {
-                key: "validator.length",
-                minLength: 1,
+            let convertedString1 = intermediateValue1[i1];
+            if (typeof convertedString1 !== "string") {
+              intermediateErrorMap1[`$.${i1}`] = {
+                key: "validator.string",
               };
             } else {
-              result["keys"][i1] = convertedString2;
+              if (convertedString1.length < 1) {
+                intermediateErrorMap1[`$.${i1}`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult1[i1] = convertedString1;
+              }
             }
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.keys${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["keys"] = intermediateResult1;
         }
       }
       if (value["reference"] === null || value["reference"] === undefined) {
@@ -7895,20 +8395,23 @@ export function validateExperimentalStringDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "string") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["string"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "string") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["string"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -7916,18 +8419,21 @@ export function validateExperimentalStringDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -7936,18 +8442,21 @@ export function validateExperimentalStringDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -7958,10 +8467,13 @@ export function validateExperimentalStringDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -8011,15 +8523,18 @@ export function validateExperimentalStringDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -8078,10 +8593,14 @@ export function validateExperimentalStringDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -8336,10 +8855,14 @@ export function validateExperimentalStringDefinition(value) {
             result["validator"]["min"] = 1;
           } else {
             let convertedNumber0 = value["validator"]["min"];
-            if (typeof convertedNumber0 !== "number") {
+            if (
+              typeof convertedNumber0 !== "number" &&
+              typeof convertedNumber0 === "string"
+            ) {
               convertedNumber0 = Number(convertedNumber0);
             }
             if (
+              typeof convertedNumber0 !== "number" ||
               isNaN(convertedNumber0) ||
               !isFinite(convertedNumber0) ||
               !Number.isInteger(convertedNumber0)
@@ -8369,10 +8892,14 @@ export function validateExperimentalStringDefinition(value) {
             result["validator"]["max"] = undefined;
           } else {
             let convertedNumber0 = value["validator"]["max"];
-            if (typeof convertedNumber0 !== "number") {
+            if (
+              typeof convertedNumber0 !== "number" &&
+              typeof convertedNumber0 === "string"
+            ) {
               convertedNumber0 = Number(convertedNumber0);
             }
             if (
+              typeof convertedNumber0 !== "number" ||
               isNaN(convertedNumber0) ||
               !isFinite(convertedNumber0) ||
               !Number.isInteger(convertedNumber0)
@@ -8403,18 +8930,21 @@ export function validateExperimentalStringDefinition(value) {
           } else {
             let convertedString0 = value["validator"]["pattern"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["validator"]["pattern"] = undefined;
+              errorMap[`$.validator.pattern`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.validator.pattern`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
+              if (convertedString0.length === 0) {
+                result["validator"]["pattern"] = undefined;
               } else {
-                result["validator"]["pattern"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.validator.pattern`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  result["validator"]["pattern"] = convertedString0;
+                }
               }
             }
           }
@@ -8451,42 +8981,55 @@ export function validateExperimentalStringDefinition(value) {
           ) {
             result["validator"]["disallowedCharacters"] = undefined;
           } else {
-            let convertedArray0 = value["validator"]["disallowedCharacters"];
-            if (!Array.isArray(convertedArray0)) {
-              convertedArray0 = [convertedArray0];
+            const intermediateErrorMap1 = {};
+            let intermediateResult1 = [];
+            let intermediateValue1 = value["validator"]["disallowedCharacters"];
+
+            if (!Array.isArray(intermediateValue1)) {
+              intermediateValue1 = [intermediateValue1];
             }
             result["validator"]["disallowedCharacters"] = Array.from({
-              length: convertedArray0.length,
+              length: intermediateValue1.length,
             });
-            for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+            for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
               if (
-                value["validator"]["disallowedCharacters"][i1] === null ||
-                value["validator"]["disallowedCharacters"][i1] === undefined
+                intermediateValue1[i1] === null ||
+                intermediateValue1[i1] === undefined
               ) {
-                errorMap[`$.validator.disallowedCharacters.${i1}`] = {
+                intermediateErrorMap1[`$.${i1}`] = {
                   key: "validator.undefined",
                 };
               } else {
-                let convertedString2 =
-                  value["validator"]["disallowedCharacters"][i1];
-                if (typeof convertedString2 !== "string") {
-                  convertedString2 = String(convertedString2);
-                }
-                if (convertedString2.length < 1) {
-                  errorMap[`$.validator.disallowedCharacters.${i1}`] = {
-                    key: "validator.length",
-                    minLength: 1,
-                  };
-                } else if (convertedString2.length > 2) {
-                  errorMap[`$.validator.disallowedCharacters.${i1}`] = {
-                    key: "validator.length",
-                    maxLength: 2,
+                let convertedString1 = intermediateValue1[i1];
+                if (typeof convertedString1 !== "string") {
+                  intermediateErrorMap1[`$.${i1}`] = {
+                    key: "validator.string",
                   };
                 } else {
-                  result["validator"]["disallowedCharacters"][i1] =
-                    convertedString2;
+                  if (convertedString1.length < 1) {
+                    intermediateErrorMap1[`$.${i1}`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else if (convertedString1.length > 2) {
+                    intermediateErrorMap1[`$.${i1}`] = {
+                      key: "validator.length",
+                      maxLength: 2,
+                    };
+                  } else {
+                    intermediateResult1[i1] = convertedString1;
+                  }
                 }
               }
+            }
+            if (Object.keys(intermediateErrorMap1).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                errorMap[
+                  `$.validator.disallowedCharacters${errorKey.substring(1)}`
+                ] = intermediateErrorMap1[errorKey];
+              }
+            } else {
+              result["validator"]["disallowedCharacters"] = intermediateResult1;
             }
           }
         }
@@ -8494,30 +9037,47 @@ export function validateExperimentalStringDefinition(value) {
       if (value["oneOf"] === null || value["oneOf"] === undefined) {
         result["oneOf"] = undefined;
       } else {
-        let convertedArray0 = value["oneOf"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["oneOf"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        result["oneOf"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
-          if (value["oneOf"][i1] === null || value["oneOf"][i1] === undefined) {
-            errorMap[`$.oneOf.${i1}`] = {
+        result["oneOf"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+          if (
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
+          ) {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedString2 = value["oneOf"][i1];
-            if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
-              errorMap[`$.oneOf.${i1}`] = {
-                key: "validator.length",
-                minLength: 1,
+            let convertedString1 = intermediateValue1[i1];
+            if (typeof convertedString1 !== "string") {
+              intermediateErrorMap1[`$.${i1}`] = {
+                key: "validator.string",
               };
             } else {
-              result["oneOf"][i1] = convertedString2;
+              if (convertedString1.length < 1) {
+                intermediateErrorMap1[`$.${i1}`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult1[i1] = convertedString1;
+              }
             }
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.oneOf${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["oneOf"] = intermediateResult1;
         }
       }
     }
@@ -8557,20 +9117,23 @@ export function validateExperimentalUuidDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "uuid") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["uuid"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "uuid") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["uuid"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -8578,18 +9141,21 @@ export function validateExperimentalUuidDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -8598,18 +9164,21 @@ export function validateExperimentalUuidDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -8620,10 +9189,13 @@ export function validateExperimentalUuidDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -8673,15 +9245,18 @@ export function validateExperimentalUuidDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -8740,10 +9315,14 @@ export function validateExperimentalUuidDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -8952,20 +9531,23 @@ export function validateExperimentalGenerateOptions(value) {
       } else {
         let convertedString0 = value["targetLanguage"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.targetLanguage`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "js" && convertedString0 !== "ts") {
-          errorMap[`$.targetLanguage`] = {
-            key: "validator.oneOf",
-            allowedValues: ["js", "ts"],
+            key: "validator.string",
           };
         } else {
-          result["targetLanguage"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.targetLanguage`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "js" && convertedString0 !== "ts") {
+            errorMap[`$.targetLanguage`] = {
+              key: "validator.oneOf",
+              allowedValues: ["js", "ts"],
+            };
+          } else {
+            result["targetLanguage"] = convertedString0;
+          }
         }
       }
       if (
@@ -8976,18 +9558,21 @@ export function validateExperimentalGenerateOptions(value) {
       } else {
         let convertedString0 = value["outputDirectory"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["outputDirectory"] = undefined;
+          errorMap[`$.outputDirectory`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.outputDirectory`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["outputDirectory"] = undefined;
           } else {
-            result["outputDirectory"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.outputDirectory`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["outputDirectory"] = convertedString0;
+            }
           }
         }
       }
@@ -9203,20 +9788,23 @@ export function validateExperimentalGenerateOptions(value) {
                       } else {
                         let convertedString2 = intermediateValue2["library"];
                         if (typeof convertedString2 !== "string") {
-                          convertedString2 = String(convertedString2);
-                        }
-                        if (convertedString2.length < 1) {
                           intermediateErrorMap2[`$.library`] = {
-                            key: "validator.length",
-                            minLength: 1,
-                          };
-                        } else if (convertedString2 !== "koa") {
-                          intermediateErrorMap2[`$.library`] = {
-                            key: "validator.oneOf",
-                            allowedValues: ["koa"],
+                            key: "validator.string",
                           };
                         } else {
-                          intermediateResult2["library"] = convertedString2;
+                          if (convertedString2.length < 1) {
+                            intermediateErrorMap2[`$.library`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (convertedString2 !== "koa") {
+                            intermediateErrorMap2[`$.library`] = {
+                              key: "validator.oneOf",
+                              allowedValues: ["koa"],
+                            };
+                          } else {
+                            intermediateResult2["library"] = convertedString2;
+                          }
                         }
                       }
                     }
@@ -9354,20 +9942,23 @@ export function validateExperimentalGenerateOptions(value) {
                       } else {
                         let convertedString2 = intermediateValue2["dialect"];
                         if (typeof convertedString2 !== "string") {
-                          convertedString2 = String(convertedString2);
-                        }
-                        if (convertedString2.length < 1) {
                           intermediateErrorMap2[`$.dialect`] = {
-                            key: "validator.length",
-                            minLength: 1,
-                          };
-                        } else if (convertedString2 !== "postgres") {
-                          intermediateErrorMap2[`$.dialect`] = {
-                            key: "validator.oneOf",
-                            allowedValues: ["postgres"],
+                            key: "validator.string",
                           };
                         } else {
-                          intermediateResult2["dialect"] = convertedString2;
+                          if (convertedString2.length < 1) {
+                            intermediateErrorMap2[`$.dialect`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (convertedString2 !== "postgres") {
+                            intermediateErrorMap2[`$.dialect`] = {
+                              key: "validator.oneOf",
+                              allowedValues: ["postgres"],
+                            };
+                          } else {
+                            intermediateResult2["dialect"] = convertedString2;
+                          }
                         }
                       }
                     }
@@ -9548,20 +10139,23 @@ export function validateExperimentalGenerateOptions(value) {
                       } else {
                         let convertedString2 = intermediateValue2["library"];
                         if (typeof convertedString2 !== "string") {
-                          convertedString2 = String(convertedString2);
-                        }
-                        if (convertedString2.length < 1) {
                           intermediateErrorMap2[`$.library`] = {
-                            key: "validator.length",
-                            minLength: 1,
-                          };
-                        } else if (convertedString2 !== "axios") {
-                          intermediateErrorMap2[`$.library`] = {
-                            key: "validator.oneOf",
-                            allowedValues: ["axios"],
+                            key: "validator.string",
                           };
                         } else {
-                          intermediateResult2["library"] = convertedString2;
+                          if (convertedString2.length < 1) {
+                            intermediateErrorMap2[`$.library`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (convertedString2 !== "axios") {
+                            intermediateErrorMap2[`$.library`] = {
+                              key: "validator.oneOf",
+                              allowedValues: ["axios"],
+                            };
+                          } else {
+                            intermediateResult2["library"] = convertedString2;
+                          }
                         }
                       }
                       if (
@@ -9575,29 +10169,32 @@ export function validateExperimentalGenerateOptions(value) {
                         let convertedString2 =
                           intermediateValue2["targetRuntime"];
                         if (typeof convertedString2 !== "string") {
-                          convertedString2 = String(convertedString2);
-                        }
-                        if (convertedString2.length < 1) {
                           intermediateErrorMap2[`$.targetRuntime`] = {
-                            key: "validator.length",
-                            minLength: 1,
-                          };
-                        } else if (
-                          convertedString2 !== "node.js" &&
-                          convertedString2 !== "browser" &&
-                          convertedString2 !== "react-native"
-                        ) {
-                          intermediateErrorMap2[`$.targetRuntime`] = {
-                            key: "validator.oneOf",
-                            allowedValues: [
-                              "node.js",
-                              "browser",
-                              "react-native",
-                            ],
+                            key: "validator.string",
                           };
                         } else {
-                          intermediateResult2["targetRuntime"] =
-                            convertedString2;
+                          if (convertedString2.length < 1) {
+                            intermediateErrorMap2[`$.targetRuntime`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (
+                            convertedString2 !== "node.js" &&
+                            convertedString2 !== "browser" &&
+                            convertedString2 !== "react-native"
+                          ) {
+                            intermediateErrorMap2[`$.targetRuntime`] = {
+                              key: "validator.oneOf",
+                              allowedValues: [
+                                "node.js",
+                                "browser",
+                                "react-native",
+                              ],
+                            };
+                          } else {
+                            intermediateResult2["targetRuntime"] =
+                              convertedString2;
+                          }
                         }
                       }
                       if (
@@ -9609,24 +10206,27 @@ export function validateExperimentalGenerateOptions(value) {
                         let convertedString2 =
                           intermediateValue2["includeWrapper"];
                         if (typeof convertedString2 !== "string") {
-                          convertedString2 = String(convertedString2);
-                        }
-                        if (convertedString2.length === 0) {
-                          intermediateResult2["includeWrapper"] = undefined;
+                          intermediateErrorMap2[`$.includeWrapper`] = {
+                            key: "validator.string",
+                          };
                         } else {
-                          if (convertedString2.length < 1) {
-                            intermediateErrorMap2[`$.includeWrapper`] = {
-                              key: "validator.length",
-                              minLength: 1,
-                            };
-                          } else if (convertedString2 !== "react-query") {
-                            intermediateErrorMap2[`$.includeWrapper`] = {
-                              key: "validator.oneOf",
-                              allowedValues: ["react-query"],
-                            };
+                          if (convertedString2.length === 0) {
+                            intermediateResult2["includeWrapper"] = undefined;
                           } else {
-                            intermediateResult2["includeWrapper"] =
-                              convertedString2;
+                            if (convertedString2.length < 1) {
+                              intermediateErrorMap2[`$.includeWrapper`] = {
+                                key: "validator.length",
+                                minLength: 1,
+                              };
+                            } else if (convertedString2 !== "react-query") {
+                              intermediateErrorMap2[`$.includeWrapper`] = {
+                                key: "validator.oneOf",
+                                allowedValues: ["react-query"],
+                              };
+                            } else {
+                              intermediateResult2["includeWrapper"] =
+                                convertedString2;
+                            }
                           }
                         }
                       }
@@ -9854,22 +10454,25 @@ export function validateExperimentalNamePartOptional(value) {
   } else {
     let convertedString0 = value;
     if (typeof convertedString0 !== "string") {
-      convertedString0 = String(convertedString0);
-    }
-    if (convertedString0.length === 0) {
-      result = undefined;
+      errorMap[`$`] = {
+        key: "validator.string",
+      };
     } else {
-      if (convertedString0.length < 1) {
-        errorMap[`$`] = {
-          key: "validator.length",
-          minLength: 1,
-        };
-      } else if (!/^[a-zA-Z$][a-zA-Z\d]+$/g.test(convertedString0)) {
-        errorMap[`$`] = {
-          key: "validator.pattern",
-        };
+      if (convertedString0.length === 0) {
+        result = undefined;
       } else {
-        result = convertedString0;
+        if (convertedString0.length < 1) {
+          errorMap[`$`] = {
+            key: "validator.length",
+            minLength: 1,
+          };
+        } else if (!/^[a-zA-Z$][a-zA-Z\d]+$/g.test(convertedString0)) {
+          errorMap[`$`] = {
+            key: "validator.pattern",
+          };
+        } else {
+          result = convertedString0;
+        }
       }
     }
   }
@@ -10399,20 +11002,23 @@ export function validateExperimentalRouteDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "route") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["route"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "route") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["route"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["group"] === null || value["group"] === undefined) {
@@ -10420,18 +11026,21 @@ export function validateExperimentalRouteDefinition(value) {
       } else {
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["group"] = undefined;
+          errorMap[`$.group`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.group`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["group"] = undefined;
           } else {
-            result["group"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.group`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["group"] = convertedString0;
+            }
           }
         }
       }
@@ -10440,18 +11049,21 @@ export function validateExperimentalRouteDefinition(value) {
       } else {
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length === 0) {
-          result["name"] = undefined;
+          errorMap[`$.name`] = {
+            key: "validator.string",
+          };
         } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.name`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
+          if (convertedString0.length === 0) {
+            result["name"] = undefined;
           } else {
-            result["name"] = convertedString0;
+            if (convertedString0.length < 1) {
+              errorMap[`$.name`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["name"] = convertedString0;
+            }
           }
         }
       }
@@ -10462,10 +11074,13 @@ export function validateExperimentalRouteDefinition(value) {
       } else {
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        {
-          result["docString"] = convertedString0;
+          errorMap[`$.docString`] = {
+            key: "validator.string",
+          };
+        } else {
+          {
+            result["docString"] = convertedString0;
+          }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
@@ -10515,15 +11130,18 @@ export function validateExperimentalRouteDefinition(value) {
           } else {
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
               intermediateErrorMap2[`$`] = {
-                key: "validator.length",
-                minLength: 1,
+                key: "validator.string",
               };
             } else {
-              intermediateResult2 = convertedString2;
+              if (convertedString2.length < 1) {
+                intermediateErrorMap2[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult2 = convertedString2;
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -10582,10 +11200,14 @@ export function validateExperimentalRouteDefinition(value) {
             };
           } else {
             let convertedNumber2 = intermediateValue2;
-            if (typeof convertedNumber2 !== "number") {
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
               convertedNumber2 = Number(convertedNumber2);
             }
             if (
+              typeof convertedNumber2 !== "number" ||
               isNaN(convertedNumber2) ||
               !isFinite(convertedNumber2) ||
               !Number.isInteger(convertedNumber2)
@@ -10733,27 +11355,30 @@ export function validateExperimentalRouteDefinition(value) {
       } else {
         let convertedString0 = value["method"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.method`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (
-          convertedString0 !== "GET" &&
-          convertedString0 !== "POST" &&
-          convertedString0 !== "PUT" &&
-          convertedString0 !== "DELETE" &&
-          convertedString0 !== "HEAD" &&
-          convertedString0 !== "PATCH"
-        ) {
-          errorMap[`$.method`] = {
-            key: "validator.oneOf",
-            allowedValues: ["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"],
+            key: "validator.string",
           };
         } else {
-          result["method"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.method`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (
+            convertedString0 !== "GET" &&
+            convertedString0 !== "POST" &&
+            convertedString0 !== "PUT" &&
+            convertedString0 !== "DELETE" &&
+            convertedString0 !== "HEAD" &&
+            convertedString0 !== "PATCH"
+          ) {
+            errorMap[`$.method`] = {
+              key: "validator.oneOf",
+              allowedValues: ["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"],
+            };
+          } else {
+            result["method"] = convertedString0;
+          }
         }
       }
       if (value["idempotent"] === null || value["idempotent"] === undefined) {
@@ -10787,15 +11412,18 @@ export function validateExperimentalRouteDefinition(value) {
       } else {
         let convertedString0 = value["path"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.path`] = {
-            key: "validator.length",
-            minLength: 1,
+            key: "validator.string",
           };
         } else {
-          result["path"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.path`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else {
+            result["path"] = convertedString0;
+          }
         }
       }
       if (value["tags"] === null || value["tags"] === undefined) {
@@ -10803,30 +11431,47 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["tags"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["tags"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
-        result["tags"] = Array.from({ length: convertedArray0.length });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
-          if (value["tags"][i1] === null || value["tags"][i1] === undefined) {
-            errorMap[`$.tags.${i1}`] = {
+        result["tags"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+          if (
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
+          ) {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedString2 = value["tags"][i1];
-            if (typeof convertedString2 !== "string") {
-              convertedString2 = String(convertedString2);
-            }
-            if (convertedString2.length < 1) {
-              errorMap[`$.tags.${i1}`] = {
-                key: "validator.length",
-                minLength: 1,
+            let convertedString1 = intermediateValue1[i1];
+            if (typeof convertedString1 !== "string") {
+              intermediateErrorMap1[`$.${i1}`] = {
+                key: "validator.string",
               };
             } else {
-              result["tags"][i1] = convertedString2;
+              if (convertedString1.length < 1) {
+                intermediateErrorMap1[`$.${i1}`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else {
+                intermediateResult1[i1] = convertedString1;
+              }
             }
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.tags${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["tags"] = intermediateResult1;
         }
       }
       if (value["query"] === null || value["query"] === undefined) {
@@ -10912,34 +11557,45 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedArray0 = value["invalidations"];
-        if (!Array.isArray(convertedArray0)) {
-          convertedArray0 = [convertedArray0];
+        const intermediateErrorMap1 = {};
+        let intermediateResult1 = [];
+        let intermediateValue1 = value["invalidations"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
         }
         result["invalidations"] = Array.from({
-          length: convertedArray0.length,
+          length: intermediateValue1.length,
         });
-        for (let i1 = 0; i1 < convertedArray0.length; ++i1) {
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
           if (
-            value["invalidations"][i1] === null ||
-            value["invalidations"][i1] === undefined
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
           ) {
-            errorMap[`$.invalidations.${i1}`] = {
+            intermediateErrorMap1[`$.${i1}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 = validateExperimentalRouteInvalidationDefinition(
-              value["invalidations"][i1],
+            const refResult1 = validateExperimentalRouteInvalidationDefinition(
+              intermediateValue1[i1],
             );
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                errorMap[`$.invalidations.${i1}${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult1.error) {
+              for (const errorKey of Object.keys(refResult1.error)) {
+                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
+                  refResult1.error[errorKey];
               }
             }
-            result["invalidations"][i1] = refResult2.value;
+            intermediateResult1[i1] = refResult1.value;
           }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.invalidations${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["invalidations"] = intermediateResult1;
         }
       }
       if (value["metadata"] === null || value["metadata"] === undefined) {
@@ -10990,26 +11646,29 @@ export function validateExperimentalRouteDefinition(value) {
           } else {
             let convertedString0 = value["metadata"]["requestBodyType"];
             if (typeof convertedString0 !== "string") {
-              convertedString0 = String(convertedString0);
-            }
-            if (convertedString0.length === 0) {
-              result["metadata"]["requestBodyType"] = undefined;
+              errorMap[`$.metadata.requestBodyType`] = {
+                key: "validator.string",
+              };
             } else {
-              if (convertedString0.length < 1) {
-                errorMap[`$.metadata.requestBodyType`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString0 !== "json" &&
-                convertedString0 !== "form-data"
-              ) {
-                errorMap[`$.metadata.requestBodyType`] = {
-                  key: "validator.oneOf",
-                  allowedValues: ["json", "form-data"],
-                };
+              if (convertedString0.length === 0) {
+                result["metadata"]["requestBodyType"] = undefined;
               } else {
-                result["metadata"]["requestBodyType"] = convertedString0;
+                if (convertedString0.length < 1) {
+                  errorMap[`$.metadata.requestBodyType`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString0 !== "json" &&
+                  convertedString0 !== "form-data"
+                ) {
+                  errorMap[`$.metadata.requestBodyType`] = {
+                    key: "validator.oneOf",
+                    allowedValues: ["json", "form-data"],
+                  };
+                } else {
+                  result["metadata"]["requestBodyType"] = convertedString0;
+                }
               }
             }
           }
@@ -11052,20 +11711,23 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
       } else {
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
-          convertedString0 = String(convertedString0);
-        }
-        if (convertedString0.length < 1) {
           errorMap[`$.type`] = {
-            key: "validator.length",
-            minLength: 1,
-          };
-        } else if (convertedString0 !== "routeInvalidation") {
-          errorMap[`$.type`] = {
-            key: "validator.oneOf",
-            allowedValues: ["routeInvalidation"],
+            key: "validator.string",
           };
         } else {
-          result["type"] = convertedString0;
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "routeInvalidation") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["routeInvalidation"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
         }
       }
       if (value["target"] === null || value["target"] === undefined) {
@@ -11234,15 +11896,18 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                   } else {
                     let convertedString3 = genericKeyInput0;
                     if (typeof convertedString3 !== "string") {
-                      convertedString3 = String(convertedString3);
-                    }
-                    if (convertedString3.length < 1) {
                       genericKeyErrorMap2[`$`] = {
-                        key: "validator.length",
-                        minLength: 1,
+                        key: "validator.string",
                       };
                     } else {
-                      genericKeyResult1 = convertedString3;
+                      if (convertedString3.length < 1) {
+                        genericKeyErrorMap2[`$`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        genericKeyResult1 = convertedString3;
+                      }
                     }
                   }
                   if (Object.keys(genericKeyErrorMap2).length !== 0) {
@@ -11276,51 +11941,59 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                         key: "validator.undefined",
                       };
                     } else {
-                      let convertedArray3 =
+                      const intermediateErrorMap4 = {};
+                      let intermediateResult4 = [];
+                      let intermediateValue4 =
                         value["properties"]["specification"]["params"][
                           genericKeyResult1
                         ];
-                      if (!Array.isArray(convertedArray3)) {
-                        convertedArray3 = [convertedArray3];
+
+                      if (!Array.isArray(intermediateValue4)) {
+                        intermediateValue4 = [intermediateValue4];
                       }
                       result["properties"]["specification"]["params"][
                         genericKeyResult1
-                      ] = Array.from({ length: convertedArray3.length });
-                      for (let i4 = 0; i4 < convertedArray3.length; ++i4) {
+                      ] = Array.from({ length: intermediateValue4.length });
+                      for (let i4 = 0; i4 < intermediateValue4.length; ++i4) {
                         if (
-                          value["properties"]["specification"]["params"][
-                            genericKeyResult1
-                          ][i4] === null ||
-                          value["properties"]["specification"]["params"][
-                            genericKeyResult1
-                          ][i4] === undefined
+                          intermediateValue4[i4] === null ||
+                          intermediateValue4[i4] === undefined
                         ) {
-                          errorMap[
-                            `$.properties.specification.params.${genericKeyResult1}.${i4}`
-                          ] = {
+                          intermediateErrorMap4[`$.${i4}`] = {
                             key: "validator.undefined",
                           };
                         } else {
-                          let convertedString5 =
-                            value["properties"]["specification"]["params"][
-                              genericKeyResult1
-                            ][i4];
-                          if (typeof convertedString5 !== "string") {
-                            convertedString5 = String(convertedString5);
-                          }
-                          if (convertedString5.length < 1) {
-                            errorMap[
-                              `$.properties.specification.params.${genericKeyResult1}.${i4}`
-                            ] = {
-                              key: "validator.length",
-                              minLength: 1,
+                          let convertedString4 = intermediateValue4[i4];
+                          if (typeof convertedString4 !== "string") {
+                            intermediateErrorMap4[`$.${i4}`] = {
+                              key: "validator.string",
                             };
                           } else {
-                            result["properties"]["specification"]["params"][
-                              genericKeyResult1
-                            ][i4] = convertedString5;
+                            if (convertedString4.length < 1) {
+                              intermediateErrorMap4[`$.${i4}`] = {
+                                key: "validator.length",
+                                minLength: 1,
+                              };
+                            } else {
+                              intermediateResult4[i4] = convertedString4;
+                            }
                           }
                         }
+                      }
+                      if (Object.keys(intermediateErrorMap4).length) {
+                        for (const errorKey of Object.keys(
+                          intermediateErrorMap4,
+                        )) {
+                          errorMap[
+                            `$.properties.specification.params.${genericKeyResult1}${errorKey.substring(
+                              1,
+                            )}`
+                          ] = intermediateErrorMap4[errorKey];
+                        }
+                      } else {
+                        result["properties"]["specification"]["params"][
+                          genericKeyResult1
+                        ] = intermediateResult4;
                       }
                     }
                   }
@@ -11350,15 +12023,18 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                   } else {
                     let convertedString3 = genericKeyInput0;
                     if (typeof convertedString3 !== "string") {
-                      convertedString3 = String(convertedString3);
-                    }
-                    if (convertedString3.length < 1) {
                       genericKeyErrorMap2[`$`] = {
-                        key: "validator.length",
-                        minLength: 1,
+                        key: "validator.string",
                       };
                     } else {
-                      genericKeyResult1 = convertedString3;
+                      if (convertedString3.length < 1) {
+                        genericKeyErrorMap2[`$`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        genericKeyResult1 = convertedString3;
+                      }
                     }
                   }
                   if (Object.keys(genericKeyErrorMap2).length !== 0) {
@@ -11393,51 +12069,59 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                         key: "validator.undefined",
                       };
                     } else {
-                      let convertedArray3 =
+                      const intermediateErrorMap4 = {};
+                      let intermediateResult4 = [];
+                      let intermediateValue4 =
                         value["properties"]["specification"]["query"][
                           genericKeyResult1
                         ];
-                      if (!Array.isArray(convertedArray3)) {
-                        convertedArray3 = [convertedArray3];
+
+                      if (!Array.isArray(intermediateValue4)) {
+                        intermediateValue4 = [intermediateValue4];
                       }
                       result["properties"]["specification"]["query"][
                         genericKeyResult1
-                      ] = Array.from({ length: convertedArray3.length });
-                      for (let i4 = 0; i4 < convertedArray3.length; ++i4) {
+                      ] = Array.from({ length: intermediateValue4.length });
+                      for (let i4 = 0; i4 < intermediateValue4.length; ++i4) {
                         if (
-                          value["properties"]["specification"]["query"][
-                            genericKeyResult1
-                          ][i4] === null ||
-                          value["properties"]["specification"]["query"][
-                            genericKeyResult1
-                          ][i4] === undefined
+                          intermediateValue4[i4] === null ||
+                          intermediateValue4[i4] === undefined
                         ) {
-                          errorMap[
-                            `$.properties.specification.query.${genericKeyResult1}.${i4}`
-                          ] = {
+                          intermediateErrorMap4[`$.${i4}`] = {
                             key: "validator.undefined",
                           };
                         } else {
-                          let convertedString5 =
-                            value["properties"]["specification"]["query"][
-                              genericKeyResult1
-                            ][i4];
-                          if (typeof convertedString5 !== "string") {
-                            convertedString5 = String(convertedString5);
-                          }
-                          if (convertedString5.length < 1) {
-                            errorMap[
-                              `$.properties.specification.query.${genericKeyResult1}.${i4}`
-                            ] = {
-                              key: "validator.length",
-                              minLength: 1,
+                          let convertedString4 = intermediateValue4[i4];
+                          if (typeof convertedString4 !== "string") {
+                            intermediateErrorMap4[`$.${i4}`] = {
+                              key: "validator.string",
                             };
                           } else {
-                            result["properties"]["specification"]["query"][
-                              genericKeyResult1
-                            ][i4] = convertedString5;
+                            if (convertedString4.length < 1) {
+                              intermediateErrorMap4[`$.${i4}`] = {
+                                key: "validator.length",
+                                minLength: 1,
+                              };
+                            } else {
+                              intermediateResult4[i4] = convertedString4;
+                            }
                           }
                         }
+                      }
+                      if (Object.keys(intermediateErrorMap4).length) {
+                        for (const errorKey of Object.keys(
+                          intermediateErrorMap4,
+                        )) {
+                          errorMap[
+                            `$.properties.specification.query.${genericKeyResult1}${errorKey.substring(
+                              1,
+                            )}`
+                          ] = intermediateErrorMap4[errorKey];
+                        }
+                      } else {
+                        result["properties"]["specification"]["query"][
+                          genericKeyResult1
+                        ] = intermediateResult4;
                       }
                     }
                   }
