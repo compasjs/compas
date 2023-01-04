@@ -80,6 +80,29 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - [ ] `upsertOnId`
   - [ ] Query builder
     - [ ] Run all query results through validators
+- [x] Code gen behaviour suite
+  - Dependencies
+    - structure.json (a specification with all the edge cases)
+    - specification.json
+      - series, generate (+ compile), validate, database query
+      - _no assertion_, any error, error string (matching regexp), validation
+        error (path, error key), result string (matching regexp)
+      - example:
+        - series:
+          - generate
+          - series:
+            - type: validate, validator: basicAny, input, output
+            - type: validate, validator: basicObject, input, validation error
+  - Outputs
+    - Passed, skipped, failed
+    - Running an implementation should output more information about failures
+  - Testing
+    - No dependency on test runner
+    - Test runner should run them spawned, and fail if any implementation fails.
+  - Can't really validate on output. Since not all implementations have the same
+    kind of assertions, and then we need a specification for the behaviour
+    suite. So we only test on the error boundaries of validators.
+  - Queries are tested by their generated queries (whitespace normalized);
 - [ ] Router generator
   - [ ] Check conflicting routes
   - [ ] Build sorted route trie
