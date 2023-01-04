@@ -251,7 +251,10 @@ export function typesTypescriptFormatType(
         ]);
 
       fileWriteNewLine(file);
-      fileWriteInline(file, `|`);
+      if (value.type !== "anyOf") {
+        // The nested anyOf will be flattened in to this one.
+        fileWriteInline(file, `|`);
+      }
       typesTypescriptFormatType(generateContext, file, value, options);
     }
 
