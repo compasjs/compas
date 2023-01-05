@@ -65,7 +65,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] uuid
   - [x] generic
 - [x] Self-host code-gen/experimental
-- [ ] Database generator
+- [x] Database generator
   - [x] SQL types
     - [x] `xxxWhere`
     - [x] `xxxUpdate`
@@ -81,8 +81,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Helpers
     - [x] Where
     - [x] OrderBy
-  - [ ] Query builder
-    - [ ] Run all query results through validators
+  - [x] Query builder
+    - [x] Run all query results through validators
 - [x] Code gen behaviour suite
   - Dependencies
     - structure.json (a specification with all the edge cases)

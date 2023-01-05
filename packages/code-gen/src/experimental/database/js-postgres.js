@@ -1002,3 +1002,128 @@ export function jsPostgresGenerateDelete(
   fileBlockEnd(file);
   fileWrite(file, "");
 }
+
+/**
+ * Generate the query builder spec and wrapper function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateQueryBuilder(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  const importCollector = JavascriptImportCollector.getImportCollector(file);
+  importCollector.destructure("@compas/store", "generatedQueryBuilderHelper");
+
+  // Generate the spec
+  const entityQuerySpec = {
+    name: model.name,
+    shortName: model.shortName,
+    orderBy: `$$${model.name}OrderBy$$`,
+    where: `$$${model.name}WhereSpec$$`,
+    columns: Object.keys(model.keys),
+    relations: [],
+  };
+
+  const ownRelations = modelRelationGetOwn(model);
+  const inverseRelations = modelRelationGetInverse(model);
+
+  for (const relation of ownRelations) {
+    const relationInfo = modelRelationGetInformation(relation);
+
+    if (relationInfo.modelOwn !== relationInfo.modelInverse) {
+      importCollector.destructure(
+        `./${relationInfo.modelInverse.name}.js`,
+        `${relationInfo.modelInverse.name}QueryBuilderSpec`,
+      );
+    }
+
+    // @ts-expect-error
+    entityQuerySpec.relations.push({
+      builderKey: relationInfo.keyNameOwn,
+      ownKey: relationInfo.keyNameOwn,
+      referencedKey: relationInfo.primaryKeyNameInverse,
+      returnsMany: false,
+      entityInformation: `$$() => ${relationInfo.modelInverse.name}QueryBuilderSpec$$`,
+    });
+  }
+  for (const relation of inverseRelations) {
+    const relationInfo = modelRelationGetInformation(relation);
+
+    if (relationInfo.modelOwn !== relationInfo.modelInverse) {
+      importCollector.destructure(
+        `./${relationInfo.modelOwn.name}.js`,
+        `${relationInfo.modelOwn.name}QueryBuilderSpec`,
+      );
+    }
+
+    // @ts-expect-error
+    entityQuerySpec.relations.push({
+      builderKey: relationInfo.virtualKeyNameInverse,
+      ownKey: relationInfo.primaryKeyNameInverse,
+      referencedKey: relationInfo.keyNameOwn,
+      returnsMany: relation.subType === "oneToMany",
+      entityInformation: `$$() => ${relationInfo.modelOwn.name}QueryBuilderSpec$$`,
+    });
+  }
+
+  fileWrite(
+    file,
+    `export const ${model.name}QueryBuilderSpec = ${JSON.stringify(
+      entityQuerySpec,
+      null,
+      2,
+    )
+      .replaceAll(`"$$`, "")
+      .replaceAll(`$$"`, "")};\n`,
+  );
+
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(
+    file,
+    ` Query records in the '${model.name}' table, optionally joining related tables.\n`,
+  );
+
+  fileWrite(file, ` @param {${contextNames.queryBuilderType.inputType}} input`);
+  fileWrite(
+    file,
+    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.queryResultType.outputType}>}`,
+  );
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(file, `function query${upperCaseFirst(model.name)}(input)`);
+
+  // Input validation
+  fileWrite(
+    file,
+    `const { error, value: validatedInput } = ${contextNames.queryBuilderType.validatorFunction}(input);`,
+  );
+  fileBlockStart(file, `if (error)`);
+  fileWrite(
+    file,
+    `throw AppError.serverError({
+  message: "Query builder input validation failed",
+  error,
+});`,
+  );
+  fileBlockEnd(file);
+
+  fileWrite(
+    file,
+    `return wrapQueryPart(generatedQueryBuilderHelper(${model.name}QueryBuilderSpec, validatedInput, {}), ${contextNames.queryResultType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.select), });`,
+  );
+
+  fileBlockEnd(file);
+  fileWrite(file, "");
+}

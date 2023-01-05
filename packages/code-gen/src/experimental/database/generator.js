@@ -15,6 +15,7 @@ import {
   jsPostgresGenerateDelete,
   jsPostgresGenerateInsert,
   jsPostgresGenerateOrderBy,
+  jsPostgresGenerateQueryBuilder,
   jsPostgresGenerateUpdate,
   jsPostgresGenerateUpsertOnPrimaryKey,
   jsPostgresGenerateUtils,
@@ -250,7 +251,14 @@ export function databaseGenerator(generateContext) {
       );
     }
 
-    // TODO: generate queryBuilder
+    targetCustomSwitch(
+      {
+        jsPostgres: jsPostgresGenerateQueryBuilder,
+        tsPostgres: noop,
+      },
+      target,
+      [generateContext, file, model, contextNames],
+    );
   }
 }
 
