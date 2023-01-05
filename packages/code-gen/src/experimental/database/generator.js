@@ -15,6 +15,7 @@ import {
   jsPostgresGenerateDelete,
   jsPostgresGenerateInsert,
   jsPostgresGenerateUpdate,
+  jsPostgresGenerateUpsertOnPrimaryKey,
   jsPostgresGenerateUtils,
   jsPostgresGenerateWhere,
 } from "./js-postgres.js";
@@ -213,6 +214,15 @@ export function databaseGenerator(generateContext) {
 
       targetCustomSwitch(
         {
+          jsPostgres: jsPostgresGenerateUpsertOnPrimaryKey,
+          tsPostgres: noop,
+        },
+        target,
+        [generateContext, file, model, contextNames],
+      );
+
+      targetCustomSwitch(
+        {
           jsPostgres: jsPostgresGenerateUpdate,
           tsPostgres: noop,
         },
@@ -229,9 +239,6 @@ export function databaseGenerator(generateContext) {
         [generateContext, file, model, contextNames],
       );
     }
-    // TODO: generate where data + wrapper around helper from @compas/store
-
-    // TODO:  generate insert, update, delete & upsert queries
 
     // TODO: generate queryBuilder
   }

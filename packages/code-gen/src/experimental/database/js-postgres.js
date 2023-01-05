@@ -8,7 +8,7 @@ import {
   fileContextSetIndent,
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/format.js";
-import { fileWrite } from "../file/write.js";
+import { fileWrite, fileWriteInline } from "../file/write.js";
 import { modelKeyGetPrimary } from "../processors/model-keys.js";
 import {
   modelRelationGetInformation,
@@ -147,6 +147,12 @@ export function jsPostgresCreateFile(generateContext, model) {
     fileWrite(file, `${model.name}Insert,`);
     fileWrite(file, `${model.name}Update,`);
     fileWrite(file, `${model.name}Delete,`);
+    fileWrite(
+      file,
+      `${model.name}UpsertOn${upperCaseFirst(
+        modelKeyGetPrimary(model).primaryKeyName,
+      )},`,
+    );
   }
 
   fileContextSetIndent(file, -1);
@@ -316,7 +322,7 @@ export function jsPostgresGenerateWhere(
       2,
     )
       .replaceAll(`"$$`, "")
-      .replaceAll(`$$"`, "")};`,
+      .replaceAll(`$$"`, "")};\n`,
   );
 
   // Doc block
@@ -371,6 +377,7 @@ export function jsPostgresGenerateWhere(
   );
 
   fileBlockEnd(file);
+  fileWrite(file, "");
 }
 
 /**
@@ -416,6 +423,7 @@ export function jsPostgresGenerateCount(
   fileWrite(file, `return Number(result?.recordCount ?? "0");`);
 
   fileBlockEnd(file);
+  fileWrite(file, "");
 }
 
 /**
@@ -578,10 +586,146 @@ export function jsPostgresGenerateInsert(
   fileWrite(file, `qb.append(query(str, args));`);
   fileWrite(
     file,
-    `return wrapQueryPart(qb, ${contextNames.insertType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
+    `return wrapQueryPart(qb, ${contextNames.model.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
   );
 
   fileBlockEnd(file);
+  fileWrite(file, "");
+}
+
+/**
+ * Generate the upsert on primary key query function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateUpsertOnPrimaryKey(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(
+    file,
+    ` Upsert a record in the '${model.name}' table based on the primary key.\n`,
+  );
+
+  fileWrite(file, ` @param {${contextNames.insertType.inputType}} input`);
+  fileWrite(
+    file,
+    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.model.outputType}>}`,
+  );
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(
+    file,
+    `function ${model.name}UpsertOn${upperCaseFirst(
+      modelKeyGetPrimary(model).primaryKeyName,
+    )}(input)`,
+  );
+
+  // Input validation
+  fileWrite(
+    file,
+    `const { error, value: validatedInput } = ${contextNames.insertType.validatorFunction}(input);`,
+  );
+  fileBlockStart(file, `if (error)`);
+  fileWrite(
+    file,
+    `throw AppError.serverError({
+  message: "Insert input validation failed",
+  error,
+});`,
+  );
+  fileBlockEnd(file);
+
+  fileWrite(
+    file,
+    `const { queryPart } = ${model.name}Insert({ insert: input.insert });`,
+  );
+
+  fileWrite(file, `const str = [];`);
+  fileWrite(file, `const args = []`);
+
+  fileWrite(
+    file,
+    `str.push(\`ON CONFLICT ("${
+      modelKeyGetPrimary(model).primaryKeyName
+    }") DO UPDATE SET`,
+  );
+  fileContextSetIndent(file, 1);
+
+  let isFirst = true;
+  for (const key of Object.keys(model.keys)) {
+    const isPrimary = referenceUtilsGetProperty(
+      generateContext,
+      model.keys[key],
+      ["sql", "primary"],
+    );
+
+    if (isPrimary) {
+      continue;
+    }
+
+    if (
+      (model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes) &&
+      key === "createdAt"
+    ) {
+      // Don't alter the original createdAt field.
+      continue;
+    }
+
+    if (!isFirst) {
+      fileWrite(file, `,`);
+    } else {
+      isFirst = false;
+    }
+
+    fileWriteInline(
+      file,
+      `"${key}" = COALESCE(EXCLUDED."${key}", "${model.name}"."${key}")`,
+    );
+  }
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `\`);`);
+
+  fileBlockStart(file, `if(validatedInput.returning === "*")`);
+  fileWrite(
+    file,
+    `str.push(\` RETURNING ${JSON.stringify(Object.keys(model.keys)).slice(
+      1,
+      -1,
+    )}\`);`,
+  );
+  fileWrite(file, `args.push(undefined);`);
+  fileBlockEnd(file);
+
+  fileBlockStart(file, `else if (Array.isArray(validatedInput.returning))`);
+  fileWrite(
+    file,
+    `str.push(\` RETURNING $\{JSON.stringify(validatedInput.returning).slice(1, -1)}\`);`,
+  );
+  fileWrite(file, `args.push(undefined);`);
+  fileBlockEnd(file);
+
+  fileWrite(file, `queryPart.append(query(str, args));`);
+  fileWrite(
+    file,
+    `return wrapQueryPart(queryPart, ${contextNames.model.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
+  );
+
+  fileBlockEnd(file);
+  fileWrite(file, "");
 }
 
 /**
@@ -690,10 +834,11 @@ export function jsPostgresGenerateUpdate(
 
   fileWrite(
     file,
-    `return wrapQueryPart(generatedUpdateHelper(${model.name}UpdateSpec, validatedInput), ${contextNames.updateType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
+    `return wrapQueryPart(generatedUpdateHelper(${model.name}UpdateSpec, validatedInput), ${contextNames.model.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
   );
 
   fileBlockEnd(file);
+  fileWrite(file, "");
 }
 
 /**
@@ -735,4 +880,5 @@ export function jsPostgresGenerateDelete(
   );
 
   fileBlockEnd(file);
+  fileWrite(file, "");
 }
