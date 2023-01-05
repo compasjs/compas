@@ -37,6 +37,10 @@ export function modelNameValidation(generateContext) {
         .join("");
     }
 
+    if (model.shortName.endsWith(".")) {
+      model.shortName = model.shortName.slice(0, -1);
+    }
+
     if (shortNames[model.shortName]) {
       errors.push(
         AppError.serverError({

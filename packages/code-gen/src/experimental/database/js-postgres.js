@@ -9,12 +9,14 @@ import {
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite } from "../file/write.js";
+import { modelKeyGetPrimary } from "../processors/model-keys.js";
 import {
   modelRelationGetInformation,
   modelRelationGetInverse,
   modelRelationGetOwn,
 } from "../processors/model-relation.js";
 import { modelWhereGetInformation } from "../processors/model-where.js";
+import { structureModels } from "../processors/models.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
@@ -37,6 +39,7 @@ export function jsPostgresGenerateUtils(generateContext) {
     `
 /**
  * @template Type
+ 
  * @typedef {object} WrappedQueryPart
  * @property {import("@compas/store").QueryPart<any>} queryPart
  * @property {function(): void} then
@@ -92,6 +95,19 @@ export function wrapQueryPart(queryPart, validator, options) {
     execRaw: async (sql) => await queryPart.exec(sql),
   };
 }
+
+export const queries = {
+${structureModels(generateContext)
+  .map((it) => {
+    importCollector.destructure(
+      `../database/${it.name}.js`,
+      `${it.name}Queries`,
+    );
+
+    return `  ...${it.name}Queries,`;
+  })
+  .join("\n")}
+};
 `,
   );
 }
@@ -120,6 +136,21 @@ export function jsPostgresCreateFile(generateContext, model) {
   importCollector.destructure("@compas/store", "generatedUpdateHelper");
   importCollector.destructure("@compas/stdlib", "isNil");
   importCollector.destructure("@compas/stdlib", "AppError");
+
+  fileWrite(file, `\nexport const ${model.name}Queries = {`);
+  fileContextSetIndent(file, 1);
+
+  if (model.queryOptions?.isView) {
+    fileWrite(file, `${model.name}Count,`);
+  } else {
+    fileWrite(file, `${model.name}Count,`);
+    fileWrite(file, `${model.name}Insert,`);
+    fileWrite(file, `${model.name}Update,`);
+    fileWrite(file, `${model.name}Delete,`);
+  }
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `};\n`);
 
   return file;
 }
@@ -343,6 +374,51 @@ export function jsPostgresGenerateWhere(
 }
 
 /**
+ * Generate the count query function. This is the only result that doesn't return a
+ * wrapped query part.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateCount(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Count the records in the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
+  fileWrite(file, ` @param {${contextNames.whereType.inputType}} where`);
+  fileWrite(file, ` @returns {Promise<number>}`);
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(file, `async function ${model.name}Count(sql, where)`);
+
+  fileWrite(
+    file,
+    `const [result] = await query\`select count(${model.shortName}."${
+      modelKeyGetPrimary(model).primaryKeyName
+    }") as "recordCount" FROM ${model.queryOptions?.schema}"${model.name}" ${
+      model.shortName
+    } WHERE $\{${model.name}Where(where)}\`.exec(sql);`,
+  );
+
+  fileWrite(file, `return Number(result?.recordCount ?? "0");`);
+
+  fileBlockEnd(file);
+}
+
+/**
  * Generate the insert query function
  *
  * @param {import("../generate").GenerateContext} generateContext
@@ -372,7 +448,7 @@ export function jsPostgresGenerateInsert(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(file, `export function ${model.name}Insert(input)`);
+  fileBlockStart(file, `function ${model.name}Insert(input)`);
 
   // Input validation
   fileWrite(
@@ -615,6 +691,47 @@ export function jsPostgresGenerateUpdate(
   fileWrite(
     file,
     `return wrapQueryPart(generatedUpdateHelper(${model.name}UpdateSpec, validatedInput), ${contextNames.updateType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
+  );
+
+  fileBlockEnd(file);
+}
+
+/**
+ * Generate the delete query function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateDelete(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Remove records from the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {${contextNames.whereType.inputType}} [where]`);
+  fileWrite(file, ` @returns {import("@compas/store").QueryPart<any>}`);
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(file, `function ${model.name}Delete(where = {})`);
+
+  if (model.queryOptions?.withSoftDeletes) {
+    fileWrite(file, `where.deletedAtIncludeNotNull = true;`);
+  }
+
+  fileWrite(
+    file,
+    `return query\`DELETE FROM ${model.queryOptions?.schema}"${model.name}" ${model.shortName} WHERE $\{${model.name}Where(where)}\`;`,
   );
 
   fileBlockEnd(file);

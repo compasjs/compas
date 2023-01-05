@@ -11,6 +11,8 @@ import {
 } from "../validators/generator.js";
 import {
   jsPostgresCreateFile,
+  jsPostgresGenerateCount,
+  jsPostgresGenerateDelete,
   jsPostgresGenerateInsert,
   jsPostgresGenerateUpdate,
   jsPostgresGenerateUtils,
@@ -190,6 +192,15 @@ export function databaseGenerator(generateContext) {
       [generateContext, file, model, contextNames],
     );
 
+    targetCustomSwitch(
+      {
+        jsPostgres: jsPostgresGenerateCount,
+        tsPostgres: noop,
+      },
+      target,
+      [generateContext, file, model, contextNames],
+    );
+
     if (!model.queryOptions?.isView) {
       targetCustomSwitch(
         {
@@ -203,6 +214,15 @@ export function databaseGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsPostgres: jsPostgresGenerateUpdate,
+          tsPostgres: noop,
+        },
+        target,
+        [generateContext, file, model, contextNames],
+      );
+
+      targetCustomSwitch(
+        {
+          jsPostgres: jsPostgresGenerateDelete,
           tsPostgres: noop,
         },
         target,
