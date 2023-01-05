@@ -72,12 +72,15 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - [x] `xxxOrderBy`
     - [x] `xxxInsert`
     - [x] `QueryBuilder`
-  - [ ] Base queries
+  - [x] Base queries
     - [x] `count`
     - [x] `update`
     - [x] `insert`
     - [x] `delete`
-    - [ ] `upsertOnId`
+    - [x] `upsertOnId`
+  - [x] Helpers
+    - [x] Where
+    - [x] OrderBy
   - [ ] Query builder
     - [ ] Run all query results through validators
 - [x] Code gen behaviour suite

@@ -14,6 +14,7 @@ import {
   jsPostgresGenerateCount,
   jsPostgresGenerateDelete,
   jsPostgresGenerateInsert,
+  jsPostgresGenerateOrderBy,
   jsPostgresGenerateUpdate,
   jsPostgresGenerateUpsertOnPrimaryKey,
   jsPostgresGenerateUtils,
@@ -187,6 +188,15 @@ export function databaseGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsPostgres: jsPostgresGenerateWhere,
+        tsPostgres: noop,
+      },
+      target,
+      [generateContext, file, model, contextNames],
+    );
+
+    targetCustomSwitch(
+      {
+        jsPostgres: jsPostgresGenerateOrderBy,
         tsPostgres: noop,
       },
       target,

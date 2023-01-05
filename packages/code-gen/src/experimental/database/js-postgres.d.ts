@@ -36,6 +36,22 @@ export function jsPostgresGenerateWhere(
   contextNames: import("./generator").DatabaseContextNames,
 ): void;
 /**
+ * Generate the order by query function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateOrderBy(
+  generateContext: import("../generate").GenerateContext,
+  file: import("../file/context").GenerateFile,
+  model: import("../types").NamedType<
+    import("../generated/common/types").ExperimentalObjectDefinition
+  >,
+  contextNames: import("./generator").DatabaseContextNames,
+): void;
+/**
  * Generate the count query function. This is the only result that doesn't return a
  * wrapped query part.
  *

@@ -345,7 +345,10 @@ export function jsPostgresGenerateWhere(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(file, `function ${model.name}Where(where, options = {})`);
+  fileBlockStart(
+    file,
+    `export function ${model.name}Where(where, options = {})`,
+  );
 
   fileWrite(file, `options.shortName ??= "${model.shortName}."`);
   fileWrite(
@@ -375,6 +378,123 @@ export function jsPostgresGenerateWhere(
     file,
     `return generatedWhereBuilderHelper(${model.name}WhereSpec, where ?? {}, options.shortName);`,
   );
+
+  fileBlockEnd(file);
+  fileWrite(file, "");
+}
+
+/**
+ * Generate the order by query function
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../file/context").GenerateFile} file
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("./generator").DatabaseContextNames} contextNames
+ */
+export function jsPostgresGenerateOrderBy(
+  generateContext,
+  file,
+  model,
+  contextNames,
+) {
+  const importCollector = JavascriptImportCollector.getImportCollector(file);
+  importCollector.destructure("@compas/store", "isQueryPart");
+
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, " *");
+
+  fileWrite(
+    file,
+    " Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.",
+  );
+  fileWrite(file, "");
+  fileWrite(file, ` @param {${contextNames.orderByType.inputType}} [orderBy]`);
+  fileWrite(
+    file,
+    ` @param {${contextNames.orderBySpecType.inputType}} [orderBySpec]`,
+  );
+  fileWrite(
+    file,
+    ` @param {{ skipValidator?: boolean, shortName?: string }} [options]`,
+  );
+  fileWrite(file, ` @returns {QueryPart<any>}`);
+  fileWrite(file, `/`);
+
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(
+    file,
+    `export function ${model.name}OrderBy(orderBy, orderBySpec, options = {})`,
+  );
+
+  fileWrite(file, `options.shortName ??= "${model.shortName}."`);
+  fileWrite(
+    file,
+    `if (!options.shortName.endsWith(".")) { options.shortName += "."; }`,
+  );
+
+  const orderByArray =
+    model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes
+      ? ["createdAt", "updatedAt", modelKeyGetPrimary(model).primaryKeyName]
+      : [modelKeyGetPrimary(model).primaryKeyName];
+
+  fileWrite(file, `orderBy ??= ${JSON.stringify(orderByArray)};`);
+  fileWrite(file, `orderBySpec ??= {};`);
+
+  fileBlockStart(file, `if (!options.skipValidator)`);
+
+  fileWrite(
+    file,
+    `const validatedOrderBy = ${contextNames.orderByType.validatorFunction}(orderBy);`,
+  );
+
+  fileBlockStart(file, `if (validatedOrderBy.error)`);
+  fileWrite(
+    file,
+    `throw AppError.serverError({ message: "Invalid orderBy array", error: validatedOrderBy.error, });`,
+  );
+  fileBlockEnd(file);
+
+  fileWrite(file, `orderBy = validatedOrderBy.value;`);
+
+  fileWrite(
+    file,
+    `const validatedOrderBySpec = ${contextNames.orderBySpecType.validatorFunction}(orderBy);`,
+  );
+
+  fileBlockStart(file, `if (validatedOrderBySpec.error)`);
+  fileWrite(
+    file,
+    `throw AppError.serverError({ message: "Invalid orderBySpec object", error: validatedOrderBySpec.error, });`,
+  );
+  fileBlockEnd(file);
+
+  fileWrite(file, `orderBySpec = validatedOrderBySpec.value;`);
+
+  fileBlockEnd(file);
+
+  fileBlockStart(file, `if (isQueryPart(orderBy))`);
+  fileWrite(file, `return orderBy`);
+  fileBlockEnd(file);
+
+  fileWrite(file, `let str = "";`);
+
+  fileBlockStart(file, `for (const value of orderBy)`);
+
+  fileBlockStart(file, `if(str.length !== 0)`);
+  fileWrite(file, `str += ", ";`);
+  fileBlockEnd(file);
+
+  fileWrite(
+    file,
+    `str += \`$\{options.shortName}"$\{value}" $\{orderBySpec[value] ?? "ASC"}\``,
+  );
+
+  fileBlockEnd(file);
+
+  fileWrite(file, `return query([str]);`);
 
   fileBlockEnd(file);
   fileWrite(file, "");
