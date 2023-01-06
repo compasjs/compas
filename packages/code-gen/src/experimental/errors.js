@@ -19,12 +19,12 @@ export function errorsThrowCombinedError(errors) {
   const messages = [];
 
   for (const err of errors) {
-    if (err.info.message) {
+    if (err.info?.message) {
       messages.push(err.info.message);
-    }
-
-    if (err.info.messages) {
+    } else if (err.info?.messages) {
       messages.push(...err.info.messages);
+    } else {
+      messages.push(AppError.format(err));
     }
   }
 

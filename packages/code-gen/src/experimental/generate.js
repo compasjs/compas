@@ -38,6 +38,7 @@ import {
 import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { routeInvalidationsCheck } from "./processors/route-invalidation.js";
 import { routeStructureCreate } from "./processors/route-structure.js";
+import { routeTrieBuild } from "./processors/route-trie.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
   structureCopyAndSort,
@@ -142,8 +143,7 @@ export function generateExecute(generator, options) {
 
   routeInvalidationsCheck(generateContext);
   routeStructureCreate(generateContext);
-
-  // TODO(router): build route trie
+  routeTrieBuild(generateContext);
 
   docStringCleanup(generateContext);
 

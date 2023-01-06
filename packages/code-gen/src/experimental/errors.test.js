@@ -38,7 +38,8 @@ test("code-gen/experimental/errors", (t) => {
         ]);
       } catch (e) {
         t.ok(AppError.instanceOf(e));
-        t.deepEqual(e.info.messages, ["1"]);
+        t.equal(e.info.messages[0], "1");
+        t.equal(e.info.messages[1].key, "error.server.internal");
       }
     });
 
@@ -52,7 +53,9 @@ test("code-gen/experimental/errors", (t) => {
         ]);
       } catch (e) {
         t.ok(AppError.instanceOf(e));
-        t.deepEqual(e.info.messages, ["1", "2"]);
+        t.equal(e.info.messages[0], "1");
+        t.equal(e.info.messages[1], "2");
+        t.equal(e.info.messages[2].key, "error.server.internal");
       }
     });
   });

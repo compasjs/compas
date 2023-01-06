@@ -245,7 +245,7 @@ function getDefaultStructure() {
         limit: T.number().convert(),
       }),
 
-      R.get("/get/:param", "getFull")
+      R.get("/get/:param/*", "getFull")
         .params({
           param: T.uuid(),
         })
