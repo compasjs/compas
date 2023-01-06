@@ -36,6 +36,7 @@ import {
   modelWhereBuildWhereTypes,
 } from "./processors/model-where.js";
 import { objectExpansionExecute } from "./processors/object-expansion.js";
+import { routeInvalidationsCheck } from "./processors/route-invalidation.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
   structureCopyAndSort,
@@ -70,7 +71,6 @@ import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
  * @returns {OutputFile[]}
  */
 export function generateExecute(generator, options) {
-  // TODO: migrate to new validators
   const validationResultOptions = validateExperimentalGenerateOptions(options);
   const validationResultStructure = validateExperimentalStructure(
     generator.internalStructure,
@@ -137,13 +137,28 @@ export function generateExecute(generator, options) {
   modelQueryBuilderTypes(generateContext);
   modelQueryResultTypes(generateContext);
 
+  // TODO(crud): crudPreprocess, crudCreateRoutes replacements
+
+  routeInvalidationsCheck(generateContext);
+
+  // TODO(router): build public route structure
+  //   Also should add the route to the structure.
+
+  // TODO(router): build route trie
+
   docStringCleanup(generateContext);
 
   typesGeneratorInit(generateContext);
   validatorGeneratorGenerateBaseTypes(generateContext);
 
-  // All other generator output logic should be between here (A)
   databaseGenerator(generateContext);
+
+  // TODO(router): routerGenerator(generateContext);
+
+  // TODO(crud): generateEventImplementations(generateContext);
+  // TODO(crud): generateRouteImplementations
+
+  // TODO(apiClient): apiClientGenerate(generateContext);
 
   typesGeneratorFinalize(generateContext);
 

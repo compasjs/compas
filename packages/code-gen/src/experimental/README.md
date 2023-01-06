@@ -109,7 +109,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Router generator
   - [ ] Check conflicting routes
   - [ ] Build sorted route trie
-  - [ ] Generate generic route selecter
+  - [ ] Generate generic route matcher
   - [ ] Generate Koa target
 - [ ] API client generator
   - [ ] Check route invalidations
