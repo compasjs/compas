@@ -37,6 +37,7 @@ import {
 } from "./processors/model-where.js";
 import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { routeInvalidationsCheck } from "./processors/route-invalidation.js";
+import { routeStructureCreate } from "./processors/route-structure.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
   structureCopyAndSort,
@@ -140,9 +141,7 @@ export function generateExecute(generator, options) {
   // TODO(crud): crudPreprocess, crudCreateRoutes replacements
 
   routeInvalidationsCheck(generateContext);
-
-  // TODO(router): build public route structure
-  //   Also should add the route to the structure.
+  routeStructureCreate(generateContext);
 
   // TODO(router): build route trie
 

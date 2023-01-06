@@ -33,7 +33,7 @@ export function routeInvalidationsCheck(generateContext) {
 /**
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @param {(import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]} route
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {import("../generated/common/types").ExperimentalRouteInvalidationDefinition} invalidation
  */
 function routeInvalidationProcess(generateContext, route, invalidation) {
@@ -96,11 +96,15 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
       structureResolveReference(
         generateContext.structure,
         route[specificationKey],
+
+        // @ts-expect-error
       )?.keys ?? {};
     const targetRouteObject =
       structureResolveReference(
         generateContext.structure,
         targetRoute[specificationKey],
+
+        // @ts-expect-error
       )?.keys ?? {};
 
     const sourceParams = Object.keys(routeObject);
@@ -146,6 +150,8 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
         structureResolveReference(
           generateContext.structure,
           targetRoute[specificationKey],
+
+          // @ts-expect-error
         )?.keys ?? {};
 
       if (isNil(targetObject?.[key])) {
@@ -155,13 +161,13 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
           )} to ${stringFormatNameForError(
             targetRoute,
           )} has an invalid specification. The specified source '${JSON.stringify(
-            invalidation.properties.specification[specificationKey][key],
+            invalidation.properties?.specification?.[specificationKey]?.[key],
           )}' or target '["${specificationKey}", "${key}"]' does not exists. Both should be defined on their appropriate routes. See the docs for constraints.`,
         });
       }
 
       const sourceSpecification =
-        invalidation.properties.specification[specificationKey][key];
+        invalidation.properties?.specification?.[specificationKey]?.[key];
 
       let sourceLevel = route;
       let isIncorrect = false;
@@ -186,13 +192,14 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
         }
 
         if (i !== sourceSpecification.length) {
-          // @ts-ignore
-          sourceLevel =
+          sourceLevel = // @ts-expect-error
             sourceLevel?.type === "reference"
               ? structureResolveReference(
                   generateContext.structure,
                   sourceLevel,
-                )?.keys
+
+                  // @ts-expect-error
+                )?.keys // @ts-expect-error
               : sourceLevel?.keys;
         }
       }
@@ -204,7 +211,7 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
           )} to ${stringFormatNameForError(
             targetRoute,
           )} has an invalid specification. The specified source '${JSON.stringify(
-            invalidation.properties.specification[specificationKey][key],
+            invalidation.properties?.specification?.[specificationKey]?.[key],
           )}' or target '["${specificationKey}", "${key}"]' does not exists. Both should be defined on their appropriate routes. See the docs for constraints.`,
         });
       }
