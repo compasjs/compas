@@ -6,7 +6,7 @@ import { structureRoutes } from "./routes.js";
 /**
  * @typedef {object} RouteTrie
  * @property {import("../generated/common/types").ExperimentalRouteDefinition} [route]
- * @property {string} prio
+ * @property {keyof typeof RoutePrio} prio
  * @property {RouteTrie[]} children
  * @property {RouteTrie} [parent]
  * @property {string} path
@@ -23,7 +23,7 @@ const routeTrieCache = new WeakMap();
 /**
  * Route prio's used for sorting.
  *
- * @type {{WILDCARD: string, PARAM: string, STATIC: string}}
+ * @type {{WILDCARD: "WILDCARD", PARAM: "PARAM", STATIC: "STATIC"}}
  */
 const RoutePrio = {
   STATIC: "STATIC",
@@ -63,6 +63,16 @@ export function routeTrieBuild(generateContext) {
   trieSort(trie);
 
   routeTrieCache.set(generateContext, trie);
+}
+
+/**
+ * Get the cached route trie
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {RouteTrie}
+ */
+export function routeTrieGet(generateContext) {
+  return routeTrieCache.get(generateContext) ?? trieCreateNode("");
 }
 
 /**

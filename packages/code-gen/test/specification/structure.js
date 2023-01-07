@@ -13,6 +13,7 @@ export function codeGenSpecificationCreate(logger) {
   const generator = new Generator(logger);
 
   specificationExtendWithValidators(generator);
+  specificationExtendWithRouteMatchers(generator);
 
   generator.generate({
     targetLanguage: "js",
@@ -30,7 +31,7 @@ export function codeGenSpecificationCreate(logger) {
  * @param {Generator} generator
  */
 function specificationExtendWithValidators(generator) {
-  const T = new TypeCreator("specificationValidator");
+  const T = new TypeCreator("validator");
 
   generator.add(
     T.any("any"),
@@ -68,5 +69,46 @@ function specificationExtendWithValidators(generator) {
     T.string("stringOptional").optional(),
     T.string("stringPattern").pattern(/^\d+$/g),
     T.string("stringDisallowCharacters").disallowCharacters(["^", " "]).max(10),
+  );
+}
+
+/**
+ * Create all different routes to facilitate the route matcher specification.
+ *
+ * @param {Generator} generator
+ */
+function specificationExtendWithRouteMatchers(generator) {
+  const T = new TypeCreator("routeMatcher");
+  const R = T.router("/");
+
+  generator.add(
+    R.get("/", "base"),
+    R.get("/static", "static"),
+    R.get("/static/unused/1", "staticNested1"),
+    R.get("/static/unused/2", "staticNested2"),
+
+    R.get("/param/:foo", "paramSingle").params({
+      foo: T.string(),
+    }),
+    R.get("/param/:foo/bar", "paramSingleNestedStatic").params({
+      foo: T.string(),
+    }),
+    R.get("/param/:foo/:bar", "paramNested").params({
+      foo: T.string(),
+      bar: T.string(),
+    }),
+
+    R.get("/param-mixed/:foo/", "paramMixedBase").params({
+      foo: T.string(),
+    }),
+    R.get("/param-mixed/:foo/foo", "paramMixedFoo").params({
+      foo: T.string(),
+    }),
+    R.get("/param-mixed/:bar/bar", "paramMixedBar").params({
+      bar: T.string(),
+    }),
+
+    R.get("/wildcard/*", "wildcardBase"),
+    R.get("/wildcard/nested/*", "wildcardNested"),
   );
 }

@@ -25,9 +25,26 @@ import { specificationStructureDirectory } from "./structure.js";
  */
 
 /**
+ * @typedef {object} CodeGenSpecificationRouteMatcher
+ * @property {"routeMatcher"} type
+ * @property {{
+ *   method: string,
+ *   path: string,
+ * }} matchInput
+ * @property {{
+ *   route: {
+ *     group: string,
+ *     name: string,
+ *   },
+ *   params: Record<string, string>
+ * }} [matchOutput]
+ */
+
+/**
  * @typedef {CodeGenSpecificationSuite
  *   |CodeGenSpecificationGenerate
  *   |CodeGenSpecificationValidator
+ *   |CodeGenSpecificationRouteMatcher
  * } CodeGenSpecification
  */
 
@@ -53,7 +70,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "any",
               },
               input: JSON.stringify("foo"),
@@ -61,7 +78,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "any",
               },
               input: JSON.stringify({}),
@@ -69,7 +86,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "any",
               },
               input: JSON.stringify(true),
@@ -77,7 +94,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "any",
               },
               input: JSON.stringify([1, 2]),
@@ -85,7 +102,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "any",
               },
               assertValidatorError: {
@@ -96,7 +113,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "any",
               },
               input: JSON.stringify(null),
@@ -108,7 +125,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOptional",
               },
               input: JSON.stringify([1, 2]),
@@ -116,14 +133,14 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOptional",
               },
             },
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOptional",
               },
               input: JSON.stringify(null),
@@ -137,7 +154,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOf",
               },
               input: JSON.stringify(true),
@@ -145,7 +162,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOf",
               },
               input: JSON.stringify(false),
@@ -153,7 +170,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOf",
               },
               assertValidatorError: {
@@ -164,7 +181,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOf",
               },
               input: JSON.stringify("br"),
@@ -176,7 +193,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfMixedPrimitive",
               },
               input: JSON.stringify("br"),
@@ -184,7 +201,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfMixedPrimitive",
               },
               input: JSON.stringify(500),
@@ -192,7 +209,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfMixedPrimitive",
               },
               input: JSON.stringify({ foo: "bar" }),
@@ -204,7 +221,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfMixedPrimitive",
               },
               input: JSON.stringify(true),
@@ -216,7 +233,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfObjects",
               },
               input: JSON.stringify({
@@ -226,7 +243,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfObjects",
               },
               input: JSON.stringify({
@@ -236,7 +253,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfObjects",
               },
               input: JSON.stringify({
@@ -250,7 +267,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfNested",
               },
               input: JSON.stringify(1),
@@ -258,7 +275,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfNested",
               },
               input: JSON.stringify(2),
@@ -266,7 +283,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "anyOfNested",
               },
               input: JSON.stringify(3),
@@ -284,7 +301,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "array",
               },
               input: JSON.stringify(true),
@@ -292,7 +309,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "array",
               },
               input: JSON.stringify([true]),
@@ -300,7 +317,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "array",
               },
               input: JSON.stringify([true, true]),
@@ -308,7 +325,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "array",
               },
               input: JSON.stringify([true, false]),
@@ -320,7 +337,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "arrayNested",
               },
               input: JSON.stringify(true),
@@ -328,7 +345,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "arrayNested",
               },
               input: JSON.stringify([true]),
@@ -336,7 +353,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "arrayNested",
               },
               input: JSON.stringify([[true], [true, true]]),
@@ -344,7 +361,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "arrayNested",
               },
               input: JSON.stringify([[true], [false, true, false]]),
@@ -356,7 +373,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "arrayNested",
               },
               input: JSON.stringify([[true], [false, true, false]]),
@@ -374,7 +391,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "object",
               },
               input: JSON.stringify({
@@ -384,7 +401,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "object",
               },
               input: JSON.stringify(null),
@@ -396,7 +413,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "object",
               },
               input: JSON.stringify({}),
@@ -408,7 +425,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "object",
               },
               input: JSON.stringify({
@@ -423,7 +440,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "objectLoose",
               },
               input: JSON.stringify({
@@ -434,7 +451,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "objectNested",
               },
               input: JSON.stringify({
@@ -448,7 +465,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "objectNested",
               },
               input: JSON.stringify({
@@ -470,7 +487,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "string",
               },
               input: JSON.stringify("foo"),
@@ -478,7 +495,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "string",
               },
               input: JSON.stringify("true"),
@@ -486,7 +503,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "string",
               },
               input: JSON.stringify(""),
@@ -498,7 +515,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "string",
               },
               assertValidatorError: {
@@ -509,7 +526,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "string",
               },
               input: JSON.stringify(null),
@@ -521,7 +538,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringMinMax",
               },
               input: JSON.stringify("foo"),
@@ -533,7 +550,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringMinMax",
               },
               input: JSON.stringify("a too long string"),
@@ -545,7 +562,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringMinMax",
               },
               input: JSON.stringify("perfect!"),
@@ -553,7 +570,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringOneOf",
               },
               input: JSON.stringify("north"),
@@ -561,7 +578,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringOneOf",
               },
               input: JSON.stringify("east"),
@@ -569,7 +586,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringOneOf",
               },
               input: JSON.stringify("oops"),
@@ -581,7 +598,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringAllowNull",
               },
               input: JSON.stringify("foo"),
@@ -589,7 +606,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringAllowNull",
               },
               input: JSON.stringify(null),
@@ -597,14 +614,14 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringAllowNull",
               },
             },
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringOptional",
               },
               input: JSON.stringify("foo"),
@@ -612,7 +629,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringOptional",
               },
               input: JSON.stringify(null),
@@ -620,14 +637,14 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringOptional",
               },
             },
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringPattern",
               },
               input: JSON.stringify("222"),
@@ -635,7 +652,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringPattern",
               },
               input: JSON.stringify("222"),
@@ -643,7 +660,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringPattern",
               },
               input: JSON.stringify("222.22"),
@@ -655,7 +672,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringDisallowCharacters",
               },
               input: JSON.stringify("foo bar"),
@@ -667,7 +684,7 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringDisallowCharacters",
               },
               input: JSON.stringify("foo^bar^baz"),
@@ -679,10 +696,295 @@ export const codeGenSpecification = {
             {
               type: "validator",
               generatedType: {
-                group: "specificationValidator",
+                group: "validator",
                 name: "stringDisallowCharacters",
               },
               input: JSON.stringify("foo"),
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: "suite",
+      name: "RouteMatcher",
+      components: [
+        {
+          type: "suite",
+          name: "static",
+          components: [
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "base",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "static",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static/",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "static",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static/unused/1",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "staticNested1",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static/unused/1/",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "staticNested1",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static/unused/2",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "staticNested2",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static/unused/3",
+              },
+            },
+          ],
+        },
+        {
+          type: "suite",
+          name: "param",
+          components: [
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param/5",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramSingle",
+                },
+                params: {
+                  foo: "5",
+                },
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param/",
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param/five",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramSingle",
+                },
+                params: {
+                  foo: "five",
+                },
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param/five/",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramSingle",
+                },
+                params: {
+                  foo: "five",
+                },
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param/five/bar",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramSingleNestedStatic",
+                },
+                params: {
+                  foo: "five",
+                },
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param/five/baz",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramNested",
+                },
+                params: {
+                  foo: "five",
+                  bar: "baz",
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: "suite",
+          name: "paramMixed",
+          components: [
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param-mixed/foo",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramMixedBase",
+                },
+                params: {
+                  foo: "foo",
+                },
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param-mixed/foo/foo",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramMixedFoo",
+                },
+                params: {
+                  foo: "foo",
+                },
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/param-mixed/bar/bar",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "paramMixedBar",
+                },
+                params: {
+                  bar: "bar",
+                },
+              },
+            },
+          ],
+        },
+        {
+          type: "suite",
+          name: "wildcard",
+          components: [
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/wildcard/foo/bar",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "wildcardBase",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/wildcard/nested/foo/bar",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "wildcardNested",
+                },
+                params: {},
+              },
             },
           ],
         },

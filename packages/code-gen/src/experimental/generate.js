@@ -44,6 +44,7 @@ import {
   structureCopyAndSort,
   structureValidateReferences,
 } from "./processors/structure.js";
+import { routerGenerator } from "./router/generator.js";
 import { structureGenerator } from "./structure/generator.js";
 import {
   typesGeneratorFinalize,
@@ -152,7 +153,7 @@ export function generateExecute(generator, options) {
 
   databaseGenerator(generateContext);
 
-  // TODO(router): routerGenerator(generateContext);
+  routerGenerator(generateContext);
 
   // TODO(crud): generateEventImplementations(generateContext);
   // TODO(crud): generateRouteImplementations

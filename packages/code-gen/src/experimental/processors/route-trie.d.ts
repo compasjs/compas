@@ -7,6 +7,15 @@ export function routeTrieBuild(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
+ * Get the cached route trie
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {RouteTrie}
+ */
+export function routeTrieGet(
+  generateContext: import("../generate").GenerateContext,
+): RouteTrie;
+/**
  * Remove unnecessary trie nodes, and collapse static trie nodes as much as possible.
  *
  * @param {RouteTrie} trie
@@ -22,10 +31,21 @@ export type RouteTrie = {
   route?:
     | import("../generated/common/types").ExperimentalRouteDefinition
     | undefined;
-  prio: string;
+  prio: keyof typeof RoutePrio;
   children: RouteTrie[];
   parent?: RouteTrie | undefined;
   path: string;
   paramName?: string | undefined;
 };
+/**
+ * Route prio's used for sorting.
+ *
+ * @type {{WILDCARD: "WILDCARD", PARAM: "PARAM", STATIC: "STATIC"}}
+ */
+declare const RoutePrio: {
+  WILDCARD: "WILDCARD";
+  PARAM: "PARAM";
+  STATIC: "STATIC";
+};
+export {};
 //# sourceMappingURL=route-trie.d.ts.map

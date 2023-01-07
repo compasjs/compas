@@ -75,6 +75,9 @@ async function dispatchSpec(result, spec) {
     case "validator":
       await runValidator(result, spec);
       break;
+    case "routeMatcher":
+      await runRouteMatcher(result, spec);
+      break;
     default:
       runSkip(result, spec);
       break;
@@ -133,6 +136,12 @@ function runGenerate(result, spec) {
       generators: {
         validators: {
           includeBaseTypes: true,
+        },
+        router: {
+          target: {
+            library: "koa",
+          },
+          exposeApiStructure: true,
         },
       },
     });
@@ -206,6 +215,82 @@ async function runValidator(result, spec) {
   } catch (e) {
     result.failed++;
     result.extraLogs.push(`Failed to validate at ${formatSpecPath(result)}`);
+    result.extraLogs.push(AppError.format(e));
+  }
+}
+
+/**
+ * Run route matcher
+ *
+ * @param {SpecResult} result
+ * @param {import("../specification/specification").CodeGenSpecificationRouteMatcher} spec
+ */
+async function runRouteMatcher(result, spec) {
+  try {
+    const { routeMatcher } = await import(
+      pathJoin(
+        process.cwd(),
+        generateOutputDirectory,
+        `common/route-matcher.js`,
+      )
+    );
+
+    const routeMatch = routeMatcher(
+      spec.matchInput.method,
+      spec.matchInput.path,
+    );
+
+    if (isNil(routeMatch) && isNil(spec.matchOutput)) {
+      result.passed++;
+    } else if (isNil(spec.matchOutput)) {
+      throw AppError.serverError({
+        message: "Expected no route match, but found a match",
+        spec,
+        routeMatch,
+      });
+    } else if (isNil(routeMatch)) {
+      throw AppError.serverError({
+        message: "Expected a route match, but found no match",
+        spec,
+      });
+    } else {
+      if (
+        routeMatch.route.group !== spec.matchOutput.route.group ||
+        routeMatch.route.name !== spec.matchOutput.route.name
+      ) {
+        throw AppError.serverError({
+          message: "Matched an invalid route",
+          spec,
+          routeMatch,
+        });
+      }
+
+      if (
+        Object.keys(routeMatch.params).length !==
+        Object.keys(spec.matchOutput.params).length
+      ) {
+        throw AppError.serverError({
+          message: "Did not match the appropriate number of params",
+          spec,
+          routeMatch,
+        });
+      }
+
+      for (const [key, value] of Object.entries(spec.matchOutput.params)) {
+        if (routeMatch.params[key] !== value) {
+          throw AppError.serverError({
+            message: "Matched an invalid route param",
+            spec,
+            routeMatch,
+          });
+        }
+      }
+
+      result.passed++;
+    }
+  } catch (e) {
+    result.failed++;
+    result.extraLogs.push(`Failed to route match at ${formatSpecPath(result)}`);
     result.extraLogs.push(AppError.format(e));
   }
 }

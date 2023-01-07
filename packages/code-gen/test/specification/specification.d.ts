@@ -20,9 +20,25 @@
  * }} [assertValidatorError]
  */
 /**
+ * @typedef {object} CodeGenSpecificationRouteMatcher
+ * @property {"routeMatcher"} type
+ * @property {{
+ *   method: string,
+ *   path: string,
+ * }} matchInput
+ * @property {{
+ *   route: {
+ *     group: string,
+ *     name: string,
+ *   },
+ *   params: Record<string, string>
+ * }} [matchOutput]
+ */
+/**
  * @typedef {CodeGenSpecificationSuite
  *   |CodeGenSpecificationGenerate
  *   |CodeGenSpecificationValidator
+ *   |CodeGenSpecificationRouteMatcher
  * } CodeGenSpecification
  */
 /**
@@ -52,8 +68,25 @@ export type CodeGenSpecificationValidator = {
       }
     | undefined;
 };
+export type CodeGenSpecificationRouteMatcher = {
+  type: "routeMatcher";
+  matchInput: {
+    method: string;
+    path: string;
+  };
+  matchOutput?:
+    | {
+        route: {
+          group: string;
+          name: string;
+        };
+        params: Record<string, string>;
+      }
+    | undefined;
+};
 export type CodeGenSpecification =
   | CodeGenSpecificationSuite
   | CodeGenSpecificationGenerate
-  | CodeGenSpecificationValidator;
+  | CodeGenSpecificationValidator
+  | CodeGenSpecificationRouteMatcher;
 //# sourceMappingURL=specification.d.ts.map
