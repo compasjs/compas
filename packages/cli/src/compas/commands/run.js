@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { existsSync, statSync } from "fs";
 import path from "path";
 import { isNil, spawn } from "@compas/stdlib";
 import { collectScripts } from "../../utils.js";
@@ -23,7 +23,9 @@ export const cliDefinition = {
       dynamicValue: {
         validator: (value) => {
           const scriptCollection = collectScripts();
-          const isValid = !isNil(scriptCollection[value]) || existsSync(value);
+          const isValid =
+            !isNil(scriptCollection[value]) ||
+            (existsSync(value) && statSync(value).isFile());
 
           if (isValid) {
             return {
@@ -35,9 +37,9 @@ export const cliDefinition = {
             isValid,
             error: {
               message: `Can run files from the following places:
-- Files located in the scripts directory.
+- Files located in the 'scripts' directory.
 - Scripts defined in the package.json
-- Any path to a JavaScript file
+- Any path to a file, that can be executed via 'node [$--node-args] $file'
 
 Scripts directory:
 ${Object.entries(scriptCollection)
@@ -94,6 +96,8 @@ ${Object.entries(scriptCollection)
     {
       name: "scriptArguments",
       rawName: "--script-args",
+      description:
+        "Arguments passed as is to the script when executed (like '--port 3000').",
       value: {
         specification: "string",
       },
@@ -101,6 +105,8 @@ ${Object.entries(scriptCollection)
     {
       name: "nodeArguments",
       rawName: "--node-args",
+      description:
+        "Arguments passed to Node when executing the script (like '--inspect').",
       value: {
         specification: "string",
       },
