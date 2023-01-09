@@ -37,6 +37,7 @@ is optimally configured.
 
 - Checks if the '.env.local' is in the .gitignore if it exists
 - Checks if all Compas packages are the same version
+- Checks if graphviz is available
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
@@ -233,11 +234,11 @@ with caution.
 Run arbitrary JavaScript files, scripts defined in the package.json and scripts
 located in the scripts directory.
 
-| Option        | Description                                              |
-| ------------- | -------------------------------------------------------- |
-| --script-args | undefined (string)                                       |
-| --node-args   | undefined (string)                                       |
-| -h, --help    | Display information about the current command. (boolean) |
+| Option        | Description                                                                       |
+| ------------- | --------------------------------------------------------------------------------- |
+| --script-args | Arguments passed as is to the script when executed (like '--port 3000'). (string) |
+| --node-args   | Arguments passed to Node when executing the script (like '--inspect'). (string)   |
+| -h, --help    | Display information about the current command. (boolean)                          |
 
 ### `compas run $script`
 
@@ -246,8 +247,8 @@ The file or script to run.
 | Option        | Description                                                                                                      |
 | ------------- | ---------------------------------------------------------------------------------------------------------------- |
 | --watch       | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean) |
-| --script-args | undefined (string)                                                                                               |
-| --node-args   | undefined (string)                                                                                               |
+| --script-args | Arguments passed as is to the script when executed (like '--port 3000'). (string)                                |
+| --node-args   | Arguments passed to Node when executing the script (like '--inspect'). (string)                                  |
 | -h, --help    | Display information about the current command. (boolean)                                                         |
 
 ## `compas test`
