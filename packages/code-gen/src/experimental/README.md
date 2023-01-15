@@ -106,21 +106,25 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     kind of assertions, and then we need a specification for the behaviour
     suite. So we only test on the error boundaries of validators.
   - Queries are tested by their generated queries (whitespace normalized);
-- [ ] Router generator
-  - [ ] Check conflicting routes
-  - [ ] Build sorted route trie
-  - [ ] Generate generic route matcher
-  - [ ] Generate Koa target
-- [ ] API client generator
-  - [ ] Check route invalidations
-  - [ ] Generate Axios target
-  - [ ] Generate react-query wrapper
-  - [ ] Validate responses
+- [x] Router generator
+  - [x] Check conflicting routes
+  - [x] Build sorted route trie
+  - [x] Generate generic route matcher
+  - [x] Generate Koa target
+- [x] API client generator
+  - [x] Check route invalidations
+  - [x] Generate Axios target
+  - [x] Validate responses
+- [ ] Duplicate `with-auth` example to code-gen experimental
 - [ ] CRUD generator
   - [ ] Static checks
   - [ ] Generate specific types
   - [ ] Generate routes
   - [ ] Generate implementation
+- [ ] Duplicate `default` example to code-gen experimental
+- [ ] Typescript validators
+- [ ] TS Axios API client
+  - [ ] Generate react-query wrapper
 - [ ] `T.file()` specific types and validations
 - [ ] Update `T.any()` to be more inline with the new target system.
 - [ ] Update `T.string().pattern()` with `patternExplanation`

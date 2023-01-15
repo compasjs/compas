@@ -9,6 +9,11 @@ import {
   structureNamedTypes,
 } from "./processors/structure.js";
 
+/**
+ * Compas code-gen entrypoint.
+ *
+ * TODO: expand the docs
+ */
 export class Generator {
   /**
    * @param {import("@compas/stdlib").Logger} logger
@@ -23,6 +28,12 @@ export class Generator {
      * @type {import("./generated/common/types").ExperimentalStructure}
      */
     this.internalStructure = {};
+
+    // TODO: Add support for OpenAPI importing
+
+    // TODO: Add support for specific generator flags
+    //  { *: { *: { apiClientKeepTrailingSlashes: true } }
+    //  { foo: { bar: { apiClientSkipResponseValidation: true } }
   }
 
   /**

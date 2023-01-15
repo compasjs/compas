@@ -10058,11 +10058,7 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["apiClient"],
               };
             } else {
-              const knownKeys0 = new Set([
-                "target",
-                "skipResponseValidation",
-                "globalClient",
-              ]);
+              const knownKeys0 = new Set(["target", "skipResponseValidation"]);
               for (const key of Object.keys(value["generators"]["apiClient"])) {
                 if (!knownKeys0.has(key)) {
                   errorMap[`$.generators.apiClient`] = {
@@ -10116,6 +10112,7 @@ export function validateExperimentalGenerateOptions(value) {
                         "library",
                         "targetRuntime",
                         "includeWrapper",
+                        "globalClient",
                       ]);
                       for (const key of Object.keys(intermediateValue2)) {
                         if (!knownKeys2.has(key)) {
@@ -10230,6 +10227,31 @@ export function validateExperimentalGenerateOptions(value) {
                           }
                         }
                       }
+                      if (
+                        intermediateValue2["globalClient"] === null ||
+                        intermediateValue2["globalClient"] === undefined
+                      ) {
+                        intermediateResult2["globalClient"] = false;
+                      } else {
+                        if (
+                          intermediateValue2["globalClient"] === true ||
+                          intermediateValue2["globalClient"] === "true" ||
+                          intermediateValue2["globalClient"] === 1
+                        ) {
+                          intermediateResult2["globalClient"] = true;
+                        } else if (
+                          intermediateValue2["globalClient"] === false ||
+                          intermediateValue2["globalClient"] === "false" ||
+                          intermediateValue2["globalClient"] === 0
+                        ) {
+                          intermediateResult2["globalClient"] = false;
+                        } else {
+                          intermediateErrorMap2[`$.globalClient`] = {
+                            key: "validator.type",
+                            expectedType: "boolean",
+                          };
+                        }
+                      }
                     }
                   }
                   if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -10275,32 +10297,6 @@ export function validateExperimentalGenerateOptions(value) {
                     false;
                 } else {
                   errorMap[`$.generators.apiClient.skipResponseValidation`] = {
-                    key: "validator.type",
-                    expectedType: "boolean",
-                  };
-                }
-              }
-              if (
-                value["generators"]["apiClient"]["globalClient"] === null ||
-                value["generators"]["apiClient"]["globalClient"] === undefined
-              ) {
-                result["generators"]["apiClient"]["globalClient"] = false;
-              } else {
-                if (
-                  value["generators"]["apiClient"]["globalClient"] === true ||
-                  value["generators"]["apiClient"]["globalClient"] === "true" ||
-                  value["generators"]["apiClient"]["globalClient"] === 1
-                ) {
-                  result["generators"]["apiClient"]["globalClient"] = true;
-                } else if (
-                  value["generators"]["apiClient"]["globalClient"] === false ||
-                  value["generators"]["apiClient"]["globalClient"] ===
-                    "false" ||
-                  value["generators"]["apiClient"]["globalClient"] === 0
-                ) {
-                  result["generators"]["apiClient"]["globalClient"] = false;
-                } else {
-                  errorMap[`$.generators.apiClient.globalClient`] = {
                     key: "validator.type",
                     expectedType: "boolean",
                   };

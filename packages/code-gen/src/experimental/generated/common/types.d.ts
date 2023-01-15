@@ -840,13 +840,13 @@ export type ExperimentalGenerateOptions = {
 
             // Include an API client wrapper to use the api easier with your user interface library.
             includeWrapper?: "react-query" | undefined;
+
+            // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
+            globalClient: boolean;
           };
 
           // Unsafe skip generating and using validators to automatically validate if the response passes the schema.
           skipResponseValidation: boolean;
-
-          // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
-          globalClient: boolean;
         }
       | undefined;
 
@@ -922,13 +922,13 @@ export type ExperimentalGenerateOptionsInput = {
 
             // Include an API client wrapper to use the api easier with your user interface library.
             includeWrapper?: "react-query" | undefined;
+
+            // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
+            globalClient?: boolean | "true" | "false" | undefined;
           };
 
           // Unsafe skip generating and using validators to automatically validate if the response passes the schema.
           skipResponseValidation?: boolean | "true" | "false" | undefined;
-
-          // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
-          globalClient?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 

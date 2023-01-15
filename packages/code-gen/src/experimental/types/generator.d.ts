@@ -11,6 +11,11 @@
  * Init the types generator. It doesn't necessary need to be enabled, cause other
  * generators will automatically add types when necessary.
  *
+ * TODO: expand docs
+ *
+ * - supported targets
+ * -
+ *
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function typesGeneratorInit(

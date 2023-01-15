@@ -125,7 +125,13 @@ export function validatorGetNameAndImport(
  * Generate a named type for the target language. Skips if the cache already has a name
  * registered for the provided type and options.
  *
- * This does not return a way to use a type, this will be added later.
+ * TODO: Expand docs
+ *
+ * - How to use the types
+ * - Duplication
+ * - Resolved & unique names
+ *
+ * TODO: support TS validators
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../types").NamedType<

@@ -70,6 +70,10 @@ import {
 /**
  * Run the database generator.
  *
+ * TODO: expand docs
+ *
+ * TODO: throw when TS is used with JS postgres
+ *
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function databaseGenerator(generateContext) {

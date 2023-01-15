@@ -140,19 +140,21 @@ export function extendWithCodeGenExperimental(generator) {
                     .docs(
                       "Include an API client wrapper to use the api easier with your user interface library.",
                     ),
+
+                  globalClient: T.bool()
+                    .default(false)
+                    .docs(
+                      "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
+                    ),
                 })
                 .docs("Select your HTTP client of choice."),
 
+              // TODO: check if we can support enabling / disabling
+              //   this for specific routes.
               skipResponseValidation: T.bool()
                 .default(false)
                 .docs(
                   `Unsafe skip generating and using validators to automatically validate if the response passes the schema.`,
-                ),
-
-              globalClient: T.bool()
-                .default(false)
-                .docs(
-                  "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
                 ),
             })
             .optional()

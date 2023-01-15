@@ -2440,6 +2440,17 @@
                           "sql": {},
                           "type": "string",
                           "oneOf": ["react-query"]
+                        },
+                        "globalClient": {
+                          "docString": "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
+                          "isOptional": true,
+                          "validator": {
+                            "convert": false,
+                            "allowNull": false
+                          },
+                          "sql": {},
+                          "type": "boolean",
+                          "defaultValue": "false"
                         }
                       },
                       "relations": []
@@ -2448,17 +2459,6 @@
                 },
                 "skipResponseValidation": {
                   "docString": "Unsafe skip generating and using validators to automatically validate if the response passes the schema.",
-                  "isOptional": true,
-                  "validator": {
-                    "convert": false,
-                    "allowNull": false
-                  },
-                  "sql": {},
-                  "type": "boolean",
-                  "defaultValue": "false"
-                },
-                "globalClient": {
-                  "docString": "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
                   "isOptional": true,
                   "validator": {
                     "convert": false,

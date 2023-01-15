@@ -1,3 +1,8 @@
+/**
+ * Compas code-gen entrypoint.
+ *
+ * TODO: expand the docs
+ */
 export class Generator {
   /**
    * @param {import("@compas/stdlib").Logger} logger

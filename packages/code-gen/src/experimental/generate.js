@@ -1,5 +1,6 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
+import { apiClientGenerator } from "./api-client/generator.js";
 import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
 import {
@@ -68,6 +69,13 @@ import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
 
 /**
  * Execute the generators based on de provided Generator instance and included options.
+ *
+ * TODO: expand docs
+ *
+ * - flat structure, no resolved references
+ * - Preprocess everything
+ * - talk about caching
+ * - targetLanguageSwitch & targetCustomSwitch
  *
  * @param {import("./generator").Generator} generator
  * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
@@ -154,11 +162,12 @@ export function generateExecute(generator, options) {
   databaseGenerator(generateContext);
 
   routerGenerator(generateContext);
+  apiClientGenerator(generateContext);
+
+  // TODO(openAPI): OpenAPI generator
 
   // TODO(crud): generateEventImplementations(generateContext);
   // TODO(crud): generateRouteImplementations
-
-  // TODO(apiClient): apiClientGenerate(generateContext);
 
   typesGeneratorFinalize(generateContext);
 

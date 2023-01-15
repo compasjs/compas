@@ -30,6 +30,14 @@ import {
 /**
  * Run the router generator.
  *
+ * TODO: Expand docs
+ *
+ * - route matcher
+ * - target specific controller
+ * - types & validations
+ *
+ * TODO: throw when TS is used with the router
+ *
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function routerGenerator(generateContext) {

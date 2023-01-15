@@ -13,6 +13,13 @@
 /**
  * Execute the generators based on de provided Generator instance and included options.
  *
+ * TODO: expand docs
+ *
+ * - flat structure, no resolved references
+ * - Preprocess everything
+ * - talk about caching
+ * - targetLanguageSwitch & targetCustomSwitch
+ *
  * @param {import("./generator").Generator} generator
  * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
  * @returns {OutputFile[]}

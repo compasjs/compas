@@ -371,6 +371,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
 
   fileWrite(file, `if (!match) { throw AppError.notFound(); }\n`);
 
+  // TODO: decodeUriComponent
   fileWrite(
     file,
     `return routes[match.route.group][match.route.name](match.params, ctx, next);`,
