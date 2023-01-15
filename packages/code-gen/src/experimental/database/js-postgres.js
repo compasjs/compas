@@ -43,8 +43,8 @@ export function jsPostgresGenerateUtils(generateContext) {
  * @typedef {object} WrappedQueryPart
  * @property {import("@compas/store").QueryPart<any>} queryPart
  * @property {function(): void} then
- * @property {(sql: import("@compas/store").Postgres) => Promise<T[]>} exec
- * @property {(sql: import("@compas/store").Postgres) => Promise<(T|any)[]>} execRaw
+ * @property {(sql: import("@compas/store").Postgres) => Promise<Type[]>} exec
+ * @property {(sql: import("@compas/store").Postgres) => Promise<(Type|any)[]>} execRaw
  */
   
 /**
@@ -55,7 +55,7 @@ export function jsPostgresGenerateUtils(generateContext) {
  * @param {import("@compas/store").QueryPart<any>} queryPart
  * @param {T} validator
  * @param {{ hasCustomReturning: boolean }} options
- * @returns {WrappedQueryPart<ReturnType<T>["value"]>}
+ * @returns {WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
  */
 export function wrapQueryPart(queryPart, validator, options) {
   return {
@@ -312,6 +312,7 @@ export function jsPostgresGenerateWhere(
     };
   }
 
+  fileWrite(file, `/** @type {any} */`);
   fileWrite(
     file,
     `export const ${model.name}WhereSpec = ${JSON.stringify(
@@ -601,6 +602,7 @@ export function jsPostgresGenerateInsert(
   fileWrite(file, `VALUES`);
   fileWrite(file, `\`;`);
 
+  fileWrite(file, `/** @type {string[]} */`);
   fileWrite(file, `const str = [];`);
   fileWrite(file, `const args = [];`);
 
@@ -676,7 +678,7 @@ export function jsPostgresGenerateInsert(
       "We have added an extra comma, so remove it.",
     ),
   );
-  fileWrite(file, `str[str.length -1] = str.at(-1).slice(0, -2);`);
+  fileWrite(file, `str[str.length -1] = str.at(-1)?.slice(0, -2) ?? "";`);
   fileWrite(file, `args.push(undefined);`);
 
   fileWrite(file, `str.push(")");`);
@@ -773,6 +775,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
     `const { queryPart } = ${model.name}Insert({ insert: input.insert });`,
   );
 
+  fileWrite(file, `/** @type {string[]} */`);
   fileWrite(file, `const str = [];`);
   fileWrite(file, `const args = []`);
 
@@ -912,6 +915,7 @@ export function jsPostgresGenerateUpdate(
     }
   }
 
+  fileWrite(file, `/** @type {any} */`);
   fileWrite(
     file,
     `const ${model.name}UpdateSpec = ${JSON.stringify(entityUpdateSpec, null, 2)
@@ -1072,6 +1076,7 @@ export function jsPostgresGenerateQueryBuilder(
     });
   }
 
+  fileWrite(file, `/** @type {any} */`);
   fileWrite(
     file,
     `export const ${model.name}QueryBuilderSpec = ${JSON.stringify(
@@ -1102,7 +1107,10 @@ export function jsPostgresGenerateQueryBuilder(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(file, `function query${upperCaseFirst(model.name)}(input)`);
+  fileBlockStart(
+    file,
+    `export function query${upperCaseFirst(model.name)}(input)`,
+  );
 
   // Input validation
   fileWrite(

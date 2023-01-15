@@ -660,7 +660,15 @@ export function validatorJavascriptDate(file, type, validatorState) {
     );
 
     fileBlockEnd(file);
-    fileBlockStart(file, "else");
+
+    if (
+      !isNil(type.validator.min) ||
+      !isNil(type.validator.max) ||
+      type.validator.inFuture ||
+      type.validator.inPast
+    ) {
+      fileBlockStart(file, "else");
+    }
 
     if (!isNil(type.validator.min)) {
       fileBlockStart(
@@ -724,7 +732,14 @@ export function validatorJavascriptDate(file, type, validatorState) {
       fileBlockEnd(file);
     }
 
-    fileBlockEnd(file);
+    if (
+      !isNil(type.validator.min) ||
+      !isNil(type.validator.max) ||
+      type.validator.inFuture ||
+      type.validator.inPast
+    ) {
+      fileBlockEnd(file);
+    }
   }
 }
 

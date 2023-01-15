@@ -4389,7 +4389,6 @@ export function validateExperimentalDateDefinition(value) {
               errorMap[`$.validator.min`] = {
                 key: "validator.date.invalid",
               };
-            } else {
             }
           }
           if (
@@ -4418,7 +4417,6 @@ export function validateExperimentalDateDefinition(value) {
               errorMap[`$.validator.max`] = {
                 key: "validator.date.invalid",
               };
-            } else {
             }
           }
           if (

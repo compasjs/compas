@@ -89,7 +89,7 @@ export function modelSortAllKeys(generateContext) {
             ? structureResolveReference(generateContext.structure, keyA)
             : undefined;
         const refB =
-          keyA.type === "reference"
+          keyB.type === "reference"
             ? structureResolveReference(generateContext.structure, keyB)
             : undefined;
 

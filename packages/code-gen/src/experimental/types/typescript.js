@@ -283,7 +283,10 @@ export function typesTypescriptFormatType(
     fileWriteInline(file, `[]`);
 
     if (options.validatorState === "input") {
-      fileWriteInline(file, "|");
+      if (type.values.type !== "anyOf") {
+        // AnyOf always starts with a `|`.
+        fileWriteInline(file, "|");
+      }
       typesTypescriptFormatType(generateContext, file, type.values, options);
     }
 
