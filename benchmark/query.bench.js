@@ -30,7 +30,7 @@ bench("query - append with parameter and exec", (b) => {
 });
 
 bench("query - append empty where clause and exec", async (b) => {
-  await import("../packages/store/src/generated/database/index.js");
+  await import("../packages/store/src/generated/common/database.js");
   const { sessionStoreWhere } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
   );
@@ -50,7 +50,7 @@ bench("query - append empty where clause and exec", async (b) => {
 });
 
 bench("query - append where clause and exec", async (b) => {
-  await import("../packages/store/src/generated/database/index.js");
+  await import("../packages/store/src/generated/common/database.js");
   const { sessionStoreWhere } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
   );
@@ -79,7 +79,7 @@ bench("query - append where clause and exec", async (b) => {
 });
 
 bench("query - querySessionStore ", async (b) => {
-  await import("../packages/store/src/generated/database/index.js");
+  await import("../packages/store/src/generated/common/database.js");
   const { querySessionStore } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
   );
@@ -98,7 +98,7 @@ bench("query - querySessionStore ", async (b) => {
 });
 
 bench("query - querySessionStore with where ", async (b) => {
-  await import("../packages/store/src/generated/database/index.js");
+  await import("../packages/store/src/generated/common/database.js");
   const { querySessionStore } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
   );
@@ -119,7 +119,7 @@ bench("query - querySessionStore with where ", async (b) => {
 });
 
 bench("query - querySessionStore nested ", async (b) => {
-  await import("../packages/store/src/generated/database/index.js");
+  await import("../packages/store/src/generated/common/database.js");
   const { querySessionStore } = await import(
     "../packages/store/src/generated/database/sessionStore.js"
   );

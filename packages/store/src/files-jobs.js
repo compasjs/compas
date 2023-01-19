@@ -5,8 +5,8 @@ import {
   fileSyncDeletedWithObjectStorage,
   TRANSFORMED_CONTENT_TYPES,
 } from "./file.js";
-import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
+import { queries } from "./generated.js";
 import { objectStorageGetObjectStream } from "./object-storage.js";
 
 /**

@@ -1,8 +1,8 @@
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { isNil } from "@compas/stdlib";
 import { sql } from "../../../src/testing.js";
-import { queries } from "./generated.js";
 import { queryJob } from "./generated/database/job.js";
+import { queries } from "./generated.js";
 import { jobQueueCleanup, jobQueueInsights } from "./queue-worker-jobs.js";
 
 mainTestFn(import.meta);

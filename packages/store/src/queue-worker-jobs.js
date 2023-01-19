@@ -1,6 +1,6 @@
 import { eventStart, eventStop } from "@compas/stdlib";
-import { queries } from "./generated.js";
 import { jobWhere } from "./generated/database/job.js";
+import { queries } from "./generated.js";
 import { query } from "./query.js";
 
 /**

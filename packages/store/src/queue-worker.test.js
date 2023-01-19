@@ -2,8 +2,8 @@ import { setImmediate } from "node:timers/promises";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { AppError, isNil } from "@compas/stdlib";
 import { sql } from "../../../src/testing.js";
-import { queries } from "./generated.js";
 import { queryJob } from "./generated/database/job.js";
+import { queries } from "./generated.js";
 import {
   queueWorkerAddJob,
   queueWorkerCreate,

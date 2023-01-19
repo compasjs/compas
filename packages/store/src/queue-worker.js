@@ -8,8 +8,8 @@ import {
   newLogger,
 } from "@compas/stdlib";
 import cron from "cron-parser";
-import { queries } from "./generated.js";
 import { jobWhere, queryJob } from "./generated/database/job.js";
+import { queries } from "./generated.js";
 import { query } from "./query.js";
 
 /**

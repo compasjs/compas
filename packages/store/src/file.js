@@ -9,8 +9,8 @@ import {
 } from "file-type";
 import { decode, sign, verify } from "jws";
 import mime from "mime-types";
-import { queries } from "./generated.js";
 import { queryFile } from "./generated/database/file.js";
+import { queries } from "./generated.js";
 import { objectStorageListObjects } from "./object-storage.js";
 import { query } from "./query.js";
 import { queueWorkerAddJob } from "./queue-worker.js";

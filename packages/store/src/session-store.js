@@ -8,9 +8,9 @@ import {
 } from "@compas/stdlib";
 import { crc32 } from "crc";
 import { createSign, createVerify } from "jws";
-import { queries } from "./generated.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
+import { queries } from "./generated.js";
 import { query } from "./query.js";
 import { queueWorkerAddJob } from "./queue-worker.js";
 

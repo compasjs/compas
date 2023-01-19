@@ -1,10 +1,10 @@
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { isNil, uuid } from "@compas/stdlib";
 import { sql } from "../../../src/testing.js";
-import { queries } from "./generated.js";
 import { queryJob } from "./generated/database/job.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import { querySessionStoreToken } from "./generated/database/sessionStoreToken.js";
+import { queries } from "./generated.js";
 import {
   SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME,
   sessionStoreCleanupExpiredSessions,
