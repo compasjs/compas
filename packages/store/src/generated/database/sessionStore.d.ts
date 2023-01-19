@@ -1,176 +1,123 @@
 /**
- * Get all fields for sessionStore
+ * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {string} [tableName="ss."]
- * @param {{ excludePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
- */
-export function sessionStoreFields(
-  tableName?: string | undefined,
-  options?:
-    | {
-        excludePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Build 'WHERE ' part for sessionStore
- *
- * @param {StoreSessionStoreWhere} [where={}]
- * @param {string} [tableName="ss."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreSessionStoreWhereInput} [where]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function sessionStoreWhere(
-  where?: StoreSessionStoreWhere | undefined,
-  tableName?: string | undefined,
+  where?: import("../common/types").StoreSessionStoreWhereInput | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'ORDER BY ' part for sessionStore
+ * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {StoreSessionStoreOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
- * @param {StoreSessionStoreOrderBySpec} [orderBySpec={}]
- * @param {string} [tableName="ss."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreSessionStoreOrderByInput} [orderBy]
+ * @param {import("../common/types").StoreSessionStoreOrderBySpecInput} [orderBySpec]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function sessionStoreOrderBy(
-  orderBy?: StoreSessionStoreOrderBy | undefined,
-  orderBySpec?: StoreSessionStoreOrderBySpec | undefined,
-  tableName?: string | undefined,
+  orderBy?: import("../common/types").StoreSessionStoreOrderByInput | undefined,
+  orderBySpec?:
+    | import("../common/types").StoreSessionStoreOrderBySpecInput
+    | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'VALUES ' part for sessionStore
+ * Query records in the 'sessionStore' table, optionally joining related tables.
  *
- * @param {StoreSessionStoreInsertPartial|StoreSessionStoreInsertPartial[]} insert
- * @param {{ includePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
- */
-export function sessionStoreInsertValues(
-  insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
-  options?:
-    | {
-        includePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Query Builder for sessionStore
- * Session data store, used by 'sessionStore\*' functions.
- *
- * @param {StoreSessionStoreQueryBuilder} [builder={}]
- * @returns {{
- *  then: () => void,
- *  exec: (sql: Postgres) => Promise<QueryResultStoreSessionStore[]>,
- *  execRaw: (sql: Postgres) => Promise<any[]>,
- *  queryPart: QueryPart<any>,
- * }}
+ * @param {import("../common/types").StoreSessionStoreQueryBuilderInput} [input]
+ * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStore>}
  */
 export function querySessionStore(
-  builder?: StoreSessionStoreQueryBuilder | undefined,
-): {
-  then: () => void;
-  exec: (sql: Postgres) => Promise<QueryResultStoreSessionStore[]>;
-  execRaw: (sql: Postgres) => Promise<any[]>;
-  queryPart: QueryPart<any>;
-};
-/**
- * NOTE: At the moment only intended for internal use by the generated queries!
- *
- * Transform results from the query builder that adhere to the known structure
- * of 'sessionStore' and its relations.
- *
- * @param {any[]} values
- * @param {StoreSessionStoreQueryBuilder} [builder={}]
- */
-export function transformSessionStore(
-  values: any[],
-  builder?: StoreSessionStoreQueryBuilder | undefined,
-): void;
+  input?:
+    | import("../common/types").StoreSessionStoreQueryBuilderInput
+    | undefined,
+): import("../common/database").WrappedQueryPart<
+  import("../common/types").QueryResultStoreSessionStore
+>;
+export namespace sessionStoreQueries {
+  export { sessionStoreCount };
+  export { sessionStoreInsert };
+  export { sessionStoreUpdate };
+  export { sessionStoreDelete };
+  export { sessionStoreUpsertOnId };
+}
 /** @type {any} */
 export const sessionStoreWhereSpec: any;
 /** @type {any} */
-export const sessionStoreUpdateSpec: any;
-export namespace sessionStoreQueries {
-  export { sessionStoreCount };
-  export { sessionStoreDelete };
-  export { sessionStoreInsert };
-  export { sessionStoreUpsertOnId };
-  export { sessionStoreUpdate };
-}
-export namespace sessionStoreQueryBuilderSpec {
-  export const name: string;
-  export const shortName: string;
-  export { sessionStoreOrderBy as orderBy };
-  export { sessionStoreWhereSpec as where };
-  export const columns: string[];
-  export const relations: {
-    builderKey: string;
-    ownKey: string;
-    referencedKey: string;
-    returnsMany: boolean;
-    entityInformation: () => any;
-  }[];
-}
+export const sessionStoreQueryBuilderSpec: any;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreWhere} [where]
+ * Count the records in the 'sessionStore' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreWhereInput} where
  * @returns {Promise<number>}
  */
 declare function sessionStoreCount(
-  sql: Postgres,
-  where?: StoreSessionStoreWhere | undefined,
+  sql: import("@compas/store").Postgres,
+  where: import("../common/types").StoreSessionStoreWhereInput,
 ): Promise<number>;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreWhere} [where={}]
- * @returns {Promise<void>}
- */
-declare function sessionStoreDelete(
-  sql: Postgres,
-  where?: StoreSessionStoreWhere | undefined,
-): Promise<void>;
-/**
- * @param {Postgres} sql
- * @param {StoreSessionStoreInsertPartial|(StoreSessionStoreInsertPartial[])} insert
+ * Insert a record in the 'sessionStore' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreInsertInput["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<StoreSessionStore[]>}
+ * @returns {Promise<import("../common/types").StoreSessionStore[]>}
  */
 declare function sessionStoreInsert(
-  sql: Postgres,
-  insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreSessionStoreInsertInput["insert"],
   options?:
     | {
         withPrimaryKey?: boolean | undefined;
       }
     | undefined,
-): Promise<StoreSessionStore[]>;
+): Promise<import("../common/types").StoreSessionStore[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreInsertPartial|(StoreSessionStoreInsertPartial[])} insert
- * @param {{}} [options={}]
- * @returns {Promise<StoreSessionStore[]>}
+ * Insert a record in the 'sessionStore' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreUpdateInput} update
+ * @returns {Promise<import("../common/types").StoreSessionStore[]>}
+ */
+declare function sessionStoreUpdate(
+  sql: import("@compas/store").Postgres,
+  update: import("../common/types").StoreSessionStoreUpdateInput,
+): Promise<import("../common/types").StoreSessionStore[]>;
+/**
+ * Insert a record in the 'sessionStore' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreWhereInput} [where]
+ * @returns {Promise<void>}
+ */
+declare function sessionStoreDelete(
+  sql: import("@compas/store").Postgres,
+  where?: import("../common/types").StoreSessionStoreWhereInput | undefined,
+): Promise<void>;
+/**
+ * Upsert a record in the 'sessionStore' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreInsertInput["insert"]} insert
+ * @returns {Promise<import("../common/types").StoreSessionStore[]>}
  */
 declare function sessionStoreUpsertOnId(
-  sql: Postgres,
-  insert: StoreSessionStoreInsertPartial | StoreSessionStoreInsertPartial[],
-  options?: {} | undefined,
-): Promise<StoreSessionStore[]>;
-/**
- * (Atomic) update queries for sessionStore
- *
- * @type {StoreSessionStoreUpdateFn}
- */
-declare const sessionStoreUpdate: StoreSessionStoreUpdateFn;
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreSessionStoreInsertInput["insert"],
+): Promise<import("../common/types").StoreSessionStore[]>;
 export {};
 //# sourceMappingURL=sessionStore.d.ts.map

@@ -48,7 +48,11 @@ import { isQueryPart, query } from "./query.js";
  *   orderBySpec?: *,
  *   shortName?: string,
  *   options?: { skipValidator?: boolean|undefined },
- *   ) => import("../types/advanced-types").QueryPart} orderBy
+ *   ) => import("../types/advanced-types").QueryPart} [orderBy]
+ * @property {( orderBy?: any[],
+ *   orderBySpec?: *,
+ *   options?: { shortName?: string;  skipValidator?: boolean|undefined },
+ *   ) => import("../types/advanced-types").QueryPart} [orderByExperimental]
  * @property {EntityWhere} where
  * @property {{
  *   builderKey: string,
@@ -542,11 +546,20 @@ export function generatedQueryBuilderHelper(
   }
 
   strings.push(` ORDER BY `);
-  args.push(
-    entity.orderBy(builder.orderBy, builder.orderBySpec, `${shortName}.`, {
-      skipValidator: true,
-    }),
-  );
+  if (entity.orderByExperimental) {
+    args.push(
+      entity.orderByExperimental(builder.orderBy, builder.orderBySpec, {
+        shortName: `${shortName}.`,
+        skipValidator: true,
+      }),
+    );
+  } else if (entity.orderBy) {
+    args.push(
+      entity.orderBy(builder.orderBy, builder.orderBySpec, `${shortName}.`, {
+        skipValidator: true,
+      }),
+    );
+  }
 
   if (!isNil(builder.offset)) {
     strings.push(` OFFSET `);

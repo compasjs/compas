@@ -31,8 +31,9 @@ test("store/session-transport", (t) => {
    *
    * @param {import("koa").Middleware} middleware
    * @returns {Promise<{axiosInstance: AxiosInstance, session:
-   *   QueryResultStoreSessionStore, tokens: {accessToken: string, refreshToken: string},
-   *   closeApp: (function(): Promise<void>)}>}
+   *   import("./generated/common/types").QueryResultStoreSessionStore, tokens:
+   *   {accessToken: string, refreshToken: string}, closeApp: (function():
+   *   Promise<void>)}>}
    */
   const createAppWithSession = async (middleware) => {
     const app = getApp();

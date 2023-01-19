@@ -18,9 +18,10 @@
  *   allowedContentTypes?: string[],
  *   schedulePlaceholderImageJob?: boolean,
  * }} options
- * @param {Partial<StoreFile> & Pick<StoreFile, "name">} props
+ * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
+ *   "name">} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
- * @returns {Promise<StoreFile>}
+ * @returns {Promise<import("./generated/common/types").StoreFile>}
  */
 export function fileCreateOrUpdate(
   sql: import("postgres").Sql,
@@ -30,9 +31,10 @@ export function fileCreateOrUpdate(
     allowedContentTypes?: string[];
     schedulePlaceholderImageJob?: boolean;
   },
-  props: Partial<StoreFile> & Pick<StoreFile, "name">,
+  props: Partial<import("./generated/common/types").StoreFile> &
+    Pick<import("./generated/common/types").StoreFile, "name">,
   source: NodeJS.ReadableStream | string | Buffer,
-): Promise<StoreFile>;
+): Promise<import("./generated/common/types").StoreFile>;
 /**
  * File deletes should be done via `queries.storeFileDelete()`. By calling this
  * function, all files that don't exist in the database will be removed from the S3
@@ -55,17 +57,17 @@ export function fileSyncDeletedWithObjectStorage(
 /**
  * Format a StoreFile, so it can be used in the response.
  *
- * @param {StoreFile} file
+ * @param {import("./generated/common/types").StoreFile} file
  * @param {object} options
  * @param {string} options.url
  * @param {{
  *   signingKey: string,
  *   maxAgeInSeconds: number,
  * }} [options.signAccessToken]
- * @returns {StoreFileResponse}
+ * @returns {import("./generated/common/types").StoreFileResponse}
  */
 export function fileFormatMetadata(
-  file: StoreFile,
+  file: import("./generated/common/types").StoreFile,
   options: {
     url: string;
     signAccessToken?:
@@ -75,7 +77,7 @@ export function fileFormatMetadata(
         }
       | undefined;
   },
-): StoreFileResponse;
+): import("./generated/common/types").StoreFileResponse;
 /**
  * Generate a signed string, based on the file id and the max age that it is allowed ot
  * be accessed.

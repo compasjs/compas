@@ -1,6 +1,6 @@
 import { App } from "@compas/code-gen";
 import { spawn } from "@compas/stdlib";
-import { storeStructure } from "@compas/store";
+import { storeGetStructure } from "@compas/store";
 import { extendWithDatabase } from "../gen/database.js";
 import { extendWithUser } from "../gen/user.js";
 
@@ -84,7 +84,7 @@ async function generateApplication(logger) {
   const app = new App();
   app.logger = logger;
 
-  app.extend(storeStructure);
+  app.extend(storeGetStructure());
   extendWithDatabase(app);
   extendWithUser(app);
 

@@ -6,7 +6,7 @@ import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
   query,
-  storeStructure,
+  storeGetStructure,
 } from "@compas/store";
 import { sql as rootSql } from "../../../../src/testing.js";
 import { TypeCreator } from "../../src/builders/index.js";
@@ -115,7 +115,7 @@ test("code-gen/e2e/sql", async (t) => {
             })
             .enableQueries(),
         ],
-        extend: [[storeStructure]],
+        extend: [[storeGetStructure()]],
       },
       {
         enabledGenerators: ["sql", "validator"],

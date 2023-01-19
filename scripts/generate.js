@@ -4,7 +4,6 @@ import {
   generateCodeGen,
   generateExamples,
   generateStore,
-  generateTypes,
 } from "../src/generate.js";
 
 /**
@@ -44,8 +43,7 @@ export const cliDefinition = {
 async function cliExecutor(logger, state) {
   await generateCli();
   await generateCodeGen();
-  await generateStore();
-  await generateTypes();
+  generateStore(logger);
   await generateExamples(logger, state);
 
   if (state.flags.skipTypescript !== true) {

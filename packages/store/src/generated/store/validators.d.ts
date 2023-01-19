@@ -1,347 +1,473 @@
 /**
- * @template T
- * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
- */
-/**
  * Postgres based file storage.
  *
- * @param {undefined|any|StoreFileInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFile>}
+ * @param {import("../common/types").StoreFileInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFile, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFile(
-  value: undefined | any | StoreFileInput,
-  propertyPath?: string | undefined,
-): Either<StoreFile>;
+  value: import("../common/types").StoreFileInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFile,
+  import("@compas/stdlib").AppError
+>;
 /**
  * User definable, optional object to store whatever you want
  *
- * @param {undefined|any|StoreFileMetaInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileMeta>}
+ * @param {import("../common/types").StoreFileMetaInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileMeta, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileMeta(
-  value: undefined | any | StoreFileMetaInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileMeta>;
+  value: import("../common/types").StoreFileMetaInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileMeta,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileResponseInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileResponse>}
+ * @param {import("../common/types").StoreFileResponseInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileResponse, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileResponse(
-  value: undefined | any | StoreFileResponseInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileResponse>;
+  value: import("../common/types").StoreFileResponseInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileResponse,
+  import("@compas/stdlib").AppError
+>;
 /**
  * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
  *
- * @param {undefined|any|StoreImageTransformOptionsInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreImageTransformOptions>}
+ * @param {import("../common/types").StoreImageTransformOptionsInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreImageTransformOptions, import("@compas/stdlib").AppError>}
  */
 export function validateStoreImageTransformOptions(
-  value: undefined | any | StoreImageTransformOptionsInput,
-  propertyPath?: string | undefined,
-): Either<StoreImageTransformOptions>;
+  value: import("../common/types").StoreImageTransformOptionsInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreImageTransformOptions,
+  import("@compas/stdlib").AppError
+>;
 /**
  * Postgres based job queue.
- * Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
- * Use {@link queueWorkerCreate} as a way to pick up jobs.
+ *Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+ *Use {@link queueWorkerCreate} as a way to pick up jobs.
  *
- * @param {undefined|any|StoreJobInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJob>}
+ * @param {import("../common/types").StoreJobInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJob, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJob(
-  value: undefined | any | StoreJobInput,
-  propertyPath?: string | undefined,
-): Either<StoreJob>;
+  value: import("../common/types").StoreJobInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJob,
+  import("@compas/stdlib").AppError
+>;
 /**
  * Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
  *
- * @param {undefined|any|StoreSecureImageTransformOptionsInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSecureImageTransformOptions>}
+ * @param {import("../common/types").StoreSecureImageTransformOptionsInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSecureImageTransformOptions, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSecureImageTransformOptions(
-  value: undefined | any | StoreSecureImageTransformOptionsInput,
-  propertyPath?: string | undefined,
-): Either<StoreSecureImageTransformOptions>;
+  value:
+    | import("../common/types").StoreSecureImageTransformOptionsInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSecureImageTransformOptions,
+  import("@compas/stdlib").AppError
+>;
 /**
  * Session data store, used by 'sessionStore\*' functions.
  *
- * @param {undefined|any|StoreSessionStoreInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStore>}
+ * @param {import("../common/types").StoreSessionStoreInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStore, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStore(
-  value: undefined | any | StoreSessionStoreInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStore>;
+  value: import("../common/types").StoreSessionStoreInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStore,
+  import("@compas/stdlib").AppError
+>;
 /**
  * Store all tokens that belong to a session.
  *
- * @param {undefined|any|StoreSessionStoreTokenInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreToken>}
+ * @param {import("../common/types").StoreSessionStoreTokenInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreToken, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreToken(
-  value: undefined | any | StoreSessionStoreTokenInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreToken>;
+  value: import("../common/types").StoreSessionStoreTokenInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreToken,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileWhereInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileWhere>}
+ * @param {import("../common/types").StoreFileWhereInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileWhere, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileWhere(
-  value: undefined | any | StoreFileWhereInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileWhere>;
+  value: import("../common/types").StoreFileWhereInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileWhere,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreJobWhereInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobWhere>}
+ * @param {import("../common/types").StoreJobWhereInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobWhere, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJobWhere(
-  value: undefined | any | StoreJobWhereInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobWhere>;
+  value: import("../common/types").StoreJobWhereInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobWhere,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreWhereInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreWhere>}
+ * @param {import("../common/types").StoreSessionStoreWhereInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreWhere, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreWhere(
-  value: undefined | any | StoreSessionStoreWhereInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreWhere>;
+  value: import("../common/types").StoreSessionStoreWhereInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreWhere,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreTokenWhereInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenWhere>}
+ * @param {import("../common/types").StoreSessionStoreTokenWhereInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenWhere, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreTokenWhere(
-  value: undefined | any | StoreSessionStoreTokenWhereInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenWhere>;
+  value: import("../common/types").StoreSessionStoreTokenWhereInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenWhere,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileUpdatePartialInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileUpdatePartial>}
+ * @param {import("../common/types").StoreFileReturningInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileReturning, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreFileReturning(
+  value: import("../common/types").StoreFileReturningInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileReturning,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreJobReturningInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobReturning, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreJobReturning(
+  value: import("../common/types").StoreJobReturningInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobReturning,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreSessionStoreReturningInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreReturning, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreSessionStoreReturning(
+  value: import("../common/types").StoreSessionStoreReturningInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreReturning,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreSessionStoreTokenReturningInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenReturning, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreSessionStoreTokenReturning(
+  value:
+    | import("../common/types").StoreSessionStoreTokenReturningInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenReturning,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreFileInsertPartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileInsertPartial, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreFileInsertPartial(
+  value: import("../common/types").StoreFileInsertPartialInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileInsertPartial,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreFileInsertInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileInsert, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreFileInsert(
+  value: import("../common/types").StoreFileInsertInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileInsert,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreJobInsertPartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobInsertPartial, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreJobInsertPartial(
+  value: import("../common/types").StoreJobInsertPartialInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobInsertPartial,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreJobInsertInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobInsert, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreJobInsert(
+  value: import("../common/types").StoreJobInsertInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobInsert,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreSessionStoreInsertPartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreInsertPartial, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreSessionStoreInsertPartial(
+  value:
+    | import("../common/types").StoreSessionStoreInsertPartialInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreInsertPartial,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreSessionStoreInsertInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreInsert, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreSessionStoreInsert(
+  value: import("../common/types").StoreSessionStoreInsertInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreInsert,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreSessionStoreTokenInsertPartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenInsertPartial, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreSessionStoreTokenInsertPartial(
+  value:
+    | import("../common/types").StoreSessionStoreTokenInsertPartialInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenInsertPartial,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreSessionStoreTokenInsertInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenInsert, import("@compas/stdlib").AppError>}
+ */
+export function validateStoreSessionStoreTokenInsert(
+  value: import("../common/types").StoreSessionStoreTokenInsertInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenInsert,
+  import("@compas/stdlib").AppError
+>;
+/**
+ * @param {import("../common/types").StoreFileUpdatePartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileUpdatePartial, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileUpdatePartial(
-  value: undefined | any | StoreFileUpdatePartialInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileUpdatePartial>;
+  value: import("../common/types").StoreFileUpdatePartialInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileUpdatePartial,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileUpdateInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileUpdate>}
+ * @param {import("../common/types").StoreFileUpdateInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileUpdate, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileUpdate(
-  value: undefined | any | StoreFileUpdateInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileUpdate>;
+  value: import("../common/types").StoreFileUpdateInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileUpdate,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileUpdateFnInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileUpdateFn>}
- */
-export function validateStoreFileUpdateFn(
-  value: undefined | any | StoreFileUpdateFnInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileUpdateFn>;
-/**
- * @param {undefined|any|StoreJobUpdatePartialInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobUpdatePartial>}
+ * @param {import("../common/types").StoreJobUpdatePartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobUpdatePartial, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJobUpdatePartial(
-  value: undefined | any | StoreJobUpdatePartialInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobUpdatePartial>;
+  value: import("../common/types").StoreJobUpdatePartialInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobUpdatePartial,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreJobUpdateInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobUpdate>}
+ * @param {import("../common/types").StoreJobUpdateInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobUpdate, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJobUpdate(
-  value: undefined | any | StoreJobUpdateInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobUpdate>;
+  value: import("../common/types").StoreJobUpdateInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobUpdate,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreJobUpdateFnInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobUpdateFn>}
- */
-export function validateStoreJobUpdateFn(
-  value: undefined | any | StoreJobUpdateFnInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobUpdateFn>;
-/**
- * @param {undefined|any|StoreSessionStoreUpdatePartialInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreUpdatePartial>}
+ * @param {import("../common/types").StoreSessionStoreUpdatePartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreUpdatePartial, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreUpdatePartial(
-  value: undefined | any | StoreSessionStoreUpdatePartialInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreUpdatePartial>;
+  value:
+    | import("../common/types").StoreSessionStoreUpdatePartialInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreUpdatePartial,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreUpdateInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreUpdate>}
+ * @param {import("../common/types").StoreSessionStoreUpdateInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreUpdate, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreUpdate(
-  value: undefined | any | StoreSessionStoreUpdateInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreUpdate>;
+  value: import("../common/types").StoreSessionStoreUpdateInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreUpdate,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreUpdateFnInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreUpdateFn>}
- */
-export function validateStoreSessionStoreUpdateFn(
-  value: undefined | any | StoreSessionStoreUpdateFnInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreUpdateFn>;
-/**
- * @param {undefined|any|StoreSessionStoreTokenUpdatePartialInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenUpdatePartial>}
+ * @param {import("../common/types").StoreSessionStoreTokenUpdatePartialInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenUpdatePartial, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreTokenUpdatePartial(
-  value: undefined | any | StoreSessionStoreTokenUpdatePartialInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenUpdatePartial>;
+  value:
+    | import("../common/types").StoreSessionStoreTokenUpdatePartialInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenUpdatePartial,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreTokenUpdateInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenUpdate>}
+ * @param {import("../common/types").StoreSessionStoreTokenUpdateInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenUpdate, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreTokenUpdate(
-  value: undefined | any | StoreSessionStoreTokenUpdateInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenUpdate>;
+  value: import("../common/types").StoreSessionStoreTokenUpdateInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenUpdate,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreTokenUpdateFnInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenUpdateFn>}
- */
-export function validateStoreSessionStoreTokenUpdateFn(
-  value: undefined | any | StoreSessionStoreTokenUpdateFnInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenUpdateFn>;
-/**
- * @param {undefined|any|StoreFileOrderByInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileOrderBy>}
+ * @param {import("../common/types").StoreFileOrderByInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileOrderBy, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileOrderBy(
-  value: undefined | any | StoreFileOrderByInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileOrderBy>;
+  value: import("../common/types").StoreFileOrderByInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileOrderBy,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileOrderBySpecInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileOrderBySpec>}
+ * @param {import("../common/types").StoreFileOrderBySpecInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileOrderBySpec, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileOrderBySpec(
-  value: undefined | any | StoreFileOrderBySpecInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileOrderBySpec>;
+  value: import("../common/types").StoreFileOrderBySpecInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileOrderBySpec,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreJobOrderByInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobOrderBy>}
+ * @param {import("../common/types").StoreJobOrderByInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobOrderBy, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJobOrderBy(
-  value: undefined | any | StoreJobOrderByInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobOrderBy>;
+  value: import("../common/types").StoreJobOrderByInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobOrderBy,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreJobOrderBySpecInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobOrderBySpec>}
+ * @param {import("../common/types").StoreJobOrderBySpecInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobOrderBySpec, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJobOrderBySpec(
-  value: undefined | any | StoreJobOrderBySpecInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobOrderBySpec>;
+  value: import("../common/types").StoreJobOrderBySpecInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobOrderBySpec,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreOrderByInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreOrderBy>}
+ * @param {import("../common/types").StoreSessionStoreOrderByInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreOrderBy, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreOrderBy(
-  value: undefined | any | StoreSessionStoreOrderByInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreOrderBy>;
+  value: import("../common/types").StoreSessionStoreOrderByInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreOrderBy,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreOrderBySpecInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreOrderBySpec>}
+ * @param {import("../common/types").StoreSessionStoreOrderBySpecInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreOrderBySpec, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreOrderBySpec(
-  value: undefined | any | StoreSessionStoreOrderBySpecInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreOrderBySpec>;
+  value: import("../common/types").StoreSessionStoreOrderBySpecInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreOrderBySpec,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreTokenOrderByInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenOrderBy>}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenOrderBy, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreTokenOrderBy(
-  value: undefined | any | StoreSessionStoreTokenOrderByInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenOrderBy>;
+  value: import("../common/types").StoreSessionStoreTokenOrderByInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenOrderBy,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreTokenOrderBySpecInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenOrderBySpec>}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBySpecInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenOrderBySpec, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreTokenOrderBySpec(
-  value: undefined | any | StoreSessionStoreTokenOrderBySpecInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenOrderBySpec>;
+  value:
+    | import("../common/types").StoreSessionStoreTokenOrderBySpecInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenOrderBySpec,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreFileQueryBuilderInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreFileQueryBuilder>}
+ * @param {import("../common/types").StoreFileQueryBuilderInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreFileQueryBuilder, import("@compas/stdlib").AppError>}
  */
 export function validateStoreFileQueryBuilder(
-  value: undefined | any | StoreFileQueryBuilderInput,
-  propertyPath?: string | undefined,
-): Either<StoreFileQueryBuilder>;
+  value: import("../common/types").StoreFileQueryBuilderInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreFileQueryBuilder,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreJobQueryBuilderInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreJobQueryBuilder>}
+ * @param {import("../common/types").StoreJobQueryBuilderInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreJobQueryBuilder, import("@compas/stdlib").AppError>}
  */
 export function validateStoreJobQueryBuilder(
-  value: undefined | any | StoreJobQueryBuilderInput,
-  propertyPath?: string | undefined,
-): Either<StoreJobQueryBuilder>;
+  value: import("../common/types").StoreJobQueryBuilderInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreJobQueryBuilder,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreQueryBuilderInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreQueryBuilder>}
+ * @param {import("../common/types").StoreSessionStoreQueryBuilderInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreQueryBuilder, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreQueryBuilder(
-  value: undefined | any | StoreSessionStoreQueryBuilderInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreQueryBuilder>;
+  value: import("../common/types").StoreSessionStoreQueryBuilderInput | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreQueryBuilder,
+  import("@compas/stdlib").AppError
+>;
 /**
- * @param {undefined|any|StoreSessionStoreTokenQueryBuilderInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<StoreSessionStoreTokenQueryBuilder>}
+ * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput|unknown} value
+ * @returns {import("@compas/stdlib").Either<import("../common/types").StoreSessionStoreTokenQueryBuilder, import("@compas/stdlib").AppError>}
  */
 export function validateStoreSessionStoreTokenQueryBuilder(
-  value: undefined | any | StoreSessionStoreTokenQueryBuilderInput,
-  propertyPath?: string | undefined,
-): Either<StoreSessionStoreTokenQueryBuilder>;
-export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
-import { AppError } from "@compas/stdlib";
+  value:
+    | import("../common/types").StoreSessionStoreTokenQueryBuilderInput
+    | unknown,
+): import("@compas/stdlib").Either<
+  import("../common/types").StoreSessionStoreTokenQueryBuilder,
+  import("@compas/stdlib").AppError
+>;
 //# sourceMappingURL=validators.d.ts.map

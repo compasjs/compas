@@ -103,7 +103,7 @@ export function queueWorkerCreate(
 export type QueueWorkerHandler = (
   event: InsightEvent,
   sql: import("postgres").Sql<{}>,
-  job: StoreJob,
+  job: import("./generated/common/types").StoreJob,
 ) => void | Promise<void>;
 export type QueueWorkerOptions = {
   /**

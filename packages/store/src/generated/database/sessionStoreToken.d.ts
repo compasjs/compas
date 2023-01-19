@@ -1,169 +1,129 @@
 /**
- * Get all fields for sessionStoreToken
+ * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {string} [tableName="sst."]
- * @param {{ excludePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
- */
-export function sessionStoreTokenFields(
-  tableName?: string | undefined,
-  options?:
-    | {
-        excludePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Build 'WHERE ' part for sessionStoreToken
- *
- * @param {StoreSessionStoreTokenWhere} [where={}]
- * @param {string} [tableName="sst."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreSessionStoreTokenWhereInput} [where]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function sessionStoreTokenWhere(
-  where?: StoreSessionStoreTokenWhere | undefined,
-  tableName?: string | undefined,
+  where?:
+    | import("../common/types").StoreSessionStoreTokenWhereInput
+    | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'ORDER BY ' part for sessionStoreToken
+ * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {StoreSessionStoreTokenOrderBy} [orderBy=["id"]]
- * @param {StoreSessionStoreTokenOrderBySpec} [orderBySpec={}]
- * @param {string} [tableName="sst."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderByInput} [orderBy]
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBySpecInput} [orderBySpec]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function sessionStoreTokenOrderBy(
-  orderBy?: StoreSessionStoreTokenOrderBy | undefined,
-  orderBySpec?: StoreSessionStoreTokenOrderBySpec | undefined,
-  tableName?: string | undefined,
+  orderBy?:
+    | import("../common/types").StoreSessionStoreTokenOrderByInput
+    | undefined,
+  orderBySpec?:
+    | import("../common/types").StoreSessionStoreTokenOrderBySpecInput
+    | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'VALUES ' part for sessionStoreToken
+ * Query records in the 'sessionStoreToken' table, optionally joining related tables.
  *
- * @param {StoreSessionStoreTokenInsertPartial|StoreSessionStoreTokenInsertPartial[]} insert
- * @param {{ includePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
- */
-export function sessionStoreTokenInsertValues(
-  insert:
-    | StoreSessionStoreTokenInsertPartial
-    | StoreSessionStoreTokenInsertPartial[],
-  options?:
-    | {
-        includePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Query Builder for sessionStoreToken
- * Store all tokens that belong to a session.
- *
- * @param {StoreSessionStoreTokenQueryBuilder} [builder={}]
- * @returns {{
- *  then: () => void,
- *  exec: (sql: Postgres) => Promise<QueryResultStoreSessionStoreToken[]>,
- *  execRaw: (sql: Postgres) => Promise<any[]>,
- *  queryPart: QueryPart<any>,
- * }}
+ * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput} [input]
+ * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStoreToken>}
  */
 export function querySessionStoreToken(
-  builder?: StoreSessionStoreTokenQueryBuilder | undefined,
-): {
-  then: () => void;
-  exec: (sql: Postgres) => Promise<QueryResultStoreSessionStoreToken[]>;
-  execRaw: (sql: Postgres) => Promise<any[]>;
-  queryPart: QueryPart<any>;
-};
-/**
- * NOTE: At the moment only intended for internal use by the generated queries!
- *
- * Transform results from the query builder that adhere to the known structure
- * of 'sessionStoreToken' and its relations.
- *
- * @param {any[]} values
- * @param {StoreSessionStoreTokenQueryBuilder} [builder={}]
- */
-export function transformSessionStoreToken(
-  values: any[],
-  builder?: StoreSessionStoreTokenQueryBuilder | undefined,
-): void;
+  input?:
+    | import("../common/types").StoreSessionStoreTokenQueryBuilderInput
+    | undefined,
+): import("../common/database").WrappedQueryPart<
+  import("../common/types").QueryResultStoreSessionStoreToken
+>;
+export namespace sessionStoreTokenQueries {
+  export { sessionStoreTokenCount };
+  export { sessionStoreTokenInsert };
+  export { sessionStoreTokenUpdate };
+  export { sessionStoreTokenDelete };
+  export { sessionStoreTokenUpsertOnId };
+}
 /** @type {any} */
 export const sessionStoreTokenWhereSpec: any;
 /** @type {any} */
-export const sessionStoreTokenUpdateSpec: any;
-export namespace sessionStoreTokenQueries {
-  export { sessionStoreTokenCount };
-  export { sessionStoreTokenDelete };
-  export { sessionStoreTokenInsert };
-  export { sessionStoreTokenUpsertOnId };
-  export { sessionStoreTokenUpdate };
-}
 export const sessionStoreTokenQueryBuilderSpec: any;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenWhere} [where]
+ * Count the records in the 'sessionStoreToken' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreTokenWhereInput} where
  * @returns {Promise<number>}
  */
 declare function sessionStoreTokenCount(
-  sql: Postgres,
-  where?: StoreSessionStoreTokenWhere | undefined,
+  sql: import("@compas/store").Postgres,
+  where: import("../common/types").StoreSessionStoreTokenWhereInput,
 ): Promise<number>;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenWhere} [where={}]
- * @returns {Promise<void>}
- */
-declare function sessionStoreTokenDelete(
-  sql: Postgres,
-  where?: StoreSessionStoreTokenWhere | undefined,
-): Promise<void>;
-/**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenInsertPartial|(StoreSessionStoreTokenInsertPartial[])} insert
+ * Insert a record in the 'sessionStoreToken' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreTokenInsertInput["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<StoreSessionStoreToken[]>}
+ * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
  */
 declare function sessionStoreTokenInsert(
-  sql: Postgres,
-  insert:
-    | StoreSessionStoreTokenInsertPartial
-    | StoreSessionStoreTokenInsertPartial[],
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreSessionStoreTokenInsertInput["insert"],
   options?:
     | {
         withPrimaryKey?: boolean | undefined;
       }
     | undefined,
-): Promise<StoreSessionStoreToken[]>;
+): Promise<import("../common/types").StoreSessionStoreToken[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreSessionStoreTokenInsertPartial|(StoreSessionStoreTokenInsertPartial[])} insert
- * @param {{}} [options={}]
- * @returns {Promise<StoreSessionStoreToken[]>}
+ * Insert a record in the 'sessionStoreToken' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreTokenUpdateInput} update
+ * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
+ */
+declare function sessionStoreTokenUpdate(
+  sql: import("@compas/store").Postgres,
+  update: import("../common/types").StoreSessionStoreTokenUpdateInput,
+): Promise<import("../common/types").StoreSessionStoreToken[]>;
+/**
+ * Insert a record in the 'sessionStoreToken' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreTokenWhereInput} [where]
+ * @returns {Promise<void>}
+ */
+declare function sessionStoreTokenDelete(
+  sql: import("@compas/store").Postgres,
+  where?:
+    | import("../common/types").StoreSessionStoreTokenWhereInput
+    | undefined,
+): Promise<void>;
+/**
+ * Upsert a record in the 'sessionStoreToken' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreSessionStoreTokenInsertInput["insert"]} insert
+ * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
  */
 declare function sessionStoreTokenUpsertOnId(
-  sql: Postgres,
-  insert:
-    | StoreSessionStoreTokenInsertPartial
-    | StoreSessionStoreTokenInsertPartial[],
-  options?: {} | undefined,
-): Promise<StoreSessionStoreToken[]>;
-/**
- * (Atomic) update queries for sessionStoreToken
- *
- * @type {StoreSessionStoreTokenUpdateFn}
- */
-declare const sessionStoreTokenUpdate: StoreSessionStoreTokenUpdateFn;
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreSessionStoreTokenInsertInput["insert"],
+): Promise<import("../common/types").StoreSessionStoreToken[]>;
 export {};
 //# sourceMappingURL=sessionStoreToken.d.ts.map

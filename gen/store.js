@@ -1,12 +1,12 @@
 import { TypeCreator } from "@compas/code-gen";
 
 /**
- * @param app
+ * @param {import("@compas/code-gen/experimental").Generator} generator
  */
-export function applyStoreStructure(app) {
+export function applyStoreStructure(generator) {
   const T = new TypeCreator("store");
 
-  app.add(
+  generator.add(
     T.object("imageTransformOptions")
       .docs(
         `Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.`,
@@ -108,7 +108,7 @@ export function applyStoreStructure(app) {
         name: T.string().searchable(),
         data: T.any().default("{}"),
         retryCount: T.number().default(0),
-        handlerTimeout: T.number().min(1000).optional(),
+        handlerTimeout: T.number().min(0).optional(),
       })
       .enableQueries({ withDates: true }),
   );

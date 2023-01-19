@@ -20,7 +20,8 @@
  * @param {import("postgres").Sql<{}>} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} settings
- * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
+ * @returns {Promise<Either<{session:
+ *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
  */
 export function sessionTransportLoadFromContext(
   event: import("@compas/stdlib").InsightEvent,
@@ -30,7 +31,7 @@ export function sessionTransportLoadFromContext(
 ): Promise<
   import("@compas/stdlib").Either<
     {
-      session: QueryResultStoreSessionStore;
+      session: import("./generated/common/types").QueryResultStoreSessionStore;
     },
     AppError
   >

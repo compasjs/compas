@@ -12,7 +12,7 @@ import { objectStorageGetObjectStream } from "./object-storage.js";
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("koa").Context} ctx
- * @param {StoreFile} file
+ * @param {import("./generated/common/types").StoreFile} file
  * @param {{
  *   cacheControlHeader?: string,
  * }} [options]
@@ -120,7 +120,7 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("koa").Context} ctx
- * @param {StoreFile} file
+ * @param {import("./generated/common/types").StoreFile} file
  * @param {{
  *   cacheControlHeader?: string,
  * }} [options]

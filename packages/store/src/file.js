@@ -44,9 +44,10 @@ export const TRANSFORMED_CONTENT_TYPES = [
  *   allowedContentTypes?: string[],
  *   schedulePlaceholderImageJob?: boolean,
  * }} options
- * @param {Partial<StoreFile> & Pick<StoreFile, "name">} props
+ * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
+ *   "name">} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
- * @returns {Promise<StoreFile>}
+ * @returns {Promise<import("./generated/common/types").StoreFile>}
  */
 export async function fileCreateOrUpdate(
   sql,
@@ -138,7 +139,8 @@ export async function fileCreateOrUpdate(
  *   allowedContentTypes?: string[],
  *   schedulePlaceholderImageJob?: boolean,
  * }} options
- * @param {Partial<StoreFile> & Pick<StoreFile, "name">} props
+ * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
+ *   "name">} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
  * @returns {Promise<{
  *   source: NodeJS.ReadableStream|string|Buffer,
@@ -208,7 +210,7 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
       where: {
         bucketName: options.bucketName,
       },
-    }).exec(sql)
+    }).execRaw(sql)
   ).map((it) => it.id);
 
   const deletingSet = [];
@@ -256,14 +258,14 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
 /**
  * Format a StoreFile, so it can be used in the response.
  *
- * @param {StoreFile} file
+ * @param {import("./generated/common/types").StoreFile} file
  * @param {object} options
  * @param {string} options.url
  * @param {{
  *   signingKey: string,
  *   maxAgeInSeconds: number,
  * }} [options.signAccessToken]
- * @returns {StoreFileResponse}
+ * @returns {import("./generated/common/types").StoreFileResponse}
  */
 export function fileFormatMetadata(file, options) {
   if (!options.url) {

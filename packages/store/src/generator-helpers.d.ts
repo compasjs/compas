@@ -43,7 +43,11 @@
  *   orderBySpec?: *,
  *   shortName?: string,
  *   options?: { skipValidator?: boolean|undefined },
- *   ) => import("../types/advanced-types").QueryPart} orderBy
+ *   ) => import("../types/advanced-types").QueryPart} [orderBy]
+ * @property {( orderBy?: any[],
+ *   orderBySpec?: *,
+ *   options?: { shortName?: string;  skipValidator?: boolean|undefined },
+ *   ) => import("../types/advanced-types").QueryPart} [orderByExperimental]
  * @property {EntityWhere} where
  * @property {{
  *   builderKey: string,
@@ -166,14 +170,26 @@ export type EntityQueryBuilder = {
   name: string;
   shortName: string;
   columns: string[];
-  orderBy: (
-    orderBy?: any[],
-    orderBySpec?: any,
-    shortName?: string,
-    options?: {
-      skipValidator?: boolean | undefined;
-    },
-  ) => import("../types/advanced-types").QueryPart;
+  orderBy?:
+    | ((
+        orderBy?: any[],
+        orderBySpec?: any,
+        shortName?: string,
+        options?: {
+          skipValidator?: boolean | undefined;
+        },
+      ) => import("../types/advanced-types").QueryPart)
+    | undefined;
+  orderByExperimental?:
+    | ((
+        orderBy?: any[],
+        orderBySpec?: any,
+        options?: {
+          shortName?: string;
+          skipValidator?: boolean | undefined;
+        },
+      ) => import("../types/advanced-types").QueryPart)
+    | undefined;
   where: EntityWhere;
   relations: {
     builderKey: string;

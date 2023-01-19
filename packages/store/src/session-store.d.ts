@@ -28,7 +28,8 @@ export function sessionStoreCreate(
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} accessTokenString
- * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
+ * @returns {Promise<Either<{session:
+ *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
  */
 export function sessionStoreGet(
   event: import("@compas/stdlib").InsightEvent,
@@ -37,7 +38,7 @@ export function sessionStoreGet(
   accessTokenString: string,
 ): Promise<
   Either<{
-    session: QueryResultStoreSessionStore;
+    session: import("./generated/common/types").QueryResultStoreSessionStore;
   }>
 >;
 /**
@@ -46,26 +47,26 @@ export function sessionStoreGet(
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
- * @param {QueryResultStoreSessionStore} session
+ * @param {import("./generated/common/types").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export function sessionStoreUpdate(
   event: import("@compas/stdlib").InsightEvent,
   sql: import("postgres").Sql<{}>,
-  session: QueryResultStoreSessionStore,
+  session: import("./generated/common/types").QueryResultStoreSessionStore,
 ): Promise<Either<void>>;
 /**
  * Revoke all tokens related to the session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
- * @param {QueryResultStoreSessionStore} session
+ * @param {import("./generated/common/types").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export function sessionStoreInvalidate(
   event: import("@compas/stdlib").InsightEvent,
   sql: import("postgres").Sql<{}>,
-  session: QueryResultStoreSessionStore,
+  session: import("./generated/common/types").QueryResultStoreSessionStore,
 ): Promise<Either<void>>;
 /**
  * Get a new token pair.
@@ -134,7 +135,7 @@ export function sessionStoreReportAndRevokeLeakedSession(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
- * @param {QueryResultStoreSessionStore} session
+ * @param {import("./generated/common/types").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string
@@ -144,7 +145,7 @@ export function sessionStoreCreateTokenPair(
   event: import("@compas/stdlib").InsightEvent,
   sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
-  session: QueryResultStoreSessionStore,
+  session: import("./generated/common/types").QueryResultStoreSessionStore,
 ): Promise<
   Either<{
     accessToken: string;

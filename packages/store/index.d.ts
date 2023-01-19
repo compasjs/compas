@@ -1,5 +1,4 @@
-export { structure as storeStructure } from "./src/generated/common/structure.js";
-export { queries as storeQueries } from "./src/generated/database/index.js";
+export { storeGetStructure } from "./src/structure.js";
 export { setStoreQueries } from "./src/generated.js";
 export { sessionTransportLoadFromContext } from "./src/session-transport.js";
 export { postgresTableSizes } from "./src/insight.js";

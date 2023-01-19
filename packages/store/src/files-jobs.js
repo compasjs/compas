@@ -50,7 +50,7 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
   /**
    * @param {import("@compas/stdlib").InsightEvent} event
    * @param {import("postgres").Sql<{}>} sql
-   * @param {StoreJob} job
+   * @param {import("./generated/common/types").StoreJob} job
    * @returns {Promise<void>}
    */
   return async function jobFileGeneratePlaceholderImage(event, sql, job) {

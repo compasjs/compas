@@ -1,4 +1,4 @@
-import { queries as storeQueries } from "./generated/database/index.js";
+import { queries as storeQueries } from "./generated/common/database.js";
 
 /**
  * @type {typeof storeQueries}
@@ -14,7 +14,7 @@ export let queries = storeQueries;
  *
  * @since 0.1.0
  *
- * @param {typeof import("./generated/database/index.js").queries} q
+ * @param {typeof storeQueries} q
  * @returns {void}
  */
 export function setStoreQueries(q) {

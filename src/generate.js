@@ -8,18 +8,6 @@ import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
 import { App } from "../packages/code-gen/index.js";
 
-export async function generateTypes() {
-  const app = new App({
-    verbose: true,
-  });
-
-  await app.generateTypes({
-    outputDirectory: "./types/generated",
-    inputPaths: ["./packages/store/src/generated"],
-    dumpCompasTypes: true,
-  });
-}
-
 export async function generateCli() {
   const app = new App({
     verbose: true,
@@ -69,21 +57,31 @@ export async function generateCodeGen() {
   });
 }
 
-export async function generateStore() {
-  const app = new App({
-    verbose: true,
-  });
+/**
+ * @param {import("@compas/stdlib").Logger} logger
+ * @returns {void}
+ */
+export function generateStore(logger) {
+  const generator = new Generator(logger);
 
-  applyStoreStructure(app);
+  applyStoreStructure(generator);
 
-  await app.generate({
-    outputDirectory: `packages/store/src/generated`,
-    enabledGroups: ["store"],
-    enabledGenerators: ["sql", "validator"],
-    isNode: true,
-    dumpStructure: true,
-    dumpApiStructure: false,
-    dumpPostgres: true,
+  generator.generate({
+    targetLanguage: "js",
+    outputDirectory: "packages/store/src/generated",
+    generators: {
+      structure: {},
+      validators: {
+        includeBaseTypes: true,
+      },
+      database: {
+        target: {
+          dialect: "postgres",
+        },
+
+        // TODO: enable DDL dump
+      },
+    },
   });
 }
 

@@ -30,7 +30,8 @@ import { sessionStoreGet } from "./session-store.js";
  * @param {import("postgres").Sql<{}>} sql
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} settings
- * @returns {Promise<Either<{session: QueryResultStoreSessionStore}>>}
+ * @returns {Promise<Either<{session:
+ *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
  */
 export async function sessionTransportLoadFromContext(
   event,

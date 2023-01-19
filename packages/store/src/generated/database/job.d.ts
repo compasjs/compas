@@ -1,170 +1,119 @@
 /**
- * Get all fields for job
+ * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {string} [tableName="j."]
- * @param {{ excludePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
- */
-export function jobFields(
-  tableName?: string | undefined,
-  options?:
-    | {
-        excludePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Build 'WHERE ' part for job
- *
- * @param {StoreJobWhere} [where={}]
- * @param {string} [tableName="j."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreJobWhereInput} [where]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function jobWhere(
-  where?: StoreJobWhere | undefined,
-  tableName?: string | undefined,
+  where?: import("../common/types").StoreJobWhereInput | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'ORDER BY ' part for job
+ * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {StoreJobOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
- * @param {StoreJobOrderBySpec} [orderBySpec={}]
- * @param {string} [tableName="j."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreJobOrderByInput} [orderBy]
+ * @param {import("../common/types").StoreJobOrderBySpecInput} [orderBySpec]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function jobOrderBy(
-  orderBy?: StoreJobOrderBy | undefined,
-  orderBySpec?: StoreJobOrderBySpec | undefined,
-  tableName?: string | undefined,
+  orderBy?: import("../common/types").StoreJobOrderByInput | undefined,
+  orderBySpec?: import("../common/types").StoreJobOrderBySpecInput | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'VALUES ' part for job
+ * Query records in the 'job' table, optionally joining related tables.
  *
- * @param {StoreJobInsertPartial|StoreJobInsertPartial[]} insert
- * @param {{ includePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreJobQueryBuilderInput} [input]
+ * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
  */
-export function jobInsertValues(
-  insert: StoreJobInsertPartial | StoreJobInsertPartial[],
-  options?:
-    | {
-        includePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Query Builder for job
- * Postgres based job queue.
- * Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
- * Use {@link queueWorkerCreate} as a way to pick up jobs.
- *
- * @param {StoreJobQueryBuilder} [builder={}]
- * @returns {{
- *  then: () => void,
- *  exec: (sql: Postgres) => Promise<QueryResultStoreJob[]>,
- *  execRaw: (sql: Postgres) => Promise<any[]>,
- *  queryPart: QueryPart<any>,
- * }}
- */
-export function queryJob(builder?: StoreJobQueryBuilder | undefined): {
-  then: () => void;
-  exec: (sql: Postgres) => Promise<QueryResultStoreJob[]>;
-  execRaw: (sql: Postgres) => Promise<any[]>;
-  queryPart: QueryPart<any>;
-};
-/**
- * NOTE: At the moment only intended for internal use by the generated queries!
- *
- * Transform results from the query builder that adhere to the known structure
- * of 'job' and its relations.
- *
- * @param {any[]} values
- * @param {StoreJobQueryBuilder} [builder={}]
- */
-export function transformJob(
-  values: any[],
-  builder?: StoreJobQueryBuilder | undefined,
-): void;
+export function queryJob(
+  input?: import("../common/types").StoreJobQueryBuilderInput | undefined,
+): import("../common/database").WrappedQueryPart<
+  import("../common/types").QueryResultStoreJob
+>;
+export namespace jobQueries {
+  export { jobCount };
+  export { jobInsert };
+  export { jobUpdate };
+  export { jobDelete };
+  export { jobUpsertOnId };
+}
 /** @type {any} */
 export const jobWhereSpec: any;
 /** @type {any} */
-export const jobUpdateSpec: any;
-export namespace jobQueries {
-  export { jobCount };
-  export { jobDelete };
-  export { jobInsert };
-  export { jobUpsertOnId };
-  export { jobUpdate };
-}
-export namespace jobQueryBuilderSpec {
-  export const name: string;
-  export const shortName: string;
-  export { jobOrderBy as orderBy };
-  export { jobWhereSpec as where };
-  export const columns: string[];
-  export const relations: never[];
-}
+export const jobQueryBuilderSpec: any;
 /**
- * @param {Postgres} sql
- * @param {StoreJobWhere} [where]
+ * Count the records in the 'job' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreJobWhereInput} where
  * @returns {Promise<number>}
  */
 declare function jobCount(
-  sql: Postgres,
-  where?: StoreJobWhere | undefined,
+  sql: import("@compas/store").Postgres,
+  where: import("../common/types").StoreJobWhereInput,
 ): Promise<number>;
 /**
- * @param {Postgres} sql
- * @param {StoreJobWhere} [where={}]
- * @returns {Promise<void>}
- */
-declare function jobDelete(
-  sql: Postgres,
-  where?: StoreJobWhere | undefined,
-): Promise<void>;
-/**
- * @param {Postgres} sql
- * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
+ * Insert a record in the 'job' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreJobInsertInput["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<StoreJob[]>}
+ * @returns {Promise<import("../common/types").StoreJob[]>}
  */
 declare function jobInsert(
-  sql: Postgres,
-  insert: StoreJobInsertPartial | StoreJobInsertPartial[],
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreJobInsertInput["insert"],
   options?:
     | {
         withPrimaryKey?: boolean | undefined;
       }
     | undefined,
-): Promise<StoreJob[]>;
+): Promise<import("../common/types").StoreJob[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreJobInsertPartial|(StoreJobInsertPartial[])} insert
- * @param {{}} [options={}]
- * @returns {Promise<StoreJob[]>}
+ * Insert a record in the 'job' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreJobUpdateInput} update
+ * @returns {Promise<import("../common/types").StoreJob[]>}
+ */
+declare function jobUpdate(
+  sql: import("@compas/store").Postgres,
+  update: import("../common/types").StoreJobUpdateInput,
+): Promise<import("../common/types").StoreJob[]>;
+/**
+ * Insert a record in the 'job' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreJobWhereInput} [where]
+ * @returns {Promise<void>}
+ */
+declare function jobDelete(
+  sql: import("@compas/store").Postgres,
+  where?: import("../common/types").StoreJobWhereInput | undefined,
+): Promise<void>;
+/**
+ * Upsert a record in the 'job' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreJobInsertInput["insert"]} insert
+ * @returns {Promise<import("../common/types").StoreJob[]>}
  */
 declare function jobUpsertOnId(
-  sql: Postgres,
-  insert: StoreJobInsertPartial | StoreJobInsertPartial[],
-  options?: {} | undefined,
-): Promise<StoreJob[]>;
-/**
- * (Atomic) update queries for job
- *
- * @type {StoreJobUpdateFn}
- */
-declare const jobUpdate: StoreJobUpdateFn;
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreJobInsertInput["insert"],
+): Promise<import("../common/types").StoreJob[]>;
 export {};
 //# sourceMappingURL=job.d.ts.map

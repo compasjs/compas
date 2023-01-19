@@ -1,168 +1,119 @@
 /**
- * Get all fields for file
+ * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {string} [tableName="f."]
- * @param {{ excludePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
- */
-export function fileFields(
-  tableName?: string | undefined,
-  options?:
-    | {
-        excludePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Build 'WHERE ' part for file
- *
- * @param {StoreFileWhere} [where={}]
- * @param {string} [tableName="f."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreFileWhereInput} [where]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function fileWhere(
-  where?: StoreFileWhere | undefined,
-  tableName?: string | undefined,
+  where?: import("../common/types").StoreFileWhereInput | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'ORDER BY ' part for file
+ * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {StoreFileOrderBy} [orderBy=["createdAt", "updatedAt", "id"]]
- * @param {StoreFileOrderBySpec} [orderBySpec={}]
- * @param {string} [tableName="f."]
- * @param {{ skipValidator?: boolean|undefined }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreFileOrderByInput} [orderBy]
+ * @param {import("../common/types").StoreFileOrderBySpecInput} [orderBySpec]
+ * @param {{ skipValidator?: boolean, shortName?: string }} [options]
+ * @returns {QueryPart<any>}
  */
 export function fileOrderBy(
-  orderBy?: StoreFileOrderBy | undefined,
-  orderBySpec?: StoreFileOrderBySpec | undefined,
-  tableName?: string | undefined,
+  orderBy?: import("../common/types").StoreFileOrderByInput | undefined,
+  orderBySpec?: import("../common/types").StoreFileOrderBySpecInput | undefined,
   options?:
     | {
         skipValidator?: boolean | undefined;
+        shortName?: string | undefined;
       }
     | undefined,
-): QueryPart;
+): QueryPart<any>;
 /**
- * Build 'VALUES ' part for file
+ * Query records in the 'file' table, optionally joining related tables.
  *
- * @param {StoreFileInsertPartial|StoreFileInsertPartial[]} insert
- * @param {{ includePrimaryKey?: boolean }} [options={}]
- * @returns {QueryPart}
+ * @param {import("../common/types").StoreFileQueryBuilderInput} [input]
+ * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
  */
-export function fileInsertValues(
-  insert: StoreFileInsertPartial | StoreFileInsertPartial[],
-  options?:
-    | {
-        includePrimaryKey?: boolean | undefined;
-      }
-    | undefined,
-): QueryPart;
-/**
- * Query Builder for file
- * Postgres based file storage.
- *
- * @param {StoreFileQueryBuilder} [builder={}]
- * @returns {{
- *  then: () => void,
- *  exec: (sql: Postgres) => Promise<QueryResultStoreFile[]>,
- *  execRaw: (sql: Postgres) => Promise<any[]>,
- *  queryPart: QueryPart<any>,
- * }}
- */
-export function queryFile(builder?: StoreFileQueryBuilder | undefined): {
-  then: () => void;
-  exec: (sql: Postgres) => Promise<QueryResultStoreFile[]>;
-  execRaw: (sql: Postgres) => Promise<any[]>;
-  queryPart: QueryPart<any>;
-};
-/**
- * NOTE: At the moment only intended for internal use by the generated queries!
- *
- * Transform results from the query builder that adhere to the known structure
- * of 'file' and its relations.
- *
- * @param {any[]} values
- * @param {StoreFileQueryBuilder} [builder={}]
- */
-export function transformFile(
-  values: any[],
-  builder?: StoreFileQueryBuilder | undefined,
-): void;
+export function queryFile(
+  input?: import("../common/types").StoreFileQueryBuilderInput | undefined,
+): import("../common/database").WrappedQueryPart<
+  import("../common/types").QueryResultStoreFile
+>;
+export namespace fileQueries {
+  export { fileCount };
+  export { fileInsert };
+  export { fileUpdate };
+  export { fileDelete };
+  export { fileUpsertOnId };
+}
 /** @type {any} */
 export const fileWhereSpec: any;
 /** @type {any} */
-export const fileUpdateSpec: any;
-export namespace fileQueries {
-  export { fileCount };
-  export { fileDelete };
-  export { fileInsert };
-  export { fileUpsertOnId };
-  export { fileUpdate };
-}
-export namespace fileQueryBuilderSpec {
-  export const name: string;
-  export const shortName: string;
-  export { fileOrderBy as orderBy };
-  export { fileWhereSpec as where };
-  export const columns: string[];
-  export const relations: never[];
-}
+export const fileQueryBuilderSpec: any;
 /**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where]
+ * Count the records in the 'file' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreFileWhereInput} where
  * @returns {Promise<number>}
  */
 declare function fileCount(
-  sql: Postgres,
-  where?: StoreFileWhere | undefined,
+  sql: import("@compas/store").Postgres,
+  where: import("../common/types").StoreFileWhereInput,
 ): Promise<number>;
 /**
- * @param {Postgres} sql
- * @param {StoreFileWhere} [where={}]
- * @returns {Promise<void>}
- */
-declare function fileDelete(
-  sql: Postgres,
-  where?: StoreFileWhere | undefined,
-): Promise<void>;
-/**
- * @param {Postgres} sql
- * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
+ * Insert a record in the 'file' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreFileInsertInput["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<StoreFile[]>}
+ * @returns {Promise<import("../common/types").StoreFile[]>}
  */
 declare function fileInsert(
-  sql: Postgres,
-  insert: StoreFileInsertPartial | StoreFileInsertPartial[],
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreFileInsertInput["insert"],
   options?:
     | {
         withPrimaryKey?: boolean | undefined;
       }
     | undefined,
-): Promise<StoreFile[]>;
+): Promise<import("../common/types").StoreFile[]>;
 /**
- * @param {Postgres} sql
- * @param {StoreFileInsertPartial|(StoreFileInsertPartial[])} insert
- * @param {{}} [options={}]
- * @returns {Promise<StoreFile[]>}
+ * Insert a record in the 'file' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreFileUpdateInput} update
+ * @returns {Promise<import("../common/types").StoreFile[]>}
+ */
+declare function fileUpdate(
+  sql: import("@compas/store").Postgres,
+  update: import("../common/types").StoreFileUpdateInput,
+): Promise<import("../common/types").StoreFile[]>;
+/**
+ * Insert a record in the 'file' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreFileWhereInput} [where]
+ * @returns {Promise<void>}
+ */
+declare function fileDelete(
+  sql: import("@compas/store").Postgres,
+  where?: import("../common/types").StoreFileWhereInput | undefined,
+): Promise<void>;
+/**
+ * Upsert a record in the 'file' table
+ *
+ * @param {import("@compas/store").Postgres} sql
+ * @param {import("../common/types").StoreFileInsertInput["insert"]} insert
+ * @returns {Promise<import("../common/types").StoreFile[]>}
  */
 declare function fileUpsertOnId(
-  sql: Postgres,
-  insert: StoreFileInsertPartial | StoreFileInsertPartial[],
-  options?: {} | undefined,
-): Promise<StoreFile[]>;
-/**
- * (Atomic) update queries for file
- *
- * @type {StoreFileUpdateFn}
- */
-declare const fileUpdate: StoreFileUpdateFn;
+  sql: import("@compas/store").Postgres,
+  insert: import("../common/types").StoreFileInsertInput["insert"],
+): Promise<import("../common/types").StoreFile[]>;
 export {};
 //# sourceMappingURL=file.d.ts.map

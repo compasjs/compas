@@ -16,7 +16,7 @@ import { query } from "./query.js";
  * @typedef {(
  *   event: InsightEvent,
  *   sql: import("postgres").Sql<{}>,
- *   job: StoreJob,
+ *   job: import("./generated/common/types").StoreJob,
  * ) => (void | Promise<void>)} QueueWorkerHandler
  */
 
@@ -75,7 +75,7 @@ import { query } from "./query.js";
 
 const queryParts = {
   /**
-   * @param {StoreJobWhere} where
+   * @param {import("./generated/common/types").StoreJobWhere} where
    * @param {import("../types/advanced-types").QueryPart<unknown>} [orderBy]
    * @returns {import("../types/advanced-types").QueryPart<any>}
    */
@@ -90,7 +90,7 @@ const queryParts = {
           SELECT "id"
           FROM "job" j
           WHERE
-            ${jobWhere(where, "j.", { skipValidator: true })}
+            ${jobWhere(where, { skipValidator: true, shortName: "j." })}
           AND NOT "isComplete"
           AND "scheduledAt" < now() ${
             orderBy
@@ -192,7 +192,7 @@ export async function queueWorkerRegisterCronJobs(event, sql, { jobs }) {
     await queueWorkerRemoveUnknownCronJobs(sql, jobs);
 
     for (const job of jobs) {
-      await queueWorkerUpserCronJob(sql, job);
+      await queueWorkerUpsertCronJob(sql, job);
     }
   });
 
@@ -317,7 +317,7 @@ async function queueWorkerRemoveUnknownCronJobs(sql, jobs) {
  * @param {QueueWorkerCronOptions["jobs"][0]} job
  * @returns {Promise<void>}
  */
-async function queueWorkerUpserCronJob(sql, job) {
+async function queueWorkerUpsertCronJob(sql, job) {
   const nextValue = cron
     .parseExpression(job.cronExpression, {
       utc: true,
@@ -362,7 +362,7 @@ async function queueWorkerUpserCronJob(sql, job) {
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
- * @param {StoreJobWhere} where
+ * @param {import("./generated/common/types").StoreJobWhere} where
  * @param {import("../types/advanced-types").QueryPart|undefined} orderBy
  * @param {{currentPromise: Promise<void>}} worker
  */
@@ -410,7 +410,7 @@ function queueWorkerRun(logger, sql, options, where, orderBy, worker) {
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
- * @param {StoreJob} job
+ * @param {import("./generated/common/types").StoreJob} job
  */
 async function queueWorkerExecuteJob(logger, sql, options, job) {
   const isCronJob = job.data?.jobType === JOB_TYPE_CRON;

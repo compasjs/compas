@@ -39,8 +39,12 @@ test("store/queue-worker-jobs", (t) => {
 
       const jobs = await queryJob().exec(sql);
 
-      t.ok(isNil(jobs.find((it) => it.id === fiveDaysAgoInsert.id)));
-      t.ok(jobs.find((it) => it.id === twoDaysAgoInsert.id));
+      t.ok(
+        isNil(
+          jobs.find((it) => Number(it.id) === Number(fiveDaysAgoInsert.id)),
+        ),
+      );
+      t.ok(jobs.find((it) => Number(it.id) === Number(twoDaysAgoInsert.id)));
     });
 
     t.test("two days", async (t) => {
@@ -51,8 +55,14 @@ test("store/queue-worker-jobs", (t) => {
 
       const jobs = await queryJob().exec(sql);
 
-      t.ok(isNil(jobs.find((it) => it.id === fiveDaysAgoInsert.id)));
-      t.ok(isNil(jobs.find((it) => it.id === twoDaysAgoInsert.id)));
+      t.ok(
+        isNil(
+          jobs.find((it) => Number(it.id) === Number(fiveDaysAgoInsert.id)),
+        ),
+      );
+      t.ok(
+        isNil(jobs.find((it) => Number(it.id) === Number(twoDaysAgoInsert.id))),
+      );
     });
   });
 

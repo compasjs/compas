@@ -72,8 +72,10 @@ export function jobQueueInsights() {
           {
             isComplete: false,
           },
-          "j.",
-          { skipValidator: true },
+          {
+            skipValidator: true,
+            shortName: "j.",
+          },
         )}
     `.exec(sql);
 

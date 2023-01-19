@@ -5,7 +5,7 @@
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("koa").Context} ctx
- * @param {StoreFile} file
+ * @param {import("./generated/common/types").StoreFile} file
  * @param {{
  *   cacheControlHeader?: string,
  * }} [options]
@@ -14,7 +14,7 @@
 export function fileSendResponse(
   s3Client: import("@aws-sdk/client-s3").S3Client,
   ctx: import("koa").Context,
-  file: StoreFile,
+  file: import("./generated/common/types").StoreFile,
   options?:
     | {
         cacheControlHeader?: string | undefined;
@@ -37,7 +37,7 @@ export function fileSendResponse(
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("koa").Context} ctx
- * @param {StoreFile} file
+ * @param {import("./generated/common/types").StoreFile} file
  * @param {{
  *   cacheControlHeader?: string,
  * }} [options]
@@ -47,7 +47,7 @@ export function fileSendTransformedImageResponse(
   sql: import("postgres").Sql,
   s3Client: import("@aws-sdk/client-s3").S3Client,
   ctx: import("koa").Context,
-  file: StoreFile,
+  file: import("./generated/common/types").StoreFile,
   options?:
     | {
         cacheControlHeader?: string | undefined;
