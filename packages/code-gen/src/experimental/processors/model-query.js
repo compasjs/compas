@@ -5,12 +5,14 @@ import {
   ObjectType,
   ReferenceType,
 } from "../../builders/index.js";
+import { upperCaseFirst } from "../../utils.js";
 import {
   modelRelationGetInformation,
   modelRelationGetInverse,
   modelRelationGetOwn,
 } from "./model-relation.js";
 import { structureModels } from "./models.js";
+import { referenceUtilsGetProperty } from "./reference-utils.js";
 import { structureAddType } from "./structure.js";
 
 /**
@@ -77,7 +79,10 @@ export function modelQueryBuilderTypes(generateContext) {
  */
 export function modelQueryResultTypes(generateContext) {
   for (const model of structureModels(generateContext)) {
-    const type = new ObjectType(model.group, `${model.name}QueryResult`)
+    const type = new ObjectType(
+      "queryResult",
+      model.group + upperCaseFirst(model.name),
+    )
       .keys({})
       .build();
 
@@ -89,12 +94,23 @@ export function modelQueryResultTypes(generateContext) {
       const relationInfo = modelRelationGetInformation(relation);
 
       const existingType = type.keys[relationInfo.keyNameOwn];
-      const joinedType = new ReferenceType( // @ts-expect-error
-        relationInfo.modelInverse.group,
-        `${relationInfo.modelInverse.name}QueryBuilder`,
+      const isOptional = referenceUtilsGetProperty(
+        generateContext,
+        type.keys[relationInfo.keyNameOwn],
+        ["isOptional"],
+      );
+      const joinedType = new ReferenceType(
+        "queryResult",
+        `${relationInfo.modelInverse.group}${upperCaseFirst(
+          relationInfo.modelInverse.name,
+        )}`,
       ).build();
 
-      type.keys[relationInfo.keyNameOwn] = new AnyOfType().values(true).build();
+      const anyOfType = new AnyOfType().values(true);
+      if (isOptional) {
+        anyOfType.optional();
+      }
+      type.keys[relationInfo.keyNameOwn] = anyOfType.build();
 
       type.keys[relationInfo.keyNameOwn].values = [existingType, joinedType];
     }
@@ -105,14 +121,18 @@ export function modelQueryResultTypes(generateContext) {
       const joinedType =
         relation.subType === "oneToMany"
           ? new ArrayType().values(
-              new ReferenceType( // @ts-expect-error
-                relationInfo.modelOwn.group,
-                `${relationInfo.modelOwn.name}QueryBuilder`,
+              new ReferenceType(
+                "queryResult",
+                `${relationInfo.modelOwn.group}${upperCaseFirst(
+                  relationInfo.modelOwn.name,
+                )}`,
               ),
             )
-          : new ReferenceType( // @ts-expect-error
-              relationInfo.modelOwn.group,
-              `${relationInfo.modelOwn.name}QueryBuilder`,
+          : new ReferenceType(
+              "queryResult",
+              `${relationInfo.modelOwn.group}${upperCaseFirst(
+                relationInfo.modelOwn.name,
+              )}`,
             );
 
       type.keys[relationInfo.virtualKeyNameInverse] = joinedType

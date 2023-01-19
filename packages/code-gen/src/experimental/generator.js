@@ -2,6 +2,7 @@ import { readFileSync } from "fs";
 import { AppError, pathJoin } from "@compas/stdlib";
 import { buildOrInfer } from "../builders/index.js";
 import { generateExecute } from "./generate.js";
+import { validateExperimentalGenerateOptions } from "./generated/experimental/validators.js";
 import {
   structureAddType,
   structureExtractGroups,
@@ -153,10 +154,21 @@ export class Generator {
   /**
    * Generate based on the structure that is known to this generator
    *
-   * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
+   * @param {import("./generated/common/types").ExperimentalGenerateOptionsInput} options
    * @returns {import("./generate").OutputFile[]}
    */
   generate(options) {
-    return generateExecute(this, options);
+    const validationResultOptions =
+      validateExperimentalGenerateOptions(options);
+    if (validationResultOptions.error) {
+      throw AppError.serverError(
+        {
+          message: "Static validation failed for the provided options.",
+        },
+        validationResultOptions.error,
+      );
+    }
+
+    return generateExecute(this, validationResultOptions.value);
   }
 }

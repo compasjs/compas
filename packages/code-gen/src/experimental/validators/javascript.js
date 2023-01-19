@@ -107,9 +107,8 @@ export function validatorJavascriptGetFile(generateContext, type) {
 
   const file = fileContextCreateGeneric(generateContext, relativePath, {
     importCollector: new JavascriptImportCollector(),
+    additionToGeneratedByComment: "@ts-nocheck",
   });
-
-  fileWrite(file, fileFormatInlineComment(file, "@ts-nocheck"));
 
   return file;
 }

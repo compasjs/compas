@@ -62,11 +62,11 @@ export class Generator {
   /**
    * Generate based on the structure that is known to this generator
    *
-   * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
+   * @param {import("./generated/common/types").ExperimentalGenerateOptionsInput} options
    * @returns {import("./generate").OutputFile[]}
    */
   generate(
-    options: import("./generated/common/types").ExperimentalGenerateOptions,
+    options: import("./generated/common/types").ExperimentalGenerateOptionsInput,
   ): import("./generate").OutputFile[];
 }
 //# sourceMappingURL=generator.d.ts.map

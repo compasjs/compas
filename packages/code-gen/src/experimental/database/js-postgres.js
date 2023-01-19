@@ -83,6 +83,7 @@ export function wrapQueryPart(queryPart, validator, options) {
           throw AppError.serverError({
             message: "Database result did not pass the validators.",
             validator: validator.name,
+            error,
             databaseValue: queryResult[i],
           });
         }
@@ -561,6 +562,38 @@ export function jsPostgresGenerateInsert(
   model,
   contextNames,
 ) {
+  // TODO(future): remove compat wrapper
+
+  // Compatibility wrapper with existing code-gen
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
+  fileWrite(
+    file,
+    ` @param {${contextNames.insertType.inputType}["insert"]} insert`,
+  );
+  fileWrite(file, ` @param {{ withPrimaryKey?: boolean }} [options={}]`);
+  fileWrite(file, ` @returns {Promise<${contextNames.model.outputType}[]>}`);
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(
+    file,
+    `function ${model.name}Insert(sql, insert, options = {})`,
+  );
+  fileWrite(
+    file,
+    `return ${model.name}InsertInternal({ insert, returning: "*" }).exec(sql);`,
+  );
+  fileBlockEnd(file);
+  fileWrite(file, "");
+
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
@@ -577,7 +610,7 @@ export function jsPostgresGenerateInsert(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(file, `function ${model.name}Insert(input)`);
+  fileBlockStart(file, `function ${model.name}InsertInternal(input)`);
 
   // Input validation
   fileWrite(
@@ -659,7 +692,7 @@ export function jsPostgresGenerateInsert(
       if (isPrimitive) {
         fileWrite(file, `args.push(insert.${key} ?? null);`);
       } else {
-        fileBlockStart(file, `if (isNil(insert.${key}))`);
+        fileBlockStart(file, `if (!isNil(insert.${key}))`);
         fileWrite(file, `args.push(JSON.stringify(insert.${key}));`);
         fileBlockEnd(file);
 
@@ -705,7 +738,7 @@ export function jsPostgresGenerateInsert(
   fileWrite(file, `args.push(undefined);`);
   fileBlockEnd(file);
 
-  fileWrite(file, `qb.append(query(str, args));`);
+  fileWrite(file, `qb.append(query(str, ...args));`);
   fileWrite(
     file,
     `return wrapQueryPart(qb, ${contextNames.model.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
@@ -729,6 +762,41 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
   model,
   contextNames,
 ) {
+  // TODO(future): remove compat wrapper
+
+  // Compatibility wrapper with existing code-gen
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Upsert a record in the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
+  fileWrite(
+    file,
+    ` @param {${contextNames.insertType.inputType}["insert"]} insert`,
+  );
+  fileWrite(file, ` @returns {Promise<${contextNames.model.outputType}[]>}`);
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(
+    file,
+    `function ${model.name}UpsertOn${upperCaseFirst(
+      modelKeyGetPrimary(model).primaryKeyName,
+    )}(sql, insert)`,
+  );
+  fileWrite(
+    file,
+    `return ${model.name}UpsertOn${upperCaseFirst(
+      modelKeyGetPrimary(model).primaryKeyName,
+    )}Internal({ insert, returning: "*" }).exec(sql);`,
+  );
+  fileBlockEnd(file);
+  fileWrite(file, "");
+
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
@@ -752,7 +820,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
     file,
     `function ${model.name}UpsertOn${upperCaseFirst(
       modelKeyGetPrimary(model).primaryKeyName,
-    )}(input)`,
+    )}Internal(input)`,
   );
 
   // Input validation
@@ -772,7 +840,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
 
   fileWrite(
     file,
-    `const { queryPart } = ${model.name}Insert({ insert: input.insert });`,
+    `const { queryPart } = ${model.name}InsertInternal({ insert: input.insert });`,
   );
 
   fileWrite(file, `/** @type {string[]} */`);
@@ -841,7 +909,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
   fileWrite(file, `args.push(undefined);`);
   fileBlockEnd(file);
 
-  fileWrite(file, `queryPart.append(query(str, args));`);
+  fileWrite(file, `queryPart.append(query(str, ...args));`);
   fileWrite(
     file,
     `return wrapQueryPart(queryPart, ${contextNames.model.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.returning), });`,
@@ -923,6 +991,31 @@ export function jsPostgresGenerateUpdate(
       .replaceAll(`$$"`, "")};\n`,
   );
 
+  // TODO(future): remove compat wrapper
+
+  // Compatibility wrapper with existing code-gen
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
+  fileWrite(file, ` @param {${contextNames.updateType.inputType}} update`);
+  fileWrite(file, ` @returns {Promise<${contextNames.model.outputType}[]>}`);
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(file, `function ${model.name}Update(sql, update)`);
+  fileBlockStart(file, `if (update?.returning === "*" || !update?.returning)`);
+  fileWrite(file, `return ${model.name}UpdateInternal(update).exec(sql);`);
+  fileBlockEnd(file);
+  fileWrite(file, `return ${model.name}UpdateInternal(update).execRaw(sql);`);
+  fileBlockEnd(file);
+  fileWrite(file, "");
+
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
@@ -939,7 +1032,7 @@ export function jsPostgresGenerateUpdate(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(file, `function ${model.name}Update(input)`);
+  fileBlockStart(file, `function ${model.name}UpdateInternal(input)`);
 
   // Input validation
   fileWrite(
@@ -979,6 +1072,28 @@ export function jsPostgresGenerateDelete(
   model,
   contextNames,
 ) {
+  // TODO(future): remove compat wrapper
+
+  // Compatibility wrapper with existing code-gen
+  // Doc block
+  fileWrite(file, `/**`);
+  fileContextAddLinePrefix(file, ` *`);
+
+  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+
+  fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
+  fileWrite(file, ` @param {${contextNames.whereType.inputType}} [where]`);
+  fileWrite(file, ` @returns {Promise<void>}`);
+
+  fileWrite(file, `/`);
+  fileContextRemoveLinePrefix(file, 2);
+
+  // Function
+  fileBlockStart(file, `function ${model.name}Delete(sql, where = {})`);
+  fileWrite(file, `return ${model.name}DeleteInternal(where).exec(sql);`);
+  fileBlockEnd(file);
+  fileWrite(file, "");
+
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
@@ -992,7 +1107,7 @@ export function jsPostgresGenerateDelete(
   fileContextRemoveLinePrefix(file, 2);
 
   // Function
-  fileBlockStart(file, `function ${model.name}Delete(where = {})`);
+  fileBlockStart(file, `function ${model.name}DeleteInternal(where = {})`);
 
   if (model.queryOptions?.withSoftDeletes) {
     fileWrite(file, `where.deletedAtIncludeNotNull = true;`);
@@ -1028,7 +1143,7 @@ export function jsPostgresGenerateQueryBuilder(
   const entityQuerySpec = {
     name: model.name,
     shortName: model.shortName,
-    orderBy: `$$${model.name}OrderBy$$`,
+    orderByExperimental: `$$${model.name}OrderBy$$`,
     where: `$$${model.name}WhereSpec$$`,
     columns: Object.keys(model.keys),
     relations: [],
@@ -1097,7 +1212,10 @@ export function jsPostgresGenerateQueryBuilder(
     ` Query records in the '${model.name}' table, optionally joining related tables.\n`,
   );
 
-  fileWrite(file, ` @param {${contextNames.queryBuilderType.inputType}} input`);
+  fileWrite(
+    file,
+    ` @param {${contextNames.queryBuilderType.inputType}} [input]`,
+  );
   fileWrite(
     file,
     ` @returns {import("../common/database").WrappedQueryPart<${contextNames.queryResultType.outputType}>}`,
@@ -1109,7 +1227,7 @@ export function jsPostgresGenerateQueryBuilder(
   // Function
   fileBlockStart(
     file,
-    `export function query${upperCaseFirst(model.name)}(input)`,
+    `export function query${upperCaseFirst(model.name)}(input = {})`,
   );
 
   // Input validation
@@ -1129,7 +1247,13 @@ export function jsPostgresGenerateQueryBuilder(
 
   fileWrite(
     file,
-    `return wrapQueryPart(generatedQueryBuilderHelper(${model.name}QueryBuilderSpec, validatedInput, {}), ${contextNames.queryResultType.validatorFunction}, { hasCustomReturning: Array.isArray(validatedInput.select), });`,
+    `return wrapQueryPart(generatedQueryBuilderHelper(${
+      model.name
+    }QueryBuilderSpec, validatedInput, {}), ${
+      contextNames.queryResultType.validatorFunction
+    }, { hasCustomReturning: validatedInput.select?.length !== ${
+      Object.keys(model.keys).length
+    }, });`,
   );
 
   fileBlockEnd(file);

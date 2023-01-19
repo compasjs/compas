@@ -3,10 +3,7 @@ import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import { apiClientGenerator } from "./api-client/generator.js";
 import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
-import {
-  validateExperimentalGenerateOptions,
-  validateExperimentalStructure,
-} from "./generated/experimental/validators.js";
+import { validateExperimentalStructure } from "./generated/experimental/validators.js";
 import { docStringCleanup } from "./processors/doc-string.js";
 import {
   modelKeyAddDateKeys,
@@ -82,19 +79,9 @@ import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
  * @returns {OutputFile[]}
  */
 export function generateExecute(generator, options) {
-  const validationResultOptions = validateExperimentalGenerateOptions(options);
   const validationResultStructure = validateExperimentalStructure(
     generator.internalStructure,
   );
-
-  if (validationResultOptions.error) {
-    throw AppError.serverError(
-      {
-        message: "Static validation failed for the provided options.",
-      },
-      validationResultOptions.error,
-    );
-  }
 
   if (validationResultStructure.error) {
     throw AppError.serverError(
@@ -104,8 +91,6 @@ export function generateExecute(generator, options) {
       validationResultStructure.error,
     );
   }
-
-  options = validationResultOptions.value;
 
   // TODO: support generate presets
   // TODO: write migration docs between old and new code gen

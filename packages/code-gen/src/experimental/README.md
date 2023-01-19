@@ -5,7 +5,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ## TODO
 
-- [ ] Migrate @compas/store
+- [x] Migrate @compas/store
   - This is tested via for example the migrations and all existing tests, so we
     should be fine (A)
 - [ ] Support both versions in @compas/cli (visualise command)
@@ -29,10 +29,24 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ## Breaking changes
 
-- `import { App } from "@compas/code-gen"` -> `Generator`
-  - `app.generate` -> `generator.generate`
-    - Bunch of changed options, document the common changes and point to new
-      documentation about targets.
+- code-gen:
+  - `import { App } from "@compas/code-gen"` -> `Generator`
+    - `app.generate` -> `generator.generate`
+      - Bunch of changed options, document the common changes and point to new
+        documentation about targets.
+- Database
+  - `queries` is exported from `common/database.js` instead of
+    `database/index.js`
+  - `queries.xxxInsert(sql, insert, { withPrimaryKey })` -> removed
+    `withPrimaryKey`, validating inputs & outputs
+  - `queries.xxxAny` -> validating inputs & outputs
+  - `xxxWhere(where, shortName, { skipValidator})` ->
+    `xxxWhere(where, { shortName, skipValidator })`
+  - `xxxOrderBy(orderBy, orderBySpec, shortName, { skipValidator}` ->
+    `xxxOrderBy(orderBy, orderBySpec, { shortName, skipValidator })`
+  - `.execRaw` is mandatory when a custom `select` or `returning` is used.
+  - Watch out for comparisons of `number` primary keys like `StoreJob`. The new
+    code-gen handles those better (string vs number) for big serial
 
 #### Refs
 

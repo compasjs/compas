@@ -126,7 +126,9 @@ export function databaseGenerator(generateContext) {
     const queryBuilderType =
       generateContext.structure[model.group][`${model.name}QueryBuilder`];
     const queryResultType =
-      generateContext.structure[model.group][`${model.name}QueryResult`];
+      generateContext.structure["queryResult"][
+        `${model.group}${upperCaseFirst(model.name)}`
+      ];
 
     const allModelTypes = {
       model,
@@ -153,6 +155,7 @@ export function databaseGenerator(generateContext) {
     for (const key of Object.keys(allModelTypes)) {
       validatorGeneratorGenerateValidator(generateContext, allModelTypes[key], {
         validatorState: "output",
+        nameSuffix: "",
         typeOverrides: {},
       });
 
@@ -163,6 +166,7 @@ export function databaseGenerator(generateContext) {
       });
       const outputType = typesCacheGet(allModelTypes[key], {
         validatorState: "output",
+        nameSuffix: "",
         typeOverrides: {},
       });
 
