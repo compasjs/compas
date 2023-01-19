@@ -4,6 +4,127 @@ editLink: false
 
 # Changelog
 
+### [v0.0.221](https://github.com/compasjs/compas/releases/tag/v0.0.221)
+
+#### Breaking changes
+
+- feat(store): migrate to @compas/code-gen/experimental
+  - `storeStructure` is now exported as `storeGetStructure`
+  - Removed the `storeQueries` export
+  - All other functionality should work as is.
+
+#### Features
+
+- feat(code-gen/experimental): add number validator support
+- feat(code-gen/experimental): add string validator support
+- feat(code-gen/experimental): add uuid validator support
+- feat(code-gen/experimental): add generic validator support
+- feat(code-gen/experimental): self-host experimental validators and types,
+  introduce blocks, various fixes
+- feat(code-gen/experimental): correctly resolve optional references
+- feat(code-gen/experimental): perf improvements, fixes, database generate
+  inserts
+- feat(code-gen/experimental): replace unnecessary deep merges
+- feat(code-gen/experimental): database insert returning support
+- feat(code-gen/experimental): validate short names
+- feat(code-gen/experimental): database generate where helper
+- feat(code-gen/experimental): database generate update helper, include schema
+  usage
+- feat(code-gen/experimental): various validator fixes for number,string,array
+- feat(code-gen/experimental): fix nested any of types generator
+- feat(code-gen/experimental): setup a behaviour / specification suite
+- feat(code-gen/experimental): add database count and delete queries
+- feat(code-gen/experimental): add database upsert on primary key support
+- feat(code-gen/experimental): add database order by partial
+- feat(code-gen/experimental): add database query builer support
+- feat(code-gen/experimental): add route invalidation checker
+- feat(code-gen/experimental): add compas structure route + route only structure
+- feat(code-gen/experimental): add route trie generation
+- feat(code-gen/experimental): add route matcher + specification tests
+- feat(code-gen/experimental): add route controllers and entrypoint for Koa
+  target
+- feat(code-gen/experimental): add api client generator
+  - References [#2010](https://github.com/compasjs/compas/pull/2010)
+- feat(code-gen/experimental): various fixes, cleanup todo list
+  - References [#2010](https://github.com/compasjs/compas/pull/2010)
+- feat(code-gen/experimental): various fixes, increase compatibility with
+  existing code-gen
+  - References [#2010](https://github.com/compasjs/compas/pull/2010)
+
+#### Bug fixes
+
+- fix(eslint-plugin): ignore errors caused by using `exports` maps
+- fix(cli): don't try to run `compas run $directory`
+  ([#2297](https://github.com/compasjs/compas/pull/2297))
+  - Closes [#2295](https://github.com/compasjs/compas/pull/2295)
+
+#### Other
+
+- chore(changelog): split into different categories
+- chore(code-gen/experimental): update todo list
+- chore(code-gen/experimental): add database model where types
+- chore(code-gen/experimental): add database model returning and insert types
+- chore(code-gen/experimental): add database model update type
+- chore(code-gen/experimental): prevent duplicate `undefined` in `anyOf` types
+- chore(code-gen/experimental): add database model orderBy support
+- chore(code-gen/experimental): add database model query builder and result
+  generation
+- chore: regenerate after optimizations
+
+#### Dependency updates
+
+- build(deps): bump sharp from 0.31.2 to 0.31.3
+  ([#2275](https://github.com/compasjs/compas/pull/2275))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump @babel/core from 7.20.5 to 7.20.12
+  ([#2277](https://github.com/compasjs/compas/pull/2277),
+  [#2288](https://github.com/compasjs/compas/pull/2288))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.231.0 to 3.252.0
+  ([#2281](https://github.com/compasjs/compas/pull/2281),
+  [#2308](https://github.com/compasjs/compas/pull/2308))
+- build(deps): bump @aws-sdk/client-s3 from 3.231.0 to 3.252.0
+  ([#2283](https://github.com/compasjs/compas/pull/2283),
+  [#2306](https://github.com/compasjs/compas/pull/2306))
+- build(deps): bump json5 from 1.0.1 to 1.0.2
+  ([#2289](https://github.com/compasjs/compas/pull/2289))
+  - [Release notes](https://github.com/json5/json5/releases)
+- build(deps): bump actions/setup-node from 3.5.1 to 3.6.0
+  ([#2292](https://github.com/compasjs/compas/pull/2292))
+- build(deps): bump postgres from 3.3.2 to 3.3.3
+  ([#2286](https://github.com/compasjs/compas/pull/2286))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump eslint from 8.30.0 to 8.32.0
+  ([#2284](https://github.com/compasjs/compas/pull/2284),
+  [#2303](https://github.com/compasjs/compas/pull/2303))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump luxon from 3.1.0 to 3.2.1
+  ([#2296](https://github.com/compasjs/compas/pull/2296))
+  - [Release notes](https://github.com/moment/luxon/releases)
+- build(deps): bump cron-parser from 4.7.0 to 4.7.1
+  ([#2298](https://github.com/compasjs/compas/pull/2298))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- build(deps): bump prettier from 2.8.1 to 2.8.3
+  ([#2294](https://github.com/compasjs/compas/pull/2294),
+  [#2302](https://github.com/compasjs/compas/pull/2302))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump file-type from 18.0.0 to 18.2.0
+  ([#2300](https://github.com/compasjs/compas/pull/2300),
+  [#2304](https://github.com/compasjs/compas/pull/2304))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump eslint-config-prettier from 8.5.0 to 8.6.0
+  ([#2285](https://github.com/compasjs/compas/pull/2285))
+  - [Release notes](https://github.com/prettier/eslint-config-prettier/releases)
+- build(deps): bump crc from 4.2.0 to 4.3.1
+  ([#2311](https://github.com/compasjs/compas/pull/2311))
+  - [Release notes](https://github.com/alexgorbatchev/crc/releases)
+- build(deps): bump eslint-plugin-import from 2.26.0 to 2.27.5
+  ([#2305](https://github.com/compasjs/compas/pull/2305))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump eslint-plugin-jsdoc from 39.6.4 to 39.6.6
+  ([#2309](https://github.com/compasjs/compas/pull/2309))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.0.220](https://github.com/compasjs/compas/releases/tag/v0.0.220)
 
 ##### Changes
