@@ -17,7 +17,7 @@ import { JavascriptImportCollector } from "../target/javascript.js";
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsAxiosGenerateGlobalClient(generateContext) {
+export function jsAxiosGenerateCommonFile(generateContext) {
   const file = fileContextCreateGeneric(
     generateContext,
     "common/api-client.js",
@@ -28,29 +28,93 @@ export function jsAxiosGenerateGlobalClient(generateContext) {
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
-  importCollector.destructure("axios", "axios");
+  if (generateContext.options.generators.apiClient?.target.globalClient) {
+    importCollector.destructure("axios", "axios");
 
-  fileWrite(file, `/**`);
-  fileContextAddLinePrefix(file, ` * `);
-  fileWrite(file, `@type {import("axios").AxiosInstance}`);
-  fileContextRemoveLinePrefix(file, 3);
-  fileWrite(file, ` */`);
+    fileWrite(
+      file,
+      `/**
+ * @type {import("axios").AxiosInstance}
+ */
+export const axiosInstance = axios.create();
+`,
+    );
 
-  fileWrite(file, `export const axiosInstance = axios.create();\n`);
+    if (
+      generateContext.options.generators.apiClient?.target.includeWrapper ===
+      "react-query"
+    ) {
+      importCollector.destructure("@tanstack/react-query", "QueryClient");
+
+      fileWrite(
+        file,
+        `/**
+ * @type {import("@tanstack/react-query").QueryClient}
+ */
+export const queryClient = new QueryClient();
+`,
+      );
+    }
+  }
 
   if (
-    generateContext.options.generators.apiClient?.target.includeWrapper ===
-    "react-query"
+    generateContext.options.generators.apiClient?.target?.targetRuntime ===
+    "node.js"
   ) {
-    importCollector.destructure("@tanstack/react-query", "QueryClient");
+    importCollector.destructure("@compas/stdlib", "AppError");
+    importCollector.destructure("@compas/stdlib", "streamToBuffer");
 
-    fileWrite(file, `/**`);
-    fileContextAddLinePrefix(file, ` * `);
-    fileWrite(file, `@type {import("@tanstack/react-query").QueryClient}`);
-    fileContextRemoveLinePrefix(file, 3);
-    fileWrite(file, ` */`);
+    fileWrite(
+      file,
+      `/**
+ * Adds an interceptor to the provided Axios instance, wrapping any error in an AppError.
+ * This allows directly testing against an error key or property.
+ *
+ * @param {import("axios").AxiosInstance} axiosInstance
+ */
+export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
+  axiosInstance.interceptors.response.use(undefined, async (error) => {
+    // Validator error
+    if (AppError.instanceOf(error)) {
+      // If it is an AppError already, it most likely is thrown by the response
+      // validators. So we rethrow it as is.
+      throw error;
+    }
 
-    fileWrite(file, `export const queryClient = new QueryClient();\n`);
+    if (typeof error?.response?.data?.pipe === "function") {
+      const buffer = await streamToBuffer(error.response.data);
+      try {
+        error.response.data = JSON.parse(buffer.toString("utf-8"));
+      } catch {
+        // Unknown error
+        throw new AppError(
+          \`response.error\`,
+          error.response?.status ?? 500,
+          {
+            message:
+              "Could not decode the response body for further information.",
+          },
+          error,
+        );
+      }
+    }
+
+    // Server AppError
+    const { key, info } = error.response?.data ?? {};
+    if (typeof key === "string" && !!info && typeof info === "object") {
+      throw new AppError(key, error.response.status, info, error);
+    }
+
+    // Unknown error
+    throw new AppError(
+      \`response.error\`,
+      error.response?.status ?? 500,
+      AppError.format(error),
+    );
+  });
+}
+`,
+    );
   }
 }
 

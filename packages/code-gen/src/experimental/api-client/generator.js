@@ -14,7 +14,7 @@ import {
 } from "../validators/generator.js";
 import {
   jsAxiosGenerateFunction,
-  jsAxiosGenerateGlobalClient,
+  jsAxiosGenerateCommonFile,
   jsAxiosGetApiClientFile,
 } from "./js-axios.js";
 
@@ -36,16 +36,14 @@ export function apiClientGenerator(generateContext) {
 
   const target = apiClientFormatTarget(generateContext);
 
-  if (generateContext.options.generators.apiClient?.target?.globalClient) {
-    targetCustomSwitch(
-      {
-        jsAxios: jsAxiosGenerateGlobalClient,
-        tsAxios: noop,
-      },
-      target,
-      [generateContext],
-    );
-  }
+  targetCustomSwitch(
+    {
+      jsAxios: jsAxiosGenerateCommonFile,
+      tsAxios: noop,
+    },
+    target,
+    [generateContext],
+  );
 
   for (const route of structureRoutes(generateContext)) {
     const file = targetCustomSwitch(

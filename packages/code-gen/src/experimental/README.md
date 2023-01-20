@@ -12,8 +12,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       @compas/cli (visualise command)
   - We could change this to an option on code-gen. For example switching to
     mermaid to visualise it.
-- [ ] Supporting dumping Postgres DDL
-- [ ] Duplicate `with-auth` example to code-gen experimental
+- [x] Supporting dumping Postgres DDL
+- [x] Duplicate `with-auth` example to code-gen experimental
 - [ ] CRUD generator
   - [ ] Static checks
   - [ ] Generate specific types
@@ -36,15 +36,17 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Better validation on flat objects for `R.query()` & `R.params()`
   - Combine `R.files()` and `R.body()`; auto switch to form-data and enforce
     flat properties when a `T.file()` is present.
-  - Remove `compas visualise` it is replaced by `includeEntityDiagram
+  - Remove `compas visualise` it is replaced by `includeEntityDiagram`
 
 ## Breaking changes
 
 - code-gen:
   - `import { App } from "@compas/code-gen"` -> `Generator`
     - `app.generate` -> `generator.generate`
-      - Bunch of changed options, document the common changes and point to new
+      - Lots of changed options, document the common changes and point to new
         documentation about targets.
+  - Removed `app.generateTypes`
+  - See diff between `with-auth` and `with-auth-experimental`
 - Validators:
   - `T.array()`, `T.bool()` and `T.number()` auto convert always
 - Database
@@ -61,6 +63,10 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Watch out for comparisons of `number` primary keys like `StoreJob`. The new
     code-gen handles those better (string vs number) for big serial
   - Use `includeEntityDiagram` instead of `compas visualise`
+- API client
+  - All responses are automatically validated
+  - Use `axiosInterceptErrorAndWrapWithAppError` on your API clients (also in
+    testing) to automatically intercept errors and rethrow an AppError.
 
 #### Refs
 

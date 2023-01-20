@@ -3,7 +3,7 @@
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsAxiosGenerateGlobalClient(
+export function jsAxiosGenerateCommonFile(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
