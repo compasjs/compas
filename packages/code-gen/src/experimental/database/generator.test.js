@@ -14,6 +14,7 @@ test("code-gen/experimental/database/generator", (t) => {
             target: {
               dialect: "postgres",
             },
+            includeEntityDiagram: true,
           },
         },
         targetLanguage: "js",

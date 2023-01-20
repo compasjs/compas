@@ -9867,7 +9867,7 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["database"],
               };
             } else {
-              const knownKeys0 = new Set(["target"]);
+              const knownKeys0 = new Set(["target", "includeEntityDiagram"]);
               for (const key of Object.keys(value["generators"]["database"])) {
                 if (!knownKeys0.has(key)) {
                   errorMap[`$.generators.database`] = {
@@ -9971,6 +9971,40 @@ export function validateExperimentalGenerateOptions(value) {
                     result["generators"]["database"]["target"] =
                       intermediateResult2;
                   }
+                }
+              }
+              if (
+                value["generators"]["database"]["includeEntityDiagram"] ===
+                  null ||
+                value["generators"]["database"]["includeEntityDiagram"] ===
+                  undefined
+              ) {
+                result["generators"]["database"]["includeEntityDiagram"] =
+                  false;
+              } else {
+                if (
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    true ||
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    "true" ||
+                  value["generators"]["database"]["includeEntityDiagram"] === 1
+                ) {
+                  result["generators"]["database"]["includeEntityDiagram"] =
+                    true;
+                } else if (
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    false ||
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    "false" ||
+                  value["generators"]["database"]["includeEntityDiagram"] === 0
+                ) {
+                  result["generators"]["database"]["includeEntityDiagram"] =
+                    false;
+                } else {
+                  errorMap[`$.generators.database.includeEntityDiagram`] = {
+                    key: "validator.type",
+                    expectedType: "boolean",
+                  };
                 }
               }
             }

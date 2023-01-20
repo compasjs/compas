@@ -101,6 +101,12 @@ export function extendWithCodeGenExperimental(generator) {
                 .docs(
                   "Select one of the supported dialects to generate queries for.",
                 ),
+
+              includeEntityDiagram: T.bool()
+                .default(false)
+                .docs(
+                  "Create a markdown file containing the ERD in a 'mermaid' block.",
+                ),
             })
             .optional()
             .docs("Generate one of the compatible database interfaces."),

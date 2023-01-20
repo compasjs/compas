@@ -9,6 +9,7 @@ import {
   validatorGeneratorGenerateValidator,
   validatorGetNameAndImport,
 } from "../validators/generator.js";
+import { databaseERDCreate } from "./erd.js";
 import {
   jsPostgresCreateFile,
   jsPostgresGenerateCount,
@@ -81,6 +82,10 @@ import {
 export function databaseGenerator(generateContext) {
   if (!databaseIsEnabled(generateContext)) {
     return;
+  }
+
+  if (generateContext.options.generators.database?.includeEntityDiagram) {
+    databaseERDCreate(generateContext);
   }
 
   const target = databaseFormatTarget(generateContext);

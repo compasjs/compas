@@ -8,7 +8,11 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Migrate @compas/store
   - This is tested via for example the migrations and all existing tests, so we
     should be fine (A)
-- [ ] Support both versions in @compas/cli (visualise command)
+- [x] Support both versions (common/structure.js / common/structure.json) in
+      @compas/cli (visualise command)
+  - We could change this to an option on code-gen. For example switching to
+    mermaid to visualise it.
+- [ ] Supporting dumping Postgres DDL
 - [ ] Duplicate `with-auth` example to code-gen experimental
 - [ ] CRUD generator
   - [ ] Static checks
@@ -19,13 +23,20 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Typescript validators
 - [ ] TS Axios API client
   - [ ] Generate react-query wrapper
+- [ ] OpenAPI generator
 - [ ] `T.file()` specific types and validations
 - [ ] Update `T.any()` to be more inline with the new target system.
 - [ ] Update `T.string().pattern()` with `patternExplanation`
-- [ ] Self-host store package
+- [ ] Support overrides for specific properties currently residing in
+      `internalSettings`
+- [ ] Double check all TODO's
 - Future ideas;
   - Include `query` + where & builder helpers in the output instead of requiring
     @compas/store. We could probably generate them at `common/database.js`
+  - Better validation on flat objects for `R.query()` & `R.params()`
+  - Combine `R.files()` and `R.body()`; auto switch to form-data and enforce
+    flat properties when a `T.file()` is present.
+  - Remove `compas visualise` it is replaced by `includeEntityDiagram
 
 ## Breaking changes
 
@@ -34,6 +45,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     - `app.generate` -> `generator.generate`
       - Bunch of changed options, document the common changes and point to new
         documentation about targets.
+- Validators:
+  - `T.array()`, `T.bool()` and `T.number()` auto convert always
 - Database
   - `queries` is exported from `common/database.js` instead of
     `database/index.js`
@@ -47,6 +60,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - `.execRaw` is mandatory when a custom `select` or `returning` is used.
   - Watch out for comparisons of `number` primary keys like `StoreJob`. The new
     code-gen handles those better (string vs number) for big serial
+  - Use `includeEntityDiagram` instead of `compas visualise`
 
 #### Refs
 

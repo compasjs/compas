@@ -77,6 +77,7 @@ export function databaseIsEnabled(
       target: {
         dialect: "postgres";
       };
+      includeEntityDiagram: boolean;
     }
   | undefined;
 export type DatabaseContextNames = {

@@ -819,6 +819,9 @@ export type ExperimentalGenerateOptions = {
           target: {
             dialect: "postgres";
           };
+
+          // Create a markdown file containing the ERD in a 'mermaid' block.
+          includeEntityDiagram: boolean;
         }
       | undefined;
 
@@ -901,6 +904,9 @@ export type ExperimentalGenerateOptionsInput = {
           target: {
             dialect: "postgres";
           };
+
+          // Create a markdown file containing the ERD in a 'mermaid' block.
+          includeEntityDiagram?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 
