@@ -76,6 +76,7 @@ export function databaseIsEnabled(
   | {
       target: {
         dialect: "postgres";
+        includeDDL: boolean;
       };
       includeEntityDiagram: boolean;
     }

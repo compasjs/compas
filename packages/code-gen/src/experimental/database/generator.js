@@ -22,6 +22,7 @@ import {
   jsPostgresGenerateUtils,
   jsPostgresGenerateWhere,
 } from "./js-postgres.js";
+import { databasePostgresWriteDDL } from "./postgres.js";
 
 /**
  * @typedef {{
@@ -86,6 +87,14 @@ export function databaseGenerator(generateContext) {
 
   if (generateContext.options.generators.database?.includeEntityDiagram) {
     databaseERDCreate(generateContext);
+  }
+
+  if (
+    generateContext.options.generators.database?.target.dialect ===
+      "postgres" &&
+    generateContext.options.generators.database.target.includeDDL
+  ) {
+    databasePostgresWriteDDL(generateContext);
   }
 
   const target = databaseFormatTarget(generateContext);

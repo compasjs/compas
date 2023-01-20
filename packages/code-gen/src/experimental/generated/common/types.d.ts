@@ -818,6 +818,9 @@ export type ExperimentalGenerateOptions = {
           // Select one of the supported dialects to generate queries for.
           target: {
             dialect: "postgres";
+
+            // Write out 'common/structure.sql' with a naive DDL approach.
+            includeDDL: boolean;
           };
 
           // Create a markdown file containing the ERD in a 'mermaid' block.
@@ -903,6 +906,9 @@ export type ExperimentalGenerateOptionsInput = {
           // Select one of the supported dialects to generate queries for.
           target: {
             dialect: "postgres";
+
+            // Write out 'common/structure.sql' with a naive DDL approach.
+            includeDDL?: boolean | "true" | "false" | undefined;
           };
 
           // Create a markdown file containing the ERD in a 'mermaid' block.

@@ -97,6 +97,11 @@ export function extendWithCodeGenExperimental(generator) {
               target: T.anyOf()
                 .values({
                   dialect: "postgres",
+                  includeDDL: T.bool()
+                    .default(false)
+                    .docs(
+                      "Write out 'common/structure.sql' with a naive DDL approach.",
+                    ),
                 })
                 .docs(
                   "Select one of the supported dialects to generate queries for.",

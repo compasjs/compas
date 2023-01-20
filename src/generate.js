@@ -77,6 +77,7 @@ export function generateStore(logger) {
       database: {
         target: {
           dialect: "postgres",
+          includeDDL: true,
         },
 
         // TODO: enable DDL dump

@@ -5,7 +5,7 @@
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition["type"],
  *   string
  * >>} typeOverrides
- * @property {string} [nameSuffix]
+ * @property {string} nameSuffix
  */
 /**
  * Init the types generator. It doesn't necessary need to be enabled, cause other
@@ -86,6 +86,6 @@ export type GenerateTypeOptions = {
       string
     >
   >;
-  nameSuffix?: string | undefined;
+  nameSuffix: string;
 };
 //# sourceMappingURL=generator.d.ts.map

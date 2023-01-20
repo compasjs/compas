@@ -10,5 +10,8 @@
  * @returns {string}
  */
 export function fileFormatInlineComment(file, contents) {
-  return `// ${contents.replace(/\n/g, `\n${file.inlineCommentPrefix}`)}`;
+  return `${file.inlineCommentPrefix}${contents.replace(
+    /\n/g,
+    `\n${file.inlineCommentPrefix}`,
+  )}`;
 }

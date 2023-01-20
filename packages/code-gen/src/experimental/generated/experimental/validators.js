@@ -9917,7 +9917,7 @@ export function validateExperimentalGenerateOptions(value) {
                         foundType: typeof intermediateValue2,
                       };
                     } else {
-                      const knownKeys2 = new Set(["dialect"]);
+                      const knownKeys2 = new Set(["dialect", "includeDDL"]);
                       for (const key of Object.keys(intermediateValue2)) {
                         if (!knownKeys2.has(key)) {
                           intermediateErrorMap2[`$`] = {
@@ -9957,6 +9957,31 @@ export function validateExperimentalGenerateOptions(value) {
                           } else {
                             intermediateResult2["dialect"] = convertedString2;
                           }
+                        }
+                      }
+                      if (
+                        intermediateValue2["includeDDL"] === null ||
+                        intermediateValue2["includeDDL"] === undefined
+                      ) {
+                        intermediateResult2["includeDDL"] = false;
+                      } else {
+                        if (
+                          intermediateValue2["includeDDL"] === true ||
+                          intermediateValue2["includeDDL"] === "true" ||
+                          intermediateValue2["includeDDL"] === 1
+                        ) {
+                          intermediateResult2["includeDDL"] = true;
+                        } else if (
+                          intermediateValue2["includeDDL"] === false ||
+                          intermediateValue2["includeDDL"] === "false" ||
+                          intermediateValue2["includeDDL"] === 0
+                        ) {
+                          intermediateResult2["includeDDL"] = false;
+                        } else {
+                          intermediateErrorMap2[`$.includeDDL`] = {
+                            key: "validator.type",
+                            expectedType: "boolean",
+                          };
                         }
                       }
                     }

@@ -21,7 +21,7 @@ import {
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition["type"],
  *   string
  * >>} typeOverrides
- * @property {string} [nameSuffix]
+ * @property {string} nameSuffix
  */
 
 /**

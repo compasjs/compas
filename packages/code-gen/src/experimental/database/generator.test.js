@@ -13,6 +13,7 @@ test("code-gen/experimental/database/generator", (t) => {
           database: {
             target: {
               dialect: "postgres",
+              includeDDL: true,
             },
             includeEntityDiagram: true,
           },
