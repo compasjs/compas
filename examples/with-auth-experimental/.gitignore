@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+
+# IDE
+.idea
+.vscode
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules
+
+# Various tools + cache
+.cache
+.clinic
+coverage
+.nyc_output
+
+# Common build directories
+dist
+out
+
+# Generator output
+structure.sql
+
+# Local environment
+.env.local
