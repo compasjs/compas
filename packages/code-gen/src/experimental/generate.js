@@ -4,6 +4,7 @@ import { apiClientGenerator } from "./api-client/generator.js";
 import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
 import { validateExperimentalStructure } from "./generated/experimental/validators.js";
+import { crudValidation } from "./processors/crud-validation.js";
 import { docStringCleanup } from "./processors/doc-string.js";
 import {
   modelKeyAddDateKeys,
@@ -133,7 +134,8 @@ export function generateExecute(generator, options) {
   modelQueryBuilderTypes(generateContext);
   modelQueryResultTypes(generateContext);
 
-  // TODO(crud): crudPreprocess, crudCreateRoutes replacements
+  crudValidation(generateContext);
+  // TODO(crud): crudCreateRoutes replacements
 
   routeInvalidationsCheck(generateContext);
   routeStructureCreate(generateContext);

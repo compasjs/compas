@@ -15,7 +15,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Supporting dumping Postgres DDL
 - [x] Duplicate `with-auth` example to code-gen experimental
 - [ ] CRUD generator
-  - [ ] Static checks
+  - [x] Static checks
   - [ ] Generate specific types
   - [ ] Generate routes
   - [ ] Generate implementation
@@ -61,7 +61,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     `xxxOrderBy(orderBy, orderBySpec, { shortName, skipValidator })`
   - `.execRaw` is mandatory when a custom `select` or `returning` is used.
   - Watch out for comparisons of `number` primary keys like `StoreJob`. The new
-    code-gen handles those better (string vs number) for big serial
+    code-gen handles those better (string vs number) for big serial. In general
+    the output is now run through the validators if no field selectors are used.
   - Use `includeEntityDiagram` instead of `compas visualise`
 - API client
   - All responses are automatically validated

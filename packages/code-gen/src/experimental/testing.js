@@ -388,7 +388,6 @@ function getDefaultStructure() {
     // CRUD
     const Tpet = new TypeCreator("crudPet");
     const Tlocation = new TypeCreator("crudLocation");
-    const TlocationInformation = new TypeCreator("crudLocationInfromation");
     const Tuser = new TypeCreator("crudUser");
 
     generator.add(
@@ -433,20 +432,6 @@ function getDefaultStructure() {
         .nestedRelations(
           Tuser.crud("/pets").fromParent("pets", { name: "pet" }).routes({
             listRoute: true,
-          }),
-        ),
-
-      // Nested one to one route
-      TlocationInformation.crud("/crud/location-information")
-        .entity(T.reference("database", "locationInformation"))
-        .routes({
-          listRoute: true,
-          singleRoute: true,
-        })
-        .nestedRelations(
-          TlocationInformation.crud("/location").fromParent("location").routes({
-            singleRoute: true,
-            updateRoute: true,
           }),
         ),
     );
