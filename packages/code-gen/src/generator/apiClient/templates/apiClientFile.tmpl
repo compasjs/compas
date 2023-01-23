@@ -2,6 +2,20 @@
 import FormData from "form-data";
 import { isPlainObject } from "@compas/stdlib";
 {{ } }}
+{{ if (options.isBrowser) { }}
+    {{ for (const itemName of Object.keys(groupStructure)) { }}
+      {{ const item = groupStructure[itemName]; }}
+
+      {{ if (item.type !== "route") { }}
+      {{ continue; }}
+      {{ } }}
+
+      {{ if (item.internalSettings?.requestBodyType === "form-data") { }}
+      import { isPlainObject } from "lodash";
+      {{ break; }}
+      {{ } }}
+    {{ } }}
+{{ } }}
 
 {{ if (options.useTypescript) { }}
 import * as T from "../common/types";
