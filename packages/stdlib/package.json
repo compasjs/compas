@@ -1,6 +1,6 @@
 {
   "name": "@compas/stdlib",
-  "version": "0.0.221",
+  "version": "0.0.222",
   "description": "All kinds of utility functions",
   "main": "./index.js",
   "exports": {
