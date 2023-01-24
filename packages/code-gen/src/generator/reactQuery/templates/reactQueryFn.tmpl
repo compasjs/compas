@@ -50,21 +50,21 @@ options?: UseQueryOptions<{{= responseType }}, AppErrorResponse, TData> | undefi
     {{ if (item.query) { }}
       {{ for (const [key, value] of Object.entries(item.query?.keys ?? item.query?.reference?.keys ?? {})) { }}
         {{ if (!value.isOptional) { }}
-          && !!opts.query.{{= key }}
+          && opts.query.{{= key }} !== undefined && opts.query.{{= key }} !== null
         {{ } }}
       {{ } }}
     {{ } }}
     {{ if (item.params) { }}
       {{ for (const [key,value] of Object.entries(item.params?.keys ?? item.params?.reference?.keys ?? {})) { }}
         {{ if (!value.isOptional) { }}
-          && !!opts.params.{{= key }}
+          && opts.params.{{= key }} !== undefined && opts.params.{{= key }} !== null
         {{ } }}
       {{ } }}
     {{ } }}
     {{ if (item.body) { }}
       {{ for (const [key, value] of Object.entries(item.body?.keys ?? item.body?.reference?.keys ?? {})) { }}
         {{ if (!value.isOptional) { }}
-          && !!opts.body.{{= key }}
+          && opts.body.{{= key }} !== undefined && opts.body.{{= key }} !== null
         {{ } }}
       {{ } }}
     {{ } }}
