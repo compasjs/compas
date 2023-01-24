@@ -265,11 +265,18 @@ function transformQueryOrParams(context, inputList, compasStruct, filter) {
  * @param compasStruct
  */
 function transformBody(context, contentKey, input, compasStruct) {
-  if (isNil(input?.content?.[contentKey])) {
+  if (isNil(input)) {
     return undefined;
   }
 
-  const item = convertSchema(context, input.content[contentKey].schema);
+  let item;
+  if (isNil(input?.content?.[contentKey])) {
+    // We don't support whatever requestBody input the spec defines, so accept any type.
+    item = new AnyType().build();
+  } else {
+    item = convertSchema(context, input.content[contentKey].schema);
+  }
+
   item.group = compasStruct.group;
   item.name = `${compasStruct.name}Body`;
   item.docString = input.description || "";

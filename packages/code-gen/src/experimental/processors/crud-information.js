@@ -35,7 +35,6 @@ export function crudInformationGetModel(crud) {
   return crudCache.get(crud).model;
 }
 
-
 /**
  * Save the used relation and parent
  *
