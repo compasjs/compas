@@ -4,6 +4,36 @@ editLink: false
 
 # Changelog
 
+
+### [v0.0.222](https://github.com/compasjs/compas/releases/tag/v0.0.222)
+
+#### Features
+
+- feat(code-gen/experimental): support database.includeEntityDiagram [`f3e3c1`](https://github.com/compasjs/compas/commit/f3e3c15af10b896d929a7d6f8fc467481f6ba6dd)
+- feat(code-gen/experimental): support database.target.includeDDL [`d004c6`](https://github.com/compasjs/compas/commit/d004c683513643c2bf802601e6340a9a1f19a3bb)
+- feat(code-gen/experimental): generate axios interceptor to convert to AppEror in the api clients [`e3d920`](https://github.com/compasjs/compas/commit/e3d920c8b8571305863888c7d5789bd769c8bae6)
+- feat(code-gen/experimental): add crud validation [`83bb81`](https://github.com/compasjs/compas/commit/83bb81de8eba7516e74684c9ab9853982a4940de)
+
+#### Bug fixes
+
+- fix(code-gen): import `isPlainObject` when necessary for none Node.js environments [`686d23`](https://github.com/compasjs/compas/commit/686d2385f26d8d8f2f58b460435df7dc82e8bee9)
+- fix(code-gen): default to `any` on unknown `requestBody` in the open api importer [`d2a27a`](https://github.com/compasjs/compas/commit/d2a27a49329eecf3bcb1500db4badd30e6df32b3)
+
+#### Other
+
+- examples(with-auth-experimental): init template [`3739d0`](https://github.com/compasjs/compas/commit/3739d0420330d025dc6ad57c75a74eb1d8d84c19)
+- chore: regenerate package-lock.json [`06a5a6`](https://github.com/compasjs/compas/commit/06a5a65d84d166b0dd5f601bc3c0a47242bb3f40)
+- chore(changelog): add commit hash to the changelog [`caa69a`](https://github.com/compasjs/compas/commit/caa69a878ac757cbd0dde849a3b5baca6d2e8185)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 39.6.6 to 39.6.8 ([#2313](https://github.com/compasjs/compas/pull/2313), [#2316](https://github.com/compasjs/compas/pull/2316))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.252.0 to 3.254.0 ([#2312](https://github.com/compasjs/compas/pull/2312))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.252.0 to 3.254.0 ([#2314](https://github.com/compasjs/compas/pull/2314))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.0.221](https://github.com/compasjs/compas/releases/tag/v0.0.221)
 
 #### Breaking changes
