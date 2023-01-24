@@ -6,6 +6,7 @@ mainFn(import.meta, main);
 /**
  * @typedef {object} ChangelogCommit
  * @property {string} title  Full commit title
+ * @property {string} hash The full commit hash
  * @property {string} body Full commit body
  * @property {string|undefined} [breakingChange] Commit body breaking change or major
  *    bumps
@@ -60,7 +61,7 @@ async function main(logger) {
  */
 async function getListOfCommitsSinceTag(logger, version) {
   const { exitCode, stdout, stderr } = await exec(
-    `git log v${version}..HEAD --no-decorate --pretty="format:%s%n%b%n commit-body-end %n"`,
+    `git log v${version}..HEAD --no-decorate --pretty="format:%s%n%H%n%b%n commit-body-end %n"`,
   );
 
   if (exitCode !== 0) {
@@ -73,10 +74,11 @@ async function getListOfCommitsSinceTag(logger, version) {
     .split("commit-body-end")
     .map((it) => it.trim())
     .map((it) => {
-      const [title, ...body] = it.split("\n");
+      const [title, hash, ...body] = it.split("\n");
 
       return {
         title,
+        hash,
         body: body.join("\n").trim(),
         notes: [],
       };
@@ -303,7 +305,7 @@ function makeChangelog(logger, commits, version) {
 
     handledCommits.add(commit);
 
-    changelog.push(`- ${commit.title}`);
+    changelog.push(`- ${commit.title}${formatHash(commit)}`);
 
     for (const note of commit.notes) {
       changelog.push(`  ${note}`);
@@ -328,7 +330,7 @@ function makeChangelog(logger, commits, version) {
 
     handledCommits.add(commit);
 
-    changelog.push(`- ${commit.title}`);
+    changelog.push(`- ${commit.title}${formatHash(commit)}`);
 
     for (const note of commit.notes) {
       changelog.push(`  ${note}`);
@@ -349,7 +351,7 @@ function makeChangelog(logger, commits, version) {
 
     handledCommits.add(commit);
 
-    changelog.push(`- ${commit.title}`);
+    changelog.push(`- ${commit.title}${formatHash(commit)}`);
 
     for (const note of commit.notes) {
       changelog.push(`  ${note}`);
@@ -371,7 +373,7 @@ function makeChangelog(logger, commits, version) {
 
     handledCommits.add(commit);
 
-    changelog.push(`- ${commit.title}`);
+    changelog.push(`- ${commit.title}${formatHash(commit)}`);
 
     for (const note of commit.notes) {
       changelog.push(`  ${note}`);
@@ -386,7 +388,7 @@ function makeChangelog(logger, commits, version) {
   }
 
   for (const commit of availableCommits()) {
-    changelog.push(`- ${commit.title}`);
+    changelog.push(`- ${commit.title}${formatHash(commit)}`);
 
     for (const note of commit.notes) {
       changelog.push(`  ${note}`);
@@ -394,6 +396,23 @@ function makeChangelog(logger, commits, version) {
   }
 
   return changelog.join("\n");
+}
+
+/**
+ * Format the commit hash, linking to the commit on GitHub.
+ *
+ * @param {ChangelogCommit} commit
+ * @returns {string}
+ */
+function formatHash(commit) {
+  if (!commit?.hash) {
+    return "";
+  }
+
+  return ` [\`${commit.hash.slice(
+    0,
+    6,
+  )}\`](https://github.com/compasjs/compas/commit/${commit.hash})`;
 }
 
 /**
