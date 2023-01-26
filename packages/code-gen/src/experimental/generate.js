@@ -4,6 +4,7 @@ import { apiClientGenerator } from "./api-client/generator.js";
 import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
 import { validateExperimentalStructure } from "./generated/experimental/validators.js";
+import { crudTypesCreate } from "./processors/crud-types.js";
 import { crudValidation } from "./processors/crud-validation.js";
 import { docStringCleanup } from "./processors/doc-string.js";
 import {
@@ -135,7 +136,7 @@ export function generateExecute(generator, options) {
   modelQueryResultTypes(generateContext);
 
   crudValidation(generateContext);
-  // TODO(crud): crudCreateRoutes replacements
+  crudTypesCreate(generateContext);
 
   routeInvalidationsCheck(generateContext);
   routeStructureCreate(generateContext);

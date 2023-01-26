@@ -20,3 +20,35 @@ export function structureCrud(generateContext) {
 
   return result;
 }
+
+/**
+ * Call the route specific functions that are enabled on the CRUD object.
+ *
+ * @template {any[]} X
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {{
+ *   listRoute: (...X) => void,
+ *   singleRoute: (...X) => void,
+ *   createRoute: (...X) => void,
+ *   updateRoute: (...X) => void,
+ *   deleteRoute: (...X) => void,
+ * }} functions
+ * @param {X} args
+ */
+export function crudRouteSwitch(crud, functions, args) {
+  if (crud.routeOptions.listRoute) {
+    functions.listRoute(...args);
+  }
+  if (crud.routeOptions.singleRoute) {
+    functions.singleRoute(...args);
+  }
+  if (crud.routeOptions.createRoute) {
+    functions.createRoute(...args);
+  }
+  if (crud.routeOptions.updateRoute) {
+    functions.updateRoute(...args);
+  }
+  if (crud.routeOptions.deleteRoute) {
+    functions.deleteRoute(...args);
+  }
+}

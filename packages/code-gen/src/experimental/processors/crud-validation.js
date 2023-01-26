@@ -40,8 +40,9 @@ function crudValidateType(generateContext, crud) {
   /**
    * @type {import("../types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>}
    */
+  // @ts-expect-error
   const model = structureResolveReference(
-    generateContext.structure,
+    generateContext.structure, // @ts-expect-error
     crud.entity,
   );
 
@@ -88,16 +89,22 @@ function crudValidateType(generateContext, crud) {
   crudInformationSetModel(crud, model);
 
   for (const relation of crud.inlineRelations) {
+    relation.group = crud.group;
+    // @ts-expect-error
     crudValidateRelation(generateContext, crud, relation);
   }
   for (const relation of crud.nestedRelations) {
+    relation.group = crud.group;
+    // @ts-expect-error
     crudValidateRelation(generateContext, crud, relation);
   }
 
   for (const relation of crud.inlineRelations) {
+    // @ts-expect-error
     crudValidateType(generateContext, relation);
   }
   for (const relation of crud.nestedRelations) {
+    // @ts-expect-error
     crudValidateType(generateContext, relation);
   }
 }
@@ -120,14 +127,14 @@ function crudValidateRelation(generateContext, crud, relation) {
     throw AppError.serverError({
       message: `Relation in 'T.crud()' from ${stringFormatNameForError(
         model,
-      )} via '${relation.fromParent.field}' could not be resolved in the '${
+      )} via '${relation.fromParent?.field}' could not be resolved in the '${
         crud.group
       }' group. There should be a 'T.oneToOne("${
-        relation.fromParent.field
+        relation.fromParent?.field
       }", ...)' or 'T.oneToOne("...", T.reference("${model.group}", "${
         model.name
       }"), "${
-        relation.fromParent.field
+        relation.fromParent?.field
       }")' on the owning side of the relation.`,
     });
   }

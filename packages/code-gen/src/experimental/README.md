@@ -14,6 +14,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     mermaid to visualise it.
 - [x] Supporting dumping Postgres DDL
 - [x] Duplicate `with-auth` example to code-gen experimental
+- [ ] Support named references
 - [ ] CRUD generator
   - [x] Static checks
   - [ ] Generate specific types
@@ -49,6 +50,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - See diff between `with-auth` and `with-auth-experimental`
 - Validators:
   - `T.array()`, `T.bool()` and `T.number()` auto convert always
+  - Validator result `error` is a plain object
+  - Validator error keys are simplified
 - Database
   - `queries` is exported from `common/database.js` instead of
     `database/index.js`

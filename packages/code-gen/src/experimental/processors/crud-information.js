@@ -4,6 +4,8 @@
  * @property {import("../generated/common/types").ExperimentalCrudDefinition} [parent]
  * @property {import("../generated/common/types").
  * ExperimentalRelationDefinition} [relation]
+ * @property {{ group: string, name: string }} readableType
+ * @property {{ group: string, name: string }} writableType
  */
 
 /**
@@ -21,8 +23,10 @@ const crudCache = new WeakMap();
  */
 export function crudInformationSetModel(crud, model) {
   const obj = crudCache.get(crud) ?? {};
+  // @ts-expect-error
   obj.model = model;
 
+  // @ts-expect-error
   crudCache.set(crud, obj);
 }
 
@@ -46,9 +50,12 @@ export function crudInformationGetModel(crud) {
 export function crudInformationSetRelationAndParent(crud, parent, relation) {
   const obj = crudCache.get(crud) ?? {};
 
+  // @ts-expect-error
   obj.parent = parent;
+  // @ts-expect-error
   obj.relation = relation;
 
+  // @ts-expect-error
   crudCache.set(crud, obj);
 }
 
@@ -68,4 +75,52 @@ export function crudInformationGetRelation(crud) {
 export function crudInformationGetParent(crud) {
   // @ts-expect-error
   return crudCache.get(crud).parent;
+}
+
+/**
+ * Save the created readable type, so it is easily resolvable later on.
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {{ group: string, name: string }} readable
+ */
+export function crudInformationSetReadableType(crud, readable) {
+  const obj = crudCache.get(crud) ?? {};
+  // @ts-expect-error
+  obj.readableType = readable;
+
+  // @ts-expect-error
+  crudCache.set(crud, obj);
+}
+
+/**
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @returns {{ group: string, name: string }}
+ */
+export function crudInformationGetReadableType(crud) {
+  // @ts-expect-error
+  return crudCache.get(crud).readableType;
+}
+
+/**
+ * Save the created writable type, so it is easily resolvable later on.
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {{ group: string, name: string }} writable
+ */
+export function crudInformationSetWritableType(crud, writable) {
+  const obj = crudCache.get(crud) ?? {};
+  // @ts-expect-error
+  obj.writableType = writable;
+
+  // @ts-expect-error
+  crudCache.set(crud, obj);
+}
+
+/**
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @returns {{ group: string, name: string }}
+ */
+export function crudInformationGetWritableType(crud) {
+  // @ts-expect-error
+  return crudCache.get(crud).writableType;
 }
