@@ -185,7 +185,7 @@ export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
   for (const route of routes) {
     fileWrite(
       file,
-      `${route.name}: (ctx, next) => { throw AppError.notImplemented() },`,
+      `${route.name}: (ctx, next) => { throw AppError.notImplemented({ message: "You probably forgot to override the generated handlers or import your own implementation." }) },`,
     );
   }
 
