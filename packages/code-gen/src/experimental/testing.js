@@ -103,6 +103,7 @@ function getDefaultStructure() {
     T.generic("genericOneOfKeys")
       .keys(T.string().oneOf("up", "down", "left", "right"))
       .values(T.bool()),
+    T.generic("genericDate").keys(T.date()).values(T.bool()),
 
     T.number("numberRequired"),
     T.number("numberOptional").optional(),
@@ -244,6 +245,9 @@ function getDefaultStructure() {
       R.get("/get/query", "getWithQuery").query({
         limit: T.number().convert(),
       }),
+      R.get("/return/reference", "getReturnReference").response(
+        T.reference("references", "simple"),
+      ),
 
       R.get("/get/:param/*", "getFull")
         .params({

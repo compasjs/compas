@@ -334,17 +334,20 @@ export function typesTypescriptFormatType(
       fileWriteInline(file, optionalStr);
     }
   } else if (type.type === "generic") {
-    fileWriteInline(file, `Record<`);
-    fileContextSetIndent(file, 1);
-    fileWriteNewLine(file);
+    const oneOf = referenceUtilsGetProperty(generateContext, type.keys, [
+      "oneOf",
+    ]);
 
+    if (oneOf) {
+      fileWriteInline(file, `{ [key in `);
+    } else {
+      fileWriteInline(file, `{ [key: `);
+    }
     typesTypescriptFormatType(generateContext, file, type.keys, options);
-    fileWriteInline(file, `,`);
-    fileWriteNewLine(file);
 
+    fileWriteInline(file, `]: `);
     typesTypescriptFormatType(generateContext, file, type.values, options);
-    fileContextSetIndent(file, -1);
-    fileWriteInline(file, `>`);
+    fileWriteInline(file, `}`);
 
     if (isOptional) {
       fileWriteInline(file, optionalStr);

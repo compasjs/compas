@@ -92,7 +92,7 @@ export function jsKoaPrepareContext(
 
   const ctxType = new AnyType(route.group, `${route.name}Ctx`)
     .raw(
-      `import("@koa").ExtendableContext & {
+      `import("koa").ExtendableContext & {
   event: import("@compas/stdlib").InsightEvent,
   log: import("@compas/stdlib").Logger,${
     partial.length > 0 ? `\n  ${partial.trim()}` : ""
@@ -126,7 +126,7 @@ export function jsKoaPrepareContext(
   ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(
         route.name ?? "",
       )}Ctx,
-  next: import("@compas/store").Next,
+  next: import("@compas/server").Next,
 ) => void | Promise<void>`,
     )
     .build();
