@@ -150,7 +150,7 @@ export class RouteBuilder extends TypeBuilder {
     if (this.queryBuilder) {
       result.query = buildOrInfer(this.queryBuilder);
 
-      if (isNil(result.query.name)) {
+      if (isNil(result.query.name) && result.query.type !== "reference") {
         result.query.group = result.group;
         result.query.name = `${result.name}Query`;
       }
@@ -159,7 +159,7 @@ export class RouteBuilder extends TypeBuilder {
     if (this.bodyBuilder) {
       result.body = buildOrInfer(this.bodyBuilder);
 
-      if (isNil(result.body.name)) {
+      if (isNil(result.body.name) && result.body.type !== "reference") {
         result.body.group = result.group;
         result.body.name = `${result.name}Body`;
       }
@@ -168,7 +168,7 @@ export class RouteBuilder extends TypeBuilder {
     if (this.filesBuilder) {
       result.files = buildOrInfer(this.filesBuilder);
 
-      if (isNil(result.files.name)) {
+      if (isNil(result.files.name) && result.files.type !== "reference") {
         result.files.group = result.group;
         result.files.name = `${result.name}Files`;
       }
@@ -177,7 +177,7 @@ export class RouteBuilder extends TypeBuilder {
     if (this.responseBuilder) {
       result.response = buildOrInfer(this.responseBuilder);
 
-      if (isNil(result.response.name)) {
+      if (isNil(result.response.name) && result.response.type !== "reference") {
         result.response.group = result.group;
         result.response.name = `${result.name}Response`;
       }
@@ -203,6 +203,17 @@ export class RouteBuilder extends TypeBuilder {
       const paramsResult = this.paramsBuilder
         ? buildOrInfer(this.paramsBuilder)
         : buildOrInfer({});
+
+      if (paramsResult.type !== "object") {
+        throw AppError.serverError({
+          message: `\`.params()\` should be an 'T.object()'. Found '${
+            paramsResult.type
+          }' in '${upperCaseFirst(result.group)}${upperCaseFirst(
+            result.name,
+          )}'`,
+        });
+      }
+
       paramsResult.group = result.group;
       paramsResult.name = `${result.name}Params`;
 
