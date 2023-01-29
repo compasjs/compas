@@ -220,6 +220,7 @@ function crudTypesBuildParamsObject(crud, options) {
  */
 function crudTypesListRoute(generateContext, crud) {
   const model = crudInformationGetModel(crud);
+
   const readableType = crudInformationGetReadableType(crud);
   const routeName = crudInformationGetName(crud, "list");
   const routePath = crudInformationGetPath(crud, "/list");
@@ -300,8 +301,6 @@ function crudTypesListRoute(generateContext, crud) {
   structureAddType(generateContext.structure, routeType, {
     skipReferenceExtraction: true,
   });
-
-  return crud;
 }
 
 /**
@@ -359,9 +358,58 @@ function crudTypesBuildWhereObject(generateContext, crud) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesSingleRoute(generateContext, crud) {
-  // TODO: Implement
+  const model = crudInformationGetModel(crud);
+  const relation = crudInformationGetRelation(crud);
 
-  return crud;
+  const readableType = crudInformationGetReadableType(crud);
+  const routeName = crudInformationGetName(crud, "single");
+  const routePath = crudInformationGetPath(
+    crud,
+    relation?.subType === "oneToOneReverse"
+      ? "/single"
+      : `/:${crudInformationGetParamName(crud)}/single`,
+  );
+
+  const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
+  if (paramsType) {
+    paramsType.name = `${routeName}Params`;
+  }
+
+  const responseType = new ObjectType(crud.group, `${routeName}Response`)
+    .keys({
+      item: new ReferenceType(readableType.group, readableType.name),
+    })
+    .build();
+
+  const routeType = {
+    type: "route",
+    group: crud.group,
+    name: routeName,
+    idempotent: false,
+    path: routePath,
+    method: "GET",
+    tags: [],
+    invalidations: [],
+    docString: `Generated single route for '${model.name}'.`,
+    params: paramsType
+      ? new ReferenceType(crud.group, paramsType.name).build()
+      : undefined,
+    response: new ReferenceType(crud.group, responseType.name).build(),
+  };
+
+  if (paramsType) {
+    structureAddType(generateContext.structure, paramsType, {
+      skipReferenceExtraction: true,
+    });
+  }
+
+  structureAddType(generateContext.structure, responseType, {
+    skipReferenceExtraction: true,
+  });
+  // @ts-expect-error
+  structureAddType(generateContext.structure, routeType, {
+    skipReferenceExtraction: true,
+  });
 }
 
 /**
@@ -369,9 +417,56 @@ function crudTypesSingleRoute(generateContext, crud) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesCreateRoute(generateContext, crud) {
-  // TODO: Implement
+  const model = crudInformationGetModel(crud);
 
-  return crud;
+  const readableType = crudInformationGetReadableType(crud);
+  const writableType = crudInformationGetWritableType(crud);
+  const routeName = crudInformationGetName(crud, "create");
+  const routePath = crudInformationGetPath(crud, "/create");
+
+  const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: false });
+  if (paramsType) {
+    paramsType.name = `${routeName}Params`;
+  }
+
+  const responseType = new ObjectType(crud.group, `${routeName}Response`)
+    .keys({
+      item: new ReferenceType(readableType.group, readableType.name),
+    })
+    .build();
+
+  const routeType = {
+    type: "route",
+    group: crud.group,
+    name: routeName,
+    idempotent: false,
+    path: routePath,
+    method: "POST",
+    tags: [],
+    invalidations: crudTypesRouteInvalidations(crud, {
+      skipSingleRoute: true,
+    }),
+    docString: `Generated create route for '${model.name}'.`,
+    params: paramsType
+      ? new ReferenceType(crud.group, paramsType.name).build()
+      : undefined,
+    body: new ReferenceType(writableType.group, writableType.name).build(),
+    response: new ReferenceType(crud.group, responseType.name).build(),
+  };
+
+  if (paramsType) {
+    structureAddType(generateContext.structure, paramsType, {
+      skipReferenceExtraction: true,
+    });
+  }
+
+  structureAddType(generateContext.structure, responseType, {
+    skipReferenceExtraction: true,
+  });
+  // @ts-expect-error
+  structureAddType(generateContext.structure, routeType, {
+    skipReferenceExtraction: true,
+  });
 }
 
 /**
@@ -379,9 +474,59 @@ function crudTypesCreateRoute(generateContext, crud) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesUpdateRoute(generateContext, crud) {
-  // TODO: Implement
+  const model = crudInformationGetModel(crud);
+  const relation = crudInformationGetRelation(crud);
 
-  return crud;
+  const writableType = crudInformationGetWritableType(crud);
+  const routeName = crudInformationGetName(crud, "update");
+  const routePath = crudInformationGetPath(
+    crud,
+    relation?.subType === "oneToOneReverse"
+      ? "/update"
+      : `/:${crudInformationGetParamName(crud)}/update`,
+  );
+
+  const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
+  if (paramsType) {
+    paramsType.name = `${routeName}Params`;
+  }
+
+  const responseType = new ObjectType(crud.group, `${routeName}Response`)
+    .keys({
+      success: true,
+    })
+    .build();
+
+  const routeType = {
+    type: "route",
+    group: crud.group,
+    name: routeName,
+    idempotent: false,
+    path: routePath,
+    method: "PUT",
+    tags: [],
+    invalidations: crudTypesRouteInvalidations(crud),
+    docString: `Generated update route for '${model.name}'.`,
+    params: paramsType
+      ? new ReferenceType(crud.group, paramsType.name).build()
+      : undefined,
+    body: new ReferenceType(writableType.group, writableType.name).build(),
+    response: new ReferenceType(crud.group, responseType.name).build(),
+  };
+
+  if (paramsType) {
+    structureAddType(generateContext.structure, paramsType, {
+      skipReferenceExtraction: true,
+    });
+  }
+
+  structureAddType(generateContext.structure, responseType, {
+    skipReferenceExtraction: true,
+  });
+  // @ts-expect-error
+  structureAddType(generateContext.structure, routeType, {
+    skipReferenceExtraction: true,
+  });
 }
 
 /**
@@ -389,7 +534,115 @@ function crudTypesUpdateRoute(generateContext, crud) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesDeleteRoute(generateContext, crud) {
-  // TODO: Implement
+  const model = crudInformationGetModel(crud);
+  const relation = crudInformationGetRelation(crud);
 
-  return crud;
+  const routeName = crudInformationGetName(crud, "delete");
+  const routePath = crudInformationGetPath(
+    crud,
+    relation?.subType === "oneToOneReverse"
+      ? "/delete"
+      : `/:${crudInformationGetParamName(crud)}/delete`,
+  );
+
+  const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
+  if (paramsType) {
+    paramsType.name = `${routeName}Params`;
+  }
+
+  const responseType = new ObjectType(crud.group, `${routeName}Response`)
+    .keys({
+      success: true,
+    })
+    .build();
+
+  const routeType = {
+    type: "route",
+    group: crud.group,
+    name: routeName,
+    idempotent: false,
+    path: routePath,
+    method: "DELETE",
+    tags: [],
+    invalidations: crudTypesRouteInvalidations(crud),
+    docString: `Generated delete route for '${model.name}'.`,
+    params: paramsType
+      ? new ReferenceType(crud.group, paramsType.name).build()
+      : undefined,
+    response: new ReferenceType(crud.group, responseType.name).build(),
+  };
+
+  if (paramsType) {
+    structureAddType(generateContext.structure, paramsType, {
+      skipReferenceExtraction: true,
+    });
+  }
+
+  structureAddType(generateContext.structure, responseType, {
+    skipReferenceExtraction: true,
+  });
+  // @ts-expect-error
+  structureAddType(generateContext.structure, routeType, {
+    skipReferenceExtraction: true,
+  });
+}
+
+/**
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {{ skipSingleRoute: boolean}} [options]
+ * @returns {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition[]}
+ */
+function crudTypesRouteInvalidations(
+  crud,
+  options = {
+    skipSingleRoute: false,
+  },
+) {
+  /** @type {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition[]} */
+  const invalidations = [];
+
+  if (crud.routeOptions.listRoute) {
+    invalidations.push({
+      type: "routeInvalidation",
+      target: {
+        group: crud.group,
+        name: crudInformationGetName(crud, "list"),
+      },
+      properties: {
+        useSharedParams: true,
+        useSharedQuery: false,
+        specification: {
+          params: {},
+          query: {},
+        },
+      },
+    });
+  }
+
+  if (crud.routeOptions.singleRoute && !options.skipSingleRoute) {
+    invalidations.push({
+      type: "routeInvalidation",
+      target: {
+        group: crud.group,
+        name: crudInformationGetName(crud, "single"),
+      },
+      properties: {
+        useSharedParams: true,
+        useSharedQuery: false,
+        specification: {
+          params: {},
+          query: {},
+        },
+      },
+    });
+  }
+
+  if (crud.fromParent) {
+    invalidations.push(
+      // @ts-expect-error
+      ...crudTypesRouteInvalidations(crudInformationGetParent(crud), {}),
+    );
+  }
+
+  return invalidations;
 }
