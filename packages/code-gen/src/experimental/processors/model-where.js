@@ -133,10 +133,6 @@ export function modelWhereBuildWhereInformation(generateContext) {
       }
     }
 
-    // TODO: Do we need to add relation information here?
-    //   It is pretty straightforward to get the own / inverse relations later based on
-    //   the model.
-
     whereCache.set(model, whereInformation);
   }
 }

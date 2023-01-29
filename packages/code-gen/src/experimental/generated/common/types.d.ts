@@ -197,7 +197,7 @@ export type ExperimentalExtendDefinition = {
     hasDefaultValue?: boolean | undefined;
   };
   validator: {};
-  keys: Record<string, ExperimentalTypeSystemDefinition>;
+  keys: { [key: string]: ExperimentalTypeSystemDefinition };
   reference: ExperimentalReferenceDefinition;
 };
 
@@ -283,7 +283,7 @@ export type ExperimentalObjectDefinition = {
     strict: boolean;
   };
   shortName?: string | undefined;
-  keys: Record<string, ExperimentalTypeSystemDefinition>;
+  keys: { [key: string]: ExperimentalTypeSystemDefinition };
   enableQueries?: boolean | undefined;
   queryOptions?:
     | {
@@ -562,7 +562,7 @@ export type ExperimentalExtendDefinitionInput = {
     hasDefaultValue?: boolean | "true" | "false" | undefined;
   };
   validator: {};
-  keys: Record<string, ExperimentalTypeSystemDefinitionInput>;
+  keys: { [key: string]: ExperimentalTypeSystemDefinitionInput };
   reference: ExperimentalReferenceDefinitionInput;
 };
 
@@ -648,7 +648,7 @@ export type ExperimentalObjectDefinitionInput = {
     strict: boolean | "true" | "false";
   };
   shortName?: string | undefined;
-  keys: Record<string, ExperimentalTypeSystemDefinitionInput>;
+  keys: { [key: string]: ExperimentalTypeSystemDefinitionInput };
   enableQueries?: boolean | "true" | "false" | undefined;
   queryOptions?:
     | {
@@ -975,8 +975,8 @@ export type ExperimentalRouteInvalidationDefinition = {
     useSharedQuery?: boolean | undefined;
     specification?:
       | {
-          params: Record<string, string[]>;
-          query: Record<string, string[]>;
+          params: { [key: string]: string[] };
+          query: { [key: string]: string[] };
         }
       | undefined;
   };
@@ -1043,8 +1043,8 @@ export type ExperimentalRouteInvalidationDefinitionInput = {
     useSharedQuery?: boolean | "true" | "false" | undefined;
     specification?:
       | {
-          params: Record<string, string[] | string>;
-          query: Record<string, string[] | string>;
+          params: { [key: string]: string[] | string };
+          query: { [key: string]: string[] | string };
         }
       | undefined;
   };
@@ -1102,15 +1102,17 @@ export type ExperimentalNamedTypeDefinitionInput =
   | ExperimentalStringDefinitionInput
   | ExperimentalUuidDefinitionInput;
 
-export type ExperimentalStructure = Record<
-  ExperimentalNamePart,
-  Record<ExperimentalNamePart, ExperimentalNamedTypeDefinition>
->;
+export type ExperimentalStructure = {
+  [key: ExperimentalNamePart]: {
+    [key: ExperimentalNamePart]: ExperimentalNamedTypeDefinition;
+  };
+};
 
-export type ExperimentalStructureInput = Record<
-  ExperimentalNamePartInput,
-  Record<ExperimentalNamePartInput, ExperimentalNamedTypeDefinitionInput>
->;
+export type ExperimentalStructureInput = {
+  [key: ExperimentalNamePartInput]: {
+    [key: ExperimentalNamePartInput]: ExperimentalNamedTypeDefinitionInput;
+  };
+};
 
 // This contains all known type definitions.
 export type ExperimentalTypeDefinition =

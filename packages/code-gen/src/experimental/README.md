@@ -14,12 +14,13 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     mermaid to visualise it.
 - [x] Supporting dumping Postgres DDL
 - [x] Duplicate `with-auth` example to code-gen experimental
-- [ ] Support named references
 - [ ] CRUD generator
   - [x] Static checks
-  - [ ] Generate specific types
-  - [ ] Generate routes
-  - [ ] Generate implementation
+  - [ ] Static checks on `fromParent.options.name`, normalize `.basePath`
+  - [x] Generate readable & writable types
+  - [ ] Generate route types
+  - [ ] Generate event implementations
+  - [ ] Generate route implementations
 - [ ] Duplicate `default` example to code-gen experimental
 - [ ] Typescript validators
 - [ ] TS Axios API client

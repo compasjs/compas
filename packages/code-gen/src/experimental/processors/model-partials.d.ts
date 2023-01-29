@@ -34,4 +34,21 @@ export function modelPartialUpdateTypes(
 export function modelPartialOrderByTypes(
   generateContext: import("../generate").GenerateContext,
 ): void;
+/**
+ * Get unnamed orderBy & orderBySpec type
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generated/common/types").ExperimentalObjectDefinition} model
+ * @returns {{
+ *   orderByType: any,
+ *   orderBySpecType: any,
+ * }}
+ */
+export function modelPartialGetOrderByTypes(
+  generateContext: import("../generate").GenerateContext,
+  model: import("../generated/common/types").ExperimentalObjectDefinition,
+): {
+  orderByType: any;
+  orderBySpecType: any;
+};
 //# sourceMappingURL=model-partials.d.ts.map

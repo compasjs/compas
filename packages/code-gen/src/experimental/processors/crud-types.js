@@ -1,7 +1,17 @@
-import { ArrayType, ObjectType, ReferenceType } from "../../builders/index.js";
+import {
+  ArrayType,
+  BooleanType,
+  NumberType,
+  ObjectType,
+  ReferenceType,
+} from "../../builders/index.js";
 import { upperCaseFirst } from "../../utils.js";
 import {
   crudInformationGetModel,
+  crudInformationGetName,
+  crudInformationGetParamName,
+  crudInformationGetParent,
+  crudInformationGetPath,
   crudInformationGetReadableType,
   crudInformationGetRelation,
   crudInformationGetWritableType,
@@ -9,6 +19,9 @@ import {
   crudInformationSetWritableType,
 } from "./crud-information.js";
 import { crudRouteSwitch, structureCrud } from "./crud.js";
+import { modelKeyGetPrimary } from "./model-keys.js";
+import { modelPartialGetOrderByTypes } from "./model-partials.js";
+import { modelWhereGetInformation } from "./model-where.js";
 import { structureAddType } from "./structure.js";
 
 /**
@@ -35,6 +48,7 @@ export function crudTypesCreate(generateContext) {
         type: "writable",
       });
     }
+
     crudTypesRoutes(generateContext, crud);
   }
 }
@@ -119,6 +133,14 @@ function crudTypesItem(generateContext, crud, options) {
     }
   }
 
+  for (const nestedCrud of crud.nestedRelations) {
+    // @ts-expect-error
+    crudTypesItem(generateContext, nestedCrud, {
+      name: `${options.name}${upperCaseFirst(nestedCrud.fromParent?.field)}`,
+      type: options.type,
+    });
+  }
+
   structureAddType(generateContext.structure, itemType, {
     skipReferenceExtraction: true,
   });
@@ -160,13 +182,176 @@ function crudTypesRoutes(generateContext, crud) {
 }
 
 /**
+ * Build the params object for the provided crud object. Including params necessary for
+ * 'parents'.
+ *
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {{ includeSelf: boolean }} options
+ */
+function crudTypesBuildParamsObject(crud, options) {
+  let crudType = options.includeSelf ? crud : crudInformationGetParent(crud);
+
+  const object = new ObjectType().keys({}).build();
+
+  while (crudType) {
+    const model = crudInformationGetModel(crudType);
+    const relation = crudInformationGetRelation(crudType);
+    const { primaryKeyDefinition } = modelKeyGetPrimary(model);
+
+    if (relation?.subType !== "oneToOneReverse") {
+      object.keys[crudInformationGetParamName(crudType)] = primaryKeyDefinition;
+    }
+
+    crudType = crudInformationGetParent(crudType);
+  }
+
+  object.group = crud.group;
+
+  if (Object.keys(object.keys).length === 0) {
+    return;
+  }
+
+  return object;
+}
+
+/**
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesListRoute(generateContext, crud) {
-  // TODO: Implement
+  const model = crudInformationGetModel(crud);
+  const readableType = crudInformationGetReadableType(crud);
+  const routeName = crudInformationGetName(crud, "list");
+  const routePath = crudInformationGetPath(crud, "/list");
+
+  const whereObject = crudTypesBuildWhereObject(generateContext, crud);
+  const { orderByType, orderBySpecType } = modelPartialGetOrderByTypes(
+    generateContext,
+    model,
+  );
+  orderByType.isOptional = true;
+  orderBySpecType.isOptional = true;
+
+  const paramsType = crudTypesBuildParamsObject(crud, {
+    includeSelf: false,
+  });
+  if (paramsType) {
+    paramsType.name = `${routeName}Params`;
+  }
+
+  const queryType = new ObjectType(crud.group, `${routeName}Query`)
+    .keys({
+      offset: new NumberType().default(0),
+      limit: new NumberType().default(50).max(5000),
+    })
+    .build();
+
+  const bodyType = new ObjectType(crud.group, `${routeName}Body`)
+    .keys({
+      where: new ObjectType().keys({}).optional(),
+      orderBy: {},
+      orderBySpec: {},
+    })
+    .build();
+  bodyType.keys.orderBy = orderByType;
+  bodyType.keys.orderBySpec = orderBySpecType;
+  bodyType.keys.where.keys = whereObject;
+
+  const responseType = new ObjectType(crud.group, `${routeName}Response`)
+    .keys({
+      list: [new ReferenceType(readableType.group, readableType.name)],
+      total: new NumberType(),
+    })
+    .build();
+
+  const routeType = {
+    type: "route",
+    group: crud.group,
+    name: routeName,
+    idempotent: true,
+    path: routePath,
+    method: "POST",
+    tags: [],
+    invalidations: [],
+    docString: `Generated list route for '${model.name}'.`,
+    params: paramsType
+      ? new ReferenceType(crud.group, paramsType.name).build()
+      : undefined,
+    query: new ReferenceType(crud.group, queryType.name).build(),
+    body: new ReferenceType(crud.group, bodyType.name).build(),
+    response: new ReferenceType(crud.group, responseType.name).build(),
+  };
+
+  if (paramsType) {
+    structureAddType(generateContext.structure, paramsType, {
+      skipReferenceExtraction: true,
+    });
+  }
+  structureAddType(generateContext.structure, queryType, {
+    skipReferenceExtraction: true,
+  });
+  structureAddType(generateContext.structure, bodyType, {
+    skipReferenceExtraction: true,
+  });
+  structureAddType(generateContext.structure, responseType, {
+    skipReferenceExtraction: true,
+  });
+  // @ts-expect-error
+  structureAddType(generateContext.structure, routeType, {
+    skipReferenceExtraction: true,
+  });
 
   return crud;
+}
+
+/**
+ * Build the where object used in the list route. This is a dumbed down version of the
+ * real 'where' object for the model. We do this because various options supported in the
+ * query-able where object could lead to slowdowns.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ */
+function crudTypesBuildWhereObject(generateContext, crud) {
+  const model = crudInformationGetModel(crud);
+  const whereInformation = modelWhereGetInformation(model);
+
+  const result = {};
+  const defaults = {
+    name: undefined,
+    group: undefined,
+    uniqueName: undefined,
+    isOptional: true,
+    defaultValue: undefined,
+    docString: "",
+  };
+
+  for (const whereField of whereInformation.fields) {
+    if (["in", "notIn"].includes(whereField.variant)) {
+      // We can't use the builders normally since we need to override some properties
+      result[whereField.whereKey] = {
+        ...new ArrayType().values(true).build(),
+        values: {
+          ...model.keys[whereField.modelKey],
+          ...defaults,
+
+          // Array values should never be optional.
+          isOptional: false,
+        },
+      };
+    } else if (
+      ["isNull", "isNotNull", "includeNotNull"].includes(whereField.variant)
+    ) {
+      result[whereField.whereKey] = new BooleanType().optional().build();
+    } else {
+      result[whereField.whereKey] = {
+        ...model.keys[whereField.modelKey],
+        ...defaults,
+      };
+    }
+  }
+
+  return result;
 }
 
 /**

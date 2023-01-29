@@ -1,4 +1,34 @@
 /**
+ * Get the resolved name of the provided crud route
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {string} suffix
+ * @returns {string}
+ */
+export function crudInformationGetName(
+  crud: import("../generated/common/types").ExperimentalCrudDefinition,
+  suffix: string,
+): string;
+/**
+ * Get the resolved path of the provided crud route
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {string} suffix
+ * @returns {string}
+ */
+export function crudInformationGetPath(
+  crud: import("../generated/common/types").ExperimentalCrudDefinition,
+  suffix: string,
+): string;
+/**
+ * Get the param name for the provided crud object
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ */
+export function crudInformationGetParamName(
+  crud: import("../generated/common/types").ExperimentalCrudDefinition,
+): string;
+/**
  * Save the used model, so we don't have to resolve that each and every time.
  *
  * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud

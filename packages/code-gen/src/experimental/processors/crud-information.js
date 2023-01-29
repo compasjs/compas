@@ -8,12 +8,77 @@
  * @property {{ group: string, name: string }} writableType
  */
 
+import { lowerCaseFirst, upperCaseFirst } from "../../utils.js";
+import { modelKeyGetPrimary } from "./model-keys.js";
+
 /**
  * Cache various items around CRUD objects
  *
  * @type {WeakMap<object, CrudInformation>}
  */
 const crudCache = new WeakMap();
+
+/**
+ * Get the resolved name of the provided crud route
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {string} suffix
+ * @returns {string}
+ */
+export function crudInformationGetName(crud, suffix) {
+  let result = lowerCaseFirst(suffix);
+
+  if (crud.fromParent) {
+    result = (crud.fromParent?.options?.name ?? "") + upperCaseFirst(result);
+
+    return crudInformationGetName(crudInformationGetParent(crud), result);
+  }
+
+  return result;
+}
+
+/**
+ * Get the resolved path of the provided crud route
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {string} suffix
+ * @returns {string}
+ */
+export function crudInformationGetPath(crud, suffix) {
+  if (!suffix.startsWith("/")) {
+    suffix = `/${suffix}`;
+  }
+
+  const path = crud.basePath + suffix;
+
+  if (crud.fromParent) {
+    const parent = crudInformationGetParent(crud);
+    const relation = crudInformationGetRelation(crud);
+
+    if (relation.subType === "oneToOneReverse") {
+      return crudInformationGetPath(parent, path);
+    }
+    return crudInformationGetPath(
+      parent,
+      `/:${crudInformationGetParamName(parent)}${path}`,
+    );
+  }
+  return path;
+}
+
+/**
+ * Get the param name for the provided crud object
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ */
+export function crudInformationGetParamName(crud) {
+  const model = crudInformationGetModel(crud);
+  const { primaryKeyName } = modelKeyGetPrimary(model);
+
+  return `${crud.fromParent?.options?.name ?? model.name}${upperCaseFirst(
+    primaryKeyName,
+  )}`;
+}
 
 /**
  * Save the used model, so we don't have to resolve that each and every time.

@@ -264,52 +264,73 @@ export function modelPartialUpdateTypes(generateContext) {
  * @returns {void}
  */
 export function modelPartialOrderByTypes(generateContext) {
-  const orderByField = new StringType("compas", "orderBy")
-    .oneOf("ASC", "DESC")
-    .optional();
-
-  const orderByOptionalField = new StringType("compas", "orderByOptional")
-    .oneOf("ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST")
-    .optional();
-
   for (const model of structureModels(generateContext)) {
-    const orderByType = new AnyOfType(model.group, `${model.name}OrderBy`)
+    const { orderByType, orderBySpecType } = modelPartialGetOrderByTypes(
+      generateContext,
+      model,
+    );
+
+    const namedOrderByType = new AnyOfType(model.group, `${model.name}OrderBy`)
       .values(
         new AnyType().raw(`import("@compas/store").QueryPart<any>`),
         new ArrayType().values("foo"),
       )
       .build();
-    const orderBySpecType = new ObjectType(
-      model.group,
-      `${model.name}OrderBySpec`,
-    ).build();
+    namedOrderByType.values[1] = orderByType;
+    orderBySpecType.group = model.group;
+    orderBySpecType.name = `${model.name}OrderBySpec`;
 
-    orderByType.values[1].values.oneOf = [];
-
-    for (const modelKey of modelKeyGetSearchable(generateContext, model)) {
-      orderByType.values[1].values.oneOf.push(modelKey);
-
-      const isOptional = referenceUtilsGetProperty(
-        generateContext,
-        model.keys[modelKey],
-        ["isOptional"],
-      );
-      const isSystemField =
-        (model.queryOptions?.withDates ||
-          model.queryOptions?.withSoftDeletes) &&
-        (modelKey === "createdAt" || modelKey === "updatedAt");
-
-      orderBySpecType.keys[modelKey] =
-        isOptional && !isSystemField
-          ? orderByOptionalField.build()
-          : orderByField.build();
-    }
-
-    structureAddType(generateContext.structure, orderByType, {
+    structureAddType(generateContext.structure, namedOrderByType, {
       skipReferenceExtraction: true,
     });
     structureAddType(generateContext.structure, orderBySpecType, {
       skipReferenceExtraction: true,
     });
   }
+}
+
+/**
+ * Get unnamed orderBy & orderBySpec type
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generated/common/types").ExperimentalObjectDefinition} model
+ * @returns {{
+ *   orderByType: any,
+ *   orderBySpecType: any,
+ * }}
+ */
+export function modelPartialGetOrderByTypes(generateContext, model) {
+  const orderByField = new StringType().oneOf("ASC", "DESC").optional();
+
+  const orderByOptionalField = new StringType()
+    .oneOf("ASC", "DESC", "ASC NULLS FIRST", "DESC NULLS LAST")
+    .optional();
+
+  const orderByType = new ArrayType().values("foo").build();
+  const orderBySpecType = new ObjectType().build();
+
+  orderByType.values.oneOf = [];
+
+  for (const modelKey of modelKeyGetSearchable(generateContext, model)) {
+    orderByType.values.oneOf.push(modelKey);
+
+    const isOptional = referenceUtilsGetProperty(
+      generateContext,
+      model.keys[modelKey],
+      ["isOptional"],
+    );
+    const isSystemField =
+      (model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes) &&
+      (modelKey === "createdAt" || modelKey === "updatedAt");
+
+    orderBySpecType.keys[modelKey] =
+      isOptional && !isSystemField
+        ? orderByOptionalField.build()
+        : orderByField.build();
+  }
+
+  return {
+    orderByType,
+    orderBySpecType,
+  };
 }
