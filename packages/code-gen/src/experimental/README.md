@@ -18,8 +18,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Static checks
   - [ ] Static checks on `fromParent.options.name`, normalize `.basePath`
   - [x] Generate readable & writable types
-  - [ ] Generate route types
-  - [ ] Generate event implementations
+  - [x] Generate route types
+  - [x] Generate event implementations
   - [ ] Generate route implementations
 - [ ] Duplicate `default` example to code-gen experimental
 - [ ] Typescript validators

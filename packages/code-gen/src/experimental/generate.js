@@ -1,6 +1,7 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import { apiClientGenerator } from "./api-client/generator.js";
+import { crudEventsGenerate } from "./crud/events.js";
 import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
 import { validateExperimentalStructure } from "./generated/experimental/validators.js";
@@ -154,7 +155,7 @@ export function generateExecute(generator, options) {
 
   // TODO(openAPI): OpenAPI generator
 
-  // TODO(crud): generateEventImplementations(generateContext);
+  crudEventsGenerate(generateContext);
   // TODO(crud): generateRouteImplementations
 
   typesGeneratorFinalize(generateContext);
