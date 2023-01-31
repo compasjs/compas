@@ -1,5 +1,5 @@
 /**
- * Generate events that are necessary for CRUD. This currenlty only works with js and Koa.
+ * Generate events that are necessary for CRUD. This currently only works with js and Koa.
  *
  * @param {import("../generate").GenerateContext} generateContext
  */

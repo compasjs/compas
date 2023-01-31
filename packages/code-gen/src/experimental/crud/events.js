@@ -23,7 +23,7 @@ import { JavascriptImportCollector } from "../target/javascript.js";
 import { crudQueryBuilderGet } from "./query-builder.js";
 
 /**
- * Generate events that are necessary for CRUD. This currenlty only works with js and Koa.
+ * Generate events that are necessary for CRUD. This currently only works with js and Koa.
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
@@ -35,6 +35,9 @@ export function crudEventsGenerate(generateContext) {
   if (isNil(generateContext.options.generators.router?.target?.library)) {
     return;
   }
+
+  // TODO: the types used in the generated events expect global types, handle support for global or imported types.
+  //  The types will be generated tho by for example the router generator, but that is implicitly done instead of the explicitness that we want.
 
   for (const crud of structureCrud(generateContext)) {
     const file = crudEventsFile(generateContext, crud);

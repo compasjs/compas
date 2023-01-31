@@ -107,7 +107,7 @@ function crudTypesItem(generateContext, crud, options) {
 
     // @ts-expect-error
     crudTypesItem(generateContext, inlineCrud, {
-      name: `${options.name}${upperCaseFirst(inlineCrud.fromParent?.field)}`,
+      name: `${upperCaseFirst(inlineCrud.fromParent?.field)}${options.name}`,
       type: options.type,
     });
 

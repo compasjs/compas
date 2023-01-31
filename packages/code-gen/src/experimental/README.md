@@ -20,7 +20,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Generate readable & writable types
   - [x] Generate route types
   - [x] Generate event implementations
-  - [ ] Generate route implementations
+  - [x] Generate route implementations
 - [ ] Duplicate `default` example to code-gen experimental
 - [ ] Typescript validators
 - [ ] TS Axios API client
