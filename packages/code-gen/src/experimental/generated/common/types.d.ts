@@ -794,8 +794,15 @@ export type ExperimentalGenerateOptions = {
     // Enable the OpenAPI generator.
     openApi?:
       | {
-          openApiExtensions?: any | undefined;
-          openApiRouteExtensions?: any | undefined;
+          // Custom top level properties.
+          openApiExtensions: {
+            version?: string | undefined;
+            title?: string | undefined;
+            description?: string | undefined;
+          };
+
+          // Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.
+          openApiRouteExtensions: { [key: string]: any };
         }
       | undefined;
 
@@ -882,8 +889,17 @@ export type ExperimentalGenerateOptionsInput = {
     // Enable the OpenAPI generator.
     openApi?:
       | {
-          openApiExtensions?: any | undefined;
-          openApiRouteExtensions?: any | undefined;
+          // Custom top level properties.
+          openApiExtensions?:
+            | {
+                version?: string | undefined;
+                title?: string | undefined;
+                description?: string | undefined;
+              }
+            | undefined;
+
+          // Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.
+          openApiRouteExtensions?: { [key: string]: any } | undefined;
         }
       | undefined;
 

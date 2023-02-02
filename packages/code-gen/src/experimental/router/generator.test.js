@@ -16,6 +16,7 @@ test("code-gen/experimental/router/generator", (t) => {
             },
             exposeApiStructure: true,
           },
+          openApi: {},
         },
         targetLanguage: "js",
       });

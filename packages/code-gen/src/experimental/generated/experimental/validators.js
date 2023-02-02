@@ -9677,11 +9677,175 @@ export function validateExperimentalGenerateOptions(value) {
                 value["generators"]["openApi"]["openApiExtensions"] ===
                   undefined
               ) {
-                result["generators"]["openApi"]["openApiExtensions"] =
-                  undefined;
+                result["generators"]["openApi"]["openApiExtensions"] = {};
               } else {
-                result["generators"]["openApi"]["openApiExtensions"] =
-                  value["generators"]["openApi"]["openApiExtensions"];
+                if (
+                  typeof value["generators"]["openApi"]["openApiExtensions"] !==
+                    "object" ||
+                  Array.isArray(
+                    value["generators"]["openApi"]["openApiExtensions"],
+                  )
+                ) {
+                  errorMap[`$.generators.openApi.openApiExtensions`] = {
+                    key: "validator.object",
+                    value: value["generators"]["openApi"]["openApiExtensions"],
+                    foundType:
+                      typeof value["generators"]["openApi"][
+                        "openApiExtensions"
+                      ],
+                  };
+                } else {
+                  const knownKeys0 = new Set([
+                    "version",
+                    "title",
+                    "description",
+                  ]);
+                  for (const key of Object.keys(
+                    value["generators"]["openApi"]["openApiExtensions"],
+                  )) {
+                    if (!knownKeys0.has(key)) {
+                      errorMap[`$.generators.openApi.openApiExtensions`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys0],
+                        foundKeys: Object.keys(
+                          value["generators"]["openApi"]["openApiExtensions"],
+                        ),
+                      };
+                      break;
+                    }
+                  }
+                  result["generators"]["openApi"]["openApiExtensions"] =
+                    Object.create(null);
+
+                  if (
+                    value["generators"]["openApi"]["openApiExtensions"][
+                      "version"
+                    ] === null ||
+                    value["generators"]["openApi"]["openApiExtensions"][
+                      "version"
+                    ] === undefined
+                  ) {
+                    result["generators"]["openApi"]["openApiExtensions"][
+                      "version"
+                    ] = undefined;
+                  } else {
+                    let convertedString0 =
+                      value["generators"]["openApi"]["openApiExtensions"][
+                        "version"
+                      ];
+                    if (typeof convertedString0 !== "string") {
+                      errorMap[
+                        `$.generators.openApi.openApiExtensions.version`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString0.length === 0) {
+                        result["generators"]["openApi"]["openApiExtensions"][
+                          "version"
+                        ] = undefined;
+                      } else {
+                        if (convertedString0.length < 1) {
+                          errorMap[
+                            `$.generators.openApi.openApiExtensions.version`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["generators"]["openApi"]["openApiExtensions"][
+                            "version"
+                          ] = convertedString0;
+                        }
+                      }
+                    }
+                  }
+                  if (
+                    value["generators"]["openApi"]["openApiExtensions"][
+                      "title"
+                    ] === null ||
+                    value["generators"]["openApi"]["openApiExtensions"][
+                      "title"
+                    ] === undefined
+                  ) {
+                    result["generators"]["openApi"]["openApiExtensions"][
+                      "title"
+                    ] = undefined;
+                  } else {
+                    let convertedString0 =
+                      value["generators"]["openApi"]["openApiExtensions"][
+                        "title"
+                      ];
+                    if (typeof convertedString0 !== "string") {
+                      errorMap[`$.generators.openApi.openApiExtensions.title`] =
+                        {
+                          key: "validator.string",
+                        };
+                    } else {
+                      if (convertedString0.length === 0) {
+                        result["generators"]["openApi"]["openApiExtensions"][
+                          "title"
+                        ] = undefined;
+                      } else {
+                        if (convertedString0.length < 1) {
+                          errorMap[
+                            `$.generators.openApi.openApiExtensions.title`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["generators"]["openApi"]["openApiExtensions"][
+                            "title"
+                          ] = convertedString0;
+                        }
+                      }
+                    }
+                  }
+                  if (
+                    value["generators"]["openApi"]["openApiExtensions"][
+                      "description"
+                    ] === null ||
+                    value["generators"]["openApi"]["openApiExtensions"][
+                      "description"
+                    ] === undefined
+                  ) {
+                    result["generators"]["openApi"]["openApiExtensions"][
+                      "description"
+                    ] = undefined;
+                  } else {
+                    let convertedString0 =
+                      value["generators"]["openApi"]["openApiExtensions"][
+                        "description"
+                      ];
+                    if (typeof convertedString0 !== "string") {
+                      errorMap[
+                        `$.generators.openApi.openApiExtensions.description`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString0.length === 0) {
+                        result["generators"]["openApi"]["openApiExtensions"][
+                          "description"
+                        ] = undefined;
+                      } else {
+                        if (convertedString0.length < 1) {
+                          errorMap[
+                            `$.generators.openApi.openApiExtensions.description`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["generators"]["openApi"]["openApiExtensions"][
+                            "description"
+                          ] = convertedString0;
+                        }
+                      }
+                    }
+                  }
+                }
               }
               if (
                 value["generators"]["openApi"]["openApiRouteExtensions"] ===
@@ -9689,11 +9853,84 @@ export function validateExperimentalGenerateOptions(value) {
                 value["generators"]["openApi"]["openApiRouteExtensions"] ===
                   undefined
               ) {
-                result["generators"]["openApi"]["openApiRouteExtensions"] =
-                  undefined;
+                result["generators"]["openApi"]["openApiRouteExtensions"] = {};
               } else {
-                result["generators"]["openApi"]["openApiRouteExtensions"] =
-                  value["generators"]["openApi"]["openApiRouteExtensions"];
+                result["generators"]["openApi"]["openApiRouteExtensions"] = {};
+                for (let genericKeyInput0 of Object.keys(
+                  value["generators"]["openApi"]["openApiRouteExtensions"],
+                )) {
+                  let genericKeyResult1 = undefined;
+                  const genericKeyErrorMap2 = {};
+                  if (
+                    genericKeyInput0 === null ||
+                    genericKeyInput0 === undefined
+                  ) {
+                    genericKeyErrorMap2[`$`] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    let convertedString3 = genericKeyInput0;
+                    if (typeof convertedString3 !== "string") {
+                      genericKeyErrorMap2[`$`] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString3.length < 1) {
+                        genericKeyErrorMap2[`$`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        genericKeyResult1 = convertedString3;
+                      }
+                    }
+                  }
+                  if (Object.keys(genericKeyErrorMap2).length !== 0) {
+                    if (
+                      errorMap[`$.generators.openApi.openApiRouteExtensions`]
+                    ) {
+                      errorMap[
+                        `$.generators.openApi.openApiRouteExtensions`
+                      ].inputs.push({
+                        key: genericKeyInput0,
+                        errors: genericKeyErrorMap2,
+                      });
+                    } else {
+                      errorMap[`$.generators.openApi.openApiRouteExtensions`] =
+                        {
+                          key: "validator.generic",
+                          inputs: [
+                            {
+                              key: genericKeyInput0,
+                              errors: genericKeyErrorMap2,
+                            },
+                          ],
+                        };
+                    }
+                  } else {
+                    if (
+                      value["generators"]["openApi"]["openApiRouteExtensions"][
+                        genericKeyResult1
+                      ] === null ||
+                      value["generators"]["openApi"]["openApiRouteExtensions"][
+                        genericKeyResult1
+                      ] === undefined
+                    ) {
+                      errorMap[
+                        `$.generators.openApi.openApiRouteExtensions.${genericKeyResult1}`
+                      ] = {
+                        key: "validator.undefined",
+                      };
+                    } else {
+                      result["generators"]["openApi"]["openApiRouteExtensions"][
+                        genericKeyResult1
+                      ] =
+                        value["generators"]["openApi"][
+                          "openApiRouteExtensions"
+                        ][genericKeyResult1];
+                    }
+                  }
+                }
               }
             }
           }

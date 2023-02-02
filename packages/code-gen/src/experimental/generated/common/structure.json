@@ -2210,26 +2210,93 @@
               "type": "object",
               "keys": {
                 "openApiExtensions": {
-                  "docString": "",
+                  "docString": "Custom top level properties.",
                   "isOptional": true,
                   "validator": {
-                    "allowNull": false
+                    "allowNull": false,
+                    "strict": true
                   },
                   "sql": {},
-                  "type": "any",
-                  "rawValueImport": {},
-                  "rawValidatorImport": {}
+                  "type": "object",
+                  "defaultValue": "{}",
+                  "keys": {
+                    "version": {
+                      "docString": "",
+                      "isOptional": true,
+                      "validator": {
+                        "convert": false,
+                        "allowNull": false,
+                        "trim": false,
+                        "lowerCase": false,
+                        "upperCase": false,
+                        "min": 1
+                      },
+                      "sql": {},
+                      "type": "string"
+                    },
+                    "title": {
+                      "docString": "",
+                      "isOptional": true,
+                      "validator": {
+                        "convert": false,
+                        "allowNull": false,
+                        "trim": false,
+                        "lowerCase": false,
+                        "upperCase": false,
+                        "min": 1
+                      },
+                      "sql": {},
+                      "type": "string"
+                    },
+                    "description": {
+                      "docString": "",
+                      "isOptional": true,
+                      "validator": {
+                        "convert": false,
+                        "allowNull": false,
+                        "trim": false,
+                        "lowerCase": false,
+                        "upperCase": false,
+                        "min": 1
+                      },
+                      "sql": {},
+                      "type": "string"
+                    }
+                  },
+                  "relations": []
                 },
                 "openApiRouteExtensions": {
-                  "docString": "",
+                  "docString": "Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.",
                   "isOptional": true,
-                  "validator": {
-                    "allowNull": false
-                  },
+                  "validator": {},
                   "sql": {},
-                  "type": "any",
-                  "rawValueImport": {},
-                  "rawValidatorImport": {}
+                  "type": "generic",
+                  "defaultValue": "{}",
+                  "keys": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "convert": false,
+                      "allowNull": false,
+                      "trim": false,
+                      "lowerCase": false,
+                      "upperCase": false,
+                      "min": 1
+                    },
+                    "sql": {},
+                    "type": "string"
+                  },
+                  "values": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false
+                    },
+                    "sql": {},
+                    "type": "any",
+                    "rawValueImport": {},
+                    "rawValidatorImport": {}
+                  }
                 }
               },
               "relations": []

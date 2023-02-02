@@ -61,8 +61,21 @@ export function extendWithCodeGenExperimental(generator) {
 
           openApi: T.object()
             .keys({
-              openApiExtensions: T.any().optional(),
-              openApiRouteExtensions: T.any().optional(),
+              openApiExtensions: T.object()
+                .keys({
+                  version: T.string().optional(),
+                  title: T.string().optional(),
+                  description: T.string().optional(),
+                })
+                .default("{}")
+                .docs("Custom top level properties."),
+              openApiRouteExtensions: T.generic()
+                .keys(T.string())
+                .values(T.any())
+                .default("{}")
+                .docs(
+                  "Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.",
+                ),
             })
             .optional()
             .docs("Enable the OpenAPI generator."),
