@@ -161,12 +161,10 @@ export class Generator {
     const validationResultOptions =
       validateExperimentalGenerateOptions(options);
     if (validationResultOptions.error) {
-      throw AppError.serverError(
-        {
-          message: "Static validation failed for the provided options.",
-        },
-        validationResultOptions.error,
-      );
+      throw AppError.serverError({
+        message: "Static validation failed for the provided options.",
+        error: validationResultOptions.error,
+      });
     }
 
     return generateExecute(this, validationResultOptions.value);

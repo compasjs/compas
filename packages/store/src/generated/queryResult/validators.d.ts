@@ -1,43 +1,54 @@
 /**
+ * @template T, E
+ * @typedef {{ value: T, error?: never}|{ value?: never, error: E }} Either
+ */
+/**
+ * @typedef {Record<string, any|undefined>} ValidatorErrorMap
+ */
+/**
  * @param {import("../common/types").QueryResultStoreFileInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").QueryResultStoreFile, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").QueryResultStoreFile, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreFile(
   value: import("../common/types").QueryResultStoreFileInput | unknown,
-): import("@compas/stdlib").Either<
-  import("../common/types").QueryResultStoreFile,
-  import("@compas/stdlib").AppError
->;
+): Either<import("../common/types").QueryResultStoreFile, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").QueryResultStoreJobInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").QueryResultStoreJob, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").QueryResultStoreJob, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreJob(
   value: import("../common/types").QueryResultStoreJobInput | unknown,
-): import("@compas/stdlib").Either<
-  import("../common/types").QueryResultStoreJob,
-  import("@compas/stdlib").AppError
->;
+): Either<import("../common/types").QueryResultStoreJob, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").QueryResultStoreSessionStoreInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").QueryResultStoreSessionStore, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").QueryResultStoreSessionStore, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStore(
   value: import("../common/types").QueryResultStoreSessionStoreInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").QueryResultStoreSessionStore,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").QueryResultStoreSessionStoreTokenInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").QueryResultStoreSessionStoreToken, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").QueryResultStoreSessionStoreToken, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStoreToken(
   value:
     | import("../common/types").QueryResultStoreSessionStoreTokenInput
     | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").QueryResultStoreSessionStoreToken,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
+export type Either<T, E> =
+  | {
+      value: T;
+      error?: never;
+    }
+  | {
+      value?: never;
+      error: E;
+    };
+export type ValidatorErrorMap = Record<string, any | undefined>;
 //# sourceMappingURL=validators.d.ts.map

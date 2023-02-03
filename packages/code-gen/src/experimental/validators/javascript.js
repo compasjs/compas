@@ -107,8 +107,20 @@ export function validatorJavascriptGetFile(generateContext, type) {
 
   const file = fileContextCreateGeneric(generateContext, relativePath, {
     importCollector: new JavascriptImportCollector(),
-    additionToGeneratedByComment: "@ts-nocheck",
   });
+
+  fileWrite(
+    file,
+    `/**
+ * @template T, E
+ * @typedef {{ value: T, error?: never}|{ value?: never, error: E }} Either
+ */
+ 
+ /**
+  * @typedef {Record<string, any|undefined>} ValidatorErrorMap
+  */
+ `,
+  );
 
   return file;
 }
@@ -172,11 +184,11 @@ export function validatorJavascriptStartValidator(
   );
   fileWrite(
     file,
-    ` @returns {import("@compas/stdlib").Either<${typesGeneratorUseTypeName(
+    ` @returns {Either<${typesGeneratorUseTypeName(
       generateContext,
       file,
       validatorState.outputTypeName,
-    )}, import("@compas/stdlib").AppError>}`,
+    )}, ValidatorErrorMap>}`,
   );
 
   // Finish the JSDoc block
@@ -190,7 +202,9 @@ export function validatorJavascriptStartValidator(
   );
 
   // We also initialize the error handling and result variable
+  fileWrite(file, `/** @type {ValidatorErrorMap} */`);
   fileWrite(file, `const ${validatorState.errorMapVariableName} = {};`);
+  fileWrite(file, `/** @type {any} */`);
   fileWrite(file, `let ${validatorState.outputVariableName} = undefined;\n`);
 }
 
@@ -303,14 +317,17 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
     validatorState.reusedVariableIndex++;
 
+    fileWrite(file, `/** @type {ValidatorErrorMap} */`);
     fileWrite(
       file,
       `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
     );
+    fileWrite(file, `/** @type {any} */`);
     fileWrite(
       file,
       `let intermediateResult${validatorState.reusedVariableIndex} = undefined;`,
     );
+    fileWrite(file, `/** @type {any} */`);
     fileWrite(
       file,
       `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
@@ -791,7 +808,9 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
 
   fileBlockStart(file, `for (let ${keyVariable} of Object.keys(${valuePath}))`);
 
+  fileWrite(file, `/** @type {any} */`);
   fileWrite(file, `let ${resultVariable} = undefined;`);
+  fileWrite(file, `/** @type {ValidatorErrorMap} */`);
   fileWrite(file, `const ${errorMapVariable} = {};`);
 
   validatorGeneratorGenerateBody(
@@ -984,6 +1003,7 @@ export function validatorJavascriptObject(file, type, validatorState) {
   if (type.validator.strict) {
     const setVariable = `knownKeys${validatorState.reusedVariableIndex++}`;
 
+    fileWrite(file, `/** @type {Set<string>} */`);
     fileWrite(file, `const ${setVariable} = new Set([`);
     fileContextSetIndent(file, 1);
     for (const key of Object.keys(type.keys)) {

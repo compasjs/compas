@@ -1,277 +1,288 @@
 /**
+ * @template T, E
+ * @typedef {{ value: T, error?: never}|{ value?: never, error: E }} Either
+ */
+/**
+ * @typedef {Record<string, any|undefined>} ValidatorErrorMap
+ */
+/**
  * @param {import("../common/types").ExperimentalAnyDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalAnyDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalAnyDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalAnyDefinition(
   value: import("../common/types").ExperimentalAnyDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalAnyDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalAnyOfDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalAnyOfDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalAnyOfDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalAnyOfDefinition(
   value: import("../common/types").ExperimentalAnyOfDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalAnyOfDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * All type definitions that can be used inside other types, like object keys.
  *
  * @param {import("../common/types").ExperimentalTypeSystemDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalTypeSystemDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalTypeSystemDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalTypeSystemDefinition(
   value:
     | import("../common/types").ExperimentalTypeSystemDefinitionInput
     | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalTypeSystemDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalArrayDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalArrayDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalArrayDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalArrayDefinition(
   value: import("../common/types").ExperimentalArrayDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalArrayDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalBooleanDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalBooleanDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalBooleanDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalBooleanDefinition(
   value: import("../common/types").ExperimentalBooleanDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalBooleanDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalCrudDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalCrudDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalCrudDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalCrudDefinition(
   value: import("../common/types").ExperimentalCrudDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalCrudDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalReferenceDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalReferenceDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalReferenceDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalReferenceDefinition(
   value:
     | import("../common/types").ExperimentalReferenceDefinitionInput
     | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalReferenceDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalNamePartInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalNamePart, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalNamePart, ValidatorErrorMap>}
  */
 export function validateExperimentalNamePart(
   value: import("../common/types").ExperimentalNamePartInput | unknown,
-): import("@compas/stdlib").Either<
-  import("../common/types").ExperimentalNamePart,
-  import("@compas/stdlib").AppError
->;
+): Either<import("../common/types").ExperimentalNamePart, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").ExperimentalDateDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalDateDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalDateDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalDateDefinition(
   value: import("../common/types").ExperimentalDateDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalDateDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalExtendDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalExtendDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalExtendDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalExtendDefinition(
   value: import("../common/types").ExperimentalExtendDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalExtendDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalFileDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalFileDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalFileDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalFileDefinition(
   value: import("../common/types").ExperimentalFileDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalFileDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalGenericDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalGenericDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalGenericDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalGenericDefinition(
   value: import("../common/types").ExperimentalGenericDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalGenericDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalNumberDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalNumberDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalNumberDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalNumberDefinition(
   value: import("../common/types").ExperimentalNumberDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalNumberDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalObjectDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalObjectDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalObjectDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalObjectDefinition(
   value: import("../common/types").ExperimentalObjectDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalObjectDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalRelationDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalRelationDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalRelationDefinition(
   value:
     | import("../common/types").ExperimentalRelationDefinitionInput
     | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalRelationDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalOmitDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalOmitDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalOmitDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalOmitDefinition(
   value: import("../common/types").ExperimentalOmitDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalOmitDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalPickDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalPickDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalPickDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalPickDefinition(
   value: import("../common/types").ExperimentalPickDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalPickDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalStringDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalStringDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalStringDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalStringDefinition(
   value: import("../common/types").ExperimentalStringDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalStringDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalUuidDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalUuidDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalUuidDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalUuidDefinition(
   value: import("../common/types").ExperimentalUuidDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalUuidDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalGenerateOptionsInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalGenerateOptions, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalGenerateOptions, ValidatorErrorMap>}
  */
 export function validateExperimentalGenerateOptions(
   value: import("../common/types").ExperimentalGenerateOptionsInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalGenerateOptions,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalNamePartOptionalInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalNamePartOptional, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalNamePartOptional, ValidatorErrorMap>}
  */
 export function validateExperimentalNamePartOptional(
   value: import("../common/types").ExperimentalNamePartOptionalInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalNamePartOptional,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * This contains all types that can be added top level to the structure.
  *
  * @param {import("../common/types").ExperimentalNamedTypeDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalNamedTypeDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalNamedTypeDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalNamedTypeDefinition(
   value:
     | import("../common/types").ExperimentalNamedTypeDefinitionInput
     | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalNamedTypeDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalRouteDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalRouteDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalRouteDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalRouteDefinition(
   value: import("../common/types").ExperimentalRouteDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalRouteDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalRouteInvalidationDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalRouteInvalidationDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalRouteInvalidationDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalRouteInvalidationDefinition(
   value:
     | import("../common/types").ExperimentalRouteInvalidationDefinitionInput
     | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalRouteInvalidationDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
 /**
  * @param {import("../common/types").ExperimentalStructureInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalStructure, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalStructure, ValidatorErrorMap>}
  */
 export function validateExperimentalStructure(
   value: import("../common/types").ExperimentalStructureInput | unknown,
-): import("@compas/stdlib").Either<
-  import("../common/types").ExperimentalStructure,
-  import("@compas/stdlib").AppError
->;
+): Either<import("../common/types").ExperimentalStructure, ValidatorErrorMap>;
 /**
  * This contains all known type definitions.
  *
  * @param {import("../common/types").ExperimentalTypeDefinitionInput|unknown} value
- * @returns {import("@compas/stdlib").Either<import("../common/types").ExperimentalTypeDefinition, import("@compas/stdlib").AppError>}
+ * @returns {Either<import("../common/types").ExperimentalTypeDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalTypeDefinition(
   value: import("../common/types").ExperimentalTypeDefinitionInput | unknown,
-): import("@compas/stdlib").Either<
+): Either<
   import("../common/types").ExperimentalTypeDefinition,
-  import("@compas/stdlib").AppError
+  ValidatorErrorMap
 >;
+export type Either<T, E> =
+  | {
+      value: T;
+      error?: never;
+    }
+  | {
+      value?: never;
+      error: E;
+    };
+export type ValidatorErrorMap = Record<string, any | undefined>;
 //# sourceMappingURL=validators.d.ts.map

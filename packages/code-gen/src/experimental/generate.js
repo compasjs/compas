@@ -89,12 +89,10 @@ export function generateExecute(generator, options) {
   );
 
   if (validationResultStructure.error) {
-    throw AppError.serverError(
-      {
-        message: "Static validation on the structure failed",
-      },
-      validationResultStructure.error,
-    );
+    throw AppError.serverError({
+      message: "Static validation on the structure failed",
+      error: validationResultStructure.error,
+    });
   }
 
   // TODO: support generate presets

@@ -25,7 +25,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Typescript validators
 - [ ] TS Axios API client
   - [ ] Generate react-query wrapper
-- [ ] OpenAPI generator
+- [x] OpenAPI generator
 - [ ] `T.file()` specific types and validations
 - [ ] Update `T.any()` to be more inline with the new target system.
 - [ ] Update `T.string().pattern()` with `patternExplanation`
