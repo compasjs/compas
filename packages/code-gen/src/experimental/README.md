@@ -31,6 +31,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Update `T.string().pattern()` with `patternExplanation`
 - [ ] Support overrides for specific properties currently residing in
       `internalSettings`
+  - Most likely custom methods on specific builders.
 - [ ] Double check all TODO's
 - Future ideas;
   - Include `query` + where & builder helpers in the output instead of requiring
@@ -39,6 +40,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Combine `R.files()` and `R.body()`; auto switch to form-data and enforce
     flat properties when a `T.file()` is present.
   - Remove `compas visualise` it is replaced by `includeEntityDiagram`
+  - Slowly deprecate the compat wrappers of `queriex.xxYY`
 
 ## Breaking changes
 
@@ -48,6 +50,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       - Lots of changed options, document the common changes and point to new
         documentation about targets.
   - Removed `app.generateTypes`
+  - Removed `app.generateOpenApi`
   - See diff between `with-auth` and `with-auth-experimental`
 - Validators:
   - `T.array()`, `T.bool()` and `T.number()` auto convert always

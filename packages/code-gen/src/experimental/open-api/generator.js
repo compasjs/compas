@@ -204,7 +204,6 @@ function openApiTransformParams(generateContext, openApiSpec, route) {
         break;
 
       case "reference":
-        // TODO: double check
         schema = transformType(generateContext, openApiSpec, param);
 
         break;
