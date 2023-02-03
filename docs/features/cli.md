@@ -23,7 +23,7 @@ of a flag description. Let's see some examples:
 These are fine without a value, or with a number / string representing true and
 false.
 
-```text
+```txt
 // --help   Display help text (boolean)
 -> `--help`, `--help=1`, `--help false`
 ```
@@ -36,7 +36,7 @@ a value.
 Some flags can be passed multiple times, this is denoted by the `[]` after
 `string[]`.
 
-```text
+```txt
 // --file   Specify files to operate on (string[])
 -> `--file ./x.js`, `--file ./a.js --file ./bar/b.js`
 ```

@@ -353,7 +353,7 @@ of the test result.
 On successful runs, the test runner will only print the number of assertions as
 follows:
 
-```text
+```txt
 12:30:38.640 info[test]
 Total assertions: 15
           Passed: 15
@@ -365,7 +365,7 @@ When tests fail, we have a few options; an assertion failed or an uncaught
 exception was caught by the runner. These will be printed as follows, with
 annotated function calls that triggered these errors:
 
-```text
+```txt
 12:42:39.578 error[test]
 Total assertions: 6
           Passed: 1

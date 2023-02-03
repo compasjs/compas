@@ -3640,7 +3640,7 @@ complex than expected.
 
 ### [v0.0.101](https://github.com/compasjs/compas/releases/tag/v0.0.101)
 
-- store: support POSTGRES\_{HOST,USER,PASSWORD,DATABASE}
+- store: support POSTGRES\_\{HOST,USER,PASSWORD,DATABASE\}
 
 ### [v0.0.100](https://github.com/compasjs/compas/releases/tag/v0.0.100)
 

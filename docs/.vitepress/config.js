@@ -32,27 +32,27 @@ module.exports = {
     ["link", { rel: "shortcut icon", href: "/favicon/favicon.ico" }],
     ["meta", { name: "theme-color", content: "#3EAF7C" }],
   ],
+  lastUpdated: true,
 
   themeConfig: {
-    repo: "compasjs/compas",
-    docsDir: "docs",
-    docsBranch: "main",
-
     logo: "/compas-icon.svg",
+    siteTitle: "Compas",
 
-    editLinks: true,
-    editLinkText: "Edit this page on GitHub",
+    editLink: {
+      pattern: "https://github.com/compasjs/compas/edit/main/docs/:path",
+      text: "Edit this page on GitHub",
+    },
 
     nav: [
       {
         text: "Docs",
         link: "/getting-started.html",
-        activeMatch: "/getting-started|^/features/|^/migrations/|^/references/",
+        activeMatch: "/getting-started|features|migrations|references/",
       },
       {
         text: "Examples",
         link: "/examples.html",
-        activeMatch: "/examples",
+        activeMatch: "/example/",
       },
       {
         text: "Changelog",
@@ -61,13 +61,30 @@ module.exports = {
       {
         text: "Release notes",
         link: "/releases/index.html",
-        activeMatch: "^/releases/",
+        activeMatch: "/releases/",
       },
     ],
 
     sidebar: {
       "/releases/": getReleaseNotesSidebar(),
       "/": getHomeSidebar(),
+    },
+
+    outline: [2, 5],
+    outlineBadges: true,
+
+    socialLinks: [
+      {
+        icon: "github",
+        link: "https://github.com/compasjs/compas",
+      },
+    ],
+
+    footer: {
+      message:
+        'Released under the <a href="https://github.com/compasjs/compas/blob/main/LICENSE">MIT License</a>.',
+      copyright:
+        'Copyright © 2019-present <a href="https://github.com/dirkdev98">Dirk de Visser</a>',
     },
   },
 
@@ -87,11 +104,16 @@ function getHomeSidebar() {
   return [
     {
       text: "Getting started",
-      link: "/getting-started.html",
+      items: [
+        {
+          text: "Installation",
+          link: "/getting-started.html",
+        },
+      ],
     },
     {
       text: "Features",
-      children: [
+      items: [
         {
           text: "CLI",
           link: "/features/cli.html",
@@ -173,12 +195,17 @@ function getHomeSidebar() {
 
     {
       text: "Examples",
-      link: "/examples.html",
+      items: [
+        {
+          text: "Examples",
+          link: "/examples.html",
+        },
+      ],
     },
 
     {
       text: "References",
-      children: [
+      items: [
         {
           text: "Compas configuration",
           link: "/references/compas-config.html",
@@ -192,8 +219,11 @@ function getHomeSidebar() {
 
     {
       text: "Migrations",
-      link: "/migrations/index.html",
-      children: [
+      items: [
+        {
+          text: "Introduction",
+          link: "/migrations/index.html",
+        },
         {
           text: "@compas/store",
           link: "/migrations/store.html",

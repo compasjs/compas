@@ -35,7 +35,7 @@ module.exports = {
 
 **/.prettierignore**
 
-```text
+```txt
 coverage/**
 ```
 

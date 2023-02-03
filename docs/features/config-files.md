@@ -36,7 +36,7 @@ will be used by other Compas features, but also allows you to have a project
 specific configuration file. You can use this to validate and convert your
 environment variables for example doing the following transformation:
 
-```.dotenv
+```dotenv
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 ```

@@ -167,7 +167,7 @@ When `eventStop` is called on the 'root-event' i.e the event created by
 `newEvent`, it will automatically log the callstack via its logger. That will
 look something like:
 
-```text
+```txt
 11:11:13.390 info[script_name] {
   type: 'event_callstack',
   aborted: false,

@@ -167,7 +167,7 @@ function main(logger) {
 And check if the validators are doing what they should with
 `compas validator-test`. Which should output something like:
 
-```text
+```txt
 /* ... */ {
   value: [Object: null prototype] {
     id: '114531fb-810d-45cf-819a-856892972acd',
@@ -271,7 +271,7 @@ function main(logger) {
 Regenerate with `compas generate` and run the validators with
 `compas validator-test`, which yields the following:
 
-```text
+```txt
 /* ... */ {
   value: [Object: null prototype] {
     id: '5f1d04c9-2e20-4b76-9720-b699b543978e',
