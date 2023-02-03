@@ -25,7 +25,7 @@ Any Compas provided template can be used via
 
 ## Synopsis
 
-```text
+```txt
 Usage: create-compas
 
 Initialize Compas projects based on Compas examples or a custom repository.

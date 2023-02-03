@@ -8,3 +8,5 @@ reactQueries.tsx
 docs/.vitepress/dist
 test/tmp
 .cache/test-output
+/docs/.vitepress/cache
+/docs/.vitepress/dist
