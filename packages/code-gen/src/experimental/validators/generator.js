@@ -1,4 +1,4 @@
-import { AppError, noop } from "@compas/stdlib";
+import { AppError } from "@compas/stdlib";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import {
   structureNamedTypes,
@@ -31,6 +31,11 @@ import {
   validatorJavascriptString,
   validatorJavascriptUuid,
 } from "./javascript.js";
+import {
+  validatorTypescriptGetFile,
+  validatorTypescriptGetNameAndImport,
+  validatorTypescriptStartValidator,
+} from "./typescript.js";
 
 /**
  * Cache for which type names we have written a validator in a file.
@@ -63,6 +68,7 @@ const validatorCache = new WeakMap();
  * @property {import("../generated/common/types")
  * .ExperimentalReferenceDefinition[]
  * } dependingValidators
+ * @property {boolean} [jsHasInlineTypes]
  */
 
 /**
@@ -115,7 +121,7 @@ export function validatorGetNameAndImport(
     generateContext,
     {
       js: validatorJavascriptGetNameAndImport,
-      ts: noop,
+      ts: validatorTypescriptGetNameAndImport,
     },
     [file, type, outputTypeName],
   );
@@ -130,8 +136,6 @@ export function validatorGetNameAndImport(
  * - How to use the types
  * - Duplication
  * - Resolved & unique names
- *
- * TODO: support TS validators
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../types").NamedType<
@@ -173,7 +177,7 @@ export function validatorGeneratorGenerateValidator(
     generateContext,
     {
       js: validatorJavascriptGetFile,
-      ts: noop,
+      ts: validatorTypescriptGetFile,
     },
     [generateContext, type],
   );
@@ -210,13 +214,14 @@ export function validatorGeneratorGenerateValidator(
     outputTypeName,
     outputTypeOptions,
     dependingValidators: [],
+    jsHasInlineTypes: generateContext.options.targetLanguage === "ts",
   };
 
   targetLanguageSwitch(
     generateContext,
     {
       js: validatorJavascriptStartValidator,
-      ts: noop,
+      ts: validatorTypescriptStartValidator,
     },
     [generateContext, file, type, validatorState],
   );
@@ -227,7 +232,7 @@ export function validatorGeneratorGenerateValidator(
     generateContext,
     {
       js: validatorJavascriptStopValidator,
-      ts: noop,
+      ts: validatorJavascriptStopValidator,
     },
     [generateContext, file, validatorState],
   );
@@ -269,7 +274,7 @@ export function validatorGeneratorGenerateBody(
     generateContext,
     {
       js: validatorJavascriptNilCheck,
-      ts: noop,
+      ts: validatorJavascriptNilCheck,
     },
     [
       file,
@@ -377,7 +382,7 @@ export function validatorGeneratorGenerateBody(
     generateContext,
     {
       js: validatorJavascriptFinishElseBlock,
-      ts: noop,
+      ts: validatorJavascriptFinishElseBlock,
     },
     [file],
   );
@@ -395,7 +400,7 @@ function validatorGeneratorAny(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptAny,
-      ts: noop,
+      ts: validatorJavascriptAny,
     },
 
     // @ts-ignore-error
@@ -417,7 +422,7 @@ function validatorGeneratorAnyOf(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptAnyOf,
-      ts: noop,
+      ts: validatorJavascriptAnyOf,
     },
 
     // @ts-ignore-error
@@ -439,7 +444,7 @@ function validatorGeneratorArray(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptArray,
-      ts: noop,
+      ts: validatorJavascriptArray,
     },
 
     // @ts-ignore-error
@@ -466,7 +471,7 @@ function validatorGeneratorBoolean(
     generateContext,
     {
       js: validatorJavascriptBoolean,
-      ts: noop,
+      ts: validatorJavascriptBoolean,
     },
 
     // @ts-ignore-error
@@ -488,7 +493,7 @@ function validatorGeneratorDate(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptDate,
-      ts: noop,
+      ts: validatorJavascriptDate,
     },
 
     // @ts-ignore-error
@@ -510,7 +515,7 @@ function validatorGeneratorFile(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptFile,
-      ts: noop,
+      ts: validatorJavascriptFile,
     },
 
     // @ts-ignore-error
@@ -537,7 +542,7 @@ function validatorGeneratorGeneric(
     generateContext,
     {
       js: validatorJavascriptGeneric,
-      ts: noop,
+      ts: validatorJavascriptGeneric,
     },
 
     // @ts-ignore-error
@@ -559,7 +564,7 @@ function validatorGeneratorNumber(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptNumber,
-      ts: noop,
+      ts: validatorJavascriptNumber,
     },
 
     // @ts-ignore-error
@@ -581,7 +586,7 @@ function validatorGeneratorObject(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptObject,
-      ts: noop,
+      ts: validatorJavascriptObject,
     },
 
     // @ts-ignore-error
@@ -608,7 +613,7 @@ function validatorGeneratorReference(
     generateContext,
     {
       js: validatorJavascriptReference,
-      ts: noop,
+      ts: validatorJavascriptReference,
     },
 
     // @ts-ignore-error
@@ -630,7 +635,7 @@ function validatorGeneratorString(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptString,
-      ts: noop,
+      ts: validatorJavascriptString,
     },
 
     // @ts-ignore-error
@@ -652,7 +657,7 @@ function validatorGeneratorUuid(generateContext, file, type, validatorState) {
     generateContext,
     {
       js: validatorJavascriptUuid,
-      ts: noop,
+      ts: validatorJavascriptUuid,
     },
 
     // @ts-ignore-error

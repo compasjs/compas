@@ -19,5 +19,20 @@ test("code-gen/experimental/validators/generator", (t) => {
 
       t.pass();
     });
+
+    t.test("test - ts", (t) => {
+      testExperimentalGenerateFiles(t, {
+        outputDirectory: "./.cache/experimental/validators-ts",
+        generators: {
+          structure: {},
+          validators: {
+            includeBaseTypes: true,
+          },
+        },
+        targetLanguage: "ts",
+      });
+
+      t.pass();
+    });
   });
 });

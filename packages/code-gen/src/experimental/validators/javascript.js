@@ -180,7 +180,7 @@ export function validatorJavascriptStartValidator(
       generateContext,
       file,
       validatorState.inputTypeName,
-    )}|unknown} ${validatorState.inputVariableName}`,
+    )}|any} ${validatorState.inputVariableName}`,
   );
   fileWrite(
     file,
@@ -202,10 +202,21 @@ export function validatorJavascriptStartValidator(
   );
 
   // We also initialize the error handling and result variable
-  fileWrite(file, `/** @type {ValidatorErrorMap} */`);
-  fileWrite(file, `const ${validatorState.errorMapVariableName} = {};`);
-  fileWrite(file, `/** @type {any} */`);
-  fileWrite(file, `let ${validatorState.outputVariableName} = undefined;\n`);
+  if (validatorState.jsHasInlineTypes) {
+    fileWrite(
+      file,
+      `const ${validatorState.errorMapVariableName}: ValidatorErrorMap = {};`,
+    );
+    fileWrite(
+      file,
+      `let ${validatorState.outputVariableName}: any = undefined;\n`,
+    );
+  } else {
+    fileWrite(file, `/** @type {ValidatorErrorMap} */`);
+    fileWrite(file, `const ${validatorState.errorMapVariableName} = {};`);
+    fileWrite(file, `/** @type {any} */`);
+    fileWrite(file, `let ${validatorState.outputVariableName} = undefined;\n`);
+  }
 }
 
 /**
@@ -317,21 +328,36 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
     validatorState.reusedVariableIndex++;
 
-    fileWrite(file, `/** @type {ValidatorErrorMap} */`);
-    fileWrite(
-      file,
-      `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
-    );
-    fileWrite(file, `/** @type {any} */`);
-    fileWrite(
-      file,
-      `let intermediateResult${validatorState.reusedVariableIndex} = undefined;`,
-    );
-    fileWrite(file, `/** @type {any} */`);
-    fileWrite(
-      file,
-      `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
-    );
+    if (validatorState.jsHasInlineTypes) {
+      fileWrite(
+        file,
+        `const intermediateErrorMap${validatorState.reusedVariableIndex}: ValidatorErrorMap = {};`,
+      );
+      fileWrite(
+        file,
+        `let intermediateResult${validatorState.reusedVariableIndex}: any = undefined;`,
+      );
+      fileWrite(
+        file,
+        `let intermediateValue${validatorState.reusedVariableIndex}: any = ${valuePath};\n`,
+      );
+    } else {
+      fileWrite(file, `/** @type {ValidatorErrorMap} */`);
+      fileWrite(
+        file,
+        `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
+      );
+      fileWrite(file, `/** @type {any} */`);
+      fileWrite(
+        file,
+        `let intermediateResult${validatorState.reusedVariableIndex} = undefined;`,
+      );
+      fileWrite(file, `/** @type {any} */`);
+      fileWrite(
+        file,
+        `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
+      );
+    }
 
     /** @type {import("./generator").ValidatorState} */
     const validatorStateCopy = {
@@ -394,18 +420,37 @@ export function validatorJavascriptArray(file, type, validatorState) {
   const errorKey = formatErrorKey(validatorState);
 
   validatorState.reusedVariableIndex++;
-  fileWrite(
-    file,
-    `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
-  );
-  fileWrite(
-    file,
-    `let intermediateResult${validatorState.reusedVariableIndex} = [];`,
-  );
-  fileWrite(
-    file,
-    `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
-  );
+
+  if (validatorState.jsHasInlineTypes) {
+    fileWrite(
+      file,
+      `const intermediateErrorMap${validatorState.reusedVariableIndex}: ValidatorErrorMap = {};`,
+    );
+    fileWrite(
+      file,
+      `let intermediateResult${validatorState.reusedVariableIndex}: any[] = [];`,
+    );
+    fileWrite(
+      file,
+      `let intermediateValue${validatorState.reusedVariableIndex}: any|any[] = ${valuePath};\n`,
+    );
+  } else {
+    fileWrite(file, `/** @type {ValidatorErrorMap} */`);
+    fileWrite(
+      file,
+      `const intermediateErrorMap${validatorState.reusedVariableIndex} = {};`,
+    );
+    fileWrite(file, `/** @type {any[]} */`);
+    fileWrite(
+      file,
+      `let intermediateResult${validatorState.reusedVariableIndex} = [];`,
+    );
+    fileWrite(file, `/** @type {any|any[]} */`);
+    fileWrite(
+      file,
+      `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
+    );
+  }
 
   /** @type {import("./generator").ValidatorState} */
   const validatorStateCopy = {
@@ -808,10 +853,15 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
 
   fileBlockStart(file, `for (let ${keyVariable} of Object.keys(${valuePath}))`);
 
-  fileWrite(file, `/** @type {any} */`);
-  fileWrite(file, `let ${resultVariable} = undefined;`);
-  fileWrite(file, `/** @type {ValidatorErrorMap} */`);
-  fileWrite(file, `const ${errorMapVariable} = {};`);
+  if (validatorState.jsHasInlineTypes) {
+    fileWrite(file, `let ${resultVariable}: any = undefined;`);
+    fileWrite(file, `const ${errorMapVariable}: ValidatorErrorMap = {};`);
+  } else {
+    fileWrite(file, `/** @type {any} */`);
+    fileWrite(file, `let ${resultVariable} = undefined;`);
+    fileWrite(file, `/** @type {ValidatorErrorMap} */`);
+    fileWrite(file, `const ${errorMapVariable} = {};`);
+  }
 
   validatorGeneratorGenerateBody(
     validatorState.generateContext,
@@ -1003,8 +1053,13 @@ export function validatorJavascriptObject(file, type, validatorState) {
   if (type.validator.strict) {
     const setVariable = `knownKeys${validatorState.reusedVariableIndex++}`;
 
-    fileWrite(file, `/** @type {Set<string>} */`);
-    fileWrite(file, `const ${setVariable} = new Set([`);
+    if (validatorState.jsHasInlineTypes) {
+      fileWrite(file, `const ${setVariable}: Set<string> = new Set([`);
+    } else {
+      fileWrite(file, `/** @type {Set<string>} */`);
+      fileWrite(file, `const ${setVariable} = new Set([`);
+    }
+
     fileContextSetIndent(file, 1);
     for (const key of Object.keys(type.keys)) {
       fileWrite(file, `"${key}",`);
@@ -1126,7 +1181,16 @@ export function validatorJavascriptString(file, type, validatorState) {
 
   const intermediateVariable = `convertedString${validatorState.reusedVariableIndex++}`;
 
-  fileWrite(file, `let ${intermediateVariable} = ${valuePath};`);
+  if (validatorState.jsHasInlineTypes) {
+    fileWrite(
+      file,
+      `let ${intermediateVariable}: string = ${valuePath} as any;`,
+    );
+  } else {
+    fileWrite(file, `/** @type {string} */`);
+
+    fileWrite(file, `let ${intermediateVariable} = ${valuePath};`);
+  }
 
   fileBlockStart(file, `if (typeof ${intermediateVariable} !== "string")`);
 

@@ -6,37 +6,35 @@
  * @typedef {Record<string, any|undefined>} ValidatorErrorMap
  */
 /**
- * @param {import("../common/types").QueryResultStoreFileInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreFileInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreFile, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreFile(
-  value: import("../common/types").QueryResultStoreFileInput | unknown,
+  value: import("../common/types").QueryResultStoreFileInput | any,
 ): Either<import("../common/types").QueryResultStoreFile, ValidatorErrorMap>;
 /**
- * @param {import("../common/types").QueryResultStoreJobInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreJobInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreJob, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreJob(
-  value: import("../common/types").QueryResultStoreJobInput | unknown,
+  value: import("../common/types").QueryResultStoreJobInput | any,
 ): Either<import("../common/types").QueryResultStoreJob, ValidatorErrorMap>;
 /**
- * @param {import("../common/types").QueryResultStoreSessionStoreInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreSessionStoreInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreSessionStore, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStore(
-  value: import("../common/types").QueryResultStoreSessionStoreInput | unknown,
+  value: import("../common/types").QueryResultStoreSessionStoreInput | any,
 ): Either<
   import("../common/types").QueryResultStoreSessionStore,
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").QueryResultStoreSessionStoreTokenInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreSessionStoreTokenInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreSessionStoreToken, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStoreToken(
-  value:
-    | import("../common/types").QueryResultStoreSessionStoreTokenInput
-    | unknown,
+  value: import("../common/types").QueryResultStoreSessionStoreTokenInput | any,
 ): Either<
   import("../common/types").QueryResultStoreSessionStoreToken,
   ValidatorErrorMap

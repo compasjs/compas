@@ -12,7 +12,7 @@
 /**
  * Postgres based file storage.
  *
- * @param {import("../common/types").StoreFileInput|unknown} value
+ * @param {import("../common/types").StoreFileInput|any} value
  * @returns {Either<import("../common/types").StoreFile, ValidatorErrorMap>}
  */
 export function validateStoreFile(value) {
@@ -119,6 +119,7 @@ export function validateStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketName"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketName`] = {
@@ -140,6 +141,7 @@ export function validateStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["contentType"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.contentType`] = {
@@ -161,6 +163,7 @@ export function validateStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -253,7 +256,7 @@ export function validateStoreFile(value) {
 /**
  * User definable, optional object to store whatever you want
  *
- * @param {import("../common/types").StoreFileMetaInput|unknown} value
+ * @param {import("../common/types").StoreFileMetaInput|any} value
  * @returns {Either<import("../common/types").StoreFileMeta, ValidatorErrorMap>}
  */
 export function validateStoreFileMeta(value) {
@@ -302,6 +305,7 @@ export function validateStoreFileMeta(value) {
       ) {
         result["transformedFromOriginal"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["transformedFromOriginal"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.transformedFromOriginal`] = {
@@ -328,6 +332,7 @@ export function validateStoreFileMeta(value) {
       ) {
         result["placeholderImage"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["placeholderImage"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.placeholderImage`] = {
@@ -351,6 +356,7 @@ export function validateStoreFileMeta(value) {
       if (value["altText"] === null || value["altText"] === undefined) {
         result["altText"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["altText"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.altText`] = {
@@ -380,7 +386,7 @@ export function validateStoreFileMeta(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileResponseInput|unknown} value
+ * @param {import("../common/types").StoreFileResponseInput|any} value
  * @returns {Either<import("../common/types").StoreFileResponse, ValidatorErrorMap>}
  */
 export function validateStoreFileResponse(value) {
@@ -446,6 +452,7 @@ export function validateStoreFileResponse(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -467,6 +474,7 @@ export function validateStoreFileResponse(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["contentType"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.contentType`] = {
@@ -488,6 +496,7 @@ export function validateStoreFileResponse(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["url"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.url`] = {
@@ -510,6 +519,7 @@ export function validateStoreFileResponse(value) {
       ) {
         result["placeholderImage"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["placeholderImage"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.placeholderImage`] = {
@@ -533,6 +543,7 @@ export function validateStoreFileResponse(value) {
       if (value["altText"] === null || value["altText"] === undefined) {
         result["altText"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["altText"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.altText`] = {
@@ -564,7 +575,7 @@ export function validateStoreFileResponse(value) {
 /**
  * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
  *
- * @param {import("../common/types").StoreImageTransformOptionsInput|unknown} value
+ * @param {import("../common/types").StoreImageTransformOptionsInput|any} value
  * @returns {Either<import("../common/types").StoreImageTransformOptions, ValidatorErrorMap>}
  */
 export function validateStoreImageTransformOptions(value) {
@@ -670,7 +681,7 @@ export function validateStoreImageTransformOptions(value) {
  *Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
  *Use {@link queueWorkerCreate} as a way to pick up jobs.
  *
- * @param {import("../common/types").StoreJobInput|unknown} value
+ * @param {import("../common/types").StoreJobInput|any} value
  * @returns {Either<import("../common/types").StoreJob, ValidatorErrorMap>}
  */
 export function validateStoreJob(value) {
@@ -874,6 +885,7 @@ export function validateStoreJob(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -983,7 +995,7 @@ export function validateStoreJob(value) {
 /**
  * Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
  *
- * @param {import("../common/types").StoreSecureImageTransformOptionsInput|unknown} value
+ * @param {import("../common/types").StoreSecureImageTransformOptionsInput|any} value
  * @returns {Either<import("../common/types").StoreSecureImageTransformOptions, ValidatorErrorMap>}
  */
 export function validateStoreSecureImageTransformOptions(value) {
@@ -1011,6 +1023,7 @@ export function validateStoreSecureImageTransformOptions(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["accessToken"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.accessToken`] = {
@@ -1108,7 +1121,7 @@ export function validateStoreSecureImageTransformOptions(value) {
 /**
  * Session data store, used by 'sessionStore\*' functions.
  *
- * @param {import("../common/types").StoreSessionStoreInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStore, ValidatorErrorMap>}
  */
 export function validateStoreSessionStore(value) {
@@ -1174,6 +1187,7 @@ export function validateStoreSessionStore(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["checksum"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.checksum`] = {
@@ -1282,7 +1296,7 @@ export function validateStoreSessionStore(value) {
 /**
  * Store all tokens that belong to a session.
  *
- * @param {import("../common/types").StoreSessionStoreTokenInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreToken, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreToken(value) {
@@ -1467,7 +1481,7 @@ export function validateStoreSessionStoreToken(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileWhereInput|unknown} value
+ * @param {import("../common/types").StoreFileWhereInput|any} value
  * @returns {Either<import("../common/types").StoreFileWhere, ValidatorErrorMap>}
  */
 export function validateStoreFileWhere(value) {
@@ -1536,8 +1550,11 @@ export function validateStoreFileWhere(value) {
       if (value["$or"] === null || value["$or"] === undefined) {
         result["$or"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["$or"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -1628,8 +1645,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -1724,8 +1744,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -1802,6 +1825,7 @@ export function validateStoreFileWhere(value) {
       if (value["bucketName"] === null || value["bucketName"] === undefined) {
         result["bucketName"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketName"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketName`] = {
@@ -1828,6 +1852,7 @@ export function validateStoreFileWhere(value) {
       ) {
         result["bucketNameNotEqual"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketNameNotEqual"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketNameNotEqual`] = {
@@ -1872,8 +1897,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -1891,6 +1919,7 @@ export function validateStoreFileWhere(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString3 = intermediateValue3[i3];
                 if (typeof convertedString3 !== "string") {
                   intermediateErrorMap3[`$.${i3}`] = {
@@ -1973,8 +2002,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -1992,6 +2024,7 @@ export function validateStoreFileWhere(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString3 = intermediateValue3[i3];
                 if (typeof convertedString3 !== "string") {
                   intermediateErrorMap3[`$.${i3}`] = {
@@ -2056,6 +2089,7 @@ export function validateStoreFileWhere(value) {
       ) {
         result["bucketNameLike"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketNameLike"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketNameLike`] = {
@@ -2082,6 +2116,7 @@ export function validateStoreFileWhere(value) {
       ) {
         result["bucketNameILike"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketNameILike"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketNameILike`] = {
@@ -2108,6 +2143,7 @@ export function validateStoreFileWhere(value) {
       ) {
         result["bucketNameNotLike"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketNameNotLike"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketNameNotLike`] = {
@@ -2201,8 +2237,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -2308,8 +2347,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -2522,8 +2564,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -2629,8 +2674,11 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -2779,7 +2827,7 @@ export function validateStoreFileWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobWhereInput|unknown} value
+ * @param {import("../common/types").StoreJobWhereInput|any} value
  * @returns {Either<import("../common/types").StoreJobWhere, ValidatorErrorMap>}
  */
 export function validateStoreJobWhere(value) {
@@ -2861,8 +2909,11 @@ export function validateStoreJobWhere(value) {
       if (value["$or"] === null || value["$or"] === undefined) {
         result["$or"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["$or"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -2987,8 +3038,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -3100,8 +3154,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -3338,6 +3395,7 @@ export function validateStoreJobWhere(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -3364,6 +3422,7 @@ export function validateStoreJobWhere(value) {
       ) {
         result["nameNotEqual"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["nameNotEqual"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.nameNotEqual`] = {
@@ -3405,8 +3464,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -3424,6 +3486,7 @@ export function validateStoreJobWhere(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString3 = intermediateValue3[i3];
                 if (typeof convertedString3 !== "string") {
                   intermediateErrorMap3[`$.${i3}`] = {
@@ -3503,8 +3566,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -3522,6 +3588,7 @@ export function validateStoreJobWhere(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString3 = intermediateValue3[i3];
                 if (typeof convertedString3 !== "string") {
                   intermediateErrorMap3[`$.${i3}`] = {
@@ -3583,6 +3650,7 @@ export function validateStoreJobWhere(value) {
       if (value["nameLike"] === null || value["nameLike"] === undefined) {
         result["nameLike"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["nameLike"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.nameLike`] = {
@@ -3606,6 +3674,7 @@ export function validateStoreJobWhere(value) {
       if (value["nameILike"] === null || value["nameILike"] === undefined) {
         result["nameILike"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["nameILike"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.nameILike`] = {
@@ -3629,6 +3698,7 @@ export function validateStoreJobWhere(value) {
       if (value["nameNotLike"] === null || value["nameNotLike"] === undefined) {
         result["nameNotLike"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["nameNotLike"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.nameNotLike`] = {
@@ -3728,8 +3798,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -3835,8 +3908,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -4101,8 +4177,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -4208,8 +4287,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -4422,8 +4504,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -4529,8 +4614,11 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -4679,7 +4767,7 @@ export function validateStoreJobWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreWhereInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreWhereInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreWhere, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreWhere(value) {
@@ -4743,8 +4831,11 @@ export function validateStoreSessionStoreWhere(value) {
       if (value["$or"] === null || value["$or"] === undefined) {
         result["$or"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["$or"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -4837,8 +4928,11 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -4933,8 +5027,11 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -5081,8 +5178,11 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -5188,8 +5288,11 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -5402,8 +5505,11 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -5509,8 +5615,11 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -5791,7 +5900,7 @@ export function validateStoreSessionStoreWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenWhereInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenWhere, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenWhere(value) {
@@ -5869,8 +5978,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
       if (value["$or"] === null || value["$or"] === undefined) {
         result["$or"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["$or"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -5963,8 +6075,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6059,8 +6174,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6192,8 +6310,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6291,8 +6412,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6439,8 +6563,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6546,8 +6673,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6751,8 +6881,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -6850,8 +6983,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -7048,8 +7184,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -7155,8 +7294,11 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap3 = {};
+            /** @type {any[]} */
             let intermediateResult3 = [];
+            /** @type {any|any[]} */
             let intermediateValue3 = intermediateValue2;
 
             if (!Array.isArray(intermediateValue3)) {
@@ -7712,7 +7854,7 @@ export function validateStoreSessionStoreTokenWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileReturningInput|unknown} value
+ * @param {import("../common/types").StoreFileReturningInput|any} value
  * @returns {Either<import("../common/types").StoreFileReturning, ValidatorErrorMap>}
  */
 export function validateStoreFileReturning(value) {
@@ -7742,6 +7884,7 @@ export function validateStoreFileReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
@@ -7784,8 +7927,11 @@ export function validateStoreFileReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -7801,6 +7947,7 @@ export function validateStoreFileReturning(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -7866,7 +8013,7 @@ export function validateStoreFileReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobReturningInput|unknown} value
+ * @param {import("../common/types").StoreJobReturningInput|any} value
  * @returns {Either<import("../common/types").StoreJobReturning, ValidatorErrorMap>}
  */
 export function validateStoreJobReturning(value) {
@@ -7896,6 +8043,7 @@ export function validateStoreJobReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
@@ -7938,8 +8086,11 @@ export function validateStoreJobReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -7955,6 +8106,7 @@ export function validateStoreJobReturning(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -8024,7 +8176,7 @@ export function validateStoreJobReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreReturningInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreReturningInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreReturning, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreReturning(value) {
@@ -8054,6 +8206,7 @@ export function validateStoreSessionStoreReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
@@ -8096,8 +8249,11 @@ export function validateStoreSessionStoreReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -8113,6 +8269,7 @@ export function validateStoreSessionStoreReturning(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -8174,7 +8331,7 @@ export function validateStoreSessionStoreReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenReturningInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenReturningInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenReturning, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenReturning(value) {
@@ -8204,6 +8361,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
@@ -8246,8 +8404,11 @@ export function validateStoreSessionStoreTokenReturning(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -8263,6 +8424,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -8324,7 +8486,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileInsertPartialInput|unknown} value
+ * @param {import("../common/types").StoreFileInsertPartialInput|any} value
  * @returns {Either<import("../common/types").StoreFileInsertPartial, ValidatorErrorMap>}
  */
 export function validateStoreFileInsertPartial(value) {
@@ -8429,6 +8591,7 @@ export function validateStoreFileInsertPartial(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketName"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketName`] = {
@@ -8450,6 +8613,7 @@ export function validateStoreFileInsertPartial(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["contentType"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.contentType`] = {
@@ -8471,6 +8635,7 @@ export function validateStoreFileInsertPartial(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -8557,7 +8722,7 @@ export function validateStoreFileInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileInsertInput|unknown} value
+ * @param {import("../common/types").StoreFileInsertInput|any} value
  * @returns {Either<import("../common/types").StoreFileInsert, ValidatorErrorMap>}
  */
 export function validateStoreFileInsert(value) {
@@ -8597,8 +8762,11 @@ export function validateStoreFileInsert(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["insert"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -8664,7 +8832,7 @@ export function validateStoreFileInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobInsertPartialInput|unknown} value
+ * @param {import("../common/types").StoreJobInsertPartialInput|any} value
  * @returns {Either<import("../common/types").StoreJobInsertPartial, ValidatorErrorMap>}
  */
 export function validateStoreJobInsertPartial(value) {
@@ -8866,6 +9034,7 @@ export function validateStoreJobInsertPartial(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -8969,7 +9138,7 @@ export function validateStoreJobInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobInsertInput|unknown} value
+ * @param {import("../common/types").StoreJobInsertInput|any} value
  * @returns {Either<import("../common/types").StoreJobInsert, ValidatorErrorMap>}
  */
 export function validateStoreJobInsert(value) {
@@ -9009,8 +9178,11 @@ export function validateStoreJobInsert(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["insert"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -9076,7 +9248,7 @@ export function validateStoreJobInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreInsertPartialInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreInsertPartialInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreInsertPartial, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreInsertPartial(value) {
@@ -9140,6 +9312,7 @@ export function validateStoreSessionStoreInsertPartial(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["checksum"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.checksum`] = {
@@ -9242,7 +9415,7 @@ export function validateStoreSessionStoreInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreInsertInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreInsertInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreInsert, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreInsert(value) {
@@ -9282,8 +9455,11 @@ export function validateStoreSessionStoreInsert(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["insert"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -9351,7 +9527,7 @@ export function validateStoreSessionStoreInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenInsertPartialInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenInsertPartialInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenInsertPartial, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenInsertPartial(value) {
@@ -9534,7 +9710,7 @@ export function validateStoreSessionStoreTokenInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenInsertInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenInsertInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenInsert, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenInsert(value) {
@@ -9574,8 +9750,11 @@ export function validateStoreSessionStoreTokenInsert(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["insert"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -9643,7 +9822,7 @@ export function validateStoreSessionStoreTokenInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileUpdatePartialInput|unknown} value
+ * @param {import("../common/types").StoreFileUpdatePartialInput|any} value
  * @returns {Either<import("../common/types").StoreFileUpdatePartial, ValidatorErrorMap>}
  */
 export function validateStoreFileUpdatePartial(value) {
@@ -10111,6 +10290,7 @@ export function validateStoreFileUpdatePartial(value) {
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateResult2 = undefined;
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -10184,6 +10364,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$append"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$append`] = {
@@ -10230,6 +10411,7 @@ export function validateStoreFileUpdatePartial(value) {
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateResult2 = undefined;
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -10303,6 +10485,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$append"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$append`] = {
@@ -10349,6 +10532,7 @@ export function validateStoreFileUpdatePartial(value) {
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateResult2 = undefined;
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -10422,6 +10606,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$append"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$append`] = {
@@ -10563,8 +10748,11 @@ export function validateStoreFileUpdatePartial(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap3 = {};
+                    /** @type {any[]} */
                     let intermediateResult3 = [];
+                    /** @type {any|any[]} */
                     let intermediateValue3 = intermediateValue2["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue3)) {
@@ -10660,6 +10848,7 @@ export function validateStoreFileUpdatePartial(value) {
                               key: "validator.undefined",
                             };
                           } else {
+                            /** @type {string} */
                             let convertedString5 = intermediateValue5;
                             if (typeof convertedString5 !== "string") {
                               intermediateErrorMap5[`$`] = {
@@ -10802,8 +10991,11 @@ export function validateStoreFileUpdatePartial(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap3 = {};
+                    /** @type {any[]} */
                     let intermediateResult3 = [];
+                    /** @type {any|any[]} */
                     let intermediateValue3 =
                       intermediateValue2["$remove"]["path"];
 
@@ -10900,6 +11092,7 @@ export function validateStoreFileUpdatePartial(value) {
                               key: "validator.undefined",
                             };
                           } else {
+                            /** @type {string} */
                             let convertedString5 = intermediateValue5;
                             if (typeof convertedString5 !== "string") {
                               intermediateErrorMap5[`$`] = {
@@ -11048,6 +11241,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -11119,6 +11313,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -11240,6 +11435,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -11311,6 +11507,7 @@ export function validateStoreFileUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -11347,7 +11544,7 @@ export function validateStoreFileUpdatePartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileUpdateInput|unknown} value
+ * @param {import("../common/types").StoreFileUpdateInput|any} value
  * @returns {Either<import("../common/types").StoreFileUpdate, ValidatorErrorMap>}
  */
 export function validateStoreFileUpdate(value) {
@@ -11434,7 +11631,7 @@ export function validateStoreFileUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobUpdatePartialInput|unknown} value
+ * @param {import("../common/types").StoreJobUpdatePartialInput|any} value
  * @returns {Either<import("../common/types").StoreJobUpdatePartial, ValidatorErrorMap>}
  */
 export function validateStoreJobUpdatePartial(value) {
@@ -12821,6 +13018,7 @@ export function validateStoreJobUpdatePartial(value) {
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateResult2 = undefined;
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -12894,6 +13092,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$append"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$append`] = {
@@ -13015,6 +13214,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -13086,6 +13286,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -13219,8 +13420,11 @@ export function validateStoreJobUpdatePartial(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap3 = {};
+                    /** @type {any[]} */
                     let intermediateResult3 = [];
+                    /** @type {any|any[]} */
                     let intermediateValue3 = intermediateValue2["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue3)) {
@@ -13316,6 +13520,7 @@ export function validateStoreJobUpdatePartial(value) {
                               key: "validator.undefined",
                             };
                           } else {
+                            /** @type {string} */
                             let convertedString5 = intermediateValue5;
                             if (typeof convertedString5 !== "string") {
                               intermediateErrorMap5[`$`] = {
@@ -13458,8 +13663,11 @@ export function validateStoreJobUpdatePartial(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap3 = {};
+                    /** @type {any[]} */
                     let intermediateResult3 = [];
+                    /** @type {any|any[]} */
                     let intermediateValue3 =
                       intermediateValue2["$remove"]["path"];
 
@@ -13556,6 +13764,7 @@ export function validateStoreJobUpdatePartial(value) {
                               key: "validator.undefined",
                             };
                           } else {
+                            /** @type {string} */
                             let convertedString5 = intermediateValue5;
                             if (typeof convertedString5 !== "string") {
                               intermediateErrorMap5[`$`] = {
@@ -13704,6 +13913,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -13775,6 +13985,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -13896,6 +14107,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -13967,6 +14179,7 @@ export function validateStoreJobUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -14003,7 +14216,7 @@ export function validateStoreJobUpdatePartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobUpdateInput|unknown} value
+ * @param {import("../common/types").StoreJobUpdateInput|any} value
  * @returns {Either<import("../common/types").StoreJobUpdate, ValidatorErrorMap>}
  */
 export function validateStoreJobUpdate(value) {
@@ -14090,7 +14303,7 @@ export function validateStoreJobUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreUpdatePartialInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreUpdatePartialInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreUpdatePartial, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreUpdatePartial(value) {
@@ -14150,6 +14363,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateResult2 = undefined;
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -14223,6 +14437,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$append"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$append`] = {
@@ -14344,6 +14559,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -14415,6 +14631,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -14548,8 +14765,11 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap3 = {};
+                    /** @type {any[]} */
                     let intermediateResult3 = [];
+                    /** @type {any|any[]} */
                     let intermediateValue3 = intermediateValue2["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue3)) {
@@ -14645,6 +14865,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                               key: "validator.undefined",
                             };
                           } else {
+                            /** @type {string} */
                             let convertedString5 = intermediateValue5;
                             if (typeof convertedString5 !== "string") {
                               intermediateErrorMap5[`$`] = {
@@ -14787,8 +15008,11 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap3 = {};
+                    /** @type {any[]} */
                     let intermediateResult3 = [];
+                    /** @type {any|any[]} */
                     let intermediateValue3 =
                       intermediateValue2["$remove"]["path"];
 
@@ -14885,6 +15109,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                               key: "validator.undefined",
                             };
                           } else {
+                            /** @type {string} */
                             let convertedString5 = intermediateValue5;
                             if (typeof convertedString5 !== "string") {
                               intermediateErrorMap5[`$`] = {
@@ -15033,6 +15258,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -15104,6 +15330,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -15225,6 +15452,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -15296,6 +15524,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -15332,7 +15561,7 @@ export function validateStoreSessionStoreUpdatePartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreUpdateInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreUpdateInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreUpdate, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreUpdate(value) {
@@ -15423,7 +15652,7 @@ export function validateStoreSessionStoreUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenUpdatePartialInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenUpdatePartialInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdatePartial, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenUpdatePartial(value) {
@@ -15600,6 +15829,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -15671,6 +15901,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -15837,6 +16068,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -15908,6 +16140,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -16029,6 +16262,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$add"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$add`] = {
@@ -16100,6 +16334,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString2 = intermediateValue2["$subtract"];
                 if (typeof convertedString2 !== "string") {
                   intermediateErrorMap2[`$.$subtract`] = {
@@ -16136,7 +16371,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenUpdateInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenUpdateInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdate, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenUpdate(value) {
@@ -16227,7 +16462,7 @@ export function validateStoreSessionStoreTokenUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileOrderByInput|unknown} value
+ * @param {import("../common/types").StoreFileOrderByInput|any} value
  * @returns {Either<import("../common/types").StoreFileOrderBy, ValidatorErrorMap>}
  */
 export function validateStoreFileOrderBy(value) {
@@ -16282,8 +16517,11 @@ export function validateStoreFileOrderBy(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -16299,6 +16537,7 @@ export function validateStoreFileOrderBy(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -16351,7 +16590,7 @@ export function validateStoreFileOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileOrderBySpecInput|unknown} value
+ * @param {import("../common/types").StoreFileOrderBySpecInput|any} value
  * @returns {Either<import("../common/types").StoreFileOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreFileOrderBySpec(value) {
@@ -16394,6 +16633,7 @@ export function validateStoreFileOrderBySpec(value) {
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["id"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.id`] = {
@@ -16425,6 +16665,7 @@ export function validateStoreFileOrderBySpec(value) {
       if (value["bucketName"] === null || value["bucketName"] === undefined) {
         result["bucketName"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketName"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketName`] = {
@@ -16456,6 +16697,7 @@ export function validateStoreFileOrderBySpec(value) {
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         result["createdAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["createdAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.createdAt`] = {
@@ -16487,6 +16729,7 @@ export function validateStoreFileOrderBySpec(value) {
       if (value["updatedAt"] === null || value["updatedAt"] === undefined) {
         result["updatedAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["updatedAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.updatedAt`] = {
@@ -16524,7 +16767,7 @@ export function validateStoreFileOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobOrderByInput|unknown} value
+ * @param {import("../common/types").StoreJobOrderByInput|any} value
  * @returns {Either<import("../common/types").StoreJobOrderBy, ValidatorErrorMap>}
  */
 export function validateStoreJobOrderBy(value) {
@@ -16579,8 +16822,11 @@ export function validateStoreJobOrderBy(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -16596,6 +16842,7 @@ export function validateStoreJobOrderBy(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -16657,7 +16904,7 @@ export function validateStoreJobOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobOrderBySpecInput|unknown} value
+ * @param {import("../common/types").StoreJobOrderBySpecInput|any} value
  * @returns {Either<import("../common/types").StoreJobOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreJobOrderBySpec(value) {
@@ -16702,6 +16949,7 @@ export function validateStoreJobOrderBySpec(value) {
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["id"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.id`] = {
@@ -16733,6 +16981,7 @@ export function validateStoreJobOrderBySpec(value) {
       if (value["isComplete"] === null || value["isComplete"] === undefined) {
         result["isComplete"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["isComplete"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.isComplete`] = {
@@ -16771,6 +17020,7 @@ export function validateStoreJobOrderBySpec(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -16802,6 +17052,7 @@ export function validateStoreJobOrderBySpec(value) {
       if (value["scheduledAt"] === null || value["scheduledAt"] === undefined) {
         result["scheduledAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["scheduledAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.scheduledAt`] = {
@@ -16840,6 +17091,7 @@ export function validateStoreJobOrderBySpec(value) {
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         result["createdAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["createdAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.createdAt`] = {
@@ -16871,6 +17123,7 @@ export function validateStoreJobOrderBySpec(value) {
       if (value["updatedAt"] === null || value["updatedAt"] === undefined) {
         result["updatedAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["updatedAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.updatedAt`] = {
@@ -16908,7 +17161,7 @@ export function validateStoreJobOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreOrderByInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreOrderByInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreOrderBy, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreOrderBy(value) {
@@ -16963,8 +17216,11 @@ export function validateStoreSessionStoreOrderBy(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -16980,6 +17236,7 @@ export function validateStoreSessionStoreOrderBy(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -17031,7 +17288,7 @@ export function validateStoreSessionStoreOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreOrderBySpecInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreOrderBySpecInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreOrderBySpec(value) {
@@ -17069,6 +17326,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["id"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.id`] = {
@@ -17100,6 +17358,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         result["createdAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["createdAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.createdAt`] = {
@@ -17131,6 +17390,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
       if (value["updatedAt"] === null || value["updatedAt"] === undefined) {
         result["updatedAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["updatedAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.updatedAt`] = {
@@ -17168,7 +17428,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBy, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenOrderBy(value) {
@@ -17223,8 +17483,11 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
+        /** @type {any[]} */
         let intermediateResult3 = [];
+        /** @type {any|any[]} */
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
@@ -17240,6 +17503,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = intermediateValue3[i3];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$.${i3}`] = {
@@ -17299,7 +17563,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderBySpecInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBySpecInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenOrderBySpec(value) {
@@ -17343,6 +17607,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["id"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.id`] = {
@@ -17374,6 +17639,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
       if (value["session"] === null || value["session"] === undefined) {
         result["session"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["session"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.session`] = {
@@ -17405,6 +17671,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
       if (value["expiresAt"] === null || value["expiresAt"] === undefined) {
         result["expiresAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["expiresAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.expiresAt`] = {
@@ -17439,6 +17706,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
       ) {
         result["refreshToken"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["refreshToken"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.refreshToken`] = {
@@ -17477,6 +17745,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
       if (value["revokedAt"] === null || value["revokedAt"] === undefined) {
         result["revokedAt"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["revokedAt"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.revokedAt`] = {
@@ -17521,7 +17790,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileQueryBuilderInput|unknown} value
+ * @param {import("../common/types").StoreFileQueryBuilderInput|any} value
  * @returns {Either<import("../common/types").StoreFileQueryBuilder, ValidatorErrorMap>}
  */
 export function validateStoreFileQueryBuilder(value) {
@@ -17691,7 +17960,7 @@ export function validateStoreFileQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobQueryBuilderInput|unknown} value
+ * @param {import("../common/types").StoreJobQueryBuilderInput|any} value
  * @returns {Either<import("../common/types").StoreJobQueryBuilder, ValidatorErrorMap>}
  */
 export function validateStoreJobQueryBuilder(value) {
@@ -17863,7 +18132,7 @@ export function validateStoreJobQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreQueryBuilderInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreQueryBuilderInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreQueryBuilder, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreQueryBuilder(value) {
@@ -18052,7 +18321,7 @@ export function validateStoreSessionStoreQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput|unknown} value
+ * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenQueryBuilder, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenQueryBuilder(value) {

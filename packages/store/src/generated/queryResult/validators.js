@@ -11,7 +11,7 @@ import { validateStoreFileMeta } from "../store/validators.js";
  */
 
 /**
- * @param {import("../common/types").QueryResultStoreFileInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreFileInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreFile, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreFile(value) {
@@ -118,6 +118,7 @@ export function validateQueryResultStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["bucketName"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.bucketName`] = {
@@ -139,6 +140,7 @@ export function validateQueryResultStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["contentType"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.contentType`] = {
@@ -160,6 +162,7 @@ export function validateQueryResultStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -250,7 +253,7 @@ export function validateQueryResultStoreFile(value) {
 }
 
 /**
- * @param {import("../common/types").QueryResultStoreJobInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreJobInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreJob, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreJob(value) {
@@ -454,6 +457,7 @@ export function validateQueryResultStoreJob(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -561,7 +565,7 @@ export function validateQueryResultStoreJob(value) {
 }
 
 /**
- * @param {import("../common/types").QueryResultStoreSessionStoreInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreSessionStoreInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreSessionStore, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStore(value) {
@@ -628,6 +632,7 @@ export function validateQueryResultStoreSessionStore(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["checksum"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.checksum`] = {
@@ -731,8 +736,11 @@ export function validateQueryResultStoreSessionStore(value) {
       ) {
         result["accessTokens"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["accessTokens"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -781,7 +789,7 @@ export function validateQueryResultStoreSessionStore(value) {
 }
 
 /**
- * @param {import("../common/types").QueryResultStoreSessionStoreTokenInput|unknown} value
+ * @param {import("../common/types").QueryResultStoreSessionStoreTokenInput|any} value
  * @returns {Either<import("../common/types").QueryResultStoreSessionStoreToken, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStoreToken(value) {

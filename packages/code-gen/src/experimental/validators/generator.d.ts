@@ -19,6 +19,7 @@
  * @property {import("../generated/common/types")
  * .ExperimentalReferenceDefinition[]
  * } dependingValidators
+ * @property {boolean} [jsHasInlineTypes]
  */
 /**
  * Generate all the 'validated' types in the provided structure. This means that, for
@@ -61,8 +62,6 @@ export function validatorGetNameAndImport(
  * - How to use the types
  * - Duplication
  * - Resolved & unique names
- *
- * TODO: support TS validators
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../types").NamedType<
@@ -117,5 +116,6 @@ export type ValidatorState = {
   reusedVariableIndex: number;
   validatedValuePath: ValidatorPath[];
   dependingValidators: import("../generated/common/types").ExperimentalReferenceDefinition[];
+  jsHasInlineTypes?: boolean | undefined;
 };
 //# sourceMappingURL=generator.d.ts.map

@@ -10,7 +10,7 @@
  */
 
 /**
- * @param {import("../common/types").ExperimentalAnyDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalAnyDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalAnyDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalAnyDefinition(value) {
@@ -38,6 +38,7 @@ export function validateExperimentalAnyDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -62,6 +63,7 @@ export function validateExperimentalAnyDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -85,6 +87,7 @@ export function validateExperimentalAnyDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -110,6 +113,7 @@ export function validateExperimentalAnyDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -169,6 +173,7 @@ export function validateExperimentalAnyDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -426,6 +431,7 @@ export function validateExperimentalAnyDefinition(value) {
       if (value["rawValue"] === null || value["rawValue"] === undefined) {
         result["rawValue"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["rawValue"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.rawValue`] = {
@@ -472,6 +478,7 @@ export function validateExperimentalAnyDefinition(value) {
           ) {
             result["rawValueImport"]["javaScript"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["rawValueImport"]["javaScript"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.rawValueImport.javaScript`] = {
@@ -498,6 +505,7 @@ export function validateExperimentalAnyDefinition(value) {
           ) {
             result["rawValueImport"]["typeScript"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["rawValueImport"]["typeScript"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.rawValueImport.typeScript`] = {
@@ -526,6 +534,7 @@ export function validateExperimentalAnyDefinition(value) {
       ) {
         result["rawValidator"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["rawValidator"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.rawValidator`] = {
@@ -572,6 +581,7 @@ export function validateExperimentalAnyDefinition(value) {
           ) {
             result["rawValidatorImport"]["javaScript"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["rawValidatorImport"]["javaScript"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.rawValidatorImport.javaScript`] = {
@@ -598,6 +608,7 @@ export function validateExperimentalAnyDefinition(value) {
           ) {
             result["rawValidatorImport"]["typeScript"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["rawValidatorImport"]["typeScript"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.rawValidatorImport.typeScript`] = {
@@ -629,7 +640,7 @@ export function validateExperimentalAnyDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalAnyOfDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalAnyOfDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalAnyOfDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalAnyOfDefinition(value) {
@@ -657,6 +668,7 @@ export function validateExperimentalAnyOfDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -681,6 +693,7 @@ export function validateExperimentalAnyOfDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -704,6 +717,7 @@ export function validateExperimentalAnyOfDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -729,6 +743,7 @@ export function validateExperimentalAnyOfDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -788,6 +803,7 @@ export function validateExperimentalAnyOfDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -1019,8 +1035,11 @@ export function validateExperimentalAnyOfDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["values"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -1075,7 +1094,7 @@ export function validateExperimentalAnyOfDefinition(value) {
 /**
  * All type definitions that can be used inside other types, like object keys.
  *
- * @param {import("../common/types").ExperimentalTypeSystemDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalTypeSystemDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalTypeSystemDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalTypeSystemDefinition(value) {
@@ -1614,7 +1633,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalArrayDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalArrayDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalArrayDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalArrayDefinition(value) {
@@ -1642,6 +1661,7 @@ export function validateExperimentalArrayDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -1666,6 +1686,7 @@ export function validateExperimentalArrayDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -1689,6 +1710,7 @@ export function validateExperimentalArrayDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -1714,6 +1736,7 @@ export function validateExperimentalArrayDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -1773,6 +1796,7 @@ export function validateExperimentalArrayDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -2127,7 +2151,7 @@ export function validateExperimentalArrayDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalBooleanDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalBooleanDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalBooleanDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalBooleanDefinition(value) {
@@ -2155,6 +2179,7 @@ export function validateExperimentalBooleanDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -2179,6 +2204,7 @@ export function validateExperimentalBooleanDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -2202,6 +2228,7 @@ export function validateExperimentalBooleanDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -2227,6 +2254,7 @@ export function validateExperimentalBooleanDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -2286,6 +2314,7 @@ export function validateExperimentalBooleanDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -2598,7 +2627,7 @@ export function validateExperimentalBooleanDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalCrudDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalCrudDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalCrudDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalCrudDefinition(value) {
@@ -2626,6 +2655,7 @@ export function validateExperimentalCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -2650,6 +2680,7 @@ export function validateExperimentalCrudDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -2673,6 +2704,7 @@ export function validateExperimentalCrudDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -2698,6 +2730,7 @@ export function validateExperimentalCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -2757,6 +2790,7 @@ export function validateExperimentalCrudDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -2986,6 +3020,7 @@ export function validateExperimentalCrudDefinition(value) {
       if (value["basePath"] === null || value["basePath"] === undefined) {
         result["basePath"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["basePath"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.basePath`] = {
@@ -3044,6 +3079,7 @@ export function validateExperimentalCrudDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString0 = value["fromParent"]["field"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.fromParent.field`] = {
@@ -3084,6 +3120,7 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fromParent"]["options"]["name"] = undefined;
               } else {
+                /** @type {string} */
                 let convertedString0 = value["fromParent"]["options"]["name"];
                 if (typeof convertedString0 !== "string") {
                   errorMap[`$.fromParent.options.name`] = {
@@ -3300,8 +3337,11 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["readable"]["$omit"] = undefined;
               } else {
+                /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap1 = {};
+                /** @type {any[]} */
                 let intermediateResult1 = [];
+                /** @type {any|any[]} */
                 let intermediateValue1 =
                   value["fieldOptions"]["readable"]["$omit"];
 
@@ -3320,6 +3360,7 @@ export function validateExperimentalCrudDefinition(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString1 = intermediateValue1[i1];
                     if (typeof convertedString1 !== "string") {
                       intermediateErrorMap1[`$.${i1}`] = {
@@ -3354,8 +3395,11 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["readable"]["$pick"] = undefined;
               } else {
+                /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap1 = {};
+                /** @type {any[]} */
                 let intermediateResult1 = [];
+                /** @type {any|any[]} */
                 let intermediateValue1 =
                   value["fieldOptions"]["readable"]["$pick"];
 
@@ -3374,6 +3418,7 @@ export function validateExperimentalCrudDefinition(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString1 = intermediateValue1[i1];
                     if (typeof convertedString1 !== "string") {
                       intermediateErrorMap1[`$.${i1}`] = {
@@ -3428,8 +3473,11 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["writable"]["$omit"] = undefined;
               } else {
+                /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap1 = {};
+                /** @type {any[]} */
                 let intermediateResult1 = [];
+                /** @type {any|any[]} */
                 let intermediateValue1 =
                   value["fieldOptions"]["writable"]["$omit"];
 
@@ -3448,6 +3496,7 @@ export function validateExperimentalCrudDefinition(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString1 = intermediateValue1[i1];
                     if (typeof convertedString1 !== "string") {
                       intermediateErrorMap1[`$.${i1}`] = {
@@ -3482,8 +3531,11 @@ export function validateExperimentalCrudDefinition(value) {
               ) {
                 result["fieldOptions"]["writable"]["$pick"] = undefined;
               } else {
+                /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap1 = {};
+                /** @type {any[]} */
                 let intermediateResult1 = [];
+                /** @type {any|any[]} */
                 let intermediateValue1 =
                   value["fieldOptions"]["writable"]["$pick"];
 
@@ -3502,6 +3554,7 @@ export function validateExperimentalCrudDefinition(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString1 = intermediateValue1[i1];
                     if (typeof convertedString1 !== "string") {
                       intermediateErrorMap1[`$.${i1}`] = {
@@ -3542,8 +3595,11 @@ export function validateExperimentalCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["inlineRelations"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -3591,8 +3647,11 @@ export function validateExperimentalCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["nestedRelations"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -3641,7 +3700,7 @@ export function validateExperimentalCrudDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalReferenceDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalReferenceDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalReferenceDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalReferenceDefinition(value) {
@@ -3669,6 +3728,7 @@ export function validateExperimentalReferenceDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -3695,6 +3755,7 @@ export function validateExperimentalReferenceDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -3754,6 +3815,7 @@ export function validateExperimentalReferenceDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -4048,7 +4110,7 @@ export function validateExperimentalReferenceDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalNamePartInput|unknown} value
+ * @param {import("../common/types").ExperimentalNamePartInput|any} value
  * @returns {Either<import("../common/types").ExperimentalNamePart, ValidatorErrorMap>}
  */
 export function validateExperimentalNamePart(value) {
@@ -4062,6 +4124,7 @@ export function validateExperimentalNamePart(value) {
       key: "validator.undefined",
     };
   } else {
+    /** @type {string} */
     let convertedString0 = value;
     if (typeof convertedString0 !== "string") {
       errorMap[`$`] = {
@@ -4089,7 +4152,7 @@ export function validateExperimentalNamePart(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalDateDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalDateDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalDateDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalDateDefinition(value) {
@@ -4117,6 +4180,7 @@ export function validateExperimentalDateDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -4141,6 +4205,7 @@ export function validateExperimentalDateDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -4164,6 +4229,7 @@ export function validateExperimentalDateDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -4189,6 +4255,7 @@ export function validateExperimentalDateDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -4248,6 +4315,7 @@ export function validateExperimentalDateDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -4611,6 +4679,7 @@ export function validateExperimentalDateDefinition(value) {
       if (value["specifier"] === null || value["specifier"] === undefined) {
         result["specifier"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["specifier"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.specifier`] = {
@@ -4648,7 +4717,7 @@ export function validateExperimentalDateDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalExtendDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalExtendDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalExtendDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalExtendDefinition(value) {
@@ -4676,6 +4745,7 @@ export function validateExperimentalExtendDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -4700,6 +4770,7 @@ export function validateExperimentalExtendDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -4723,6 +4794,7 @@ export function validateExperimentalExtendDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -4748,6 +4820,7 @@ export function validateExperimentalExtendDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -4807,6 +4880,7 @@ export function validateExperimentalExtendDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -5049,6 +5123,7 @@ export function validateExperimentalExtendDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = genericKeyInput0;
             if (typeof convertedString3 !== "string") {
               genericKeyErrorMap2[`$`] = {
@@ -5130,7 +5205,7 @@ export function validateExperimentalExtendDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalFileDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalFileDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalFileDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalFileDefinition(value) {
@@ -5158,6 +5233,7 @@ export function validateExperimentalFileDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -5182,6 +5258,7 @@ export function validateExperimentalFileDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -5205,6 +5282,7 @@ export function validateExperimentalFileDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -5230,6 +5308,7 @@ export function validateExperimentalFileDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -5289,6 +5368,7 @@ export function validateExperimentalFileDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -5520,8 +5600,11 @@ export function validateExperimentalFileDefinition(value) {
           ) {
             result["validator"]["mimeTypes"] = undefined;
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap1 = {};
+            /** @type {any[]} */
             let intermediateResult1 = [];
+            /** @type {any|any[]} */
             let intermediateValue1 = value["validator"]["mimeTypes"];
 
             if (!Array.isArray(intermediateValue1)) {
@@ -5539,6 +5622,7 @@ export function validateExperimentalFileDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString1 = intermediateValue1[i1];
                 if (typeof convertedString1 !== "string") {
                   intermediateErrorMap1[`$.${i1}`] = {
@@ -5576,7 +5660,7 @@ export function validateExperimentalFileDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalGenericDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalGenericDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalGenericDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalGenericDefinition(value) {
@@ -5604,6 +5688,7 @@ export function validateExperimentalGenericDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -5628,6 +5713,7 @@ export function validateExperimentalGenericDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -5651,6 +5737,7 @@ export function validateExperimentalGenericDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -5676,6 +5763,7 @@ export function validateExperimentalGenericDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -5735,6 +5823,7 @@ export function validateExperimentalGenericDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -6004,7 +6093,7 @@ export function validateExperimentalGenericDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalNumberDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalNumberDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalNumberDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalNumberDefinition(value) {
@@ -6032,6 +6121,7 @@ export function validateExperimentalNumberDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -6056,6 +6146,7 @@ export function validateExperimentalNumberDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -6079,6 +6170,7 @@ export function validateExperimentalNumberDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -6104,6 +6196,7 @@ export function validateExperimentalNumberDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -6163,6 +6256,7 @@ export function validateExperimentalNumberDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -6548,8 +6642,11 @@ export function validateExperimentalNumberDefinition(value) {
       if (value["oneOf"] === null || value["oneOf"] === undefined) {
         result["oneOf"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["oneOf"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -6615,7 +6712,7 @@ export function validateExperimentalNumberDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalObjectDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalObjectDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalObjectDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalObjectDefinition(value) {
@@ -6643,6 +6740,7 @@ export function validateExperimentalObjectDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -6667,6 +6765,7 @@ export function validateExperimentalObjectDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -6690,6 +6789,7 @@ export function validateExperimentalObjectDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -6715,6 +6815,7 @@ export function validateExperimentalObjectDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -6774,6 +6875,7 @@ export function validateExperimentalObjectDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -7058,6 +7160,7 @@ export function validateExperimentalObjectDefinition(value) {
       if (value["shortName"] === null || value["shortName"] === undefined) {
         result["shortName"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["shortName"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.shortName`] = {
@@ -7094,6 +7197,7 @@ export function validateExperimentalObjectDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString3 = genericKeyInput0;
             if (typeof convertedString3 !== "string") {
               genericKeyErrorMap2[`$`] = {
@@ -7300,6 +7404,7 @@ export function validateExperimentalObjectDefinition(value) {
           ) {
             result["queryOptions"]["schema"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["queryOptions"]["schema"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.queryOptions.schema`] = {
@@ -7327,8 +7432,11 @@ export function validateExperimentalObjectDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["relations"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -7375,7 +7483,7 @@ export function validateExperimentalObjectDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalRelationDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalRelationDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalRelationDefinition(value) {
@@ -7403,6 +7511,7 @@ export function validateExperimentalRelationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -7429,6 +7538,7 @@ export function validateExperimentalRelationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["subType"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.subType`] = {
@@ -7482,6 +7592,7 @@ export function validateExperimentalRelationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["ownKey"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.ownKey`] = {
@@ -7504,6 +7615,7 @@ export function validateExperimentalRelationDefinition(value) {
       ) {
         result["referencedKey"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["referencedKey"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.referencedKey`] = {
@@ -7557,7 +7669,7 @@ export function validateExperimentalRelationDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalOmitDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalOmitDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalOmitDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalOmitDefinition(value) {
@@ -7585,6 +7697,7 @@ export function validateExperimentalOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -7609,6 +7722,7 @@ export function validateExperimentalOmitDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -7632,6 +7746,7 @@ export function validateExperimentalOmitDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -7657,6 +7772,7 @@ export function validateExperimentalOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -7716,6 +7832,7 @@ export function validateExperimentalOmitDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -8002,8 +8119,11 @@ export function validateExperimentalOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["keys"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -8019,6 +8139,7 @@ export function validateExperimentalOmitDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString1 = intermediateValue1[i1];
             if (typeof convertedString1 !== "string") {
               intermediateErrorMap1[`$.${i1}`] = {
@@ -8071,7 +8192,7 @@ export function validateExperimentalOmitDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalPickDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalPickDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalPickDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalPickDefinition(value) {
@@ -8099,6 +8220,7 @@ export function validateExperimentalPickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -8123,6 +8245,7 @@ export function validateExperimentalPickDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -8146,6 +8269,7 @@ export function validateExperimentalPickDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -8171,6 +8295,7 @@ export function validateExperimentalPickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -8230,6 +8355,7 @@ export function validateExperimentalPickDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -8516,8 +8642,11 @@ export function validateExperimentalPickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["keys"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -8533,6 +8662,7 @@ export function validateExperimentalPickDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString1 = intermediateValue1[i1];
             if (typeof convertedString1 !== "string") {
               intermediateErrorMap1[`$.${i1}`] = {
@@ -8585,7 +8715,7 @@ export function validateExperimentalPickDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalStringDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalStringDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalStringDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalStringDefinition(value) {
@@ -8613,6 +8743,7 @@ export function validateExperimentalStringDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -8637,6 +8768,7 @@ export function validateExperimentalStringDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -8660,6 +8792,7 @@ export function validateExperimentalStringDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -8685,6 +8818,7 @@ export function validateExperimentalStringDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -8744,6 +8878,7 @@ export function validateExperimentalStringDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -9157,6 +9292,7 @@ export function validateExperimentalStringDefinition(value) {
           ) {
             result["validator"]["pattern"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["validator"]["pattern"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.validator.pattern`] = {
@@ -9210,8 +9346,11 @@ export function validateExperimentalStringDefinition(value) {
           ) {
             result["validator"]["disallowedCharacters"] = undefined;
           } else {
+            /** @type {ValidatorErrorMap} */
             const intermediateErrorMap1 = {};
+            /** @type {any[]} */
             let intermediateResult1 = [];
+            /** @type {any|any[]} */
             let intermediateValue1 = value["validator"]["disallowedCharacters"];
 
             if (!Array.isArray(intermediateValue1)) {
@@ -9229,6 +9368,7 @@ export function validateExperimentalStringDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
+                /** @type {string} */
                 let convertedString1 = intermediateValue1[i1];
                 if (typeof convertedString1 !== "string") {
                   intermediateErrorMap1[`$.${i1}`] = {
@@ -9266,8 +9406,11 @@ export function validateExperimentalStringDefinition(value) {
       if (value["oneOf"] === null || value["oneOf"] === undefined) {
         result["oneOf"] = undefined;
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["oneOf"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -9283,6 +9426,7 @@ export function validateExperimentalStringDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString1 = intermediateValue1[i1];
             if (typeof convertedString1 !== "string") {
               intermediateErrorMap1[`$.${i1}`] = {
@@ -9318,7 +9462,7 @@ export function validateExperimentalStringDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalUuidDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalUuidDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalUuidDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalUuidDefinition(value) {
@@ -9346,6 +9490,7 @@ export function validateExperimentalUuidDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -9370,6 +9515,7 @@ export function validateExperimentalUuidDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -9393,6 +9539,7 @@ export function validateExperimentalUuidDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -9418,6 +9565,7 @@ export function validateExperimentalUuidDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -9477,6 +9625,7 @@ export function validateExperimentalUuidDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -9740,7 +9889,7 @@ export function validateExperimentalUuidDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalGenerateOptionsInput|unknown} value
+ * @param {import("../common/types").ExperimentalGenerateOptionsInput|any} value
  * @returns {Either<import("../common/types").ExperimentalGenerateOptions, ValidatorErrorMap>}
  */
 export function validateExperimentalGenerateOptions(value) {
@@ -9771,6 +9920,7 @@ export function validateExperimentalGenerateOptions(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["targetLanguage"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.targetLanguage`] = {
@@ -9798,6 +9948,7 @@ export function validateExperimentalGenerateOptions(value) {
       ) {
         result["outputDirectory"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["outputDirectory"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.outputDirectory`] = {
@@ -9977,6 +10128,7 @@ export function validateExperimentalGenerateOptions(value) {
                       "version"
                     ] = undefined;
                   } else {
+                    /** @type {string} */
                     let convertedString0 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "version"
@@ -10020,6 +10172,7 @@ export function validateExperimentalGenerateOptions(value) {
                       "title"
                     ] = undefined;
                   } else {
+                    /** @type {string} */
                     let convertedString0 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "title"
@@ -10062,6 +10215,7 @@ export function validateExperimentalGenerateOptions(value) {
                       "description"
                     ] = undefined;
                   } else {
+                    /** @type {string} */
                     let convertedString0 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "description"
@@ -10119,6 +10273,7 @@ export function validateExperimentalGenerateOptions(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString3 = genericKeyInput0;
                     if (typeof convertedString3 !== "string") {
                       genericKeyErrorMap2[`$`] = {
@@ -10276,6 +10431,7 @@ export function validateExperimentalGenerateOptions(value) {
                           key: "validator.undefined",
                         };
                       } else {
+                        /** @type {string} */
                         let convertedString2 = intermediateValue2["library"];
                         if (typeof convertedString2 !== "string") {
                           intermediateErrorMap2[`$.library`] = {
@@ -10435,6 +10591,7 @@ export function validateExperimentalGenerateOptions(value) {
                           key: "validator.undefined",
                         };
                       } else {
+                        /** @type {string} */
                         let convertedString2 = intermediateValue2["dialect"];
                         if (typeof convertedString2 !== "string") {
                           intermediateErrorMap2[`$.dialect`] = {
@@ -10694,6 +10851,7 @@ export function validateExperimentalGenerateOptions(value) {
                           key: "validator.undefined",
                         };
                       } else {
+                        /** @type {string} */
                         let convertedString2 = intermediateValue2["library"];
                         if (typeof convertedString2 !== "string") {
                           intermediateErrorMap2[`$.library`] = {
@@ -10723,6 +10881,7 @@ export function validateExperimentalGenerateOptions(value) {
                           key: "validator.undefined",
                         };
                       } else {
+                        /** @type {string} */
                         let convertedString2 =
                           intermediateValue2["targetRuntime"];
                         if (typeof convertedString2 !== "string") {
@@ -10760,6 +10919,7 @@ export function validateExperimentalGenerateOptions(value) {
                       ) {
                         intermediateResult2["includeWrapper"] = undefined;
                       } else {
+                        /** @type {string} */
                         let convertedString2 =
                           intermediateValue2["includeWrapper"];
                         if (typeof convertedString2 !== "string") {
@@ -10999,7 +11159,7 @@ export function validateExperimentalGenerateOptions(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalNamePartOptionalInput|unknown} value
+ * @param {import("../common/types").ExperimentalNamePartOptionalInput|any} value
  * @returns {Either<import("../common/types").ExperimentalNamePartOptional, ValidatorErrorMap>}
  */
 export function validateExperimentalNamePartOptional(value) {
@@ -11011,6 +11171,7 @@ export function validateExperimentalNamePartOptional(value) {
   if (value === null || value === undefined) {
     result = undefined;
   } else {
+    /** @type {string} */
     let convertedString0 = value;
     if (typeof convertedString0 !== "string") {
       errorMap[`$`] = {
@@ -11044,7 +11205,7 @@ export function validateExperimentalNamePartOptional(value) {
 /**
  * This contains all types that can be added top level to the structure.
  *
- * @param {import("../common/types").ExperimentalNamedTypeDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalNamedTypeDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalNamedTypeDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalNamedTypeDefinition(value) {
@@ -11583,7 +11744,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalRouteDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalRouteDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalRouteDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalRouteDefinition(value) {
@@ -11611,6 +11772,7 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -11635,6 +11797,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["group"] === null || value["group"] === undefined) {
         result["group"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["group"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.group`] = {
@@ -11658,6 +11821,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
       } else {
+        /** @type {string} */
         let convertedString0 = value["name"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.name`] = {
@@ -11683,6 +11847,7 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["docString"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.docString`] = {
@@ -11742,6 +11907,7 @@ export function validateExperimentalRouteDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString2 = intermediateValue2;
             if (typeof convertedString2 !== "string") {
               intermediateErrorMap2[`$`] = {
@@ -11973,6 +12139,7 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["method"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.method`] = {
@@ -12030,6 +12197,7 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["path"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.path`] = {
@@ -12051,8 +12219,11 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["tags"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -12068,6 +12239,7 @@ export function validateExperimentalRouteDefinition(value) {
               key: "validator.undefined",
             };
           } else {
+            /** @type {string} */
             let convertedString1 = intermediateValue1[i1];
             if (typeof convertedString1 !== "string") {
               intermediateErrorMap1[`$.${i1}`] = {
@@ -12177,8 +12349,11 @@ export function validateExperimentalRouteDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {ValidatorErrorMap} */
         const intermediateErrorMap1 = {};
+        /** @type {any[]} */
         let intermediateResult1 = [];
+        /** @type {any|any[]} */
         let intermediateValue1 = value["invalidations"];
 
         if (!Array.isArray(intermediateValue1)) {
@@ -12264,6 +12439,7 @@ export function validateExperimentalRouteDefinition(value) {
           ) {
             result["metadata"]["requestBodyType"] = undefined;
           } else {
+            /** @type {string} */
             let convertedString0 = value["metadata"]["requestBodyType"];
             if (typeof convertedString0 !== "string") {
               errorMap[`$.metadata.requestBodyType`] = {
@@ -12303,7 +12479,7 @@ export function validateExperimentalRouteDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalRouteInvalidationDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalRouteInvalidationDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalRouteInvalidationDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalRouteInvalidationDefinition(value) {
@@ -12331,6 +12507,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
+        /** @type {string} */
         let convertedString0 = value["type"];
         if (typeof convertedString0 !== "string") {
           errorMap[`$.type`] = {
@@ -12518,6 +12695,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString3 = genericKeyInput0;
                     if (typeof convertedString3 !== "string") {
                       genericKeyErrorMap2[`$`] = {
@@ -12565,8 +12743,11 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                         key: "validator.undefined",
                       };
                     } else {
+                      /** @type {ValidatorErrorMap} */
                       const intermediateErrorMap4 = {};
+                      /** @type {any[]} */
                       let intermediateResult4 = [];
+                      /** @type {any|any[]} */
                       let intermediateValue4 =
                         value["properties"]["specification"]["params"][
                           genericKeyResult1
@@ -12587,6 +12768,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                             key: "validator.undefined",
                           };
                         } else {
+                          /** @type {string} */
                           let convertedString4 = intermediateValue4[i4];
                           if (typeof convertedString4 !== "string") {
                             intermediateErrorMap4[`$.${i4}`] = {
@@ -12647,6 +12829,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                       key: "validator.undefined",
                     };
                   } else {
+                    /** @type {string} */
                     let convertedString3 = genericKeyInput0;
                     if (typeof convertedString3 !== "string") {
                       genericKeyErrorMap2[`$`] = {
@@ -12695,8 +12878,11 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                         key: "validator.undefined",
                       };
                     } else {
+                      /** @type {ValidatorErrorMap} */
                       const intermediateErrorMap4 = {};
+                      /** @type {any[]} */
                       let intermediateResult4 = [];
+                      /** @type {any|any[]} */
                       let intermediateValue4 =
                         value["properties"]["specification"]["query"][
                           genericKeyResult1
@@ -12717,6 +12903,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                             key: "validator.undefined",
                           };
                         } else {
+                          /** @type {string} */
                           let convertedString4 = intermediateValue4[i4];
                           if (typeof convertedString4 !== "string") {
                             intermediateErrorMap4[`$.${i4}`] = {
@@ -12766,7 +12953,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalStructureInput|unknown} value
+ * @param {import("../common/types").ExperimentalStructureInput|any} value
  * @returns {Either<import("../common/types").ExperimentalStructure, ValidatorErrorMap>}
  */
 export function validateExperimentalStructure(value) {
@@ -12896,7 +13083,7 @@ export function validateExperimentalStructure(value) {
 /**
  * This contains all known type definitions.
  *
- * @param {import("../common/types").ExperimentalTypeDefinitionInput|unknown} value
+ * @param {import("../common/types").ExperimentalTypeDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalTypeDefinition, ValidatorErrorMap>}
  */
 export function validateExperimentalTypeDefinition(value) {
