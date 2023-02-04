@@ -17,10 +17,10 @@ import { JavascriptImportCollector } from "../target/javascript.js";
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsAxiosGenerateCommonFile(generateContext) {
+export function tsAxiosGenerateCommonFile(generateContext) {
   const file = fileContextCreateGeneric(
     generateContext,
-    "common/api-client.js",
+    "common/api-client.ts",
     {
       importCollector: new JavascriptImportCollector(),
     },
@@ -29,14 +29,12 @@ export function jsAxiosGenerateCommonFile(generateContext) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure("axios", "axios");
+    importCollector.raw(`import Axios from "axios"`);
+    importCollector.destructure("axios", "AxiosInstance");
 
     fileWrite(
       file,
-      `/**
- * @type {import("axios").AxiosInstance}
- */
-export const axiosInstance = axios.create();
+      `export const axiosInstance: AxiosInstance = Axios.create();
 `,
     );
 
@@ -48,10 +46,7 @@ export const axiosInstance = axios.create();
 
       fileWrite(
         file,
-        `/**
- * @type {import("@tanstack/react-query").QueryClient}
- */
-export const queryClient = new QueryClient();
+        `export const queryClient = new QueryClient();
 `,
       );
     }
@@ -63,16 +58,15 @@ export const queryClient = new QueryClient();
   ) {
     importCollector.destructure("@compas/stdlib", "AppError");
     importCollector.destructure("@compas/stdlib", "streamToBuffer");
+    importCollector.destructure("axios", "AxiosInstance");
 
     fileWrite(
       file,
       `/**
  * Adds an interceptor to the provided Axios instance, wrapping any error in an AppError.
  * This allows directly testing against an error key or property.
- *
- * @param {import("axios").AxiosInstance} axiosInstance
  */
-export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
+export function axiosInterceptErrorAndWrapWithAppError(axiosInstance: AxiosInstance) {
   axiosInstance.interceptors.response.use(undefined, async (error) => {
     // Validator error
     if (AppError.instanceOf(error)) {
@@ -125,10 +119,10 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function jsAxiosGetApiClientFile(generateContext, route) {
+export function tsAxiosGetApiClientFile(generateContext, route) {
   let file = fileContextGetOptional(
     generateContext,
-    `${route.group}/apiClient.js`,
+    `${route.group}/apiClient.ts`,
   );
 
   if (file) {
@@ -137,23 +131,19 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
 
   file = fileContextCreateGeneric(
     generateContext,
-    `${route.group}/apiClient.js`,
+    `${route.group}/apiClient.ts`,
     {
       importCollector: new JavascriptImportCollector(),
     },
   );
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
+  importCollector.destructure("axios", "AxiosRequestConfig");
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure(`../common/api-client.js`, "axiosInstance");
-
-    if (
-      generateContext.options.generators.apiClient.target.includeWrapper ===
-      "react-query"
-    ) {
-      importCollector.destructure(`../common/api-client.js`, "queryClient");
-    }
+    importCollector.destructure(`../common/api-client`, "axiosInstance");
+  } else {
+    importCollector.destructure("axios", "AxiosInstance");
   }
 
   if (
@@ -165,12 +155,8 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
     fileWrite(
       file,
       `\nexport class ResponseError extends Error {
-  constructor(group, name, error) {
+  constructor(public group: string, public name: string, public error: any) {
     super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
-
-    this.group = group;
-    this.name = name;
-    this.error = error;
     
     Object.setPrototypeOf(this, ResponseError.prototype);
   }
@@ -202,7 +188,7 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function jsAxiosGenerateFunction(
+export function tsAxiosGenerateFunction(
   generateContext,
   file,
   options,
@@ -224,37 +210,24 @@ export function jsAxiosGenerateFunction(
   fileWrite(file, `Tags: ${JSON.stringify(route.tags)}\n`);
 
   if (!options.target.globalClient) {
-    args.push("axiosInstance");
-    fileWrite(file, `@param {import("axios").AxiosInstance} axiosInstance`);
+    args.push("axiosInstance: AxiosInstance");
   }
 
   if (route.params) {
-    args.push("params");
-    fileWrite(file, `@param {${contextNames.paramsTypeName}} params`);
+    args.push(`params: ${contextNames.paramsTypeName}`);
   }
   if (route.query) {
-    args.push("query");
-    fileWrite(file, `@param {${contextNames.queryTypeName}} query`);
+    args.push(`query: ${contextNames.queryTypeName}`);
   }
   if (route.body) {
-    args.push("body");
-    fileWrite(file, `@param {${contextNames.bodyTypeName}} body`);
+    args.push(`body: ${contextNames.bodyTypeName}`);
   }
   if (route.files) {
-    args.push("files");
-    fileWrite(file, `@param {${contextNames.filesTypeName}} files`);
+    args.push(`files: ${contextNames.filesTypeName}`);
   }
 
   // Allow overwriting any request config
-  args.push("requestConfig");
-  fileWrite(
-    file,
-    `@param {import("axios").AxiosRequestConfig} [requestConfig]`,
-  );
-
-  if (route.response) {
-    fileWrite(file, `@returns {Promise<${contextNames.responseTypeName}>}`);
-  }
+  args.push(`requestConfig: AxiosRequestConfig`);
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);
@@ -263,7 +236,7 @@ export function jsAxiosGenerateFunction(
     file,
     `export async function api${upperCaseFirst(route.group)}${upperCaseFirst(
       route.name,
-    )}(${args.join(", ")})`,
+    )}(${args.join(", ")}): Promise<${contextNames.responseTypeName}>`,
   );
 
   if (route.files) {

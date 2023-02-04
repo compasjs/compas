@@ -1,4 +1,4 @@
-import { AppError, isNil, noop } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../../utils.js";
 import { structureRoutes } from "../processors/routes.js";
 import { structureResolveReference } from "../processors/structure.js";
@@ -13,17 +13,20 @@ import {
   validatorGetNameAndImport,
 } from "../validators/generator.js";
 import {
-  jsAxiosGenerateFunction,
   jsAxiosGenerateCommonFile,
+  jsAxiosGenerateFunction,
   jsAxiosGetApiClientFile,
 } from "./js-axios.js";
+import {
+  tsAxiosGenerateCommonFile,
+  tsAxiosGenerateFunction,
+  tsAxiosGetApiClientFile,
+} from "./ts-axios.js";
 
 /**
  * Run the API client generator.
  *
  * TODO: extend docs
- *
- * TODO: support ts-axios
  *
  * TODO: throw when js-axios is used with react-query wrapper
  *
@@ -39,7 +42,7 @@ export function apiClientGenerator(generateContext) {
   targetCustomSwitch(
     {
       jsAxios: jsAxiosGenerateCommonFile,
-      tsAxios: noop,
+      tsAxios: tsAxiosGenerateCommonFile,
     },
     target,
     [generateContext],
@@ -49,7 +52,7 @@ export function apiClientGenerator(generateContext) {
     const file = targetCustomSwitch(
       {
         jsAxios: jsAxiosGetApiClientFile,
-        tsAxios: noop,
+        tsAxios: tsAxiosGetApiClientFile,
       },
       target,
       [generateContext, route],
@@ -126,7 +129,7 @@ export function apiClientGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsAxios: jsAxiosGenerateFunction,
-        tsAxios: noop,
+        tsAxios: tsAxiosGenerateFunction,
       },
       target,
       [

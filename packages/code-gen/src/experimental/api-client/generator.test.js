@@ -15,11 +15,32 @@ test("code-gen/experimental/api-client/generator", (t) => {
             target: {
               targetRuntime: "node.js",
               library: "axios",
-              globalClient: true,
+              globalClient: false,
             },
           },
         },
         targetLanguage: "js",
+      });
+
+      t.pass();
+    });
+
+    t.test("test - ts", (t) => {
+      testExperimentalGenerateFiles(t, {
+        outputDirectory: "./.cache/experimental/api-client-ts",
+        generators: {
+          structure: {},
+
+          apiClient: {
+            target: {
+              targetRuntime: "browser",
+              library: "axios",
+              globalClient: true,
+              includeWrapper: "react-query",
+            },
+          },
+        },
+        targetLanguage: "ts",
       });
 
       t.pass();

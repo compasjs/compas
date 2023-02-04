@@ -51,6 +51,15 @@ export class JavascriptImportCollector {
     this.destructuredImports.get(path)?.add(symbol);
   }
 
+  /**
+   * Add a raw import. These are deduplicated, before writing.
+   *
+   * @param {string} importString
+   */
+  raw(importString) {
+    this.rawImports.add(importString);
+  }
+
   toString() {
     const result = [...this.rawImports];
 

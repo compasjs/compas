@@ -22,8 +22,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Generate event implementations
   - [x] Generate route implementations
 - [ ] Duplicate `default` example to code-gen experimental
-- [ ] Typescript validators
-- [ ] TS Axios API client
+- [x] Typescript validators
+- [x] TS Axios API client
   - [ ] Generate react-query wrapper
 - [x] OpenAPI generator
 - [ ] `T.file()` specific types and validations
