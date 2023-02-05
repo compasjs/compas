@@ -1,6 +1,6 @@
 {
   "name": "compas",
-  "version": "0.0.222",
+  "version": "0.0.223",
   "description": "Unified backend tooling",
   "exports": {
     "./cli": "./src/exports/cli.js",
@@ -22,11 +22,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/cli": "0.0.222",
-    "@compas/code-gen": "0.0.222",
-    "@compas/server": "0.0.222",
-    "@compas/stdlib": "0.0.222",
-    "@compas/store": "0.0.222"
+    "@compas/cli": "0.0.223",
+    "@compas/code-gen": "0.0.223",
+    "@compas/server": "0.0.223",
+    "@compas/stdlib": "0.0.223",
+    "@compas/store": "0.0.223"
   },
   "author": {
     "name": "Dirk de Visser",
