@@ -1,0 +1,5 @@
+{
+  "cli": {
+    "commandDirectories": ["./commands"]
+  }
+}

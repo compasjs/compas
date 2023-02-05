@@ -21,7 +21,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - [x] Generate route types
   - [x] Generate event implementations
   - [x] Generate route implementations
-- [ ] Duplicate `default` example to code-gen experimental
+- [x] Duplicate `default` example to code-gen experimental
 - [x] Typescript validators
 - [x] TS Axios API client
   - [x] Generate react-query wrapper
@@ -75,6 +75,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - All responses are automatically validated
   - Use `axiosInterceptErrorAndWrapWithAppError` on your API clients (also in
     testing) to automatically intercept errors and rethrow an AppError.
+- Router:
+  - Router entrypoint accepts bodyParsers
 
 #### Refs
 

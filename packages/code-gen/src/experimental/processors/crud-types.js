@@ -69,6 +69,11 @@ function crudTypesItem(generateContext, crud, options) {
     ...model.keys,
   };
 
+  if (options.type === "writable") {
+    const { primaryKeyName } = modelKeyGetPrimary(model);
+    delete itemType.keys[primaryKeyName];
+  }
+
   if (
     options.type === "writable" &&
     (model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes)
