@@ -14,9 +14,9 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     mermaid to visualise it.
 - [x] Supporting dumping Postgres DDL
 - [x] Duplicate `with-auth` example to code-gen experimental
-- [ ] CRUD generator
+- [x] CRUD generator
   - [x] Static checks
-  - [ ] Static checks on `fromParent.options.name`, normalize `.basePath`
+  - [x] Static checks on `fromParent.options.name`, normalize `.basePath`
   - [x] Generate readable & writable types
   - [x] Generate route types
   - [x] Generate event implementations
@@ -24,7 +24,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] Duplicate `default` example to code-gen experimental
 - [x] Typescript validators
 - [x] TS Axios API client
-  - [ ] Generate react-query wrapper
+  - [x] Generate react-query wrapper
 - [x] OpenAPI generator
 - [ ] `T.file()` specific types and validations
 - [ ] Update `T.any()` to be more inline with the new target system.

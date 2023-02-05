@@ -1,4 +1,4 @@
-import { AppError } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { errorsThrowCombinedError } from "../errors.js";
 import { stringFormatNameForError } from "../string-format.js";
 import {
@@ -79,6 +79,16 @@ function crudValidateType(generateContext, crud) {
   ) {
     // One to one routes don't support list routes. So silently disable them
     crud.routeOptions.listRoute = false;
+  }
+
+  if (
+    crud.fromParent &&
+    crudInformationGetRelation(crud).subType === "oneToMany" &&
+    isNil(crud.fromParent?.options?.name)
+  ) {
+    throw AppError.serverError({
+      message: `'T.crud().fromParent("field", { name: "singular" })' is mandatory when the inferred relation is 'oneToMany'. This singular name is used in the route parameter.`,
+    });
   }
 
   if (crud.basePath && !crud.basePath.startsWith("/")) {

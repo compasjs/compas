@@ -1,3 +1,6 @@
+import { lowerCaseFirst, upperCaseFirst } from "../../utils.js";
+import { modelKeyGetPrimary } from "./model-keys.js";
+
 /**
  * @typedef {object} CrudInformation
  * @property {import("../generated/common/types").ExperimentalObjectDefinition} model
@@ -7,9 +10,6 @@
  * @property {{ group: string, name: string }} readableType
  * @property {{ group: string, name: string }} writableType
  */
-
-import { lowerCaseFirst, upperCaseFirst } from "../../utils.js";
-import { modelKeyGetPrimary } from "./model-keys.js";
 
 /**
  * Cache various items around CRUD objects
