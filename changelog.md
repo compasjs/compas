@@ -4,6 +4,88 @@ editLink: false
 
 # Changelog
 
+### [v0.0.223](https://github.com/compasjs/compas/releases/tag/v0.0.223)
+
+#### Breaking changes
+
+- fix(code-gen): correct `undefined` checks for react-query `options.enabled`
+  [`9e863c`](https://github.com/compasjs/compas/commit/9e863c85e7bd605b9cc098e5ee7198fe7c832ff3)
+  - The generated `options.enabled` will now use `!== undefined && !== null`
+    instead of auto coercing to booleans. This means that `0` or an empty string
+    will not disable the generated hooks
+- feat(code-gen): don't apply the default names on route inputs that are
+  references already
+  [`bf5ae0`](https://github.com/compasjs/compas/commit/bf5ae00e76b8f35e3491edaf24879126f2ee0725)
+  - If a reference (`T.reference()` is passed to `R.query`, `R.body`, `R.files`
+    or `R.response`, no intermediate type is created.
+    - e.g. `R.get("/", "get").response(T.reference("foo", "bar"))` previously
+      always created a `AppGetResponse` type, after this change only `FooBar` is
+      created and used.
+  - `R.params()` only accepts a JS object or `T.object()`. This is necessary to
+    validate that all params defined in the route path have a type provided.
+
+#### Features
+
+- feat(code-gen/experimental): generate crud readable & writable types
+  [`a061da`](https://github.com/compasjs/compas/commit/a061daf4e368b88e54cbd1c9ee3936d947b3128a)
+- feat(code-gen/experimental): add a clarification message to router
+  notImplemented errors
+  [`c30692`](https://github.com/compasjs/compas/commit/c3069295fd8e195d500c97eb6bffcec605d4130f)
+- feat(code-gen/experimental): fix types in js-koa, better typescript types for
+  `T.generic()`
+  [`1d7687`](https://github.com/compasjs/compas/commit/1d7687a6bfaa201639ee398002e9ebcd5bdc3765)
+- feat(code-gen/experimental): generate crud list route definition
+  [`796d05`](https://github.com/compasjs/compas/commit/796d05ed39c387cba3e2b50a6a2013de3f88371a)
+- feat(code-gen/experimental): generate all other crud route definitions
+  [`0c89c5`](https://github.com/compasjs/compas/commit/0c89c5872c4d78cfd6c836138110ec5efd99710a)
+- feat(code-gen/experimental): generate crud event implementations
+  [`ab0839`](https://github.com/compasjs/compas/commit/ab0839992821903fea84a4fd7e1986eff63eccde)
+- feat(code-gen/experimental): generate crud controller implementations
+  [`e95fa1`](https://github.com/compasjs/compas/commit/e95fa177b69de6b6035b5b5cc0d7a795f713ab21)
+- feat(code-gen/experimental): add openapi generator support
+  [`763bcd`](https://github.com/compasjs/compas/commit/763bcde937881033ed5c727724f8a72f1ff78e32)
+- feat(code-gen/experimental): various type 'fixes' in JS validators
+  [`69ebff`](https://github.com/compasjs/compas/commit/69ebff2759852fbc7d52e685998cc4bd669aeb6e)
+- feat(code-gen/experimental): added Typescript target support to validators
+  [`981dd4`](https://github.com/compasjs/compas/commit/981dd4b70f199639af1e7e9ecfba3495ae4525d3)
+- feat(code-gen/experimental): added Typescript target support to the api client
+  [`d7df45`](https://github.com/compasjs/compas/commit/d7df45fe27375be34c3e5bb69ca7711ad1d2b897)
+- feat(code-gen/experimental): add react-query wrapper support
+  [`e74708`](https://github.com/compasjs/compas/commit/e74708f548d693c7c19b5a1966d75639a698f37b)
+- feat(code-gen/experimental): enforce crud 'options.name'
+  [`2d0b6a`](https://github.com/compasjs/compas/commit/2d0b6a26f4cd81ee9f6a97b345372c71f1374776)
+
+#### Other
+
+- chore(code-gen/experimental): update todo list
+  [`d02d83`](https://github.com/compasjs/compas/commit/d02d836bab78b145309527c42d66bb073c856077)
+- chore(docs): bump VitePress to v1 alpha
+  ([#2343](https://github.com/compasjs/compas/pull/2343))
+  [`a0721f`](https://github.com/compasjs/compas/commit/a0721fc0afc6c343a7e4f6ee3661537ef34e2e9c)
+- examples(default-experimental): init template
+  [`daf6f8`](https://github.com/compasjs/compas/commit/daf6f8c1b8f4848dc536dec84c6828d9f8958763)
+- chore: regenerate package-lock.json
+  [`da9e27`](https://github.com/compasjs/compas/commit/da9e2717f029263c3d22ff2f282d7f7a31963001)
+
+#### Dependency updates
+
+- build(deps): bump eslint from 8.32.0 to 8.33.0
+  ([#2328](https://github.com/compasjs/compas/pull/2328))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 39.6.8 to 39.7.5
+  ([#2329](https://github.com/compasjs/compas/pull/2329),
+  [#2337](https://github.com/compasjs/compas/pull/2337))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump crc from 4.3.1 to 4.3.2
+  ([#2334](https://github.com/compasjs/compas/pull/2334))
+  - [Release notes](https://github.com/alexgorbatchev/crc/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.254.0 to 3.264.0
+  ([#2342](https://github.com/compasjs/compas/pull/2342))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.254.0 to 3.264.0
+  ([#2341](https://github.com/compasjs/compas/pull/2341))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.0.222](https://github.com/compasjs/compas/releases/tag/v0.0.222)
 
 #### Features
