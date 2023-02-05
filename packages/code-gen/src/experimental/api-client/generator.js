@@ -13,6 +13,10 @@ import {
   validatorGetNameAndImport,
 } from "../validators/generator.js";
 import {
+  axiosReactQueryGenerateFunction,
+  axiosReactQueryGetApiClientFile,
+} from "./axios-react-query.js";
+import {
   jsAxiosGenerateCommonFile,
   jsAxiosGenerateFunction,
   jsAxiosGetApiClientFile,
@@ -38,6 +42,7 @@ export function apiClientGenerator(generateContext) {
   }
 
   const target = apiClientFormatTarget(generateContext);
+  const wrapperTarget = apiClientFormatWrapperTarget(generateContext);
 
   targetCustomSwitch(
     {
@@ -55,6 +60,14 @@ export function apiClientGenerator(generateContext) {
         tsAxios: tsAxiosGetApiClientFile,
       },
       target,
+      [generateContext, route],
+    );
+
+    const wrapperFile = targetCustomSwitch(
+      {
+        axiosReactQuery: axiosReactQueryGetApiClientFile,
+      },
+      wrapperTarget,
       [generateContext, route],
     );
 
@@ -113,6 +126,13 @@ export function apiClientGenerator(generateContext) {
         file,
         contextNames[`${name}Type`],
       );
+      if (wrapperFile) {
+        typesGeneratorUseTypeName(
+          generateContext,
+          wrapperFile,
+          contextNames[`${name}Type`],
+        );
+      }
 
       if (name === "response") {
         contextNames[`${name}Validator`] = validatorGetNameAndImport(
@@ -142,6 +162,23 @@ export function apiClientGenerator(generateContext) {
         contextNames,
       ],
     );
+    if (wrapperFile) {
+      targetCustomSwitch(
+        {
+          axiosReactQuery: axiosReactQueryGenerateFunction,
+        },
+        wrapperTarget,
+        [
+          generateContext,
+          wrapperFile,
+          generateContext.options.generators.apiClient,
+          route,
+
+          // @ts-expect-error
+          contextNames,
+        ],
+      );
+    }
   }
 }
 
@@ -171,6 +208,24 @@ export function apiClientFormatTarget(generateContext) {
     generateContext.options.targetLanguage +
     upperCaseFirst(generateContext.options.generators.apiClient.target.library)
   );
+}
+
+/**
+ * Format the api client wrapper target.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {"axiosReactQuery"|undefined}
+ */
+export function apiClientFormatWrapperTarget(generateContext) {
+  if (
+    generateContext.options.generators.apiClient?.target.library === "axios" &&
+    generateContext.options.generators.apiClient.target.includeWrapper ===
+      "react-query"
+  ) {
+    return "axiosReactQuery";
+  }
+
+  return undefined;
 }
 
 /**

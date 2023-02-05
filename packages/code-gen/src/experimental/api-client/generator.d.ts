@@ -3,8 +3,6 @@
  *
  * TODO: extend docs
  *
- * TODO: support ts-axios
- *
  * TODO: throw when js-axios is used with react-query wrapper
  *
  * @param {import("../generate").GenerateContext} generateContext
@@ -30,6 +28,15 @@ export function apiClientFormatTarget(
     import("../generate").GenerateContext["options"]["generators"]["apiClient"]
   >["target"]["library"]
 >}`;
+/**
+ * Format the api client wrapper target.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {"axiosReactQuery"|undefined}
+ */
+export function apiClientFormatWrapperTarget(
+  generateContext: import("../generate").GenerateContext,
+): "axiosReactQuery" | undefined;
 /**
  * Check if we should run the router generator.
  *

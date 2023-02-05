@@ -27,11 +27,15 @@ export function targetLanguageSwitch(generateContext, functions, args) {
  *
  * @param {Record<Targets, F|(() =>
  *   void)>} functions
- * @param {Targets} target
+ * @param {Targets|undefined} target
  * @param {[...Parameters<F>]} args
  * @returns {ReturnType<F>|undefined}
  */
 export function targetCustomSwitch(functions, target, args) {
+  if (!target) {
+    return;
+  }
+
   const fn = functions[target];
 
   if (!fn) {

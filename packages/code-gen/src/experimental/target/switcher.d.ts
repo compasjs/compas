@@ -22,7 +22,7 @@ export function targetLanguageSwitch<F extends (...args: any) => any>(
  *
  * @param {Record<Targets, F|(() =>
  *   void)>} functions
- * @param {Targets} target
+ * @param {Targets|undefined} target
  * @param {[...Parameters<F>]} args
  * @returns {ReturnType<F>|undefined}
  */
@@ -31,7 +31,7 @@ export function targetCustomSwitch<
   Targets extends string,
 >(
   functions: Record<Targets, F | (() => void)>,
-  target: Targets,
+  target: Targets | undefined,
   args: [...Parameters<F>],
 ): ReturnType<F> | undefined;
 //# sourceMappingURL=switcher.d.ts.map

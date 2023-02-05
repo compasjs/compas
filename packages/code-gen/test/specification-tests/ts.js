@@ -145,6 +145,14 @@ async function runGenerate(result, spec) {
         validators: {
           includeBaseTypes: true,
         },
+        apiClient: {
+          target: {
+            library: "axios",
+            globalClient: true,
+            targetRuntime: "browser",
+            includeWrapper: "react-query",
+          },
+        },
       },
     });
 

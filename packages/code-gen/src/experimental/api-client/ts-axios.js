@@ -18,9 +18,13 @@ import { JavascriptImportCollector } from "../target/javascript.js";
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function tsAxiosGenerateCommonFile(generateContext) {
+  const includeWrapper =
+    generateContext.options.generators.apiClient?.target.includeWrapper ===
+    "react-query";
+
   const file = fileContextCreateGeneric(
     generateContext,
-    "common/api-client.ts",
+    `common/api-client.ts${includeWrapper ? "x" : ""}`,
     {
       importCollector: new JavascriptImportCollector(),
     },
@@ -38,10 +42,7 @@ export function tsAxiosGenerateCommonFile(generateContext) {
 `,
     );
 
-    if (
-      generateContext.options.generators.apiClient?.target.includeWrapper ===
-      "react-query"
-    ) {
+    if (includeWrapper) {
       importCollector.destructure("@tanstack/react-query", "QueryClient");
 
       fileWrite(
@@ -109,6 +110,63 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance: AxiosInsta
 }
 `,
     );
+  } else {
+    fileWrite(
+      file,
+      `\nexport class ResponseError extends Error {
+  constructor(public group: string, public name: string, public error: any) {
+    super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
+    
+    Object.setPrototypeOf(this, ResponseError.prototype);
+  }
+  
+  toJSON() {
+    return {
+      name: "ResponseError",
+      route: {
+        group: this.group,
+        name: this.name,
+      },
+      error: this.error,
+    };
+  }
+}
+`,
+    );
+
+    if (
+      includeWrapper &&
+      !generateContext.options.generators.apiClient?.target.globalClient
+    ) {
+      importCollector.destructure("axios", "AxiosError");
+      importCollector.destructure("axios", "AxiosInstance");
+      importCollector.raw(`import React from "react";`);
+      importCollector.destructure("react", "createContext");
+      importCollector.destructure("react", "PropsWithChildren");
+      importCollector.destructure("react", "useContext");
+      fileWrite(
+        file,
+        `const ApiContext = createContext<AxiosInstance | undefined>(undefined);
+
+export function ApiProvider({
+  instance, children,
+}: PropsWithChildren<{
+  instance: AxiosInstance;
+}>) {
+  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
+}
+
+export const useApi = () => {
+  const context = useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};`,
+      );
+    }
   }
 }
 
@@ -152,28 +210,7 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
   ) {
     importCollector.destructure("@compas/stdlib", "AppError");
   } else {
-    fileWrite(
-      file,
-      `\nexport class ResponseError extends Error {
-  constructor(public group: string, public name: string, public error: any) {
-    super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
-    
-    Object.setPrototypeOf(this, ResponseError.prototype);
-  }
-  
-  toJSON() {
-    return {
-      name: "ResponseError",
-      route: {
-        group: this.group,
-        name: this.name,
-      },
-      error: this.error,
-    };
-  }
-}
-`,
-    );
+    importCollector.destructure("../common/api-client", "ResponseError");
   }
 
   return file;
@@ -227,7 +264,7 @@ export function tsAxiosGenerateFunction(
   }
 
   // Allow overwriting any request config
-  args.push(`requestConfig: AxiosRequestConfig`);
+  args.push(`requestConfig?: AxiosRequestConfig`);
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);

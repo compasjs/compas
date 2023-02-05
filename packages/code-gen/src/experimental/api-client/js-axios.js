@@ -115,6 +115,33 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
 }
 `,
     );
+  } else {
+    fileWrite(
+      file,
+      `\nexport class ResponseError extends Error {
+  constructor(group, name, error) {
+    super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
+
+    this.group = group;
+    this.name = name;
+    this.error = error;
+    
+    Object.setPrototypeOf(this, ResponseError.prototype);
+  }
+  
+  toJSON() {
+    return {
+      name: "ResponseError",
+      route: {
+        group: this.group,
+        name: this.name,
+      },
+      error: this.error,
+    };
+  }
+}
+`,
+    );
   }
 }
 
@@ -162,32 +189,7 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
   ) {
     importCollector.destructure("@compas/stdlib", "AppError");
   } else {
-    fileWrite(
-      file,
-      `\nexport class ResponseError extends Error {
-  constructor(group, name, error) {
-    super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
-
-    this.group = group;
-    this.name = name;
-    this.error = error;
-    
-    Object.setPrototypeOf(this, ResponseError.prototype);
-  }
-  
-  toJSON() {
-    return {
-      name: "ResponseError",
-      route: {
-        group: this.group,
-        name: this.name,
-      },
-      error: this.error,
-    };
-  }
-}
-`,
-    );
+    importCollector.destructure("../common/api-client.js", "ResponseError");
   }
 
   return file;

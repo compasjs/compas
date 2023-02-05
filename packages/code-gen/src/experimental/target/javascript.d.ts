@@ -28,6 +28,12 @@ export class JavascriptImportCollector {
    * @param {string} symbol
    */
   destructure(path: string, symbol: string): void;
+  /**
+   * Add a raw import. These are deduplicated, before writing.
+   *
+   * @param {string} importString
+   */
+  raw(importString: string): void;
   toString(): string;
 }
 //# sourceMappingURL=javascript.d.ts.map
