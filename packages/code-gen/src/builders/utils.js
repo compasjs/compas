@@ -60,7 +60,8 @@ export function buildOrInfer(value) {
     );
   } else if (Array.isArray(value) && value.length !== 1) {
     throw new Error(
-      `Inferred arrays can only have a single element. Found '${value}' which has ${value.length} elements.`,
+      `Inferred arrays can only have a single element. Found '${value}' which has ${value.length} elements.
+      If you want to use more types in an array you could use \`T.anyOf()\` or consider using an object.`,
     );
   }
 
