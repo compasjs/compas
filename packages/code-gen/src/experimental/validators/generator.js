@@ -92,8 +92,8 @@ export function validatorGeneratorGenerateBaseTypes(generateContext) {
 
     validatorGeneratorGenerateValidator(generateContext, type, {
       validatorState: "output",
-      typeOverrides: {},
       nameSuffix: "",
+      targets: [generateContext.options.targetLanguage],
     });
   }
 }
@@ -160,8 +160,12 @@ export function validatorGeneratorGenerateValidator(
   typesGeneratorGenerateNamedType(generateContext, type, outputTypeOptions);
   typesGeneratorGenerateNamedType(generateContext, type, inputTypeOptions);
 
-  const outputTypeName = typesCacheGet(type, outputTypeOptions);
-  const inputTypeName = typesCacheGet(type, inputTypeOptions);
+  const outputTypeName = typesCacheGet(
+    generateContext,
+    type,
+    outputTypeOptions,
+  );
+  const inputTypeName = typesCacheGet(generateContext, type, inputTypeOptions);
 
   if (!outputTypeName || !inputTypeName) {
     throw AppError.serverError({
@@ -281,7 +285,6 @@ export function validatorGeneratorGenerateBody(
       validatorState,
       {
         isOptional: typesGeneratorIsOptional(generateContext, type, {
-          ...validatorState.outputTypeOptions,
           validatorState: "input",
         }),
         defaultValue: referenceUtilsGetProperty(generateContext, type, [
@@ -296,10 +299,6 @@ export function validatorGeneratorGenerateBody(
       },
     ],
   );
-
-  if (validatorState.outputTypeOptions.typeOverrides[type.type]) {
-    // TODO: language switch custom type override validator.
-  }
 
   switch (type.type) {
     case "any":
@@ -619,7 +618,7 @@ function validatorGeneratorReference(
     // @ts-ignore-error
     //
     // Ref is always a system type here
-    [file, type, validatorState],
+    [generateContext, file, type, validatorState],
   );
 }
 

@@ -191,6 +191,93 @@
           },
           "relations": []
         },
+        "targets": {
+          "docString": "Support different 'any' behaviours for different targets. All targets are optional and will be tried from most specific to least specific.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "keys": {
+            "type": "reference",
+            "docString": "",
+            "isOptional": false,
+            "sql": {},
+            "validator": {},
+            "reference": {
+              "group": "experimental",
+              "name": "anyDefinitionTarget"
+            }
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "keys": {
+              "validatorInputType": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "convert": false,
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "validatorOutputType": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "convert": false,
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "validatorExpression": {
+                "docString": "Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated",
+                "isOptional": true,
+                "validator": {
+                  "convert": false,
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "validatorImport": {
+                "docString": "A raw import that is added to the files where the provided validator expression is used.",
+                "isOptional": true,
+                "validator": {
+                  "convert": false,
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            },
+            "relations": []
+          }
+        },
         "rawValue": {
           "docString": "",
           "isOptional": true,
@@ -303,6 +390,33 @@
         }
       },
       "relations": []
+    },
+    "anyDefinitionTarget": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {
+        "convert": false,
+        "allowNull": false,
+        "trim": false,
+        "lowerCase": false,
+        "upperCase": false,
+        "min": 1
+      },
+      "sql": {},
+      "type": "string",
+      "group": "experimental",
+      "name": "anyDefinitionTarget",
+      "oneOf": [
+        "js",
+        "ts",
+        "jsKoa",
+        "jsPostgres",
+        "jsAxios",
+        "tsAxios",
+        "jsAxiosNode",
+        "tsAxiosBrowser",
+        "tsAxiosReactNative"
+      ]
     },
     "anyOfDefinition": {
       "docString": "",

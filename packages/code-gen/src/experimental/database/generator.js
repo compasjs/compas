@@ -98,6 +98,8 @@ export function databaseGenerator(generateContext) {
   }
 
   const target = databaseFormatTarget(generateContext);
+  /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
+  const typeTargets = ["js", "jsPostgres"];
 
   targetCustomSwitch(
     {
@@ -170,18 +172,18 @@ export function databaseGenerator(generateContext) {
       validatorGeneratorGenerateValidator(generateContext, allModelTypes[key], {
         validatorState: "output",
         nameSuffix: "",
-        typeOverrides: {},
+        targets: typeTargets,
       });
 
-      const inputType = typesCacheGet(allModelTypes[key], {
+      const inputType = typesCacheGet(generateContext, allModelTypes[key], {
         validatorState: "input",
-        typeOverrides: {},
         nameSuffix: "Input",
+        targets: typeTargets,
       });
-      const outputType = typesCacheGet(allModelTypes[key], {
+      const outputType = typesCacheGet(generateContext, allModelTypes[key], {
         validatorState: "output",
         nameSuffix: "",
-        typeOverrides: {},
+        targets: typeTargets,
       });
 
       if (!outputType || !inputType) {

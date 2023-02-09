@@ -381,8 +381,6 @@ function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
     for (const [subKey, field] of Object.entries(type.keys)) {
       const isOptional = typesGeneratorIsOptional(generateContext, field, {
         validatorState: "input",
-        nameSuffix: "",
-        typeOverrides: {},
       });
 
       if (!isOptional) {

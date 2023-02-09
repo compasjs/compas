@@ -18,6 +18,8 @@ export class AnyType extends TypeBuilder {
   /**
    * Add raw type string instead of any.
    *
+   * TODO(depr): add jsdoc tag
+   *
    * @param {string} value
    * @param {{ javaScript?: string, typeScript?: string }} [importValue={}]
    * @returns {AnyType}
@@ -35,6 +37,8 @@ export class AnyType extends TypeBuilder {
    * Add raw validator instead of only undefined check.
    * This is validator is called with a value and should return a boolean.
    *
+   * TODO(depr): add jsdoc tag
+   *
    * @param {string} value
    * @param {{ javaScript?: string, typeScript?: string }} [importValue={}]
    * @returns {AnyType}
@@ -47,6 +51,19 @@ export class AnyType extends TypeBuilder {
           typeScript?: string | undefined;
         }
       | undefined,
+  ): AnyType;
+  /**
+   * Add specific implementations for each supported target. Not all targets are required. The targets are resolved based on the most specific target first (e.g. 'jsAxios' before 'js').
+   *
+   * Note that these implementations are only used in @compas/code-gen/experimental.
+   *
+   * TODO: update above comment
+   *
+   * @param {import("../experimental/generated/common/types.js").ExperimentalAnyDefinition["targets"]} targets
+   * @returns {AnyType}
+   */
+  implementations(
+    targets: import("../experimental/generated/common/types.js").ExperimentalAnyDefinition["targets"],
   ): AnyType;
 }
 import { TypeBuilder } from "./TypeBuilder.js";

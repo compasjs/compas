@@ -175,12 +175,13 @@ export function validatorJavascriptObject(
   validatorState: import("./generator").ValidatorState,
 ): void;
 /**
- *
+ * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
  * @param {import("../generated/common/types").ExperimentalReferenceDefinition} type
  * @param {import("./generator").ValidatorState} validatorState
  */
 export function validatorJavascriptReference(
+  generateContext: import("../generate").GenerateContext,
   file: import("../file/context").GenerateFile,
   type: import("../generated/common/types").ExperimentalReferenceDefinition,
   validatorState: import("./generator").ValidatorState,

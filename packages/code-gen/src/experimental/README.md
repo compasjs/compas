@@ -26,8 +26,29 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] TS Axios API client
   - [x] Generate react-query wrapper
 - [x] OpenAPI generator
+- [x] Update `T.any()` to be more inline with the new target system.
+  - `T.any().targets()`
+  - `rawValue`, `rawValueImport`, `rawValidator`, `rawValidatorImport`,
+    `rawValueDocs`
+  - `{ js: {}, ts: {}, jsAxios: {}, tsAxios: {}, jsKoa: {} }`
+  - Defaults to `any` in any supported language
+  - Warn in the output when a case is missing?
 - [ ] `T.file()` specific types and validations
-- [ ] Update `T.any()` to be more inline with the new target system.
+  - Should this hook in to the `T.any()` system?
+  - Supported variants
+    - `{ name?: string, data: Blob }` - Browser -> api client input
+    - `(string|{ name?: string, type?: string, uri: string }` - RN -> api client
+      input
+    - `Blob` - Browser | RN -> api client output
+    - `FormidableFile` - router input
+    - `{ name?: string, data: ReadableStream|Buffer }` -> node.js api client
+      input
+    - `ReadableStream` -> node.js api client input
+    - `unknown` -> any other scenario
+  - Use constants for all places where `GenerateTypeOptions` are used
+  - Generate specific validators for `Blob`, `ReadableStream` and
+    `FormidableFile`. The other variants are unvalidated inputs (/ validated
+    when they hit the api).
 - [ ] Update `T.string().pattern()` with `patternExplanation`
 - [ ] Support overrides for specific properties currently residing in
       `internalSettings`

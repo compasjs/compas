@@ -145,6 +145,46 @@ export const codeGenSpecification = {
               },
               input: JSON.stringify(null),
             },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "anyStringLength",
+              },
+              input: JSON.stringify("foo"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.any",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "anyStringLength",
+              },
+              input: JSON.stringify("foobar"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "anyWithImport",
+              },
+              input: JSON.stringify([]),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.any",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "anyWithImport",
+              },
+              input: JSON.stringify({}),
+            },
           ],
         },
         {

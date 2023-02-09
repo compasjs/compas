@@ -17,11 +17,9 @@ import {
 /**
  * @typedef {object} GenerateTypeOptions
  * @property {"input"|"output"} validatorState
- * @property {Partial<Record<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition["type"],
- *   string
- * >>} typeOverrides
  * @property {string} nameSuffix
+ * @property {(import("../generated/common/types.js").ExperimentalAnyDefinitionTarget
+ *  )[]} targets
  */
 
 /**
@@ -138,8 +136,8 @@ function typesGeneratorGenerateBaseTypes(generateContext) {
 
     typesGeneratorGenerateNamedType(generateContext, type, {
       validatorState: "output",
-      typeOverrides: {},
       nameSuffix: "",
+      targets: [generateContext.options.targetLanguage],
     });
   }
 }
@@ -161,7 +159,7 @@ export function typesGeneratorGenerateNamedType(
   type,
   options,
 ) {
-  if (typesCacheGet(type, options)) {
+  if (typesCacheGet(generateContext, type, options)) {
     return;
   }
 
@@ -203,7 +201,7 @@ export function typesGeneratorUseTypeName(generateContext, file, name) {
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
- * @param {import("./generator").GenerateTypeOptions} options
+ * @param {Pick<import("./generator").GenerateTypeOptions, "validatorState">} options
  * @returns {boolean}
  */
 export function typesGeneratorIsOptional(generateContext, type, options) {

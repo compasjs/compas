@@ -44,6 +44,20 @@ export function apiClientGenerator(generateContext) {
   const target = apiClientFormatTarget(generateContext);
   const wrapperTarget = apiClientFormatWrapperTarget(generateContext);
 
+  /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
+  const typeTargets = [generateContext.options.targetLanguage, target];
+  if (
+    generateContext.options.generators.apiClient?.target.targetRuntime ===
+    "browser"
+  ) {
+    typeTargets.push("tsAxiosBrowser");
+  } else if (
+    generateContext.options.generators.apiClient?.target.targetRuntime ===
+    "react-native"
+  ) {
+    typeTargets.push("tsAxiosReactNative");
+  }
+
   targetCustomSwitch(
     {
       jsAxios: jsAxiosGenerateCommonFile,
@@ -103,22 +117,22 @@ export function apiClientGenerator(generateContext) {
         validatorGeneratorGenerateValidator(generateContext, typeRef, {
           validatorState: "output",
           nameSuffix: "",
-          typeOverrides: {},
+          targets: typeTargets,
         });
       } else {
         // @ts-expect-error
         typesGeneratorGenerateNamedType(generateContext, typeRef, {
           validatorState: "input",
           nameSuffix: "",
-          typeOverrides: {},
+          targets: typeTargets,
         });
       }
 
       // @ts-expect-error
-      contextNames[`${name}Type`] = typesCacheGet(typeRef, {
+      contextNames[`${name}Type`] = typesCacheGet(generateContext, typeRef, {
         validatorState: name === "response" ? "output" : "input",
         nameSuffix: "",
-        typeOverrides: {},
+        targets: typeTargets,
       });
 
       contextNames[`${name}TypeName`] = typesGeneratorUseTypeName(

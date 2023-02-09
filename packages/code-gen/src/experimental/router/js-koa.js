@@ -90,6 +90,7 @@ export function jsKoaPrepareContext(
     ? `  validatedBody: ${contextNames.bodyTypeName},\n`
     : "";
 
+  // TODO(any): better handling
   const ctxType = new AnyType(route.group, `${route.name}Ctx`)
     .raw(
       `import("koa").ExtendableContext & {
@@ -104,14 +105,14 @@ export function jsKoaPrepareContext(
   typesGeneratorGenerateNamedType(generateContext, ctxType, {
     validatorState: "output",
     nameSuffix: "",
-    typeOverrides: {},
+    targets: ["js"],
   });
 
   // @ts-expect-error
-  contextNames[`ctxTypeName`] = typesCacheGet(ctxType, {
+  contextNames[`ctxTypeName`] = typesCacheGet(generateContext, ctxType, {
     validatorState: "output",
     nameSuffix: "",
-    typeOverrides: {},
+    targets: ["js"],
   });
 
   contextNames[`ctxType`] = typesGeneratorUseTypeName(
@@ -134,14 +135,14 @@ export function jsKoaPrepareContext(
   typesGeneratorGenerateNamedType(generateContext, fnType, {
     validatorState: "output",
     nameSuffix: "",
-    typeOverrides: {},
+    targets: ["js"],
   });
 
   // @ts-expect-error
-  contextNames[`fnTypeName`] = typesCacheGet(fnType, {
+  contextNames[`fnTypeName`] = typesCacheGet(generateContext, fnType, {
     validatorState: "output",
     nameSuffix: "",
-    typeOverrides: {},
+    targets: ["js"],
   });
 
   contextNames[`fnType`] = typesGeneratorUseTypeName(

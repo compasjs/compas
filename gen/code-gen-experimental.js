@@ -277,13 +277,44 @@ export function extendWithCodeGenExperimental(generator) {
       .keys({
         type: "any",
         ...namedTypeDefinitionBase,
+        targets: T.generic()
+          .keys(
+            T.string("anyDefinitionTarget").oneOf(
+              "js",
+              "ts",
+              "jsKoa",
+              "jsPostgres",
+              "jsAxios",
+              "tsAxios",
+              "jsAxiosNode",
+              "tsAxiosBrowser",
+              "tsAxiosReactNative",
+            ),
+          )
+          .values({
+            validatorInputType: T.string(),
+            validatorOutputType: T.string(),
+            validatorExpression: T.string()
+              .optional()
+              .docs(
+                `Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated`,
+              ),
+            validatorImport: T.string()
+              .optional()
+              .docs(
+                "A raw import that is added to the files where the provided validator expression is used.",
+              ),
+          })
+          .docs(
+            "Support different 'any' behaviours for different targets. All targets are optional and will be tried from most specific to least specific.",
+          )
+          .optional(),
         validator: T.object()
           .keys({
             allowNull: T.bool(),
           })
           .loose(),
 
-        // TODO: align with new targetLanguage & runtime setup.
         rawValue: T.string().optional(),
         rawValueImport: T.object()
           .keys({

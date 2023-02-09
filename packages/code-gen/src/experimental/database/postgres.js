@@ -120,8 +120,6 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
     ]);
     const isOptional = typesGeneratorIsOptional(generateContext, field, {
       validatorState: "output",
-      nameSuffix: "",
-      typeOverrides: {},
     });
 
     fileWriteInline(file, `"${key}"`);

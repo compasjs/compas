@@ -1,11 +1,9 @@
 /**
  * @typedef {object} GenerateTypeOptions
  * @property {"input"|"output"} validatorState
- * @property {Partial<Record<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition["type"],
- *   string
- * >>} typeOverrides
  * @property {string} nameSuffix
+ * @property {(import("../generated/common/types.js").ExperimentalAnyDefinitionTarget
+ *  )[]} targets
  */
 /**
  * Init the types generator. It doesn't necessary need to be enabled, cause other
@@ -70,22 +68,17 @@ export function typesGeneratorUseTypeName(
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
- * @param {import("./generator").GenerateTypeOptions} options
+ * @param {Pick<import("./generator").GenerateTypeOptions, "validatorState">} options
  * @returns {boolean}
  */
 export function typesGeneratorIsOptional(
   generateContext: import("../generate").GenerateContext,
   type: import("../generated/common/types").ExperimentalTypeSystemDefinition,
-  options: import("./generator").GenerateTypeOptions,
+  options: Pick<import("./generator").GenerateTypeOptions, "validatorState">,
 ): boolean;
 export type GenerateTypeOptions = {
   validatorState: "input" | "output";
-  typeOverrides: Partial<
-    Record<
-      import("../generated/common/types").ExperimentalTypeSystemDefinition["type"],
-      string
-    >
-  >;
   nameSuffix: string;
+  targets: import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[];
 };
 //# sourceMappingURL=generator.d.ts.map

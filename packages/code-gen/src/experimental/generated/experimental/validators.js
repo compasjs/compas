@@ -428,6 +428,240 @@ export function validateExperimentalAnyDefinition(value) {
           }
         }
       }
+      if (value["targets"] === null || value["targets"] === undefined) {
+        result["targets"] = undefined;
+      } else {
+        result["targets"] = {};
+        for (let genericKeyInput0 of Object.keys(value["targets"])) {
+          /** @type {any} */
+          let genericKeyResult1 = undefined;
+          /** @type {ValidatorErrorMap} */
+          const genericKeyErrorMap2 = {};
+          if (genericKeyInput0 === null || genericKeyInput0 === undefined) {
+            genericKeyErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            const refResult3 =
+              validateExperimentalAnyDefinitionTarget(genericKeyInput0);
+
+            if (refResult3.error) {
+              for (const errorKey of Object.keys(refResult3.error)) {
+                genericKeyErrorMap2[`$${errorKey.substring(1)}`] =
+                  refResult3.error[errorKey];
+              }
+            }
+            genericKeyResult1 = refResult3.value;
+          }
+          if (Object.keys(genericKeyErrorMap2).length !== 0) {
+            if (errorMap[`$.targets`]) {
+              errorMap[`$.targets`].inputs.push({
+                key: genericKeyInput0,
+                errors: genericKeyErrorMap2,
+              });
+            } else {
+              errorMap[`$.targets`] = {
+                key: "validator.generic",
+                inputs: [
+                  { key: genericKeyInput0, errors: genericKeyErrorMap2 },
+                ],
+              };
+            }
+          } else {
+            if (
+              value["targets"][genericKeyResult1] === null ||
+              value["targets"][genericKeyResult1] === undefined
+            ) {
+              errorMap[`$.targets.${genericKeyResult1}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              if (
+                typeof value["targets"][genericKeyResult1] !== "object" ||
+                Array.isArray(value["targets"][genericKeyResult1])
+              ) {
+                errorMap[`$.targets.${genericKeyResult1}`] = {
+                  key: "validator.object",
+                  value: value["targets"][genericKeyResult1],
+                  foundType: typeof value["targets"][genericKeyResult1],
+                };
+              } else {
+                /** @type {Set<string>} */
+                const knownKeys3 = new Set([
+                  "validatorInputType",
+                  "validatorOutputType",
+                  "validatorExpression",
+                  "validatorImport",
+                ]);
+                for (const key of Object.keys(
+                  value["targets"][genericKeyResult1],
+                )) {
+                  if (!knownKeys3.has(key)) {
+                    errorMap[`$.targets.${genericKeyResult1}`] = {
+                      key: "validator.keys",
+                      expectedKeys: [...knownKeys3],
+                      foundKeys: Object.keys(
+                        value["targets"][genericKeyResult1],
+                      ),
+                    };
+                    break;
+                  }
+                }
+                result["targets"][genericKeyResult1] = Object.create(null);
+
+                if (
+                  value["targets"][genericKeyResult1]["validatorInputType"] ===
+                    null ||
+                  value["targets"][genericKeyResult1]["validatorInputType"] ===
+                    undefined
+                ) {
+                  errorMap[
+                    `$.targets.${genericKeyResult1}.validatorInputType`
+                  ] = {
+                    key: "validator.undefined",
+                  };
+                } else {
+                  /** @type {string} */
+                  let convertedString3 =
+                    value["targets"][genericKeyResult1]["validatorInputType"];
+                  if (typeof convertedString3 !== "string") {
+                    errorMap[
+                      `$.targets.${genericKeyResult1}.validatorInputType`
+                    ] = {
+                      key: "validator.string",
+                    };
+                  } else {
+                    if (convertedString3.length < 1) {
+                      errorMap[
+                        `$.targets.${genericKeyResult1}.validatorInputType`
+                      ] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      result["targets"][genericKeyResult1][
+                        "validatorInputType"
+                      ] = convertedString3;
+                    }
+                  }
+                }
+                if (
+                  value["targets"][genericKeyResult1]["validatorOutputType"] ===
+                    null ||
+                  value["targets"][genericKeyResult1]["validatorOutputType"] ===
+                    undefined
+                ) {
+                  errorMap[
+                    `$.targets.${genericKeyResult1}.validatorOutputType`
+                  ] = {
+                    key: "validator.undefined",
+                  };
+                } else {
+                  /** @type {string} */
+                  let convertedString3 =
+                    value["targets"][genericKeyResult1]["validatorOutputType"];
+                  if (typeof convertedString3 !== "string") {
+                    errorMap[
+                      `$.targets.${genericKeyResult1}.validatorOutputType`
+                    ] = {
+                      key: "validator.string",
+                    };
+                  } else {
+                    if (convertedString3.length < 1) {
+                      errorMap[
+                        `$.targets.${genericKeyResult1}.validatorOutputType`
+                      ] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      result["targets"][genericKeyResult1][
+                        "validatorOutputType"
+                      ] = convertedString3;
+                    }
+                  }
+                }
+                if (
+                  value["targets"][genericKeyResult1]["validatorExpression"] ===
+                    null ||
+                  value["targets"][genericKeyResult1]["validatorExpression"] ===
+                    undefined
+                ) {
+                  result["targets"][genericKeyResult1]["validatorExpression"] =
+                    undefined;
+                } else {
+                  /** @type {string} */
+                  let convertedString3 =
+                    value["targets"][genericKeyResult1]["validatorExpression"];
+                  if (typeof convertedString3 !== "string") {
+                    errorMap[
+                      `$.targets.${genericKeyResult1}.validatorExpression`
+                    ] = {
+                      key: "validator.string",
+                    };
+                  } else {
+                    if (convertedString3.length === 0) {
+                      result["targets"][genericKeyResult1][
+                        "validatorExpression"
+                      ] = undefined;
+                    } else {
+                      if (convertedString3.length < 1) {
+                        errorMap[
+                          `$.targets.${genericKeyResult1}.validatorExpression`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["targets"][genericKeyResult1][
+                          "validatorExpression"
+                        ] = convertedString3;
+                      }
+                    }
+                  }
+                }
+                if (
+                  value["targets"][genericKeyResult1]["validatorImport"] ===
+                    null ||
+                  value["targets"][genericKeyResult1]["validatorImport"] ===
+                    undefined
+                ) {
+                  result["targets"][genericKeyResult1]["validatorImport"] =
+                    undefined;
+                } else {
+                  /** @type {string} */
+                  let convertedString3 =
+                    value["targets"][genericKeyResult1]["validatorImport"];
+                  if (typeof convertedString3 !== "string") {
+                    errorMap[`$.targets.${genericKeyResult1}.validatorImport`] =
+                      {
+                        key: "validator.string",
+                      };
+                  } else {
+                    if (convertedString3.length === 0) {
+                      result["targets"][genericKeyResult1]["validatorImport"] =
+                        undefined;
+                    } else {
+                      if (convertedString3.length < 1) {
+                        errorMap[
+                          `$.targets.${genericKeyResult1}.validatorImport`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["targets"][genericKeyResult1][
+                          "validatorImport"
+                        ] = convertedString3;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       if (value["rawValue"] === null || value["rawValue"] === undefined) {
         result["rawValue"] = undefined;
       } else {
@@ -630,6 +864,69 @@ export function validateExperimentalAnyDefinition(value) {
             }
           }
         }
+      }
+    }
+  }
+  if (Object.keys(errorMap).length > 0) {
+    return { error: errorMap };
+  }
+  return { value: result };
+}
+
+/**
+ * @param {import("../common/types").ExperimentalAnyDefinitionTargetInput|any} value
+ * @returns {Either<import("../common/types").ExperimentalAnyDefinitionTarget, ValidatorErrorMap>}
+ */
+export function validateExperimentalAnyDefinitionTarget(value) {
+  /** @type {ValidatorErrorMap} */
+  const errorMap = {};
+  /** @type {any} */
+  let result = undefined;
+
+  if (value === null || value === undefined) {
+    errorMap[`$`] = {
+      key: "validator.undefined",
+    };
+  } else {
+    /** @type {string} */
+    let convertedString0 = value;
+    if (typeof convertedString0 !== "string") {
+      errorMap[`$`] = {
+        key: "validator.string",
+      };
+    } else {
+      if (convertedString0.length < 1) {
+        errorMap[`$`] = {
+          key: "validator.length",
+          minLength: 1,
+        };
+      } else if (
+        convertedString0 !== "js" &&
+        convertedString0 !== "ts" &&
+        convertedString0 !== "jsKoa" &&
+        convertedString0 !== "jsPostgres" &&
+        convertedString0 !== "jsAxios" &&
+        convertedString0 !== "tsAxios" &&
+        convertedString0 !== "jsAxiosNode" &&
+        convertedString0 !== "tsAxiosBrowser" &&
+        convertedString0 !== "tsAxiosReactNative"
+      ) {
+        errorMap[`$`] = {
+          key: "validator.oneOf",
+          allowedValues: [
+            "js",
+            "ts",
+            "jsKoa",
+            "jsPostgres",
+            "jsAxios",
+            "tsAxios",
+            "jsAxiosNode",
+            "tsAxiosBrowser",
+            "tsAxiosReactNative",
+          ],
+        };
+      } else {
+        result = convertedString0;
       }
     }
   }

@@ -106,13 +106,13 @@ export function typesTypescriptGenerateNamedType(
   type,
   options,
 ) {
-  if (typesCacheGet(type, options)) {
+  if (typesCacheGet(generateContext, type, options)) {
     // We already have this type, so we can skip it.
     return;
   }
 
   const file = typesTypescriptResolveFile(generateContext);
-  const name = typesTypescriptFormatTypeName(type, options);
+  const name = typesTypescriptFormatTypeName(generateContext, type, options);
 
   // Make sure that nested references exists before we generate this type.
   // TODO: check if we should move this logic up in to the generator
@@ -186,7 +186,9 @@ export function typesTypescriptFormatType(
   type,
   options,
 ) {
-  const isOptional = typesGeneratorIsOptional(generateContext, type, options);
+  const isOptional = typesGeneratorIsOptional(generateContext, type, {
+    validatorState: options.validatorState,
+  });
 
   let optionalStr = `|undefined`;
 
@@ -196,36 +198,45 @@ export function typesTypescriptFormatType(
     optionalStr += "|null";
   }
 
-  if (!isNil(options.typeOverrides[type.type])) {
-    // @ts-expect-error
-    //
-    // We have this typed as a partial, so all values could be undefined, even though we
-    // check this in the if-statement.
-    //
-    // If the type has an override, we skip any of the
-    // default behavior.
-    fileWriteInline(file, options.typeOverrides[type.type]);
-    fileWriteInline(file, optionalStr);
-
-    return;
-  }
-
   if (type.type === "reference") {
     const resolvedReference = structureResolveReference(
       generateContext.structure,
       type,
     );
 
-    // @ts-expect-error
-    const resolvedName = typesCacheGet(resolvedReference, options);
+    const resolvedName = typesCacheGet(
+      generateContext,
+
+      // @ts-expect-error
+      resolvedReference,
+      options,
+    );
     fileWriteInline(file, `${resolvedName}`);
 
     if (isOptional) {
       fileWriteInline(file, optionalStr);
     }
   } else if (type.type === "any") {
-    // TODO: handle imports
-    if (type.rawValue) {
+    if (type.targets) {
+      let didWrite = false;
+      for (let i = options.targets.length - 1; i >= 0; --i) {
+        const target = type.targets[options.targets[i]];
+        if (target) {
+          if (options.validatorState === "output") {
+            fileWriteInline(file, target.validatorOutputType);
+          } else {
+            fileWriteInline(file, target.validatorInputType);
+          }
+
+          didWrite = true;
+          break;
+        }
+      }
+
+      if (!didWrite) {
+        fileWriteInline(file, `any`);
+      }
+    } else if (type.rawValue) {
       fileWriteInline(file, type.rawValue);
     } else {
       fileWriteInline(file, `any`);
@@ -339,15 +350,24 @@ export function typesTypescriptFormatType(
     ]);
 
     if (oneOf) {
-      fileWriteInline(file, `{ [key in `);
+      fileWriteInline(file, `Partial<Record<`);
     } else {
       fileWriteInline(file, `{ [key: `);
     }
     typesTypescriptFormatType(generateContext, file, type.keys, options);
 
-    fileWriteInline(file, `]: `);
+    if (oneOf) {
+      fileWriteInline(file, `,`);
+    } else {
+      fileWriteInline(file, `]: `);
+    }
     typesTypescriptFormatType(generateContext, file, type.values, options);
-    fileWriteInline(file, `}`);
+
+    if (oneOf) {
+      fileWriteInline(file, `>>`);
+    } else {
+      fileWriteInline(file, `}`);
+    }
 
     if (isOptional) {
       fileWriteInline(file, optionalStr);
@@ -385,7 +405,9 @@ export function typesTypescriptFormatType(
       const subIsOptional = typesGeneratorIsOptional(
         generateContext,
         type.keys[key],
-        options,
+        {
+          validatorState: options.validatorState,
+        },
       );
 
       if (subIsOptional) {
@@ -438,26 +460,27 @@ export function typesTypescriptFormatType(
  *
  * The used type is directly registered in the cache.
  *
+ * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {import("./generator").GenerateTypeOptions} options
  * @returns {string}
  */
-function typesTypescriptFormatTypeName(type, options) {
+function typesTypescriptFormatTypeName(generateContext, type, options) {
   const usedNames = typesCacheGetUsedNames(type);
 
   const baseName = `${upperCaseFirst(type.group)}${upperCaseFirst(type.name)}`;
 
   if (!usedNames.includes(baseName)) {
-    typesCacheAdd(type, options, baseName);
+    typesCacheAdd(generateContext, type, options, baseName);
     return baseName;
   }
 
   const withSuffix = `${baseName}${upperCaseFirst(options.nameSuffix)}`;
 
   if (!usedNames.includes(withSuffix)) {
-    typesCacheAdd(type, options, withSuffix);
+    typesCacheAdd(generateContext, type, options, withSuffix);
     return withSuffix;
   }
 
@@ -467,7 +490,7 @@ function typesTypescriptFormatTypeName(type, options) {
     const currentName = `${withSuffix}_${numberedSuffix}`;
 
     if (!usedNames.includes(currentName)) {
-      typesCacheAdd(type, options, currentName);
+      typesCacheAdd(generateContext, type, options, currentName);
       return currentName;
     }
 

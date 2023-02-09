@@ -291,11 +291,51 @@ export function validatorJavascriptNilCheck(file, validatorState, options) {
 export function validatorJavascriptAny(file, type, validatorState) {
   const valuePath = formatValuePath(validatorState);
   const resultPath = formatResultPath(validatorState);
+  const errorKey = formatErrorKey(validatorState);
 
-  // const errorKey = formatErrorKey(validatorState);
-  // TODO: implement custom validators for custom raw types.
+  let didWrite = false;
+  if (type.targets) {
+    for (
+      let i = validatorState.outputTypeOptions.targets.length - 1;
+      i >= 0;
+      --i
+    ) {
+      const target = type.targets[validatorState.outputTypeOptions.targets[i]];
+      if (target?.validatorExpression) {
+        fileBlockStart(
+          file,
+          `if (${target.validatorExpression.replaceAll(`$value$`, valuePath)})`,
+        );
 
-  fileWrite(file, `${resultPath} = ${valuePath};`);
+        if (target.validatorImport) {
+          // Add the necessary imports for the used expression.
+          const importCollector =
+            JavascriptImportCollector.getImportCollector(file);
+          importCollector.raw(target.validatorImport);
+        }
+
+        fileWrite(file, `${resultPath} = ${valuePath};`);
+
+        fileBlockEnd(file);
+        fileBlockStart(file, `else`);
+        fileWrite(
+          file,
+          `${errorKey} = {
+  key: "validator.any",
+  message: "Custom validator see the input type for more information.",
+};`,
+        );
+        fileBlockEnd(file);
+
+        didWrite = true;
+        break;
+      }
+    }
+  }
+
+  if (!didWrite) {
+    fileWrite(file, `${resultPath} = ${valuePath};`);
+  }
 }
 
 /**
@@ -1109,12 +1149,17 @@ export function validatorJavascriptObject(file, type, validatorState) {
 }
 
 /**
- *
+ * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
  * @param {import("../generated/common/types").ExperimentalReferenceDefinition} type
  * @param {import("./generator").ValidatorState} validatorState
  */
-export function validatorJavascriptReference(file, type, validatorState) {
+export function validatorJavascriptReference(
+  generateContext,
+  file,
+  type,
+  validatorState,
+) {
   const valuePath = formatValuePath(validatorState);
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
@@ -1125,10 +1170,15 @@ export function validatorJavascriptReference(file, type, validatorState) {
     type,
   );
 
-  // @ts-ignore-error
-  //
-  // Ref is always a system type here
-  const referredTypeName = typesCacheGet(ref, validatorState.outputTypeOptions);
+  const referredTypeName = typesCacheGet(
+    generateContext,
+
+    // @ts-ignore-error
+    //
+    // Ref is always a system type here
+    ref,
+    validatorState.outputTypeOptions,
+  );
 
   if (file.relativePath !== `${type.reference.group}/validators.js`) {
     const importCollector = JavascriptImportCollector.getImportCollector(file);

@@ -36,6 +36,34 @@ function specificationExtendWithValidators(generator) {
   generator.add(
     T.any("any"),
     T.any("anyOptional").optional(),
+    T.any("anyStringLength").implementations({
+      js: {
+        validatorInputType: "any",
+        validatorOutputType: "string",
+        validatorExpression:
+          "typeof $value$ === 'string' && $value$.length > 5",
+      },
+      ts: {
+        validatorInputType: "any",
+        validatorOutputType: "string",
+        validatorExpression:
+          "typeof $value$ === 'string' && $value$.length > 5",
+      },
+    }),
+    T.any("anyWithImport").implementations({
+      js: {
+        validatorInputType: "any",
+        validatorOutputType: "{}",
+        validatorExpression: "lodash.isPlainObject($value$)",
+        validatorImport: `import lodash from "lodash";`,
+      },
+      ts: {
+        validatorInputType: "any",
+        validatorOutputType: "{}",
+        validatorExpression: "lodash.isPlainObject($value$)",
+        validatorImport: `import lodash from "lodash";`,
+      },
+    }),
 
     T.anyOf("anyOf").values(true, false),
     T.anyOf("anyOfMixedPrimitive").values(T.number(), T.string()),

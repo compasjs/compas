@@ -16,6 +16,16 @@ export function validateExperimentalAnyDefinition(
   ValidatorErrorMap
 >;
 /**
+ * @param {import("../common/types").ExperimentalAnyDefinitionTargetInput|any} value
+ * @returns {Either<import("../common/types").ExperimentalAnyDefinitionTarget, ValidatorErrorMap>}
+ */
+export function validateExperimentalAnyDefinitionTarget(
+  value: import("../common/types").ExperimentalAnyDefinitionTargetInput | any,
+): Either<
+  import("../common/types").ExperimentalAnyDefinitionTarget,
+  ValidatorErrorMap
+>;
+/**
  * @param {import("../common/types").ExperimentalAnyOfDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalAnyOfDefinition, ValidatorErrorMap>}
  */

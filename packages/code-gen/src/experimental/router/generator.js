@@ -55,6 +55,8 @@ export function routerGenerator(generateContext) {
   );
 
   const target = routerFormatTarget(generateContext);
+  /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
+  const typeTargets = ["js", "jsKoa"];
 
   /** @type Record<string, (import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]>} */
   const routesPerGroup = {};
@@ -128,23 +130,28 @@ export function routerGenerator(generateContext) {
           validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
             validatorState: "output",
             nameSuffix: "",
-            typeOverrides: {},
+            targets: typeTargets,
           });
         } else {
           // @ts-expect-error
           typesGeneratorGenerateNamedType(generateContext, resolvedRef, {
             validatorState: "output",
             nameSuffix: "",
-            typeOverrides: {},
+            targets: typeTargets,
           });
         }
 
-        // @ts-expect-error
-        result[`${prefix}TypeName`] = typesCacheGet(resolvedRef, {
-          validatorState: "output",
-          nameSuffix: "",
-          typeOverrides: {},
-        });
+        result[`${prefix}TypeName`] = typesCacheGet(
+          generateContext,
+
+          // @ts-expect-error
+          resolvedRef,
+          {
+            validatorState: "output",
+            nameSuffix: "",
+            targets: typeTargets,
+          },
+        );
 
         result[`${prefix}Type`] = typesGeneratorUseTypeName(
           generateContext,
