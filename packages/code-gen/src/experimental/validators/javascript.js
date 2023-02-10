@@ -1051,7 +1051,7 @@ export function validatorJavascriptNumber(file, type, validatorState) {
     );
 
     fileContextSetIndent(file, -1);
-    fileWriteInline(file, `} else`);
+    fileWriteInline(file, `} else `);
   }
 
   fileBlockStart(file, ``);
@@ -1344,7 +1344,7 @@ export function validatorJavascriptString(file, type, validatorState) {
     );
 
     fileContextSetIndent(file, -1);
-    fileWriteInline(file, `} else`);
+    fileWriteInline(file, `} else `);
   }
 
   if (type.validator.pattern) {
@@ -1363,7 +1363,7 @@ export function validatorJavascriptString(file, type, validatorState) {
     );
 
     fileContextSetIndent(file, -1);
-    fileWriteInline(file, `} else`);
+    fileWriteInline(file, `} else `);
   }
 
   if (type.validator.disallowedCharacters) {
@@ -1382,7 +1382,7 @@ export function validatorJavascriptString(file, type, validatorState) {
     );
 
     fileContextSetIndent(file, -1);
-    fileWriteInline(file, `} else`);
+    fileWriteInline(file, `} else `);
   }
 
   fileBlockStart(file, ``);
