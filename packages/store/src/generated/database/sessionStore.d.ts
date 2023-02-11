@@ -23,7 +23,7 @@ export function sessionStoreWhere(
  * @returns {QueryPart<any>}
  */
 export function sessionStoreOrderBy(
-  orderBy?: import("../common/types").StoreSessionStoreOrderByInput | undefined,
+  orderBy?: import("../common/types").StoreSessionStoreOrderByInput,
   orderBySpec?:
     | import("../common/types").StoreSessionStoreOrderBySpecInput
     | undefined,

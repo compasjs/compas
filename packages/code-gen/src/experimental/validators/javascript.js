@@ -322,7 +322,7 @@ export function validatorJavascriptAny(file, type, validatorState) {
           file,
           `${errorKey} = {
   key: "validator.any",
-  message: "Custom validator see the input type for more information.",
+  message: "Custom validator error. See the input type for more information.",
 };`,
         );
         fileBlockEnd(file);

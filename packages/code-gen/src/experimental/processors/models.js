@@ -1,3 +1,4 @@
+import { AnyType } from "../../builders/index.js";
 import { structureNamedTypes } from "./structure.js";
 
 /**
@@ -19,4 +20,20 @@ export function structureModels(generateContext) {
   }
 
   return result;
+}
+
+/**
+ * Return a new generic any type for custom query parts
+ *
+ * @returns {import("../../builders/AnyType").AnyType}
+ */
+export function modelQueryPartType() {
+  return new AnyType().implementations({
+    jsPostgres: {
+      validatorImport: `import { isQueryPart } from "@compas/store";`,
+      validatorExpression: `isQueryPart($value$)`,
+      validatorInputType: `(any|import("@compas/store").QueryPart<any>)`,
+      validatorOutputType: `import("@compas/store").QueryPart<any>`,
+    },
+  });
 }

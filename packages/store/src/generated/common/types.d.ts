@@ -52,150 +52,6 @@ export type StoreFileInput = {
   updatedAt: Date | string | number;
 };
 
-export type StoreFileResponse = {
-  id: string;
-  name: string;
-  contentType: string;
-  url: string;
-  placeholderImage?: string | undefined;
-  altText?: string | undefined;
-};
-
-export type StoreFileResponseInput = {
-  id: string;
-  name: string;
-  contentType: string;
-  url: string;
-  placeholderImage?: string | undefined;
-  altText?: string | undefined;
-};
-
-// Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
-export type StoreImageTransformOptions = {
-  q: number;
-  w: number;
-};
-
-// Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
-export type StoreImageTransformOptionsInput = {
-  q?: number | undefined;
-  w: number;
-};
-
-// Postgres based job queue.
-// Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
-// Use {@link queueWorkerCreate} as a way to pick up jobs.
-export type StoreJob = {
-  id: number;
-  isComplete: boolean;
-  handlerTimeout?: number | undefined;
-  priority: number;
-  retryCount: number;
-  name: string;
-  scheduledAt: Date;
-  data: any;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date;
-};
-
-// Postgres based job queue.
-// Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
-// Use {@link queueWorkerCreate} as a way to pick up jobs.
-export type StoreJobInput = {
-  id: number;
-  isComplete?: boolean | "true" | "false" | undefined;
-  handlerTimeout?: number | undefined;
-  priority?: number | undefined;
-  retryCount?: number | undefined;
-  name: string;
-  scheduledAt?: Date | string | number | undefined;
-  data?: any | undefined;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date | string | number;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date | string | number;
-};
-
-// Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
-export type StoreSecureImageTransformOptions = {
-  accessToken: string;
-  q: number;
-  w: number;
-};
-
-// Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
-export type StoreSecureImageTransformOptionsInput = {
-  accessToken: string;
-  q?: number | undefined;
-  w: number;
-};
-
-// Store all tokens that belong to a session.
-export type StoreSessionStoreToken = {
-  // The primary key of the 'sessionStoreToken' model.
-  id: string;
-
-  // The primary key of the 'sessionStore' model.
-  session: string;
-  expiresAt: Date;
-
-  // The primary key of the 'sessionStoreToken' model.
-  refreshToken?: string | undefined;
-  revokedAt?: Date | undefined;
-  createdAt: Date;
-};
-
-// Session data store, used by 'sessionStore\*' functions.
-export type StoreSessionStore = {
-  // The primary key of the 'sessionStore' model.
-  id: string;
-  checksum: string;
-  revokedAt?: Date | undefined;
-  data: any;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date;
-};
-
-// Store all tokens that belong to a session.
-export type StoreSessionStoreTokenInput = {
-  // The primary key of the 'sessionStoreToken' model.
-  id: string;
-
-  // The primary key of the 'sessionStore' model.
-  session: string;
-  expiresAt: Date | string | number;
-
-  // The primary key of the 'sessionStoreToken' model.
-  refreshToken?: string | undefined;
-  revokedAt?: Date | string | number | undefined;
-  createdAt: Date | string | number;
-};
-
-// Session data store, used by 'sessionStore\*' functions.
-export type StoreSessionStoreInput = {
-  // The primary key of the 'sessionStore' model.
-  id: string;
-  checksum: string;
-  revokedAt?: Date | string | number | undefined;
-  data?: any | undefined;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date | string | number;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date | string | number;
-};
-
 export type StoreFileWhere = {
   $raw?: import("@compas/store").QueryPart<any> | undefined;
   $or?: StoreFileWhere[] | undefined;
@@ -228,27 +84,31 @@ export type StoreFileWhere = {
 };
 
 export type StoreFileWhereInput = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
+  $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
   $or?: StoreFileWhereInput[] | StoreFileWhereInput | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?: string[] | string | import("@compas/store").QueryPart<any> | undefined;
+  idIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
   idNotIn?:
     | string[]
     | string
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   bucketName?: string | undefined;
   bucketNameNotEqual?: string | undefined;
   bucketNameIn?:
     | string[]
     | string
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   bucketNameNotIn?:
     | string[]
     | string
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   bucketNameLike?: string | undefined;
   bucketNameILike?: string | undefined;
@@ -260,14 +120,14 @@ export type StoreFileWhereInput = {
     | Date
     | string
     | number
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtNotIn?:
     | (Date | string | number)[]
     | Date
     | string
     | number
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
   createdAtLowerThan?: Date | string | number | undefined;
@@ -278,399 +138,43 @@ export type StoreFileWhereInput = {
     | Date
     | string
     | number
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtNotIn?:
     | (Date | string | number)[]
     | Date
     | string
     | number
-    | import("@compas/store").QueryPart<any>
+    | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
   updatedAtLowerThan?: Date | string | number | undefined;
 };
 
-export type StoreJobWhere = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
-  $or?: StoreJobWhere[] | undefined;
-  id?: number | undefined;
-  idNotEqual?: number | undefined;
-  idIn?: number[] | import("@compas/store").QueryPart<any> | undefined;
-  idNotIn?: number[] | import("@compas/store").QueryPart<any> | undefined;
-  idGreaterThan?: number | undefined;
-  idLowerThan?: number | undefined;
-  isComplete?: boolean | undefined;
-  isCompleteIsNull?: boolean | undefined;
-  isCompleteIsNotNull?: boolean | undefined;
-  name?: string | undefined;
-  nameNotEqual?: string | undefined;
-  nameIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  nameNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  nameLike?: string | undefined;
-  nameILike?: string | undefined;
-  nameNotLike?: string | undefined;
-  scheduledAt?: Date | undefined;
-  scheduledAtNotEqual?: Date | undefined;
-  scheduledAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  scheduledAtNotIn?:
-    | Date[]
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  scheduledAtGreaterThan?: Date | undefined;
-  scheduledAtLowerThan?: Date | undefined;
-  scheduledAtIsNull?: boolean | undefined;
-  scheduledAtIsNotNull?: boolean | undefined;
-  createdAt?: Date | undefined;
-  createdAtNotEqual?: Date | undefined;
-  createdAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  createdAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  createdAtGreaterThan?: Date | undefined;
-  createdAtLowerThan?: Date | undefined;
-  updatedAt?: Date | undefined;
-  updatedAtNotEqual?: Date | undefined;
-  updatedAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  updatedAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  updatedAtGreaterThan?: Date | undefined;
-  updatedAtLowerThan?: Date | undefined;
+export type StoreFileOrderBy =
+  | import("@compas/store").QueryPart<any>
+  | ("id" | "bucketName" | "createdAt" | "updatedAt")[];
+
+export type StoreFileOrderByInput =
+  | (any | import("@compas/store").QueryPart<any>)
+  | ("id" | "bucketName" | "createdAt" | "updatedAt")[]
+  | "id"
+  | "bucketName"
+  | "createdAt"
+  | "updatedAt";
+
+export type StoreFileOrderBySpec = {
+  id?: "ASC" | "DESC" | undefined;
+  bucketName?: "ASC" | "DESC" | undefined;
+  createdAt?: "ASC" | "DESC" | undefined;
+  updatedAt?: "ASC" | "DESC" | undefined;
 };
 
-export type StoreJobWhereInput = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
-  $or?: StoreJobWhereInput[] | StoreJobWhereInput | undefined;
-  id?: number | undefined;
-  idNotEqual?: number | undefined;
-  idIn?: number[] | number | import("@compas/store").QueryPart<any> | undefined;
-  idNotIn?:
-    | number[]
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  idGreaterThan?: number | undefined;
-  idLowerThan?: number | undefined;
-  isComplete?: boolean | "true" | "false" | undefined;
-  isCompleteIsNull?: boolean | "true" | "false" | undefined;
-  isCompleteIsNotNull?: boolean | "true" | "false" | undefined;
-  name?: string | undefined;
-  nameNotEqual?: string | undefined;
-  nameIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  nameNotIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  nameLike?: string | undefined;
-  nameILike?: string | undefined;
-  nameNotLike?: string | undefined;
-  scheduledAt?: Date | string | number | undefined;
-  scheduledAtNotEqual?: Date | string | number | undefined;
-  scheduledAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  scheduledAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  scheduledAtGreaterThan?: Date | string | number | undefined;
-  scheduledAtLowerThan?: Date | string | number | undefined;
-  scheduledAtIsNull?: boolean | "true" | "false" | undefined;
-  scheduledAtIsNotNull?: boolean | "true" | "false" | undefined;
-  createdAt?: Date | string | number | undefined;
-  createdAtNotEqual?: Date | string | number | undefined;
-  createdAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  createdAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  createdAtGreaterThan?: Date | string | number | undefined;
-  createdAtLowerThan?: Date | string | number | undefined;
-  updatedAt?: Date | string | number | undefined;
-  updatedAtNotEqual?: Date | string | number | undefined;
-  updatedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  updatedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  updatedAtGreaterThan?: Date | string | number | undefined;
-  updatedAtLowerThan?: Date | string | number | undefined;
-};
-
-export type StoreSessionStoreTokenWhere = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
-  $or?: StoreSessionStoreTokenWhere[] | undefined;
-  id?: string | undefined;
-  idNotEqual?: string | undefined;
-  idIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  idNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  session?: string | undefined;
-  sessionNotEqual?: string | undefined;
-  sessionIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  sessionNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  expiresAt?: Date | undefined;
-  expiresAtNotEqual?: Date | undefined;
-  expiresAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  expiresAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  expiresAtGreaterThan?: Date | undefined;
-  expiresAtLowerThan?: Date | undefined;
-  refreshToken?: string | undefined;
-  refreshTokenNotEqual?: string | undefined;
-  refreshTokenIn?:
-    | string[]
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  refreshTokenNotIn?:
-    | string[]
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  refreshTokenIsNull?: boolean | undefined;
-  refreshTokenIsNotNull?: boolean | undefined;
-  revokedAt?: Date | undefined;
-  revokedAtNotEqual?: Date | undefined;
-  revokedAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  revokedAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  revokedAtGreaterThan?: Date | undefined;
-  revokedAtLowerThan?: Date | undefined;
-  revokedAtIsNull?: boolean | undefined;
-  revokedAtIsNotNull?: boolean | undefined;
-  viaRefreshToken?:
-    | {
-        where: StoreSessionStoreTokenWhere;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  viaSession?:
-    | {
-        where: StoreSessionStoreWhere;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  viaAccessToken?:
-    | {
-        where: StoreSessionStoreTokenWhere;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  accessTokenNotExists?: StoreSessionStoreTokenWhere | undefined;
-};
-
-export type StoreSessionStoreWhere = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
-  $or?: StoreSessionStoreWhere[] | undefined;
-  id?: string | undefined;
-  idNotEqual?: string | undefined;
-  idIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  idNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
-  createdAt?: Date | undefined;
-  createdAtNotEqual?: Date | undefined;
-  createdAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  createdAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  createdAtGreaterThan?: Date | undefined;
-  createdAtLowerThan?: Date | undefined;
-  updatedAt?: Date | undefined;
-  updatedAtNotEqual?: Date | undefined;
-  updatedAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  updatedAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
-  updatedAtGreaterThan?: Date | undefined;
-  updatedAtLowerThan?: Date | undefined;
-  viaAccessTokens?:
-    | {
-        where: StoreSessionStoreTokenWhere;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  accessTokensNotExists?: StoreSessionStoreTokenWhere | undefined;
-};
-
-export type StoreSessionStoreTokenWhereInput = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
-  $or?:
-    | StoreSessionStoreTokenWhereInput[]
-    | StoreSessionStoreTokenWhereInput
-    | undefined;
-  id?: string | undefined;
-  idNotEqual?: string | undefined;
-  idIn?: string[] | string | import("@compas/store").QueryPart<any> | undefined;
-  idNotIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  session?: string | undefined;
-  sessionNotEqual?: string | undefined;
-  sessionIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  sessionNotIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  expiresAt?: Date | string | number | undefined;
-  expiresAtNotEqual?: Date | string | number | undefined;
-  expiresAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  expiresAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  expiresAtGreaterThan?: Date | string | number | undefined;
-  expiresAtLowerThan?: Date | string | number | undefined;
-  refreshToken?: string | undefined;
-  refreshTokenNotEqual?: string | undefined;
-  refreshTokenIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  refreshTokenNotIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  refreshTokenIsNull?: boolean | "true" | "false" | undefined;
-  refreshTokenIsNotNull?: boolean | "true" | "false" | undefined;
-  revokedAt?: Date | string | number | undefined;
-  revokedAtNotEqual?: Date | string | number | undefined;
-  revokedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  revokedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  revokedAtGreaterThan?: Date | string | number | undefined;
-  revokedAtLowerThan?: Date | string | number | undefined;
-  revokedAtIsNull?: boolean | "true" | "false" | undefined;
-  revokedAtIsNotNull?: boolean | "true" | "false" | undefined;
-  viaRefreshToken?:
-    | {
-        where?: StoreSessionStoreTokenWhereInput | undefined;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  viaSession?:
-    | {
-        where?: StoreSessionStoreWhereInput | undefined;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  viaAccessToken?:
-    | {
-        where?: StoreSessionStoreTokenWhereInput | undefined;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  accessTokenNotExists?: StoreSessionStoreTokenWhereInput | undefined;
-};
-
-export type StoreSessionStoreWhereInput = {
-  $raw?: import("@compas/store").QueryPart<any> | undefined;
-  $or?: StoreSessionStoreWhereInput[] | StoreSessionStoreWhereInput | undefined;
-  id?: string | undefined;
-  idNotEqual?: string | undefined;
-  idIn?: string[] | string | import("@compas/store").QueryPart<any> | undefined;
-  idNotIn?:
-    | string[]
-    | string
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  createdAt?: Date | string | number | undefined;
-  createdAtNotEqual?: Date | string | number | undefined;
-  createdAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  createdAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  createdAtGreaterThan?: Date | string | number | undefined;
-  createdAtLowerThan?: Date | string | number | undefined;
-  updatedAt?: Date | string | number | undefined;
-  updatedAtNotEqual?: Date | string | number | undefined;
-  updatedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  updatedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | import("@compas/store").QueryPart<any>
-    | undefined;
-  updatedAtGreaterThan?: Date | string | number | undefined;
-  updatedAtLowerThan?: Date | string | number | undefined;
-  viaAccessTokens?:
-    | {
-        where?: StoreSessionStoreTokenWhereInput | undefined;
-        limit?: number | undefined;
-        offset?: number | undefined;
-      }
-    | undefined;
-  accessTokensNotExists?: StoreSessionStoreTokenWhereInput | undefined;
+export type StoreFileOrderBySpecInput = {
+  id?: "ASC" | "DESC" | undefined;
+  bucketName?: "ASC" | "DESC" | undefined;
+  createdAt?: "ASC" | "DESC" | undefined;
+  updatedAt?: "ASC" | "DESC" | undefined;
 };
 
 export type StoreFileReturning =
@@ -686,6 +190,15 @@ export type StoreFileReturning =
       | "updatedAt"
     )[]
   | undefined;
+
+export type StoreFileQueryBuilder = {
+  where?: StoreFileWhere | undefined;
+  orderBy?: StoreFileOrderBy | undefined;
+  orderBySpec?: StoreFileOrderBySpec | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select: StoreFileReturning;
+};
 
 export type StoreFileReturningInput =
   | "*"
@@ -709,93 +222,46 @@ export type StoreFileReturningInput =
   | "updatedAt"
   | undefined;
 
-export type StoreJobReturning =
-  | "*"
-  | (
-      | "id"
-      | "isComplete"
-      | "handlerTimeout"
-      | "priority"
-      | "retryCount"
-      | "name"
-      | "scheduledAt"
-      | "data"
-      | "createdAt"
-      | "updatedAt"
-    )[]
-  | undefined;
+export type StoreFileQueryBuilderInput = {
+  where?: StoreFileWhereInput | undefined;
+  orderBy?: StoreFileOrderByInput | undefined;
+  orderBySpec?: StoreFileOrderBySpecInput | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select?: StoreFileReturningInput | undefined;
+};
 
-export type StoreJobReturningInput =
-  | "*"
-  | (
-      | "id"
-      | "isComplete"
-      | "handlerTimeout"
-      | "priority"
-      | "retryCount"
-      | "name"
-      | "scheduledAt"
-      | "data"
-      | "createdAt"
-      | "updatedAt"
-    )[]
-  | "id"
-  | "isComplete"
-  | "handlerTimeout"
-  | "priority"
-  | "retryCount"
-  | "name"
-  | "scheduledAt"
-  | "data"
-  | "createdAt"
-  | "updatedAt"
-  | undefined;
+export type QueryResultStoreFile = {
+  // The primary key of the 'file' model.
+  id: string;
+  contentLength: number;
+  bucketName: string;
+  contentType: string;
+  name: string;
+  meta: StoreFileMeta;
 
-export type StoreSessionStoreReturning =
-  | "*"
-  | ("id" | "checksum" | "revokedAt" | "data" | "createdAt" | "updatedAt")[]
-  | undefined;
+  // Automatically generated 'createdAt' key.
+  createdAt: Date;
 
-export type StoreSessionStoreReturningInput =
-  | "*"
-  | ("id" | "checksum" | "revokedAt" | "data" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "checksum"
-  | "revokedAt"
-  | "data"
-  | "createdAt"
-  | "updatedAt"
-  | undefined;
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date;
+};
 
-export type StoreSessionStoreTokenReturning =
-  | "*"
-  | (
-      | "id"
-      | "session"
-      | "expiresAt"
-      | "refreshToken"
-      | "revokedAt"
-      | "createdAt"
-    )[]
-  | undefined;
+export type QueryResultStoreFileInput = {
+  // The primary key of the 'file' model.
+  id: string;
+  contentLength: number;
+  bucketName: string;
+  contentType: string;
+  name: string;
+  meta?: StoreFileMetaInput | undefined;
 
-export type StoreSessionStoreTokenReturningInput =
-  | "*"
-  | (
-      | "id"
-      | "session"
-      | "expiresAt"
-      | "refreshToken"
-      | "revokedAt"
-      | "createdAt"
-    )[]
-  | "id"
-  | "session"
-  | "expiresAt"
-  | "refreshToken"
-  | "revokedAt"
-  | "createdAt"
-  | undefined;
+  // Automatically generated 'createdAt' key.
+  createdAt: Date | string | number;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date | string | number;
+};
 
 export type StoreFileInsertPartial = {
   // The primary key of the 'file' model.
@@ -811,6 +277,11 @@ export type StoreFileInsertPartial = {
 
   // Automatically generated 'updatedAt' key.
   updatedAt?: Date | undefined | null;
+};
+
+export type StoreFileInsert = {
+  insert: StoreFileInsertPartial[];
+  returning?: StoreFileReturning | undefined;
 };
 
 export type StoreFileInsertPartialInput = {
@@ -829,138 +300,9 @@ export type StoreFileInsertPartialInput = {
   updatedAt?: Date | string | number | undefined | null;
 };
 
-export type StoreFileInsert = {
-  insert: StoreFileInsertPartial[];
-  returning?: StoreFileReturning | undefined;
-};
-
 export type StoreFileInsertInput = {
   insert: StoreFileInsertPartialInput[] | StoreFileInsertPartialInput;
   returning?: StoreFileReturningInput | undefined;
-};
-
-export type StoreJobInsertPartial = {
-  id?: number | undefined;
-  isComplete: boolean;
-  handlerTimeout?: number | undefined | null;
-  priority: number;
-  retryCount: number;
-  name: string;
-  scheduledAt: Date;
-  data: any;
-
-  // Automatically generated 'createdAt' key.
-  createdAt?: Date | undefined | null;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt?: Date | undefined | null;
-};
-
-export type StoreJobInsertPartialInput = {
-  id?: number | undefined;
-  isComplete?: boolean | "true" | "false" | undefined | null;
-  handlerTimeout?: number | undefined | null;
-  priority?: number | undefined | null;
-  retryCount?: number | undefined | null;
-  name: string;
-  scheduledAt?: Date | string | number | undefined | null;
-  data?: any | undefined | null;
-
-  // Automatically generated 'createdAt' key.
-  createdAt?: Date | string | number | undefined | null;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt?: Date | string | number | undefined | null;
-};
-
-export type StoreJobInsert = {
-  insert: StoreJobInsertPartial[];
-  returning?: StoreJobReturning | undefined;
-};
-
-export type StoreJobInsertInput = {
-  insert: StoreJobInsertPartialInput[] | StoreJobInsertPartialInput;
-  returning?: StoreJobReturningInput | undefined;
-};
-
-export type StoreSessionStoreInsertPartial = {
-  // The primary key of the 'sessionStore' model.
-  id?: string | undefined;
-  checksum: string;
-  revokedAt?: Date | undefined | null;
-  data: any;
-
-  // Automatically generated 'createdAt' key.
-  createdAt?: Date | undefined | null;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt?: Date | undefined | null;
-};
-
-export type StoreSessionStoreInsertPartialInput = {
-  // The primary key of the 'sessionStore' model.
-  id?: string | undefined;
-  checksum: string;
-  revokedAt?: Date | string | number | undefined | null;
-  data?: any | undefined | null;
-
-  // Automatically generated 'createdAt' key.
-  createdAt?: Date | string | number | undefined | null;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt?: Date | string | number | undefined | null;
-};
-
-export type StoreSessionStoreInsert = {
-  insert: StoreSessionStoreInsertPartial[];
-  returning?: StoreSessionStoreReturning | undefined;
-};
-
-export type StoreSessionStoreInsertInput = {
-  insert:
-    | StoreSessionStoreInsertPartialInput[]
-    | StoreSessionStoreInsertPartialInput;
-  returning?: StoreSessionStoreReturningInput | undefined;
-};
-
-export type StoreSessionStoreTokenInsertPartial = {
-  // The primary key of the 'sessionStoreToken' model.
-  id?: string | undefined;
-
-  // The primary key of the 'sessionStore' model.
-  session: string;
-  expiresAt: Date;
-
-  // The primary key of the 'sessionStoreToken' model.
-  refreshToken?: string | undefined | null;
-  revokedAt?: Date | undefined | null;
-  createdAt: Date;
-};
-
-export type StoreSessionStoreTokenInsertPartialInput = {
-  // The primary key of the 'sessionStoreToken' model.
-  id?: string | undefined;
-
-  // The primary key of the 'sessionStore' model.
-  session: string;
-  expiresAt: Date | string | number;
-
-  // The primary key of the 'sessionStoreToken' model.
-  refreshToken?: string | undefined | null;
-  revokedAt?: Date | string | number | undefined | null;
-  createdAt: Date | string | number;
-};
-
-export type StoreSessionStoreTokenInsert = {
-  insert: StoreSessionStoreTokenInsertPartial[];
-  returning?: StoreSessionStoreTokenReturning | undefined;
-};
-
-export type StoreSessionStoreTokenInsertInput = {
-  insert:
-    | StoreSessionStoreTokenInsertPartialInput[]
-    | StoreSessionStoreTokenInsertPartialInput;
-  returning?: StoreSessionStoreTokenReturningInput | undefined;
 };
 
 export type StoreFileUpdatePartial = {
@@ -1028,6 +370,12 @@ export type StoreFileUpdatePartial = {
     | {
         $subtract: string;
       };
+};
+
+export type StoreFileUpdate = {
+  update: StoreFileUpdatePartial;
+  where: StoreFileWhere;
+  returning?: StoreFileReturning | undefined;
 };
 
 export type StoreFileUpdatePartialInput = {
@@ -1103,16 +451,384 @@ export type StoreFileUpdatePartialInput = {
       };
 };
 
-export type StoreFileUpdate = {
-  update: StoreFileUpdatePartial;
-  where: StoreFileWhere;
-  returning?: StoreFileReturning | undefined;
-};
-
 export type StoreFileUpdateInput = {
   update: StoreFileUpdatePartialInput;
   where: StoreFileWhereInput;
   returning?: StoreFileReturningInput | undefined;
+};
+
+// Postgres based job queue.
+// Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+// Use {@link queueWorkerCreate} as a way to pick up jobs.
+export type StoreJob = {
+  id: number;
+  isComplete: boolean;
+  handlerTimeout?: number | undefined;
+  priority: number;
+  retryCount: number;
+  name: string;
+  scheduledAt: Date;
+  data: any;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date;
+};
+
+// Postgres based job queue.
+// Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
+// Use {@link queueWorkerCreate} as a way to pick up jobs.
+export type StoreJobInput = {
+  id: number;
+  isComplete?: boolean | "true" | "false" | undefined;
+  handlerTimeout?: number | undefined;
+  priority?: number | undefined;
+  retryCount?: number | undefined;
+  name: string;
+  scheduledAt?: Date | string | number | undefined;
+  data?: any | undefined;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date | string | number;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date | string | number;
+};
+
+export type StoreJobWhere = {
+  $raw?: import("@compas/store").QueryPart<any> | undefined;
+  $or?: StoreJobWhere[] | undefined;
+  id?: number | undefined;
+  idNotEqual?: number | undefined;
+  idIn?: number[] | import("@compas/store").QueryPart<any> | undefined;
+  idNotIn?: number[] | import("@compas/store").QueryPart<any> | undefined;
+  idGreaterThan?: number | undefined;
+  idLowerThan?: number | undefined;
+  isComplete?: boolean | undefined;
+  isCompleteIsNull?: boolean | undefined;
+  isCompleteIsNotNull?: boolean | undefined;
+  name?: string | undefined;
+  nameNotEqual?: string | undefined;
+  nameIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  nameNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  nameLike?: string | undefined;
+  nameILike?: string | undefined;
+  nameNotLike?: string | undefined;
+  scheduledAt?: Date | undefined;
+  scheduledAtNotEqual?: Date | undefined;
+  scheduledAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  scheduledAtNotIn?:
+    | Date[]
+    | import("@compas/store").QueryPart<any>
+    | undefined;
+  scheduledAtGreaterThan?: Date | undefined;
+  scheduledAtLowerThan?: Date | undefined;
+  scheduledAtIsNull?: boolean | undefined;
+  scheduledAtIsNotNull?: boolean | undefined;
+  createdAt?: Date | undefined;
+  createdAtNotEqual?: Date | undefined;
+  createdAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  createdAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  createdAtGreaterThan?: Date | undefined;
+  createdAtLowerThan?: Date | undefined;
+  updatedAt?: Date | undefined;
+  updatedAtNotEqual?: Date | undefined;
+  updatedAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  updatedAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  updatedAtGreaterThan?: Date | undefined;
+  updatedAtLowerThan?: Date | undefined;
+};
+
+export type StoreJobWhereInput = {
+  $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
+  $or?: StoreJobWhereInput[] | StoreJobWhereInput | undefined;
+  id?: number | undefined;
+  idNotEqual?: number | undefined;
+  idIn?:
+    | number[]
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  idNotIn?:
+    | number[]
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  idGreaterThan?: number | undefined;
+  idLowerThan?: number | undefined;
+  isComplete?: boolean | "true" | "false" | undefined;
+  isCompleteIsNull?: boolean | "true" | "false" | undefined;
+  isCompleteIsNotNull?: boolean | "true" | "false" | undefined;
+  name?: string | undefined;
+  nameNotEqual?: string | undefined;
+  nameIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  nameNotIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  nameLike?: string | undefined;
+  nameILike?: string | undefined;
+  nameNotLike?: string | undefined;
+  scheduledAt?: Date | string | number | undefined;
+  scheduledAtNotEqual?: Date | string | number | undefined;
+  scheduledAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  scheduledAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  scheduledAtGreaterThan?: Date | string | number | undefined;
+  scheduledAtLowerThan?: Date | string | number | undefined;
+  scheduledAtIsNull?: boolean | "true" | "false" | undefined;
+  scheduledAtIsNotNull?: boolean | "true" | "false" | undefined;
+  createdAt?: Date | string | number | undefined;
+  createdAtNotEqual?: Date | string | number | undefined;
+  createdAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  createdAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  createdAtGreaterThan?: Date | string | number | undefined;
+  createdAtLowerThan?: Date | string | number | undefined;
+  updatedAt?: Date | string | number | undefined;
+  updatedAtNotEqual?: Date | string | number | undefined;
+  updatedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  updatedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  updatedAtGreaterThan?: Date | string | number | undefined;
+  updatedAtLowerThan?: Date | string | number | undefined;
+};
+
+export type StoreJobOrderBy =
+  | import("@compas/store").QueryPart<any>
+  | (
+      | "id"
+      | "isComplete"
+      | "name"
+      | "scheduledAt"
+      | "createdAt"
+      | "updatedAt"
+    )[];
+
+export type StoreJobOrderByInput =
+  | (any | import("@compas/store").QueryPart<any>)
+  | ("id" | "isComplete" | "name" | "scheduledAt" | "createdAt" | "updatedAt")[]
+  | "id"
+  | "isComplete"
+  | "name"
+  | "scheduledAt"
+  | "createdAt"
+  | "updatedAt";
+
+export type StoreJobOrderBySpec = {
+  id?: "ASC" | "DESC" | undefined;
+  isComplete?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+  name?: "ASC" | "DESC" | undefined;
+  scheduledAt?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+  createdAt?: "ASC" | "DESC" | undefined;
+  updatedAt?: "ASC" | "DESC" | undefined;
+};
+
+export type StoreJobOrderBySpecInput = {
+  id?: "ASC" | "DESC" | undefined;
+  isComplete?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+  name?: "ASC" | "DESC" | undefined;
+  scheduledAt?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+  createdAt?: "ASC" | "DESC" | undefined;
+  updatedAt?: "ASC" | "DESC" | undefined;
+};
+
+export type StoreJobReturning =
+  | "*"
+  | (
+      | "id"
+      | "isComplete"
+      | "handlerTimeout"
+      | "priority"
+      | "retryCount"
+      | "name"
+      | "scheduledAt"
+      | "data"
+      | "createdAt"
+      | "updatedAt"
+    )[]
+  | undefined;
+
+export type StoreJobQueryBuilder = {
+  where?: StoreJobWhere | undefined;
+  orderBy?: StoreJobOrderBy | undefined;
+  orderBySpec?: StoreJobOrderBySpec | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select: StoreJobReturning;
+};
+
+export type StoreJobReturningInput =
+  | "*"
+  | (
+      | "id"
+      | "isComplete"
+      | "handlerTimeout"
+      | "priority"
+      | "retryCount"
+      | "name"
+      | "scheduledAt"
+      | "data"
+      | "createdAt"
+      | "updatedAt"
+    )[]
+  | "id"
+  | "isComplete"
+  | "handlerTimeout"
+  | "priority"
+  | "retryCount"
+  | "name"
+  | "scheduledAt"
+  | "data"
+  | "createdAt"
+  | "updatedAt"
+  | undefined;
+
+export type StoreJobQueryBuilderInput = {
+  where?: StoreJobWhereInput | undefined;
+  orderBy?: StoreJobOrderByInput | undefined;
+  orderBySpec?: StoreJobOrderBySpecInput | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select?: StoreJobReturningInput | undefined;
+};
+
+export type QueryResultStoreJob = {
+  id: number;
+  isComplete: boolean;
+  handlerTimeout?: number | undefined;
+  priority: number;
+  retryCount: number;
+  name: string;
+  scheduledAt: Date;
+  data: any;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date;
+};
+
+export type QueryResultStoreJobInput = {
+  id: number;
+  isComplete?: boolean | "true" | "false" | undefined;
+  handlerTimeout?: number | undefined;
+  priority?: number | undefined;
+  retryCount?: number | undefined;
+  name: string;
+  scheduledAt?: Date | string | number | undefined;
+  data?: any | undefined;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date | string | number;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date | string | number;
+};
+
+export type StoreJobInsertPartial = {
+  id?: number | undefined;
+  isComplete: boolean;
+  handlerTimeout?: number | undefined | null;
+  priority: number;
+  retryCount: number;
+  name: string;
+  scheduledAt: Date;
+  data: any;
+
+  // Automatically generated 'createdAt' key.
+  createdAt?: Date | undefined | null;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt?: Date | undefined | null;
+};
+
+export type StoreJobInsert = {
+  insert: StoreJobInsertPartial[];
+  returning?: StoreJobReturning | undefined;
+};
+
+export type StoreJobInsertPartialInput = {
+  id?: number | undefined;
+  isComplete?: boolean | "true" | "false" | undefined | null;
+  handlerTimeout?: number | undefined | null;
+  priority?: number | undefined | null;
+  retryCount?: number | undefined | null;
+  name: string;
+  scheduledAt?: Date | string | number | undefined | null;
+  data?: any | undefined | null;
+
+  // Automatically generated 'createdAt' key.
+  createdAt?: Date | string | number | undefined | null;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt?: Date | string | number | undefined | null;
+};
+
+export type StoreJobInsertInput = {
+  insert: StoreJobInsertPartialInput[] | StoreJobInsertPartialInput;
+  returning?: StoreJobReturningInput | undefined;
 };
 
 export type StoreJobUpdatePartial = {
@@ -1210,6 +926,12 @@ export type StoreJobUpdatePartial = {
     | {
         $subtract: string;
       };
+};
+
+export type StoreJobUpdate = {
+  update: StoreJobUpdatePartial;
+  where: StoreJobWhere;
+  returning?: StoreJobReturning | undefined;
 };
 
 export type StoreJobUpdatePartialInput = {
@@ -1327,16 +1049,584 @@ export type StoreJobUpdatePartialInput = {
       };
 };
 
-export type StoreJobUpdate = {
-  update: StoreJobUpdatePartial;
-  where: StoreJobWhere;
-  returning?: StoreJobReturning | undefined;
-};
-
 export type StoreJobUpdateInput = {
   update: StoreJobUpdatePartialInput;
   where: StoreJobWhereInput;
   returning?: StoreJobReturningInput | undefined;
+};
+
+// Store all tokens that belong to a session.
+export type StoreSessionStoreToken = {
+  // The primary key of the 'sessionStoreToken' model.
+  id: string;
+
+  // The primary key of the 'sessionStore' model.
+  session: string;
+  expiresAt: Date;
+
+  // The primary key of the 'sessionStoreToken' model.
+  refreshToken?: string | undefined;
+  revokedAt?: Date | undefined;
+  createdAt: Date;
+};
+
+// Session data store, used by 'sessionStore\*' functions.
+export type StoreSessionStore = {
+  // The primary key of the 'sessionStore' model.
+  id: string;
+  checksum: string;
+  revokedAt?: Date | undefined;
+  data: any;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date;
+};
+
+// Store all tokens that belong to a session.
+export type StoreSessionStoreTokenInput = {
+  // The primary key of the 'sessionStoreToken' model.
+  id: string;
+
+  // The primary key of the 'sessionStore' model.
+  session: string;
+  expiresAt: Date | string | number;
+
+  // The primary key of the 'sessionStoreToken' model.
+  refreshToken?: string | undefined;
+  revokedAt?: Date | string | number | undefined;
+  createdAt: Date | string | number;
+};
+
+// Session data store, used by 'sessionStore\*' functions.
+export type StoreSessionStoreInput = {
+  // The primary key of the 'sessionStore' model.
+  id: string;
+  checksum: string;
+  revokedAt?: Date | string | number | undefined;
+  data?: any | undefined;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date | string | number;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date | string | number;
+};
+
+export type StoreSessionStoreTokenWhere = {
+  $raw?: import("@compas/store").QueryPart<any> | undefined;
+  $or?: StoreSessionStoreTokenWhere[] | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  idNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  session?: string | undefined;
+  sessionNotEqual?: string | undefined;
+  sessionIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  sessionNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  expiresAt?: Date | undefined;
+  expiresAtNotEqual?: Date | undefined;
+  expiresAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  expiresAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  expiresAtGreaterThan?: Date | undefined;
+  expiresAtLowerThan?: Date | undefined;
+  refreshToken?: string | undefined;
+  refreshTokenNotEqual?: string | undefined;
+  refreshTokenIn?:
+    | string[]
+    | import("@compas/store").QueryPart<any>
+    | undefined;
+  refreshTokenNotIn?:
+    | string[]
+    | import("@compas/store").QueryPart<any>
+    | undefined;
+  refreshTokenIsNull?: boolean | undefined;
+  refreshTokenIsNotNull?: boolean | undefined;
+  revokedAt?: Date | undefined;
+  revokedAtNotEqual?: Date | undefined;
+  revokedAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  revokedAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  revokedAtGreaterThan?: Date | undefined;
+  revokedAtLowerThan?: Date | undefined;
+  revokedAtIsNull?: boolean | undefined;
+  revokedAtIsNotNull?: boolean | undefined;
+  viaRefreshToken?:
+    | {
+        where: StoreSessionStoreTokenWhere;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaSession?:
+    | {
+        where: StoreSessionStoreWhere;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaAccessToken?:
+    | {
+        where: StoreSessionStoreTokenWhere;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokenNotExists?: StoreSessionStoreTokenWhere | undefined;
+};
+
+export type StoreSessionStoreWhere = {
+  $raw?: import("@compas/store").QueryPart<any> | undefined;
+  $or?: StoreSessionStoreWhere[] | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  idNotIn?: string[] | import("@compas/store").QueryPart<any> | undefined;
+  createdAt?: Date | undefined;
+  createdAtNotEqual?: Date | undefined;
+  createdAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  createdAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  createdAtGreaterThan?: Date | undefined;
+  createdAtLowerThan?: Date | undefined;
+  updatedAt?: Date | undefined;
+  updatedAtNotEqual?: Date | undefined;
+  updatedAtIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  updatedAtNotIn?: Date[] | import("@compas/store").QueryPart<any> | undefined;
+  updatedAtGreaterThan?: Date | undefined;
+  updatedAtLowerThan?: Date | undefined;
+  viaAccessTokens?:
+    | {
+        where: StoreSessionStoreTokenWhere;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokensNotExists?: StoreSessionStoreTokenWhere | undefined;
+};
+
+export type StoreSessionStoreTokenWhereInput = {
+  $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
+  $or?:
+    | StoreSessionStoreTokenWhereInput[]
+    | StoreSessionStoreTokenWhereInput
+    | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  idNotIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  session?: string | undefined;
+  sessionNotEqual?: string | undefined;
+  sessionIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  sessionNotIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  expiresAt?: Date | string | number | undefined;
+  expiresAtNotEqual?: Date | string | number | undefined;
+  expiresAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  expiresAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  expiresAtGreaterThan?: Date | string | number | undefined;
+  expiresAtLowerThan?: Date | string | number | undefined;
+  refreshToken?: string | undefined;
+  refreshTokenNotEqual?: string | undefined;
+  refreshTokenIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  refreshTokenNotIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  refreshTokenIsNull?: boolean | "true" | "false" | undefined;
+  refreshTokenIsNotNull?: boolean | "true" | "false" | undefined;
+  revokedAt?: Date | string | number | undefined;
+  revokedAtNotEqual?: Date | string | number | undefined;
+  revokedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  revokedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  revokedAtGreaterThan?: Date | string | number | undefined;
+  revokedAtLowerThan?: Date | string | number | undefined;
+  revokedAtIsNull?: boolean | "true" | "false" | undefined;
+  revokedAtIsNotNull?: boolean | "true" | "false" | undefined;
+  viaRefreshToken?:
+    | {
+        where?: StoreSessionStoreTokenWhereInput | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaSession?:
+    | {
+        where?: StoreSessionStoreWhereInput | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaAccessToken?:
+    | {
+        where?: StoreSessionStoreTokenWhereInput | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokenNotExists?: StoreSessionStoreTokenWhereInput | undefined;
+};
+
+export type StoreSessionStoreWhereInput = {
+  $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
+  $or?: StoreSessionStoreWhereInput[] | StoreSessionStoreWhereInput | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  idNotIn?:
+    | string[]
+    | string
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  createdAt?: Date | string | number | undefined;
+  createdAtNotEqual?: Date | string | number | undefined;
+  createdAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  createdAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  createdAtGreaterThan?: Date | string | number | undefined;
+  createdAtLowerThan?: Date | string | number | undefined;
+  updatedAt?: Date | string | number | undefined;
+  updatedAtNotEqual?: Date | string | number | undefined;
+  updatedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  updatedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | (any | import("@compas/store").QueryPart<any>)
+    | undefined;
+  updatedAtGreaterThan?: Date | string | number | undefined;
+  updatedAtLowerThan?: Date | string | number | undefined;
+  viaAccessTokens?:
+    | {
+        where?: StoreSessionStoreTokenWhereInput | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokensNotExists?: StoreSessionStoreTokenWhereInput | undefined;
+};
+
+export type StoreSessionStoreOrderBy =
+  | import("@compas/store").QueryPart<any>
+  | ("id" | "createdAt" | "updatedAt")[];
+
+export type StoreSessionStoreOrderByInput =
+  | (any | import("@compas/store").QueryPart<any>)
+  | ("id" | "createdAt" | "updatedAt")[]
+  | "id"
+  | "createdAt"
+  | "updatedAt";
+
+export type StoreSessionStoreOrderBySpec = {
+  id?: "ASC" | "DESC" | undefined;
+  createdAt?: "ASC" | "DESC" | undefined;
+  updatedAt?: "ASC" | "DESC" | undefined;
+};
+
+export type StoreSessionStoreOrderBySpecInput = {
+  id?: "ASC" | "DESC" | undefined;
+  createdAt?: "ASC" | "DESC" | undefined;
+  updatedAt?: "ASC" | "DESC" | undefined;
+};
+
+export type StoreSessionStoreReturning =
+  | "*"
+  | ("id" | "checksum" | "revokedAt" | "data" | "createdAt" | "updatedAt")[]
+  | undefined;
+
+export type StoreSessionStoreTokenOrderBy =
+  | import("@compas/store").QueryPart<any>
+  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
+
+export type StoreSessionStoreTokenOrderBySpec = {
+  id?: "ASC" | "DESC" | undefined;
+  session?: "ASC" | "DESC" | undefined;
+  expiresAt?: "ASC" | "DESC" | undefined;
+  refreshToken?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+  revokedAt?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+};
+
+export type StoreSessionStoreTokenReturning =
+  | "*"
+  | (
+      | "id"
+      | "session"
+      | "expiresAt"
+      | "refreshToken"
+      | "revokedAt"
+      | "createdAt"
+    )[]
+  | undefined;
+
+export type StoreSessionStoreTokenQueryBuilder = {
+  where?: StoreSessionStoreTokenWhere | undefined;
+  orderBy?: StoreSessionStoreTokenOrderBy | undefined;
+  orderBySpec?: StoreSessionStoreTokenOrderBySpec | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select: StoreSessionStoreTokenReturning;
+  refreshToken?: StoreSessionStoreTokenQueryBuilder | undefined;
+  session?: StoreSessionStoreQueryBuilder | undefined;
+  accessToken?: StoreSessionStoreTokenQueryBuilder | undefined;
+};
+
+export type StoreSessionStoreQueryBuilder = {
+  where?: StoreSessionStoreWhere | undefined;
+  orderBy?: StoreSessionStoreOrderBy | undefined;
+  orderBySpec?: StoreSessionStoreOrderBySpec | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select: StoreSessionStoreReturning;
+  accessTokens?: StoreSessionStoreTokenQueryBuilder | undefined;
+};
+
+export type StoreSessionStoreReturningInput =
+  | "*"
+  | ("id" | "checksum" | "revokedAt" | "data" | "createdAt" | "updatedAt")[]
+  | "id"
+  | "checksum"
+  | "revokedAt"
+  | "data"
+  | "createdAt"
+  | "updatedAt"
+  | undefined;
+
+export type StoreSessionStoreTokenOrderByInput =
+  | (any | import("@compas/store").QueryPart<any>)
+  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[]
+  | "id"
+  | "session"
+  | "expiresAt"
+  | "refreshToken"
+  | "revokedAt";
+
+export type StoreSessionStoreTokenOrderBySpecInput = {
+  id?: "ASC" | "DESC" | undefined;
+  session?: "ASC" | "DESC" | undefined;
+  expiresAt?: "ASC" | "DESC" | undefined;
+  refreshToken?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+  revokedAt?:
+    | "ASC"
+    | "DESC"
+    | "ASC NULLS FIRST"
+    | "DESC NULLS LAST"
+    | undefined;
+};
+
+export type StoreSessionStoreTokenReturningInput =
+  | "*"
+  | (
+      | "id"
+      | "session"
+      | "expiresAt"
+      | "refreshToken"
+      | "revokedAt"
+      | "createdAt"
+    )[]
+  | "id"
+  | "session"
+  | "expiresAt"
+  | "refreshToken"
+  | "revokedAt"
+  | "createdAt"
+  | undefined;
+
+export type StoreSessionStoreTokenQueryBuilderInput = {
+  where?: StoreSessionStoreTokenWhereInput | undefined;
+  orderBy?: StoreSessionStoreTokenOrderByInput | undefined;
+  orderBySpec?: StoreSessionStoreTokenOrderBySpecInput | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select?: StoreSessionStoreTokenReturningInput | undefined;
+  refreshToken?: StoreSessionStoreTokenQueryBuilderInput | undefined;
+  session?: StoreSessionStoreQueryBuilderInput | undefined;
+  accessToken?: StoreSessionStoreTokenQueryBuilderInput | undefined;
+};
+
+export type StoreSessionStoreQueryBuilderInput = {
+  where?: StoreSessionStoreWhereInput | undefined;
+  orderBy?: StoreSessionStoreOrderByInput | undefined;
+  orderBySpec?: StoreSessionStoreOrderBySpecInput | undefined;
+  limit?: number | undefined;
+  offset?: number | undefined;
+  select?: StoreSessionStoreReturningInput | undefined;
+  accessTokens?: StoreSessionStoreTokenQueryBuilderInput | undefined;
+};
+
+export type QueryResultStoreSessionStoreToken = {
+  // The primary key of the 'sessionStoreToken' model.
+  id: string;
+  session: string | QueryResultStoreSessionStore;
+  expiresAt: Date;
+  refreshToken?: string | undefined | QueryResultStoreSessionStoreToken;
+  revokedAt?: Date | undefined;
+  createdAt: Date;
+  accessToken?: QueryResultStoreSessionStoreToken | undefined;
+};
+
+export type QueryResultStoreSessionStore = {
+  // The primary key of the 'sessionStore' model.
+  id: string;
+  checksum: string;
+  revokedAt?: Date | undefined;
+  data: any;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date;
+  accessTokens?: QueryResultStoreSessionStoreToken[] | undefined;
+};
+
+export type QueryResultStoreSessionStoreTokenInput = {
+  // The primary key of the 'sessionStoreToken' model.
+  id: string;
+  session: string | QueryResultStoreSessionStoreInput;
+  expiresAt: Date | string | number;
+  refreshToken?: string | undefined | QueryResultStoreSessionStoreTokenInput;
+  revokedAt?: Date | string | number | undefined;
+  createdAt: Date | string | number;
+  accessToken?: QueryResultStoreSessionStoreTokenInput | undefined;
+};
+
+export type QueryResultStoreSessionStoreInput = {
+  // The primary key of the 'sessionStore' model.
+  id: string;
+  checksum: string;
+  revokedAt?: Date | string | number | undefined;
+  data?: any | undefined;
+
+  // Automatically generated 'createdAt' key.
+  createdAt: Date | string | number;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt: Date | string | number;
+  accessTokens?:
+    | QueryResultStoreSessionStoreTokenInput[]
+    | QueryResultStoreSessionStoreTokenInput
+    | undefined;
+};
+
+export type StoreSessionStoreInsertPartial = {
+  // The primary key of the 'sessionStore' model.
+  id?: string | undefined;
+  checksum: string;
+  revokedAt?: Date | undefined | null;
+  data: any;
+
+  // Automatically generated 'createdAt' key.
+  createdAt?: Date | undefined | null;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt?: Date | undefined | null;
+};
+
+export type StoreSessionStoreInsert = {
+  insert: StoreSessionStoreInsertPartial[];
+  returning?: StoreSessionStoreReturning | undefined;
+};
+
+export type StoreSessionStoreInsertPartialInput = {
+  // The primary key of the 'sessionStore' model.
+  id?: string | undefined;
+  checksum: string;
+  revokedAt?: Date | string | number | undefined | null;
+  data?: any | undefined | null;
+
+  // Automatically generated 'createdAt' key.
+  createdAt?: Date | string | number | undefined | null;
+
+  // Automatically generated 'updatedAt' key.
+  updatedAt?: Date | string | number | undefined | null;
+};
+
+export type StoreSessionStoreInsertInput = {
+  insert:
+    | StoreSessionStoreInsertPartialInput[]
+    | StoreSessionStoreInsertPartialInput;
+  returning?: StoreSessionStoreReturningInput | undefined;
 };
 
 export type StoreSessionStoreUpdatePartial = {
@@ -1387,6 +1677,12 @@ export type StoreSessionStoreUpdatePartial = {
     | {
         $subtract: string;
       };
+};
+
+export type StoreSessionStoreUpdate = {
+  update: StoreSessionStoreUpdatePartial;
+  where: StoreSessionStoreWhere;
+  returning?: StoreSessionStoreReturning | undefined;
 };
 
 export type StoreSessionStoreUpdatePartialInput = {
@@ -1447,16 +1743,50 @@ export type StoreSessionStoreUpdatePartialInput = {
       };
 };
 
-export type StoreSessionStoreUpdate = {
-  update: StoreSessionStoreUpdatePartial;
-  where: StoreSessionStoreWhere;
-  returning?: StoreSessionStoreReturning | undefined;
-};
-
 export type StoreSessionStoreUpdateInput = {
   update: StoreSessionStoreUpdatePartialInput;
   where: StoreSessionStoreWhereInput;
   returning?: StoreSessionStoreReturningInput | undefined;
+};
+
+export type StoreSessionStoreTokenInsertPartial = {
+  // The primary key of the 'sessionStoreToken' model.
+  id?: string | undefined;
+
+  // The primary key of the 'sessionStore' model.
+  session: string;
+  expiresAt: Date;
+
+  // The primary key of the 'sessionStoreToken' model.
+  refreshToken?: string | undefined | null;
+  revokedAt?: Date | undefined | null;
+  createdAt: Date;
+};
+
+export type StoreSessionStoreTokenInsert = {
+  insert: StoreSessionStoreTokenInsertPartial[];
+  returning?: StoreSessionStoreTokenReturning | undefined;
+};
+
+export type StoreSessionStoreTokenInsertPartialInput = {
+  // The primary key of the 'sessionStoreToken' model.
+  id?: string | undefined;
+
+  // The primary key of the 'sessionStore' model.
+  session: string;
+  expiresAt: Date | string | number;
+
+  // The primary key of the 'sessionStoreToken' model.
+  refreshToken?: string | undefined | null;
+  revokedAt?: Date | string | number | undefined | null;
+  createdAt: Date | string | number;
+};
+
+export type StoreSessionStoreTokenInsertInput = {
+  insert:
+    | StoreSessionStoreTokenInsertPartialInput[]
+    | StoreSessionStoreTokenInsertPartialInput;
+  returning?: StoreSessionStoreTokenReturningInput | undefined;
 };
 
 export type StoreSessionStoreTokenUpdatePartial = {
@@ -1490,6 +1820,12 @@ export type StoreSessionStoreTokenUpdatePartial = {
     | {
         $subtract: string;
       };
+};
+
+export type StoreSessionStoreTokenUpdate = {
+  update: StoreSessionStoreTokenUpdatePartial;
+  where: StoreSessionStoreTokenWhere;
+  returning?: StoreSessionStoreTokenReturning | undefined;
 };
 
 export type StoreSessionStoreTokenUpdatePartialInput = {
@@ -1531,46 +1867,538 @@ export type StoreSessionStoreTokenUpdatePartialInput = {
       };
 };
 
-export type StoreSessionStoreTokenUpdate = {
-  update: StoreSessionStoreTokenUpdatePartial;
-  where: StoreSessionStoreTokenWhere;
-  returning?: StoreSessionStoreTokenReturning | undefined;
-};
-
 export type StoreSessionStoreTokenUpdateInput = {
   update: StoreSessionStoreTokenUpdatePartialInput;
   where: StoreSessionStoreTokenWhereInput;
   returning?: StoreSessionStoreTokenReturningInput | undefined;
 };
 
-export type StoreFileOrderBy =
-  | import("@compas/store").QueryPart<any>
+export type StoreFileResponse = {
+  id: string;
+  name: string;
+  contentType: string;
+  url: string;
+  placeholderImage?: string | undefined;
+  altText?: string | undefined;
+};
+
+export type StoreFileResponseInput = {
+  id: string;
+  name: string;
+  contentType: string;
+  url: string;
+  placeholderImage?: string | undefined;
+  altText?: string | undefined;
+};
+
+// Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
+export type StoreImageTransformOptions = {
+  q: number;
+  w: number;
+};
+
+// Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
+export type StoreImageTransformOptionsInput = {
+  q?: number | undefined;
+  w: number;
+};
+
+// Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
+export type StoreSecureImageTransformOptions = {
+  accessToken: string;
+  q: number;
+  w: number;
+};
+
+// Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
+export type StoreSecureImageTransformOptionsInput = {
+  accessToken: string;
+  q?: number | undefined;
+  w: number;
+};
+
+export type StoreFileWhere_1 = {
+  $raw?: any | undefined;
+  $or?: StoreFileWhere_1[] | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | any | undefined;
+  idNotIn?: string[] | any | undefined;
+  bucketName?: string | undefined;
+  bucketNameNotEqual?: string | undefined;
+  bucketNameIn?: string[] | any | undefined;
+  bucketNameNotIn?: string[] | any | undefined;
+  bucketNameLike?: string | undefined;
+  bucketNameILike?: string | undefined;
+  bucketNameNotLike?: string | undefined;
+  createdAt?: Date | undefined;
+  createdAtNotEqual?: Date | undefined;
+  createdAtIn?: Date[] | any | undefined;
+  createdAtNotIn?: Date[] | any | undefined;
+  createdAtGreaterThan?: Date | undefined;
+  createdAtLowerThan?: Date | undefined;
+  updatedAt?: Date | undefined;
+  updatedAtNotEqual?: Date | undefined;
+  updatedAtIn?: Date[] | any | undefined;
+  updatedAtNotIn?: Date[] | any | undefined;
+  updatedAtGreaterThan?: Date | undefined;
+  updatedAtLowerThan?: Date | undefined;
+};
+
+export type StoreFileWhereInput_1 = {
+  $raw?: any | undefined;
+  $or?: StoreFileWhereInput_1[] | StoreFileWhereInput_1 | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | string | any | undefined;
+  idNotIn?: string[] | string | any | undefined;
+  bucketName?: string | undefined;
+  bucketNameNotEqual?: string | undefined;
+  bucketNameIn?: string[] | string | any | undefined;
+  bucketNameNotIn?: string[] | string | any | undefined;
+  bucketNameLike?: string | undefined;
+  bucketNameILike?: string | undefined;
+  bucketNameNotLike?: string | undefined;
+  createdAt?: Date | string | number | undefined;
+  createdAtNotEqual?: Date | string | number | undefined;
+  createdAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  createdAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  createdAtGreaterThan?: Date | string | number | undefined;
+  createdAtLowerThan?: Date | string | number | undefined;
+  updatedAt?: Date | string | number | undefined;
+  updatedAtNotEqual?: Date | string | number | undefined;
+  updatedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  updatedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  updatedAtGreaterThan?: Date | string | number | undefined;
+  updatedAtLowerThan?: Date | string | number | undefined;
+};
+
+export type StoreJobWhere_1 = {
+  $raw?: any | undefined;
+  $or?: StoreJobWhere_1[] | undefined;
+  id?: number | undefined;
+  idNotEqual?: number | undefined;
+  idIn?: number[] | any | undefined;
+  idNotIn?: number[] | any | undefined;
+  idGreaterThan?: number | undefined;
+  idLowerThan?: number | undefined;
+  isComplete?: boolean | undefined;
+  isCompleteIsNull?: boolean | undefined;
+  isCompleteIsNotNull?: boolean | undefined;
+  name?: string | undefined;
+  nameNotEqual?: string | undefined;
+  nameIn?: string[] | any | undefined;
+  nameNotIn?: string[] | any | undefined;
+  nameLike?: string | undefined;
+  nameILike?: string | undefined;
+  nameNotLike?: string | undefined;
+  scheduledAt?: Date | undefined;
+  scheduledAtNotEqual?: Date | undefined;
+  scheduledAtIn?: Date[] | any | undefined;
+  scheduledAtNotIn?: Date[] | any | undefined;
+  scheduledAtGreaterThan?: Date | undefined;
+  scheduledAtLowerThan?: Date | undefined;
+  scheduledAtIsNull?: boolean | undefined;
+  scheduledAtIsNotNull?: boolean | undefined;
+  createdAt?: Date | undefined;
+  createdAtNotEqual?: Date | undefined;
+  createdAtIn?: Date[] | any | undefined;
+  createdAtNotIn?: Date[] | any | undefined;
+  createdAtGreaterThan?: Date | undefined;
+  createdAtLowerThan?: Date | undefined;
+  updatedAt?: Date | undefined;
+  updatedAtNotEqual?: Date | undefined;
+  updatedAtIn?: Date[] | any | undefined;
+  updatedAtNotIn?: Date[] | any | undefined;
+  updatedAtGreaterThan?: Date | undefined;
+  updatedAtLowerThan?: Date | undefined;
+};
+
+export type StoreJobWhereInput_1 = {
+  $raw?: any | undefined;
+  $or?: StoreJobWhereInput_1[] | StoreJobWhereInput_1 | undefined;
+  id?: number | undefined;
+  idNotEqual?: number | undefined;
+  idIn?: number[] | number | any | undefined;
+  idNotIn?: number[] | number | any | undefined;
+  idGreaterThan?: number | undefined;
+  idLowerThan?: number | undefined;
+  isComplete?: boolean | "true" | "false" | undefined;
+  isCompleteIsNull?: boolean | "true" | "false" | undefined;
+  isCompleteIsNotNull?: boolean | "true" | "false" | undefined;
+  name?: string | undefined;
+  nameNotEqual?: string | undefined;
+  nameIn?: string[] | string | any | undefined;
+  nameNotIn?: string[] | string | any | undefined;
+  nameLike?: string | undefined;
+  nameILike?: string | undefined;
+  nameNotLike?: string | undefined;
+  scheduledAt?: Date | string | number | undefined;
+  scheduledAtNotEqual?: Date | string | number | undefined;
+  scheduledAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  scheduledAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  scheduledAtGreaterThan?: Date | string | number | undefined;
+  scheduledAtLowerThan?: Date | string | number | undefined;
+  scheduledAtIsNull?: boolean | "true" | "false" | undefined;
+  scheduledAtIsNotNull?: boolean | "true" | "false" | undefined;
+  createdAt?: Date | string | number | undefined;
+  createdAtNotEqual?: Date | string | number | undefined;
+  createdAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  createdAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  createdAtGreaterThan?: Date | string | number | undefined;
+  createdAtLowerThan?: Date | string | number | undefined;
+  updatedAt?: Date | string | number | undefined;
+  updatedAtNotEqual?: Date | string | number | undefined;
+  updatedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  updatedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  updatedAtGreaterThan?: Date | string | number | undefined;
+  updatedAtLowerThan?: Date | string | number | undefined;
+};
+
+export type StoreSessionStoreTokenWhere_1 = {
+  $raw?: any | undefined;
+  $or?: StoreSessionStoreTokenWhere_1[] | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | any | undefined;
+  idNotIn?: string[] | any | undefined;
+  session?: string | undefined;
+  sessionNotEqual?: string | undefined;
+  sessionIn?: string[] | any | undefined;
+  sessionNotIn?: string[] | any | undefined;
+  expiresAt?: Date | undefined;
+  expiresAtNotEqual?: Date | undefined;
+  expiresAtIn?: Date[] | any | undefined;
+  expiresAtNotIn?: Date[] | any | undefined;
+  expiresAtGreaterThan?: Date | undefined;
+  expiresAtLowerThan?: Date | undefined;
+  refreshToken?: string | undefined;
+  refreshTokenNotEqual?: string | undefined;
+  refreshTokenIn?: string[] | any | undefined;
+  refreshTokenNotIn?: string[] | any | undefined;
+  refreshTokenIsNull?: boolean | undefined;
+  refreshTokenIsNotNull?: boolean | undefined;
+  revokedAt?: Date | undefined;
+  revokedAtNotEqual?: Date | undefined;
+  revokedAtIn?: Date[] | any | undefined;
+  revokedAtNotIn?: Date[] | any | undefined;
+  revokedAtGreaterThan?: Date | undefined;
+  revokedAtLowerThan?: Date | undefined;
+  revokedAtIsNull?: boolean | undefined;
+  revokedAtIsNotNull?: boolean | undefined;
+  viaRefreshToken?:
+    | {
+        where: StoreSessionStoreTokenWhere_1;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaSession?:
+    | {
+        where: StoreSessionStoreWhere_1;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaAccessToken?:
+    | {
+        where: StoreSessionStoreTokenWhere_1;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokenNotExists?: StoreSessionStoreTokenWhere_1 | undefined;
+};
+
+export type StoreSessionStoreWhere_1 = {
+  $raw?: any | undefined;
+  $or?: StoreSessionStoreWhere_1[] | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | any | undefined;
+  idNotIn?: string[] | any | undefined;
+  createdAt?: Date | undefined;
+  createdAtNotEqual?: Date | undefined;
+  createdAtIn?: Date[] | any | undefined;
+  createdAtNotIn?: Date[] | any | undefined;
+  createdAtGreaterThan?: Date | undefined;
+  createdAtLowerThan?: Date | undefined;
+  updatedAt?: Date | undefined;
+  updatedAtNotEqual?: Date | undefined;
+  updatedAtIn?: Date[] | any | undefined;
+  updatedAtNotIn?: Date[] | any | undefined;
+  updatedAtGreaterThan?: Date | undefined;
+  updatedAtLowerThan?: Date | undefined;
+  viaAccessTokens?:
+    | {
+        where: StoreSessionStoreTokenWhere_1;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokensNotExists?: StoreSessionStoreTokenWhere_1 | undefined;
+};
+
+export type StoreSessionStoreTokenWhereInput_1 = {
+  $raw?: any | undefined;
+  $or?:
+    | StoreSessionStoreTokenWhereInput_1[]
+    | StoreSessionStoreTokenWhereInput_1
+    | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | string | any | undefined;
+  idNotIn?: string[] | string | any | undefined;
+  session?: string | undefined;
+  sessionNotEqual?: string | undefined;
+  sessionIn?: string[] | string | any | undefined;
+  sessionNotIn?: string[] | string | any | undefined;
+  expiresAt?: Date | string | number | undefined;
+  expiresAtNotEqual?: Date | string | number | undefined;
+  expiresAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  expiresAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  expiresAtGreaterThan?: Date | string | number | undefined;
+  expiresAtLowerThan?: Date | string | number | undefined;
+  refreshToken?: string | undefined;
+  refreshTokenNotEqual?: string | undefined;
+  refreshTokenIn?: string[] | string | any | undefined;
+  refreshTokenNotIn?: string[] | string | any | undefined;
+  refreshTokenIsNull?: boolean | "true" | "false" | undefined;
+  refreshTokenIsNotNull?: boolean | "true" | "false" | undefined;
+  revokedAt?: Date | string | number | undefined;
+  revokedAtNotEqual?: Date | string | number | undefined;
+  revokedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  revokedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  revokedAtGreaterThan?: Date | string | number | undefined;
+  revokedAtLowerThan?: Date | string | number | undefined;
+  revokedAtIsNull?: boolean | "true" | "false" | undefined;
+  revokedAtIsNotNull?: boolean | "true" | "false" | undefined;
+  viaRefreshToken?:
+    | {
+        where?: StoreSessionStoreTokenWhereInput_1 | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaSession?:
+    | {
+        where?: StoreSessionStoreWhereInput_1 | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  viaAccessToken?:
+    | {
+        where?: StoreSessionStoreTokenWhereInput_1 | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokenNotExists?: StoreSessionStoreTokenWhereInput_1 | undefined;
+};
+
+export type StoreSessionStoreWhereInput_1 = {
+  $raw?: any | undefined;
+  $or?:
+    | StoreSessionStoreWhereInput_1[]
+    | StoreSessionStoreWhereInput_1
+    | undefined;
+  id?: string | undefined;
+  idNotEqual?: string | undefined;
+  idIn?: string[] | string | any | undefined;
+  idNotIn?: string[] | string | any | undefined;
+  createdAt?: Date | string | number | undefined;
+  createdAtNotEqual?: Date | string | number | undefined;
+  createdAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  createdAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  createdAtGreaterThan?: Date | string | number | undefined;
+  createdAtLowerThan?: Date | string | number | undefined;
+  updatedAt?: Date | string | number | undefined;
+  updatedAtNotEqual?: Date | string | number | undefined;
+  updatedAtIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  updatedAtNotIn?:
+    | (Date | string | number)[]
+    | Date
+    | string
+    | number
+    | any
+    | undefined;
+  updatedAtGreaterThan?: Date | string | number | undefined;
+  updatedAtLowerThan?: Date | string | number | undefined;
+  viaAccessTokens?:
+    | {
+        where?: StoreSessionStoreTokenWhereInput_1 | undefined;
+        limit?: number | undefined;
+        offset?: number | undefined;
+      }
+    | undefined;
+  accessTokensNotExists?: StoreSessionStoreTokenWhereInput_1 | undefined;
+};
+
+export type StoreFileUpdate_1 = {
+  update: StoreFileUpdatePartial;
+  where: StoreFileWhere_1;
+  returning?: StoreFileReturning | undefined;
+};
+
+export type StoreFileUpdateInput_1 = {
+  update: StoreFileUpdatePartialInput;
+  where: StoreFileWhereInput_1;
+  returning?: StoreFileReturningInput | undefined;
+};
+
+export type StoreJobUpdate_1 = {
+  update: StoreJobUpdatePartial;
+  where: StoreJobWhere_1;
+  returning?: StoreJobReturning | undefined;
+};
+
+export type StoreJobUpdateInput_1 = {
+  update: StoreJobUpdatePartialInput;
+  where: StoreJobWhereInput_1;
+  returning?: StoreJobReturningInput | undefined;
+};
+
+export type StoreSessionStoreUpdate_1 = {
+  update: StoreSessionStoreUpdatePartial;
+  where: StoreSessionStoreWhere_1;
+  returning?: StoreSessionStoreReturning | undefined;
+};
+
+export type StoreSessionStoreUpdateInput_1 = {
+  update: StoreSessionStoreUpdatePartialInput;
+  where: StoreSessionStoreWhereInput_1;
+  returning?: StoreSessionStoreReturningInput | undefined;
+};
+
+export type StoreSessionStoreTokenUpdate_1 = {
+  update: StoreSessionStoreTokenUpdatePartial;
+  where: StoreSessionStoreTokenWhere_1;
+  returning?: StoreSessionStoreTokenReturning | undefined;
+};
+
+export type StoreSessionStoreTokenUpdateInput_1 = {
+  update: StoreSessionStoreTokenUpdatePartialInput;
+  where: StoreSessionStoreTokenWhereInput_1;
+  returning?: StoreSessionStoreTokenReturningInput | undefined;
+};
+
+export type StoreFileOrderBy_1 =
+  | any
   | ("id" | "bucketName" | "createdAt" | "updatedAt")[];
 
-export type StoreFileOrderByInput =
-  | import("@compas/store").QueryPart<any>
+export type StoreFileOrderByInput_1 =
+  | any
   | ("id" | "bucketName" | "createdAt" | "updatedAt")[]
   | "id"
   | "bucketName"
   | "createdAt"
   | "updatedAt";
 
-export type StoreFileOrderBySpec = {
-  id?: "ASC" | "DESC" | undefined;
-  bucketName?: "ASC" | "DESC" | undefined;
-  createdAt?: "ASC" | "DESC" | undefined;
-  updatedAt?: "ASC" | "DESC" | undefined;
-};
-
-export type StoreFileOrderBySpecInput = {
-  id?: "ASC" | "DESC" | undefined;
-  bucketName?: "ASC" | "DESC" | undefined;
-  createdAt?: "ASC" | "DESC" | undefined;
-  updatedAt?: "ASC" | "DESC" | undefined;
-};
-
-export type StoreJobOrderBy =
-  | import("@compas/store").QueryPart<any>
+export type StoreJobOrderBy_1 =
+  | any
   | (
       | "id"
       | "isComplete"
@@ -1580,8 +2408,8 @@ export type StoreJobOrderBy =
       | "updatedAt"
     )[];
 
-export type StoreJobOrderByInput =
-  | import("@compas/store").QueryPart<any>
+export type StoreJobOrderByInput_1 =
+  | any
   | ("id" | "isComplete" | "name" | "scheduledAt" | "createdAt" | "updatedAt")[]
   | "id"
   | "isComplete"
@@ -1590,73 +2418,23 @@ export type StoreJobOrderByInput =
   | "createdAt"
   | "updatedAt";
 
-export type StoreJobOrderBySpec = {
-  id?: "ASC" | "DESC" | undefined;
-  isComplete?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-  name?: "ASC" | "DESC" | undefined;
-  scheduledAt?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-  createdAt?: "ASC" | "DESC" | undefined;
-  updatedAt?: "ASC" | "DESC" | undefined;
-};
-
-export type StoreJobOrderBySpecInput = {
-  id?: "ASC" | "DESC" | undefined;
-  isComplete?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-  name?: "ASC" | "DESC" | undefined;
-  scheduledAt?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-  createdAt?: "ASC" | "DESC" | undefined;
-  updatedAt?: "ASC" | "DESC" | undefined;
-};
-
-export type StoreSessionStoreOrderBy =
-  | import("@compas/store").QueryPart<any>
+export type StoreSessionStoreOrderBy_1 =
+  | any
   | ("id" | "createdAt" | "updatedAt")[];
 
-export type StoreSessionStoreOrderByInput =
-  | import("@compas/store").QueryPart<any>
+export type StoreSessionStoreOrderByInput_1 =
+  | any
   | ("id" | "createdAt" | "updatedAt")[]
   | "id"
   | "createdAt"
   | "updatedAt";
 
-export type StoreSessionStoreOrderBySpec = {
-  id?: "ASC" | "DESC" | undefined;
-  createdAt?: "ASC" | "DESC" | undefined;
-  updatedAt?: "ASC" | "DESC" | undefined;
-};
-
-export type StoreSessionStoreOrderBySpecInput = {
-  id?: "ASC" | "DESC" | undefined;
-  createdAt?: "ASC" | "DESC" | undefined;
-  updatedAt?: "ASC" | "DESC" | undefined;
-};
-
-export type StoreSessionStoreTokenOrderBy =
-  | import("@compas/store").QueryPart<any>
+export type StoreSessionStoreTokenOrderBy_1 =
+  | any
   | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
 
-export type StoreSessionStoreTokenOrderByInput =
-  | import("@compas/store").QueryPart<any>
+export type StoreSessionStoreTokenOrderByInput_1 =
+  | any
   | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[]
   | "id"
   | "session"
@@ -1664,239 +2442,82 @@ export type StoreSessionStoreTokenOrderByInput =
   | "refreshToken"
   | "revokedAt";
 
-export type StoreSessionStoreTokenOrderBySpec = {
-  id?: "ASC" | "DESC" | undefined;
-  session?: "ASC" | "DESC" | undefined;
-  expiresAt?: "ASC" | "DESC" | undefined;
-  refreshToken?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-  revokedAt?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-};
-
-export type StoreSessionStoreTokenOrderBySpecInput = {
-  id?: "ASC" | "DESC" | undefined;
-  session?: "ASC" | "DESC" | undefined;
-  expiresAt?: "ASC" | "DESC" | undefined;
-  refreshToken?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-  revokedAt?:
-    | "ASC"
-    | "DESC"
-    | "ASC NULLS FIRST"
-    | "DESC NULLS LAST"
-    | undefined;
-};
-
-export type StoreFileQueryBuilder = {
-  where?: StoreFileWhere | undefined;
-  orderBy?: StoreFileOrderBy | undefined;
+export type StoreFileQueryBuilder_1 = {
+  where?: StoreFileWhere_1 | undefined;
+  orderBy?: StoreFileOrderBy_1 | undefined;
   orderBySpec?: StoreFileOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select: StoreFileReturning;
 };
 
-export type StoreFileQueryBuilderInput = {
-  where?: StoreFileWhereInput | undefined;
-  orderBy?: StoreFileOrderByInput | undefined;
+export type StoreFileQueryBuilderInput_1 = {
+  where?: StoreFileWhereInput_1 | undefined;
+  orderBy?: StoreFileOrderByInput_1 | undefined;
   orderBySpec?: StoreFileOrderBySpecInput | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select?: StoreFileReturningInput | undefined;
 };
 
-export type StoreJobQueryBuilder = {
-  where?: StoreJobWhere | undefined;
-  orderBy?: StoreJobOrderBy | undefined;
+export type StoreJobQueryBuilder_1 = {
+  where?: StoreJobWhere_1 | undefined;
+  orderBy?: StoreJobOrderBy_1 | undefined;
   orderBySpec?: StoreJobOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select: StoreJobReturning;
 };
 
-export type StoreJobQueryBuilderInput = {
-  where?: StoreJobWhereInput | undefined;
-  orderBy?: StoreJobOrderByInput | undefined;
+export type StoreJobQueryBuilderInput_1 = {
+  where?: StoreJobWhereInput_1 | undefined;
+  orderBy?: StoreJobOrderByInput_1 | undefined;
   orderBySpec?: StoreJobOrderBySpecInput | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select?: StoreJobReturningInput | undefined;
 };
 
-export type StoreSessionStoreTokenQueryBuilder = {
-  where?: StoreSessionStoreTokenWhere | undefined;
-  orderBy?: StoreSessionStoreTokenOrderBy | undefined;
+export type StoreSessionStoreTokenQueryBuilder_1 = {
+  where?: StoreSessionStoreTokenWhere_1 | undefined;
+  orderBy?: StoreSessionStoreTokenOrderBy_1 | undefined;
   orderBySpec?: StoreSessionStoreTokenOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select: StoreSessionStoreTokenReturning;
-  refreshToken?: StoreSessionStoreTokenQueryBuilder | undefined;
-  session?: StoreSessionStoreQueryBuilder | undefined;
-  accessToken?: StoreSessionStoreTokenQueryBuilder | undefined;
+  refreshToken?: StoreSessionStoreTokenQueryBuilder_1 | undefined;
+  session?: StoreSessionStoreQueryBuilder_1 | undefined;
+  accessToken?: StoreSessionStoreTokenQueryBuilder_1 | undefined;
 };
 
-export type StoreSessionStoreQueryBuilder = {
-  where?: StoreSessionStoreWhere | undefined;
-  orderBy?: StoreSessionStoreOrderBy | undefined;
+export type StoreSessionStoreQueryBuilder_1 = {
+  where?: StoreSessionStoreWhere_1 | undefined;
+  orderBy?: StoreSessionStoreOrderBy_1 | undefined;
   orderBySpec?: StoreSessionStoreOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select: StoreSessionStoreReturning;
-  accessTokens?: StoreSessionStoreTokenQueryBuilder | undefined;
+  accessTokens?: StoreSessionStoreTokenQueryBuilder_1 | undefined;
 };
 
-export type StoreSessionStoreTokenQueryBuilderInput = {
-  where?: StoreSessionStoreTokenWhereInput | undefined;
-  orderBy?: StoreSessionStoreTokenOrderByInput | undefined;
+export type StoreSessionStoreTokenQueryBuilderInput_1 = {
+  where?: StoreSessionStoreTokenWhereInput_1 | undefined;
+  orderBy?: StoreSessionStoreTokenOrderByInput_1 | undefined;
   orderBySpec?: StoreSessionStoreTokenOrderBySpecInput | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select?: StoreSessionStoreTokenReturningInput | undefined;
-  refreshToken?: StoreSessionStoreTokenQueryBuilderInput | undefined;
-  session?: StoreSessionStoreQueryBuilderInput | undefined;
-  accessToken?: StoreSessionStoreTokenQueryBuilderInput | undefined;
+  refreshToken?: StoreSessionStoreTokenQueryBuilderInput_1 | undefined;
+  session?: StoreSessionStoreQueryBuilderInput_1 | undefined;
+  accessToken?: StoreSessionStoreTokenQueryBuilderInput_1 | undefined;
 };
 
-export type StoreSessionStoreQueryBuilderInput = {
-  where?: StoreSessionStoreWhereInput | undefined;
-  orderBy?: StoreSessionStoreOrderByInput | undefined;
+export type StoreSessionStoreQueryBuilderInput_1 = {
+  where?: StoreSessionStoreWhereInput_1 | undefined;
+  orderBy?: StoreSessionStoreOrderByInput_1 | undefined;
   orderBySpec?: StoreSessionStoreOrderBySpecInput | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
   select?: StoreSessionStoreReturningInput | undefined;
-  accessTokens?: StoreSessionStoreTokenQueryBuilderInput | undefined;
-};
-
-export type QueryResultStoreFile = {
-  // The primary key of the 'file' model.
-  id: string;
-  contentLength: number;
-  bucketName: string;
-  contentType: string;
-  name: string;
-  meta: StoreFileMeta;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date;
-};
-
-export type QueryResultStoreFileInput = {
-  // The primary key of the 'file' model.
-  id: string;
-  contentLength: number;
-  bucketName: string;
-  contentType: string;
-  name: string;
-  meta?: StoreFileMetaInput | undefined;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date | string | number;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date | string | number;
-};
-
-export type QueryResultStoreJob = {
-  id: number;
-  isComplete: boolean;
-  handlerTimeout?: number | undefined;
-  priority: number;
-  retryCount: number;
-  name: string;
-  scheduledAt: Date;
-  data: any;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date;
-};
-
-export type QueryResultStoreJobInput = {
-  id: number;
-  isComplete?: boolean | "true" | "false" | undefined;
-  handlerTimeout?: number | undefined;
-  priority?: number | undefined;
-  retryCount?: number | undefined;
-  name: string;
-  scheduledAt?: Date | string | number | undefined;
-  data?: any | undefined;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date | string | number;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date | string | number;
-};
-
-export type QueryResultStoreSessionStoreToken = {
-  // The primary key of the 'sessionStoreToken' model.
-  id: string;
-  session: string | QueryResultStoreSessionStore;
-  expiresAt: Date;
-  refreshToken?: string | undefined | QueryResultStoreSessionStoreToken;
-  revokedAt?: Date | undefined;
-  createdAt: Date;
-  accessToken?: QueryResultStoreSessionStoreToken | undefined;
-};
-
-export type QueryResultStoreSessionStore = {
-  // The primary key of the 'sessionStore' model.
-  id: string;
-  checksum: string;
-  revokedAt?: Date | undefined;
-  data: any;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date;
-  accessTokens?: QueryResultStoreSessionStoreToken[] | undefined;
-};
-
-export type QueryResultStoreSessionStoreTokenInput = {
-  // The primary key of the 'sessionStoreToken' model.
-  id: string;
-  session: string | QueryResultStoreSessionStoreInput;
-  expiresAt: Date | string | number;
-  refreshToken?: string | undefined | QueryResultStoreSessionStoreTokenInput;
-  revokedAt?: Date | string | number | undefined;
-  createdAt: Date | string | number;
-  accessToken?: QueryResultStoreSessionStoreTokenInput | undefined;
-};
-
-export type QueryResultStoreSessionStoreInput = {
-  // The primary key of the 'sessionStore' model.
-  id: string;
-  checksum: string;
-  revokedAt?: Date | string | number | undefined;
-  data?: any | undefined;
-
-  // Automatically generated 'createdAt' key.
-  createdAt: Date | string | number;
-
-  // Automatically generated 'updatedAt' key.
-  updatedAt: Date | string | number;
-  accessTokens?:
-    | QueryResultStoreSessionStoreTokenInput[]
-    | QueryResultStoreSessionStoreTokenInput
-    | undefined;
+  accessTokens?: StoreSessionStoreTokenQueryBuilderInput_1 | undefined;
 };

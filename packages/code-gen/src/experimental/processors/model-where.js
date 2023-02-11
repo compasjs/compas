@@ -1,7 +1,6 @@
 import { AppError } from "@compas/stdlib";
 import {
   AnyOfType,
-  AnyType,
   ArrayType,
   BooleanType,
   NumberType,
@@ -16,7 +15,7 @@ import {
   modelRelationGetInverse,
   modelRelationGetOwn,
 } from "./model-relation.js";
-import { structureModels } from "./models.js";
+import { modelQueryPartType, structureModels } from "./models.js";
 import { referenceUtilsGetProperty } from "./reference-utils.js";
 import { structureAddType, structureResolveReference } from "./structure.js";
 
@@ -162,11 +161,7 @@ export function modelWhereBuildWhereTypes(generateContext) {
       .keys({})
       .build();
 
-    // TODO: add validation + imports when the type / validators support this;
-    type.keys["$raw"] = new AnyType()
-      .raw(`import("@compas/store").QueryPart<any>`)
-      .optional()
-      .build();
+    type.keys["$raw"] = modelQueryPartType().optional().build();
     type.keys["$or"] = new ArrayType()
       .values(new ReferenceType(type.group, type.name))
       .optional()
@@ -188,7 +183,7 @@ export function modelWhereBuildWhereTypes(generateContext) {
                 isOptional: false,
               },
             },
-            new AnyType().raw(`import("@compas/store").QueryPart<any>`).build(),
+            modelQueryPartType().build(),
           ],
         };
       } else if (

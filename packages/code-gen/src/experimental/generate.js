@@ -146,7 +146,6 @@ export function generateExecute(generator, options) {
   docStringCleanup(generateContext);
 
   typesGeneratorInit(generateContext);
-  validatorGeneratorGenerateBaseTypes(generateContext);
 
   databaseGenerator(generateContext);
 
@@ -157,6 +156,8 @@ export function generateExecute(generator, options) {
 
   crudEventsGenerate(generateContext);
   crudHandlersGenerate(generateContext);
+
+  validatorGeneratorGenerateBaseTypes(generateContext);
 
   typesGeneratorFinalize(generateContext);
 

@@ -25,9 +25,7 @@ export function sessionStoreTokenWhere(
  * @returns {QueryPart<any>}
  */
 export function sessionStoreTokenOrderBy(
-  orderBy?:
-    | import("../common/types").StoreSessionStoreTokenOrderByInput
-    | undefined,
+  orderBy?: import("../common/types").StoreSessionStoreTokenOrderByInput,
   orderBySpec?:
     | import("../common/types").StoreSessionStoreTokenOrderBySpecInput
     | undefined,

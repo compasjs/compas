@@ -23,7 +23,7 @@ export function jobWhere(
  * @returns {QueryPart<any>}
  */
 export function jobOrderBy(
-  orderBy?: import("../common/types").StoreJobOrderByInput | undefined,
+  orderBy?: import("../common/types").StoreJobOrderByInput,
   orderBySpec?: import("../common/types").StoreJobOrderBySpecInput | undefined,
   options?:
     | {

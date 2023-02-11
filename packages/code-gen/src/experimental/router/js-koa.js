@@ -90,16 +90,18 @@ export function jsKoaPrepareContext(
     ? `  validatedBody: ${contextNames.bodyTypeName},\n`
     : "";
 
-  // TODO(any): better handling
   const ctxType = new AnyType(route.group, `${route.name}Ctx`)
-    .raw(
-      `import("koa").ExtendableContext & {
+    .implementations({
+      js: {
+        validatorOutputType: `import("koa").ExtendableContext & {
   event: import("@compas/stdlib").InsightEvent,
   log: import("@compas/stdlib").Logger,${
     partial.length > 0 ? `\n  ${partial.trim()}` : ""
   }
 } & { body: ${contextNames.responseTypeName ?? "any"} }`,
-    )
+        validatorInputType: "any",
+      },
+    })
     .build();
 
   typesGeneratorGenerateNamedType(generateContext, ctxType, {
@@ -122,14 +124,17 @@ export function jsKoaPrepareContext(
   );
 
   const fnType = new AnyType(route.group, `${route.name}Fn`)
-    .raw(
-      `(
+    .implementations({
+      js: {
+        validatorOutputType: `(
   ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(
-        route.name ?? "",
-      )}Ctx,
+          route.name ?? "",
+        )}Ctx,
   next: import("@compas/server").Next,
 ) => void | Promise<void>`,
-    )
+        validatorInputType: "any",
+      },
+    })
     .build();
 
   typesGeneratorGenerateNamedType(generateContext, fnType, {

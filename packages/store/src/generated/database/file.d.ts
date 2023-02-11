@@ -23,7 +23,7 @@ export function fileWhere(
  * @returns {QueryPart<any>}
  */
 export function fileOrderBy(
-  orderBy?: import("../common/types").StoreFileOrderByInput | undefined,
+  orderBy?: import("../common/types").StoreFileOrderByInput,
   orderBySpec?: import("../common/types").StoreFileOrderBySpecInput | undefined,
   options?:
     | {

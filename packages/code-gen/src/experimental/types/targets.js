@@ -30,9 +30,12 @@ export function typeTargetsDetermine(generateContext, type) {
 
   const targets = new Set();
 
+  /** @type {any} */
+  const includedTypes = [type];
+
   typeDefinitionTraverse(
     type,
-    (nestedType) => {
+    (nestedType, callback) => {
       if (nestedType.type === "file") {
         for (const fileTarget of fileTargets) {
           targets.add(fileTarget);
@@ -46,23 +49,24 @@ export function typeTargetsDetermine(generateContext, type) {
           generateContext.structure,
           nestedType,
         );
-        if (type !== resolvedRef) {
-          // @ts-expect-error
-          //
-          // Only apply when not recursing in to the same type
-          const result = typeTargetsDetermine(generateContext, resolvedRef);
-          for (const key of result) {
-            targets.add(key);
-          }
+
+        if (!includedTypes.includes(resolvedRef)) {
+          includedTypes.push(resolvedRef);
+          callback(resolvedRef);
         }
       }
+
+      callback(nestedType);
     },
     {
       isInitialType: true,
     },
   );
 
-  return [...targets];
+  const result = [...targets];
+  typeCache.set(type, result);
+
+  return result;
 }
 
 /**

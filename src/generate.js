@@ -79,8 +79,6 @@ export function generateStore(logger) {
           dialect: "postgres",
           includeDDL: true,
         },
-
-        // TODO: enable DDL dump
       },
     },
   });

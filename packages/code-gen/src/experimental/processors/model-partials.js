@@ -9,7 +9,7 @@ import {
   StringType,
 } from "../../builders/index.js";
 import { modelKeyGetSearchable } from "./model-keys.js";
-import { structureModels } from "./models.js";
+import { modelQueryPartType, structureModels } from "./models.js";
 import { referenceUtilsGetProperty } from "./reference-utils.js";
 import { structureAddType, structureResolveReference } from "./structure.js";
 
@@ -271,10 +271,7 @@ export function modelPartialOrderByTypes(generateContext) {
     );
 
     const namedOrderByType = new AnyOfType(model.group, `${model.name}OrderBy`)
-      .values(
-        new AnyType().raw(`import("@compas/store").QueryPart<any>`),
-        new ArrayType().values("foo"),
-      )
+      .values(modelQueryPartType(), new ArrayType().values("foo"))
       .build();
     namedOrderByType.values[1] = orderByType;
     orderBySpecType.group = model.group;
