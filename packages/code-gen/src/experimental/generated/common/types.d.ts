@@ -3,7 +3,8 @@
 export type ExperimentalAnyDefinitionTarget =
   | "js"
   | "ts"
-  | "jsKoa"
+  | "jsKoaReceive"
+  | "jsKoaSend"
   | "jsPostgres"
   | "jsAxios"
   | "tsAxios"
@@ -60,7 +61,8 @@ export type ExperimentalAnyDefinition = {
 export type ExperimentalAnyDefinitionTargetInput =
   | "js"
   | "ts"
-  | "jsKoa"
+  | "jsKoaReceive"
+  | "jsKoaSend"
   | "jsPostgres"
   | "jsAxios"
   | "tsAxios"

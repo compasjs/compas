@@ -33,7 +33,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - `{ js: {}, ts: {}, jsAxios: {}, tsAxios: {}, jsKoa: {} }`
   - Defaults to `any` in any supported language
   - Warn in the output when a case is missing?
-- [ ] `T.file()` specific types and validations
+- [x] `T.file()` specific types and validations
   - Should this hook in to the `T.any()` system?
   - Supported variants
     - `{ name?: string, data: Blob }` - Browser -> api client input

@@ -7,7 +7,7 @@ import {
   isPlainObject,
   refreshEnvironmentCache,
 } from "@compas/stdlib";
-import Axios from "axios";
+import axios from "axios";
 import { closeTestApp, createTestAppAndClient, getApp } from "../index.js";
 
 mainTestFn(import.meta);
@@ -20,8 +20,8 @@ test("server/app", (t) => {
   });
   const app = getApp();
 
-  const clientWithoutErrorLeak = Axios.create({});
-  const client = Axios.create({});
+  const clientWithoutErrorLeak = axios.create({});
+  const client = axios.create({});
 
   [appWithoutErrorLeak, app].forEach((app) =>
     app.use((ctx, next) => {

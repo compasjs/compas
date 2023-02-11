@@ -257,6 +257,8 @@ function getDefaultStructure() {
           success: true,
         }),
 
+      R.get("/get/file", "getFile").response(T.file()),
+
       R.post("/post", "post"),
       R.post("/post/idempotent", "postIdempotent")
         .idempotent()
@@ -265,13 +267,18 @@ function getDefaultStructure() {
             foo: T.bool(),
           },
         }),
-      R.post("/post/full")
+      R.post("/post/full", "postFull")
         .body({
           enable: T.bool(),
         })
         .response({
           isEnabled: true,
         }),
+      R.post("/post/file", "postFile")
+        .files({
+          file: T.file(),
+        })
+        .response({}),
 
       // TODO: put, delete routes and file (post and fetch) routes
 

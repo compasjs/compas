@@ -16,6 +16,12 @@ test("code-gen/experimental/router/generator", (t) => {
             },
             exposeApiStructure: true,
           },
+          apiClient: {
+            target: {
+              library: "axios",
+              targetRuntime: "node.js",
+            },
+          },
           openApi: {},
         },
         targetLanguage: "js",

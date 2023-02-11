@@ -12,7 +12,8 @@ const typeCache = new WeakMap();
 /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
 const fileTargets = [
   "jsAxiosNode",
-  "jsKoa",
+  "jsKoaReceive",
+  "jsKoaSend",
   "tsAxiosBrowser",
   "tsAxiosReactNative",
 ];

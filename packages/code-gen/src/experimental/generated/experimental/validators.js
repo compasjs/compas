@@ -903,7 +903,8 @@ export function validateExperimentalAnyDefinitionTarget(value) {
       } else if (
         convertedString0 !== "js" &&
         convertedString0 !== "ts" &&
-        convertedString0 !== "jsKoa" &&
+        convertedString0 !== "jsKoaReceive" &&
+        convertedString0 !== "jsKoaSend" &&
         convertedString0 !== "jsPostgres" &&
         convertedString0 !== "jsAxios" &&
         convertedString0 !== "tsAxios" &&
@@ -916,7 +917,8 @@ export function validateExperimentalAnyDefinitionTarget(value) {
           allowedValues: [
             "js",
             "ts",
-            "jsKoa",
+            "jsKoaReceive",
+            "jsKoaSend",
             "jsPostgres",
             "jsAxios",
             "tsAxios",

@@ -9,6 +9,7 @@ import {
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
+import { fileImplementations } from "../processors/file-implementations.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesCacheGet } from "../types/cache.js";
@@ -853,10 +854,75 @@ export function validatorJavascriptDate(file, type, validatorState) {
 export function validatorJavascriptFile(file, type, validatorState) {
   const valuePath = formatValuePath(validatorState);
   const resultPath = formatResultPath(validatorState);
-  // const errorKey = formatErrorKey(validatorState);
+  const errorKey = formatErrorKey(validatorState);
 
-  // This should always be a custom validator.
-  fileWrite(file, `${resultPath} = ${valuePath};`);
+  let didWrite = false;
+  for (
+    let i = validatorState.outputTypeOptions.targets.length - 1;
+    i >= 0;
+    --i
+  ) {
+    const target =
+      fileImplementations[validatorState.outputTypeOptions.targets[i]];
+    if (target?.validatorExpression) {
+      fileBlockStart(
+        file,
+        `if (${target.validatorExpression.replaceAll(`$value$`, valuePath)})`,
+      );
+
+      if (target.validatorImport) {
+        // Add the necessary imports for the used expression.
+        const importCollector =
+          JavascriptImportCollector.getImportCollector(file);
+        importCollector.raw(target.validatorImport);
+      }
+
+      fileWrite(file, `${resultPath} = ${valuePath};`);
+
+      fileBlockEnd(file);
+      fileBlockStart(file, `else`);
+      fileWrite(
+        file,
+        `${errorKey} = {
+  key: "validator.file",
+  message: "Invalid file input. See the input type for more information.",
+};`,
+      );
+      fileBlockEnd(file);
+
+      didWrite = true;
+      break;
+    }
+  }
+
+  if (!didWrite) {
+    fileWrite(file, `${resultPath} = ${valuePath};`);
+  } else if (
+    validatorState.outputTypeOptions.targets.includes("jsKoaReceive")
+  ) {
+    if (!isNil(type.validator.mimeTypes)) {
+      fileBlockStart(file, `if (${resultPath}?.mimetype)`);
+
+      fileBlockStart(
+        file,
+        `if (!${JSON.stringify(
+          type.validator.mimeTypes,
+        )}.includes(${resultPath}?.mimetype))`,
+      );
+
+      fileWrite(
+        file,
+        `${errorKey} = {
+  key: "validator.mimeType",
+  mimeType: ${resultPath}.mimetype,
+  allowedMimeTypes: ${JSON.stringify(type.validator.mimeTypes)},
+};`,
+      );
+
+      fileBlockEnd(file);
+      fileBlockEnd(file);
+    }
+  }
 }
 
 /**

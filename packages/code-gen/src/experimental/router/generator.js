@@ -56,7 +56,7 @@ export function routerGenerator(generateContext) {
 
   const target = routerFormatTarget(generateContext);
   /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
-  const typeTargets = ["js", "jsKoa"];
+  const typeTargets = ["js", "jsKoaReceive"];
 
   /** @type Record<string, (import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]>} */
   const routesPerGroup = {};
@@ -120,6 +120,13 @@ export function routerGenerator(generateContext) {
           continue;
         }
 
+        const specificTargets =
+          prefix === "response"
+            ? typeTargets
+                .filter((it) => it !== "jsKoaReceive")
+                .concat(["jsKoaSend"])
+            : typeTargets;
+
         const resolvedRef = structureResolveReference(
           generateContext.structure,
           type,
@@ -130,14 +137,14 @@ export function routerGenerator(generateContext) {
           validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
             validatorState: "output",
             nameSuffix: "",
-            targets: typeTargets,
+            targets: specificTargets,
           });
         } else {
           // @ts-expect-error
           typesGeneratorGenerateNamedType(generateContext, resolvedRef, {
             validatorState: "output",
             nameSuffix: "",
-            targets: typeTargets,
+            targets: specificTargets,
           });
         }
 
@@ -149,7 +156,7 @@ export function routerGenerator(generateContext) {
           {
             validatorState: "output",
             nameSuffix: "",
-            targets: typeTargets,
+            targets: specificTargets,
           },
         );
 

@@ -16,7 +16,7 @@ import {
   spawn,
   streamToBuffer,
 } from "@compas/stdlib";
-import Axios from "axios";
+import axios from "axios";
 import { TypeCreator } from "../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
@@ -213,7 +213,7 @@ test("code-gen/e2e/server", async (t) => {
   let clientApiClientImport;
 
   const app = await buildTestApp(serverGeneratedDirectory);
-  const axiosInstance = Axios.create({});
+  const axiosInstance = axios.create({});
   await createTestAppAndClient(app, axiosInstance);
 
   t.test("client - transpile and import", async (t) => {

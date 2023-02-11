@@ -33,12 +33,12 @@ export function tsAxiosGenerateCommonFile(generateContext) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.raw(`import Axios from "axios"`);
+    importCollector.raw(`import axios from "axios"`);
     importCollector.destructure("axios", "AxiosInstance");
 
     fileWrite(
       file,
-      `export const axiosInstance: AxiosInstance = Axios.create();
+      `export const axiosInstance: AxiosInstance = axios.create();
 `,
     );
 

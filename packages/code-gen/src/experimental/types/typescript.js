@@ -13,6 +13,7 @@ import {
   fileWriteNewLine,
   fileWriteRaw,
 } from "../file/write.js";
+import { fileImplementations } from "../processors/file-implementations.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { typeDefinitionTraverse } from "../processors/type-definition-traverse.js";
@@ -335,14 +336,23 @@ export function typesTypescriptFormatType(
       fileWriteInline(file, optionalStr);
     }
   } else if (type.type === "file") {
-    if (options.validatorState === "input") {
-      fileWriteInline(file, `{ name?; string, data: Blob}`);
-    } else {
-      fileWriteInline(file, "Blob");
+    let didWrite = false;
+    for (let i = options.targets.length - 1; i >= 0; --i) {
+      const target = fileImplementations[options.targets[i]];
+      if (target) {
+        if (options.validatorState === "output") {
+          fileWriteInline(file, target.validatorOutputType);
+        } else {
+          fileWriteInline(file, target.validatorInputType);
+        }
+
+        didWrite = true;
+        break;
+      }
     }
 
-    if (isOptional) {
-      fileWriteInline(file, optionalStr);
+    if (!didWrite) {
+      fileWriteInline(file, `any`);
     }
   } else if (type.type === "generic") {
     const oneOf = referenceUtilsGetProperty(generateContext, type.keys, [

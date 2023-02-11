@@ -409,7 +409,8 @@
       "oneOf": [
         "js",
         "ts",
-        "jsKoa",
+        "jsKoaReceive",
+        "jsKoaSend",
         "jsPostgres",
         "jsAxios",
         "tsAxios",

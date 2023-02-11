@@ -282,7 +282,8 @@ export function extendWithCodeGenExperimental(generator) {
             T.string("anyDefinitionTarget").oneOf(
               "js",
               "ts",
-              "jsKoa",
+              "jsKoaReceive",
+              "jsKoaSend",
               "jsPostgres",
               "jsAxios",
               "tsAxios",

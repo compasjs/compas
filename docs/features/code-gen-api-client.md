@@ -24,7 +24,7 @@ contents:
 // scripts/generate.mjs
 import { mainFn } from "@compas/stdlib";
 import { App, loadFromRemote } from "@compas/store";
-import Axios from "axios";
+import axios from "axios";
 
 mainFn(import.meta, main);
 
@@ -41,7 +41,7 @@ async function main() {
   app.extend(
     await loadFromRemote(
       "https://api.example.com", // Base url of the Compas based api
-      Axios.create({
+      axios.create({
         /* ... */
       }),
     ),
@@ -73,7 +73,7 @@ There are a few cool files to look at;
 - `src/generated/common/types.ts`: this file contains all input and output types
   used in the project.
 - `src/generated/xxx/apiClient.ts`: these files contain the generated typed api
-  functions. As you can see it wraps the an `Axios.request` call and returns the
+  functions. As you can see it wraps the an `axios.request` call and returns the
   response data.
 
 By using your IDE and requesting for autocomplete on `apiGroupName` you can see

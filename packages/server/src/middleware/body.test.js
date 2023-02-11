@@ -1,6 +1,6 @@
 import { createReadStream } from "fs";
 import { mainTestFn, test } from "@compas/cli";
-import Axios from "axios";
+import axios from "axios";
 import FormData from "form-data";
 import { getApp } from "../app.js";
 import { closeTestApp, createTestAppAndClient } from "../testing.js";
@@ -36,9 +36,9 @@ test("server/middleware/body", async (t) => {
     return next();
   });
 
-  const client = Axios.create();
+  const client = axios.create();
   await createTestAppAndClient(app, client);
-  const fileClient = Axios.create();
+  const fileClient = axios.create();
   await createTestAppAndClient(fileApp, fileClient);
 
   t.test("text payload", async (t) => {

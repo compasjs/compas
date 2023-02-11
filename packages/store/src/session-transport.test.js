@@ -6,7 +6,7 @@ import {
   newEventFromEvent,
   uuid,
 } from "@compas/stdlib";
-import Axios from "axios";
+import axios from "axios";
 import { sql } from "../../../src/testing.js";
 import { querySessionStore } from "./generated/database/sessionStore.js";
 import {
@@ -39,7 +39,7 @@ test("store/session-transport", (t) => {
     const app = getApp();
     app.use(middleware);
 
-    const axiosInstance = Axios.create();
+    const axiosInstance = axios.create();
     await createTestAppAndClient(app, axiosInstance);
 
     const tokenResult = await sessionStoreCreate(
