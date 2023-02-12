@@ -447,6 +447,9 @@ export function extendWithCodeGenExperimental(generator) {
           .keys(T.string())
           .values(T.reference("experimental", "typeSystemDefinition")),
         reference: T.reference("experimental", "referenceDefinition"),
+        relations: T.array().values(
+          T.reference("experimental", "relationDefinition"),
+        ),
       })
       .loose(),
 

@@ -246,6 +246,15 @@ export type ExperimentalDateDefinition = {
   specifier?: "dateOnly" | "timeOnly" | undefined;
 };
 
+export type ExperimentalRelationDefinition = {
+  type: "relation";
+  subType: "manyToOne" | "oneToMany" | "oneToOne" | "oneToOneReverse";
+  reference: ExperimentalReferenceDefinition;
+  ownKey: string;
+  referencedKey?: string | undefined;
+  isOptional: boolean;
+};
+
 export type ExperimentalExtendDefinition = {
   type: "extend";
   group?: string | undefined;
@@ -261,6 +270,7 @@ export type ExperimentalExtendDefinition = {
   validator: {};
   keys: { [key: string]: ExperimentalTypeSystemDefinition };
   reference: ExperimentalReferenceDefinition;
+  relations: ExperimentalRelationDefinition[];
 };
 
 export type ExperimentalFileDefinition = {
@@ -317,15 +327,6 @@ export type ExperimentalNumberDefinition = {
     allowNull: boolean;
   };
   oneOf?: number[] | undefined;
-};
-
-export type ExperimentalRelationDefinition = {
-  type: "relation";
-  subType: "manyToOne" | "oneToMany" | "oneToOne" | "oneToOneReverse";
-  reference: ExperimentalReferenceDefinition;
-  ownKey: string;
-  referencedKey?: string | undefined;
-  isOptional: boolean;
 };
 
 export type ExperimentalObjectDefinition = {
@@ -611,6 +612,15 @@ export type ExperimentalDateDefinitionInput = {
   specifier?: "dateOnly" | "timeOnly" | undefined;
 };
 
+export type ExperimentalRelationDefinitionInput = {
+  type: "relation";
+  subType: "manyToOne" | "oneToMany" | "oneToOne" | "oneToOneReverse";
+  reference: ExperimentalReferenceDefinitionInput;
+  ownKey: string;
+  referencedKey?: string | undefined;
+  isOptional: boolean | "true" | "false";
+};
+
 export type ExperimentalExtendDefinitionInput = {
   type: "extend";
   group?: string | undefined;
@@ -626,6 +636,9 @@ export type ExperimentalExtendDefinitionInput = {
   validator: {};
   keys: { [key: string]: ExperimentalTypeSystemDefinitionInput };
   reference: ExperimentalReferenceDefinitionInput;
+  relations:
+    | ExperimentalRelationDefinitionInput[]
+    | ExperimentalRelationDefinitionInput;
 };
 
 export type ExperimentalFileDefinitionInput = {
@@ -682,15 +695,6 @@ export type ExperimentalNumberDefinitionInput = {
     allowNull: boolean | "true" | "false";
   };
   oneOf?: number[] | number | undefined;
-};
-
-export type ExperimentalRelationDefinitionInput = {
-  type: "relation";
-  subType: "manyToOne" | "oneToMany" | "oneToOne" | "oneToOneReverse";
-  reference: ExperimentalReferenceDefinitionInput;
-  ownKey: string;
-  referencedKey?: string | undefined;
-  isOptional: boolean | "true" | "false";
 };
 
 export type ExperimentalObjectDefinitionInput = {

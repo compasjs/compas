@@ -7,7 +7,6 @@ import {
   pathJoin,
   printProcessMemoryUsage,
 } from "@compas/stdlib";
-import { ReferenceType } from "./builders/ReferenceType.js";
 import { buildOrInfer } from "./builders/utils.js";
 import { generateTypes } from "./generate-types.js";
 import { addGroupsToGeneratorInput } from "./generate.js";
@@ -160,58 +159,6 @@ export class App {
     }
 
     return this;
-  }
-
-  /**
-   * Add relations to the provided reference.
-   * The provided reference must already exist.
-   * This only works when referencing in to structure that you've passed in to
-   * `app.extend`.
-   *
-   * @param {ReferenceType} reference
-   * @param {...import("./builders/RelationType").RelationType} relations
-   * @returns {import("@compas/stdlib").Either<App, Error>}
-   */
-  addRelations(reference, ...relations) {
-    if (!(reference instanceof ReferenceType)) {
-      return {
-        error: new Error(
-          `Expected T.relation as a first argument to App.addRelations`,
-        ),
-      };
-    }
-
-    const buildRef = reference.build();
-    this.processData();
-
-    const { group, name } = buildRef?.reference ?? {};
-
-    const resolved = this.data[group]?.[name];
-
-    if (!resolved) {
-      return {
-        error: new Error(
-          `Can not resolve ${group}:${name}. Make sure to extend first via app.extend.`,
-        ),
-      };
-    }
-
-    if (resolved.type !== "object") {
-      return {
-        error: new Error(
-          `Can only add relations to objects. Found '${resolved.type}'.`,
-        ),
-      };
-    }
-
-    for (const relation of relations) {
-      // @ts-ignore
-      resolved.relations.push(relation.build());
-    }
-
-    return {
-      value: this,
-    };
   }
 
   /**

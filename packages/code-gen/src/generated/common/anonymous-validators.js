@@ -6239,7 +6239,47 @@ export function anonymousValidator1557692177(value, propertyPath) {
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "extend", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "keys": { [ key: string]:import("./types").CodeGenType}, "reference": import("./types").CodeGenReferenceType, }>}
+ * @returns {EitherN<undefined|(import("./types").CodeGenRelationType)[]>}
+ */
+export function anonymousValidator337947030(value, propertyPath) {
+  if (isNil(value)) {
+    return { value: undefined };
+  }
+  if (!Array.isArray(value)) {
+    /** @type {{ errors: InternalError[] }} */
+    return {
+      errors: [
+        {
+          propertyPath,
+          key: "validator.array.type",
+          info: {},
+        },
+      ],
+    };
+  }
+  const result = Array.from({ length: value.length });
+  let errors = [];
+  for (let i = 0; i < value.length; ++i) {
+    const arrVar = anonymousValidator243901689(
+      value[i],
+      propertyPath + "[" + i + "]",
+    );
+    if (arrVar.errors) {
+      errors.push(...arrVar.errors);
+    } else {
+      result[i] = arrVar.value;
+    }
+  }
+  if (errors.length > 0) {
+    /** @type {{ errors: InternalError[] }} */
+    return { errors };
+  }
+  return { value: result };
+}
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "extend", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "keys": { [ key: string]:import("./types").CodeGenType}, "relations"?: undefined|(import("./types").CodeGenRelationType)[], "reference": import("./types").CodeGenReferenceType, }>}
  */
 export function anonymousValidator1421326295(value, propertyPath) {
   if (isNil(value)) {
@@ -6387,6 +6427,17 @@ export function anonymousValidator1421326295(value, propertyPath) {
       errors.push(...validatorResult.errors);
     } else {
       result["keys"] = validatorResult.value;
+    }
+  }
+  {
+    const validatorResult = anonymousValidator337947030(
+      value["relations"],
+      `${propertyPath}.relations`,
+    );
+    if (validatorResult.errors) {
+      errors.push(...validatorResult.errors);
+    } else {
+      result["relations"] = validatorResult.value;
     }
   }
   {

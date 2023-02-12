@@ -68,6 +68,7 @@ export function objectExpansionExtend(structure, namedType) {
     }
 
     referencedType.keys = Object.assign(referencedType.keys, namedType.keys);
+    referencedType.relations.push(...namedType.relations);
 
     // @ts-expect-error
     //

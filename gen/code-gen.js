@@ -401,6 +401,9 @@ function getTypes(T) {
     type: "extend",
     ...typeBase,
     keys: T.generic().keys(T.string()).values(T.reference("codeGen", "type")),
+    relations: T.array()
+      .values(T.reference("codeGen", "relationType"))
+      .optional(),
     reference: T.reference("codeGen", "referenceType"),
   });
 

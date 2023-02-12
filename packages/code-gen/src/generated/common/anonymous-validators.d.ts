@@ -1377,7 +1377,16 @@ export function anonymousValidator1557692177(
 /**
  * @param {*} value
  * @param {string} propertyPath
- * @returns {EitherN<{"type": "extend", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "keys": { [ key: string]:import("./types").CodeGenType}, "reference": import("./types").CodeGenReferenceType, }>}
+ * @returns {EitherN<undefined|(import("./types").CodeGenRelationType)[]>}
+ */
+export function anonymousValidator337947030(
+  value: any,
+  propertyPath: string,
+): EitherN<undefined | import("./types").CodeGenRelationType[]>;
+/**
+ * @param {*} value
+ * @param {string} propertyPath
+ * @returns {EitherN<{"type": "extend", "docString": string, "isOptional": boolean, "defaultValue"?: undefined|string|boolean|number, "uniqueName"?: undefined|string, "group"?: undefined|string, "name"?: undefined|string, "sql"?: undefined|{"primary": boolean, "searchable": boolean, "hasDefaultValue": boolean, }, "validator": {}, "internalSettings": {}, "keys": { [ key: string]:import("./types").CodeGenType}, "relations"?: undefined|(import("./types").CodeGenRelationType)[], "reference": import("./types").CodeGenReferenceType, }>}
  */
 export function anonymousValidator1421326295(
   value: any,
@@ -1402,6 +1411,7 @@ export function anonymousValidator1421326295(
   keys: {
     [key: string]: import("./types").CodeGenType;
   };
+  relations?: undefined | import("./types").CodeGenRelationType[];
   reference: import("./types").CodeGenReferenceType;
 }>;
 /**

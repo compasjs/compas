@@ -41,20 +41,6 @@ export class App {
    */
   add(...builders: TypeBuilderLike[]): this;
   /**
-   * Add relations to the provided reference.
-   * The provided reference must already exist.
-   * This only works when referencing in to structure that you've passed in to
-   * `app.extend`.
-   *
-   * @param {ReferenceType} reference
-   * @param {...import("./builders/RelationType").RelationType} relations
-   * @returns {import("@compas/stdlib").Either<App, Error>}
-   */
-  addRelations(
-    reference: ReferenceType,
-    ...relations: import("./builders/RelationType").RelationType[]
-  ): import("@compas/stdlib").Either<App, Error>;
-  /**
    * @param {Record<string, any>} obj
    * @returns {this}
    */
@@ -175,5 +161,4 @@ export type GenerateOpts = {
   outputDirectory: string;
   declareGlobalTypes?: false | undefined;
 };
-import { ReferenceType } from "./builders/ReferenceType.js";
 //# sourceMappingURL=App.d.ts.map

@@ -49,19 +49,32 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Generate specific validators for `Blob`, `ReadableStream` and
     `FormidableFile`. The other variants are unvalidated inputs (/ validated
     when they hit the api).
-- [ ] Update `T.string().pattern()` with `patternExplanation`
 - [ ] Support overrides for specific properties currently residing in
       `internalSettings`
   - Most likely custom methods on specific builders.
+  - `stripTrailingSlash`
+  - `requestBodyType`
+- [x] Add support for `T.addRelations()` / `T.extend().addRelations()`
 - [ ] Double check all TODO's
-- Future ideas;
-  - Include `query` + where & builder helpers in the output instead of requiring
-    @compas/store. We could probably generate them at `common/database.js`
-  - Better validation on flat objects for `R.query()` & `R.params()`
-  - Combine `R.files()` and `R.body()`; auto switch to form-data and enforce
-    flat properties when a `T.file()` is present.
-  - Remove `compas visualise` it is replaced by `includeEntityDiagram`
-  - Slowly deprecate the compat wrappers of `queriex.xxYY`
+
+### Docs
+
+- Need separate introductions for code-gen and the rest of the tooling
+  - Code-gen should be tailored towards the supported targets
+    - e.g React, Node.js backend (koa), react-query
+  - Backends, about generic tooling and all it's related features
+
+### Feature ideas
+
+- Update `T.string().pattern()` with `patternExplanation`
+- Include `query` + where & builder helpers in the output instead of requiring
+  @compas/store. We could probably generate them at `common/database.js`
+- Better validation on flat objects for `R.query()` & `R.params()`
+- Combine `R.files()` and `R.body()`; auto switch to form-data and enforce flat
+  properties when a `T.file()` is present.
+- Remove `compas visualise` it is replaced by `includeEntityDiagram`
+- Slowly deprecate the compat wrappers of `queriex.xxYY`
+- Improve `{@reference UniqueName}` behaviour in docs
 
 ## Breaking changes
 
@@ -72,6 +85,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
         documentation about targets.
   - Removed `app.generateTypes`
   - Removed `app.generateOpenApi`
+  - Removed `app.extend`, ...
   - See diff between `with-auth` and `with-auth-experimental`
 - Validators:
   - `T.array()`, `T.bool()` and `T.number()` auto convert always

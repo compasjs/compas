@@ -357,6 +357,7 @@ export type CodeGenExtendType = {
   validator: {};
   internalSettings: {};
   keys: { [key: string]: CodeGenType };
+  relations?: undefined | CodeGenRelationType[];
   reference: CodeGenReferenceType;
 };
 export type CodeGenOmitType = {
@@ -878,6 +879,9 @@ export type CodeGenExtendTypeInput = {
   validator?: undefined | {};
   internalSettings?: undefined | {};
   keys: { [key: string]: import("./../common/types").CodeGenTypeInput };
+  relations?:
+    | undefined
+    | import("./../common/types").CodeGenRelationTypeInput[];
   reference: import("./../common/types").CodeGenReferenceTypeInput;
 };
 export type CodeGenOmitTypeInput = {

@@ -12,9 +12,14 @@ export class ExtendType extends TypeBuilder {
 
     result.reference = buildOrInfer(this.internalReference);
     result.keys = {};
+    result.relations = [];
 
     for (const k of Object.keys(this.internalKeys)) {
       result.keys[k] = buildOrInfer(this.internalKeys[k]);
+    }
+
+    for (const r of this.internalRelations) {
+      result.relations.push(buildOrInfer(r));
     }
 
     return result;
@@ -31,6 +36,7 @@ export class ExtendType extends TypeBuilder {
 
     this.internalReference = ref;
     this.internalKeys = {};
+    this.internalRelations = [];
 
     this.data = {
       ...this.data,
@@ -47,6 +53,18 @@ export class ExtendType extends TypeBuilder {
       ...this.internalKeys,
       ...obj,
     };
+
+    return this;
+  }
+
+  /**
+   * Add relations to the type
+   *
+   * @param {...import("./RelationType.js").RelationType} relations
+   * @returns {ExtendType}
+   */
+  relations(...relations) {
+    this.internalRelations.push(...relations);
 
     return this;
   }

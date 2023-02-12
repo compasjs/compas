@@ -15,6 +15,7 @@ export function preprocessExtend(structure, type) {
     type.reference.reference.keys,
     type.keys,
   );
+  type.reference.reference.relations.push(...type.relations);
 
   delete structure[type.group][type.name];
 }

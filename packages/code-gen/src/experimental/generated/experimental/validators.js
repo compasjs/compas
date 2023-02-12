@@ -5495,6 +5495,239 @@ export function validateExperimentalExtendDefinition(value) {
         }
         result["reference"] = refResult0.value;
       }
+      if (value["relations"] === null || value["relations"] === undefined) {
+        errorMap[`$.relations`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        /** @type {ValidatorErrorMap} */
+        const intermediateErrorMap1 = {};
+        /** @type {any[]} */
+        let intermediateResult1 = [];
+        /** @type {any|any[]} */
+        let intermediateValue1 = value["relations"];
+
+        if (!Array.isArray(intermediateValue1)) {
+          intermediateValue1 = [intermediateValue1];
+        }
+        result["relations"] = Array.from({ length: intermediateValue1.length });
+        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+          if (
+            intermediateValue1[i1] === null ||
+            intermediateValue1[i1] === undefined
+          ) {
+            intermediateErrorMap1[`$.${i1}`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            const refResult1 = validateExperimentalRelationDefinition(
+              intermediateValue1[i1],
+            );
+
+            if (refResult1.error) {
+              for (const errorKey of Object.keys(refResult1.error)) {
+                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
+                  refResult1.error[errorKey];
+              }
+            }
+            intermediateResult1[i1] = refResult1.value;
+          }
+        }
+        if (Object.keys(intermediateErrorMap1).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            errorMap[`$.relations${errorKey.substring(1)}`] =
+              intermediateErrorMap1[errorKey];
+          }
+        } else {
+          result["relations"] = intermediateResult1;
+        }
+      }
+    }
+  }
+  if (Object.keys(errorMap).length > 0) {
+    return { error: errorMap };
+  }
+  return { value: result };
+}
+
+/**
+ * @param {import("../common/types").ExperimentalRelationDefinitionInput|any} value
+ * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
+ */
+export function validateExperimentalRelationDefinition(value) {
+  /** @type {ValidatorErrorMap} */
+  const errorMap = {};
+  /** @type {any} */
+  let result = undefined;
+
+  if (value === null || value === undefined) {
+    errorMap[`$`] = {
+      key: "validator.undefined",
+    };
+  } else {
+    if (typeof value !== "object" || Array.isArray(value)) {
+      errorMap[`$`] = {
+        key: "validator.object",
+        value: value,
+        foundType: typeof value,
+      };
+    } else {
+      result = Object.create(null);
+
+      if (value["type"] === null || value["type"] === undefined) {
+        errorMap[`$.type`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        /** @type {string} */
+        let convertedString0 = value["type"];
+        if (typeof convertedString0 !== "string") {
+          errorMap[`$.type`] = {
+            key: "validator.string",
+          };
+        } else {
+          if (convertedString0.length < 1) {
+            errorMap[`$.type`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (convertedString0 !== "relation") {
+            errorMap[`$.type`] = {
+              key: "validator.oneOf",
+              allowedValues: ["relation"],
+            };
+          } else {
+            result["type"] = convertedString0;
+          }
+        }
+      }
+      if (value["subType"] === null || value["subType"] === undefined) {
+        errorMap[`$.subType`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        /** @type {string} */
+        let convertedString0 = value["subType"];
+        if (typeof convertedString0 !== "string") {
+          errorMap[`$.subType`] = {
+            key: "validator.string",
+          };
+        } else {
+          if (convertedString0.length < 1) {
+            errorMap[`$.subType`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else if (
+            convertedString0 !== "manyToOne" &&
+            convertedString0 !== "oneToMany" &&
+            convertedString0 !== "oneToOne" &&
+            convertedString0 !== "oneToOneReverse"
+          ) {
+            errorMap[`$.subType`] = {
+              key: "validator.oneOf",
+              allowedValues: [
+                "manyToOne",
+                "oneToMany",
+                "oneToOne",
+                "oneToOneReverse",
+              ],
+            };
+          } else {
+            result["subType"] = convertedString0;
+          }
+        }
+      }
+      if (value["reference"] === null || value["reference"] === undefined) {
+        errorMap[`$.reference`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        const refResult0 = validateExperimentalReferenceDefinition(
+          value["reference"],
+        );
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.reference${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["reference"] = refResult0.value;
+      }
+      if (value["ownKey"] === null || value["ownKey"] === undefined) {
+        errorMap[`$.ownKey`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        /** @type {string} */
+        let convertedString0 = value["ownKey"];
+        if (typeof convertedString0 !== "string") {
+          errorMap[`$.ownKey`] = {
+            key: "validator.string",
+          };
+        } else {
+          if (convertedString0.length < 1) {
+            errorMap[`$.ownKey`] = {
+              key: "validator.length",
+              minLength: 1,
+            };
+          } else {
+            result["ownKey"] = convertedString0;
+          }
+        }
+      }
+      if (
+        value["referencedKey"] === null ||
+        value["referencedKey"] === undefined
+      ) {
+        result["referencedKey"] = undefined;
+      } else {
+        /** @type {string} */
+        let convertedString0 = value["referencedKey"];
+        if (typeof convertedString0 !== "string") {
+          errorMap[`$.referencedKey`] = {
+            key: "validator.string",
+          };
+        } else {
+          if (convertedString0.length === 0) {
+            result["referencedKey"] = undefined;
+          } else {
+            if (convertedString0.length < 1) {
+              errorMap[`$.referencedKey`] = {
+                key: "validator.length",
+                minLength: 1,
+              };
+            } else {
+              result["referencedKey"] = convertedString0;
+            }
+          }
+        }
+      }
+      if (value["isOptional"] === null || value["isOptional"] === undefined) {
+        errorMap[`$.isOptional`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        if (
+          value["isOptional"] === true ||
+          value["isOptional"] === "true" ||
+          value["isOptional"] === 1
+        ) {
+          result["isOptional"] = true;
+        } else if (
+          value["isOptional"] === false ||
+          value["isOptional"] === "false" ||
+          value["isOptional"] === 0
+        ) {
+          result["isOptional"] = false;
+        } else {
+          errorMap[`$.isOptional`] = {
+            key: "validator.type",
+            expectedType: "boolean",
+          };
+        }
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
@@ -7771,192 +8004,6 @@ export function validateExperimentalObjectDefinition(value) {
           }
         } else {
           result["relations"] = intermediateResult1;
-        }
-      }
-    }
-  }
-  if (Object.keys(errorMap).length > 0) {
-    return { error: errorMap };
-  }
-  return { value: result };
-}
-
-/**
- * @param {import("../common/types").ExperimentalRelationDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
- */
-export function validateExperimentalRelationDefinition(value) {
-  /** @type {ValidatorErrorMap} */
-  const errorMap = {};
-  /** @type {any} */
-  let result = undefined;
-
-  if (value === null || value === undefined) {
-    errorMap[`$`] = {
-      key: "validator.undefined",
-    };
-  } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
-      errorMap[`$`] = {
-        key: "validator.object",
-        value: value,
-        foundType: typeof value,
-      };
-    } else {
-      result = Object.create(null);
-
-      if (value["type"] === null || value["type"] === undefined) {
-        errorMap[`$.type`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
-          errorMap[`$.type`] = {
-            key: "validator.string",
-          };
-        } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.type`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
-          } else if (convertedString0 !== "relation") {
-            errorMap[`$.type`] = {
-              key: "validator.oneOf",
-              allowedValues: ["relation"],
-            };
-          } else {
-            result["type"] = convertedString0;
-          }
-        }
-      }
-      if (value["subType"] === null || value["subType"] === undefined) {
-        errorMap[`$.subType`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        /** @type {string} */
-        let convertedString0 = value["subType"];
-        if (typeof convertedString0 !== "string") {
-          errorMap[`$.subType`] = {
-            key: "validator.string",
-          };
-        } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.subType`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
-          } else if (
-            convertedString0 !== "manyToOne" &&
-            convertedString0 !== "oneToMany" &&
-            convertedString0 !== "oneToOne" &&
-            convertedString0 !== "oneToOneReverse"
-          ) {
-            errorMap[`$.subType`] = {
-              key: "validator.oneOf",
-              allowedValues: [
-                "manyToOne",
-                "oneToMany",
-                "oneToOne",
-                "oneToOneReverse",
-              ],
-            };
-          } else {
-            result["subType"] = convertedString0;
-          }
-        }
-      }
-      if (value["reference"] === null || value["reference"] === undefined) {
-        errorMap[`$.reference`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
-          value["reference"],
-        );
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.reference${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["reference"] = refResult0.value;
-      }
-      if (value["ownKey"] === null || value["ownKey"] === undefined) {
-        errorMap[`$.ownKey`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        /** @type {string} */
-        let convertedString0 = value["ownKey"];
-        if (typeof convertedString0 !== "string") {
-          errorMap[`$.ownKey`] = {
-            key: "validator.string",
-          };
-        } else {
-          if (convertedString0.length < 1) {
-            errorMap[`$.ownKey`] = {
-              key: "validator.length",
-              minLength: 1,
-            };
-          } else {
-            result["ownKey"] = convertedString0;
-          }
-        }
-      }
-      if (
-        value["referencedKey"] === null ||
-        value["referencedKey"] === undefined
-      ) {
-        result["referencedKey"] = undefined;
-      } else {
-        /** @type {string} */
-        let convertedString0 = value["referencedKey"];
-        if (typeof convertedString0 !== "string") {
-          errorMap[`$.referencedKey`] = {
-            key: "validator.string",
-          };
-        } else {
-          if (convertedString0.length === 0) {
-            result["referencedKey"] = undefined;
-          } else {
-            if (convertedString0.length < 1) {
-              errorMap[`$.referencedKey`] = {
-                key: "validator.length",
-                minLength: 1,
-              };
-            } else {
-              result["referencedKey"] = convertedString0;
-            }
-          }
-        }
-      }
-      if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        if (
-          value["isOptional"] === true ||
-          value["isOptional"] === "true" ||
-          value["isOptional"] === 1
-        ) {
-          result["isOptional"] = true;
-        } else if (
-          value["isOptional"] === false ||
-          value["isOptional"] === "false" ||
-          value["isOptional"] === 0
-        ) {
-          result["isOptional"] = false;
-        } else {
-          errorMap[`$.isOptional`] = {
-            key: "validator.type",
-            expectedType: "boolean",
-          };
         }
       }
     }

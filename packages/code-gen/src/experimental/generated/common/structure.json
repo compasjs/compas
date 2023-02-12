@@ -2040,6 +2040,27 @@
             "name": "referenceDefinition",
             "uniqueName": "ExperimentalReferenceDefinition"
           }
+        },
+        "relations": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {},
+            "sql": {},
+            "type": "reference",
+            "reference": {
+              "group": "experimental",
+              "name": "relationDefinition",
+              "uniqueName": "ExperimentalRelationDefinition"
+            }
+          }
         }
       },
       "relations": []

@@ -115,6 +115,16 @@ export function validateExperimentalExtendDefinition(
   ValidatorErrorMap
 >;
 /**
+ * @param {import("../common/types").ExperimentalRelationDefinitionInput|any} value
+ * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
+ */
+export function validateExperimentalRelationDefinition(
+  value: import("../common/types").ExperimentalRelationDefinitionInput | any,
+): Either<
+  import("../common/types").ExperimentalRelationDefinition,
+  ValidatorErrorMap
+>;
+/**
  * @param {import("../common/types").ExperimentalFileDefinitionInput|any} value
  * @returns {Either<import("../common/types").ExperimentalFileDefinition, ValidatorErrorMap>}
  */
@@ -152,16 +162,6 @@ export function validateExperimentalObjectDefinition(
   value: import("../common/types").ExperimentalObjectDefinitionInput | any,
 ): Either<
   import("../common/types").ExperimentalObjectDefinition,
-  ValidatorErrorMap
->;
-/**
- * @param {import("../common/types").ExperimentalRelationDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
- */
-export function validateExperimentalRelationDefinition(
-  value: import("../common/types").ExperimentalRelationDefinitionInput | any,
-): Either<
-  import("../common/types").ExperimentalRelationDefinition,
   ValidatorErrorMap
 >;
 /**
