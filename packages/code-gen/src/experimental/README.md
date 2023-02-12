@@ -54,7 +54,18 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Most likely custom methods on specific builders.
   - `requestBodyType`
 - [x] Add support for `T.addRelations()` / `T.extend().addRelations()`
-- [ ] Double check all TODO's
+- [ ] API client generator, add specific config option to skip the validators on
+      specific calls
+  - Also expose this in the react-query wrapper
+- [ ] Add validation on the allowed target combinations
+- [ ] nit: Normalize `xxxFormatTarget` return types
+- [ ] CRUD generator support non-global types
+- [ ] Model-relation check if an existing key has the same optionality as the
+      relation.
+- [ ] Use `decodeUriComponent` in the route matcher
+- [ ] Improve the thrown errors in the validators, adding more information where
+      possible.
+- [ ] Write migration docs + breaking changes
 
 ### Docs
 
@@ -62,11 +73,14 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Code-gen should be tailored towards the supported targets
     - e.g React, Node.js backend (koa), react-query
   - Backends, about generic tooling and all it's related features
+- Should include a target compatibility page
 
 ### Feature ideas
 
-- Remove `skipTrailingSlash` from `internalSettings
+- Remove `skipTrailingSlash` from `internalSettings` since it is not used
+  anymore.
 - Update `T.string().pattern()` with `patternExplanation`
+  - This will improve error readability
 - Include `query` + where & builder helpers in the output instead of requiring
   @compas/store. We could probably generate them at `common/database.js`
 - Better validation on flat objects for `R.query()` & `R.params()`
@@ -75,6 +89,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - Remove `compas visualise` it is replaced by `includeEntityDiagram`
 - Slowly deprecate the compat wrappers of `queriex.xxYY`
 - Improve `{@reference UniqueName}` behaviour in docs
+- Check if there is a need for option presets in `Generator#generate`.
 
 ## Breaking changes
 
@@ -112,6 +127,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     testing) to automatically intercept errors and rethrow an AppError.
 - Router:
   - Router entrypoint accepts bodyParsers
+- Types;
+  - No support for dumping Compas types, file should be maintained manually.
 
 #### Refs
 

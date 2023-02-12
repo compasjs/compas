@@ -95,9 +95,6 @@ export function generateExecute(generator, options) {
     });
   }
 
-  // TODO: support generate presets
-  // TODO: write migration docs between old and new code gen
-
   structureValidateReferences(generator.internalStructure);
   const structure = structureCopyAndSort(generator.internalStructure);
 

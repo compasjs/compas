@@ -172,14 +172,6 @@ export function extendWithCodeGenExperimental(generator) {
                     ),
                 })
                 .docs("Select your HTTP client of choice."),
-
-              // TODO: check if we can support enabling / disabling
-              //   this for specific routes.
-              skipResponseValidation: T.bool()
-                .default(false)
-                .docs(
-                  `Unsafe skip generating and using validators to automatically validate if the response passes the schema.`,
-                ),
             })
             .optional()
             .docs(

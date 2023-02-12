@@ -1420,7 +1420,6 @@ export function validatorJavascriptString(file, type, validatorState) {
     );
     fileContextSetIndent(file, 1);
 
-    // TODO: Pattern name
     fileWrite(
       file,
       `${errorKey} = {

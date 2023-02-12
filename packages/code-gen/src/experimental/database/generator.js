@@ -76,8 +76,6 @@ import { databasePostgresWriteDDL } from "./postgres.js";
  *
  * TODO: throw when TS is used with JS postgres
  *
- * TODO: Support dumping the DDL.
- *
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function databaseGenerator(generateContext) {
