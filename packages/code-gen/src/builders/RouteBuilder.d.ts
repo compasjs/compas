@@ -64,6 +64,13 @@ export class RouteBuilder extends TypeBuilder {
     ...invalidates: import("./RouteInvalidationType.js").RouteInvalidationType[]
   ): RouteBuilder;
   /**
+   * Prefer the api client / router to use form-data instead of expecting json.
+   * This can be used to conform to non Compas api's.
+   *
+   * @returns {RouteBuilder}
+   */
+  preferFormData(): RouteBuilder;
+  /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */

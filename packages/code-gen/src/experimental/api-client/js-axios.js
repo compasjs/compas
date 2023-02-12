@@ -240,7 +240,12 @@ export function jsAxiosGenerateFunction(
   }
   if (route.body) {
     args.push("body");
-    fileWrite(file, `@param {${contextNames.bodyTypeName}} body`);
+    fileWrite(
+      file,
+      `@param {${contextNames.bodyTypeName}${
+        route.metadata?.requestBodyType === "form-data" ? "|FormData" : ""
+      }} body`,
+    );
   }
   if (route.files) {
     args.push("files");
@@ -291,6 +296,19 @@ for (const key of Object.keys(files)) {
     fileWrite(file, `}\n}`);
   }
 
+  if (route.metadata?.requestBodyType === "form-data") {
+    fileWrite(
+      file,
+      `const data = body instanceof FormData ? body : new FormData();`,
+    );
+    fileBlockStart(file, `if (!(body instanceof FormData))`);
+    fileWrite(
+      file,
+      `for (const key of Object.keys(body)) { data.append(key, body[key]); }`,
+    );
+    fileBlockEnd(file);
+  }
+
   fileWrite(file, `const response = await axiosInstance.request({`);
   fileContextSetIndent(file, 1);
 
@@ -308,12 +326,11 @@ for (const key of Object.keys(files)) {
     fileWrite(file, `params: query,`);
   }
 
-  if (route.files) {
+  if (route.files || route.metadata?.requestBodyType === "form-data") {
     fileWrite(file, `data,`);
   }
 
-  if (route.body) {
-    // TODO: handle form-data calls mostly for OpenAPI imports.
+  if (route.body && route.metadata?.requestBodyType !== "form-data") {
     fileWrite(file, `data: body,`);
   }
 

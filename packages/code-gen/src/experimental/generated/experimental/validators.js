@@ -12755,31 +12755,6 @@ export function validateExperimentalRouteDefinition(value) {
           result["metadata"] = Object.create(null);
 
           if (
-            value["metadata"]["stripTrailingSlash"] === null ||
-            value["metadata"]["stripTrailingSlash"] === undefined
-          ) {
-            result["metadata"]["stripTrailingSlash"] = undefined;
-          } else {
-            if (
-              value["metadata"]["stripTrailingSlash"] === true ||
-              value["metadata"]["stripTrailingSlash"] === "true" ||
-              value["metadata"]["stripTrailingSlash"] === 1
-            ) {
-              result["metadata"]["stripTrailingSlash"] = true;
-            } else if (
-              value["metadata"]["stripTrailingSlash"] === false ||
-              value["metadata"]["stripTrailingSlash"] === "false" ||
-              value["metadata"]["stripTrailingSlash"] === 0
-            ) {
-              result["metadata"]["stripTrailingSlash"] = false;
-            } else {
-              errorMap[`$.metadata.stripTrailingSlash`] = {
-                key: "validator.type",
-                expectedType: "boolean",
-              };
-            }
-          }
-          if (
             value["metadata"]["requestBodyType"] === null ||
             value["metadata"]["requestBodyType"] === undefined
           ) {

@@ -606,7 +606,6 @@ export function extendWithCodeGenExperimental(generator) {
         ],
         metadata: T.object()
           .keys({
-            stripTrailingSlash: T.bool().optional(),
             requestBodyType: T.string().oneOf("json", "form-data").optional(),
           })
           .loose()

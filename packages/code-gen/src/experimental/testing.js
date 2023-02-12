@@ -257,7 +257,7 @@ function getDefaultStructure() {
           success: true,
         }),
 
-      R.get("/get/file", "getFile").response(T.file()),
+      R.get("/get/file/", "getFile").response(T.file()),
 
       R.post("/post", "post"),
       R.post("/post/idempotent", "postIdempotent")
@@ -274,6 +274,14 @@ function getDefaultStructure() {
         .response({
           isEnabled: true,
         }),
+      R.post("/post/form", "postForm")
+        .body({
+          enable: T.bool(),
+        })
+        .response({
+          isEnabled: true,
+        })
+        .preferFormData(),
       R.post("/post/file", "postFile")
         .files({
           file: T.file(),

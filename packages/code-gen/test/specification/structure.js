@@ -112,6 +112,7 @@ function specificationExtendWithRouteMatchers(generator) {
   generator.add(
     R.get("/", "base"),
     R.get("/static", "static"),
+    R.get("/static-trailing/", "staticTrailingSlash"),
     R.get("/static/unused/1", "staticNested1"),
     R.get("/static/unused/2", "staticNested2"),
 

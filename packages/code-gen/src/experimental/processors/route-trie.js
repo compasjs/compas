@@ -42,7 +42,7 @@ export function routeTrieBuild(generateContext) {
   const trie = trieCreateNode("");
 
   for (const route of structureRoutes(generateContext)) {
-    const fullPath = route.path.endsWith("/")
+    const fullPath = route.path.startsWith("/")
       ? route.method + route.path
       : `${route.method}/${route.path}`;
 

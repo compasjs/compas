@@ -49,10 +49,9 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Generate specific validators for `Blob`, `ReadableStream` and
     `FormidableFile`. The other variants are unvalidated inputs (/ validated
     when they hit the api).
-- [ ] Support overrides for specific properties currently residing in
+- [x] Support overrides for specific properties currently residing in
       `internalSettings`
   - Most likely custom methods on specific builders.
-  - `stripTrailingSlash`
   - `requestBodyType`
 - [x] Add support for `T.addRelations()` / `T.extend().addRelations()`
 - [ ] Double check all TODO's
@@ -66,6 +65,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ### Feature ideas
 
+- Remove `skipTrailingSlash` from `internalSettings
 - Update `T.string().pattern()` with `patternExplanation`
 - Include `query` + where & builder helpers in the output instead of requiring
   @compas/store. We could probably generate them at `common/database.js`

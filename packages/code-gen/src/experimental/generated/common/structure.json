@@ -4899,16 +4899,6 @@
           "sql": {},
           "type": "object",
           "keys": {
-            "stripTrailingSlash": {
-              "docString": "",
-              "isOptional": true,
-              "validator": {
-                "convert": false,
-                "allowNull": false
-              },
-              "sql": {},
-              "type": "boolean"
-            },
             "requestBodyType": {
               "docString": "",
               "isOptional": true,

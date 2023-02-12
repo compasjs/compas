@@ -124,6 +124,22 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
+   * Prefer the api client / router to use form-data instead of expecting json.
+   * This can be used to conform to non Compas api's.
+   *
+   * @returns {RouteBuilder}
+   */
+  preferFormData() {
+    this.data.metadata ??= {};
+    this.data.metadata.requestBodyType = "form-data";
+
+    this.data.internalSettings ??= {};
+    this.data.internalSettings.requestBodyType = "form-data";
+
+    return this;
+  }
+
+  /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */

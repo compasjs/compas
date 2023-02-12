@@ -799,6 +799,48 @@ export const codeGenSpecification = {
               type: "routeMatcher",
               matchInput: {
                 method: "GET",
+                path: "/static-trailing",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "staticTrailingSlash",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static-trailing/",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "staticTrailingSlash",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
+                path: "/static/",
+              },
+              matchOutput: {
+                route: {
+                  group: "routeMatcher",
+                  name: "static",
+                },
+                params: {},
+              },
+            },
+            {
+              type: "routeMatcher",
+              matchInput: {
+                method: "GET",
                 path: "/static/unused/1",
               },
               matchOutput: {

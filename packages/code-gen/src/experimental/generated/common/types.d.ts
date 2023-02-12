@@ -1089,7 +1089,6 @@ export type ExperimentalRouteDefinition = {
   invalidations: ExperimentalRouteInvalidationDefinition[];
   metadata?:
     | {
-        stripTrailingSlash?: boolean | undefined;
         requestBodyType?: "json" | "form-data" | undefined;
       }
     | undefined;
@@ -1159,7 +1158,6 @@ export type ExperimentalRouteDefinitionInput = {
     | ExperimentalRouteInvalidationDefinitionInput;
   metadata?:
     | {
-        stripTrailingSlash?: boolean | "true" | "false" | undefined;
         requestBodyType?: "json" | "form-data" | undefined;
       }
     | undefined;
