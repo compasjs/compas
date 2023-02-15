@@ -14,7 +14,7 @@
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
     "@tanstack/react-query": "4.24.6",
-    "axios": "1.3.2",
+    "axios": "1.3.3",
     "fastest-validator": "1.16.0",
     "meriyah": "4.3.3",
     "react": "18.2.0",
