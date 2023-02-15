@@ -202,10 +202,7 @@ export function apiClientGenerator(generateContext) {
  * TODO: Apply this return type on other target format functions in other generators
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {`${import("../generate").GenerateContext["options"]["targetLanguage"]
- * }${Capitalize<NonNullable<
- * import("../generate").GenerateContext["options"]["generators"]["apiClient"]>["target"]["library"]
- * >}`}
+ * @returns {"jsAxios"|"tsAxios"}
  */
 export function apiClientFormatTarget(generateContext) {
   if (!generateContext.options.generators.apiClient?.target) {

@@ -2681,17 +2681,6 @@
                       "relations": []
                     }
                   ]
-                },
-                "skipResponseValidation": {
-                  "docString": "Unsafe skip generating and using validators to automatically validate if the response passes the schema.",
-                  "isOptional": true,
-                  "validator": {
-                    "convert": false,
-                    "allowNull": false
-                  },
-                  "sql": {},
-                  "type": "boolean",
-                  "defaultValue": "false"
                 }
               },
               "relations": []

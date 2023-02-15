@@ -16,18 +16,11 @@ export function apiClientGenerator(
  * TODO: Apply this return type on other target format functions in other generators
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {`${import("../generate").GenerateContext["options"]["targetLanguage"]
- * }${Capitalize<NonNullable<
- * import("../generate").GenerateContext["options"]["generators"]["apiClient"]>["target"]["library"]
- * >}`}
+ * @returns {"jsAxios"|"tsAxios"}
  */
 export function apiClientFormatTarget(
   generateContext: import("../generate").GenerateContext,
-): `${import("../generate").GenerateContext["options"]["targetLanguage"]}${Capitalize<
-  NonNullable<
-    import("../generate").GenerateContext["options"]["generators"]["apiClient"]
-  >["target"]["library"]
->}`;
+): "jsAxios" | "tsAxios";
 /**
  * Format the api client wrapper target.
  *
@@ -52,7 +45,6 @@ export function apiClientIsEnabled(
         includeWrapper?: "react-query" | undefined;
         globalClient: boolean;
       };
-      skipResponseValidation: boolean;
     }
   | undefined;
 //# sourceMappingURL=generator.d.ts.map

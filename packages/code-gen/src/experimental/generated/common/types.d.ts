@@ -923,9 +923,6 @@ export type ExperimentalGenerateOptions = {
             // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
             globalClient: boolean;
           };
-
-          // Unsafe skip generating and using validators to automatically validate if the response passes the schema.
-          skipResponseValidation: boolean;
         }
       | undefined;
 
@@ -1020,9 +1017,6 @@ export type ExperimentalGenerateOptionsInput = {
             // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
             globalClient?: boolean | "true" | "false" | undefined;
           };
-
-          // Unsafe skip generating and using validators to automatically validate if the response passes the schema.
-          skipResponseValidation?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 

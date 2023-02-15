@@ -58,7 +58,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       specific calls
   - Also expose this in the react-query wrapper
 - [ ] Add validation on the allowed target combinations
-- [ ] nit: Normalize `xxxFormatTarget` return types
+- [x] nit: Normalize `xxxFormatTarget` return types
 - [ ] CRUD generator support non-global types
 - [ ] Model-relation check if an existing key has the same optionality as the
       relation.
@@ -118,7 +118,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
     `xxxOrderBy(orderBy, orderBySpec, { shortName, skipValidator })`
   - `.execRaw` is mandatory when a custom `select` or `returning` is used.
   - Watch out for comparisons of `number` primary keys like `StoreJob`. The new
-    code-gen handles those better (string vs number) for big serial. In general
+    code-gen handles those better (string vs number) for big serial. In general,
     the output is now run through the validators if no field selectors are used.
   - Use `includeEntityDiagram` instead of `compas visualise`
 - API client
@@ -128,7 +128,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - Router:
   - Router entrypoint accepts bodyParsers
 - Types;
-  - No support for dumping Compas types, file should be maintained manually.
+  - Type names are generated without suffix where possible
+  - No support for dumping Compas types, file can be maintained manually
 
 #### Refs
 

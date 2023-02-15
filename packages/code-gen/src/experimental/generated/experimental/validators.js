@@ -11117,7 +11117,7 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target", "skipResponseValidation"]);
+              const knownKeys0 = new Set(["target"]);
               for (const key of Object.keys(value["generators"]["apiClient"])) {
                 if (!knownKeys0.has(key)) {
                   errorMap[`$.generators.apiClient`] = {
@@ -11330,42 +11330,6 @@ export function validateExperimentalGenerateOptions(value) {
                     result["generators"]["apiClient"]["target"] =
                       intermediateResult2;
                   }
-                }
-              }
-              if (
-                value["generators"]["apiClient"]["skipResponseValidation"] ===
-                  null ||
-                value["generators"]["apiClient"]["skipResponseValidation"] ===
-                  undefined
-              ) {
-                result["generators"]["apiClient"]["skipResponseValidation"] =
-                  false;
-              } else {
-                if (
-                  value["generators"]["apiClient"]["skipResponseValidation"] ===
-                    true ||
-                  value["generators"]["apiClient"]["skipResponseValidation"] ===
-                    "true" ||
-                  value["generators"]["apiClient"]["skipResponseValidation"] ===
-                    1
-                ) {
-                  result["generators"]["apiClient"]["skipResponseValidation"] =
-                    true;
-                } else if (
-                  value["generators"]["apiClient"]["skipResponseValidation"] ===
-                    false ||
-                  value["generators"]["apiClient"]["skipResponseValidation"] ===
-                    "false" ||
-                  value["generators"]["apiClient"]["skipResponseValidation"] ===
-                    0
-                ) {
-                  result["generators"]["apiClient"]["skipResponseValidation"] =
-                    false;
-                } else {
-                  errorMap[`$.generators.apiClient.skipResponseValidation`] = {
-                    key: "validator.type",
-                    expectedType: "boolean",
-                  };
                 }
               }
             }
