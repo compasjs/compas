@@ -54,7 +54,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Most likely custom methods on specific builders.
   - `requestBodyType`
 - [x] Add support for `T.addRelations()` / `T.extend().addRelations()`
-- [ ] API client generator, add specific config option to skip the validators on
+- [x] API client generator, add specific config option to skip the validators on
       specific calls
   - Also expose this in the react-query wrapper
 - [ ] Add validation on the allowed target combinations

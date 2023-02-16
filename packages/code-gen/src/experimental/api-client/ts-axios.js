@@ -268,7 +268,11 @@ export function tsAxiosGenerateFunction(
   }
 
   // Allow overwriting any request config
-  args.push(`requestConfig?: AxiosRequestConfig`);
+  args.push(
+    `requestConfig?: AxiosRequestConfig${
+      route.response ? ` & { skipResponseValidation?: boolean }` : ""
+    }`,
+  );
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);
@@ -368,6 +372,10 @@ for (const key of Object.keys(files)) {
   fileWrite(file, `});`);
 
   if (route.response) {
+    fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
+    fileWrite(file, `return response.data;`);
+    fileBlockEnd(file);
+
     fileWrite(
       file,
       `const { value, error } = ${contextNames.responseValidator}(response.data);`,

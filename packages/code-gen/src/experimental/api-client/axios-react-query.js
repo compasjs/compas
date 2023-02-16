@@ -119,21 +119,27 @@ export function axiosReactQueryGenerateFunction(
   }
 
   // Helper variables for reusable patterns
-  const argumentList = (suffix = "") =>
+  const argumentList = ({ suffix, withRequestConfig }) =>
     [
       route.params ? `params: ${contextNames.paramsTypeName}` : undefined,
       route.query ? `query: ${contextNames.queryTypeName}` : undefined,
       route.body ? `body: ${contextNames.bodyTypeName}` : undefined,
       route.files ? `files: ${contextNames.filesTypeName}` : undefined,
+      withRequestConfig
+        ? `requestConfig?: AxiosRequestConfig${
+            route.response ? ` & { skipResponseValidation?: boolean }` : ""
+          }`
+        : undefined,
     ]
       .filter((it) => !!it)
       .map((it) => `${it}${suffix}`);
-  const parameterList = (prefix = "") => {
+  const parameterList = ({ prefix, withRequestConfig }) => {
     return [
       route.params ? `params,` : undefined,
       route.query ? `query,` : undefined,
       route.body ? `body,` : undefined,
       route.files ? `files,` : undefined,
+      withRequestConfig ? `requestConfig,` : undefined,
     ]
       .filter((it) => !!it)
       .map((it) => `${prefix}${it}`)
@@ -163,7 +169,10 @@ export function axiosReactQueryGenerateFunction(
     }
 
     fileContextSetIndent(file, 1);
-    fileWrite(file, argumentList(";").join("\n"));
+    fileWrite(
+      file,
+      argumentList({ suffix: ";", withRequestConfig: true }).join("\n"),
+    );
     fileWrite(
       file,
       `options?: UseQueryOptions<${contextNames.responseTypeName}, ResponseError|AxiosError, TData>`,
@@ -186,13 +195,21 @@ export function axiosReactQueryGenerateFunction(
     axiosReactQueryWriteIsEnabled(generateContext, file, route);
 
     fileWriteInline(file, `return useQuery(${hookName}.queryKey(`);
-    fileWriteInline(file, parameterList("opts."));
+    fileWriteInline(
+      file,
+      parameterList({ prefix: "opts.", withRequestConfig: false }),
+    );
     fileWriteInline(
       file,
       `), ({ signal }) => {
+  opts.requestConfig ??= {};
+  opts.requestConfig.signal = signal;
+    
   return ${apiName}(${axiosInstanceParameter}
-  ${parameterList("opts.")}
-  { signal },
+  ${parameterList({
+    prefix: "opts.",
+    withRequestConfig: true,
+  })}
   );
   }, options);`,
     );
@@ -210,10 +227,10 @@ ${hookName}.baseKey = (): QueryKey => ["${route.group}", "${route.name}"];
  * Query key used by ${hookName}
  */
 ${hookName}.queryKey = (
-  ${argumentList(",").join("")}
+  ${argumentList({ suffix: ",", withRequestConfig: false }).join("")}
 ): QueryKey => [
   ...${hookName}.baseKey(),
-  ${parameterList("")}
+  ${parameterList({ prefix: "", withRequestConfig: false })}
 ];
 
 /**
@@ -224,15 +241,17 @@ ${hookName}.queryKey = (
   ${axiosInstanceArgument}
   ${
     route.params || route.query || route.body
-      ? `data: { ${argumentList(";").join("\n")} }`
+      ? `data: { ${argumentList({ suffix: ";", withRequestConfig: true }).join(
+          "\n",
+        )} }`
       : ""
   }
  ) => {
   return queryClient.fetchQuery(${hookName}.queryKey(
-  ${parameterList("data.")}
+  ${parameterList({ prefix: "data.", withRequestConfig: false })}
   ), () => ${apiName}(
    ${axiosInstanceParameter}
-  ${parameterList("data.")}
+  ${parameterList({ prefix: "data.", withRequestConfig: true })}
   ));
 }
 /**
@@ -243,15 +262,17 @@ ${hookName}.queryKey = (
   ${axiosInstanceArgument}
  ${
    route.params || route.query || route.body
-     ? `data: { ${argumentList(";").join("\n")} },`
+     ? `data: { ${argumentList({ suffix: ";", withRequestConfig: true }).join(
+         "\n",
+       )} },`
      : ""
  }
  ) => {
   return queryClient.prefetchQuery(${hookName}.queryKey(
-    ${parameterList("data.")}
+    ${parameterList({ prefix: "data.", withRequestConfig: false })}
   ), () => ${apiName}(
      ${axiosInstanceParameter}
-     ${parameterList("data.")}
+     ${parameterList({ prefix: "data.", withRequestConfig: true })}
   ));
 }
 
@@ -262,11 +283,14 @@ ${hookName}.invalidate = (
   ${queryClientArgument}
   ${
     route.params || route.query || route.body
-      ? `queryKey: { ${argumentList(";").join("\n")} }`
+      ? `queryKey: { ${argumentList({
+          suffix: ";",
+          withRequestConfig: false,
+        }).join("\n")} }`
       : ""
   }
 ) => queryClient.invalidateQueries(${hookName}.queryKey(
-    ${parameterList("queryKey.")}
+    ${parameterList({ prefix: "queryKey.", withRequestConfig: false })}
 ));
   
 
@@ -277,19 +301,25 @@ ${hookName}.setQueryData = (
    ${queryClientArgument}
   ${
     route.params || route.query || route.body
-      ? `queryKey: { ${argumentList(";").join("\n")} },`
+      ? `queryKey: { ${argumentList({
+          suffix: ";",
+          withRequestConfig: false,
+        }).join("\n")} },`
       : ""
   }
       data: ${contextNames.responseTypeName},
 ) => queryClient.setQueryData(${hookName}.queryKey(
-  ${parameterList("queryKey.")}
+  ${parameterList({ prefix: "queryKey.", withRequestConfig: false })}
 ), data);
 `,
     );
   } else {
     // Write the props type
     fileBlockStart(file, `interface ${upperCaseFirst(hookName)}Props`);
-    fileWrite(file, argumentList(";").join("\n"));
+    fileWrite(
+      file,
+      argumentList({ suffix: ";", withRequestConfig: true }).join("\n"),
+    );
     fileBlockEnd(file);
 
     fileWriteInline(
@@ -333,9 +363,9 @@ ${hookName}.setQueryData = (
 
     fileWrite(
       file,
-      `return useMutation(( variables) => ${apiName}(
+      `return useMutation((variables) => ${apiName}(
    ${axiosInstanceParameter}
-  ${parameterList("variables.")}
+  ${parameterList({ prefix: "variables.", withRequestConfig: true })}
 ), options);
 `,
     );
@@ -405,7 +435,7 @@ function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
     );
 
     fileContextSetIndent(file, -1);
-    fileWrite(file, `);`);
+    fileWrite(file, `));`);
   }
 }
 

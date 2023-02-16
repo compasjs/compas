@@ -256,7 +256,9 @@ export function jsAxiosGenerateFunction(
   args.push("requestConfig");
   fileWrite(
     file,
-    `@param {import("axios").AxiosRequestConfig} [requestConfig]`,
+    `@param {import("axios").AxiosRequestConfig${
+      route.response ? ` & { skipResponseValidation?: boolean }` : ""
+    }} [requestConfig]`,
   );
 
   if (route.response) {
@@ -361,6 +363,10 @@ for (const key of Object.keys(files)) {
   fileWrite(file, `});`);
 
   if (route.response) {
+    fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
+    fileWrite(file, `return response.data;`);
+    fileBlockEnd(file);
+
     fileWrite(
       file,
       `const { value, error } = ${contextNames.responseValidator}(response.data);`,
