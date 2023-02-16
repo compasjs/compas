@@ -934,9 +934,6 @@ export type ExperimentalGenerateOptions = {
 
           // Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.
           declareGlobalTypes: boolean;
-
-          // Creates global types for types provided by Compas features. Only applicable when using 'targetLanguage' that is set to 'js' or 'ts'.
-          declareGlobalCompasTypes: boolean;
         }
       | undefined;
   };
@@ -1028,9 +1025,6 @@ export type ExperimentalGenerateOptionsInput = {
 
           // Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.
           declareGlobalTypes?: boolean | "true" | "false" | undefined;
-
-          // Creates global types for types provided by Compas features. Only applicable when using 'targetLanguage' that is set to 'js' or 'ts'.
-          declareGlobalCompasTypes?: boolean | "true" | "false" | undefined;
         }
       | undefined;
   };

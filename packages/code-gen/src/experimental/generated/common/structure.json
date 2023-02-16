@@ -2716,17 +2716,6 @@
                   "sql": {},
                   "type": "boolean",
                   "defaultValue": "false"
-                },
-                "declareGlobalCompasTypes": {
-                  "docString": "Creates global types for types provided by Compas features. Only applicable when using 'targetLanguage' that is set to 'js' or 'ts'.",
-                  "isOptional": true,
-                  "validator": {
-                    "convert": false,
-                    "allowNull": false
-                  },
-                  "sql": {},
-                  "type": "boolean",
-                  "defaultValue": "false"
                 }
               },
               "relations": []

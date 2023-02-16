@@ -191,12 +191,6 @@ export function extendWithCodeGenExperimental(generator) {
                 .docs(
                   "Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.",
                 ),
-
-              declareGlobalCompasTypes: T.bool()
-                .default(false)
-                .docs(
-                  "Creates global types for types provided by Compas features. Only applicable when using 'targetLanguage' that is set to 'js' or 'ts'.",
-                ),
             })
             .optional()
             .docs(

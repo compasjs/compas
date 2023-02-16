@@ -49,6 +49,7 @@ import {
 } from "./processors/structure.js";
 import { routerGenerator } from "./router/generator.js";
 import { structureGenerator } from "./structure/generator.js";
+import { targetValidateCombinations } from "./target/validation.js";
 import {
   typesGeneratorFinalize,
   typesGeneratorInit,
@@ -104,6 +105,8 @@ export function generateExecute(generator, options) {
     structure,
     files: new Map(),
   };
+
+  targetValidateCombinations(generateContext);
 
   structureGenerator(generateContext);
 

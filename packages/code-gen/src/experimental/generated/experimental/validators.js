@@ -11354,7 +11354,6 @@ export function validateExperimentalGenerateOptions(value) {
               const knownKeys0 = new Set([
                 "includeBaseTypes",
                 "declareGlobalTypes",
-                "declareGlobalCompasTypes",
               ]);
               for (const key of Object.keys(value["generators"]["types"])) {
                 if (!knownKeys0.has(key)) {
@@ -11417,40 +11416,6 @@ export function validateExperimentalGenerateOptions(value) {
                   result["generators"]["types"]["declareGlobalTypes"] = false;
                 } else {
                   errorMap[`$.generators.types.declareGlobalTypes`] = {
-                    key: "validator.type",
-                    expectedType: "boolean",
-                  };
-                }
-              }
-              if (
-                value["generators"]["types"]["declareGlobalCompasTypes"] ===
-                  null ||
-                value["generators"]["types"]["declareGlobalCompasTypes"] ===
-                  undefined
-              ) {
-                result["generators"]["types"]["declareGlobalCompasTypes"] =
-                  false;
-              } else {
-                if (
-                  value["generators"]["types"]["declareGlobalCompasTypes"] ===
-                    true ||
-                  value["generators"]["types"]["declareGlobalCompasTypes"] ===
-                    "true" ||
-                  value["generators"]["types"]["declareGlobalCompasTypes"] === 1
-                ) {
-                  result["generators"]["types"]["declareGlobalCompasTypes"] =
-                    true;
-                } else if (
-                  value["generators"]["types"]["declareGlobalCompasTypes"] ===
-                    false ||
-                  value["generators"]["types"]["declareGlobalCompasTypes"] ===
-                    "false" ||
-                  value["generators"]["types"]["declareGlobalCompasTypes"] === 0
-                ) {
-                  result["generators"]["types"]["declareGlobalCompasTypes"] =
-                    false;
-                } else {
-                  errorMap[`$.generators.types.declareGlobalCompasTypes`] = {
                     key: "validator.type",
                     expectedType: "boolean",
                   };

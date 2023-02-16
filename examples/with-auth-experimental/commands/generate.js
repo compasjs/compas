@@ -92,9 +92,7 @@ function generateApplication(logger) {
     outputDirectory: "./src/generated/application",
     generators: {
       structure: {},
-      types: {
-        declareGlobalCompasTypes: true,
-      },
+      types: {},
       apiClient: {
         target: {
           library: "axios",
