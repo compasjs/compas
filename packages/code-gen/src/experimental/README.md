@@ -57,10 +57,10 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] API client generator, add specific config option to skip the validators on
       specific calls
   - Also expose this in the react-query wrapper
-- [ ] Add validation on the allowed target combinations
+- [x] Add validation on the allowed target combinations
 - [x] nit: Normalize `xxxFormatTarget` return types
 - [ ] CRUD generator support non-global types
-- [ ] Model-relation check if an existing key has the same optionality as the
+- [x] Model-relation check if an existing key has the same optionality as the
       relation.
 - [ ] Use `decodeUriComponent` in the route matcher
 - [ ] Improve the thrown errors in the validators, adding more information where

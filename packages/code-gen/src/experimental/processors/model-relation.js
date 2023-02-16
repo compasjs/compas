@@ -5,6 +5,7 @@ import {
   stringFormatNameForError,
   stringFormatRelation,
 } from "../string-format.js";
+import { typesGeneratorIsOptional } from "../types/generator.js";
 import { modelKeyGetPrimary } from "./model-keys.js";
 import { structureModels } from "./models.js";
 import { structureNamedTypes, structureResolveReference } from "./structure.js";
@@ -362,7 +363,36 @@ export function modelRelationAddKeys(generateContext) {
             }),
           );
         }
-        // TODO: check if same optionality of field & relation is used
+
+        if (
+          typesGeneratorIsOptional(
+            generateContext,
+            model.keys[relation.ownKey],
+            {
+              validatorState: "output",
+            },
+          ) !== relation.isOptional
+        ) {
+          AppError.serverError({
+            message: `The relation ${stringFormatRelation(
+              model.name,
+              modelInverse.name,
+              relation.ownKey,
+
+              // @ts-expect-error
+              //
+              // Referenced key is set earlier in the
+              // process
+              relation.referencedKey,
+            )} uses a user defined type for '${relation.ownKey}' ('${
+              model.keys[relation.ownKey].type
+            }'). However, the type of that field is optional, while the provided relation is not. Either make the relation optional, or remove '.optional()' from the defined type for '${
+              relation.ownKey
+            }'. Compas.js is able to automatically create the correct key based on the known primary key if you remove the '${
+              relation.ownKey
+            }' from the definition of '${model.name}'.`,
+          });
+        }
       } else {
         // The inverse field doesn't exist yet, create it.
 
