@@ -1,15 +1,15 @@
 import { TypeCreator } from "@compas/code-gen";
 
 /**
- * @param app
+ * @param generator
  */
-export function applyCliStructure(app) {
+export function applyCliStructure(generator) {
   const T = new TypeCreator("cli");
 
   // Note that if this is updated, both `compasGetCli` and `cliHelpInit` should be
   // updated. This is also a downstream breaking change.
 
-  app.add(
+  generator.add(
     T.anyOf("completion").values(
       { type: "directory" },
       {

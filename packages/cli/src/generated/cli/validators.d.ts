@@ -1,34 +1,39 @@
 /**
- * @template T
- * @typedef {import("@compas/stdlib").Either<T, AppError>} Either
+ * @template T, E
+ * @typedef {{ value: T, error?: never}|{ value?: never, error: E }} Either
  */
 /**
- * @param {undefined|any|import("../common/types").CliCommandDefinitionInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<import("../common/types").CliCommandDefinition>}
+ * @typedef {Record<string, any|undefined>} ValidatorErrorMap
+ */
+/**
+ * @param {import("../common/types").CliCommandDefinitionInput|any} value
+ * @returns {Either<import("../common/types").CliCommandDefinition, ValidatorErrorMap>}
  */
 export function validateCliCommandDefinition(
-  value: undefined | any | import("../common/types").CliCommandDefinitionInput,
-  propertyPath?: string | undefined,
-): Either<import("../common/types").CliCommandDefinition>;
+  value: import("../common/types").CliCommandDefinitionInput | any,
+): Either<import("../common/types").CliCommandDefinition, ValidatorErrorMap>;
 /**
- * @param {undefined|any|import("../common/types").CliCompletionInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<import("../common/types").CliCompletion>}
- */
-export function validateCliCompletion(
-  value: undefined | any | import("../common/types").CliCompletionInput,
-  propertyPath?: string | undefined,
-): Either<import("../common/types").CliCompletion>;
-/**
- * @param {undefined|any|import("../common/types").CliFlagDefinitionInput} value
- * @param {string|undefined} [propertyPath]
- * @returns {Either<import("../common/types").CliFlagDefinition>}
+ * @param {import("../common/types").CliFlagDefinitionInput|any} value
+ * @returns {Either<import("../common/types").CliFlagDefinition, ValidatorErrorMap>}
  */
 export function validateCliFlagDefinition(
-  value: undefined | any | import("../common/types").CliFlagDefinitionInput,
-  propertyPath?: string | undefined,
-): Either<import("../common/types").CliFlagDefinition>;
-export type Either<T> = import("@compas/stdlib").Either<T, AppError>;
-import { AppError } from "@compas/stdlib";
+  value: import("../common/types").CliFlagDefinitionInput | any,
+): Either<import("../common/types").CliFlagDefinition, ValidatorErrorMap>;
+/**
+ * @param {import("../common/types").CliCompletionInput|any} value
+ * @returns {Either<import("../common/types").CliCompletion, ValidatorErrorMap>}
+ */
+export function validateCliCompletion(
+  value: import("../common/types").CliCompletionInput | any,
+): Either<import("../common/types").CliCompletion, ValidatorErrorMap>;
+export type Either<T, E> =
+  | {
+      value: T;
+      error?: never;
+    }
+  | {
+      value?: never;
+      error: E;
+    };
+export type ValidatorErrorMap = Record<string, any | undefined>;
 //# sourceMappingURL=validators.d.ts.map

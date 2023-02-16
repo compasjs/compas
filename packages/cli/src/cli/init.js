@@ -37,7 +37,7 @@ export async function cliInit(event, root, options) {
     inputs: options.commandDirectories,
   });
 
-  const validateResult = validateCliCommandDefinition(root, "$.cli");
+  const validateResult = validateCliCommandDefinition(root);
   if (validateResult.error) {
     eventStop(event);
     throw validateResult.error;

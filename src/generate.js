@@ -8,20 +8,21 @@ import { applyCodeGenStructure } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
 import { App } from "../packages/code-gen/index.js";
 
-export async function generateCli() {
-  const app = new App({
-    verbose: true,
-  });
+export function generateCli(logger) {
+  const generator = new Generator(logger);
 
-  applyCliStructure(app);
+  applyCliStructure(generator);
 
-  await app.generate({
-    outputDirectory: `packages/cli/src/generated`,
-    enabledGroups: ["cli"],
-    isNode: true,
-    enabledGenerators: ["validator", "type"],
-    dumpStructure: true,
-    declareGlobalTypes: false,
+  generator.generate({
+    targetLanguage: "js",
+    outputDirectory: "./packages/cli/src/generated",
+    generators: {
+      structure: {},
+      types: {},
+      validators: {
+        includeBaseTypes: true,
+      },
+    },
   });
 }
 

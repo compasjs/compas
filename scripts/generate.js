@@ -41,7 +41,7 @@ export const cliDefinition = {
  * @returns {Promise<CliResult>}
  */
 async function cliExecutor(logger, state) {
-  await generateCli();
+  generateCli(logger);
   await generateCodeGen();
   generateStore(logger);
   await generateExamples(logger, state);

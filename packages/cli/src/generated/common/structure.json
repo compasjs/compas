@@ -1,0 +1,611 @@
+{
+  "cli": {
+    "commandDefinition": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {
+        "allowNull": false,
+        "strict": true
+      },
+      "sql": {},
+      "type": "object",
+      "group": "cli",
+      "name": "commandDefinition",
+      "keys": {
+        "name": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "convert": false,
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1,
+            "pattern": "/^[a-z-]+$/g"
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "shortDescription": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "convert": false,
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1,
+            "pattern": "/^[^\\n]+$/g"
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "longDescription": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "convert": false,
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "modifiers": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "defaultValue": "{\"isDynamic\":false,\"isCosmetic\":false,\"isWatchable\":false}",
+          "keys": {
+            "isDynamic": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "boolean",
+              "defaultValue": "false"
+            },
+            "isCosmetic": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "boolean",
+              "defaultValue": "false"
+            },
+            "isWatchable": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "boolean",
+              "defaultValue": "false"
+            }
+          },
+          "relations": []
+        },
+        "dynamicValue": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "defaultValue": "{}",
+          "keys": {
+            "validator": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "any",
+              "rawValueImport": {},
+              "rawValidatorImport": {},
+              "rawValue": "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+              "rawValidator": "((v) => typeof v === \"function\")"
+            },
+            "completions": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "any",
+              "rawValueImport": {},
+              "rawValidatorImport": {},
+              "rawValue": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+              "rawValidator": "((v) => typeof v === \"function\")"
+            }
+          },
+          "relations": []
+        },
+        "watchSettings": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "defaultValue": "{\"extensions\":[\"js\",\"json\"],\"ignorePatterns\":[\".cache\",\"coverage\",\"node_modules\"]}",
+          "keys": {
+            "extensions": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false
+              },
+              "sql": {},
+              "type": "array",
+              "defaultValue": "[\"js\", \"json\"]",
+              "values": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "convert": false,
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            },
+            "ignorePatterns": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false
+              },
+              "sql": {},
+              "type": "array",
+              "defaultValue": "[\".cache\", \"coverage\", \"node_modules\"]",
+              "values": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "convert": false,
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            }
+          },
+          "relations": []
+        },
+        "subCommands": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "defaultValue": "[]",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {},
+            "sql": {},
+            "type": "reference",
+            "reference": {
+              "group": "cli",
+              "name": "commandDefinition",
+              "uniqueName": "CliCommandDefinition"
+            }
+          }
+        },
+        "flags": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "defaultValue": "[]",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {},
+            "sql": {},
+            "type": "reference",
+            "reference": {
+              "group": "cli",
+              "name": "flagDefinition",
+              "uniqueName": "CliFlagDefinition"
+            }
+          }
+        },
+        "executor": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false
+          },
+          "sql": {},
+          "type": "any",
+          "rawValueImport": {},
+          "rawValidatorImport": {},
+          "rawValue": "((logger: import(\"@compas/stdlib\").Logger, state: import(\"../../cli/types\").CliExecutorState) => (Promise<import(\"../../cli/types\").CliResult>|CliResult))",
+          "rawValidator": "((v) => typeof v === \"function\")"
+        }
+      },
+      "relations": []
+    },
+    "completion": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {},
+      "sql": {},
+      "type": "anyOf",
+      "group": "cli",
+      "name": "completion",
+      "values": [
+        {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "keys": {
+            "type": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["directory"]
+            }
+          },
+          "relations": []
+        },
+        {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "keys": {
+            "type": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["file"]
+            }
+          },
+          "relations": []
+        },
+        {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "keys": {
+            "type": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["completion"]
+            },
+            "name": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string"
+            },
+            "description": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string"
+            }
+          },
+          "relations": []
+        },
+        {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "keys": {
+            "type": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["value"]
+            },
+            "specification": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["boolean", "number", "string", "booleanOrString"]
+            },
+            "description": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string"
+            }
+          },
+          "relations": []
+        }
+      ]
+    },
+    "flagDefinition": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {
+        "allowNull": false,
+        "strict": true
+      },
+      "sql": {},
+      "type": "object",
+      "group": "cli",
+      "name": "flagDefinition",
+      "keys": {
+        "name": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "convert": false,
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "rawName": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "convert": false,
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": true,
+            "upperCase": false,
+            "min": 1,
+            "pattern": "/^--\\w/g"
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "description": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "convert": false,
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1,
+            "pattern": "/^[^\\n]+$/g"
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "modifiers": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "defaultValue": "{\"isRepeatable\":false,\"isRequired\":false,\"isInternal\":false}",
+          "keys": {
+            "isRepeatable": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "boolean",
+              "defaultValue": "false"
+            },
+            "isRequired": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "boolean",
+              "defaultValue": "false"
+            },
+            "isInternal": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "boolean",
+              "defaultValue": "false"
+            }
+          },
+          "relations": []
+        },
+        "value": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "defaultValue": "{\"specification\":\"boolean\"}",
+          "keys": {
+            "specification": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["boolean", "number", "string", "booleanOrString"],
+              "defaultValue": "\"boolean\""
+            },
+            "validator": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "any",
+              "rawValueImport": {},
+              "rawValidatorImport": {},
+              "rawValue": "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+              "rawValidator": "((v) => typeof v === \"function\")"
+            },
+            "completions": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "allowNull": false
+              },
+              "sql": {},
+              "type": "any",
+              "rawValueImport": {},
+              "rawValidatorImport": {},
+              "rawValue": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+              "rawValidator": "((v) => typeof v === \"function\")"
+            }
+          },
+          "relations": []
+        }
+      },
+      "relations": []
+    }
+  }
+}
