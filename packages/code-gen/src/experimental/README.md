@@ -62,7 +62,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [ ] CRUD generator support non-global types
 - [x] Model-relation check if an existing key has the same optionality as the
       relation.
-- [ ] Use `decodeUriComponent` in the route matcher
+- [x] Use `decodeUriComponent` in the route matcher
 - [ ] Improve the thrown errors in the validators, adding more information where
       possible.
 - [ ] Write migration docs + breaking changes

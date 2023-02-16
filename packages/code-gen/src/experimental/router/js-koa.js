@@ -377,7 +377,35 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
 
   fileWrite(file, `if (!match) { throw AppError.notFound(); }\n`);
 
-  // TODO: decodeUriComponent
+  // const decodePathParam = (arg) => {
+  //   try {
+  //     return decodeURIComponent(arg);
+  //   } catch (e) {
+  //     throw AppError.validationError("router.param.invalidEncoding", {
+  //       param: arg,
+  //     });
+  //   }
+  // };
+
+  fileBlockStart(file, `if (match.params)`);
+  fileBlockStart(
+    file,
+    `for (const [key, value] of Object.entries(match.params))`,
+  );
+
+  fileWrite(
+    file,
+    `try {
+  match.params[key] = decodeURIComponent(value);
+} catch (e) {
+  throw AppError.validationError("router.param.invalidEncoding", { key, value });
+}
+`,
+  );
+
+  fileBlockEnd(file);
+  fileBlockEnd(file);
+
   fileWrite(
     file,
     `return routes[match.route.group][match.route.name](match.params, ctx, next);`,
