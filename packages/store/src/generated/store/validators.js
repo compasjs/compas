@@ -1909,6 +1909,7 @@ export function validateStoreFileOrderBy(value) {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.oneOf",
                   allowedValues: ["id", "bucketName", "createdAt", "updatedAt"],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -2006,6 +2007,7 @@ export function validateStoreFileOrderBySpec(value) {
               errorMap[`$.id`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["id"] = convertedString0;
@@ -2038,6 +2040,7 @@ export function validateStoreFileOrderBySpec(value) {
               errorMap[`$.bucketName`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["bucketName"] = convertedString0;
@@ -2070,6 +2073,7 @@ export function validateStoreFileOrderBySpec(value) {
               errorMap[`$.createdAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["createdAt"] = convertedString0;
@@ -2102,6 +2106,7 @@ export function validateStoreFileOrderBySpec(value) {
               errorMap[`$.updatedAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["updatedAt"] = convertedString0;
@@ -2334,6 +2339,7 @@ export function validateStoreFileReturning(value) {
             intermediateErrorMap2[`$`] = {
               key: "validator.oneOf",
               allowedValues: ["*"],
+              foundValue: convertedString2,
             };
           } else {
             intermediateResult2 = convertedString2;
@@ -2415,6 +2421,7 @@ export function validateStoreFileReturning(value) {
                     "createdAt",
                     "updatedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -2501,6 +2508,7 @@ export function validateStoreFileInsert(value) {
           errorMap[`$.insert`] = {
             key: "validator.length",
             maxLength: 50000,
+            foundLength: intermediateValue1.length,
           };
         }
         result["insert"] = Array.from({ length: intermediateValue1.length });
@@ -7059,6 +7067,7 @@ export function validateStoreJobOrderBy(value) {
                     "createdAt",
                     "updatedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -7158,6 +7167,7 @@ export function validateStoreJobOrderBySpec(value) {
               errorMap[`$.id`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["id"] = convertedString0;
@@ -7197,6 +7207,7 @@ export function validateStoreJobOrderBySpec(value) {
                   "ASC NULLS FIRST",
                   "DESC NULLS LAST",
                 ],
+                foundValue: convertedString0,
               };
             } else {
               result["isComplete"] = convertedString0;
@@ -7229,6 +7240,7 @@ export function validateStoreJobOrderBySpec(value) {
               errorMap[`$.name`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["name"] = convertedString0;
@@ -7268,6 +7280,7 @@ export function validateStoreJobOrderBySpec(value) {
                   "ASC NULLS FIRST",
                   "DESC NULLS LAST",
                 ],
+                foundValue: convertedString0,
               };
             } else {
               result["scheduledAt"] = convertedString0;
@@ -7300,6 +7313,7 @@ export function validateStoreJobOrderBySpec(value) {
               errorMap[`$.createdAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["createdAt"] = convertedString0;
@@ -7332,6 +7346,7 @@ export function validateStoreJobOrderBySpec(value) {
               errorMap[`$.updatedAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["updatedAt"] = convertedString0;
@@ -7566,6 +7581,7 @@ export function validateStoreJobReturning(value) {
             intermediateErrorMap2[`$`] = {
               key: "validator.oneOf",
               allowedValues: ["*"],
+              foundValue: convertedString2,
             };
           } else {
             intermediateResult2 = convertedString2;
@@ -7651,6 +7667,7 @@ export function validateStoreJobReturning(value) {
                     "createdAt",
                     "updatedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -7737,6 +7754,7 @@ export function validateStoreJobInsert(value) {
           errorMap[`$.insert`] = {
             key: "validator.length",
             maxLength: 50000,
+            foundLength: intermediateValue1.length,
           };
         }
         result["insert"] = Array.from({ length: intermediateValue1.length });
@@ -14280,6 +14298,7 @@ export function validateStoreSessionStoreOrderBy(value) {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.oneOf",
                   allowedValues: ["id", "createdAt", "updatedAt"],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -14372,6 +14391,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
               errorMap[`$.id`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["id"] = convertedString0;
@@ -14404,6 +14424,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
               errorMap[`$.createdAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["createdAt"] = convertedString0;
@@ -14436,6 +14457,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
               errorMap[`$.updatedAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["updatedAt"] = convertedString0;
@@ -14687,6 +14709,7 @@ export function validateStoreSessionStoreReturning(value) {
             intermediateErrorMap2[`$`] = {
               key: "validator.oneOf",
               allowedValues: ["*"],
+              foundValue: convertedString2,
             };
           } else {
             intermediateResult2 = convertedString2;
@@ -14764,6 +14787,7 @@ export function validateStoreSessionStoreReturning(value) {
                     "createdAt",
                     "updatedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -15132,6 +15156,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
                     "refreshToken",
                     "revokedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -15230,6 +15255,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
               errorMap[`$.id`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["id"] = convertedString0;
@@ -15262,6 +15288,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
               errorMap[`$.session`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["session"] = convertedString0;
@@ -15294,6 +15321,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
               errorMap[`$.expiresAt`] = {
                 key: "validator.oneOf",
                 allowedValues: ["ASC", "DESC"],
+                foundValue: convertedString0,
               };
             } else {
               result["expiresAt"] = convertedString0;
@@ -15336,6 +15364,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
                   "ASC NULLS FIRST",
                   "DESC NULLS LAST",
                 ],
+                foundValue: convertedString0,
               };
             } else {
               result["refreshToken"] = convertedString0;
@@ -15375,6 +15404,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
                   "ASC NULLS FIRST",
                   "DESC NULLS LAST",
                 ],
+                foundValue: convertedString0,
               };
             } else {
               result["revokedAt"] = convertedString0;
@@ -15437,6 +15467,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
             intermediateErrorMap2[`$`] = {
               key: "validator.oneOf",
               allowedValues: ["*"],
+              foundValue: convertedString2,
             };
           } else {
             intermediateResult2 = convertedString2;
@@ -15514,6 +15545,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
                     "revokedAt",
                     "createdAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -15600,6 +15632,7 @@ export function validateStoreSessionStoreInsert(value) {
           errorMap[`$.insert`] = {
             key: "validator.length",
             maxLength: 50000,
+            foundLength: intermediateValue1.length,
           };
         }
         result["insert"] = Array.from({ length: intermediateValue1.length });
@@ -17415,6 +17448,7 @@ export function validateStoreSessionStoreTokenInsert(value) {
           errorMap[`$.insert`] = {
             key: "validator.length",
             maxLength: 50000,
+            foundLength: intermediateValue1.length,
           };
         }
         result["insert"] = Array.from({ length: intermediateValue1.length });
@@ -25710,6 +25744,7 @@ export function validateStoreFileOrderBy_1(value) {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.oneOf",
                   allowedValues: ["id", "bucketName", "createdAt", "updatedAt"],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -25847,6 +25882,7 @@ export function validateStoreJobOrderBy_1(value) {
                     "createdAt",
                     "updatedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -25974,6 +26010,7 @@ export function validateStoreSessionStoreOrderBy_1(value) {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.oneOf",
                   allowedValues: ["id", "createdAt", "updatedAt"],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;
@@ -26109,6 +26146,7 @@ export function validateStoreSessionStoreTokenOrderBy_1(value) {
                     "refreshToken",
                     "revokedAt",
                   ],
+                  foundValue: convertedString3,
                 };
               } else {
                 intermediateResult3[i3] = convertedString3;

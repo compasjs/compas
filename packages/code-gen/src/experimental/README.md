@@ -63,7 +63,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Model-relation check if an existing key has the same optionality as the
       relation.
 - [x] Use `decodeUriComponent` in the route matcher
-- [ ] Improve the thrown errors in the validators, adding more information where
+- [x] Improve the thrown errors in the validators, adding more information where
       possible.
 - [ ] Write migration docs + breaking changes
 

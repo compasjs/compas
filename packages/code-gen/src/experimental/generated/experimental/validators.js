@@ -54,6 +54,7 @@ export function validateExperimentalAnyDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["any"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -926,6 +927,7 @@ export function validateExperimentalAnyDefinitionTarget(value) {
             "tsAxiosBrowser",
             "tsAxiosReactNative",
           ],
+          foundValue: convertedString0,
         };
       } else {
         result = convertedString0;
@@ -983,6 +985,7 @@ export function validateExperimentalAnyOfDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["anyOf"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -1348,6 +1351,7 @@ export function validateExperimentalAnyOfDefinition(value) {
           errorMap[`$.values`] = {
             key: "validator.length",
             minLength: 1,
+            foundLength: intermediateValue1.length,
           };
         }
         result["values"] = Array.from({ length: intermediateValue1.length });
@@ -1976,6 +1980,7 @@ export function validateExperimentalArrayDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["array"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -2494,6 +2499,7 @@ export function validateExperimentalBooleanDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["boolean"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -2970,6 +2976,7 @@ export function validateExperimentalCrudDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["crud"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -4043,6 +4050,7 @@ export function validateExperimentalReferenceDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["reference"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -4495,6 +4503,7 @@ export function validateExperimentalDateDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["date"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -5000,6 +5009,7 @@ export function validateExperimentalDateDefinition(value) {
               errorMap[`$.specifier`] = {
                 key: "validator.oneOf",
                 allowedValues: ["dateOnly", "timeOnly"],
+                foundValue: convertedString0,
               };
             } else {
               result["specifier"] = convertedString0;
@@ -5060,6 +5070,7 @@ export function validateExperimentalExtendDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["extend"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -5595,6 +5606,7 @@ export function validateExperimentalRelationDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["relation"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -5632,6 +5644,7 @@ export function validateExperimentalRelationDefinition(value) {
                 "oneToOne",
                 "oneToOneReverse",
               ],
+              foundValue: convertedString0,
             };
           } else {
             result["subType"] = convertedString0;
@@ -5781,6 +5794,7 @@ export function validateExperimentalFileDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["file"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -6236,6 +6250,7 @@ export function validateExperimentalGenericDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["generic"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -6669,6 +6684,7 @@ export function validateExperimentalNumberDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["number"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -7288,6 +7304,7 @@ export function validateExperimentalObjectDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["object"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -8059,6 +8076,7 @@ export function validateExperimentalOmitDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["omit"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -8582,6 +8600,7 @@ export function validateExperimentalPickDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["pick"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -9105,6 +9124,7 @@ export function validateExperimentalStringDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["string"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -9852,6 +9872,7 @@ export function validateExperimentalUuidDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["uuid"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -10282,6 +10303,7 @@ export function validateExperimentalGenerateOptions(value) {
             errorMap[`$.targetLanguage`] = {
               key: "validator.oneOf",
               allowedValues: ["js", "ts"],
+              foundValue: convertedString0,
             };
           } else {
             result["targetLanguage"] = convertedString0;
@@ -10793,6 +10815,7 @@ export function validateExperimentalGenerateOptions(value) {
                             intermediateErrorMap2[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["koa"],
+                              foundValue: convertedString2,
                             };
                           } else {
                             intermediateResult2["library"] = convertedString2;
@@ -10953,6 +10976,7 @@ export function validateExperimentalGenerateOptions(value) {
                             intermediateErrorMap2[`$.dialect`] = {
                               key: "validator.oneOf",
                               allowedValues: ["postgres"],
+                              foundValue: convertedString2,
                             };
                           } else {
                             intermediateResult2["dialect"] = convertedString2;
@@ -11213,6 +11237,7 @@ export function validateExperimentalGenerateOptions(value) {
                             intermediateErrorMap2[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["axios"],
+                              foundValue: convertedString2,
                             };
                           } else {
                             intermediateResult2["library"] = convertedString2;
@@ -11252,6 +11277,7 @@ export function validateExperimentalGenerateOptions(value) {
                                 "browser",
                                 "react-native",
                               ],
+                              foundValue: convertedString2,
                             };
                           } else {
                             intermediateResult2["targetRuntime"] =
@@ -11285,6 +11311,7 @@ export function validateExperimentalGenerateOptions(value) {
                               intermediateErrorMap2[`$.includeWrapper`] = {
                                 key: "validator.oneOf",
                                 allowedValues: ["react-query"],
+                                foundValue: convertedString2,
                               };
                             } else {
                               intermediateResult2["includeWrapper"] =
@@ -12063,6 +12090,7 @@ export function validateExperimentalRouteDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["route"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;
@@ -12437,6 +12465,7 @@ export function validateExperimentalRouteDefinition(value) {
             errorMap[`$.method`] = {
               key: "validator.oneOf",
               allowedValues: ["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"],
+              foundValue: convertedString0,
             };
           } else {
             result["method"] = convertedString0;
@@ -12711,6 +12740,7 @@ export function validateExperimentalRouteDefinition(value) {
                   errorMap[`$.metadata.requestBodyType`] = {
                     key: "validator.oneOf",
                     allowedValues: ["json", "form-data"],
+                    foundValue: convertedString0,
                   };
                 } else {
                   result["metadata"]["requestBodyType"] = convertedString0;
@@ -12773,6 +12803,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["routeInvalidation"],
+              foundValue: convertedString0,
             };
           } else {
             result["type"] = convertedString0;

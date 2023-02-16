@@ -520,7 +520,8 @@ export function validatorJavascriptArray(file, type, validatorState) {
       file,
       `${errorKey} = {
   key: "validator.length",
-  minLength: ${type.validator.min}
+  minLength: ${type.validator.min},
+  foundLength: ${currentValuePath}.length,
 };`,
     );
 
@@ -537,7 +538,8 @@ export function validatorJavascriptArray(file, type, validatorState) {
       file,
       `${errorKey} = {
   key: "validator.length",
-  maxLength: ${type.validator.max}
+  maxLength: ${type.validator.max},
+  foundLength: ${currentValuePath}.length,
 };`,
     );
 
@@ -636,6 +638,7 @@ export function validatorJavascriptBoolean(file, type, validatorState) {
       `${errorKey} = {
   key: "validator.oneOf",
   allowedValues: [${type.oneOf}],
+  foundValue: ${valuePath},
 };`,
     );
 
@@ -914,7 +917,7 @@ export function validatorJavascriptFile(file, type, validatorState) {
         file,
         `${errorKey} = {
   key: "validator.mimeType",
-  mimeType: ${resultPath}.mimetype,
+  foundMimeType: ${resultPath}.mimetype,
   allowedMimeTypes: ${JSON.stringify(type.validator.mimeTypes)},
 };`,
       );
@@ -1112,7 +1115,8 @@ export function validatorJavascriptNumber(file, type, validatorState) {
       file,
       `${errorKey} = {
   key: "validator.oneOf",
-  allowedValues: [${type.oneOf.join(", ")}]
+  allowedValues: [${type.oneOf.join(", ")}],
+  foundValue: ${intermediateVariable},
 };`,
     );
 
@@ -1406,6 +1410,7 @@ export function validatorJavascriptString(file, type, validatorState) {
       `${errorKey} = {
   key: "validator.oneOf",
   allowedValues: ${JSON.stringify(type.oneOf)},
+  foundValue: ${intermediateVariable},
 };`,
     );
 
