@@ -38,16 +38,6 @@ export function jsPostgresGenerateUtils(generateContext) {
     file,
     `
 /**
- * @template Type
- 
- * @typedef {object} WrappedQueryPart
- * @property {import("@compas/store").QueryPart<any>} queryPart
- * @property {function(): void} then
- * @property {(sql: import("@compas/store").Postgres) => Promise<Type[]>} exec
- * @property {(sql: import("@compas/store").Postgres) => Promise<(Type|any)[]>} execRaw
- */
-  
-/**
  * Wrap a queryPart & validator in something that can either be used directly, or can be chained.
  * 
  * @template {function} T
@@ -55,7 +45,7 @@ export function jsPostgresGenerateUtils(generateContext) {
  * @param {import("@compas/store").QueryPart<any>} queryPart
  * @param {T} validator
  * @param {{ hasCustomReturning: boolean }} options
- * @returns {WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
+ * @returns {import("@compas/store").WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
  */
 export function wrapQueryPart(queryPart, validator, options) {
   return {
@@ -603,7 +593,7 @@ export function jsPostgresGenerateInsert(
   fileWrite(file, ` @param {${contextNames.insertType.inputType}} input`);
   fileWrite(
     file,
-    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.model.outputType}>}`,
+    ` @returns {import("@compas/store").WrappedQueryPart<${contextNames.model.outputType}>}`,
   );
 
   fileWrite(file, `/`);
@@ -809,7 +799,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
   fileWrite(file, ` @param {${contextNames.insertType.inputType}} input`);
   fileWrite(
     file,
-    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.model.outputType}>}`,
+    ` @returns {import("@compas/store").WrappedQueryPart<${contextNames.model.outputType}>}`,
   );
 
   fileWrite(file, `/`);
@@ -1025,7 +1015,7 @@ export function jsPostgresGenerateUpdate(
   fileWrite(file, ` @param {${contextNames.updateType.inputType}} input`);
   fileWrite(
     file,
-    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.model.outputType}>}`,
+    ` @returns {import("@compas/store").WrappedQueryPart<${contextNames.model.outputType}>}`,
   );
 
   fileWrite(file, `/`);
@@ -1218,7 +1208,7 @@ export function jsPostgresGenerateQueryBuilder(
   );
   fileWrite(
     file,
-    ` @returns {import("../common/database").WrappedQueryPart<${contextNames.queryResultType.outputType}>}`,
+    ` @returns {import("@compas/store").WrappedQueryPart<${contextNames.queryResultType.outputType}>}`,
   );
 
   fileWrite(file, `/`);

@@ -1,13 +1,4 @@
 /**
- * @template Type
- 
- * @typedef {object} WrappedQueryPart
- * @property {import("@compas/store").QueryPart<any>} queryPart
- * @property {function(): void} then
- * @property {(sql: import("@compas/store").Postgres) => Promise<Type[]>} exec
- * @property {(sql: import("@compas/store").Postgres) => Promise<(Type|any)[]>} execRaw
- */
-/**
  * Wrap a queryPart & validator in something that can either be used directly, or can be chained.
  *
  * @template {function} T
@@ -15,7 +6,7 @@
  * @param {import("@compas/store").QueryPart<any>} queryPart
  * @param {T} validator
  * @param {{ hasCustomReturning: boolean }} options
- * @returns {WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
+ * @returns {import("@compas/store").WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
  */
 export function wrapQueryPart<T extends Function>(
   queryPart: import("@compas/store").QueryPart<any>,
@@ -23,7 +14,9 @@ export function wrapQueryPart<T extends Function>(
   options: {
     hasCustomReturning: boolean;
   },
-): WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>;
+): import("../../../index.js").WrappedQueryPart<
+  NonNullable<ReturnType<T>["value"]>
+>;
 export const queries: {
   sessionStoreTokenCount: (
     sql: import("postgres").Sql<{}>,
@@ -141,11 +134,5 @@ export const queries: {
       | import("./types.js").StoreFileInsertPartialInput
       | import("./types.js").StoreFileInsertPartialInput[],
   ) => Promise<import("./types.js").StoreFile[]>;
-};
-export type WrappedQueryPart<Type> = {
-  queryPart: import("@compas/store").QueryPart<any>;
-  then: () => void;
-  exec: (sql: import("@compas/store").Postgres) => Promise<Type[]>;
-  execRaw: (sql: import("@compas/store").Postgres) => Promise<(Type | any)[]>;
 };
 //# sourceMappingURL=database.d.ts.map

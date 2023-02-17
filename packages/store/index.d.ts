@@ -10,6 +10,8 @@ export type Returning<
   Type,
   Selector extends string[] | "*" | undefined,
 > = import("./types/advanced-types.js").Returning<Type, Selector>;
+export type WrappedQueryPart<Type> =
+  import("./types/advanced-types.js").WrappedQueryPart<Type>;
 export type SessionStoreSettings =
   import("./src/session-store.js").SessionStoreSettings;
 export type SessionTransportSettings =

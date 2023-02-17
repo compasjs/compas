@@ -333,7 +333,7 @@ function sessionStoreTokenInsert(sql, insert, options = {}) {
  * Insert a record in the 'sessionStoreToken' table
  *
  * @param {import("../common/types").StoreSessionStoreTokenInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
  */
 function sessionStoreTokenInsertInternal(input) {
   const { error, value: validatedInput } =
@@ -415,7 +415,7 @@ function sessionStoreTokenUpsertOnId(sql, insert) {
  * Upsert a record in the 'sessionStoreToken' table based on the primary key.
  *
  * @param {import("../common/types").StoreSessionStoreTokenInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
  */
 function sessionStoreTokenUpsertOnIdInternal(input) {
   const { error, value: validatedInput } =
@@ -516,7 +516,7 @@ function sessionStoreTokenUpdate(sql, update) {
  * Update records in the 'sessionStoreToken' table
  *
  * @param {import("../common/types").StoreSessionStoreTokenUpdateInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
  */
 function sessionStoreTokenUpdateInternal(input) {
   const { error, value: validatedInput } =
@@ -600,7 +600,7 @@ export const sessionStoreTokenQueryBuilderSpec = {
  * Query records in the 'sessionStoreToken' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStoreToken>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStoreToken>}
  */
 export function querySessionStoreToken(input = {}) {
   const { error, value: validatedInput } =

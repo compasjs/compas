@@ -38,13 +38,13 @@ export function sessionStoreOrderBy(
  * Query records in the 'sessionStore' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreSessionStoreQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStore>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStore>}
  */
 export function querySessionStore(
   input?:
     | import("../common/types").StoreSessionStoreQueryBuilderInput
     | undefined,
-): import("../common/database").WrappedQueryPart<
+): import("@compas/store").WrappedQueryPart<
   import("../common/types").QueryResultStoreSessionStore
 >;
 export namespace sessionStoreQueries {

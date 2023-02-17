@@ -59,12 +59,13 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Also expose this in the react-query wrapper
 - [x] Add validation on the allowed target combinations
 - [x] nit: Normalize `xxxFormatTarget` return types
-- [ ] CRUD generator support non-global types
 - [x] Model-relation check if an existing key has the same optionality as the
       relation.
 - [x] Use `decodeUriComponent` in the route matcher
 - [x] Improve the thrown errors in the validators, adding more information where
       possible.
+- [x] Check if `WrappedQueryPart` resolves correctly, or if we need an advanced
+      type for that somewhere.
 - [ ] Write migration docs + breaking changes
 
 ### Docs
@@ -77,6 +78,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ### Feature ideas
 
+- CRUD generator support non-global types
 - Remove `skipTrailingSlash` from `internalSettings` since it is not used
   anymore.
 - Update `T.string().pattern()` with `patternExplanation`
@@ -106,6 +108,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - `T.array()`, `T.bool()` and `T.number()` auto convert always
   - Validator result `error` is a plain object
   - Validator error keys are simplified
+  - Validators don't accept a base error property path as the second argument
 - Database
   - `queries` is exported from `common/database.js` instead of
     `database/index.js`

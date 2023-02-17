@@ -7,16 +7,6 @@ import { sessionStoreTokenQueries } from "../database/sessionStoreToken.js";
 import { AppError } from "@compas/stdlib";
 
 /**
- * @template Type
- 
- * @typedef {object} WrappedQueryPart
- * @property {import("@compas/store").QueryPart<any>} queryPart
- * @property {function(): void} then
- * @property {(sql: import("@compas/store").Postgres) => Promise<Type[]>} exec
- * @property {(sql: import("@compas/store").Postgres) => Promise<(Type|any)[]>} execRaw
- */
-
-/**
  * Wrap a queryPart & validator in something that can either be used directly, or can be chained.
  *
  * @template {function} T
@@ -24,7 +14,7 @@ import { AppError } from "@compas/stdlib";
  * @param {import("@compas/store").QueryPart<any>} queryPart
  * @param {T} validator
  * @param {{ hasCustomReturning: boolean }} options
- * @returns {WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
+ * @returns {import("@compas/store").WrappedQueryPart<NonNullable<ReturnType<T>["value"]>>}
  */
 export function wrapQueryPart(queryPart, validator, options) {
   return {

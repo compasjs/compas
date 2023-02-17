@@ -36,11 +36,11 @@ export function jobOrderBy(
  * Query records in the 'job' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreJobQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
  */
 export function queryJob(
   input?: import("../common/types").StoreJobQueryBuilderInput | undefined,
-): import("../common/database").WrappedQueryPart<
+): import("@compas/store").WrappedQueryPart<
   import("../common/types").QueryResultStoreJob
 >;
 export namespace jobQueries {

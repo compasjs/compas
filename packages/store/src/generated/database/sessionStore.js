@@ -250,7 +250,7 @@ function sessionStoreInsert(sql, insert, options = {}) {
  * Insert a record in the 'sessionStore' table
  *
  * @param {import("../common/types").StoreSessionStoreInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreSessionStore>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStore>}
  */
 function sessionStoreInsertInternal(input) {
   const { error, value: validatedInput } =
@@ -344,7 +344,7 @@ function sessionStoreUpsertOnId(sql, insert) {
  * Upsert a record in the 'sessionStore' table based on the primary key.
  *
  * @param {import("../common/types").StoreSessionStoreInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreSessionStore>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStore>}
  */
 function sessionStoreUpsertOnIdInternal(input) {
   const { error, value: validatedInput } =
@@ -435,7 +435,7 @@ function sessionStoreUpdate(sql, update) {
  * Update records in the 'sessionStore' table
  *
  * @param {import("../common/types").StoreSessionStoreUpdateInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreSessionStore>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStore>}
  */
 function sessionStoreUpdateInternal(input) {
   const { error, value: validatedInput } =
@@ -496,7 +496,7 @@ export const sessionStoreQueryBuilderSpec = {
  * Query records in the 'sessionStore' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreSessionStoreQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStore>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStore>}
  */
 export function querySessionStore(input = {}) {
   const { error, value: validatedInput } =

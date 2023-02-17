@@ -253,7 +253,7 @@ function fileInsert(sql, insert, options = {}) {
  * Insert a record in the 'file' table
  *
  * @param {import("../common/types").StoreFileInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreFile>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
  */
 function fileInsertInternal(input) {
   const { error, value: validatedInput } = validateStoreFileInsert(input);
@@ -350,7 +350,7 @@ function fileUpsertOnId(sql, insert) {
  * Upsert a record in the 'file' table based on the primary key.
  *
  * @param {import("../common/types").StoreFileInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreFile>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
  */
 function fileUpsertOnIdInternal(input) {
   const { error, value: validatedInput } = validateStoreFileInsert(input);
@@ -459,7 +459,7 @@ function fileUpdate(sql, update) {
  * Update records in the 'file' table
  *
  * @param {import("../common/types").StoreFileUpdateInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreFile>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
  */
 function fileUpdateInternal(input) {
   const { error, value: validatedInput } = validateStoreFileUpdate(input);
@@ -520,7 +520,7 @@ export const fileQueryBuilderSpec = {
  * Query records in the 'file' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreFileQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
  */
 export function queryFile(input = {}) {
   const { error, value: validatedInput } = validateStoreFileQueryBuilder(input);

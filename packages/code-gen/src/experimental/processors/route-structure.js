@@ -32,7 +32,10 @@ export function routeStructureCreate(generateContext) {
 
   routeStructureCache.set(
     generateContext,
-    JSON.stringify(routesOnlyGenerator.internalStructure),
+    JSON.stringify(routesOnlyGenerator.internalStructure).replaceAll(
+      /`/g,
+      "\\`",
+    ),
   );
 
   structureAddType(

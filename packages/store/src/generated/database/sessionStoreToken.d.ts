@@ -40,13 +40,13 @@ export function sessionStoreTokenOrderBy(
  * Query records in the 'sessionStoreToken' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStoreToken>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStoreToken>}
  */
 export function querySessionStoreToken(
   input?:
     | import("../common/types").StoreSessionStoreTokenQueryBuilderInput
     | undefined,
-): import("../common/database").WrappedQueryPart<
+): import("@compas/store").WrappedQueryPart<
   import("../common/types").QueryResultStoreSessionStoreToken
 >;
 export namespace sessionStoreTokenQueries {

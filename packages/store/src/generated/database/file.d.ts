@@ -36,11 +36,11 @@ export function fileOrderBy(
  * Query records in the 'file' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreFileQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
  */
 export function queryFile(
   input?: import("../common/types").StoreFileQueryBuilderInput | undefined,
-): import("../common/database").WrappedQueryPart<
+): import("@compas/store").WrappedQueryPart<
   import("../common/types").QueryResultStoreFile
 >;
 export namespace fileQueries {

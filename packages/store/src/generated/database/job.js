@@ -317,7 +317,7 @@ function jobInsert(sql, insert, options = {}) {
  * Insert a record in the 'job' table
  *
  * @param {import("../common/types").StoreJobInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreJob>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
  */
 function jobInsertInternal(input) {
   const { error, value: validatedInput } = validateStoreJobInsert(input);
@@ -418,7 +418,7 @@ function jobUpsertOnId(sql, insert) {
  * Upsert a record in the 'job' table based on the primary key.
  *
  * @param {import("../common/types").StoreJobInsertInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreJob>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
  */
 function jobUpsertOnIdInternal(input) {
   const { error, value: validatedInput } = validateStoreJobInsert(input);
@@ -539,7 +539,7 @@ function jobUpdate(sql, update) {
  * Update records in the 'job' table
  *
  * @param {import("../common/types").StoreJobUpdateInput} input
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").StoreJob>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
  */
 function jobUpdateInternal(input) {
   const { error, value: validatedInput } = validateStoreJobUpdate(input);
@@ -602,7 +602,7 @@ export const jobQueryBuilderSpec = {
  * Query records in the 'job' table, optionally joining related tables.
  *
  * @param {import("../common/types").StoreJobQueryBuilderInput} [input]
- * @returns {import("../common/database").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
  */
 export function queryJob(input = {}) {
   const { error, value: validatedInput } = validateStoreJobQueryBuilder(input);

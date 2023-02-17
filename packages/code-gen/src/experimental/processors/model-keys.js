@@ -90,6 +90,7 @@ export function modelKeyAddDateKeys(generateContext) {
 
     if (model.queryOptions?.withSoftDeletes) {
       model.keys["deletedAt"] = new DateType()
+        .optional()
         .searchable()
         .docs(
           "Automatically generated 'deletedAt' key. This is by default filtered on in 'select' queries.",

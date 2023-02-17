@@ -22,6 +22,11 @@
  */
 
 /**
+ * @template Type
+ * @typedef {import("./types/advanced-types.js").WrappedQueryPart<Type>} WrappedQueryPart
+ */
+
+/**
  * @typedef {import("./src/session-store.js").SessionStoreSettings} SessionStoreSettings
  */
 
