@@ -428,6 +428,7 @@ function sessionStoreUpdate(sql, update) {
   if (update?.returning === "*" || !update?.returning) {
     return sessionStoreUpdateInternal(update).exec(sql);
   }
+  // @ts-expect-error
   return sessionStoreUpdateInternal(update).execRaw(sql);
 }
 

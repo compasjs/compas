@@ -452,6 +452,7 @@ function fileUpdate(sql, update) {
   if (update?.returning === "*" || !update?.returning) {
     return fileUpdateInternal(update).exec(sql);
   }
+  // @ts-expect-error
   return fileUpdateInternal(update).execRaw(sql);
 }
 

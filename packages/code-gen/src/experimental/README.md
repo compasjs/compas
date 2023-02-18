@@ -66,6 +66,14 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       possible.
 - [x] Check if `WrappedQueryPart` resolves correctly, or if we need an advanced
       type for that somewhere.
+- [x] Database DDL `createdAt`/ `updatedAt` default to `now()`
+  - Dubbel check all `withDates` & `withSoftDeletes`
+- [ ] Update type names
+  - Types always get a suffix, only used when necessary
+  - Checken of isOptional / default value gebruikt wordt tijdens generaten
+  - -> dat opslaan in cache-key
+  - -> Als new variant w/ same validator state, same targets used
+  - -> Reuse name
 - [ ] Write migration docs + breaking changes
 
 ### Docs
@@ -74,10 +82,54 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Code-gen should be tailored towards the supported targets
     - e.g React, Node.js backend (koa), react-query
   - Backends, about generic tooling and all it's related features
-- Should include a target compatibility page
+- Generators should link to specific feature pages for implementations & usage
+- Structure
+  - Generators
+    - Introduction
+    - Explain different targets
+      - Link to OpenAPI import, Structure import, building your own structure.
+        To get started
+    - OpenAPI import -> different api clients
+    - Structure import -> different api clients
+    - Building your own structure
+      - Introduction
+        - Group by flow + (types, database) groups
+      - Types
+      - Entities
+      - Crud
+      - Custom routes
+    - Advanced patterns
+      - Route specifics (invalidations, idemptotent)
+      - Custom entity primary key, sql default, dates, soft deletes
+      - Different entity relation types
+  - Node.js backends
+    - Introduction
+    - ...exiting pages -> filter out code-gen pages
+  - Examples
+    - Link up the README's
+  - References
+    - Compas configuration
+    - CLI reference
+    - Base migration @compas/store
+- Home page CTA's
+  - Explore code-gen
+  - Explore backend tooling
+- Features
+  - All in one specification; Build up a specification based on types, routes
+    and entities with flexible builders, or import an existing OpenAPI schema.
+  - Multi target generators; Reuse a specification and generate types,
+    validators, routers, api clients and database queries in different languages
+    and with different base libraries.
+  - Unified utilities; Session handling, file storage, test runner and more all
+    in a few packages.
+- Top bar nav;
+  - Docs; Generators -> introduction
+  - Release notes -> release notes (keep existing sidebar)
+  - Changelog -> Changelog (reuse docs sidebar)
 
 ### Feature ideas
 
+- Add response validation to the router
 - CRUD generator support non-global types
 - Remove `skipTrailingSlash` from `internalSettings` since it is not used
   anymore.

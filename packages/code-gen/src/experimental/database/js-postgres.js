@@ -1002,6 +1002,7 @@ export function jsPostgresGenerateUpdate(
   fileBlockStart(file, `if (update?.returning === "*" || !update?.returning)`);
   fileWrite(file, `return ${model.name}UpdateInternal(update).exec(sql);`);
   fileBlockEnd(file);
+  fileWrite(file, `// @ts-expect-error`);
   fileWrite(file, `return ${model.name}UpdateInternal(update).execRaw(sql);`);
   fileBlockEnd(file);
   fileWrite(file, "");

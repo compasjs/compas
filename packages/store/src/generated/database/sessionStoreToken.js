@@ -509,6 +509,7 @@ function sessionStoreTokenUpdate(sql, update) {
   if (update?.returning === "*" || !update?.returning) {
     return sessionStoreTokenUpdateInternal(update).exec(sql);
   }
+  // @ts-expect-error
   return sessionStoreTokenUpdateInternal(update).execRaw(sql);
 }
 

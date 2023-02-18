@@ -215,12 +215,18 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
 
     if (isPrimary && type === "uuid") {
       fileWriteInline(file, ` DEFAULT uuid_generate_v4()`);
-    } else if (model.queryOptions?.withDates) {
+    } else if (
+      model.queryOptions?.withDates ||
+      model.queryOptions?.withSoftDeletes
+    ) {
       if (key === "createdAt" || key === "updatedAt") {
         fileWriteInline(file, ` DEFAULT now()`);
       }
     } else if (hasDefaultValue) {
-      fileWriteInline(file, ` DEFAULT 'Fill in your default.'`);
+      fileWriteInline(
+        file,
+        ` DEFAULT 'Fill in a valid default based on the column type'`,
+      );
     }
   }
 
