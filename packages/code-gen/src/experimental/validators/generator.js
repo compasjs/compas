@@ -7,10 +7,8 @@ import {
 import { stringFormatNameForError } from "../string-format.js";
 import { targetLanguageSwitch } from "../target/switcher.js";
 import { typesCacheGet } from "../types/cache.js";
-import {
-  typesGeneratorGenerateNamedType,
-  typesGeneratorIsOptional,
-} from "../types/generator.js";
+import { typesGeneratorGenerateNamedType } from "../types/generator.js";
+import { typesOptionalityIsOptional } from "../types/optionality.js";
 import {
   validatorJavascriptAny,
   validatorJavascriptAnyOf,
@@ -92,7 +90,10 @@ export function validatorGeneratorGenerateBaseTypes(generateContext) {
 
     validatorGeneratorGenerateValidator(generateContext, type, {
       validatorState: "output",
-      nameSuffix: "",
+      nameSuffixes: {
+        input: "Input",
+        output: "Validated",
+      },
       targets: [generateContext.options.targetLanguage],
     });
   }
@@ -141,7 +142,9 @@ export function validatorGetNameAndImport(
  * @param {import("../types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
- * @param {import("../types/generator").GenerateTypeOptions} outputTypeOptions
+ * @param {import("../types/generator").GenerateTypeOptions & {
+ *   preferInputBaseName?: boolean;
+ * }} outputTypeOptions
  */
 export function validatorGeneratorGenerateValidator(
   generateContext,
@@ -151,14 +154,19 @@ export function validatorGeneratorGenerateValidator(
   /** @type {import("../types/generator").GenerateTypeOptions} */
   const inputTypeOptions = {
     ...outputTypeOptions,
-    nameSuffix: `${outputTypeOptions.nameSuffix ?? ""}Input`,
     validatorState: "input",
   };
 
   // Prepare the types that we are using, this way we can fetch the name from the type
   // cache.
-  typesGeneratorGenerateNamedType(generateContext, type, outputTypeOptions);
-  typesGeneratorGenerateNamedType(generateContext, type, inputTypeOptions);
+  if (outputTypeOptions.preferInputBaseName) {
+    // Generate the input type first, this way it can get the 'normal' name without a suffix, improving usability
+    typesGeneratorGenerateNamedType(generateContext, type, inputTypeOptions);
+    typesGeneratorGenerateNamedType(generateContext, type, outputTypeOptions);
+  } else {
+    typesGeneratorGenerateNamedType(generateContext, type, outputTypeOptions);
+    typesGeneratorGenerateNamedType(generateContext, type, inputTypeOptions);
+  }
 
   const outputTypeName = typesCacheGet(
     generateContext,
@@ -284,7 +292,7 @@ export function validatorGeneratorGenerateBody(
       file,
       validatorState,
       {
-        isOptional: typesGeneratorIsOptional(generateContext, type, {
+        isOptional: typesOptionalityIsOptional(generateContext, type, {
           validatorState: "input",
         }),
         defaultValue: referenceUtilsGetProperty(generateContext, type, [

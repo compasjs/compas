@@ -106,14 +106,20 @@ export function jsKoaPrepareContext(
 
   typesGeneratorGenerateNamedType(generateContext, ctxType, {
     validatorState: "output",
-    nameSuffix: "",
+    nameSuffixes: {
+      input: "Input",
+      output: "Validated",
+    },
     targets: ["js"],
   });
 
   // @ts-expect-error
   contextNames[`ctxTypeName`] = typesCacheGet(generateContext, ctxType, {
     validatorState: "output",
-    nameSuffix: "",
+    nameSuffixes: {
+      input: "Input",
+      output: "Validated",
+    },
     targets: ["js"],
   });
 
@@ -139,14 +145,20 @@ export function jsKoaPrepareContext(
 
   typesGeneratorGenerateNamedType(generateContext, fnType, {
     validatorState: "output",
-    nameSuffix: "",
+    nameSuffixes: {
+      input: "Input",
+      output: "Validated",
+    },
     targets: ["js"],
   });
 
   // @ts-expect-error
   contextNames[`fnTypeName`] = typesCacheGet(generateContext, fnType, {
     validatorState: "output",
-    nameSuffix: "",
+    nameSuffixes: {
+      input: "Input",
+      output: "Validated",
+    },
     targets: ["js"],
   });
 

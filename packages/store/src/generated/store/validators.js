@@ -387,10 +387,10 @@ export function validateStoreFileMeta(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileWhereInput|any} value
- * @returns {Either<import("../common/types").StoreFileWhere, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileWhere|any} value
+ * @returns {Either<import("../common/types").StoreFileWhereValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileWhere(value) {
+export function validateStoreFileWhereValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -484,7 +484,9 @@ export function validateStoreFileWhere(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreFileWhere(intermediateValue1[i1]);
+            const refResult1 = validateStoreFileWhereValidated(
+              intermediateValue1[i1],
+            );
 
             if (refResult1.error) {
               for (const errorKey of Object.keys(refResult1.error)) {
@@ -1805,10 +1807,10 @@ export function validateStoreFileWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreFileOrderBy, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileOrderBy|any} value
+ * @returns {Either<import("../common/types").StoreFileOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileOrderBy(value) {
+export function validateStoreFileOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -1942,7 +1944,7 @@ export function validateStoreFileOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileOrderBySpecInput|any} value
+ * @param {import("../common/types").StoreFileOrderBySpec|any} value
  * @returns {Either<import("../common/types").StoreFileOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreFileOrderBySpec(value) {
@@ -2123,10 +2125,10 @@ export function validateStoreFileOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileQueryBuilderInput|any} value
- * @returns {Either<import("../common/types").StoreFileQueryBuilder, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileQueryBuilder|any} value
+ * @returns {Either<import("../common/types").StoreFileQueryBuilderValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileQueryBuilder(value) {
+export function validateStoreFileQueryBuilderValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2168,7 +2170,7 @@ export function validateStoreFileQueryBuilder(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreFileWhere(value["where"]);
+        const refResult0 = validateStoreFileWhereValidated(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2181,7 +2183,7 @@ export function validateStoreFileQueryBuilder(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreFileOrderBy(value["orderBy"]);
+        const refResult0 = validateStoreFileOrderByValidated(value["orderBy"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2274,7 +2276,7 @@ export function validateStoreFileQueryBuilder(value) {
           "updatedAt",
         ];
       } else {
-        const refResult0 = validateStoreFileReturning(value["select"]);
+        const refResult0 = validateStoreFileReturningValidated(value["select"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2293,10 +2295,10 @@ export function validateStoreFileQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileReturningInput|any} value
- * @returns {Either<import("../common/types").StoreFileReturning, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileReturning|any} value
+ * @returns {Either<import("../common/types").StoreFileReturningValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileReturning(value) {
+export function validateStoreFileReturningValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2454,10 +2456,10 @@ export function validateStoreFileReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileInsertInput|any} value
- * @returns {Either<import("../common/types").StoreFileInsert, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileInsert|any} value
+ * @returns {Either<import("../common/types").StoreFileInsertValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileInsert(value) {
+export function validateStoreFileInsertValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2521,7 +2523,7 @@ export function validateStoreFileInsert(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreFileInsertPartial(
+            const refResult1 = validateStoreFileInsertPartialValidated(
               intermediateValue1[i1],
             );
 
@@ -2546,7 +2548,9 @@ export function validateStoreFileInsert(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreFileReturning(value["returning"]);
+        const refResult0 = validateStoreFileReturningValidated(
+          value["returning"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2565,10 +2569,10 @@ export function validateStoreFileInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileInsertPartialInput|any} value
- * @returns {Either<import("../common/types").StoreFileInsertPartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileInsertPartial|any} value
+ * @returns {Either<import("../common/types").StoreFileInsertPartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileInsertPartial(value) {
+export function validateStoreFileInsertPartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2801,10 +2805,10 @@ export function validateStoreFileInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileUpdateInput|any} value
- * @returns {Either<import("../common/types").StoreFileUpdate, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileUpdate|any} value
+ * @returns {Either<import("../common/types").StoreFileUpdateValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileUpdate(value) {
+export function validateStoreFileUpdateValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2841,7 +2845,9 @@ export function validateStoreFileUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreFileUpdatePartial(value["update"]);
+        const refResult0 = validateStoreFileUpdatePartialValidated(
+          value["update"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2856,7 +2862,7 @@ export function validateStoreFileUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreFileWhere(value["where"]);
+        const refResult0 = validateStoreFileWhereValidated(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2869,7 +2875,9 @@ export function validateStoreFileUpdate(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreFileReturning(value["returning"]);
+        const refResult0 = validateStoreFileReturningValidated(
+          value["returning"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -2888,10 +2896,10 @@ export function validateStoreFileUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileUpdatePartialInput|any} value
- * @returns {Either<import("../common/types").StoreFileUpdatePartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileUpdatePartial|any} value
+ * @returns {Either<import("../common/types").StoreFileUpdatePartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileUpdatePartial(value) {
+export function validateStoreFileUpdatePartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -4926,10 +4934,10 @@ export function validateStoreJob(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobWhereInput|any} value
- * @returns {Either<import("../common/types").StoreJobWhere, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobWhere|any} value
+ * @returns {Either<import("../common/types").StoreJobWhereValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobWhere(value) {
+export function validateStoreJobWhereValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -5036,7 +5044,9 @@ export function validateStoreJobWhere(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreJobWhere(intermediateValue1[i1]);
+            const refResult1 = validateStoreJobWhereValidated(
+              intermediateValue1[i1],
+            );
 
             if (refResult1.error) {
               for (const errorKey of Object.keys(refResult1.error)) {
@@ -6954,10 +6964,10 @@ export function validateStoreJobWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreJobOrderBy, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobOrderBy|any} value
+ * @returns {Either<import("../common/types").StoreJobOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobOrderBy(value) {
+export function validateStoreJobOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7100,7 +7110,7 @@ export function validateStoreJobOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobOrderBySpecInput|any} value
+ * @param {import("../common/types").StoreJobOrderBySpec|any} value
  * @returns {Either<import("../common/types").StoreJobOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreJobOrderBySpec(value) {
@@ -7363,10 +7373,10 @@ export function validateStoreJobOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobQueryBuilderInput|any} value
- * @returns {Either<import("../common/types").StoreJobQueryBuilder, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobQueryBuilder|any} value
+ * @returns {Either<import("../common/types").StoreJobQueryBuilderValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobQueryBuilder(value) {
+export function validateStoreJobQueryBuilderValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7408,7 +7418,7 @@ export function validateStoreJobQueryBuilder(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreJobWhere(value["where"]);
+        const refResult0 = validateStoreJobWhereValidated(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -7421,7 +7431,7 @@ export function validateStoreJobQueryBuilder(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreJobOrderBy(value["orderBy"]);
+        const refResult0 = validateStoreJobOrderByValidated(value["orderBy"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -7516,7 +7526,7 @@ export function validateStoreJobQueryBuilder(value) {
           "updatedAt",
         ];
       } else {
-        const refResult0 = validateStoreJobReturning(value["select"]);
+        const refResult0 = validateStoreJobReturningValidated(value["select"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -7535,10 +7545,10 @@ export function validateStoreJobQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobReturningInput|any} value
- * @returns {Either<import("../common/types").StoreJobReturning, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobReturning|any} value
+ * @returns {Either<import("../common/types").StoreJobReturningValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobReturning(value) {
+export function validateStoreJobReturningValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7700,10 +7710,10 @@ export function validateStoreJobReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobInsertInput|any} value
- * @returns {Either<import("../common/types").StoreJobInsert, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobInsert|any} value
+ * @returns {Either<import("../common/types").StoreJobInsertValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobInsert(value) {
+export function validateStoreJobInsertValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7767,7 +7777,7 @@ export function validateStoreJobInsert(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreJobInsertPartial(
+            const refResult1 = validateStoreJobInsertPartialValidated(
               intermediateValue1[i1],
             );
 
@@ -7792,7 +7802,9 @@ export function validateStoreJobInsert(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreJobReturning(value["returning"]);
+        const refResult0 = validateStoreJobReturningValidated(
+          value["returning"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -7811,10 +7823,10 @@ export function validateStoreJobInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobInsertPartialInput|any} value
- * @returns {Either<import("../common/types").StoreJobInsertPartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobInsertPartial|any} value
+ * @returns {Either<import("../common/types").StoreJobInsertPartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobInsertPartial(value) {
+export function validateStoreJobInsertPartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -8117,10 +8129,10 @@ export function validateStoreJobInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobUpdateInput|any} value
- * @returns {Either<import("../common/types").StoreJobUpdate, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobUpdate|any} value
+ * @returns {Either<import("../common/types").StoreJobUpdateValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobUpdate(value) {
+export function validateStoreJobUpdateValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -8157,7 +8169,9 @@ export function validateStoreJobUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreJobUpdatePartial(value["update"]);
+        const refResult0 = validateStoreJobUpdatePartialValidated(
+          value["update"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -8172,7 +8186,7 @@ export function validateStoreJobUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreJobWhere(value["where"]);
+        const refResult0 = validateStoreJobWhereValidated(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -8185,7 +8199,9 @@ export function validateStoreJobUpdate(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreJobReturning(value["returning"]);
+        const refResult0 = validateStoreJobReturningValidated(
+          value["returning"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -8204,10 +8220,10 @@ export function validateStoreJobUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobUpdatePartialInput|any} value
- * @returns {Either<import("../common/types").StoreJobUpdatePartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobUpdatePartial|any} value
+ * @returns {Either<import("../common/types").StoreJobUpdatePartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobUpdatePartial(value) {
+export function validateStoreJobUpdatePartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -10964,10 +10980,10 @@ export function validateStoreSessionStore(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreWhereInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreWhere, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreWhere|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreWhereValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreWhere(value) {
+export function validateStoreSessionStoreWhereValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -11056,7 +11072,7 @@ export function validateStoreSessionStoreWhere(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreSessionStoreWhere(
+            const refResult1 = validateStoreSessionStoreWhereValidated(
               intermediateValue1[i1],
             );
 
@@ -12048,7 +12064,7 @@ export function validateStoreSessionStoreWhere(value) {
           ) {
             result["viaAccessTokens"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreTokenWhere(
+            const refResult0 = validateStoreSessionStoreTokenWhereValidated(
               value["viaAccessTokens"]["where"],
             );
 
@@ -12132,7 +12148,7 @@ export function validateStoreSessionStoreWhere(value) {
       ) {
         result["accessTokensNotExists"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere(
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated(
           value["accessTokensNotExists"],
         );
 
@@ -12153,10 +12169,10 @@ export function validateStoreSessionStoreWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenWhere, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenWhere|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenWhereValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenWhere(value) {
+export function validateStoreSessionStoreTokenWhereValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -12259,7 +12275,7 @@ export function validateStoreSessionStoreTokenWhere(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreSessionStoreTokenWhere(
+            const refResult1 = validateStoreSessionStoreTokenWhereValidated(
               intermediateValue1[i1],
             );
 
@@ -13865,7 +13881,7 @@ export function validateStoreSessionStoreTokenWhere(value) {
           ) {
             result["viaRefreshToken"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreTokenWhere(
+            const refResult0 = validateStoreSessionStoreTokenWhereValidated(
               value["viaRefreshToken"]["where"],
             );
 
@@ -13976,7 +13992,7 @@ export function validateStoreSessionStoreTokenWhere(value) {
           ) {
             result["viaSession"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreWhere(
+            const refResult0 = validateStoreSessionStoreWhereValidated(
               value["viaSession"]["where"],
             );
 
@@ -14090,7 +14106,7 @@ export function validateStoreSessionStoreTokenWhere(value) {
           ) {
             result["viaAccessToken"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreTokenWhere(
+            const refResult0 = validateStoreSessionStoreTokenWhereValidated(
               value["viaAccessToken"]["where"],
             );
 
@@ -14174,7 +14190,7 @@ export function validateStoreSessionStoreTokenWhere(value) {
       ) {
         result["accessTokenNotExists"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere(
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated(
           value["accessTokenNotExists"],
         );
 
@@ -14195,10 +14211,10 @@ export function validateStoreSessionStoreTokenWhere(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreOrderBy, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreOrderBy|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreOrderBy(value) {
+export function validateStoreSessionStoreOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -14331,7 +14347,7 @@ export function validateStoreSessionStoreOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreOrderBySpecInput|any} value
+ * @param {import("../common/types").StoreSessionStoreOrderBySpec|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreOrderBySpec(value) {
@@ -14474,10 +14490,10 @@ export function validateStoreSessionStoreOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreQueryBuilderInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreQueryBuilder, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreQueryBuilder|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreQueryBuilderValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreQueryBuilder(value) {
+export function validateStoreSessionStoreQueryBuilderValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -14520,7 +14536,9 @@ export function validateStoreSessionStoreQueryBuilder(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreWhere(value["where"]);
+        const refResult0 = validateStoreSessionStoreWhereValidated(
+          value["where"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -14533,7 +14551,9 @@ export function validateStoreSessionStoreQueryBuilder(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreOrderBy(value["orderBy"]);
+        const refResult0 = validateStoreSessionStoreOrderByValidated(
+          value["orderBy"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -14626,7 +14646,9 @@ export function validateStoreSessionStoreQueryBuilder(value) {
           "updatedAt",
         ];
       } else {
-        const refResult0 = validateStoreSessionStoreReturning(value["select"]);
+        const refResult0 = validateStoreSessionStoreReturningValidated(
+          value["select"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -14642,7 +14664,7 @@ export function validateStoreSessionStoreQueryBuilder(value) {
       ) {
         result["accessTokens"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenQueryBuilder(
+        const refResult0 = validateStoreSessionStoreTokenQueryBuilderValidated(
           value["accessTokens"],
         );
 
@@ -14663,10 +14685,10 @@ export function validateStoreSessionStoreQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreReturningInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreReturning, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreReturning|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreReturningValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreReturning(value) {
+export function validateStoreSessionStoreReturningValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -14820,10 +14842,10 @@ export function validateStoreSessionStoreReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenQueryBuilder, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenQueryBuilder|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenQueryBuilderValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenQueryBuilder(value) {
+export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -14868,7 +14890,9 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere(value["where"]);
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated(
+          value["where"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -14881,7 +14905,7 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenOrderBy(
+        const refResult0 = validateStoreSessionStoreTokenOrderByValidated(
           value["orderBy"],
         );
 
@@ -14976,7 +15000,7 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
           "createdAt",
         ];
       } else {
-        const refResult0 = validateStoreSessionStoreTokenReturning(
+        const refResult0 = validateStoreSessionStoreTokenReturningValidated(
           value["select"],
         );
 
@@ -14994,7 +15018,7 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
       ) {
         result["refreshToken"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenQueryBuilder(
+        const refResult0 = validateStoreSessionStoreTokenQueryBuilderValidated(
           value["refreshToken"],
         );
 
@@ -15009,7 +15033,7 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
       if (value["session"] === null || value["session"] === undefined) {
         result["session"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreQueryBuilder(
+        const refResult0 = validateStoreSessionStoreQueryBuilderValidated(
           value["session"],
         );
 
@@ -15024,7 +15048,7 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
       if (value["accessToken"] === null || value["accessToken"] === undefined) {
         result["accessToken"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenQueryBuilder(
+        const refResult0 = validateStoreSessionStoreTokenQueryBuilderValidated(
           value["accessToken"],
         );
 
@@ -15045,10 +15069,10 @@ export function validateStoreSessionStoreTokenQueryBuilder(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBy, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBy|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenOrderBy(value) {
+export function validateStoreSessionStoreTokenOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15189,7 +15213,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderBySpecInput|any} value
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBySpec|any} value
  * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBySpec, ValidatorErrorMap>}
  */
 export function validateStoreSessionStoreTokenOrderBySpec(value) {
@@ -15421,10 +15445,10 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenReturningInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenReturning, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenReturning|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenReturningValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenReturning(value) {
+export function validateStoreSessionStoreTokenReturningValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15578,10 +15602,10 @@ export function validateStoreSessionStoreTokenReturning(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreInsertInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreInsert, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreInsert|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreInsertValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreInsert(value) {
+export function validateStoreSessionStoreInsertValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15645,7 +15669,7 @@ export function validateStoreSessionStoreInsert(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreSessionStoreInsertPartial(
+            const refResult1 = validateStoreSessionStoreInsertPartialValidated(
               intermediateValue1[i1],
             );
 
@@ -15670,7 +15694,7 @@ export function validateStoreSessionStoreInsert(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreReturning(
+        const refResult0 = validateStoreSessionStoreReturningValidated(
           value["returning"],
         );
 
@@ -15691,10 +15715,10 @@ export function validateStoreSessionStoreInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreInsertPartialInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreInsertPartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreInsertPartial|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreInsertPartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreInsertPartial(value) {
+export function validateStoreSessionStoreInsertPartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15858,10 +15882,10 @@ export function validateStoreSessionStoreInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreUpdateInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreUpdate, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreUpdate|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreUpdateValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreUpdate(value) {
+export function validateStoreSessionStoreUpdateValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15898,7 +15922,7 @@ export function validateStoreSessionStoreUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreUpdatePartial(
+        const refResult0 = validateStoreSessionStoreUpdatePartialValidated(
           value["update"],
         );
 
@@ -15915,7 +15939,9 @@ export function validateStoreSessionStoreUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreWhere(value["where"]);
+        const refResult0 = validateStoreSessionStoreWhereValidated(
+          value["where"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -15928,7 +15954,7 @@ export function validateStoreSessionStoreUpdate(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreReturning(
+        const refResult0 = validateStoreSessionStoreReturningValidated(
           value["returning"],
         );
 
@@ -15949,10 +15975,10 @@ export function validateStoreSessionStoreUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreUpdatePartialInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreUpdatePartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreUpdatePartial|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreUpdatePartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreUpdatePartial(value) {
+export function validateStoreSessionStoreUpdatePartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -17394,10 +17420,10 @@ export function validateStoreSessionStoreToken(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenInsertInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenInsert, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenInsert|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenInsertValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenInsert(value) {
+export function validateStoreSessionStoreTokenInsertValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -17461,9 +17487,10 @@ export function validateStoreSessionStoreTokenInsert(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreSessionStoreTokenInsertPartial(
-              intermediateValue1[i1],
-            );
+            const refResult1 =
+              validateStoreSessionStoreTokenInsertPartialValidated(
+                intermediateValue1[i1],
+              );
 
             if (refResult1.error) {
               for (const errorKey of Object.keys(refResult1.error)) {
@@ -17486,7 +17513,7 @@ export function validateStoreSessionStoreTokenInsert(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenReturning(
+        const refResult0 = validateStoreSessionStoreTokenReturningValidated(
           value["returning"],
         );
 
@@ -17507,10 +17534,10 @@ export function validateStoreSessionStoreTokenInsert(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenInsertPartialInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenInsertPartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenInsertPartial|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenInsertPartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenInsertPartial(value) {
+export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -17690,10 +17717,10 @@ export function validateStoreSessionStoreTokenInsertPartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenUpdateInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdate, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenUpdate|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdateValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenUpdate(value) {
+export function validateStoreSessionStoreTokenUpdateValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -17730,7 +17757,7 @@ export function validateStoreSessionStoreTokenUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreTokenUpdatePartial(
+        const refResult0 = validateStoreSessionStoreTokenUpdatePartialValidated(
           value["update"],
         );
 
@@ -17747,7 +17774,9 @@ export function validateStoreSessionStoreTokenUpdate(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere(value["where"]);
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated(
+          value["where"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -17760,7 +17789,7 @@ export function validateStoreSessionStoreTokenUpdate(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenReturning(
+        const refResult0 = validateStoreSessionStoreTokenReturningValidated(
           value["returning"],
         );
 
@@ -17781,10 +17810,10 @@ export function validateStoreSessionStoreTokenUpdate(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenUpdatePartialInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdatePartial, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenUpdatePartial|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdatePartialValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenUpdatePartial(value) {
+export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -18500,7 +18529,7 @@ export function validateStoreSessionStoreTokenUpdatePartial(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileResponseInput|any} value
+ * @param {import("../common/types").StoreFileResponse|any} value
  * @returns {Either<import("../common/types").StoreFileResponse, ValidatorErrorMap>}
  */
 export function validateStoreFileResponse(value) {
@@ -18917,10 +18946,10 @@ export function validateStoreSecureImageTransformOptions(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileWhereInput_1|any} value
- * @returns {Either<import("../common/types").StoreFileWhere_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileWhereInput|any} value
+ * @returns {Either<import("../common/types").StoreFileWhereValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreFileWhere_1(value) {
+export function validateStoreFileWhereValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -19006,7 +19035,9 @@ export function validateStoreFileWhere_1(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreFileWhere_1(intermediateValue1[i1]);
+            const refResult1 = validateStoreFileWhereValidated_1(
+              intermediateValue1[i1],
+            );
 
             if (refResult1.error) {
               for (const errorKey of Object.keys(refResult1.error)) {
@@ -20263,10 +20294,10 @@ export function validateStoreFileWhere_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobWhereInput_1|any} value
- * @returns {Either<import("../common/types").StoreJobWhere_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobWhereInput|any} value
+ * @returns {Either<import("../common/types").StoreJobWhereValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreJobWhere_1(value) {
+export function validateStoreJobWhereValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -20365,7 +20396,9 @@ export function validateStoreJobWhere_1(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreJobWhere_1(intermediateValue1[i1]);
+            const refResult1 = validateStoreJobWhereValidated_1(
+              intermediateValue1[i1],
+            );
 
             if (refResult1.error) {
               for (const errorKey of Object.keys(refResult1.error)) {
@@ -22203,10 +22236,10 @@ export function validateStoreJobWhere_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreWhereInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreWhere_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreWhereInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreWhereValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreWhere_1(value) {
+export function validateStoreSessionStoreWhereValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -22287,7 +22320,7 @@ export function validateStoreSessionStoreWhere_1(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreSessionStoreWhere_1(
+            const refResult1 = validateStoreSessionStoreWhereValidated_1(
               intermediateValue1[i1],
             );
 
@@ -23231,7 +23264,7 @@ export function validateStoreSessionStoreWhere_1(value) {
           ) {
             result["viaAccessTokens"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreTokenWhere_1(
+            const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
               value["viaAccessTokens"]["where"],
             );
 
@@ -23315,7 +23348,7 @@ export function validateStoreSessionStoreWhere_1(value) {
       ) {
         result["accessTokensNotExists"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere_1(
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
           value["accessTokensNotExists"],
         );
 
@@ -23336,10 +23369,10 @@ export function validateStoreSessionStoreWhere_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenWhere_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenWhereInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenWhereValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenWhere_1(value) {
+export function validateStoreSessionStoreTokenWhereValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -23434,7 +23467,7 @@ export function validateStoreSessionStoreTokenWhere_1(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateStoreSessionStoreTokenWhere_1(
+            const refResult1 = validateStoreSessionStoreTokenWhereValidated_1(
               intermediateValue1[i1],
             );
 
@@ -24960,7 +24993,7 @@ export function validateStoreSessionStoreTokenWhere_1(value) {
           ) {
             result["viaRefreshToken"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreTokenWhere_1(
+            const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
               value["viaRefreshToken"]["where"],
             );
 
@@ -25071,7 +25104,7 @@ export function validateStoreSessionStoreTokenWhere_1(value) {
           ) {
             result["viaSession"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreWhere_1(
+            const refResult0 = validateStoreSessionStoreWhereValidated_1(
               value["viaSession"]["where"],
             );
 
@@ -25185,7 +25218,7 @@ export function validateStoreSessionStoreTokenWhere_1(value) {
           ) {
             result["viaAccessToken"]["where"] = {};
           } else {
-            const refResult0 = validateStoreSessionStoreTokenWhere_1(
+            const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
               value["viaAccessToken"]["where"],
             );
 
@@ -25269,7 +25302,7 @@ export function validateStoreSessionStoreTokenWhere_1(value) {
       ) {
         result["accessTokenNotExists"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere_1(
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
           value["accessTokenNotExists"],
         );
 
@@ -25290,10 +25323,10 @@ export function validateStoreSessionStoreTokenWhere_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileUpdateInput_1|any} value
- * @returns {Either<import("../common/types").StoreFileUpdate_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileUpdateInput|any} value
+ * @returns {Either<import("../common/types").StoreFileUpdateValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreFileUpdate_1(value) {
+export function validateStoreFileUpdateValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -25330,181 +25363,7 @@ export function validateStoreFileUpdate_1(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreFileUpdatePartial(value["update"]);
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.update${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["update"] = refResult0.value;
-      }
-      if (value["where"] === null || value["where"] === undefined) {
-        errorMap[`$.where`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        const refResult0 = validateStoreFileWhere_1(value["where"]);
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.where${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["where"] = refResult0.value;
-      }
-      if (value["returning"] === null || value["returning"] === undefined) {
-        result["returning"] = undefined;
-      } else {
-        const refResult0 = validateStoreFileReturning(value["returning"]);
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.returning${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["returning"] = refResult0.value;
-      }
-    }
-  }
-  if (Object.keys(errorMap).length > 0) {
-    return { error: errorMap };
-  }
-  return { value: result };
-}
-
-/**
- * @param {import("../common/types").StoreJobUpdateInput_1|any} value
- * @returns {Either<import("../common/types").StoreJobUpdate_1, ValidatorErrorMap>}
- */
-export function validateStoreJobUpdate_1(value) {
-  /** @type {ValidatorErrorMap} */
-  const errorMap = {};
-  /** @type {any} */
-  let result = undefined;
-
-  if (value === null || value === undefined) {
-    errorMap[`$`] = {
-      key: "validator.undefined",
-    };
-  } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
-      errorMap[`$`] = {
-        key: "validator.object",
-        value: value,
-        foundType: typeof value,
-      };
-    } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
-      result = Object.create(null);
-
-      if (value["update"] === null || value["update"] === undefined) {
-        errorMap[`$.update`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        const refResult0 = validateStoreJobUpdatePartial(value["update"]);
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.update${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["update"] = refResult0.value;
-      }
-      if (value["where"] === null || value["where"] === undefined) {
-        errorMap[`$.where`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        const refResult0 = validateStoreJobWhere_1(value["where"]);
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.where${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["where"] = refResult0.value;
-      }
-      if (value["returning"] === null || value["returning"] === undefined) {
-        result["returning"] = undefined;
-      } else {
-        const refResult0 = validateStoreJobReturning(value["returning"]);
-
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
-            errorMap[`$.returning${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
-          }
-        }
-        result["returning"] = refResult0.value;
-      }
-    }
-  }
-  if (Object.keys(errorMap).length > 0) {
-    return { error: errorMap };
-  }
-  return { value: result };
-}
-
-/**
- * @param {import("../common/types").StoreSessionStoreUpdateInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreUpdate_1, ValidatorErrorMap>}
- */
-export function validateStoreSessionStoreUpdate_1(value) {
-  /** @type {ValidatorErrorMap} */
-  const errorMap = {};
-  /** @type {any} */
-  let result = undefined;
-
-  if (value === null || value === undefined) {
-    errorMap[`$`] = {
-      key: "validator.undefined",
-    };
-  } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
-      errorMap[`$`] = {
-        key: "validator.object",
-        value: value,
-        foundType: typeof value,
-      };
-    } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
-      result = Object.create(null);
-
-      if (value["update"] === null || value["update"] === undefined) {
-        errorMap[`$.update`] = {
-          key: "validator.undefined",
-        };
-      } else {
-        const refResult0 = validateStoreSessionStoreUpdatePartial(
+        const refResult0 = validateStoreFileUpdatePartialValidated(
           value["update"],
         );
 
@@ -25521,7 +25380,7 @@ export function validateStoreSessionStoreUpdate_1(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreWhere_1(value["where"]);
+        const refResult0 = validateStoreFileWhereValidated_1(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -25534,7 +25393,7 @@ export function validateStoreSessionStoreUpdate_1(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreReturning(
+        const refResult0 = validateStoreFileReturningValidated(
           value["returning"],
         );
 
@@ -25555,10 +25414,10 @@ export function validateStoreSessionStoreUpdate_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenUpdateInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdate_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobUpdateInput|any} value
+ * @returns {Either<import("../common/types").StoreJobUpdateValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenUpdate_1(value) {
+export function validateStoreJobUpdateValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -25595,7 +25454,7 @@ export function validateStoreSessionStoreTokenUpdate_1(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreTokenUpdatePartial(
+        const refResult0 = validateStoreJobUpdatePartialValidated(
           value["update"],
         );
 
@@ -25612,7 +25471,98 @@ export function validateStoreSessionStoreTokenUpdate_1(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere_1(
+        const refResult0 = validateStoreJobWhereValidated_1(value["where"]);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.where${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["where"] = refResult0.value;
+      }
+      if (value["returning"] === null || value["returning"] === undefined) {
+        result["returning"] = undefined;
+      } else {
+        const refResult0 = validateStoreJobReturningValidated(
+          value["returning"],
+        );
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.returning${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["returning"] = refResult0.value;
+      }
+    }
+  }
+  if (Object.keys(errorMap).length > 0) {
+    return { error: errorMap };
+  }
+  return { value: result };
+}
+
+/**
+ * @param {import("../common/types").StoreSessionStoreUpdateInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreUpdateValidated_1, ValidatorErrorMap>}
+ */
+export function validateStoreSessionStoreUpdateValidated_1(value) {
+  /** @type {ValidatorErrorMap} */
+  const errorMap = {};
+  /** @type {any} */
+  let result = undefined;
+
+  if (value === null || value === undefined) {
+    errorMap[`$`] = {
+      key: "validator.undefined",
+    };
+  } else {
+    if (typeof value !== "object" || Array.isArray(value)) {
+      errorMap[`$`] = {
+        key: "validator.object",
+        value: value,
+        foundType: typeof value,
+      };
+    } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
+      result = Object.create(null);
+
+      if (value["update"] === null || value["update"] === undefined) {
+        errorMap[`$.update`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        const refResult0 = validateStoreSessionStoreUpdatePartialValidated(
+          value["update"],
+        );
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.update${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["update"] = refResult0.value;
+      }
+      if (value["where"] === null || value["where"] === undefined) {
+        errorMap[`$.where`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        const refResult0 = validateStoreSessionStoreWhereValidated_1(
           value["where"],
         );
 
@@ -25627,7 +25577,7 @@ export function validateStoreSessionStoreTokenUpdate_1(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenReturning(
+        const refResult0 = validateStoreSessionStoreReturningValidated(
           value["returning"],
         );
 
@@ -25648,10 +25598,103 @@ export function validateStoreSessionStoreTokenUpdate_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileOrderByInput_1|any} value
- * @returns {Either<import("../common/types").StoreFileOrderBy_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenUpdateInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenUpdateValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreFileOrderBy_1(value) {
+export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
+  /** @type {ValidatorErrorMap} */
+  const errorMap = {};
+  /** @type {any} */
+  let result = undefined;
+
+  if (value === null || value === undefined) {
+    errorMap[`$`] = {
+      key: "validator.undefined",
+    };
+  } else {
+    if (typeof value !== "object" || Array.isArray(value)) {
+      errorMap[`$`] = {
+        key: "validator.object",
+        value: value,
+        foundType: typeof value,
+      };
+    } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
+      result = Object.create(null);
+
+      if (value["update"] === null || value["update"] === undefined) {
+        errorMap[`$.update`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        const refResult0 = validateStoreSessionStoreTokenUpdatePartialValidated(
+          value["update"],
+        );
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.update${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["update"] = refResult0.value;
+      }
+      if (value["where"] === null || value["where"] === undefined) {
+        errorMap[`$.where`] = {
+          key: "validator.undefined",
+        };
+      } else {
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
+          value["where"],
+        );
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.where${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["where"] = refResult0.value;
+      }
+      if (value["returning"] === null || value["returning"] === undefined) {
+        result["returning"] = undefined;
+      } else {
+        const refResult0 = validateStoreSessionStoreTokenReturningValidated(
+          value["returning"],
+        );
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$.returning${errorKey.substring(1)}`] =
+              refResult0.error[errorKey];
+          }
+        }
+        result["returning"] = refResult0.value;
+      }
+    }
+  }
+  if (Object.keys(errorMap).length > 0) {
+    return { error: errorMap };
+  }
+  return { value: result };
+}
+
+/**
+ * @param {import("../common/types").StoreFileOrderByInput|any} value
+ * @returns {Either<import("../common/types").StoreFileOrderByValidated_1, ValidatorErrorMap>}
+ */
+export function validateStoreFileOrderByValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -25777,10 +25820,10 @@ export function validateStoreFileOrderBy_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobOrderByInput_1|any} value
- * @returns {Either<import("../common/types").StoreJobOrderBy_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobOrderByInput|any} value
+ * @returns {Either<import("../common/types").StoreJobOrderByValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreJobOrderBy_1(value) {
+export function validateStoreJobOrderByValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -25915,10 +25958,10 @@ export function validateStoreJobOrderBy_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreOrderByInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreOrderBy_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreOrderByInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreOrderBy_1(value) {
+export function validateStoreSessionStoreOrderByValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -26043,10 +26086,10 @@ export function validateStoreSessionStoreOrderBy_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderByInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBy_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenOrderBy_1(value) {
+export function validateStoreSessionStoreTokenOrderByValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -26179,10 +26222,10 @@ export function validateStoreSessionStoreTokenOrderBy_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileQueryBuilderInput_1|any} value
- * @returns {Either<import("../common/types").StoreFileQueryBuilder_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileQueryBuilderInput|any} value
+ * @returns {Either<import("../common/types").StoreFileQueryBuilderValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreFileQueryBuilder_1(value) {
+export function validateStoreFileQueryBuilderValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -26224,7 +26267,7 @@ export function validateStoreFileQueryBuilder_1(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreFileWhere_1(value["where"]);
+        const refResult0 = validateStoreFileWhereValidated_1(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26237,7 +26280,9 @@ export function validateStoreFileQueryBuilder_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreFileOrderBy_1(value["orderBy"]);
+        const refResult0 = validateStoreFileOrderByValidated_1(
+          value["orderBy"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26330,7 +26375,7 @@ export function validateStoreFileQueryBuilder_1(value) {
           "updatedAt",
         ];
       } else {
-        const refResult0 = validateStoreFileReturning(value["select"]);
+        const refResult0 = validateStoreFileReturningValidated(value["select"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26349,10 +26394,10 @@ export function validateStoreFileQueryBuilder_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobQueryBuilderInput_1|any} value
- * @returns {Either<import("../common/types").StoreJobQueryBuilder_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobQueryBuilderInput|any} value
+ * @returns {Either<import("../common/types").StoreJobQueryBuilderValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreJobQueryBuilder_1(value) {
+export function validateStoreJobQueryBuilderValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -26394,7 +26439,7 @@ export function validateStoreJobQueryBuilder_1(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreJobWhere_1(value["where"]);
+        const refResult0 = validateStoreJobWhereValidated_1(value["where"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26407,7 +26452,7 @@ export function validateStoreJobQueryBuilder_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreJobOrderBy_1(value["orderBy"]);
+        const refResult0 = validateStoreJobOrderByValidated_1(value["orderBy"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26502,7 +26547,7 @@ export function validateStoreJobQueryBuilder_1(value) {
           "updatedAt",
         ];
       } else {
-        const refResult0 = validateStoreJobReturning(value["select"]);
+        const refResult0 = validateStoreJobReturningValidated(value["select"]);
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26521,10 +26566,10 @@ export function validateStoreJobQueryBuilder_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreQueryBuilderInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreQueryBuilder_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreQueryBuilderInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreQueryBuilderValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreQueryBuilder_1(value) {
+export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -26567,7 +26612,9 @@ export function validateStoreSessionStoreQueryBuilder_1(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreWhere_1(value["where"]);
+        const refResult0 = validateStoreSessionStoreWhereValidated_1(
+          value["where"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26580,7 +26627,9 @@ export function validateStoreSessionStoreQueryBuilder_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreOrderBy_1(value["orderBy"]);
+        const refResult0 = validateStoreSessionStoreOrderByValidated_1(
+          value["orderBy"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26673,7 +26722,9 @@ export function validateStoreSessionStoreQueryBuilder_1(value) {
           "updatedAt",
         ];
       } else {
-        const refResult0 = validateStoreSessionStoreReturning(value["select"]);
+        const refResult0 = validateStoreSessionStoreReturningValidated(
+          value["select"],
+        );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26689,9 +26740,10 @@ export function validateStoreSessionStoreQueryBuilder_1(value) {
       ) {
         result["accessTokens"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenQueryBuilder_1(
-          value["accessTokens"],
-        );
+        const refResult0 =
+          validateStoreSessionStoreTokenQueryBuilderValidated_1(
+            value["accessTokens"],
+          );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26710,10 +26762,10 @@ export function validateStoreSessionStoreQueryBuilder_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput_1|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenQueryBuilder_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenQueryBuilderValidated_1, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
+export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -26758,7 +26810,7 @@ export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenWhere_1(
+        const refResult0 = validateStoreSessionStoreTokenWhereValidated_1(
           value["where"],
         );
 
@@ -26773,7 +26825,7 @@ export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenOrderBy_1(
+        const refResult0 = validateStoreSessionStoreTokenOrderByValidated_1(
           value["orderBy"],
         );
 
@@ -26868,7 +26920,7 @@ export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
           "createdAt",
         ];
       } else {
-        const refResult0 = validateStoreSessionStoreTokenReturning(
+        const refResult0 = validateStoreSessionStoreTokenReturningValidated(
           value["select"],
         );
 
@@ -26886,9 +26938,10 @@ export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
       ) {
         result["refreshToken"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenQueryBuilder_1(
-          value["refreshToken"],
-        );
+        const refResult0 =
+          validateStoreSessionStoreTokenQueryBuilderValidated_1(
+            value["refreshToken"],
+          );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {
@@ -26901,7 +26954,7 @@ export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
       if (value["session"] === null || value["session"] === undefined) {
         result["session"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreQueryBuilder_1(
+        const refResult0 = validateStoreSessionStoreQueryBuilderValidated_1(
           value["session"],
         );
 
@@ -26916,9 +26969,10 @@ export function validateStoreSessionStoreTokenQueryBuilder_1(value) {
       if (value["accessToken"] === null || value["accessToken"] === undefined) {
         result["accessToken"] = undefined;
       } else {
-        const refResult0 = validateStoreSessionStoreTokenQueryBuilder_1(
-          value["accessToken"],
-        );
+        const refResult0 =
+          validateStoreSessionStoreTokenQueryBuilderValidated_1(
+            value["accessToken"],
+          );
 
         if (refResult0.error) {
           for (const errorKey of Object.keys(refResult0.error)) {

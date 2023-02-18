@@ -169,18 +169,35 @@ export function databaseGenerator(generateContext) {
     for (const key of Object.keys(allModelTypes)) {
       validatorGeneratorGenerateValidator(generateContext, allModelTypes[key], {
         validatorState: "output",
-        nameSuffix: "",
+        nameSuffixes: {
+          input: "Input",
+          output: "Validated",
+        },
         targets: typeTargets,
+        preferInputBaseName: [
+          "insertType",
+          "updateType",
+          "whereType",
+          "orderByType",
+          "orderBySpecType",
+          "queryBuilderType",
+        ].includes(key),
       });
 
       const inputType = typesCacheGet(generateContext, allModelTypes[key], {
         validatorState: "input",
-        nameSuffix: "Input",
+        nameSuffixes: {
+          input: "Input",
+          output: "Validated",
+        },
         targets: typeTargets,
       });
       const outputType = typesCacheGet(generateContext, allModelTypes[key], {
         validatorState: "output",
-        nameSuffix: "",
+        nameSuffixes: {
+          input: "Input",
+          output: "Validated",
+        },
         targets: typeTargets,
       });
 

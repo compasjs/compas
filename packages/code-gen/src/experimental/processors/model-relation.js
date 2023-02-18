@@ -5,7 +5,7 @@ import {
   stringFormatNameForError,
   stringFormatRelation,
 } from "../string-format.js";
-import { typesGeneratorIsOptional } from "../types/generator.js";
+import { typesOptionalityIsOptional } from "../types/optionality.js";
 import { modelKeyGetPrimary } from "./model-keys.js";
 import { structureModels } from "./models.js";
 import { structureNamedTypes, structureResolveReference } from "./structure.js";
@@ -365,7 +365,7 @@ export function modelRelationAddKeys(generateContext) {
         }
 
         if (
-          typesGeneratorIsOptional(
+          typesOptionalityIsOptional(
             generateContext,
             model.keys[relation.ownKey],
             {

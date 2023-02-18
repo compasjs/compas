@@ -886,7 +886,7 @@ export function validateCliFlagDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").CliCompletionInput|any} value
+ * @param {import("../common/types").CliCompletion|any} value
  * @returns {Either<import("../common/types").CliCompletion, ValidatorErrorMap>}
  */
 export function validateCliCompletion(value) {

@@ -67,14 +67,18 @@ export function validatorGetNameAndImport(
  * @param {import("../types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
- * @param {import("../types/generator").GenerateTypeOptions} outputTypeOptions
+ * @param {import("../types/generator").GenerateTypeOptions & {
+ *   preferInputBaseName?: boolean;
+ * }} outputTypeOptions
  */
 export function validatorGeneratorGenerateValidator(
   generateContext: import("../generate").GenerateContext,
   type: import("../types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
-  outputTypeOptions: import("../types/generator").GenerateTypeOptions,
+  outputTypeOptions: import("../types/generator").GenerateTypeOptions & {
+    preferInputBaseName?: boolean;
+  },
 ): void;
 /**
  * Generate the body of a validator. This function should be called and work for

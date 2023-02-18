@@ -161,21 +161,3 @@ export type CliCompletion =
       specification: "boolean" | "number" | "string" | "booleanOrString";
       description?: string | undefined;
     };
-
-export type CliCompletionInput =
-  | {
-      type: "directory";
-    }
-  | {
-      type: "file";
-    }
-  | {
-      type: "completion";
-      name: string;
-      description?: string | undefined;
-    }
-  | {
-      type: "value";
-      specification: "boolean" | "number" | "string" | "booleanOrString";
-      description?: string | undefined;
-    };

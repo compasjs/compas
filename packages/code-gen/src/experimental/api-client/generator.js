@@ -116,14 +116,20 @@ export function apiClientGenerator(generateContext) {
         // @ts-expect-error
         validatorGeneratorGenerateValidator(generateContext, typeRef, {
           validatorState: "output",
-          nameSuffix: "",
+          nameSuffixes: {
+            input: "Input",
+            output: "Validated",
+          },
           targets: typeTargets,
         });
       } else {
         // @ts-expect-error
         typesGeneratorGenerateNamedType(generateContext, typeRef, {
           validatorState: "input",
-          nameSuffix: "",
+          nameSuffixes: {
+            input: "Input",
+            output: "Validated",
+          },
           targets: typeTargets,
         });
       }
@@ -131,7 +137,6 @@ export function apiClientGenerator(generateContext) {
       // @ts-expect-error
       contextNames[`${name}Type`] = typesCacheGet(generateContext, typeRef, {
         validatorState: name === "response" ? "output" : "input",
-        nameSuffix: "",
         targets: typeTargets,
       });
 

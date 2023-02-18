@@ -7,7 +7,7 @@ import { typeDefinitionTraverse } from "../processors/type-definition-traverse.j
  * @type {WeakMap<import("../generated/common/types").ExperimentalTypeSystemDefinition,
  *   import("../generated/common/types").ExperimentalAnyDefinitionTarget[]>}
  */
-const typeCache = new WeakMap();
+const typeTargetCache = new WeakMap();
 
 /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
 const fileTargets = [
@@ -19,14 +19,15 @@ const fileTargets = [
 ];
 
 /**
+ * Recursively check which targets are used by the provided type, including the references.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
  * @returns {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]}
  */
 export function typeTargetsDetermine(generateContext, type) {
-  if (typeCache.has(type)) {
-    return typeCache.get(type) ?? [];
+  if (typeTargetCache.has(type)) {
+    return typeTargetCache.get(type) ?? [];
   }
 
   const targets = new Set();
@@ -65,7 +66,7 @@ export function typeTargetsDetermine(generateContext, type) {
   );
 
   const result = [...targets];
-  typeCache.set(type, result);
+  typeTargetCache.set(type, result);
 
   return result;
 }

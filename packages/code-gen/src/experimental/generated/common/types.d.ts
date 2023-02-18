@@ -58,18 +58,6 @@ export type ExperimentalAnyDefinition = {
   };
 };
 
-export type ExperimentalAnyDefinitionTargetInput =
-  | "js"
-  | "ts"
-  | "jsKoaReceive"
-  | "jsKoaSend"
-  | "jsPostgres"
-  | "jsAxios"
-  | "tsAxios"
-  | "jsAxiosNode"
-  | "tsAxiosBrowser"
-  | "tsAxiosReactNative";
-
 export type ExperimentalAnyDefinitionInput = {
   type: "any";
   group?: string | undefined;
@@ -90,7 +78,7 @@ export type ExperimentalAnyDefinitionInput = {
   targets?:
     | Partial<
         Record<
-          ExperimentalAnyDefinitionTargetInput,
+          ExperimentalAnyDefinitionTarget,
           {
             validatorInputType: string;
             validatorOutputType: string;
@@ -517,8 +505,6 @@ export type ExperimentalBooleanDefinitionInput = {
   oneOf?: boolean | "true" | "false" | undefined;
 };
 
-export type ExperimentalNamePartInput = string;
-
 export type ExperimentalReferenceDefinitionInput = {
   type: "reference";
   docString: string;
@@ -531,8 +517,8 @@ export type ExperimentalReferenceDefinitionInput = {
   };
   validator: {};
   reference: {
-    group: ExperimentalNamePartInput;
-    name: ExperimentalNamePartInput;
+    group: ExperimentalNamePart;
+    name: ExperimentalNamePart;
   };
 };
 
@@ -1032,8 +1018,6 @@ export type ExperimentalGenerateOptionsInput = {
 
 export type ExperimentalNamePartOptional = string | undefined;
 
-export type ExperimentalNamePartOptionalInput = string | undefined;
-
 export type ExperimentalRouteInvalidationDefinition = {
   type: "routeInvalidation";
   target: {
@@ -1104,8 +1088,8 @@ export type ExperimentalNamedTypeDefinition =
 export type ExperimentalRouteInvalidationDefinitionInput = {
   type: "routeInvalidation";
   target: {
-    group: ExperimentalNamePartInput;
-    name?: ExperimentalNamePartOptionalInput | undefined;
+    group: ExperimentalNamePart;
+    name?: ExperimentalNamePartOptional | undefined;
   };
   properties: {
     useSharedParams?: boolean | "true" | "false" | undefined;
@@ -1177,8 +1161,8 @@ export type ExperimentalStructure = {
 };
 
 export type ExperimentalStructureInput = {
-  [key: ExperimentalNamePartInput]: {
-    [key: ExperimentalNamePartInput]: ExperimentalNamedTypeDefinitionInput;
+  [key: ExperimentalNamePart]: {
+    [key: ExperimentalNamePart]: ExperimentalNamedTypeDefinitionInput;
   };
 };
 

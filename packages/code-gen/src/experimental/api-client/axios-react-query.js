@@ -11,7 +11,7 @@ import {
 import { fileWrite, fileWriteInline } from "../file/write.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
-import { typesGeneratorIsOptional } from "../types/generator.js";
+import { typesOptionalityIsOptional } from "../types/optionality.js";
 
 /**
  * Get the api client file
@@ -397,7 +397,7 @@ function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
 
     if (type.type !== "object") {
       // @ts-expect-error
-      const isOptional = typesGeneratorIsOptional(generateContext, type, {
+      const isOptional = typesOptionalityIsOptional(generateContext, type, {
         validatorState: "input",
       });
 
@@ -409,7 +409,7 @@ function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
     }
 
     for (const [subKey, field] of Object.entries(type.keys)) {
-      const isOptional = typesGeneratorIsOptional(generateContext, field, {
+      const isOptional = typesOptionalityIsOptional(generateContext, field, {
         validatorState: "input",
       });
 

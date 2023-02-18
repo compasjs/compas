@@ -1,5 +1,4 @@
 import { AppError } from "@compas/stdlib";
-import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureNamedTypes } from "../processors/structure.js";
 import { targetLanguageSwitch } from "../target/switcher.js";
 import { typesCacheGet } from "./cache.js";
@@ -17,7 +16,10 @@ import {
 /**
  * @typedef {object} GenerateTypeOptions
  * @property {"input"|"output"} validatorState
- * @property {string} nameSuffix
+ * @property {{
+ *   input: string,
+ *   output: string,
+ * }} nameSuffixes
  * @property {(import("../generated/common/types.js").ExperimentalAnyDefinitionTarget
  *  )[]} targets
  */
@@ -136,7 +138,10 @@ function typesGeneratorGenerateBaseTypes(generateContext) {
 
     typesGeneratorGenerateNamedType(generateContext, type, {
       validatorState: "output",
-      nameSuffix: "",
+      nameSuffixes: {
+        input: "Input",
+        output: "Validated",
+      },
       targets: [generateContext.options.targetLanguage],
     });
   }
@@ -192,41 +197,4 @@ export function typesGeneratorUseTypeName(generateContext, file, name) {
       [generateContext, file, name],
     ) ?? name
   );
-}
-
-/**
- * Check if the provided type should be generated as an optional type.
- * When {@link options.validatorState} is set to 'output', we expect that defaults are
- * applied.
- *
- * @param {import("../generate").GenerateContext} generateContext
- * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
- * @param {Pick<import("./generator").GenerateTypeOptions, "validatorState">} options
- * @returns {boolean}
- */
-export function typesGeneratorIsOptional(generateContext, type, options) {
-  if (options.validatorState === "input") {
-    return referenceUtilsGetProperty(
-      generateContext,
-      type,
-      ["isOptional"],
-      false,
-    );
-  } else if (options.validatorState === "output") {
-    if (
-      referenceUtilsGetProperty(generateContext, type, ["isOptional"], false) &&
-      referenceUtilsGetProperty(generateContext, type, ["defaultValue"], false)
-    ) {
-      return false;
-    }
-
-    return referenceUtilsGetProperty(
-      generateContext,
-      type,
-      ["isOptional"],
-      false,
-    );
-  }
-
-  return false;
 }

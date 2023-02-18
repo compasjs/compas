@@ -4,12 +4,12 @@ import { wrapQueryPart } from "../common/database.js";
 import { validateQueryResultStoreSessionStoreToken } from "../queryResult/validators.js";
 import {
   validateStoreSessionStoreToken,
-  validateStoreSessionStoreTokenInsert,
-  validateStoreSessionStoreTokenOrderBy,
+  validateStoreSessionStoreTokenInsertValidated,
   validateStoreSessionStoreTokenOrderBySpec,
-  validateStoreSessionStoreTokenQueryBuilder,
-  validateStoreSessionStoreTokenUpdate,
-  validateStoreSessionStoreTokenWhere,
+  validateStoreSessionStoreTokenOrderByValidated,
+  validateStoreSessionStoreTokenQueryBuilderValidated,
+  validateStoreSessionStoreTokenUpdateValidated,
+  validateStoreSessionStoreTokenWhereValidated,
 } from "../store/validators.js";
 import {
   sessionStoreQueryBuilderSpec,
@@ -232,7 +232,7 @@ export const sessionStoreTokenWhereSpec = {
 /**
  * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput} [where]
+ * @param {import("../common/types").StoreSessionStoreTokenWhere} [where]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
  * @returns {QueryPart<any>}
  */
@@ -242,7 +242,9 @@ export function sessionStoreTokenWhere(where, options = {}) {
     options.shortName += ".";
   }
   if (!options.skipValidator) {
-    const { error, value } = validateStoreSessionStoreTokenWhere(where ?? {});
+    const { error, value } = validateStoreSessionStoreTokenWhereValidated(
+      where ?? {},
+    );
     if (error) {
       throw AppError.serverError({ message: "Invalid where object", error });
     }
@@ -258,8 +260,8 @@ export function sessionStoreTokenWhere(where, options = {}) {
 /**
  * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreSessionStoreTokenOrderByInput} [orderBy]
- * @param {import("../common/types").StoreSessionStoreTokenOrderBySpecInput} [orderBySpec]
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBy} [orderBy]
+ * @param {import("../common/types").StoreSessionStoreTokenOrderBySpec} [orderBySpec]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
  * @returns {QueryPart<any>}
  */
@@ -271,7 +273,8 @@ export function sessionStoreTokenOrderBy(orderBy, orderBySpec, options = {}) {
   orderBy ??= ["id"];
   orderBySpec ??= {};
   if (!options.skipValidator) {
-    const validatedOrderBy = validateStoreSessionStoreTokenOrderBy(orderBy);
+    const validatedOrderBy =
+      validateStoreSessionStoreTokenOrderByValidated(orderBy);
     if (validatedOrderBy.error) {
       throw AppError.serverError({
         message: "Invalid orderBy array",
@@ -306,7 +309,7 @@ export function sessionStoreTokenOrderBy(orderBy, orderBySpec, options = {}) {
  * Count the records in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput} where
+ * @param {import("../common/types").StoreSessionStoreTokenWhere} where
  * @returns {Promise<number>}
  */
 async function sessionStoreTokenCount(sql, where) {
@@ -321,7 +324,7 @@ async function sessionStoreTokenCount(sql, where) {
  * Insert a record in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreTokenInsertInput["insert"]} insert
+ * @param {import("../common/types").StoreSessionStoreTokenInsert["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
  */
@@ -332,12 +335,12 @@ function sessionStoreTokenInsert(sql, insert, options = {}) {
 /**
  * Insert a record in the 'sessionStoreToken' table
  *
- * @param {import("../common/types").StoreSessionStoreTokenInsertInput} input
+ * @param {import("../common/types").StoreSessionStoreTokenInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
  */
 function sessionStoreTokenInsertInternal(input) {
   const { error, value: validatedInput } =
-    validateStoreSessionStoreTokenInsert(input);
+    validateStoreSessionStoreTokenInsertValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Insert input validation failed",
@@ -402,7 +405,7 @@ function sessionStoreTokenInsertInternal(input) {
  * Upsert a record in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreTokenInsertInput["insert"]} insert
+ * @param {import("../common/types").StoreSessionStoreTokenInsert["insert"]} insert
  * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
  */
 function sessionStoreTokenUpsertOnId(sql, insert) {
@@ -414,12 +417,12 @@ function sessionStoreTokenUpsertOnId(sql, insert) {
 /**
  * Upsert a record in the 'sessionStoreToken' table based on the primary key.
  *
- * @param {import("../common/types").StoreSessionStoreTokenInsertInput} input
+ * @param {import("../common/types").StoreSessionStoreTokenInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
  */
 function sessionStoreTokenUpsertOnIdInternal(input) {
   const { error, value: validatedInput } =
-    validateStoreSessionStoreTokenInsert(input);
+    validateStoreSessionStoreTokenInsertValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Insert input validation failed",
@@ -502,7 +505,7 @@ const sessionStoreTokenUpdateSpec = {
  * Insert a record in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreTokenUpdateInput} update
+ * @param {import("../common/types").StoreSessionStoreTokenUpdate} update
  * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
  */
 function sessionStoreTokenUpdate(sql, update) {
@@ -516,12 +519,12 @@ function sessionStoreTokenUpdate(sql, update) {
 /**
  * Update records in the 'sessionStoreToken' table
  *
- * @param {import("../common/types").StoreSessionStoreTokenUpdateInput} input
+ * @param {import("../common/types").StoreSessionStoreTokenUpdate} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStoreToken>}
  */
 function sessionStoreTokenUpdateInternal(input) {
   const { error, value: validatedInput } =
-    validateStoreSessionStoreTokenUpdate(input);
+    validateStoreSessionStoreTokenUpdateValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Update input validation failed",
@@ -539,7 +542,7 @@ function sessionStoreTokenUpdateInternal(input) {
  * Insert a record in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput} [where]
+ * @param {import("../common/types").StoreSessionStoreTokenWhere} [where]
  * @returns {Promise<void>}
  */
 function sessionStoreTokenDelete(sql, where = {}) {
@@ -549,7 +552,7 @@ function sessionStoreTokenDelete(sql, where = {}) {
 /**
  * Remove records from the 'sessionStoreToken' table
  *
- * @param {import("../common/types").StoreSessionStoreTokenWhereInput} [where]
+ * @param {import("../common/types").StoreSessionStoreTokenWhere} [where]
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function sessionStoreTokenDeleteInternal(where = {}) {
@@ -600,12 +603,12 @@ export const sessionStoreTokenQueryBuilderSpec = {
 /**
  * Query records in the 'sessionStoreToken' table, optionally joining related tables.
  *
- * @param {import("../common/types").StoreSessionStoreTokenQueryBuilderInput} [input]
+ * @param {import("../common/types").StoreSessionStoreTokenQueryBuilder} [input]
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStoreToken>}
  */
 export function querySessionStoreToken(input = {}) {
   const { error, value: validatedInput } =
-    validateStoreSessionStoreTokenQueryBuilder(input);
+    validateStoreSessionStoreTokenQueryBuilderValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Query builder input validation failed",

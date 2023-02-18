@@ -1,3 +1,4 @@
+import { typesHasDifferentTypeAfterValidators } from "./optionality.js";
 import { typeTargetsDetermine, typeTargetsGetUsed } from "./targets.js";
 
 /**
@@ -22,6 +23,10 @@ const typeCache = new WeakMap();
 export function typesCacheAdd(generateContext, type, options, name) {
   const typeTargets = typeTargetsDetermine(generateContext, type);
   const usedTargets = typeTargetsGetUsed(typeTargets, options.targets);
+  const hasOptionalityDifferences = typesHasDifferentTypeAfterValidators(
+    generateContext,
+    type,
+  );
 
   let existingSubCache = typeCache.get(type);
   if (!existingSubCache) {
@@ -30,7 +35,8 @@ export function typesCacheAdd(generateContext, type, options, name) {
   }
 
   const cacheKey = typeCacheFormatKey({
-    ...options,
+    validatorState: options.validatorState,
+    hasOptionalityDifferences,
     targets: usedTargets,
   });
   existingSubCache[cacheKey] = name;
@@ -48,6 +54,10 @@ export function typesCacheAdd(generateContext, type, options, name) {
 export function typesCacheGet(generateContext, type, options) {
   const typeTargets = typeTargetsDetermine(generateContext, type);
   const usedTargets = typeTargetsGetUsed(typeTargets, options.targets);
+  const hasOptionalityDifferences = typesHasDifferentTypeAfterValidators(
+    generateContext,
+    type,
+  );
 
   const subCache = typeCache.get(type);
 
@@ -56,7 +66,8 @@ export function typesCacheGet(generateContext, type, options) {
   }
 
   const cacheKey = typeCacheFormatKey({
-    ...options,
+    validatorState: options.validatorState,
+    hasOptionalityDifferences,
     targets: usedTargets,
   });
 
@@ -78,11 +89,21 @@ export function typesCacheGetUsedNames(type) {
 /**
  * Stable format of a cache key based on the options.
  *
- * @param {import("./generator").GenerateTypeOptions} options
+ * @param {{
+ *   validatorState: "input"|"output",
+ *   targets: string[],
+ *   hasOptionalityDifferences: boolean,
+ * }} options
  * @returns {string}
  */
 function typeCacheFormatKey(options) {
-  return `${options.validatorState}-${JSON.stringify(options.targets)}-${
-    options.nameSuffix
-  }`;
+  if (!options.hasOptionalityDifferences) {
+    return `optionality-diff=${
+      options.hasOptionalityDifferences
+    },targets=${JSON.stringify(options.targets)}`;
+  }
+
+  return `validator-state=${options.validatorState},targets=${JSON.stringify(
+    options.targets,
+  )}`;
 }

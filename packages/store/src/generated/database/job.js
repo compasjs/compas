@@ -4,12 +4,12 @@ import { wrapQueryPart } from "../common/database.js";
 import { validateQueryResultStoreJob } from "../queryResult/validators.js";
 import {
   validateStoreJob,
-  validateStoreJobInsert,
-  validateStoreJobOrderBy,
+  validateStoreJobInsertValidated,
   validateStoreJobOrderBySpec,
-  validateStoreJobQueryBuilder,
-  validateStoreJobUpdate,
-  validateStoreJobWhere,
+  validateStoreJobOrderByValidated,
+  validateStoreJobQueryBuilderValidated,
+  validateStoreJobUpdateValidated,
+  validateStoreJobWhereValidated,
 } from "../store/validators.js";
 import { AppError, isNil } from "@compas/stdlib";
 import {
@@ -217,7 +217,7 @@ export const jobWhereSpec = {
 /**
  * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreJobWhereInput} [where]
+ * @param {import("../common/types").StoreJobWhere} [where]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
  * @returns {QueryPart<any>}
  */
@@ -227,7 +227,7 @@ export function jobWhere(where, options = {}) {
     options.shortName += ".";
   }
   if (!options.skipValidator) {
-    const { error, value } = validateStoreJobWhere(where ?? {});
+    const { error, value } = validateStoreJobWhereValidated(where ?? {});
     if (error) {
       throw AppError.serverError({ message: "Invalid where object", error });
     }
@@ -243,8 +243,8 @@ export function jobWhere(where, options = {}) {
 /**
  * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreJobOrderByInput} [orderBy]
- * @param {import("../common/types").StoreJobOrderBySpecInput} [orderBySpec]
+ * @param {import("../common/types").StoreJobOrderBy} [orderBy]
+ * @param {import("../common/types").StoreJobOrderBySpec} [orderBySpec]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
  * @returns {QueryPart<any>}
  */
@@ -256,7 +256,7 @@ export function jobOrderBy(orderBy, orderBySpec, options = {}) {
   orderBy ??= ["createdAt", "updatedAt", "id"];
   orderBySpec ??= {};
   if (!options.skipValidator) {
-    const validatedOrderBy = validateStoreJobOrderBy(orderBy);
+    const validatedOrderBy = validateStoreJobOrderByValidated(orderBy);
     if (validatedOrderBy.error) {
       throw AppError.serverError({
         message: "Invalid orderBy array",
@@ -290,7 +290,7 @@ export function jobOrderBy(orderBy, orderBySpec, options = {}) {
  * Count the records in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobWhereInput} where
+ * @param {import("../common/types").StoreJobWhere} where
  * @returns {Promise<number>}
  */
 async function jobCount(sql, where) {
@@ -305,7 +305,7 @@ async function jobCount(sql, where) {
  * Insert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobInsertInput["insert"]} insert
+ * @param {import("../common/types").StoreJobInsert["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<import("../common/types").StoreJob[]>}
  */
@@ -316,11 +316,12 @@ function jobInsert(sql, insert, options = {}) {
 /**
  * Insert a record in the 'job' table
  *
- * @param {import("../common/types").StoreJobInsertInput} input
+ * @param {import("../common/types").StoreJobInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
  */
 function jobInsertInternal(input) {
-  const { error, value: validatedInput } = validateStoreJobInsert(input);
+  const { error, value: validatedInput } =
+    validateStoreJobInsertValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Insert input validation failed",
@@ -407,7 +408,7 @@ function jobInsertInternal(input) {
  * Upsert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobInsertInput["insert"]} insert
+ * @param {import("../common/types").StoreJobInsert["insert"]} insert
  * @returns {Promise<import("../common/types").StoreJob[]>}
  */
 function jobUpsertOnId(sql, insert) {
@@ -417,11 +418,12 @@ function jobUpsertOnId(sql, insert) {
 /**
  * Upsert a record in the 'job' table based on the primary key.
  *
- * @param {import("../common/types").StoreJobInsertInput} input
+ * @param {import("../common/types").StoreJobInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
  */
 function jobUpsertOnIdInternal(input) {
-  const { error, value: validatedInput } = validateStoreJobInsert(input);
+  const { error, value: validatedInput } =
+    validateStoreJobInsertValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Insert input validation failed",
@@ -525,7 +527,7 @@ const jobUpdateSpec = {
  * Insert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobUpdateInput} update
+ * @param {import("../common/types").StoreJobUpdate} update
  * @returns {Promise<import("../common/types").StoreJob[]>}
  */
 function jobUpdate(sql, update) {
@@ -539,11 +541,12 @@ function jobUpdate(sql, update) {
 /**
  * Update records in the 'job' table
  *
- * @param {import("../common/types").StoreJobUpdateInput} input
+ * @param {import("../common/types").StoreJobUpdate} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
  */
 function jobUpdateInternal(input) {
-  const { error, value: validatedInput } = validateStoreJobUpdate(input);
+  const { error, value: validatedInput } =
+    validateStoreJobUpdateValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Update input validation failed",
@@ -561,7 +564,7 @@ function jobUpdateInternal(input) {
  * Insert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobWhereInput} [where]
+ * @param {import("../common/types").StoreJobWhere} [where]
  * @returns {Promise<void>}
  */
 function jobDelete(sql, where = {}) {
@@ -571,7 +574,7 @@ function jobDelete(sql, where = {}) {
 /**
  * Remove records from the 'job' table
  *
- * @param {import("../common/types").StoreJobWhereInput} [where]
+ * @param {import("../common/types").StoreJobWhere} [where]
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function jobDeleteInternal(where = {}) {
@@ -602,11 +605,12 @@ export const jobQueryBuilderSpec = {
 /**
  * Query records in the 'job' table, optionally joining related tables.
  *
- * @param {import("../common/types").StoreJobQueryBuilderInput} [input]
+ * @param {import("../common/types").StoreJobQueryBuilder} [input]
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
  */
 export function queryJob(input = {}) {
-  const { error, value: validatedInput } = validateStoreJobQueryBuilder(input);
+  const { error, value: validatedInput } =
+    validateStoreJobQueryBuilderValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Query builder input validation failed",

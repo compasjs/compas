@@ -68,7 +68,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       type for that somewhere.
 - [x] Database DDL `createdAt`/ `updatedAt` default to `now()`
   - Dubbel check all `withDates` & `withSoftDeletes`
-- [ ] Update type names
+- [x] Update type names
   - Types always get a suffix, only used when necessary
   - Checken of isOptional / default value gebruikt wordt tijdens generaten
   - -> dat opslaan in cache-key

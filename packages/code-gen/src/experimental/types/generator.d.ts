@@ -1,7 +1,10 @@
 /**
  * @typedef {object} GenerateTypeOptions
  * @property {"input"|"output"} validatorState
- * @property {string} nameSuffix
+ * @property {{
+ *   input: string,
+ *   output: string,
+ * }} nameSuffixes
  * @property {(import("../generated/common/types.js").ExperimentalAnyDefinitionTarget
  *  )[]} targets
  */
@@ -61,24 +64,12 @@ export function typesGeneratorUseTypeName(
   file: import("../file/context").GenerateFile,
   name: string,
 ): string;
-/**
- * Check if the provided type should be generated as an optional type.
- * When {@link options.validatorState} is set to 'output', we expect that defaults are
- * applied.
- *
- * @param {import("../generate").GenerateContext} generateContext
- * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
- * @param {Pick<import("./generator").GenerateTypeOptions, "validatorState">} options
- * @returns {boolean}
- */
-export function typesGeneratorIsOptional(
-  generateContext: import("../generate").GenerateContext,
-  type: import("../generated/common/types").ExperimentalTypeSystemDefinition,
-  options: Pick<import("./generator").GenerateTypeOptions, "validatorState">,
-): boolean;
 export type GenerateTypeOptions = {
   validatorState: "input" | "output";
-  nameSuffix: string;
+  nameSuffixes: {
+    input: string;
+    output: string;
+  };
   targets: import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[];
 };
 //# sourceMappingURL=generator.d.ts.map

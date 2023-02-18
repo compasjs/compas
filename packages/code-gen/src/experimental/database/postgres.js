@@ -18,7 +18,7 @@ import { structureModels } from "../processors/models.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { stringFormatNameForError } from "../string-format.js";
-import { typesGeneratorIsOptional } from "../types/generator.js";
+import { typesOptionalityIsOptional } from "../types/optionality.js";
 
 /**
  * Write the DDL out for Postgres
@@ -118,7 +118,7 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
       "sql",
       "hasDefaultValue",
     ]);
-    const isOptional = typesGeneratorIsOptional(generateContext, field, {
+    const isOptional = typesOptionalityIsOptional(generateContext, field, {
       validatorState: "output",
     });
 

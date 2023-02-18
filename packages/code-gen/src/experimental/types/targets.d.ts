@@ -1,4 +1,5 @@
 /**
+ * Recursively check which targets are used by the provided type, including the references.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type

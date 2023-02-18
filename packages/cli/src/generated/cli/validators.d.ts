@@ -20,11 +20,11 @@ export function validateCliFlagDefinition(
   value: import("../common/types").CliFlagDefinitionInput | any,
 ): Either<import("../common/types").CliFlagDefinition, ValidatorErrorMap>;
 /**
- * @param {import("../common/types").CliCompletionInput|any} value
+ * @param {import("../common/types").CliCompletion|any} value
  * @returns {Either<import("../common/types").CliCompletion, ValidatorErrorMap>}
  */
 export function validateCliCompletion(
-  value: import("../common/types").CliCompletionInput | any,
+  value: import("../common/types").CliCompletion | any,
 ): Either<import("../common/types").CliCompletion, ValidatorErrorMap>;
 export type Either<T, E> =
   | {

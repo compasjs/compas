@@ -23,7 +23,7 @@ import {
   typesCacheGet,
   typesCacheGetUsedNames,
 } from "./cache.js";
-import { typesGeneratorIsOptional } from "./generator.js";
+import { typesOptionalityIsOptional } from "./optionality.js";
 
 /**
  * Resolve the `types.d.ts` output file.
@@ -187,7 +187,7 @@ export function typesTypescriptFormatType(
   type,
   options,
 ) {
-  const isOptional = typesGeneratorIsOptional(generateContext, type, {
+  const isOptional = typesOptionalityIsOptional(generateContext, type, {
     validatorState: options.validatorState,
   });
 
@@ -412,7 +412,7 @@ export function typesTypescriptFormatType(
         );
       }
 
-      const subIsOptional = typesGeneratorIsOptional(
+      const subIsOptional = typesOptionalityIsOptional(
         generateContext,
         type.keys[key],
         {
@@ -487,7 +487,9 @@ function typesTypescriptFormatTypeName(generateContext, type, options) {
     return baseName;
   }
 
-  const withSuffix = `${baseName}${upperCaseFirst(options.nameSuffix)}`;
+  const withSuffix = `${baseName}${upperCaseFirst(
+    options.nameSuffixes[options.validatorState],
+  )}`;
 
   if (!usedNames.includes(withSuffix)) {
     typesCacheAdd(generateContext, type, options, withSuffix);

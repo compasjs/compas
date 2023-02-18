@@ -4,12 +4,12 @@ import { wrapQueryPart } from "../common/database.js";
 import { validateQueryResultStoreFile } from "../queryResult/validators.js";
 import {
   validateStoreFile,
-  validateStoreFileInsert,
-  validateStoreFileOrderBy,
+  validateStoreFileInsertValidated,
   validateStoreFileOrderBySpec,
-  validateStoreFileQueryBuilder,
-  validateStoreFileUpdate,
-  validateStoreFileWhere,
+  validateStoreFileOrderByValidated,
+  validateStoreFileQueryBuilderValidated,
+  validateStoreFileUpdateValidated,
+  validateStoreFileWhereValidated,
 } from "../store/validators.js";
 import { AppError, isNil } from "@compas/stdlib";
 import {
@@ -153,7 +153,7 @@ export const fileWhereSpec = {
 /**
  * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreFileWhereInput} [where]
+ * @param {import("../common/types").StoreFileWhere} [where]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
  * @returns {QueryPart<any>}
  */
@@ -163,7 +163,7 @@ export function fileWhere(where, options = {}) {
     options.shortName += ".";
   }
   if (!options.skipValidator) {
-    const { error, value } = validateStoreFileWhere(where ?? {});
+    const { error, value } = validateStoreFileWhereValidated(where ?? {});
     if (error) {
       throw AppError.serverError({ message: "Invalid where object", error });
     }
@@ -179,8 +179,8 @@ export function fileWhere(where, options = {}) {
 /**
  * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreFileOrderByInput} [orderBy]
- * @param {import("../common/types").StoreFileOrderBySpecInput} [orderBySpec]
+ * @param {import("../common/types").StoreFileOrderBy} [orderBy]
+ * @param {import("../common/types").StoreFileOrderBySpec} [orderBySpec]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
  * @returns {QueryPart<any>}
  */
@@ -192,7 +192,7 @@ export function fileOrderBy(orderBy, orderBySpec, options = {}) {
   orderBy ??= ["createdAt", "updatedAt", "id"];
   orderBySpec ??= {};
   if (!options.skipValidator) {
-    const validatedOrderBy = validateStoreFileOrderBy(orderBy);
+    const validatedOrderBy = validateStoreFileOrderByValidated(orderBy);
     if (validatedOrderBy.error) {
       throw AppError.serverError({
         message: "Invalid orderBy array",
@@ -226,7 +226,7 @@ export function fileOrderBy(orderBy, orderBySpec, options = {}) {
  * Count the records in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileWhereInput} where
+ * @param {import("../common/types").StoreFileWhere} where
  * @returns {Promise<number>}
  */
 async function fileCount(sql, where) {
@@ -241,7 +241,7 @@ async function fileCount(sql, where) {
  * Insert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileInsertInput["insert"]} insert
+ * @param {import("../common/types").StoreFileInsert["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
  * @returns {Promise<import("../common/types").StoreFile[]>}
  */
@@ -252,11 +252,12 @@ function fileInsert(sql, insert, options = {}) {
 /**
  * Insert a record in the 'file' table
  *
- * @param {import("../common/types").StoreFileInsertInput} input
+ * @param {import("../common/types").StoreFileInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
  */
 function fileInsertInternal(input) {
-  const { error, value: validatedInput } = validateStoreFileInsert(input);
+  const { error, value: validatedInput } =
+    validateStoreFileInsertValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Insert input validation failed",
@@ -339,7 +340,7 @@ function fileInsertInternal(input) {
  * Upsert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileInsertInput["insert"]} insert
+ * @param {import("../common/types").StoreFileInsert["insert"]} insert
  * @returns {Promise<import("../common/types").StoreFile[]>}
  */
 function fileUpsertOnId(sql, insert) {
@@ -349,11 +350,12 @@ function fileUpsertOnId(sql, insert) {
 /**
  * Upsert a record in the 'file' table based on the primary key.
  *
- * @param {import("../common/types").StoreFileInsertInput} input
+ * @param {import("../common/types").StoreFileInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
  */
 function fileUpsertOnIdInternal(input) {
-  const { error, value: validatedInput } = validateStoreFileInsert(input);
+  const { error, value: validatedInput } =
+    validateStoreFileInsertValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Insert input validation failed",
@@ -445,7 +447,7 @@ const fileUpdateSpec = {
  * Insert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileUpdateInput} update
+ * @param {import("../common/types").StoreFileUpdate} update
  * @returns {Promise<import("../common/types").StoreFile[]>}
  */
 function fileUpdate(sql, update) {
@@ -459,11 +461,12 @@ function fileUpdate(sql, update) {
 /**
  * Update records in the 'file' table
  *
- * @param {import("../common/types").StoreFileUpdateInput} input
+ * @param {import("../common/types").StoreFileUpdate} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
  */
 function fileUpdateInternal(input) {
-  const { error, value: validatedInput } = validateStoreFileUpdate(input);
+  const { error, value: validatedInput } =
+    validateStoreFileUpdateValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Update input validation failed",
@@ -481,7 +484,7 @@ function fileUpdateInternal(input) {
  * Insert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileWhereInput} [where]
+ * @param {import("../common/types").StoreFileWhere} [where]
  * @returns {Promise<void>}
  */
 function fileDelete(sql, where = {}) {
@@ -491,7 +494,7 @@ function fileDelete(sql, where = {}) {
 /**
  * Remove records from the 'file' table
  *
- * @param {import("../common/types").StoreFileWhereInput} [where]
+ * @param {import("../common/types").StoreFileWhere} [where]
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function fileDeleteInternal(where = {}) {
@@ -520,11 +523,12 @@ export const fileQueryBuilderSpec = {
 /**
  * Query records in the 'file' table, optionally joining related tables.
  *
- * @param {import("../common/types").StoreFileQueryBuilderInput} [input]
+ * @param {import("../common/types").StoreFileQueryBuilder} [input]
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
  */
 export function queryFile(input = {}) {
-  const { error, value: validatedInput } = validateStoreFileQueryBuilder(input);
+  const { error, value: validatedInput } =
+    validateStoreFileQueryBuilderValidated(input);
   if (error) {
     throw AppError.serverError({
       message: "Query builder input validation failed",

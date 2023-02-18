@@ -16,11 +16,11 @@ export function validateExperimentalAnyDefinition(
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").ExperimentalAnyDefinitionTargetInput|any} value
+ * @param {import("../common/types").ExperimentalAnyDefinitionTarget|any} value
  * @returns {Either<import("../common/types").ExperimentalAnyDefinitionTarget, ValidatorErrorMap>}
  */
 export function validateExperimentalAnyDefinitionTarget(
-  value: import("../common/types").ExperimentalAnyDefinitionTargetInput | any,
+  value: import("../common/types").ExperimentalAnyDefinitionTarget | any,
 ): Either<
   import("../common/types").ExperimentalAnyDefinitionTarget,
   ValidatorErrorMap
@@ -88,11 +88,11 @@ export function validateExperimentalReferenceDefinition(
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").ExperimentalNamePartInput|any} value
+ * @param {import("../common/types").ExperimentalNamePart|any} value
  * @returns {Either<import("../common/types").ExperimentalNamePart, ValidatorErrorMap>}
  */
 export function validateExperimentalNamePart(
-  value: import("../common/types").ExperimentalNamePartInput | any,
+  value: import("../common/types").ExperimentalNamePart | any,
 ): Either<import("../common/types").ExperimentalNamePart, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").ExperimentalDateDefinitionInput|any} value
@@ -215,11 +215,11 @@ export function validateExperimentalGenerateOptions(
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").ExperimentalNamePartOptionalInput|any} value
+ * @param {import("../common/types").ExperimentalNamePartOptional|any} value
  * @returns {Either<import("../common/types").ExperimentalNamePartOptional, ValidatorErrorMap>}
  */
 export function validateExperimentalNamePartOptional(
-  value: import("../common/types").ExperimentalNamePartOptionalInput | any,
+  value: import("../common/types").ExperimentalNamePartOptional | any,
 ): Either<
   import("../common/types").ExperimentalNamePartOptional,
   ValidatorErrorMap

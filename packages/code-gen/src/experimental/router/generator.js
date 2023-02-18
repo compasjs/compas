@@ -136,14 +136,20 @@ export function routerGenerator(generateContext) {
           // @ts-expect-error
           validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
             validatorState: "output",
-            nameSuffix: "",
+            nameSuffixes: {
+              input: "ValidatorInput",
+              output: "Validated",
+            },
             targets: specificTargets,
           });
         } else {
           // @ts-expect-error
           typesGeneratorGenerateNamedType(generateContext, resolvedRef, {
             validatorState: "output",
-            nameSuffix: "",
+            nameSuffixes: {
+              input: "Input",
+              output: "Validated",
+            },
             targets: specificTargets,
           });
         }
@@ -155,7 +161,10 @@ export function routerGenerator(generateContext) {
           resolvedRef,
           {
             validatorState: "output",
-            nameSuffix: "",
+            nameSuffixes: {
+              input: "Input",
+              output: "Validated",
+            },
             targets: specificTargets,
           },
         );
