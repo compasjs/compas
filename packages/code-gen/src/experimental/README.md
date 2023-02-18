@@ -74,7 +74,10 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - -> dat opslaan in cache-key
   - -> Als new variant w/ same validator state, same targets used
   - -> Reuse name
-- [ ] Write migration docs + breaking changes
+- [x] Write migration docs + breaking changes
+- [ ] Always validate objects in loose mode
+  - Additional fields are now also a breaking change with validating api clients
+    :s
 
 ### Docs
 

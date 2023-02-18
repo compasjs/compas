@@ -235,6 +235,10 @@ function getHomeSidebar() {
 
 function getReleaseNotesSidebar() {
   return [
+    {
+      text: "Migrating to the new code-gen",
+      link: "/releases/code-gen-migration.html",
+    },
     { text: "Release v0.0.212", link: "/releases/0.0.212.html" },
     { text: "Release v0.0.180", link: "/releases/0.0.180.html" },
     { text: "Release v0.0.172", link: "/releases/0.0.172.html" },
