@@ -34,27 +34,6 @@ export function validateStoreFile(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "contentLength",
-        "bucketName",
-        "contentType",
-        "name",
-        "meta",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -276,23 +255,6 @@ export function validateStoreFileMeta(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "transforms",
-        "transformedFromOriginal",
-        "placeholderImage",
-        "altText",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["transforms"] === null || value["transforms"] === undefined) {
@@ -408,44 +370,6 @@ export function validateStoreFileWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "bucketName",
-        "bucketNameNotEqual",
-        "bucketNameIn",
-        "bucketNameNotIn",
-        "bucketNameLike",
-        "bucketNameILike",
-        "bucketNameNotLike",
-        "createdAt",
-        "createdAtNotEqual",
-        "createdAtIn",
-        "createdAtNotIn",
-        "createdAtGreaterThan",
-        "createdAtLowerThan",
-        "updatedAt",
-        "updatedAtNotEqual",
-        "updatedAtIn",
-        "updatedAtNotIn",
-        "updatedAtGreaterThan",
-        "updatedAtLowerThan",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -1965,23 +1889,6 @@ export function validateStoreFileOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "bucketName",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -2146,25 +2053,6 @@ export function validateStoreFileQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -2477,18 +2365,6 @@ export function validateStoreFileInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["insert", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -2590,27 +2466,6 @@ export function validateStoreFileInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "contentLength",
-        "bucketName",
-        "contentType",
-        "name",
-        "meta",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -2826,18 +2681,6 @@ export function validateStoreFileUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -2917,26 +2760,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "contentLength",
-        "bucketName",
-        "contentType",
-        "name",
-        "meta",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (
@@ -3023,18 +2846,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3109,18 +2920,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3195,18 +2994,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$multiply"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3281,18 +3068,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$divide"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3416,18 +3191,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$append"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3537,18 +3300,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$append"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3658,18 +3409,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$append"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3768,18 +3507,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$set"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3800,18 +3527,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$set"],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys2 = new Set(["path", "value"]);
-                  for (const key of Object.keys(intermediateValue2["$set"])) {
-                    if (!knownKeys2.has(key)) {
-                      intermediateErrorMap2[`$.$set`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$set"]),
-                      };
-                      break;
-                    }
-                  }
                   intermediateResult2["$set"] = Object.create(null);
 
                   if (
@@ -4009,18 +3724,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$remove"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4041,20 +3744,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$remove"],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys2 = new Set(["path"]);
-                  for (const key of Object.keys(
-                    intermediateValue2["$remove"],
-                  )) {
-                    if (!knownKeys2.has(key)) {
-                      intermediateErrorMap2[`$.$remove`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$remove"]),
-                      };
-                      break;
-                    }
-                  }
                   intermediateResult2["$remove"] = Object.create(null);
 
                   if (
@@ -4293,18 +3982,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4365,18 +4042,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4487,18 +4152,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4559,18 +4212,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4643,29 +4284,6 @@ export function validateStoreJob(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "isComplete",
-        "handlerTimeout",
-        "priority",
-        "retryCount",
-        "name",
-        "scheduledAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -4955,57 +4573,6 @@ export function validateStoreJobWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "idGreaterThan",
-        "idLowerThan",
-        "isComplete",
-        "isCompleteIsNull",
-        "isCompleteIsNotNull",
-        "name",
-        "nameNotEqual",
-        "nameIn",
-        "nameNotIn",
-        "nameLike",
-        "nameILike",
-        "nameNotLike",
-        "scheduledAt",
-        "scheduledAtNotEqual",
-        "scheduledAtIn",
-        "scheduledAtNotIn",
-        "scheduledAtGreaterThan",
-        "scheduledAtLowerThan",
-        "scheduledAtIsNull",
-        "scheduledAtIsNotNull",
-        "createdAt",
-        "createdAtNotEqual",
-        "createdAtIn",
-        "createdAtNotIn",
-        "createdAtGreaterThan",
-        "createdAtLowerThan",
-        "updatedAt",
-        "updatedAtNotEqual",
-        "updatedAtIn",
-        "updatedAtNotIn",
-        "updatedAtGreaterThan",
-        "updatedAtLowerThan",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -7131,25 +6698,6 @@ export function validateStoreJobOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "isComplete",
-        "name",
-        "scheduledAt",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -7394,25 +6942,6 @@ export function validateStoreJobQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -7731,18 +7260,6 @@ export function validateStoreJobInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["insert", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -7844,29 +7361,6 @@ export function validateStoreJobInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "isComplete",
-        "handlerTimeout",
-        "priority",
-        "retryCount",
-        "name",
-        "scheduledAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -8150,18 +7644,6 @@ export function validateStoreJobUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -8241,28 +7723,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "isComplete",
-        "handlerTimeout",
-        "priority",
-        "retryCount",
-        "name",
-        "scheduledAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["isComplete"] === null || value["isComplete"] === undefined) {
@@ -8334,18 +7794,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$negate"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8465,18 +7913,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8551,18 +7987,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8637,18 +8061,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$multiply"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8723,18 +8135,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$divide"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8863,18 +8263,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8949,18 +8337,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9035,18 +8411,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$multiply"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9121,18 +8485,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$divide"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9266,18 +8618,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9352,18 +8692,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9438,18 +8766,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$multiply"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9524,18 +8840,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$divide"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9659,18 +8963,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$append"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9781,18 +9073,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9853,18 +9133,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9955,18 +9223,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$set"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9987,18 +9243,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$set"],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys2 = new Set(["path", "value"]);
-                  for (const key of Object.keys(intermediateValue2["$set"])) {
-                    if (!knownKeys2.has(key)) {
-                      intermediateErrorMap2[`$.$set`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$set"]),
-                      };
-                      break;
-                    }
-                  }
                   intermediateResult2["$set"] = Object.create(null);
 
                   if (
@@ -10196,18 +9440,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$remove"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -10228,20 +9460,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$remove"],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys2 = new Set(["path"]);
-                  for (const key of Object.keys(
-                    intermediateValue2["$remove"],
-                  )) {
-                    if (!knownKeys2.has(key)) {
-                      intermediateErrorMap2[`$.$remove`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$remove"]),
-                      };
-                      break;
-                    }
-                  }
                   intermediateResult2["$remove"] = Object.create(null);
 
                   if (
@@ -10480,18 +9698,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -10552,18 +9758,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -10674,18 +9868,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -10746,18 +9928,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -10828,25 +9998,6 @@ export function validateStoreSessionStore(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "checksum",
-        "revokedAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -11001,39 +10152,6 @@ export function validateStoreSessionStoreWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "createdAt",
-        "createdAtNotEqual",
-        "createdAtIn",
-        "createdAtNotIn",
-        "createdAtGreaterThan",
-        "createdAtLowerThan",
-        "updatedAt",
-        "updatedAtNotEqual",
-        "updatedAtIn",
-        "updatedAtNotIn",
-        "updatedAtGreaterThan",
-        "updatedAtLowerThan",
-        "viaAccessTokens",
-        "accessTokensNotExists",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -12044,18 +11162,6 @@ export function validateStoreSessionStoreWhereValidated(value) {
             foundType: typeof value["viaAccessTokens"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaAccessTokens"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaAccessTokens`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessTokens"]),
-              };
-              break;
-            }
-          }
           result["viaAccessTokens"] = Object.create(null);
 
           if (
@@ -12190,53 +11296,6 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "session",
-        "sessionNotEqual",
-        "sessionIn",
-        "sessionNotIn",
-        "expiresAt",
-        "expiresAtNotEqual",
-        "expiresAtIn",
-        "expiresAtNotIn",
-        "expiresAtGreaterThan",
-        "expiresAtLowerThan",
-        "refreshToken",
-        "refreshTokenNotEqual",
-        "refreshTokenIn",
-        "refreshTokenNotIn",
-        "refreshTokenIsNull",
-        "refreshTokenIsNotNull",
-        "revokedAt",
-        "revokedAtNotEqual",
-        "revokedAtIn",
-        "revokedAtNotIn",
-        "revokedAtGreaterThan",
-        "revokedAtLowerThan",
-        "revokedAtIsNull",
-        "revokedAtIsNotNull",
-        "viaRefreshToken",
-        "viaSession",
-        "viaAccessToken",
-        "accessTokenNotExists",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -13861,18 +12920,6 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             foundType: typeof value["viaRefreshToken"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaRefreshToken"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaRefreshToken`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaRefreshToken"]),
-              };
-              break;
-            }
-          }
           result["viaRefreshToken"] = Object.create(null);
 
           if (
@@ -13972,18 +13019,6 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             foundType: typeof value["viaSession"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaSession"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaSession`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaSession"]),
-              };
-              break;
-            }
-          }
           result["viaSession"] = Object.create(null);
 
           if (
@@ -14086,18 +13121,6 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             foundType: typeof value["viaAccessToken"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaAccessToken"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaAccessToken`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessToken"]),
-              };
-              break;
-            }
-          }
           result["viaAccessToken"] = Object.create(null);
 
           if (
@@ -14368,18 +13391,6 @@ export function validateStoreSessionStoreOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["id", "createdAt", "updatedAt"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -14511,26 +13522,6 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-        "accessTokens",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -14863,28 +13854,6 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-        "refreshToken",
-        "session",
-        "accessToken",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -15234,24 +14203,6 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "session",
-        "expiresAt",
-        "refreshToken",
-        "revokedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -15623,18 +14574,6 @@ export function validateStoreSessionStoreInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["insert", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -15736,25 +14675,6 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "checksum",
-        "revokedAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -15903,18 +14823,6 @@ export function validateStoreSessionStoreUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -15996,24 +14904,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "checksum",
-        "revokedAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["checksum"] === null || value["checksum"] === undefined) {
@@ -16087,18 +14977,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$append"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16209,18 +15087,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16281,18 +15147,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16383,18 +15237,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$set"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16415,18 +15257,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$set"],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys2 = new Set(["path", "value"]);
-                  for (const key of Object.keys(intermediateValue2["$set"])) {
-                    if (!knownKeys2.has(key)) {
-                      intermediateErrorMap2[`$.$set`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$set"]),
-                      };
-                      break;
-                    }
-                  }
                   intermediateResult2["$set"] = Object.create(null);
 
                   if (
@@ -16624,18 +15454,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$remove"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16656,20 +15474,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$remove"],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys2 = new Set(["path"]);
-                  for (const key of Object.keys(
-                    intermediateValue2["$remove"],
-                  )) {
-                    if (!knownKeys2.has(key)) {
-                      intermediateErrorMap2[`$.$remove`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$remove"]),
-                      };
-                      break;
-                    }
-                  }
                   intermediateResult2["$remove"] = Object.create(null);
 
                   if (
@@ -16908,18 +15712,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16980,18 +15772,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -17102,18 +15882,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -17174,18 +15942,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -17256,25 +16012,6 @@ export function validateStoreSessionStoreToken(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "session",
-        "expiresAt",
-        "refreshToken",
-        "revokedAt",
-        "createdAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -17441,18 +16178,6 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["insert", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -17555,25 +16280,6 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "session",
-        "expiresAt",
-        "refreshToken",
-        "revokedAt",
-        "createdAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -17738,18 +16444,6 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -17831,24 +16525,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "session",
-        "expiresAt",
-        "refreshToken",
-        "revokedAt",
-        "createdAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["session"] === null || value["session"] === undefined) {
@@ -17965,18 +16641,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -18037,18 +16701,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -18204,18 +16856,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -18276,18 +16916,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -18398,18 +17026,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$add"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -18470,18 +17086,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys2 = new Set(["$subtract"]);
-              for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
-                  };
-                  break;
-                }
-              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -18550,25 +17154,6 @@ export function validateStoreFileResponse(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "name",
-        "contentType",
-        "url",
-        "placeholderImage",
-        "altText",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -18967,44 +17552,6 @@ export function validateStoreFileWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "bucketName",
-        "bucketNameNotEqual",
-        "bucketNameIn",
-        "bucketNameNotIn",
-        "bucketNameLike",
-        "bucketNameILike",
-        "bucketNameNotLike",
-        "createdAt",
-        "createdAtNotEqual",
-        "createdAtIn",
-        "createdAtNotIn",
-        "createdAtGreaterThan",
-        "createdAtLowerThan",
-        "updatedAt",
-        "updatedAtNotEqual",
-        "updatedAtIn",
-        "updatedAtNotIn",
-        "updatedAtGreaterThan",
-        "updatedAtLowerThan",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -20315,57 +18862,6 @@ export function validateStoreJobWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "idGreaterThan",
-        "idLowerThan",
-        "isComplete",
-        "isCompleteIsNull",
-        "isCompleteIsNotNull",
-        "name",
-        "nameNotEqual",
-        "nameIn",
-        "nameNotIn",
-        "nameLike",
-        "nameILike",
-        "nameNotLike",
-        "scheduledAt",
-        "scheduledAtNotEqual",
-        "scheduledAtIn",
-        "scheduledAtNotIn",
-        "scheduledAtGreaterThan",
-        "scheduledAtLowerThan",
-        "scheduledAtIsNull",
-        "scheduledAtIsNotNull",
-        "createdAt",
-        "createdAtNotEqual",
-        "createdAtIn",
-        "createdAtNotIn",
-        "createdAtGreaterThan",
-        "createdAtLowerThan",
-        "updatedAt",
-        "updatedAtNotEqual",
-        "updatedAtIn",
-        "updatedAtNotIn",
-        "updatedAtGreaterThan",
-        "updatedAtLowerThan",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -22257,39 +20753,6 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "createdAt",
-        "createdAtNotEqual",
-        "createdAtIn",
-        "createdAtNotIn",
-        "createdAtGreaterThan",
-        "createdAtLowerThan",
-        "updatedAt",
-        "updatedAtNotEqual",
-        "updatedAtIn",
-        "updatedAtNotIn",
-        "updatedAtGreaterThan",
-        "updatedAtLowerThan",
-        "viaAccessTokens",
-        "accessTokensNotExists",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -23244,18 +21707,6 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             foundType: typeof value["viaAccessTokens"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaAccessTokens"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaAccessTokens`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessTokens"]),
-              };
-              break;
-            }
-          }
           result["viaAccessTokens"] = Object.create(null);
 
           if (
@@ -23390,53 +21841,6 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "$raw",
-        "$or",
-        "id",
-        "idNotEqual",
-        "idIn",
-        "idNotIn",
-        "session",
-        "sessionNotEqual",
-        "sessionIn",
-        "sessionNotIn",
-        "expiresAt",
-        "expiresAtNotEqual",
-        "expiresAtIn",
-        "expiresAtNotIn",
-        "expiresAtGreaterThan",
-        "expiresAtLowerThan",
-        "refreshToken",
-        "refreshTokenNotEqual",
-        "refreshTokenIn",
-        "refreshTokenNotIn",
-        "refreshTokenIsNull",
-        "refreshTokenIsNotNull",
-        "revokedAt",
-        "revokedAtNotEqual",
-        "revokedAtIn",
-        "revokedAtNotIn",
-        "revokedAtGreaterThan",
-        "revokedAtLowerThan",
-        "revokedAtIsNull",
-        "revokedAtIsNotNull",
-        "viaRefreshToken",
-        "viaSession",
-        "viaAccessToken",
-        "accessTokenNotExists",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -24973,18 +23377,6 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             foundType: typeof value["viaRefreshToken"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaRefreshToken"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaRefreshToken`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaRefreshToken"]),
-              };
-              break;
-            }
-          }
           result["viaRefreshToken"] = Object.create(null);
 
           if (
@@ -25084,18 +23476,6 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             foundType: typeof value["viaSession"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaSession"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaSession`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaSession"]),
-              };
-              break;
-            }
-          }
           result["viaSession"] = Object.create(null);
 
           if (
@@ -25198,18 +23578,6 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             foundType: typeof value["viaAccessToken"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set(["where", "limit", "offset"]);
-          for (const key of Object.keys(value["viaAccessToken"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.viaAccessToken`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessToken"]),
-              };
-              break;
-            }
-          }
           result["viaAccessToken"] = Object.create(null);
 
           if (
@@ -25344,18 +23712,6 @@ export function validateStoreFileUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -25435,18 +23791,6 @@ export function validateStoreJobUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -25526,18 +23870,6 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -25619,18 +23951,6 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set(["update", "where", "returning"]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -26243,25 +24563,6 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -26415,25 +24716,6 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -26587,26 +24869,6 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-        "accessTokens",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -26783,28 +25045,6 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "where",
-        "orderBy",
-        "orderBySpec",
-        "limit",
-        "offset",
-        "select",
-        "refreshToken",
-        "session",
-        "accessToken",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {

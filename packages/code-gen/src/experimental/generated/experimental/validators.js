@@ -487,27 +487,6 @@ export function validateExperimentalAnyDefinition(value) {
                   foundType: typeof value["targets"][genericKeyResult1],
                 };
               } else {
-                /** @type {Set<string>} */
-                const knownKeys3 = new Set([
-                  "validatorInputType",
-                  "validatorOutputType",
-                  "validatorExpression",
-                  "validatorImport",
-                ]);
-                for (const key of Object.keys(
-                  value["targets"][genericKeyResult1],
-                )) {
-                  if (!knownKeys3.has(key)) {
-                    errorMap[`$.targets.${genericKeyResult1}`] = {
-                      key: "validator.keys",
-                      expectedKeys: [...knownKeys3],
-                      foundKeys: Object.keys(
-                        value["targets"][genericKeyResult1],
-                      ),
-                    };
-                    break;
-                  }
-                }
                 result["targets"][genericKeyResult1] = Object.create(null);
 
                 if (
@@ -10352,26 +10331,6 @@ export function validateExperimentalGenerateOptions(value) {
             foundType: typeof value["generators"],
           };
         } else {
-          /** @type {Set<string>} */
-          const knownKeys0 = new Set([
-            "structure",
-            "openApi",
-            "router",
-            "database",
-            "validators",
-            "apiClient",
-            "types",
-          ]);
-          for (const key of Object.keys(value["generators"])) {
-            if (!knownKeys0.has(key)) {
-              errorMap[`$.generators`] = {
-                key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["generators"]),
-              };
-              break;
-            }
-          }
           result["generators"] = Object.create(null);
 
           if (
@@ -10390,18 +10349,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["structure"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set([]);
-              for (const key of Object.keys(value["generators"]["structure"])) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.structure`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["structure"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["structure"] = Object.create(null);
             }
           }
@@ -10421,21 +10368,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["openApi"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set([
-                "openApiExtensions",
-                "openApiRouteExtensions",
-              ]);
-              for (const key of Object.keys(value["generators"]["openApi"])) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.openApi`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["openApi"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["openApi"] = Object.create(null);
 
               if (
@@ -10461,26 +10393,6 @@ export function validateExperimentalGenerateOptions(value) {
                       ],
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys0 = new Set([
-                    "version",
-                    "title",
-                    "description",
-                  ]);
-                  for (const key of Object.keys(
-                    value["generators"]["openApi"]["openApiExtensions"],
-                  )) {
-                    if (!knownKeys0.has(key)) {
-                      errorMap[`$.generators.openApi.openApiExtensions`] = {
-                        key: "validator.keys",
-                        expectedKeys: [...knownKeys0],
-                        foundKeys: Object.keys(
-                          value["generators"]["openApi"]["openApiExtensions"],
-                        ),
-                      };
-                      break;
-                    }
-                  }
                   result["generators"]["openApi"]["openApiExtensions"] =
                     Object.create(null);
 
@@ -10723,18 +10635,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["router"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target", "exposeApiStructure"]);
-              for (const key of Object.keys(value["generators"]["router"])) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.router`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["router"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["router"] = Object.create(null);
 
               if (
@@ -10777,18 +10677,6 @@ export function validateExperimentalGenerateOptions(value) {
                         foundType: typeof intermediateValue2,
                       };
                     } else {
-                      /** @type {Set<string>} */
-                      const knownKeys2 = new Set(["library"]);
-                      for (const key of Object.keys(intermediateValue2)) {
-                        if (!knownKeys2.has(key)) {
-                          intermediateErrorMap2[`$`] = {
-                            key: "validator.keys",
-                            expectedKeys: [...knownKeys2],
-                            foundKeys: Object.keys(intermediateValue2),
-                          };
-                          break;
-                        }
-                      }
                       intermediateResult2 = Object.create(null);
 
                       if (
@@ -10884,18 +10772,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["database"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target", "includeEntityDiagram"]);
-              for (const key of Object.keys(value["generators"]["database"])) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.database`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["database"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["database"] = Object.create(null);
 
               if (
@@ -10938,18 +10814,6 @@ export function validateExperimentalGenerateOptions(value) {
                         foundType: typeof intermediateValue2,
                       };
                     } else {
-                      /** @type {Set<string>} */
-                      const knownKeys2 = new Set(["dialect", "includeDDL"]);
-                      for (const key of Object.keys(intermediateValue2)) {
-                        if (!knownKeys2.has(key)) {
-                          intermediateErrorMap2[`$`] = {
-                            key: "validator.keys",
-                            expectedKeys: [...knownKeys2],
-                            foundKeys: Object.keys(intermediateValue2),
-                          };
-                          break;
-                        }
-                      }
                       intermediateResult2 = Object.create(null);
 
                       if (
@@ -11074,20 +10938,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["validators"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set(["includeBaseTypes"]);
-              for (const key of Object.keys(
-                value["generators"]["validators"],
-              )) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.validators`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["validators"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["validators"] = Object.create(null);
 
               if (
@@ -11140,18 +10990,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["apiClient"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target"]);
-              for (const key of Object.keys(value["generators"]["apiClient"])) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.apiClient`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["apiClient"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["apiClient"] = Object.create(null);
 
               if (
@@ -11194,23 +11032,6 @@ export function validateExperimentalGenerateOptions(value) {
                         foundType: typeof intermediateValue2,
                       };
                     } else {
-                      /** @type {Set<string>} */
-                      const knownKeys2 = new Set([
-                        "library",
-                        "targetRuntime",
-                        "includeWrapper",
-                        "globalClient",
-                      ]);
-                      for (const key of Object.keys(intermediateValue2)) {
-                        if (!knownKeys2.has(key)) {
-                          intermediateErrorMap2[`$`] = {
-                            key: "validator.keys",
-                            expectedKeys: [...knownKeys2],
-                            foundKeys: Object.keys(intermediateValue2),
-                          };
-                          break;
-                        }
-                      }
                       intermediateResult2 = Object.create(null);
 
                       if (
@@ -11377,21 +11198,6 @@ export function validateExperimentalGenerateOptions(value) {
                 foundType: typeof value["generators"]["types"],
               };
             } else {
-              /** @type {Set<string>} */
-              const knownKeys0 = new Set([
-                "includeBaseTypes",
-                "declareGlobalTypes",
-              ]);
-              for (const key of Object.keys(value["generators"]["types"])) {
-                if (!knownKeys0.has(key)) {
-                  errorMap[`$.generators.types`] = {
-                    key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["types"]),
-                  };
-                  break;
-                }
-              }
               result["generators"]["types"] = Object.create(null);
 
               if (

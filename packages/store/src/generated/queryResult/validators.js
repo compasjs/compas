@@ -32,27 +32,6 @@ export function validateQueryResultStoreFile(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "contentLength",
-        "bucketName",
-        "contentType",
-        "name",
-        "meta",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -274,29 +253,6 @@ export function validateQueryResultStoreJob(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "isComplete",
-        "handlerTimeout",
-        "priority",
-        "retryCount",
-        "name",
-        "scheduledAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -586,26 +542,6 @@ export function validateQueryResultStoreSessionStore(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "checksum",
-        "revokedAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-        "accessTokens",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -810,26 +746,6 @@ export function validateQueryResultStoreSessionStoreToken(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "session",
-        "expiresAt",
-        "refreshToken",
-        "revokedAt",
-        "createdAt",
-        "accessToken",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
-          errorMap[`$`] = {
-            key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
-          };
-          break;
-        }
-      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {

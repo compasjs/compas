@@ -136,6 +136,8 @@ means that number inputs used in query params like
 
 Other changes around the validators are:
 
+- Extra keys on input objects are now allowed. They are just not returned after
+  the validator.
 - Validator functions accept a single argument, the input value, instead of the
   input value and error path.
 - The validator results are a plain object instead of already being wrapped with
