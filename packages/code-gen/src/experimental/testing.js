@@ -1,6 +1,7 @@
-import { newLogger } from "@compas/stdlib";
+import { AppError, newLogger } from "@compas/stdlib";
 import { TypeCreator } from "../builders/index.js";
 import { generateExecute } from "./generate.js";
+import { validateExperimentalGenerateOptions } from "./generated/experimental/validators.js";
 import { Generator } from "./generator.js";
 
 /**
@@ -30,10 +31,18 @@ export function testExperimentalGenerateContext(t, options, structure) {
  */
 export function testExperimentalGenerateFiles(t, options, structure) {
   const context = testExperimentalGenerateContext(t, options, structure);
+  const validatedOptions = validateExperimentalGenerateOptions(options);
+
+  if (validatedOptions.error) {
+    throw AppError.serverError({
+      message: "Failed to validate options",
+      validatedOptions,
+    });
+  }
 
   return generateExecute(
     new Generator(t.log).addStructure(context.structure),
-    options,
+    validatedOptions.value,
   );
 }
 

@@ -30,7 +30,6 @@ test("code-gen/experimental/api-client/generator", (t) => {
         outputDirectory: "./.cache/experimental/api-client-ts",
         generators: {
           structure: {},
-
           apiClient: {
             target: {
               targetRuntime: "browser",

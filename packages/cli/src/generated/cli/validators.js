@@ -31,6 +31,28 @@ export function validateCliCommandDefinition(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "name",
+        "shortDescription",
+        "longDescription",
+        "modifiers",
+        "dynamicValue",
+        "watchSettings",
+        "subCommands",
+        "flags",
+        "executor",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["name"] === null || value["name"] === undefined) {
@@ -132,6 +154,22 @@ export function validateCliCommandDefinition(value) {
             foundType: typeof value["modifiers"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set([
+            "isDynamic",
+            "isCosmetic",
+            "isWatchable",
+          ]);
+          for (const key of Object.keys(value["modifiers"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.modifiers`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["modifiers"]),
+              };
+              break;
+            }
+          }
           result["modifiers"] = Object.create(null);
 
           if (
@@ -227,6 +265,18 @@ export function validateCliCommandDefinition(value) {
             foundType: typeof value["dynamicValue"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["validator", "completions"]);
+          for (const key of Object.keys(value["dynamicValue"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.dynamicValue`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["dynamicValue"]),
+              };
+              break;
+            }
+          }
           result["dynamicValue"] = Object.create(null);
 
           if (
@@ -268,6 +318,18 @@ export function validateCliCommandDefinition(value) {
             foundType: typeof value["watchSettings"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["extensions", "ignorePatterns"]);
+          for (const key of Object.keys(value["watchSettings"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.watchSettings`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["watchSettings"]),
+              };
+              break;
+            }
+          }
           result["watchSettings"] = Object.create(null);
 
           if (
@@ -514,6 +576,24 @@ export function validateCliFlagDefinition(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "name",
+        "rawName",
+        "description",
+        "modifiers",
+        "value",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["name"] === null || value["name"] === undefined) {
@@ -610,6 +690,22 @@ export function validateCliFlagDefinition(value) {
             foundType: typeof value["modifiers"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set([
+            "isRepeatable",
+            "isRequired",
+            "isInternal",
+          ]);
+          for (const key of Object.keys(value["modifiers"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.modifiers`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["modifiers"]),
+              };
+              break;
+            }
+          }
           result["modifiers"] = Object.create(null);
 
           if (
@@ -702,6 +798,22 @@ export function validateCliFlagDefinition(value) {
             foundType: typeof value["value"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set([
+            "specification",
+            "validator",
+            "completions",
+          ]);
+          for (const key of Object.keys(value["value"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.value`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["value"]),
+              };
+              break;
+            }
+          }
           result["value"] = Object.create(null);
 
           if (
@@ -816,6 +928,18 @@ export function validateCliCompletion(value) {
             foundType: typeof intermediateValue2,
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys2 = new Set(["type"]);
+          for (const key of Object.keys(intermediateValue2)) {
+            if (!knownKeys2.has(key)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys2],
+                foundKeys: Object.keys(intermediateValue2),
+              };
+              break;
+            }
+          }
           intermediateResult2 = Object.create(null);
 
           if (
@@ -882,6 +1006,18 @@ export function validateCliCompletion(value) {
             foundType: typeof intermediateValue2,
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys2 = new Set(["type"]);
+          for (const key of Object.keys(intermediateValue2)) {
+            if (!knownKeys2.has(key)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys2],
+                foundKeys: Object.keys(intermediateValue2),
+              };
+              break;
+            }
+          }
           intermediateResult2 = Object.create(null);
 
           if (
@@ -948,6 +1084,18 @@ export function validateCliCompletion(value) {
             foundType: typeof intermediateValue2,
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys2 = new Set(["type", "name", "description"]);
+          for (const key of Object.keys(intermediateValue2)) {
+            if (!knownKeys2.has(key)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys2],
+                foundKeys: Object.keys(intermediateValue2),
+              };
+              break;
+            }
+          }
           intermediateResult2 = Object.create(null);
 
           if (
@@ -1066,6 +1214,18 @@ export function validateCliCompletion(value) {
             foundType: typeof intermediateValue2,
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys2 = new Set(["type", "specification", "description"]);
+          for (const key of Object.keys(intermediateValue2)) {
+            if (!knownKeys2.has(key)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys2],
+                foundKeys: Object.keys(intermediateValue2),
+              };
+              break;
+            }
+          }
           intermediateResult2 = Object.create(null);
 
           if (

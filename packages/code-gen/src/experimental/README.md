@@ -75,7 +75,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - -> Als new variant w/ same validator state, same targets used
   - -> Reuse name
 - [x] Write migration docs + breaking changes
-- [x] Always validate objects in loose mode
+- [x] Always validate objects in loose mode when the target is a browser based
+      api client
   - Additional fields are now also a breaking change with validating api clients
     :s
 
@@ -147,7 +148,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - Slowly deprecate the compat wrappers of `queriex.xxYY`
 - Improve `{@reference UniqueName}` behaviour in docs
 - Check if there is a need for option presets in `Generator#generate`.
-- Do the deprecations in `AnyType` & `ObjectType`
+- Do the deprecations in `AnyType`
 
 ## Breaking changes
 

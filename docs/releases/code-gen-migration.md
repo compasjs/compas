@@ -92,6 +92,9 @@ async function main(logger) {
           library: "axios",
           targetRuntime: "node.js",
         },
+        responseValidation: {
+          looseObjectValidation: false,
+        },
       },
       types: {
         declareGlobalTypes: true,
@@ -136,8 +139,6 @@ means that number inputs used in query params like
 
 Other changes around the validators are:
 
-- Extra keys on input objects are now allowed. They are just not returned after
-  the validator.
 - Validator functions accept a single argument, the input value, instead of the
   input value and error path.
 - The validator results are a plain object instead of already being wrapped with
@@ -178,3 +179,11 @@ Other changes around the generator database queries are:
   `shortName, { skipValidator }` in to `{ shortName, skipValidator }`.
 - `queryFoo().execRaw` is now mandatory when a `select`-array is passed. This is
   necessary to skip the database output validators.
+
+## `T.any()` implementations
+
+`T.any().raw()` and friends are deprecated in favor of
+`T.any().implementations()`. This allows you to generate specific behaviour
+based on which target is currently generated for. The most specific target
+combination is tried before taking a more general target (e.g. `tsAxiosBrowser`
+is tried before `ts`). See the docs for more information.

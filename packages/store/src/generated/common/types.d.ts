@@ -300,42 +300,39 @@ export type StoreFileInsertValidated = {
 
 export type StoreFileUpdatePartial = {
   contentLength?:
-    | number
-    | undefined
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number
+    | undefined;
   bucketName?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   contentType?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   name?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   meta?:
-    | StoreFileMetaInput
-    | undefined
-    | null
     | {
         $set: {
           path: (number | string)[] | number | string;
@@ -346,29 +343,32 @@ export type StoreFileUpdatePartial = {
         $remove: {
           path: (number | string)[] | number | string;
         };
-      };
+      }
+    | StoreFileMetaInput
+    | undefined
+    | null;
   createdAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
   updatedAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
 };
 
 export type StoreFileUpdate = {
@@ -379,40 +379,39 @@ export type StoreFileUpdate = {
 
 export type StoreFileUpdatePartialValidated = {
   contentLength?:
-    | number
-    | undefined
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number
+    | undefined;
   bucketName?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   contentType?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   name?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   meta?:
-    | StoreFileMeta
     | {
         $set: {
           path: (number | string)[];
@@ -423,25 +422,26 @@ export type StoreFileUpdatePartialValidated = {
         $remove: {
           path: (number | string)[];
         };
-      };
+      }
+    | StoreFileMeta;
   createdAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
   updatedAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
 };
 
 export type StoreFileUpdateValidated = {
@@ -807,84 +807,81 @@ export type StoreJobInsertValidated = {
 
 export type StoreJobUpdatePartial = {
   isComplete?:
+    | {
+        $negate: boolean | "true" | "false";
+      }
     | boolean
     | "true"
     | "false"
     | undefined
-    | null
-    | {
-        $negate: boolean | "true" | "false";
-      };
+    | null;
   handlerTimeout?:
-    | number
-    | undefined
-    | null
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number
+    | undefined
+    | null;
   priority?:
-    | number
-    | undefined
-    | null
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number
+    | undefined
+    | null;
   retryCount?:
-    | number
-    | undefined
-    | null
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
-  name?:
-    | string
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number
     | undefined
+    | null;
+  name?:
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   scheduledAt?:
+    | {
+        $subtract: string;
+      }
+    | {
+        $add: string;
+      }
     | Date
     | string
     | number
     | undefined
-    | null
-    | {
-        $add: string;
-      }
-    | {
-        $subtract: string;
-      };
+    | null;
   data?:
-    | any
-    | undefined
-    | null
     | {
         $set: {
           path: (number | string)[] | number | string;
@@ -895,29 +892,32 @@ export type StoreJobUpdatePartial = {
         $remove: {
           path: (number | string)[] | number | string;
         };
-      };
+      }
+    | any
+    | undefined
+    | null;
   createdAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
   updatedAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
 };
 
 export type StoreJobUpdate = {
@@ -928,70 +928,69 @@ export type StoreJobUpdate = {
 
 export type StoreJobUpdatePartialValidated = {
   isComplete?:
-    | boolean
     | {
         $negate: boolean;
-      };
+      }
+    | boolean;
   handlerTimeout?:
-    | number
-    | undefined
-    | null
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number
+    | undefined
+    | null;
   priority?:
-    | number
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number;
   retryCount?:
-    | number
     | {
-        $add: number;
-      }
-    | {
-        $subtract: number;
+        $divide: number;
       }
     | {
         $multiply: number;
       }
     | {
-        $divide: number;
-      };
+        $subtract: number;
+      }
+    | {
+        $add: number;
+      }
+    | number;
   name?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   scheduledAt?:
-    | Date
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date;
   data?:
-    | any
     | {
         $set: {
           path: (number | string)[];
@@ -1002,25 +1001,26 @@ export type StoreJobUpdatePartialValidated = {
         $remove: {
           path: (number | string)[];
         };
-      };
+      }
+    | any;
   createdAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
   updatedAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
 };
 
 export type StoreJobUpdateValidated = {
@@ -1576,27 +1576,24 @@ export type StoreSessionStoreInsertValidated = {
 
 export type StoreSessionStoreUpdatePartial = {
   checksum?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   revokedAt?:
+    | {
+        $subtract: string;
+      }
+    | {
+        $add: string;
+      }
     | Date
     | string
     | number
     | undefined
-    | null
-    | {
-        $add: string;
-      }
-    | {
-        $subtract: string;
-      };
+    | null;
   data?:
-    | any
-    | undefined
-    | null
     | {
         $set: {
           path: (number | string)[] | number | string;
@@ -1607,29 +1604,32 @@ export type StoreSessionStoreUpdatePartial = {
         $remove: {
           path: (number | string)[] | number | string;
         };
-      };
+      }
+    | any
+    | undefined
+    | null;
   createdAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
   updatedAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
 };
 
 export type StoreSessionStoreUpdate = {
@@ -1640,23 +1640,22 @@ export type StoreSessionStoreUpdate = {
 
 export type StoreSessionStoreUpdatePartialValidated = {
   checksum?:
-    | string
-    | undefined
     | {
         $append: string;
-      };
+      }
+    | string
+    | undefined;
   revokedAt?:
-    | Date
-    | undefined
-    | null
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined
+    | null;
   data?:
-    | any
     | {
         $set: {
           path: (number | string)[];
@@ -1667,25 +1666,26 @@ export type StoreSessionStoreUpdatePartialValidated = {
         $remove: {
           path: (number | string)[];
         };
-      };
+      }
+    | any;
   createdAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
   updatedAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
 };
 
 export type StoreSessionStoreUpdateValidated = {
@@ -1737,40 +1737,40 @@ export type StoreSessionStoreTokenInsertValidated = {
 export type StoreSessionStoreTokenUpdatePartial = {
   session?: string | undefined;
   expiresAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
   refreshToken?: string | undefined | null;
   revokedAt?:
+    | {
+        $subtract: string;
+      }
+    | {
+        $add: string;
+      }
     | Date
     | string
     | number
     | undefined
-    | null
-    | {
-        $add: string;
-      }
-    | {
-        $subtract: string;
-      };
+    | null;
   createdAt?:
-    | Date
-    | string
-    | number
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | string
+    | number
+    | undefined;
 };
 
 export type StoreSessionStoreTokenUpdate = {
@@ -1782,34 +1782,34 @@ export type StoreSessionStoreTokenUpdate = {
 export type StoreSessionStoreTokenUpdatePartialValidated = {
   session?: string | undefined;
   expiresAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
   refreshToken?: string | undefined | null;
   revokedAt?:
-    | Date
-    | undefined
-    | null
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined
+    | null;
   createdAt?:
-    | Date
-    | undefined
+    | {
+        $subtract: string;
+      }
     | {
         $add: string;
       }
-    | {
-        $subtract: string;
-      };
+    | Date
+    | undefined;
 };
 
 export type StoreSessionStoreTokenUpdateValidated = {

@@ -909,6 +909,11 @@ export type ExperimentalGenerateOptions = {
             // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
             globalClient: boolean;
           };
+
+          // Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
+          responseValidation: {
+            looseObjectValidation: boolean;
+          };
         }
       | undefined;
 
@@ -1000,6 +1005,13 @@ export type ExperimentalGenerateOptionsInput = {
             // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
             globalClient?: boolean | "true" | "false" | undefined;
           };
+
+          // Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
+          responseValidation?:
+            | {
+                looseObjectValidation: boolean | "true" | "false";
+              }
+            | undefined;
         }
       | undefined;
 

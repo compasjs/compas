@@ -1160,6 +1160,52 @@ export function validatorJavascriptObject(file, type, validatorState) {
   fileBlockEnd(file);
   fileBlockStart(file, "else");
 
+  const isApiClientValidator =
+    validatorState.outputTypeOptions.targets.includes("jsAxios") ||
+    validatorState.outputTypeOptions.targets.includes("tsAxios");
+
+  // Allows api clients to skip strict validation, even if the type enforces it to prevent unnecessary breaking changes when new keys are added to the response.
+  if (
+    type.validator.strict &&
+    (!isApiClientValidator ||
+      validatorState.generateContext.options.generators.apiClient
+        ?.responseValidation.looseObjectValidation === false)
+  ) {
+    const setVariable = `knownKeys${validatorState.reusedVariableIndex++}`;
+
+    if (validatorState.jsHasInlineTypes) {
+      fileWrite(file, `const ${setVariable}: Set<string> = new Set([`);
+    } else {
+      fileWrite(file, `/** @type {Set<string>} */`);
+      fileWrite(file, `const ${setVariable} = new Set([`);
+    }
+
+    fileContextSetIndent(file, 1);
+    for (const key of Object.keys(type.keys)) {
+      fileWrite(file, `"${key}",`);
+    }
+    fileContextSetIndent(file, -1);
+    fileWrite(file, `]);`);
+
+    fileBlockStart(file, `for (const key of Object.keys(${valuePath}))`);
+    fileBlockStart(file, `if (!${setVariable}.has(key))`);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.keys",
+  expectedKeys: [...${setVariable}],
+  foundKeys: Object.keys(${valuePath}),
+};`,
+    );
+    fileWrite(file, `break;`);
+
+    fileBlockEnd(file);
+    fileBlockEnd(file);
+
+    validatorState.reusedVariableIndex--;
+  }
+
   fileWrite(file, `${resultPath} = Object.create(null);\n`);
 
   for (const key of Object.keys(type.keys)) {

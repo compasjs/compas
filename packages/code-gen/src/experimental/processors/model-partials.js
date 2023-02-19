@@ -179,7 +179,7 @@ export function modelPartialUpdateTypes(generateContext) {
           "$multiply",
           "$divide",
         ]) {
-          typePartial.keys[modelKey].values.push(
+          typePartial.keys[modelKey].values.unshift(
             new ObjectType()
               .keys({
                 [atomicField]: originalField.validator.floatingPoint
@@ -191,7 +191,7 @@ export function modelPartialUpdateTypes(generateContext) {
         }
       } else if (originalField.type === "date") {
         for (const atomicField of ["$add", "$subtract"]) {
-          typePartial.keys[modelKey].values.push(
+          typePartial.keys[modelKey].values.unshift(
             new ObjectType()
               .keys({
                 [atomicField]: new StringType(),
@@ -201,7 +201,7 @@ export function modelPartialUpdateTypes(generateContext) {
         }
       } else if (originalField.type === "string") {
         for (const atomicField of ["$append"]) {
-          typePartial.keys[modelKey].values.push(
+          typePartial.keys[modelKey].values.unshift(
             new ObjectType()
               .keys({
                 [atomicField]: new StringType(),
@@ -211,7 +211,7 @@ export function modelPartialUpdateTypes(generateContext) {
         }
       } else if (originalField.type === "boolean") {
         for (const atomicField of ["$negate"]) {
-          typePartial.keys[modelKey].values.push(
+          typePartial.keys[modelKey].values.unshift(
             new ObjectType()
               .keys({
                 [atomicField]: new BooleanType(),
@@ -228,7 +228,7 @@ export function modelPartialUpdateTypes(generateContext) {
           new AnyOfType().values(new NumberType(), new StringType()),
         );
 
-        typePartial.keys[modelKey].values.push(
+        typePartial.keys[modelKey].values.unshift(
           new ObjectType()
             .keys({
               $set: new ObjectType().keys({

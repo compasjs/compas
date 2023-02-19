@@ -21,6 +21,9 @@ test("code-gen/experimental/router/generator", (t) => {
               library: "axios",
               targetRuntime: "node.js",
             },
+            responseValidation: {
+              looseObjectValidation: false,
+            },
           },
           openApi: {},
         },

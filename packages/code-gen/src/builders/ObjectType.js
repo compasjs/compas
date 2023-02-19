@@ -55,8 +55,6 @@ export class ObjectType extends TypeBuilder {
   }
 
   /**
-   * TODO(depr): add jsdoc tag
-   *
    * @returns {ObjectType}
    */
   loose() {

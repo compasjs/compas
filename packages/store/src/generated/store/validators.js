@@ -34,6 +34,27 @@ export function validateStoreFile(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "contentLength",
+        "bucketName",
+        "contentType",
+        "name",
+        "meta",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -255,6 +276,23 @@ export function validateStoreFileMeta(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "transforms",
+        "transformedFromOriginal",
+        "placeholderImage",
+        "altText",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["transforms"] === null || value["transforms"] === undefined) {
@@ -370,6 +408,44 @@ export function validateStoreFileWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "bucketName",
+        "bucketNameNotEqual",
+        "bucketNameIn",
+        "bucketNameNotIn",
+        "bucketNameLike",
+        "bucketNameILike",
+        "bucketNameNotLike",
+        "createdAt",
+        "createdAtNotEqual",
+        "createdAtIn",
+        "createdAtNotIn",
+        "createdAtGreaterThan",
+        "createdAtLowerThan",
+        "updatedAt",
+        "updatedAtNotEqual",
+        "updatedAtIn",
+        "updatedAtNotIn",
+        "updatedAtGreaterThan",
+        "updatedAtLowerThan",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -1889,6 +1965,23 @@ export function validateStoreFileOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "bucketName",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -2053,6 +2146,25 @@ export function validateStoreFileQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -2365,6 +2477,18 @@ export function validateStoreFileInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["insert", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -2466,6 +2590,27 @@ export function validateStoreFileInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "contentLength",
+        "bucketName",
+        "contentType",
+        "name",
+        "meta",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -2681,6 +2826,18 @@ export function validateStoreFileUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -2760,6 +2917,26 @@ export function validateStoreFileUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "contentLength",
+        "bucketName",
+        "contentType",
+        "name",
+        "meta",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (
@@ -2782,56 +2959,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["contentLength"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
-          } else {
-            let convertedNumber2 = intermediateValue2;
-            if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
-            ) {
-              convertedNumber2 = Number(convertedNumber2);
-            }
-            if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.number",
-                subType: "int",
-              };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.range",
-                minValue: -2147483647,
-              };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.range",
-                maxValue: 2147483647,
-              };
-            } else {
-              intermediateResult2 = convertedNumber2;
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.contentLength`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.contentLength`];
-            result["contentLength"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["contentLength"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -2846,17 +2973,29 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$divide"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
-                intermediateValue2["$add"] === null ||
-                intermediateValue2["$add"] === undefined
+                intermediateValue2["$divide"] === null ||
+                intermediateValue2["$divide"] === undefined
               ) {
-                intermediateErrorMap2[`$.$add`] = {
+                intermediateErrorMap2[`$.$divide`] = {
                   key: "validator.undefined",
                 };
               } else {
-                let convertedNumber2 = intermediateValue2["$add"];
+                let convertedNumber2 = intermediateValue2["$divide"];
                 if (
                   typeof convertedNumber2 !== "number" &&
                   typeof convertedNumber2 === "string"
@@ -2869,22 +3008,22 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   !isFinite(convertedNumber2) ||
                   !Number.isInteger(convertedNumber2)
                 ) {
-                  intermediateErrorMap2[`$.$add`] = {
+                  intermediateErrorMap2[`$.$divide`] = {
                     key: "validator.number",
                     subType: "int",
                   };
                 } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
+                  intermediateErrorMap2[`$.$divide`] = {
                     key: "validator.range",
                     minValue: -2147483647,
                   };
                 } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
+                  intermediateErrorMap2[`$.$divide`] = {
                     key: "validator.range",
                     maxValue: 2147483647,
                   };
                 } else {
-                  intermediateResult2["$add"] = convertedNumber2;
+                  intermediateResult2["$divide"] = convertedNumber2;
                 }
               }
             }
@@ -2920,80 +3059,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$subtract"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.number",
-                    subType: "int",
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$multiply"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
                   };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$subtract"] = convertedNumber2;
+                  break;
                 }
               }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.contentLength`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.contentLength`];
-            result["contentLength"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["contentLength"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3068,17 +3145,29 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
-                intermediateValue2["$divide"] === null ||
-                intermediateValue2["$divide"] === undefined
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
               ) {
-                intermediateErrorMap2[`$.$divide`] = {
+                intermediateErrorMap2[`$.$subtract`] = {
                   key: "validator.undefined",
                 };
               } else {
-                let convertedNumber2 = intermediateValue2["$divide"];
+                let convertedNumber2 = intermediateValue2["$subtract"];
                 if (
                   typeof convertedNumber2 !== "number" &&
                   typeof convertedNumber2 === "string"
@@ -3091,24 +3180,160 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   !isFinite(convertedNumber2) ||
                   !Number.isInteger(convertedNumber2)
                 ) {
-                  intermediateErrorMap2[`$.$divide`] = {
+                  intermediateErrorMap2[`$.$subtract`] = {
                     key: "validator.number",
                     subType: "int",
                   };
                 } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$divide`] = {
+                  intermediateErrorMap2[`$.$subtract`] = {
                     key: "validator.range",
                     minValue: -2147483647,
                   };
                 } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$divide`] = {
+                  intermediateErrorMap2[`$.$subtract`] = {
                     key: "validator.range",
                     maxValue: 2147483647,
                   };
                 } else {
-                  intermediateResult2["$divide"] = convertedNumber2;
+                  intermediateResult2["$subtract"] = convertedNumber2;
                 }
               }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.contentLength`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.contentLength`];
+            result["contentLength"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["contentLength"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$add"] === null ||
+                intermediateValue2["$add"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$add`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$add"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$add"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.contentLength`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.contentLength`];
+            result["contentLength"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["contentLength"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = undefined;
+          } else {
+            let convertedNumber2 = intermediateValue2;
+            if (
+              typeof convertedNumber2 !== "number" &&
+              typeof convertedNumber2 === "string"
+            ) {
+              convertedNumber2 = Number(convertedNumber2);
+            }
+            if (
+              typeof convertedNumber2 !== "number" ||
+              isNaN(convertedNumber2) ||
+              !isFinite(convertedNumber2) ||
+              !Number.isInteger(convertedNumber2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.number",
+                subType: "int",
+              };
+            } else if (convertedNumber2 < -2147483647) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.range",
+                minValue: -2147483647,
+              };
+            } else if (convertedNumber2 > 2147483647) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.range",
+                maxValue: 2147483647,
+              };
+            } else {
+              intermediateResult2 = convertedNumber2;
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -3137,46 +3362,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["bucketName"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
-          } else {
-            /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.string",
-              };
-            } else {
-              if (convertedString2.length === 0) {
-                intermediateResult2 = undefined;
-              } else {
-                if (convertedString2.length < 1) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.length",
-                    minLength: 1,
-                  };
-                } else {
-                  intermediateResult2 = convertedString2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.bucketName`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.bucketName`];
-            result["bucketName"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["bucketName"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -3191,6 +3376,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$append"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3216,6 +3413,46 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   } else {
                     intermediateResult2["$append"] = convertedString2;
                   }
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.bucketName`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.bucketName`];
+            result["bucketName"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["bucketName"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = undefined;
+          } else {
+            /** @type {string} */
+            let convertedString2 = intermediateValue2;
+            if (typeof convertedString2 !== "string") {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.string",
+              };
+            } else {
+              if (convertedString2.length === 0) {
+                intermediateResult2 = undefined;
+              } else {
+                if (convertedString2.length < 1) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult2 = convertedString2;
                 }
               }
             }
@@ -3246,46 +3483,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["contentType"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
-          } else {
-            /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.string",
-              };
-            } else {
-              if (convertedString2.length === 0) {
-                intermediateResult2 = undefined;
-              } else {
-                if (convertedString2.length < 1) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.length",
-                    minLength: 1,
-                  };
-                } else {
-                  intermediateResult2 = convertedString2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.contentType`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.contentType`];
-            result["contentType"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["contentType"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -3300,6 +3497,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$append"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3325,6 +3534,46 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   } else {
                     intermediateResult2["$append"] = convertedString2;
                   }
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.contentType`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.contentType`];
+            result["contentType"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["contentType"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = undefined;
+          } else {
+            /** @type {string} */
+            let convertedString2 = intermediateValue2;
+            if (typeof convertedString2 !== "string") {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.string",
+              };
+            } else {
+              if (convertedString2.length === 0) {
+                intermediateResult2 = undefined;
+              } else {
+                if (convertedString2.length < 1) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult2 = convertedString2;
                 }
               }
             }
@@ -3355,46 +3604,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["name"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
-          } else {
-            /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.string",
-              };
-            } else {
-              if (convertedString2.length === 0) {
-                intermediateResult2 = undefined;
-              } else {
-                if (convertedString2.length < 1) {
-                  intermediateErrorMap2[`$`] = {
-                    key: "validator.length",
-                    minLength: 1,
-                  };
-                } else {
-                  intermediateResult2 = convertedString2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.name`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.name`];
-            result["name"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["name"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -3409,6 +3618,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$append"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3446,6 +3667,46 @@ export function validateStoreFileUpdatePartialValidated(value) {
             result["name"] = intermediateResult2;
           }
         }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["name"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = undefined;
+          } else {
+            /** @type {string} */
+            let convertedString2 = intermediateValue2;
+            if (typeof convertedString2 !== "string") {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.string",
+              };
+            } else {
+              if (convertedString2.length === 0) {
+                intermediateResult2 = undefined;
+              } else {
+                if (convertedString2.length < 1) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult2 = convertedString2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.name`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.name`];
+            result["name"] = intermediateResult2;
+          }
+        }
       }
       if (value["meta"] === null || value["meta"] === undefined) {
         result["meta"] = undefined;
@@ -3455,35 +3716,6 @@ export function validateStoreFileUpdatePartialValidated(value) {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["meta"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = {};
-          } else {
-            const refResult2 = validateStoreFileMeta(intermediateValue2);
-
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                intermediateErrorMap2[`$${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
-              }
-            }
-            intermediateResult2 = refResult2.value;
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.meta`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.meta`];
-            result["meta"] = intermediateResult2;
-          }
-        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -3507,6 +3739,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$set"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3527,6 +3771,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$set"],
                   };
                 } else {
+                  /** @type {Set<string>} */
+                  const knownKeys2 = new Set(["path", "value"]);
+                  for (const key of Object.keys(intermediateValue2["$set"])) {
+                    if (!knownKeys2.has(key)) {
+                      intermediateErrorMap2[`$.$set`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys2],
+                        foundKeys: Object.keys(intermediateValue2["$set"]),
+                      };
+                      break;
+                    }
+                  }
                   intermediateResult2["$set"] = Object.create(null);
 
                   if (
@@ -3724,6 +3980,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$remove"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -3744,6 +4012,20 @@ export function validateStoreFileUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$remove"],
                   };
                 } else {
+                  /** @type {Set<string>} */
+                  const knownKeys2 = new Set(["path"]);
+                  for (const key of Object.keys(
+                    intermediateValue2["$remove"],
+                  )) {
+                    if (!knownKeys2.has(key)) {
+                      intermediateErrorMap2[`$.$remove`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys2],
+                        foundKeys: Object.keys(intermediateValue2["$remove"]),
+                      };
+                      break;
+                    }
+                  }
                   intermediateResult2["$remove"] = Object.create(null);
 
                   if (
@@ -3909,6 +4191,35 @@ export function validateStoreFileUpdatePartialValidated(value) {
             result["meta"] = intermediateResult2;
           }
         }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["meta"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = {};
+          } else {
+            const refResult2 = validateStoreFileMeta(intermediateValue2);
+
+            if (refResult2.error) {
+              for (const errorKey of Object.keys(refResult2.error)) {
+                intermediateErrorMap2[`$${errorKey.substring(1)}`] =
+                  refResult2.error[errorKey];
+              }
+            }
+            intermediateResult2 = refResult2.value;
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.meta`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.meta`];
+            result["meta"] = intermediateResult2;
+          }
+        }
       }
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         result["createdAt"] = undefined;
@@ -3927,28 +4238,59 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["createdAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -3982,6 +4324,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4028,47 +4382,28 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["createdAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -4097,28 +4432,59 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["updatedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -4152,6 +4518,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -4198,47 +4576,28 @@ export function validateStoreFileUpdatePartialValidated(value) {
           let intermediateValue2 = value["updatedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -4284,6 +4643,29 @@ export function validateStoreJob(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "isComplete",
+        "handlerTimeout",
+        "priority",
+        "retryCount",
+        "name",
+        "scheduledAt",
+        "data",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -4573,6 +4955,57 @@ export function validateStoreJobWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "idGreaterThan",
+        "idLowerThan",
+        "isComplete",
+        "isCompleteIsNull",
+        "isCompleteIsNotNull",
+        "name",
+        "nameNotEqual",
+        "nameIn",
+        "nameNotIn",
+        "nameLike",
+        "nameILike",
+        "nameNotLike",
+        "scheduledAt",
+        "scheduledAtNotEqual",
+        "scheduledAtIn",
+        "scheduledAtNotIn",
+        "scheduledAtGreaterThan",
+        "scheduledAtLowerThan",
+        "scheduledAtIsNull",
+        "scheduledAtIsNotNull",
+        "createdAt",
+        "createdAtNotEqual",
+        "createdAtIn",
+        "createdAtNotIn",
+        "createdAtGreaterThan",
+        "createdAtLowerThan",
+        "updatedAt",
+        "updatedAtNotEqual",
+        "updatedAtIn",
+        "updatedAtNotIn",
+        "updatedAtGreaterThan",
+        "updatedAtLowerThan",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -6698,6 +7131,25 @@ export function validateStoreJobOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "isComplete",
+        "name",
+        "scheduledAt",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -6942,6 +7394,25 @@ export function validateStoreJobQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -7260,6 +7731,18 @@ export function validateStoreJobInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["insert", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -7361,6 +7844,29 @@ export function validateStoreJobInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "isComplete",
+        "handlerTimeout",
+        "priority",
+        "retryCount",
+        "name",
+        "scheduledAt",
+        "data",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -7644,6 +8150,18 @@ export function validateStoreJobUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -7723,6 +8241,28 @@ export function validateStoreJobUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "isComplete",
+        "handlerTimeout",
+        "priority",
+        "retryCount",
+        "name",
+        "scheduledAt",
+        "data",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["isComplete"] === null || value["isComplete"] === undefined) {
@@ -7733,44 +8273,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["isComplete"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = false;
-          } else {
-            if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
-            ) {
-              intermediateResult2 = true;
-            } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
-            ) {
-              intermediateResult2 = false;
-            } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "boolean",
-              };
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.isComplete`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.isComplete`];
-            result["isComplete"] = intermediateResult2;
-          }
-        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -7794,6 +8296,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$negate"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -7833,6 +8347,44 @@ export function validateStoreJobUpdatePartialValidated(value) {
             result["isComplete"] = intermediateResult2;
           }
         }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["isComplete"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = false;
+          } else {
+            if (
+              intermediateValue2 === true ||
+              intermediateValue2 === "true" ||
+              intermediateValue2 === 1
+            ) {
+              intermediateResult2 = true;
+            } else if (
+              intermediateValue2 === false ||
+              intermediateValue2 === "false" ||
+              intermediateValue2 === 0
+            ) {
+              intermediateResult2 = false;
+            } else {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "boolean",
+              };
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.isComplete`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.isComplete`];
+            result["isComplete"] = intermediateResult2;
+          }
+        }
       }
       if (
         value["handlerTimeout"] === null ||
@@ -7845,6 +8397,350 @@ export function validateStoreJobUpdatePartialValidated(value) {
           key: "validator.anyOf",
           errors: [],
         };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["handlerTimeout"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$divide"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$divide"] === null ||
+                intermediateValue2["$divide"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$divide`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$divide"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$divide`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$divide`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$divide`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$divide"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.handlerTimeout`];
+            result["handlerTimeout"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["handlerTimeout"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$multiply"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$multiply"] === null ||
+                intermediateValue2["$multiply"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$multiply`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$multiply"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$multiply"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.handlerTimeout`];
+            result["handlerTimeout"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["handlerTimeout"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$subtract"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$subtract"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.handlerTimeout`];
+            result["handlerTimeout"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["handlerTimeout"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$add"] === null ||
+                intermediateValue2["$add"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$add`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$add"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$add"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.handlerTimeout`];
+            result["handlerTimeout"] = intermediateResult2;
+          }
+        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -7890,13 +8786,22 @@ export function validateStoreJobUpdatePartialValidated(value) {
             result["handlerTimeout"] = intermediateResult2;
           }
         }
+      }
+      if (value["priority"] === null || value["priority"] === undefined) {
+        result["priority"] = undefined;
+      } else {
+        let hasAnyOfMatch0 = false;
+        errorMap[`$.priority`] = {
+          key: "validator.anyOf",
+          errors: [],
+        };
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
           /** @type {any} */
           let intermediateResult2 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["handlerTimeout"];
+          let intermediateValue2 = value["priority"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
@@ -7913,228 +8818,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$add"] === null ||
-                intermediateValue2["$add"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$add`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$add"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.number",
-                    subType: "int",
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$divide"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
                   };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$add"] = convertedNumber2;
+                  break;
                 }
               }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.handlerTimeout`];
-            result["handlerTimeout"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["handlerTimeout"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$subtract"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$subtract"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.handlerTimeout`];
-            result["handlerTimeout"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["handlerTimeout"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$multiply"] === null ||
-                intermediateValue2["$multiply"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$multiply`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$multiply"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$multiply"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.handlerTimeout`];
-            result["handlerTimeout"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["handlerTimeout"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8179,22 +8874,271 @@ export function validateStoreJobUpdatePartialValidated(value) {
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.handlerTimeout`].errors.push(intermediateErrorMap2);
+            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
           } else {
             hasAnyOfMatch0 = true;
-            delete errorMap[`$.handlerTimeout`];
-            result["handlerTimeout"] = intermediateResult2;
+            delete errorMap[`$.priority`];
+            result["priority"] = intermediateResult2;
           }
         }
-      }
-      if (value["priority"] === null || value["priority"] === undefined) {
-        result["priority"] = undefined;
-      } else {
-        let hasAnyOfMatch0 = false;
-        errorMap[`$.priority`] = {
-          key: "validator.anyOf",
-          errors: [],
-        };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["priority"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$multiply"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$multiply"] === null ||
+                intermediateValue2["$multiply"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$multiply`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$multiply"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$multiply"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.priority`];
+            result["priority"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["priority"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$subtract"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$subtract"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.priority`];
+            result["priority"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["priority"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$add"] === null ||
+                intermediateValue2["$add"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$add`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$add"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$add"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.priority`];
+            result["priority"] = intermediateResult2;
+          }
+        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -8240,13 +9184,22 @@ export function validateStoreJobUpdatePartialValidated(value) {
             result["priority"] = intermediateResult2;
           }
         }
+      }
+      if (value["retryCount"] === null || value["retryCount"] === undefined) {
+        result["retryCount"] = undefined;
+      } else {
+        let hasAnyOfMatch0 = false;
+        errorMap[`$.retryCount`] = {
+          key: "validator.anyOf",
+          errors: [],
+        };
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
           /** @type {any} */
           let intermediateResult2 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["priority"];
+          let intermediateValue2 = value["retryCount"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
@@ -8263,228 +9216,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$add"] === null ||
-                intermediateValue2["$add"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$add`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$add"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.number",
-                    subType: "int",
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$divide"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
                   };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$add"] = convertedNumber2;
+                  break;
                 }
               }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.priority`];
-            result["priority"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["priority"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$subtract"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$subtract"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.priority`];
-            result["priority"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["priority"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$multiply"] === null ||
-                intermediateValue2["$multiply"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$multiply`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$multiply"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$multiply"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.priority`];
-            result["priority"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["priority"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
               intermediateResult2 = Object.create(null);
 
               if (
@@ -8529,22 +9272,271 @@ export function validateStoreJobUpdatePartialValidated(value) {
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.priority`].errors.push(intermediateErrorMap2);
+            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
           } else {
             hasAnyOfMatch0 = true;
-            delete errorMap[`$.priority`];
-            result["priority"] = intermediateResult2;
+            delete errorMap[`$.retryCount`];
+            result["retryCount"] = intermediateResult2;
           }
         }
-      }
-      if (value["retryCount"] === null || value["retryCount"] === undefined) {
-        result["retryCount"] = undefined;
-      } else {
-        let hasAnyOfMatch0 = false;
-        errorMap[`$.retryCount`] = {
-          key: "validator.anyOf",
-          errors: [],
-        };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["retryCount"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$multiply"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$multiply"] === null ||
+                intermediateValue2["$multiply"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$multiply`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$multiply"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$multiply`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$multiply"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.retryCount`];
+            result["retryCount"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["retryCount"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$subtract"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$subtract"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.retryCount`];
+            result["retryCount"] = intermediateResult2;
+          }
+        }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["retryCount"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$add"] === null ||
+                intermediateValue2["$add"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$add`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                let convertedNumber2 = intermediateValue2["$add"];
+                if (
+                  typeof convertedNumber2 !== "number" &&
+                  typeof convertedNumber2 === "string"
+                ) {
+                  convertedNumber2 = Number(convertedNumber2);
+                }
+                if (
+                  typeof convertedNumber2 !== "number" ||
+                  isNaN(convertedNumber2) ||
+                  !isFinite(convertedNumber2) ||
+                  !Number.isInteger(convertedNumber2)
+                ) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.number",
+                    subType: "int",
+                  };
+                } else if (convertedNumber2 < -2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    minValue: -2147483647,
+                  };
+                } else if (convertedNumber2 > 2147483647) {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.range",
+                    maxValue: 2147483647,
+                  };
+                } else {
+                  intermediateResult2["$add"] = convertedNumber2;
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.retryCount`];
+            result["retryCount"] = intermediateResult2;
+          }
+        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -8595,302 +9587,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
             result["retryCount"] = intermediateResult2;
           }
         }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["retryCount"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$add"] === null ||
-                intermediateValue2["$add"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$add`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$add"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$add"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.retryCount`];
-            result["retryCount"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["retryCount"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$subtract"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$subtract"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.retryCount`];
-            result["retryCount"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["retryCount"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$multiply"] === null ||
-                intermediateValue2["$multiply"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$multiply`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$multiply"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$multiply`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$multiply"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.retryCount`];
-            result["retryCount"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["retryCount"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$divide"] === null ||
-                intermediateValue2["$divide"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$divide`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber2 = intermediateValue2["$divide"];
-                if (
-                  typeof convertedNumber2 !== "number" &&
-                  typeof convertedNumber2 === "string"
-                ) {
-                  convertedNumber2 = Number(convertedNumber2);
-                }
-                if (
-                  typeof convertedNumber2 !== "number" ||
-                  isNaN(convertedNumber2) ||
-                  !isFinite(convertedNumber2) ||
-                  !Number.isInteger(convertedNumber2)
-                ) {
-                  intermediateErrorMap2[`$.$divide`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber2 < -2147483647) {
-                  intermediateErrorMap2[`$.$divide`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber2 > 2147483647) {
-                  intermediateErrorMap2[`$.$divide`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
-                  };
-                } else {
-                  intermediateResult2["$divide"] = convertedNumber2;
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.retryCount`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.retryCount`];
-            result["retryCount"] = intermediateResult2;
-          }
-        }
       }
       if (value["name"] === null || value["name"] === undefined) {
         result["name"] = undefined;
@@ -8900,6 +9596,78 @@ export function validateStoreJobUpdatePartialValidated(value) {
           key: "validator.anyOf",
           errors: [],
         };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["name"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$append"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$append"] === null ||
+                intermediateValue2["$append"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$append`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$append"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$append`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$append`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$append"] = convertedString2;
+                  }
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.name`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.name`];
+            result["name"] = intermediateResult2;
+          }
+        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -8940,66 +9708,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
             result["name"] = intermediateResult2;
           }
         }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["name"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$append"] === null ||
-                intermediateValue2["$append"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$append`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$append"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$append`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$append`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$append"] = convertedString2;
-                  }
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.name`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.name`];
-            result["name"] = intermediateResult2;
-          }
-        }
       }
       if (value["scheduledAt"] === null || value["scheduledAt"] === undefined) {
         result["scheduledAt"] = undefined;
@@ -9018,28 +9726,59 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["scheduledAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = new Date();
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -9073,6 +9812,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9119,47 +9870,28 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["scheduledAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = new Date();
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -9188,27 +9920,6 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["data"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = {};
-          } else {
-            intermediateResult2 = intermediateValue2;
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.data`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.data`];
-            result["data"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["data"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -9223,6 +9934,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$set"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9243,6 +9966,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$set"],
                   };
                 } else {
+                  /** @type {Set<string>} */
+                  const knownKeys2 = new Set(["path", "value"]);
+                  for (const key of Object.keys(intermediateValue2["$set"])) {
+                    if (!knownKeys2.has(key)) {
+                      intermediateErrorMap2[`$.$set`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys2],
+                        foundKeys: Object.keys(intermediateValue2["$set"]),
+                      };
+                      break;
+                    }
+                  }
                   intermediateResult2["$set"] = Object.create(null);
 
                   if (
@@ -9440,6 +10175,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$remove"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9460,6 +10207,20 @@ export function validateStoreJobUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$remove"],
                   };
                 } else {
+                  /** @type {Set<string>} */
+                  const knownKeys2 = new Set(["path"]);
+                  for (const key of Object.keys(
+                    intermediateValue2["$remove"],
+                  )) {
+                    if (!knownKeys2.has(key)) {
+                      intermediateErrorMap2[`$.$remove`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys2],
+                        foundKeys: Object.keys(intermediateValue2["$remove"]),
+                      };
+                      break;
+                    }
+                  }
                   intermediateResult2["$remove"] = Object.create(null);
 
                   if (
@@ -9625,6 +10386,27 @@ export function validateStoreJobUpdatePartialValidated(value) {
             result["data"] = intermediateResult2;
           }
         }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["data"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = {};
+          } else {
+            intermediateResult2 = intermediateValue2;
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.data`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.data`];
+            result["data"] = intermediateResult2;
+          }
+        }
       }
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         result["createdAt"] = undefined;
@@ -9643,28 +10425,59 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["createdAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -9698,6 +10511,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9744,47 +10569,28 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["createdAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -9813,28 +10619,59 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["updatedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -9868,6 +10705,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -9914,47 +10763,28 @@ export function validateStoreJobUpdatePartialValidated(value) {
           let intermediateValue2 = value["updatedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -9998,6 +10828,25 @@ export function validateStoreSessionStore(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "checksum",
+        "revokedAt",
+        "data",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -10152,6 +11001,39 @@ export function validateStoreSessionStoreWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "createdAt",
+        "createdAtNotEqual",
+        "createdAtIn",
+        "createdAtNotIn",
+        "createdAtGreaterThan",
+        "createdAtLowerThan",
+        "updatedAt",
+        "updatedAtNotEqual",
+        "updatedAtIn",
+        "updatedAtNotIn",
+        "updatedAtGreaterThan",
+        "updatedAtLowerThan",
+        "viaAccessTokens",
+        "accessTokensNotExists",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -11162,6 +12044,18 @@ export function validateStoreSessionStoreWhereValidated(value) {
             foundType: typeof value["viaAccessTokens"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaAccessTokens"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaAccessTokens`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaAccessTokens"]),
+              };
+              break;
+            }
+          }
           result["viaAccessTokens"] = Object.create(null);
 
           if (
@@ -11296,6 +12190,53 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "session",
+        "sessionNotEqual",
+        "sessionIn",
+        "sessionNotIn",
+        "expiresAt",
+        "expiresAtNotEqual",
+        "expiresAtIn",
+        "expiresAtNotIn",
+        "expiresAtGreaterThan",
+        "expiresAtLowerThan",
+        "refreshToken",
+        "refreshTokenNotEqual",
+        "refreshTokenIn",
+        "refreshTokenNotIn",
+        "refreshTokenIsNull",
+        "refreshTokenIsNotNull",
+        "revokedAt",
+        "revokedAtNotEqual",
+        "revokedAtIn",
+        "revokedAtNotIn",
+        "revokedAtGreaterThan",
+        "revokedAtLowerThan",
+        "revokedAtIsNull",
+        "revokedAtIsNotNull",
+        "viaRefreshToken",
+        "viaSession",
+        "viaAccessToken",
+        "accessTokenNotExists",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -12920,6 +13861,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             foundType: typeof value["viaRefreshToken"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaRefreshToken"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaRefreshToken`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaRefreshToken"]),
+              };
+              break;
+            }
+          }
           result["viaRefreshToken"] = Object.create(null);
 
           if (
@@ -13019,6 +13972,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             foundType: typeof value["viaSession"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaSession"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaSession`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaSession"]),
+              };
+              break;
+            }
+          }
           result["viaSession"] = Object.create(null);
 
           if (
@@ -13121,6 +14086,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             foundType: typeof value["viaAccessToken"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaAccessToken"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaAccessToken`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaAccessToken"]),
+              };
+              break;
+            }
+          }
           result["viaAccessToken"] = Object.create(null);
 
           if (
@@ -13391,6 +14368,18 @@ export function validateStoreSessionStoreOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["id", "createdAt", "updatedAt"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -13522,6 +14511,26 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+        "accessTokens",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -13854,6 +14863,28 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+        "refreshToken",
+        "session",
+        "accessToken",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -14203,6 +15234,24 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "session",
+        "expiresAt",
+        "refreshToken",
+        "revokedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -14574,6 +15623,18 @@ export function validateStoreSessionStoreInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["insert", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -14675,6 +15736,25 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "checksum",
+        "revokedAt",
+        "data",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -14823,6 +15903,18 @@ export function validateStoreSessionStoreUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -14904,6 +15996,24 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "checksum",
+        "revokedAt",
+        "data",
+        "createdAt",
+        "updatedAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["checksum"] === null || value["checksum"] === undefined) {
@@ -14914,6 +16024,78 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           key: "validator.anyOf",
           errors: [],
         };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["checksum"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$append"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$append"] === null ||
+                intermediateValue2["$append"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$append`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$append"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$append`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$append`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$append"] = convertedString2;
+                  }
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.checksum`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.checksum`];
+            result["checksum"] = intermediateResult2;
+          }
+        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -14954,66 +16136,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
             result["checksum"] = intermediateResult2;
           }
         }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["checksum"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$append"] === null ||
-                intermediateValue2["$append"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$append`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$append"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$append`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$append`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$append"] = convertedString2;
-                  }
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.checksum`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.checksum`];
-            result["checksum"] = intermediateResult2;
-          }
-        }
       }
       if (value["revokedAt"] === null || value["revokedAt"] === undefined) {
         result["revokedAt"] = undefined;
@@ -15032,28 +16154,59 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["revokedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = intermediateValue2;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -15087,6 +16240,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -15133,47 +16298,28 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["revokedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = intermediateValue2;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -15202,27 +16348,6 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["data"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = {};
-          } else {
-            intermediateResult2 = intermediateValue2;
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.data`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.data`];
-            result["data"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["data"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -15237,6 +16362,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$set"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -15257,6 +16394,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$set"],
                   };
                 } else {
+                  /** @type {Set<string>} */
+                  const knownKeys2 = new Set(["path", "value"]);
+                  for (const key of Object.keys(intermediateValue2["$set"])) {
+                    if (!knownKeys2.has(key)) {
+                      intermediateErrorMap2[`$.$set`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys2],
+                        foundKeys: Object.keys(intermediateValue2["$set"]),
+                      };
+                      break;
+                    }
+                  }
                   intermediateResult2["$set"] = Object.create(null);
 
                   if (
@@ -15454,6 +16603,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$remove"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -15474,6 +16635,20 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                     foundType: typeof intermediateValue2["$remove"],
                   };
                 } else {
+                  /** @type {Set<string>} */
+                  const knownKeys2 = new Set(["path"]);
+                  for (const key of Object.keys(
+                    intermediateValue2["$remove"],
+                  )) {
+                    if (!knownKeys2.has(key)) {
+                      intermediateErrorMap2[`$.$remove`] = {
+                        key: "validator.keys",
+                        expectedKeys: [...knownKeys2],
+                        foundKeys: Object.keys(intermediateValue2["$remove"]),
+                      };
+                      break;
+                    }
+                  }
                   intermediateResult2["$remove"] = Object.create(null);
 
                   if (
@@ -15639,6 +16814,27 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
             result["data"] = intermediateResult2;
           }
         }
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["data"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = {};
+          } else {
+            intermediateResult2 = intermediateValue2;
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.data`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.data`];
+            result["data"] = intermediateResult2;
+          }
+        }
       }
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         result["createdAt"] = undefined;
@@ -15657,28 +16853,59 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["createdAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -15712,6 +16939,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -15758,47 +16997,28 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["createdAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -15827,28 +17047,59 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["updatedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -15882,6 +17133,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -15928,47 +17191,28 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           let intermediateValue2 = value["updatedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -16012,6 +17256,25 @@ export function validateStoreSessionStoreToken(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "session",
+        "expiresAt",
+        "refreshToken",
+        "revokedAt",
+        "createdAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -16178,6 +17441,18 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["insert", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["insert"] === null || value["insert"] === undefined) {
@@ -16280,6 +17555,25 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "session",
+        "expiresAt",
+        "refreshToken",
+        "revokedAt",
+        "createdAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -16444,6 +17738,18 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -16525,6 +17831,24 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "session",
+        "expiresAt",
+        "refreshToken",
+        "revokedAt",
+        "createdAt",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["session"] === null || value["session"] === undefined) {
@@ -16586,28 +17910,59 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           let intermediateValue2 = value["expiresAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -16641,6 +17996,18 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16687,47 +18054,28 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           let intermediateValue2 = value["expiresAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
+            intermediateResult2 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
             ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
             } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -16801,28 +18149,59 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           let intermediateValue2 = value["revokedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = intermediateValue2;
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
           } else {
             if (
-              typeof intermediateValue2 === "string" ||
-              typeof intermediateValue2 === "number"
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
             ) {
-              intermediateResult2 = new Date(intermediateValue2);
-            } else if (
-              Object.prototype.toString.call(intermediateValue2) ===
-              "[object Date]"
-            ) {
-              intermediateResult2 = intermediateValue2;
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
             } else {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.type",
-                expectedType: "Date|string",
-              };
-            }
-            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.date.invalid",
-              };
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$subtract"] === null ||
+                intermediateValue2["$subtract"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$subtract`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$subtract"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$subtract`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$subtract`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$subtract"] = convertedString2;
+                  }
+                }
+              }
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
@@ -16856,6 +18235,18 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16902,6 +18293,56 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           let intermediateValue2 = value["revokedAt"];
 
           if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateResult2 = intermediateValue2;
+          } else {
+            if (
+              typeof intermediateValue2 === "string" ||
+              typeof intermediateValue2 === "number"
+            ) {
+              intermediateResult2 = new Date(intermediateValue2);
+            } else if (
+              Object.prototype.toString.call(intermediateValue2) ===
+              "[object Date]"
+            ) {
+              intermediateResult2 = intermediateValue2;
+            } else {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.type",
+                expectedType: "Date|string",
+              };
+            }
+            if (isNaN(intermediateResult2?.getTime() ?? undefined)) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.date.invalid",
+              };
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.revokedAt`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.revokedAt`];
+            result["revokedAt"] = intermediateResult2;
+          }
+        }
+      }
+      if (value["createdAt"] === null || value["createdAt"] === undefined) {
+        result["createdAt"] = undefined;
+      } else {
+        let hasAnyOfMatch0 = false;
+        errorMap[`$.createdAt`] = {
+          key: "validator.anyOf",
+          errors: [],
+        };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["createdAt"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
             intermediateErrorMap2[`$`] = {
               key: "validator.undefined",
             };
@@ -16916,6 +18357,18 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 foundType: typeof intermediateValue2,
               };
             } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$subtract"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
               intermediateResult2 = Object.create(null);
 
               if (
@@ -16946,22 +18399,85 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
             }
           }
           if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.revokedAt`].errors.push(intermediateErrorMap2);
+            errorMap[`$.createdAt`].errors.push(intermediateErrorMap2);
           } else {
             hasAnyOfMatch0 = true;
-            delete errorMap[`$.revokedAt`];
-            result["revokedAt"] = intermediateResult2;
+            delete errorMap[`$.createdAt`];
+            result["createdAt"] = intermediateResult2;
           }
         }
-      }
-      if (value["createdAt"] === null || value["createdAt"] === undefined) {
-        result["createdAt"] = undefined;
-      } else {
-        let hasAnyOfMatch0 = false;
-        errorMap[`$.createdAt`] = {
-          key: "validator.anyOf",
-          errors: [],
-        };
+        if (!hasAnyOfMatch0) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap2 = {};
+          /** @type {any} */
+          let intermediateResult2 = undefined;
+          /** @type {any} */
+          let intermediateValue2 = value["createdAt"];
+
+          if (intermediateValue2 === null || intermediateValue2 === undefined) {
+            intermediateErrorMap2[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            if (
+              typeof intermediateValue2 !== "object" ||
+              Array.isArray(intermediateValue2)
+            ) {
+              intermediateErrorMap2[`$`] = {
+                key: "validator.object",
+                value: intermediateValue2,
+                foundType: typeof intermediateValue2,
+              };
+            } else {
+              /** @type {Set<string>} */
+              const knownKeys2 = new Set(["$add"]);
+              for (const key of Object.keys(intermediateValue2)) {
+                if (!knownKeys2.has(key)) {
+                  intermediateErrorMap2[`$`] = {
+                    key: "validator.keys",
+                    expectedKeys: [...knownKeys2],
+                    foundKeys: Object.keys(intermediateValue2),
+                  };
+                  break;
+                }
+              }
+              intermediateResult2 = Object.create(null);
+
+              if (
+                intermediateValue2["$add"] === null ||
+                intermediateValue2["$add"] === undefined
+              ) {
+                intermediateErrorMap2[`$.$add`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString2 = intermediateValue2["$add"];
+                if (typeof convertedString2 !== "string") {
+                  intermediateErrorMap2[`$.$add`] = {
+                    key: "validator.string",
+                  };
+                } else {
+                  if (convertedString2.length < 1) {
+                    intermediateErrorMap2[`$.$add`] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    intermediateResult2["$add"] = convertedString2;
+                  }
+                }
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap2).length > 0) {
+            errorMap[`$.createdAt`].errors.push(intermediateErrorMap2);
+          } else {
+            hasAnyOfMatch0 = true;
+            delete errorMap[`$.createdAt`];
+            result["createdAt"] = intermediateResult2;
+          }
+        }
         if (!hasAnyOfMatch0) {
           /** @type {ValidatorErrorMap} */
           const intermediateErrorMap2 = {};
@@ -17003,126 +18519,6 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
             result["createdAt"] = intermediateResult2;
           }
         }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["createdAt"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$add"] === null ||
-                intermediateValue2["$add"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$add`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$add"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$add`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$add`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$add"] = convertedString2;
-                  }
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.createdAt`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.createdAt`];
-            result["createdAt"] = intermediateResult2;
-          }
-        }
-        if (!hasAnyOfMatch0) {
-          /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
-          /** @type {any} */
-          let intermediateResult2 = undefined;
-          /** @type {any} */
-          let intermediateValue2 = value["createdAt"];
-
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              typeof intermediateValue2 !== "object" ||
-              Array.isArray(intermediateValue2)
-            ) {
-              intermediateErrorMap2[`$`] = {
-                key: "validator.object",
-                value: intermediateValue2,
-                foundType: typeof intermediateValue2,
-              };
-            } else {
-              intermediateResult2 = Object.create(null);
-
-              if (
-                intermediateValue2["$subtract"] === null ||
-                intermediateValue2["$subtract"] === undefined
-              ) {
-                intermediateErrorMap2[`$.$subtract`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString2 = intermediateValue2["$subtract"];
-                if (typeof convertedString2 !== "string") {
-                  intermediateErrorMap2[`$.$subtract`] = {
-                    key: "validator.string",
-                  };
-                } else {
-                  if (convertedString2.length < 1) {
-                    intermediateErrorMap2[`$.$subtract`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else {
-                    intermediateResult2["$subtract"] = convertedString2;
-                  }
-                }
-              }
-            }
-          }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.createdAt`].errors.push(intermediateErrorMap2);
-          } else {
-            hasAnyOfMatch0 = true;
-            delete errorMap[`$.createdAt`];
-            result["createdAt"] = intermediateResult2;
-          }
-        }
       }
     }
   }
@@ -17154,6 +18550,25 @@ export function validateStoreFileResponse(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "id",
+        "name",
+        "contentType",
+        "url",
+        "placeholderImage",
+        "altText",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["id"] === null || value["id"] === undefined) {
@@ -17552,6 +18967,44 @@ export function validateStoreFileWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "bucketName",
+        "bucketNameNotEqual",
+        "bucketNameIn",
+        "bucketNameNotIn",
+        "bucketNameLike",
+        "bucketNameILike",
+        "bucketNameNotLike",
+        "createdAt",
+        "createdAtNotEqual",
+        "createdAtIn",
+        "createdAtNotIn",
+        "createdAtGreaterThan",
+        "createdAtLowerThan",
+        "updatedAt",
+        "updatedAtNotEqual",
+        "updatedAtIn",
+        "updatedAtNotIn",
+        "updatedAtGreaterThan",
+        "updatedAtLowerThan",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -18862,6 +20315,57 @@ export function validateStoreJobWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "idGreaterThan",
+        "idLowerThan",
+        "isComplete",
+        "isCompleteIsNull",
+        "isCompleteIsNotNull",
+        "name",
+        "nameNotEqual",
+        "nameIn",
+        "nameNotIn",
+        "nameLike",
+        "nameILike",
+        "nameNotLike",
+        "scheduledAt",
+        "scheduledAtNotEqual",
+        "scheduledAtIn",
+        "scheduledAtNotIn",
+        "scheduledAtGreaterThan",
+        "scheduledAtLowerThan",
+        "scheduledAtIsNull",
+        "scheduledAtIsNotNull",
+        "createdAt",
+        "createdAtNotEqual",
+        "createdAtIn",
+        "createdAtNotIn",
+        "createdAtGreaterThan",
+        "createdAtLowerThan",
+        "updatedAt",
+        "updatedAtNotEqual",
+        "updatedAtIn",
+        "updatedAtNotIn",
+        "updatedAtGreaterThan",
+        "updatedAtLowerThan",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -20753,6 +22257,39 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "createdAt",
+        "createdAtNotEqual",
+        "createdAtIn",
+        "createdAtNotIn",
+        "createdAtGreaterThan",
+        "createdAtLowerThan",
+        "updatedAt",
+        "updatedAtNotEqual",
+        "updatedAtIn",
+        "updatedAtNotIn",
+        "updatedAtGreaterThan",
+        "updatedAtLowerThan",
+        "viaAccessTokens",
+        "accessTokensNotExists",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -21707,6 +23244,18 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             foundType: typeof value["viaAccessTokens"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaAccessTokens"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaAccessTokens`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaAccessTokens"]),
+              };
+              break;
+            }
+          }
           result["viaAccessTokens"] = Object.create(null);
 
           if (
@@ -21841,6 +23390,53 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "$raw",
+        "$or",
+        "id",
+        "idNotEqual",
+        "idIn",
+        "idNotIn",
+        "session",
+        "sessionNotEqual",
+        "sessionIn",
+        "sessionNotIn",
+        "expiresAt",
+        "expiresAtNotEqual",
+        "expiresAtIn",
+        "expiresAtNotIn",
+        "expiresAtGreaterThan",
+        "expiresAtLowerThan",
+        "refreshToken",
+        "refreshTokenNotEqual",
+        "refreshTokenIn",
+        "refreshTokenNotIn",
+        "refreshTokenIsNull",
+        "refreshTokenIsNotNull",
+        "revokedAt",
+        "revokedAtNotEqual",
+        "revokedAtIn",
+        "revokedAtNotIn",
+        "revokedAtGreaterThan",
+        "revokedAtLowerThan",
+        "revokedAtIsNull",
+        "revokedAtIsNotNull",
+        "viaRefreshToken",
+        "viaSession",
+        "viaAccessToken",
+        "accessTokenNotExists",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
@@ -23377,6 +24973,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             foundType: typeof value["viaRefreshToken"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaRefreshToken"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaRefreshToken`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaRefreshToken"]),
+              };
+              break;
+            }
+          }
           result["viaRefreshToken"] = Object.create(null);
 
           if (
@@ -23476,6 +25084,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             foundType: typeof value["viaSession"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaSession"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaSession`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaSession"]),
+              };
+              break;
+            }
+          }
           result["viaSession"] = Object.create(null);
 
           if (
@@ -23578,6 +25198,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             foundType: typeof value["viaAccessToken"],
           };
         } else {
+          /** @type {Set<string>} */
+          const knownKeys0 = new Set(["where", "limit", "offset"]);
+          for (const key of Object.keys(value["viaAccessToken"])) {
+            if (!knownKeys0.has(key)) {
+              errorMap[`$.viaAccessToken`] = {
+                key: "validator.keys",
+                expectedKeys: [...knownKeys0],
+                foundKeys: Object.keys(value["viaAccessToken"]),
+              };
+              break;
+            }
+          }
           result["viaAccessToken"] = Object.create(null);
 
           if (
@@ -23712,6 +25344,18 @@ export function validateStoreFileUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -23791,6 +25435,18 @@ export function validateStoreJobUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -23870,6 +25526,18 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -23951,6 +25619,18 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set(["update", "where", "returning"]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["update"] === null || value["update"] === undefined) {
@@ -24563,6 +26243,25 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -24716,6 +26415,25 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -24869,6 +26587,26 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+        "accessTokens",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {
@@ -25045,6 +26783,28 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
         foundType: typeof value,
       };
     } else {
+      /** @type {Set<string>} */
+      const knownKeys0 = new Set([
+        "where",
+        "orderBy",
+        "orderBySpec",
+        "limit",
+        "offset",
+        "select",
+        "refreshToken",
+        "session",
+        "accessToken",
+      ]);
+      for (const key of Object.keys(value)) {
+        if (!knownKeys0.has(key)) {
+          errorMap[`$`] = {
+            key: "validator.keys",
+            expectedKeys: [...knownKeys0],
+            foundKeys: Object.keys(value),
+          };
+          break;
+        }
+      }
       result = Object.create(null);
 
       if (value["where"] === null || value["where"] === undefined) {

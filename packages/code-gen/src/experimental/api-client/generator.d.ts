@@ -45,6 +45,9 @@ export function apiClientIsEnabled(
         includeWrapper?: "react-query" | undefined;
         globalClient: boolean;
       };
+      responseValidation: {
+        looseObjectValidation: boolean;
+      };
     }
   | undefined;
 //# sourceMappingURL=generator.d.ts.map

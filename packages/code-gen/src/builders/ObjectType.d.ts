@@ -17,8 +17,6 @@ export class ObjectType extends TypeBuilder {
     obj: Record<string, import("../../types/advanced-types").TypeBuilderLike>,
   ): ObjectType;
   /**
-   * TODO(depr): add jsdoc tag
-   *
    * @returns {ObjectType}
    */
   loose(): ObjectType;
