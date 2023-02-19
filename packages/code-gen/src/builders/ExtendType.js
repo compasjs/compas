@@ -1,6 +1,8 @@
-import { AppError, uuid } from "@compas/stdlib";
+import { AppError } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
+
+let uniqueNameIdx = 0;
 
 export class ExtendType extends TypeBuilder {
   static baseData = {
@@ -26,7 +28,7 @@ export class ExtendType extends TypeBuilder {
   }
 
   constructor(group, ref) {
-    super("extend", group, `x${uuid().substring(0, 6)}`);
+    super("extend", group, `x${uniqueNameIdx++}`);
 
     if (ref.data.type !== "reference") {
       throw AppError.serverError({
