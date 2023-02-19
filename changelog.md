@@ -4,6 +4,103 @@ editLink: false
 
 # Changelog
 
+### [v0.0.224](https://github.com/compasjs/compas/releases/tag/v0.0.224)
+
+The experimental code generators are ready to be tested! See the
+[migration guide](https://compasjs.com/releases/code-gen-migration.html) on how
+to upgrade.
+
+#### Breaking changes
+
+- feat(code-gen): replace `app.addRelations` with
+  `T.extendNamedObject().relations()`
+  [`c29965`](https://github.com/compasjs/compas/commit/c29965773b96ff7a21b5106a8e1d1226caa47ac9)
+  - `App#addRelations` is removed, use
+    `T.extendNamedObject(T.reference(...)).relations(...relations)`.
+
+#### Features
+
+- feat(code-gen): utils expand inferred array error
+  ([#2357](https://github.com/compasjs/compas/pull/2357))
+  [`bd94c4`](https://github.com/compasjs/compas/commit/bd94c4ce4dcbb012b77f005f22b9ed0c60ffbbfc)
+- feat(code-gen/experimental): add `T.any().implementations()` support
+  [`a9f010`](https://github.com/compasjs/compas/commit/a9f01026d1658f4f1ce36f7ed1996962c50dd6e2)
+- feat(code-gen/experimental): add specific `T.file()` implementations
+  [`62f1cb`](https://github.com/compasjs/compas/commit/62f1cb9fbf28bd3feef07cd7e3cde9d9392892cf)
+- feat(code-gen/experimental): add support to force form-data body
+  [`88d358`](https://github.com/compasjs/compas/commit/88d358d5e962b0f21c7c9d5effe134ab23447c9c)
+- feat(code-gen/experimental): consistent internal target formatting
+  [`703e6c`](https://github.com/compasjs/compas/commit/703e6c266a5ce834a497c3428388a2108c71fc38)
+- feat(code-gen/experimental): accept requestConfig in react-query hooks, add
+  options to skip response validation
+  [`7725a6`](https://github.com/compasjs/compas/commit/7725a61dc2423d2bf6799351bc9b44981c4f036d)
+- feat(code-gen/experimental): add custom validation on the allowed target
+  combinations
+  [`9e63d9`](https://github.com/compasjs/compas/commit/9e63d9ea24975c5b832285e45f457bb90091bbf8)
+- feat(code-gen/experimental): add check for custom relation fields that are
+  optional
+  [`6c8dd2`](https://github.com/compasjs/compas/commit/6c8dd27013877fc3c87ef50fbd166d3a31f0bdda)
+- feat(code-gen/experimental): decode uri params in the router generator
+  [`f937ad`](https://github.com/compasjs/compas/commit/f937ad099171dd752fe8abfb620784234ecf4cfc)
+- feat(code-gen/experimental): improve some validation errors
+  [`54b670`](https://github.com/compasjs/compas/commit/54b670da955631cef55f6d2b7fdc25ea84b285c1)
+- feat(cli): use @compas/code-gen/experimental
+  [`783343`](https://github.com/compasjs/compas/commit/783343ed0cee7a9da9bf5af9f2ad9be42d73a65d)
+- feat(code-gen/experimental): reuse type names if no target or validator
+  specific changes are necessary
+  [`b0ccd1`](https://github.com/compasjs/compas/commit/b0ccd1fe1986f845a0af69b0c2925753758354f3)
+- feat(code-gen/experimental): always allow extra object keys
+  [`86c9db`](https://github.com/compasjs/compas/commit/86c9dba4366f3781f5adf531919581a75bbd26f1)
+- feat(code-gen): stabilize `T.extendNamedObject()` generated name
+  [`eafd5d`](https://github.com/compasjs/compas/commit/eafd5d974236c746463f691dcee804218865e63b)
+- feat(code-gen/experimental): add `apiClient.responseValidation` option to
+  allow loose response validation
+  [`2a671d`](https://github.com/compasjs/compas/commit/2a671d660480ec0603068d29ed8b1fc96701c8fb)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): correct printing of `else if` in validators
+  [`ec7e1a`](https://github.com/compasjs/compas/commit/ec7e1a50d1402225528fa7aef05bc0653fc81215)
+- fix(code-gen/experimental): various fixes, use new `T.any().implementations`
+  [`06621b`](https://github.com/compasjs/compas/commit/06621b3ef06d10ef54ed903b99c3d1ad22fbe4da)
+- fix(code-gen/experimental): fix `deletedAt` optionality, better typing of
+  WrappedQueryPart, escape api structure
+  [`a04944`](https://github.com/compasjs/compas/commit/a04944b93e681f7a839cbef828afc2fda4b90971)
+- fix(code-gen/experimental): fix postgres DDL of 'deletedAt'
+  [`db42db`](https://github.com/compasjs/compas/commit/db42dbc030d528695ccc7cdac9d6bb4e31f21840)
+
+#### Other
+
+- chore(code-gen/experimental): extract required TODO's into a list
+  [`e73411`](https://github.com/compasjs/compas/commit/e73411ed61139b57707ee8e18e95f189692d8ea0)
+- build(deps-dev): bump vitepress from 1.0.0-alpha.45 to 1.0.0-alpha.46
+  ([#2361](https://github.com/compasjs/compas/pull/2361))
+  [`5ba981`](https://github.com/compasjs/compas/commit/5ba9814829607814866788d3fc3a8c9914086549)
+  - [Release notes](https://github.com/vuejs/vitepress/releases)
+- docs(releases): write code-gen/experimental migration guide
+  [`4a14dc`](https://github.com/compasjs/compas/commit/4a14dc0368badc964ce1494d7a8799874031793a)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 39.7.5 to 40.0.0
+  ([#2345](https://github.com/compasjs/compas/pull/2345),
+  [#2360](https://github.com/compasjs/compas/pull/2360))
+  - Major version bump
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump pino from 8.8.0 to 8.10.0
+  ([#2347](https://github.com/compasjs/compas/pull/2347),
+  [#2358](https://github.com/compasjs/compas/pull/2358))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump prettier from 2.8.3 to 2.8.4
+  ([#2351](https://github.com/compasjs/compas/pull/2351))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump eslint from 8.33.0 to 8.34.0
+  ([#2359](https://github.com/compasjs/compas/pull/2359))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump c8 from 7.12.0 to 7.13.0
+  ([#2369](https://github.com/compasjs/compas/pull/2369))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+
 ### [v0.0.223](https://github.com/compasjs/compas/releases/tag/v0.0.223)
 
 #### Breaking changes
