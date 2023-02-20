@@ -403,12 +403,17 @@ function getDefaultStructure() {
             T.reference("database", "location"),
             "preferredLocationFor",
           ),
-          T.manyToOne(
-            "pet",
-            T.reference("database", "pet"),
-            "preferredLocations",
-          ),
         ),
+
+      T.extendNamedObject(
+        T.reference(T.group, "petPreferredLocation"),
+      ).relations(
+        T.manyToOne(
+          "pet",
+          T.reference("database", "pet"),
+          "preferredLocations",
+        ),
+      ),
     );
   }
 

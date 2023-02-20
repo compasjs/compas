@@ -79,6 +79,13 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       api client
   - Additional fields are now also a breaking change with validating api clients
     :s
+- [ ] Add response validation in the router
+  - This should throw an `AppError.serverError`, preventing unnecessary errors
+    in the frontend API client.
+- [ ] Link up the example readme's automatically to `docs/examples` in
+      `syncMetadata`
+- [ ] Auto create the `examples/` navbar part
+- [ ] Implement new docs structure
 
 ### Docs
 
@@ -91,17 +98,17 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
   - Generators
     - Introduction
     - Explain different targets
-      - Link to OpenAPI import, Structure import, building your own structure.
-        To get started
+      - Link to OpenAPI import, Structure import and building your own structure
+        to get started
     - OpenAPI import -> different api clients
     - Structure import -> different api clients
     - Building your own structure
       - Introduction
-        - Group by flow + (types, database) groups
+        - Groups and naming; group by flow + (types, database) groups
       - Types
+      - Routes
       - Entities
       - Crud
-      - Custom routes
     - Advanced patterns
       - Route specifics (invalidations, idemptotent)
       - Custom entity primary key, sql default, dates, soft deletes
@@ -133,7 +140,6 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ### Feature ideas
 
-- Add response validation to the router
 - CRUD generator support non-global types
 - Remove `skipTrailingSlash` from `internalSettings` since it is not used
   anymore.

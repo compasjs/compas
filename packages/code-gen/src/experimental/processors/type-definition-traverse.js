@@ -50,6 +50,14 @@ export const typeDefinitionTraversePaths = {
       key: "reference",
       amount: "single",
     },
+    {
+      key: "keys",
+      amount: "many",
+    },
+    {
+      key: "relations",
+      amount: "many",
+    },
   ],
   file: [],
   generic: [

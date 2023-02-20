@@ -56,8 +56,11 @@ test("code-gen/e2e/sql", async (t) => {
               T.manyToOne("writer", T.reference("sql", "user"), "posts"),
 
               T.oneToMany("categories", T.reference("sql", "postCategory")),
-              T.oneToMany("postages", T.reference("sql", "postage")),
             ),
+
+          T.extendNamedObject(T.reference(T.group, "post")).relations(
+            T.oneToMany("postages", T.reference("sql", "postage")),
+          ),
 
           T.object("postage")
             .shortName("pst")
