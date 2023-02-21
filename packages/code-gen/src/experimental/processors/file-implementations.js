@@ -11,6 +11,7 @@ export const fileImplementations = {
   jsKoaSend: {
     validatorInputType: `Buffer|import("stream").Readable`,
     validatorOutputType: `Buffer|import("stream").Readable`,
+    validatorExpression: `$value$ instanceof Buffer || (typeof $value$.pipe === "function" && typeof $value$._read === "function")`,
   },
   jsAxios: {
     validatorInputType: `{ name?: string, data: import("stream").Readable|Buffer }`,

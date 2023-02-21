@@ -57,11 +57,8 @@ controller in a new file. Create the follwing in `src/app/controller.js`:
 ```js
 import { appHandlers } from "../generated/app/controller.js";
 
-appHandlers.hello = (ctx, next) => {
+appHandlers.hello = (ctx) => {
   ctx.body = "Hello world!";
-
-  // These are Koa middleware, so we allow other middleware's to run next.
-  return next();
 };
 ```
 
@@ -123,7 +120,7 @@ Let's regenerate first, so we get our validators and typings and then add the
 controller implementation for `appHelloToThing` in `src/app/controller.js`:
 
 ```js
-appHandlers.helloToThing = (ctx, next) => {
+appHandlers.helloToThing = (ctx) => {
   let greeting = `Hello ${ctx.validatedParams.thing}!`;
 
   if (ctx.validatedQuery.upperCase) {
@@ -131,8 +128,6 @@ appHandlers.helloToThing = (ctx, next) => {
   }
 
   ctx.body = greeting;
-
-  return next();
 };
 ```
 

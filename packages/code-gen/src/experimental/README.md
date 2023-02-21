@@ -79,7 +79,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       api client
   - Additional fields are now also a breaking change with validating api clients
     :s
-- [ ] Add response validation in the router
+- [x] Add response validation in the router
   - This should throw an `AppError.serverError`, preventing unnecessary errors
     in the frontend API client.
 - [ ] Link up the example readme's automatically to `docs/examples` in

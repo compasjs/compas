@@ -139,14 +139,14 @@ function crudHandlersGetModifiers(crud) {
         relation?.subType === "oneToOneReverse"
           ? `, singleBuilder: ${modelUniqueName}QueryBuilder`
           : ""
-      }) => void|Promise<void>`,
+      }) => void|Promise<void>,`,
     );
     modifierDestructure.push(`${crudName}CreatePreModifier,`);
   }
 
   if (crud.routeOptions.updateRoute) {
     modifierDocs.push(
-      `${crudName}UpdatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${modelUniqueName}QueryBuilder) => void|Promise<void>,,`,
+      `${crudName}UpdatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}SingleCtx, singleBuilder: ${modelUniqueName}QueryBuilder) => void|Promise<void>,`,
     );
     modifierDestructure.push(`${crudName}UpdatePreModifier,`);
   }
@@ -242,6 +242,7 @@ function crudHandlersList(generateContext, file, crud) {
       },
     }),
     primaryKey: primaryKeyName,
+    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -276,6 +277,7 @@ function crudHandlersSingle(generateContext, file, crud) {
       traverseParents: true,
     }),
     primaryKey: primaryKeyName,
+    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -319,6 +321,7 @@ function crudHandlersCreate(generateContext, file, crud) {
             }),
           }
         : undefined,
+    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -353,6 +356,7 @@ function crudHandlersUpdate(generateContext, file, crud) {
       includeJoins: true,
       traverseParents: true,
     }),
+    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -382,6 +386,7 @@ function crudHandlersDelete(generateContext, file, crud) {
       includeJoins: false,
       traverseParents: true,
     }),
+    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");

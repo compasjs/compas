@@ -129,7 +129,7 @@ const [privateImage] = (
   }).exec(sql)
 )[0];
 
-appController.getProduct = (ctx, next) => {
+appController.getProduct = (ctx) => {
   // Do user checks here, so see if the privateAvatarUrl should be added.
 
   ctx.body = {
@@ -144,19 +144,15 @@ appController.getProduct = (ctx, next) => {
       },
     }),
   };
-
-  return next();
 };
 
-appController.publicImage = async (ctx, next) => {
+appController.publicImage = async (ctx) => {
   const file = await queryFile({ where: { id: publicImage.id } }).exec(sql);
 
   await fileSendResponse(s3Client, ctx, file);
-
-  return next();
 };
 
-appController.privateAvatar = async (ctx, next) => {
+appController.privateAvatar = async (ctx) => {
   const file = await queryFile({ where: { id: privateAvatar.id } }).exec(sql);
 
   // Throws if expired or invalid
@@ -167,8 +163,6 @@ appController.privateAvatar = async (ctx, next) => {
   });
 
   await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
-
-  return next();
 };
 ```
 

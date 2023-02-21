@@ -135,8 +135,7 @@ export function jsKoaPrepareContext(
         validatorOutputType: `(
   ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(
           route.name ?? "",
-        )}Ctx,
-  next: import("@compas/server").Next,
+        )}Ctx
 ) => void | Promise<void>`,
         validatorInputType: "any",
       },
@@ -203,7 +202,7 @@ export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
   for (const route of routes) {
     fileWrite(
       file,
-      `${route.name}: (ctx, next) => { throw AppError.notImplemented({ message: "You probably forgot to override the generated handlers or import your own implementation." }) },`,
+      `${route.name}: (ctx) => { throw AppError.notImplemented({ message: "You probably forgot to override the generated handlers or import your own implementation." }) },`,
     );
   }
 
@@ -215,7 +214,6 @@ export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
  * @param {import("../file/context").GenerateFile} file
  * @param {string} group
  * @param {import("../generated/common/types").ExperimentalRouteDefinition[]} routes
- 
  */
 export function jsKoaWriteTags(file, group, routes) {
   fileWrite(file, `export const ${group}Tags = {`);
@@ -270,9 +268,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
     for (const route of routes) {
       const contextNames = contextNamesMap.get(route) ?? {};
 
-      const isAsync = route.files || route.body || route.query ? "async " : "";
-
-      fileWrite(file, `${route.name}: ${isAsync}(params, ctx, next) => {`);
+      fileWrite(file, `${route.name}: async (params, ctx, next) => {`);
       fileContextSetIndent(file, 1);
 
       fileBlockStart(file, `if (ctx.event)`);
@@ -370,7 +366,32 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
         fileBlockEnd(file);
       }
 
-      fileWrite(file, `return ${group}Handlers.${route.name}(ctx, next);`);
+      fileWrite(file, `await ${group}Handlers.${route.name}(ctx);`);
+
+      if (route.response) {
+        fileWrite(
+          file,
+          `const validatedResponse = ${
+            contextNames[`responseValidator`]
+          }(ctx.body);`,
+        );
+
+        fileBlockStart(file, `if (validatedResponse.error)`);
+        fileWrite(
+          file,
+          `throw AppError.serverError({
+  message: "Response did not satisfy the response type.",
+  route: {
+    group: "${route.group}",
+    name: "${route.name}",
+  },
+  error: validatedResponse.error
+});`,
+        );
+        fileBlockEnd(file);
+      }
+
+      fileWrite(file, `return next();`);
 
       fileContextSetIndent(file, -1);
       fileWrite(file, `},`);
@@ -440,12 +461,10 @@ export function jsKoaRegisterCompasStructureRoute(generateContext, file) {
 
   fileWrite(
     file,
-    `compasHandlers.structure = (ctx, next) => {
+    `compasHandlers.structure = (ctx) => {
   ctx.set("Content-Type", "application/json");
 
   ctx.body = \`${routeStructureGet(generateContext)}\`;
-
-  return next();
 };
 `,
   );

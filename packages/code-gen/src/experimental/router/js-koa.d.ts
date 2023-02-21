@@ -46,7 +46,6 @@ export function jsKoaWriteHandlers(
  * @param {import("../file/context").GenerateFile} file
  * @param {string} group
  * @param {import("../generated/common/types").ExperimentalRouteDefinition[]} routes
- 
  */
 export function jsKoaWriteTags(
   file: import("../file/context").GenerateFile,

@@ -69,7 +69,7 @@ export async function cliLoaderLoadDirectories(event, options) {
       } catch (e) {
         // Skip logging on production, may be because of not installed dev dependencies.
         // The user will get an error anyway, since the command does not exist.
-        if (!isProduction() && environment.CI !== true) {
+        if (!isProduction() && environment.CI !== "true") {
           event.log.error(
             `Error loading 'cliDefinition' from '${filePath}'. This can be caused by missing dependencies, missing generated files or even a syntax error in an (in)directly imported file.`,
           );

@@ -8,10 +8,7 @@ import {
   targetLanguageSwitch,
 } from "../target/switcher.js";
 import { typesCacheGet } from "../types/cache.js";
-import {
-  typesGeneratorGenerateNamedType,
-  typesGeneratorUseTypeName,
-} from "../types/generator.js";
+import { typesGeneratorUseTypeName } from "../types/generator.js";
 import {
   validatorGeneratorGenerateValidator,
   validatorGetNameAndImport,
@@ -132,27 +129,22 @@ export function routerGenerator(generateContext) {
           type,
         );
 
-        if (prefix !== "response") {
-          // @ts-expect-error
-          validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
-            validatorState: "output",
-            nameSuffixes: {
-              input: "ValidatorInput",
-              output: "Validated",
-            },
-            targets: specificTargets,
-          });
-        } else {
-          // @ts-expect-error
-          typesGeneratorGenerateNamedType(generateContext, resolvedRef, {
-            validatorState: "output",
-            nameSuffixes: {
-              input: "Input",
-              output: "Validated",
-            },
-            targets: specificTargets,
-          });
-        }
+        // @ts-expect-error
+        validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
+          validatorState: "output",
+          nameSuffixes:
+            prefix !== "response"
+              ? {
+                  input: "ValidatorInput",
+                  output: "Validated",
+                }
+              : {
+                  input: "RouterOutput",
+                  output: "RouterValidated",
+                },
+          targets: specificTargets,
+          preferInputBaseName: prefix === "response",
+        });
 
         result[`${prefix}TypeName`] = typesCacheGet(
           generateContext,
@@ -161,10 +153,16 @@ export function routerGenerator(generateContext) {
           resolvedRef,
           {
             validatorState: "output",
-            nameSuffixes: {
-              input: "Input",
-              output: "Validated",
-            },
+            nameSuffixes:
+              prefix !== "response"
+                ? {
+                    input: "ValidatorInput",
+                    output: "Validated",
+                  }
+                : {
+                    input: "RouterOutput",
+                    output: "RouterValidated",
+                  },
             targets: specificTargets,
           },
         );
@@ -176,16 +174,14 @@ export function routerGenerator(generateContext) {
           result[`${prefix}TypeName`],
         );
 
-        if (prefix !== "response") {
-          result[`${prefix}Validator`] = validatorGetNameAndImport(
-            generateContext,
-            routerFile,
+        result[`${prefix}Validator`] = validatorGetNameAndImport(
+          generateContext,
+          routerFile,
 
-            // @ts-expect-error
-            resolvedRef,
-            result[`${prefix}TypeName`],
-          );
-        }
+          // @ts-expect-error
+          resolvedRef,
+          result[`${prefix}TypeName`],
+        );
       }
 
       nameMap.set(route, result);

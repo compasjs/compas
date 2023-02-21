@@ -4,16 +4,17 @@ editLink: false
 
 # Changelog
 
-
 ### [v0.0.225](https://github.com/compasjs/compas/releases/tag/v0.0.225)
 
 #### Bug fixes
 
-- fix(code-gen): correctly preprocess `T.extendNamedObject().relations()` [`7dd510`](https://github.com/compasjs/compas/commit/7dd510400916a539a4114fc50f9231c3044bed02)
+- fix(code-gen): correctly preprocess `T.extendNamedObject().relations()`
+  [`7dd510`](https://github.com/compasjs/compas/commit/7dd510400916a539a4114fc50f9231c3044bed02)
 
 #### Dependency updates
 
-- build(deps): bump file-type from 18.2.0 to 18.2.1 ([#2370](https://github.com/compasjs/compas/pull/2370))
+- build(deps): bump file-type from 18.2.0 to 18.2.1
+  ([#2370](https://github.com/compasjs/compas/pull/2370))
   - [Release notes](https://github.com/sindresorhus/file-type/releases)
 
 ### [v0.0.224](https://github.com/compasjs/compas/releases/tag/v0.0.224)

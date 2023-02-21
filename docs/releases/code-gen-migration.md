@@ -14,8 +14,9 @@ of breaking changes to a minimum. The biggest ones are:
 - [A new code generator entrypoint](#replaced-wild-grown-app-with-generator)
   with [different accepted options](#app-generate-generator-generate)
 - [Consistent type names](#refactored-how-the-type-names-are-generated)
-- More validators in the [api clients](#always-validating-api-client-responses)
-  and [database queries](#validating-database-inputs-and-outputs)
+- More validators in the [router](#validating-router-responses),
+  [api clients](#always-validating-api-client-responses) and
+  [database queries](#validating-database-inputs-and-outputs)
 - And a few other bits and bobs.
 
 ## Replaced wild grown `App` with `Generator`
@@ -162,6 +163,23 @@ Other changes around the api clients are:
 - The Node.js compatible api clients now need an explicit interceptor to turn
   any error thrown in a `AppError`. You can add this interceptor via
   `axiosInterceptErrorAndWrapWithAppError`
+
+## Validating router responses
+
+The router will now run the response through a validator as well. This ensures
+that API clients for Compas backed API's will never get an unexpected response
+validation error. It instead will return an internal server error
+(`AppError.serverError`), which will automatically be logged as `level: "error"`
+since the server doesn't uphold its part of the contract.
+
+Other changes around the router generator are:
+
+- `next` is removed from the controller signatures. This proved unnecessary in
+  all cases. If custom Koa middleware is necessary, wrap it up in a custom
+  Promise that only resolves once. Search for `return next()` in your codebase
+  to find any 'offending' code.
+- The exported `router` function from `common/router.js` now accepts the body
+  parsers instead of via `setBodyParsers`.
 
 ## Validating database inputs and outputs
 
