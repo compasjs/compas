@@ -13,8 +13,8 @@ export function extendWithCodeGenExperimental(generator) {
     .pattern(/^[a-zA-Z$][a-zA-Z\d]+$/g);
 
   const typeDefinitionBase = {
-    docString: T.string().min(0),
-    isOptional: T.bool(),
+    docString: T.string().min(0).default(`""`),
+    isOptional: T.bool().default(false),
     defaultValue: T.anyOf()
       .values(T.string().min(1), T.bool(), T.number())
       .optional(),
@@ -24,8 +24,9 @@ export function extendWithCodeGenExperimental(generator) {
         searchable: T.bool().optional(),
         hasDefaultValue: T.bool().optional(),
       })
+      .default(`{}`)
       .loose(),
-    validator: T.object().loose(),
+    validator: T.object().default(`{}`).loose(),
   };
 
   const namedTypeDefinitionBase = {

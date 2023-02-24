@@ -108,6 +108,9 @@ async function main(logger) {
 ### Other generator changes
 
 - `App#extend` is replaced by `App#addStructure`.
+- `App.defaultEslintIgnore` is removed. You can archieve the same with
+  `overrides: [{ files: ["src/generated/**"], rules: {/* ... */ }]` in your
+  `.eslintrc`
 - `App#generateTypes` is removed; this was pretty hacky and not really necessary
   for deduplication or type extension. Use the
   `generators.types.declareGlobalTypes` option for global types. Keep manually
@@ -132,6 +135,17 @@ generated for `params` or `body` in the api client will try to use the base name
 for the input type. But the route generator will try to use the base names on
 `ctx.validatedParams` which is the validated type.
 
+This mostly affects the frontend API clients. A quick way to catch most renames
+would be to execute the following replacements over your codebase;
+
+- `ParamsInput` -> `Params`
+- `QueryInput` -> `Query`
+- `BodyInput` -> `Body`
+- `FilesInput` -> `Files`
+- `ResponseApi` -> `Response`
+- Other renames are less straight forward removing the `Api` or `Input`
+  suffixes.
+
 ## Auto converting validators
 
 The `.convert()` option is implied now for `T.number()` and `T.array()`. This
@@ -149,20 +163,24 @@ Other changes around the validators are:
   for existing usages of the old keys with something like
   `/validator\.(\w+)\.(\w+)/`.
 
-## Always validating API client responses
+## Validating API client responses
 
 The generated response types in the api client are nice on paper, but could be
 far from reality. This could be due to a bug on the api side, or when the API
 documentation is not updated. To catch these issues and proof type-correctness,
-the generated api client will now always validate the response before returning
-it to the caller. There is an extra option added to the api client functions to
-skip this behaviour on specific calls.
+the generated api client can now validate the response before returning it to
+the caller. There is an extra option added to the api client functions to skip
+this behaviour on specific calls. Response validation is automatically skipped
+for the `tsAxiosBrowser` and `tsAxiosReactNative` targets.
 
 Other changes around the api clients are:
 
 - The Node.js compatible api clients now need an explicit interceptor to turn
   any error thrown in a `AppError`. You can add this interceptor via
   `axiosInterceptErrorAndWrapWithAppError`
+- The `common/reactQuery.ts` file is replaced by `common/api-client.ts`. This
+  file will also contain the global clients if enabled via
+  `globalClients: true`.
 
 ## Validating router responses
 

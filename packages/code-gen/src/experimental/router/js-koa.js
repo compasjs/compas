@@ -389,6 +389,9 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
 });`,
         );
         fileBlockEnd(file);
+        fileBlockStart(file, `else`);
+        fileWrite(file, `ctx.body = validatedResponse.value;`);
+        fileBlockEnd(file);
       }
 
       fileWrite(file, `return next();`);

@@ -1244,7 +1244,6 @@ export function validatorJavascriptReference(
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  validatorState.dependingValidators.push(type);
   const ref = structureResolveReference(
     validatorState.generateContext.structure,
     type,
@@ -1260,12 +1259,24 @@ export function validatorJavascriptReference(
     validatorState.outputTypeOptions,
   );
 
-  if (file.relativePath !== `${type.reference.group}/validators.js`) {
-    const importCollector = JavascriptImportCollector.getImportCollector(file);
-    importCollector.destructure(
-      `../${type.reference.group}/validators.js`,
-      `validate${referredTypeName}`,
-    );
+  if (generateContext.options.targetLanguage === "js") {
+    if (file.relativePath !== `${type.reference.group}/validators.js`) {
+      const importCollector =
+        JavascriptImportCollector.getImportCollector(file);
+      importCollector.destructure(
+        `../${type.reference.group}/validators.js`,
+        `validate${referredTypeName}`,
+      );
+    }
+  } else if (generateContext.options.targetLanguage === "ts") {
+    if (file.relativePath !== `${type.reference.group}/validators.ts`) {
+      const importCollector =
+        JavascriptImportCollector.getImportCollector(file);
+      importCollector.destructure(
+        `../${type.reference.group}/validators`,
+        `validate${referredTypeName}`,
+      );
+    }
   }
 
   const intermediateVariable = `refResult${validatorState.reusedVariableIndex++}`;

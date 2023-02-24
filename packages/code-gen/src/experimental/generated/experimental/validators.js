@@ -110,9 +110,7 @@ export function validateExperimentalAnyDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -121,15 +119,17 @@ export function validateExperimentalAnyDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -293,9 +293,7 @@ export function validateExperimentalAnyDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -1041,9 +1039,7 @@ export function validateExperimentalAnyOfDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -1052,15 +1048,17 @@ export function validateExperimentalAnyOfDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -1224,9 +1222,7 @@ export function validateExperimentalAnyOfDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -1315,9 +1311,7 @@ export function validateExperimentalAnyOfDefinition(value) {
         }
       }
       if (value["validator"] === null || value["validator"] === undefined) {
-        errorMap[`$.validator`] = {
-          key: "validator.undefined",
-        };
+        result["validator"] = {};
       } else {
         if (
           typeof value["validator"] !== "object" ||
@@ -2036,9 +2030,7 @@ export function validateExperimentalArrayDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -2047,15 +2039,17 @@ export function validateExperimentalArrayDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -2219,9 +2213,7 @@ export function validateExperimentalArrayDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -2555,9 +2547,7 @@ export function validateExperimentalBooleanDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -2566,15 +2556,17 @@ export function validateExperimentalBooleanDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -2738,9 +2730,7 @@ export function validateExperimentalBooleanDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -3032,9 +3022,7 @@ export function validateExperimentalCrudDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -3043,15 +3031,17 @@ export function validateExperimentalCrudDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -3215,9 +3205,7 @@ export function validateExperimentalCrudDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -3306,9 +3294,7 @@ export function validateExperimentalCrudDefinition(value) {
         }
       }
       if (value["validator"] === null || value["validator"] === undefined) {
-        errorMap[`$.validator`] = {
-          key: "validator.undefined",
-        };
+        result["validator"] = {};
       } else {
         if (
           typeof value["validator"] !== "object" ||
@@ -4058,9 +4044,7 @@ export function validateExperimentalReferenceDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -4069,15 +4053,17 @@ export function validateExperimentalReferenceDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -4241,9 +4227,7 @@ export function validateExperimentalReferenceDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -4332,9 +4316,7 @@ export function validateExperimentalReferenceDefinition(value) {
         }
       }
       if (value["validator"] === null || value["validator"] === undefined) {
-        errorMap[`$.validator`] = {
-          key: "validator.undefined",
-        };
+        result["validator"] = {};
       } else {
         if (
           typeof value["validator"] !== "object" ||
@@ -4559,9 +4541,7 @@ export function validateExperimentalDateDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -4570,15 +4550,17 @@ export function validateExperimentalDateDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -4742,9 +4724,7 @@ export function validateExperimentalDateDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -5126,9 +5106,7 @@ export function validateExperimentalExtendDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -5137,15 +5115,17 @@ export function validateExperimentalExtendDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -5309,9 +5289,7 @@ export function validateExperimentalExtendDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -5400,9 +5378,7 @@ export function validateExperimentalExtendDefinition(value) {
         }
       }
       if (value["validator"] === null || value["validator"] === undefined) {
-        errorMap[`$.validator`] = {
-          key: "validator.undefined",
-        };
+        result["validator"] = {};
       } else {
         if (
           typeof value["validator"] !== "object" ||
@@ -5850,9 +5826,7 @@ export function validateExperimentalFileDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -5861,15 +5835,17 @@ export function validateExperimentalFileDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -6033,9 +6009,7 @@ export function validateExperimentalFileDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -6306,9 +6280,7 @@ export function validateExperimentalGenericDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -6317,15 +6289,17 @@ export function validateExperimentalGenericDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -6489,9 +6463,7 @@ export function validateExperimentalGenericDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -6580,9 +6552,7 @@ export function validateExperimentalGenericDefinition(value) {
         }
       }
       if (value["validator"] === null || value["validator"] === undefined) {
-        errorMap[`$.validator`] = {
-          key: "validator.undefined",
-        };
+        result["validator"] = {};
       } else {
         if (
           typeof value["validator"] !== "object" ||
@@ -6740,9 +6710,7 @@ export function validateExperimentalNumberDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -6751,15 +6719,17 @@ export function validateExperimentalNumberDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -6923,9 +6893,7 @@ export function validateExperimentalNumberDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -7360,9 +7328,7 @@ export function validateExperimentalObjectDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -7371,15 +7337,17 @@ export function validateExperimentalObjectDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -7543,9 +7511,7 @@ export function validateExperimentalObjectDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -8132,9 +8098,7 @@ export function validateExperimentalOmitDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -8143,15 +8107,17 @@ export function validateExperimentalOmitDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -8315,9 +8281,7 @@ export function validateExperimentalOmitDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -8656,9 +8620,7 @@ export function validateExperimentalPickDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -8667,15 +8629,17 @@ export function validateExperimentalPickDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -8839,9 +8803,7 @@ export function validateExperimentalPickDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -9180,9 +9142,7 @@ export function validateExperimentalStringDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -9191,15 +9151,17 @@ export function validateExperimentalStringDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -9363,9 +9325,7 @@ export function validateExperimentalStringDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -9928,9 +9888,7 @@ export function validateExperimentalUuidDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -9939,15 +9897,17 @@ export function validateExperimentalUuidDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -10111,9 +10071,7 @@ export function validateExperimentalUuidDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -12230,9 +12188,7 @@ export function validateExperimentalRouteDefinition(value) {
         }
       }
       if (value["docString"] === null || value["docString"] === undefined) {
-        errorMap[`$.docString`] = {
-          key: "validator.undefined",
-        };
+        result["docString"] = "";
       } else {
         /** @type {string} */
         let convertedString0 = value["docString"];
@@ -12241,15 +12197,17 @@ export function validateExperimentalRouteDefinition(value) {
             key: "validator.string",
           };
         } else {
-          {
-            result["docString"] = convertedString0;
+          if (convertedString0.length === 0) {
+            result["docString"] = "";
+          } else {
+            {
+              result["docString"] = convertedString0;
+            }
           }
         }
       }
       if (value["isOptional"] === null || value["isOptional"] === undefined) {
-        errorMap[`$.isOptional`] = {
-          key: "validator.undefined",
-        };
+        result["isOptional"] = false;
       } else {
         if (
           value["isOptional"] === true ||
@@ -12413,9 +12371,7 @@ export function validateExperimentalRouteDefinition(value) {
         }
       }
       if (value["sql"] === null || value["sql"] === undefined) {
-        errorMap[`$.sql`] = {
-          key: "validator.undefined",
-        };
+        result["sql"] = {};
       } else {
         if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
           errorMap[`$.sql`] = {
@@ -12504,9 +12460,7 @@ export function validateExperimentalRouteDefinition(value) {
         }
       }
       if (value["validator"] === null || value["validator"] === undefined) {
-        errorMap[`$.validator`] = {
-          key: "validator.undefined",
-        };
+        result["validator"] = {};
       } else {
         if (
           typeof value["validator"] !== "object" ||

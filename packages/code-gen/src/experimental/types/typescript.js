@@ -326,7 +326,11 @@ export function typesTypescriptFormatType(
   } else if (type.type === "date") {
     if (options.validatorState === "input") {
       fileWriteInline(file, `Date|string|number`);
-    } else if (type.specifier) {
+    } else if (
+      type.specifier ||
+      options.targets.includes("tsAxiosBrowser") ||
+      options.targets.includes("tsAxiosReactNative")
+    ) {
       fileWriteInline(file, "string");
     } else {
       fileWriteInline(file, `Date`);

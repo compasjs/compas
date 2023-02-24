@@ -57,6 +57,9 @@ export function apiClientGenerator(generateContext) {
   ) {
     typeTargets.push("tsAxiosReactNative");
   }
+  const skipResponseValidation =
+    typeTargets.includes("tsAxiosBrowser") ||
+    typeTargets.includes("tsAxiosReactNative");
 
   targetCustomSwitch(
     {
@@ -112,7 +115,7 @@ export function apiClientGenerator(generateContext) {
         type,
       );
 
-      if (name === "response") {
+      if (name === "response" && !skipResponseValidation) {
         // @ts-expect-error
         validatorGeneratorGenerateValidator(generateContext, typeRef, {
           validatorState: "output",
@@ -125,7 +128,7 @@ export function apiClientGenerator(generateContext) {
       } else {
         // @ts-expect-error
         typesGeneratorGenerateNamedType(generateContext, typeRef, {
-          validatorState: "input",
+          validatorState: name === "response" ? "output" : "input",
           nameSuffixes: {
             input: "Input",
             output: "Validated",
@@ -153,7 +156,7 @@ export function apiClientGenerator(generateContext) {
         );
       }
 
-      if (name === "response") {
+      if (name === "response" && !skipResponseValidation) {
         contextNames[`${name}Validator`] = validatorGetNameAndImport(
           generateContext,
           file,

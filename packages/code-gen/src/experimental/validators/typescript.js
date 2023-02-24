@@ -60,7 +60,7 @@ export function validatorTypescriptGetFile(generateContext, type) {
     `
 type Either<T, E> = { value: T; error?: never }|{ value?: never; error: E };
 
-type ValidatorErrorMap = Record<string, any|undefined>;`,
+type ValidatorErrorMap = Record<string, unknown|undefined>;`,
   );
 
   return file;
@@ -103,7 +103,7 @@ export function validatorTypescriptStartValidator(
       generateContext,
       file,
       validatorState.inputTypeName,
-    )}|any): Either<${typesGeneratorUseTypeName(
+    )}|unknown): Either<${typesGeneratorUseTypeName(
       generateContext,
       file,
       validatorState.outputTypeName,

@@ -21,11 +21,9 @@ export const fileImplementations = {
   tsAxiosBrowser: {
     validatorInputType: `{ name?: string, data: Blob }`,
     validatorOutputType: `Blob`,
-    validatorExpression: `$value$ instanceof Blob`,
   },
   tsAxiosReactNative: {
     validatorInputType: `(string | { name?: string, type?: string, uri: string })`,
     validatorOutputType: `Blob`,
-    validatorExpression: `$value$ instanceof Blob`,
   },
 };

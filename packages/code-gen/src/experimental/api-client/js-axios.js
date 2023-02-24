@@ -115,33 +115,6 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
 }
 `,
     );
-  } else {
-    fileWrite(
-      file,
-      `\nexport class ResponseError extends Error {
-  constructor(group, name, error) {
-    super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
-
-    this.group = group;
-    this.name = name;
-    this.error = error;
-    
-    Object.setPrototypeOf(this, ResponseError.prototype);
-  }
-  
-  toJSON() {
-    return {
-      name: "ResponseError",
-      route: {
-        group: this.group,
-        name: this.name,
-      },
-      error: this.error,
-    };
-  }
-}
-`,
-    );
   }
 }
 
@@ -188,8 +161,6 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
     "node.js"
   ) {
     importCollector.destructure("@compas/stdlib", "AppError");
-  } else {
-    importCollector.destructure("../common/api-client.js", "ResponseError");
   }
 
   return file;
@@ -373,20 +344,14 @@ for (const key of Object.keys(files)) {
     );
     fileBlockStart(file, `if (error)`);
 
-    if (options.target.targetRuntime === "node.js") {
-      fileWrite(
-        file,
-        `throw AppError.validationError("validator.error", {
+    fileWrite(
+      file,
+      `throw AppError.validationError("validator.error", {
   route: { group: "${route.group}", name: "${route.name}", },
   error,
 });`,
-      );
-    } else {
-      fileWrite(
-        file,
-        `throw new ResponseError("${route.group}","${route.name}", error);`,
-      );
-    }
+    );
+
     fileBlockEnd(file);
 
     fileBlockStart(file, `else`);

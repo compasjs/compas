@@ -79,12 +79,16 @@ export function modelKeyAddDateKeys(generateContext) {
       model.keys["createdAt"] = new DateType()
         .sqlDefault()
         .searchable()
-        .docs("Automatically generated 'createdAt' key.")
+        .docs(
+          "Automatically generated 'createdAt', containing an ISO timestamp.",
+        )
         .build();
       model.keys["updatedAt"] = new DateType()
         .sqlDefault()
         .searchable()
-        .docs("Automatically generated 'updatedAt' key.")
+        .docs(
+          "Automatically generated 'updatedAt', containing an ISO timestamp.",
+        )
         .build();
     }
 
@@ -93,7 +97,7 @@ export function modelKeyAddDateKeys(generateContext) {
         .optional()
         .searchable()
         .docs(
-          "Automatically generated 'deletedAt' key. This is by default filtered on in 'select' queries.",
+          "Automatically generated 'deletedAt', containing an ISO timestamp. This is by default filtered on in 'select' queries.",
         )
         .build();
     }

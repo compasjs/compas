@@ -62,14 +62,16 @@ export type ExperimentalAnyDefinitionInput = {
   type: "any";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     allowNull: boolean | "true" | "false";
   };
@@ -470,14 +472,16 @@ export type ExperimentalArrayDefinitionInput = {
   type: "array";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     convert: boolean | "true" | "false";
     min?: number | undefined;
@@ -490,14 +494,16 @@ export type ExperimentalBooleanDefinitionInput = {
   type: "boolean";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     convert: boolean | "true" | "false";
     allowNull: boolean | "true" | "false";
@@ -507,15 +513,17 @@ export type ExperimentalBooleanDefinitionInput = {
 
 export type ExperimentalReferenceDefinitionInput = {
   type: "reference";
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
-  validator: {};
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
+  validator?: {} | undefined;
   reference: {
     group: ExperimentalNamePart;
     name: ExperimentalNamePart;
@@ -526,15 +534,17 @@ export type ExperimentalCrudDefinitionInput = {
   type: "crud";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
-  validator: {};
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
+  validator?: {} | undefined;
   basePath?: string | undefined;
   entity?: ExperimentalReferenceDefinitionInput | undefined;
   fromParent?:
@@ -580,14 +590,16 @@ export type ExperimentalDateDefinitionInput = {
   type: "date";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     allowNull: boolean | "true" | "false";
     min?: Date | string | number | undefined;
@@ -611,15 +623,17 @@ export type ExperimentalExtendDefinitionInput = {
   type: "extend";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
-  validator: {};
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
+  validator?: {} | undefined;
   keys: { [key: string]: ExperimentalTypeSystemDefinitionInput };
   reference: ExperimentalReferenceDefinitionInput;
   relations:
@@ -631,14 +645,16 @@ export type ExperimentalFileDefinitionInput = {
   type: "file";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     mimeTypes?: string[] | string | undefined;
   };
@@ -648,15 +664,17 @@ export type ExperimentalGenericDefinitionInput = {
   type: "generic";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
-  validator: {};
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
+  validator?: {} | undefined;
   keys: ExperimentalTypeSystemDefinitionInput;
   values: ExperimentalTypeSystemDefinitionInput;
 };
@@ -665,14 +683,16 @@ export type ExperimentalNumberDefinitionInput = {
   type: "number";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     convert: boolean | "true" | "false";
     floatingPoint: boolean | "true" | "false";
@@ -687,14 +707,16 @@ export type ExperimentalObjectDefinitionInput = {
   type: "object";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     allowNull: boolean | "true" | "false";
     strict: boolean | "true" | "false";
@@ -720,14 +742,16 @@ export type ExperimentalOmitDefinitionInput = {
   type: "omit";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     allowNull: boolean | "true" | "false";
     strict: boolean | "true" | "false";
@@ -740,14 +764,16 @@ export type ExperimentalPickDefinitionInput = {
   type: "pick";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     allowNull: boolean | "true" | "false";
     strict: boolean | "true" | "false";
@@ -760,14 +786,16 @@ export type ExperimentalStringDefinitionInput = {
   type: "string";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     convert: boolean | "true" | "false";
     trim: boolean | "true" | "false";
@@ -786,14 +814,16 @@ export type ExperimentalUuidDefinitionInput = {
   type: "uuid";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
   validator: {
     allowNull: boolean | "true" | "false";
   };
@@ -822,15 +852,17 @@ export type ExperimentalAnyOfDefinitionInput = {
   type: "anyOf";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
-  validator: {};
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
+  validator?: {} | undefined;
   values:
     | ExperimentalTypeSystemDefinitionInput[]
     | ExperimentalTypeSystemDefinitionInput;
@@ -1119,15 +1151,17 @@ export type ExperimentalRouteDefinitionInput = {
   type: "route";
   group?: string | undefined;
   name?: string | undefined;
-  docString: string;
-  isOptional: boolean | "true" | "false";
+  docString?: string | undefined;
+  isOptional?: boolean | "true" | "false" | undefined;
   defaultValue?: string | boolean | "true" | "false" | number | undefined;
-  sql: {
-    primary?: boolean | "true" | "false" | undefined;
-    searchable?: boolean | "true" | "false" | undefined;
-    hasDefaultValue?: boolean | "true" | "false" | undefined;
-  };
-  validator: {};
+  sql?:
+    | {
+        primary?: boolean | "true" | "false" | undefined;
+        searchable?: boolean | "true" | "false" | undefined;
+        hasDefaultValue?: boolean | "true" | "false" | undefined;
+      }
+    | undefined;
+  validator?: {} | undefined;
   method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
   idempotent: boolean | "true" | "false";
   path: string;

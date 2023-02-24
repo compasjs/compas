@@ -57,7 +57,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -67,17 +67,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -127,13 +129,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -476,7 +479,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -486,17 +489,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -546,13 +551,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -589,13 +595,14 @@
         },
         "validator": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {},
           "relations": []
         },
@@ -681,7 +688,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -691,17 +698,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -751,13 +760,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -913,7 +923,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -923,17 +933,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -983,13 +995,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -1127,7 +1140,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -1137,17 +1150,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -1197,13 +1212,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -1240,13 +1256,14 @@
         },
         "validator": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {},
           "relations": []
         },
@@ -1626,7 +1643,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -1636,17 +1653,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -1696,13 +1715,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -1873,7 +1893,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -1883,17 +1903,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -1943,13 +1965,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -1986,13 +2009,14 @@
         },
         "validator": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {},
           "relations": []
         },
@@ -2122,7 +2146,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -2132,17 +2156,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -2192,13 +2218,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -2807,7 +2834,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -2817,17 +2844,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -2877,13 +2906,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -2920,13 +2950,14 @@
         },
         "validator": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {},
           "relations": []
         },
@@ -3251,7 +3282,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -3261,17 +3292,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -3321,13 +3354,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -3513,7 +3547,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -3523,17 +3557,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -3583,13 +3619,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -3862,7 +3899,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -3872,17 +3909,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -3932,13 +3971,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -4101,7 +4141,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -4111,17 +4151,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -4171,13 +4213,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -4312,7 +4355,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -4322,17 +4365,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -4382,13 +4427,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -4425,13 +4471,14 @@
         },
         "validator": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {},
           "relations": []
         },
@@ -4625,7 +4672,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -4635,17 +4682,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -4695,13 +4744,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -4738,13 +4788,14 @@
         },
         "validator": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {},
           "relations": []
         },
@@ -5178,7 +5229,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -5188,17 +5239,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -5248,13 +5301,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",
@@ -5812,7 +5866,7 @@
         },
         "docString": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false,
@@ -5822,17 +5876,19 @@
             "min": 0
           },
           "sql": {},
-          "type": "string"
+          "type": "string",
+          "defaultValue": "\"\""
         },
         "isOptional": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "convert": false,
             "allowNull": false
           },
           "sql": {},
-          "type": "boolean"
+          "type": "boolean",
+          "defaultValue": "false"
         },
         "defaultValue": {
           "docString": "",
@@ -5882,13 +5938,14 @@
         },
         "sql": {
           "docString": "",
-          "isOptional": false,
+          "isOptional": true,
           "validator": {
             "allowNull": false,
             "strict": false
           },
           "sql": {},
           "type": "object",
+          "defaultValue": "{}",
           "keys": {
             "primary": {
               "docString": "",

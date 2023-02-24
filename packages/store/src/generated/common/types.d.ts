@@ -18,10 +18,10 @@ export type StoreFile = {
   name: string;
   meta: StoreFileMeta;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date;
 };
 
@@ -45,10 +45,10 @@ export type StoreFileInput = {
   name: string;
   meta?: StoreFileMetaInput | undefined;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date | string | number;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date | string | number;
 };
 
@@ -233,10 +233,10 @@ export type QueryResultStoreFile = {
   name: string;
   meta: StoreFileMeta;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date;
 };
 
@@ -249,10 +249,10 @@ export type QueryResultStoreFileInput = {
   name: string;
   meta?: StoreFileMetaInput | undefined;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date | string | number;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date | string | number;
 };
 
@@ -265,10 +265,10 @@ export type StoreFileInsertPartial = {
   name: string;
   meta?: StoreFileMetaInput | undefined | null;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt?: Date | string | number | undefined | null;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt?: Date | string | number | undefined | null;
 };
 
@@ -286,10 +286,10 @@ export type StoreFileInsertPartialValidated = {
   name: string;
   meta: StoreFileMeta;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt?: Date | undefined | null;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt?: Date | undefined | null;
 };
 
@@ -463,10 +463,10 @@ export type StoreJob = {
   scheduledAt: Date;
   data: any;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date;
 };
 
@@ -483,10 +483,10 @@ export type StoreJobInput = {
   scheduledAt?: Date | string | number | undefined;
   data?: any | undefined;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date | string | number;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date | string | number;
 };
 
@@ -737,10 +737,10 @@ export type QueryResultStoreJob = {
   scheduledAt: Date;
   data: any;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date;
 };
 
@@ -754,10 +754,10 @@ export type QueryResultStoreJobInput = {
   scheduledAt?: Date | string | number | undefined;
   data?: any | undefined;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date | string | number;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date | string | number;
 };
 
@@ -771,10 +771,10 @@ export type StoreJobInsertPartial = {
   scheduledAt?: Date | string | number | undefined | null;
   data?: any | undefined | null;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt?: Date | string | number | undefined | null;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt?: Date | string | number | undefined | null;
 };
 
@@ -793,10 +793,10 @@ export type StoreJobInsertPartialValidated = {
   scheduledAt: Date;
   data: any;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt?: Date | undefined | null;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt?: Date | undefined | null;
 };
 
@@ -1052,10 +1052,10 @@ export type StoreSessionStore = {
   revokedAt?: Date | undefined;
   data: any;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date;
 };
 
@@ -1082,10 +1082,10 @@ export type StoreSessionStoreInput = {
   revokedAt?: Date | string | number | undefined;
   data?: any | undefined;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date | string | number;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date | string | number;
 };
 
@@ -1499,10 +1499,10 @@ export type QueryResultStoreSessionStore = {
   revokedAt?: Date | undefined;
   data: any;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date;
   accessTokens?: QueryResultStoreSessionStoreToken[] | undefined;
 };
@@ -1525,10 +1525,10 @@ export type QueryResultStoreSessionStoreInput = {
   revokedAt?: Date | string | number | undefined;
   data?: any | undefined;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt: Date | string | number;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt: Date | string | number;
   accessTokens?:
     | QueryResultStoreSessionStoreTokenInput[]
@@ -1543,10 +1543,10 @@ export type StoreSessionStoreInsertPartial = {
   revokedAt?: Date | string | number | undefined | null;
   data?: any | undefined | null;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt?: Date | string | number | undefined | null;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt?: Date | string | number | undefined | null;
 };
 
@@ -1562,10 +1562,10 @@ export type StoreSessionStoreInsertPartialValidated = {
   revokedAt?: Date | undefined | null;
   data: any;
 
-  // Automatically generated 'createdAt' key.
+  // Automatically generated 'createdAt', containing an ISO timestamp.
   createdAt?: Date | undefined | null;
 
-  // Automatically generated 'updatedAt' key.
+  // Automatically generated 'updatedAt', containing an ISO timestamp.
   updatedAt?: Date | undefined | null;
 };
 

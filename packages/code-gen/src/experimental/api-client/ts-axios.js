@@ -111,26 +111,18 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance: AxiosInsta
 `,
     );
   } else {
+    importCollector.destructure("axios", "AxiosError");
+
     fileWrite(
       file,
-      `\nexport class ResponseError extends Error {
-  constructor(public group: string, public name: string, public error: any) {
-    super(\`Response validation failed for (group: "$\{group}", name: "$\{name}").\`);
-    
-    Object.setPrototypeOf(this, ResponseError.prototype);
-  }
-  
-  toJSON() {
-    return {
-      name: "ResponseError",
-      route: {
-        group: this.group,
-        name: this.name,
-      },
-      error: this.error,
-    };
-  }
-}
+      `\nexport type AppErrorResponse = AxiosError<{
+  key?: string;
+  status?: number;
+  requestId?: number;
+  info?: {
+    [key: string]: unknown;
+  };
+}>;
 `,
     );
 
@@ -210,7 +202,7 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
   ) {
     importCollector.destructure("@compas/stdlib", "AppError");
   } else {
-    importCollector.destructure("../common/api-client", "ResponseError");
+    importCollector.destructure("../common/api-client", "AppErrorResponse");
   }
 
   return file;
@@ -237,6 +229,10 @@ export function tsAxiosGenerateFunction(
       message: "Received unknown apiClient generator options",
     });
   }
+
+  const skipResponseValidation =
+    options.target.targetRuntime === "browser" ||
+    options.target.targetRuntime === "react-native";
 
   const args = [];
   fileWrite(file, `/**`);
@@ -270,7 +266,9 @@ export function tsAxiosGenerateFunction(
   // Allow overwriting any request config
   args.push(
     `requestConfig?: AxiosRequestConfig${
-      route.response ? ` & { skipResponseValidation?: boolean }` : ""
+      route.response && !skipResponseValidation
+        ? ` & { skipResponseValidation?: boolean }`
+        : ""
     }`,
   );
 
@@ -371,7 +369,7 @@ for (const key of Object.keys(files)) {
   fileContextSetIndent(file, -1);
   fileWrite(file, `});`);
 
-  if (route.response) {
+  if (route.response && !skipResponseValidation) {
     fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
     fileWrite(file, `return response.data;`);
     fileBlockEnd(file);
@@ -381,21 +379,14 @@ for (const key of Object.keys(files)) {
       `const { value, error } = ${contextNames.responseValidator}(response.data);`,
     );
     fileBlockStart(file, `if (error)`);
-
-    if (options.target.targetRuntime === "node.js") {
-      fileWrite(
-        file,
-        `throw AppError.validationError("validator.error", {
+    fileWrite(
+      file,
+      `throw AppError.validationError("validator.error", {
   route: { group: "${route.group}", name: "${route.name}", },
   error,
 });`,
-      );
-    } else {
-      fileWrite(
-        file,
-        `throw new ResponseError("${route.group}","${route.name}", error);`,
-      );
-    }
+    );
+
     fileBlockEnd(file);
 
     fileBlockStart(file, `else`);

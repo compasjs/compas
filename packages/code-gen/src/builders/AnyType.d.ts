@@ -53,7 +53,9 @@ export class AnyType extends TypeBuilder {
       | undefined,
   ): AnyType;
   /**
-   * Add specific implementations for each supported target. Not all targets are required. The targets are resolved based on the most specific target first (e.g. 'jsAxios' before 'js').
+   * Add specific implementations for each supported target. Not all targets are
+   * required. The targets are resolved based on the most specific target first (e.g.
+   * 'jsAxios' before 'js').
    *
    * Note that these implementations are only used in @compas/code-gen/experimental.
    *

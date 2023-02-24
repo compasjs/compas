@@ -1,3 +1,4 @@
+import { AppError } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class AnyType extends TypeBuilder {
@@ -60,7 +61,9 @@ export class AnyType extends TypeBuilder {
   }
 
   /**
-   * Add specific implementations for each supported target. Not all targets are required. The targets are resolved based on the most specific target first (e.g. 'jsAxios' before 'js').
+   * Add specific implementations for each supported target. Not all targets are
+   * required. The targets are resolved based on the most specific target first (e.g.
+   * 'jsAxios' before 'js').
    *
    * Note that these implementations are only used in @compas/code-gen/experimental.
    *
@@ -71,6 +74,16 @@ export class AnyType extends TypeBuilder {
    */
   implementations(targets) {
     this.data.targets = targets;
+
+    if (
+      targets?.tsAxiosBrowser?.validatorExpression ||
+      targets?.tsAxiosReactNative?.validatorExpression
+    ) {
+      throw AppError.serverError({
+        message:
+          "Can't have custom 'validatorExpression' for 'tsAxiosBrowser' and 'tsAxiosReactNative'.",
+      });
+    }
 
     return this;
   }

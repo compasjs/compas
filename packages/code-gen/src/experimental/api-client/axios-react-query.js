@@ -52,7 +52,7 @@ export function axiosReactQueryGetApiClientFile(generateContext, route) {
   }
 
   // Error handling
-  importCollector.destructure("../common/api-client", "ResponseError");
+  importCollector.destructure("../common/api-client", "AppErrorResponse");
   importCollector.destructure("axios", "AxiosError");
 
   importCollector.destructure("axios", "AxiosRequestConfig");
@@ -65,6 +65,7 @@ export function axiosReactQueryGetApiClientFile(generateContext, route) {
   importCollector.destructure("@tanstack/react-query", "UseQueryResult");
   importCollector.destructure("@tanstack/react-query", "useMutation");
   importCollector.destructure("@tanstack/react-query", "useQuery");
+  importCollector.destructure("@tanstack/react-query", "QueryClient");
 
   return file;
 }
@@ -91,6 +92,9 @@ export function axiosReactQueryGenerateFunction(
     });
   }
 
+  const skipResponseValidation =
+    options.target.targetRuntime === "browser" ||
+    options.target.targetRuntime === "react-native";
   const hookName = `use${upperCaseFirst(route.group)}${upperCaseFirst(
     route.name,
   )}`;
@@ -127,7 +131,9 @@ export function axiosReactQueryGenerateFunction(
       route.files ? `files: ${contextNames.filesTypeName}` : undefined,
       withRequestConfig
         ? `requestConfig?: AxiosRequestConfig${
-            route.response ? ` & { skipResponseValidation?: boolean }` : ""
+            route.response && !skipResponseValidation
+              ? ` & { skipResponseValidation?: boolean }`
+              : ""
           }`
         : undefined,
     ]
@@ -135,14 +141,15 @@ export function axiosReactQueryGenerateFunction(
       .map((it) => `${it}${suffix}`);
   const parameterList = ({ prefix, withRequestConfig }) => {
     return [
-      route.params ? `params,` : undefined,
-      route.query ? `query,` : undefined,
-      route.body ? `body,` : undefined,
-      route.files ? `files,` : undefined,
-      withRequestConfig ? `requestConfig,` : undefined,
+      route.params ? `${prefix}params,` : undefined,
+      route.query ? `${prefix}query,` : undefined,
+      route.body ? `${prefix}body,` : undefined,
+      route.files ? `${prefix}files,` : undefined,
+      withRequestConfig
+        ? `${prefix.replace(".", "?.")}requestConfig,`
+        : undefined,
     ]
       .filter((it) => !!it)
-      .map((it) => `${prefix}${it}`)
       .join("");
   };
 
@@ -158,7 +165,7 @@ export function axiosReactQueryGenerateFunction(
   if (route.method === "GET" || route.idempotent) {
     fileWriteInline(
       file,
-      `export async function ${hookName}<TData = ${contextNames.responseTypeName}>(`,
+      `export function ${hookName}<TData = ${contextNames.responseTypeName}>(`,
     );
 
     // When no arguments are required, the whole opts object is optional
@@ -175,7 +182,7 @@ export function axiosReactQueryGenerateFunction(
     );
     fileWrite(
       file,
-      `options?: UseQueryOptions<${contextNames.responseTypeName}, ResponseError|AxiosError, TData>`,
+      `options?: UseQueryOptions<${contextNames.responseTypeName}, AppErrorResponse, TData>`,
     );
     fileContextSetIndent(file, -1);
 
@@ -191,6 +198,10 @@ export function axiosReactQueryGenerateFunction(
       fileWrite(file, `const axiosInstance = useApi();`);
     }
 
+    if (!route.params && !route.query && !route.body) {
+      fileWrite(file, `opts ??= {};`);
+    }
+
     fileWrite(file, `const options = opts?.options ?? {};`);
     axiosReactQueryWriteIsEnabled(generateContext, file, route);
 
@@ -202,8 +213,11 @@ export function axiosReactQueryGenerateFunction(
     fileWriteInline(
       file,
       `), ({ signal }) => {
+  ${!route.params && !route.query && !route.body ? "if (opts) {" : ""}
   opts.requestConfig ??= {};
   opts.requestConfig.signal = signal;
+  ${!route.params && !route.query && !route.body ? "}" : ""}
+  
     
   return ${apiName}(${axiosInstanceParameter}
   ${parameterList({
@@ -239,19 +253,18 @@ ${hookName}.queryKey = (
  ${hookName}.fetch = (
   ${queryClientArgument}
   ${axiosInstanceArgument}
-  ${
-    route.params || route.query || route.body
-      ? `data: { ${argumentList({ suffix: ";", withRequestConfig: true }).join(
-          "\n",
-        )} }`
-      : ""
-  }
+  ${`data${
+    route.params || route.query || route.body ? "" : "?"
+  }: { ${argumentList({ suffix: ";", withRequestConfig: true }).join("\n")} }`}
  ) => {
   return queryClient.fetchQuery(${hookName}.queryKey(
   ${parameterList({ prefix: "data.", withRequestConfig: false })}
   ), () => ${apiName}(
    ${axiosInstanceParameter}
-  ${parameterList({ prefix: "data.", withRequestConfig: true })}
+  ${parameterList({
+    prefix: "data.",
+    withRequestConfig: true,
+  })}
   ));
 }
 /**
@@ -260,19 +273,20 @@ ${hookName}.queryKey = (
  ${hookName}.prefetch = (
   ${queryClientArgument}
   ${axiosInstanceArgument}
- ${
-   route.params || route.query || route.body
-     ? `data: { ${argumentList({ suffix: ";", withRequestConfig: true }).join(
-         "\n",
-       )} },`
-     : ""
- }
+ data${route.params || route.query || route.body ? "" : "?"}: { ${argumentList({
+        suffix: ";",
+        withRequestConfig: true,
+      }).join("\n")} },
+ 
  ) => {
   return queryClient.prefetchQuery(${hookName}.queryKey(
     ${parameterList({ prefix: "data.", withRequestConfig: false })}
   ), () => ${apiName}(
      ${axiosInstanceParameter}
-     ${parameterList({ prefix: "data.", withRequestConfig: true })}
+     ${parameterList({
+       prefix: "data.",
+       withRequestConfig: true,
+     })}
   ));
 }
 
@@ -326,7 +340,7 @@ ${hookName}.setQueryData = (
       file,
       `export function ${hookName}(options: UseMutationOptions<${
         contextNames.responseTypeName
-      }, AxiosError|ResponseError, ${upperCaseFirst(hookName)}Props> = {},`,
+      }, AppErrorResponse, ${upperCaseFirst(hookName)}Props> = {},`,
     );
 
     if (route.invalidations.length > 0) {
@@ -341,9 +355,7 @@ ${hookName}.setQueryData = (
       file,
       `): UseMutationResult<${
         contextNames.responseTypeName
-      }, AxiosError|ResponseError, ${upperCaseFirst(
-        hookName,
-      )}Props, unknown> {`,
+      }, AppErrorResponse, ${upperCaseFirst(hookName)}Props, unknown> {`,
     );
 
     if (!hasGlobalClient) {
@@ -356,10 +368,12 @@ ${hookName}.setQueryData = (
       }
     }
 
-    // Write out the invalidatiosn
-    fileBlockStart(file, `if (hookOptions.invalidateQueries)`);
-    axiosReactQueryWriteInvalidations(file, route);
-    fileBlockEnd(file);
+    if (route.invalidations.length > 0) {
+      // Write out the invalidatiosn
+      fileBlockStart(file, `if (hookOptions.invalidateQueries)`);
+      axiosReactQueryWriteInvalidations(file, route);
+      fileBlockEnd(file);
+    }
 
     fileWrite(
       file,

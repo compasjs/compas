@@ -82,6 +82,17 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Add response validation in the router
   - This should throw an `AppError.serverError`, preventing unnecessary errors
     in the frontend API client.
+- [x] Document breaking change `App.defaultEslintIgnore`
+  - Use `.eslint` overrides;
+    `overrides: [ { files: ["src/generated"], rules: { ...: off } } ]`
+    - `App.defaultEslintIgnore.push( "@typescript-eslint/no-explicit-any", "unused-imports/no-unused-imports", "@typescript-eslint/no-unused-vars", "@typescript-eslint/no-empty-interface", "@typescript-eslint/ban-types", );`
+- [x] Document breaking changes react-query
+  - Improved type names
+  - Imports from `common/reactQuery` -> `common/api-client`
+    - `ResponseError` ipv `AppErrorResponse`
+- [x] Figure out how to handle frontend server side rendering
+  - We basically can't validate there -> creating null objects. So enable
+    `skipResponseValidation` in SSR.
 - [ ] Link up the example readme's automatically to `docs/examples` in
       `syncMetadata`
 - [ ] Auto create the `examples/` navbar part
