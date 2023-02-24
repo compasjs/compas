@@ -1,4 +1,5 @@
-import { dirnameForModule, mainFn, pathJoin, spawn } from "@compas/stdlib";
+import { mkdir, readdir, rm, symlink } from "node:fs/promises";
+import { mainFn, spawn } from "@compas/stdlib";
 import { syncCliReference } from "../src/cli-reference.js";
 
 mainFn(import.meta, main);
@@ -9,11 +10,8 @@ mainFn(import.meta, main);
  * @param {Logger} logger
  */
 async function main(logger) {
-  if (pathJoin(process.cwd(), "scripts") !== dirnameForModule(import.meta)) {
-    throw new Error("Wrong directory. Run in root.");
-  }
-
   await syncCliReference(logger);
+  await syncExamplesToDocs();
 
   logger.info("Regenerating");
   await spawn("compas", ["generate"], {
@@ -24,4 +22,23 @@ async function main(logger) {
   });
 
   logger.info("Done");
+}
+
+/**
+ * Recreate soft links for all examples in to the docs
+ *
+ * @returns {Promise<void>}
+ */
+async function syncExamplesToDocs() {
+  await rm(`./docs/examples`, { force: true, recursive: true });
+  await mkdir(`./docs/examples`, { recursive: true });
+
+  const examples = await readdir("./examples");
+
+  for (const example of examples) {
+    await symlink(
+      `../../examples/${example}/README.md`,
+      `./docs/examples/${example}.md`,
+    );
+  }
 }

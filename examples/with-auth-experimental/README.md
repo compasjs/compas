@@ -4,6 +4,14 @@ This project is created using the
 [with-auth-experimental](https://github.com/compasjs/compas/tree/main/examples/with-auth-experimental)
 template via [create-compas](https://www.npmjs.com/package/create-compas).
 
+```shell
+# Via NPM
+npx create-compas@latest --template with-auth-experimental
+
+# Or with Yarn
+yarn create compas --template with-auth-experimental
+```
+
 ## Warning
 
 This project uses experimental features from @compas/code-gen. Use the

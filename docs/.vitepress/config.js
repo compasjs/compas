@@ -1,4 +1,6 @@
-module.exports = {
+import { readdirSync } from "fs";
+
+export default {
   lang: "en-US",
   title: "Compas",
   description: "Unified backend tooling",
@@ -193,15 +195,7 @@ function getHomeSidebar() {
       ],
     },
 
-    {
-      text: "Examples",
-      items: [
-        {
-          text: "Examples",
-          link: "/examples.html",
-        },
-      ],
-    },
+    getExamplesSidebar(),
 
     {
       text: "References",
@@ -231,6 +225,24 @@ function getHomeSidebar() {
       ],
     },
   ];
+}
+
+function getExamplesSidebar() {
+  const files = readdirSync("./docs/examples");
+
+  return {
+    text: "Examples",
+    items: [
+      {
+        text: "Introduction",
+        link: "/examples.html",
+      },
+      ...files.map((it) => ({
+        text: it.slice(0, 1).toUpperCase() + it.slice(0, -3).replace("-", " "),
+        link: `/examples/${it.replace(".md", ".html")}`,
+      })),
+    ],
+  };
 }
 
 function getReleaseNotesSidebar() {

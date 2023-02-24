@@ -4,6 +4,14 @@ This project is created using the
 [default](https://github.com/compasjs/compas/tree/main/examples/default)
 template via [create-compas](https://www.npmjs.com/package/create-compas).
 
+```shell
+# Via NPM
+npx create-compas@latest --template default-experimental
+
+# Or with Yarn
+yarn create compas --template default-experimental
+```
+
 # Experimental
 
 NOTE: This example uses experimental code-gen which is not stable yet!

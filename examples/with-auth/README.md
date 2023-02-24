@@ -4,6 +4,14 @@ This project is created using the
 [with-auth](https://github.com/compasjs/compas/tree/main/examples/with-auth)
 template via [create-compas](https://www.npmjs.com/package/create-compas).
 
+```shell
+# Via NPM
+npx create-compas@latest --template with-auth
+
+# Or with Yarn
+yarn create compas --template with-auth
+```
+
 ## Getting started
 
 - Start up the development Postgres and Minio instances

@@ -93,9 +93,9 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 - [x] Figure out how to handle frontend server side rendering
   - We basically can't validate there -> creating null objects. So enable
     `skipResponseValidation` in SSR.
-- [ ] Link up the example readme's automatically to `docs/examples` in
+- [x] Link up the example readme's automatically to `docs/examples` in
       `syncMetadata`
-- [ ] Auto create the `examples/` navbar part
+- [x] Auto create the `examples/` navbar part
 - [ ] Implement new docs structure
 
 ### Docs
