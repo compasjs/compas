@@ -11,6 +11,7 @@
       "type": "object",
       "group": "store",
       "name": "file",
+      "relations": [],
       "enableQueries": true,
       "queryOptions": {
         "withDates": true,
@@ -85,8 +86,7 @@
             "name": "fileMeta"
           }
         }
-      },
-      "relations": []
+      }
     },
     "fileMeta": {
       "docString": "User definable, optional object to store whatever you want",
@@ -99,6 +99,7 @@
       "type": "object",
       "group": "store",
       "name": "fileMeta",
+      "relations": [],
       "defaultValue": "{}",
       "keys": {
         "transforms": {
@@ -154,8 +155,7 @@
           "sql": {},
           "type": "string"
         }
-      },
-      "relations": []
+      }
     },
     "fileResponse": {
       "docString": "",
@@ -168,6 +168,7 @@
       "type": "object",
       "group": "store",
       "name": "fileResponse",
+      "relations": [],
       "keys": {
         "id": {
           "docString": "",
@@ -248,8 +249,7 @@
           "sql": {},
           "type": "string"
         }
-      },
-      "relations": []
+      }
     },
     "imageTransformOptions": {
       "docString": "Set as '.query(T.reference(\"store\", \"imageTransformOptions\"))' of routes that use 'sendTransformedImage'.",
@@ -262,6 +262,7 @@
       "type": "object",
       "group": "store",
       "name": "imageTransformOptions",
+      "relations": [],
       "keys": {
         "q": {
           "docString": "",
@@ -290,8 +291,7 @@
           "sql": {},
           "type": "number"
         }
-      },
-      "relations": []
+      }
     },
     "job": {
       "docString": "\n      Postgres based job queue.\n      Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.\n      Use {@link queueWorkerCreate} as a way to pick up jobs.\n      ",
@@ -304,6 +304,7 @@
       "type": "object",
       "group": "store",
       "name": "job",
+      "relations": [],
       "enableQueries": true,
       "queryOptions": {
         "withDates": true,
@@ -418,8 +419,7 @@
           "sql": {},
           "type": "number"
         }
-      },
-      "relations": []
+      }
     },
     "secureImageTransformOptions": {
       "docString": "Set as '.query(T.reference(\"store\", \"secureImageTransformOptions\"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.",
@@ -432,6 +432,7 @@
       "type": "object",
       "group": "store",
       "name": "secureImageTransformOptions",
+      "relations": [],
       "keys": {
         "accessToken": {
           "docString": "",
@@ -474,8 +475,7 @@
           "sql": {},
           "type": "number"
         }
-      },
-      "relations": []
+      }
     },
     "sessionStore": {
       "docString": "Session data store, used by 'sessionStore*' functions.",
@@ -488,6 +488,26 @@
       "type": "object",
       "group": "store",
       "name": "sessionStore",
+      "relations": [
+        {
+          "type": "relation",
+          "subType": "oneToMany",
+          "ownKey": "accessTokens",
+          "isOptional": false,
+          "reference": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {},
+            "sql": {},
+            "type": "reference",
+            "reference": {
+              "group": "store",
+              "name": "sessionStoreToken",
+              "uniqueName": "StoreSessionStoreToken"
+            }
+          }
+        }
+      ],
       "enableQueries": true,
       "queryOptions": {
         "withDates": true,
@@ -529,27 +549,7 @@
           "sql": {},
           "type": "date"
         }
-      },
-      "relations": [
-        {
-          "type": "relation",
-          "subType": "oneToMany",
-          "ownKey": "accessTokens",
-          "isOptional": false,
-          "reference": {
-            "docString": "",
-            "isOptional": false,
-            "validator": {},
-            "sql": {},
-            "type": "reference",
-            "reference": {
-              "group": "store",
-              "name": "sessionStoreToken",
-              "uniqueName": "StoreSessionStoreToken"
-            }
-          }
-        }
-      ]
+      }
     },
     "sessionStoreToken": {
       "docString": "Store all tokens that belong to a session.",
@@ -562,43 +562,6 @@
       "type": "object",
       "group": "store",
       "name": "sessionStoreToken",
-      "enableQueries": true,
-      "queryOptions": {
-        "withPrimaryKey": true
-      },
-      "keys": {
-        "expiresAt": {
-          "docString": "",
-          "isOptional": false,
-          "validator": {
-            "allowNull": false
-          },
-          "sql": {
-            "searchable": true
-          },
-          "type": "date"
-        },
-        "revokedAt": {
-          "docString": "",
-          "isOptional": true,
-          "validator": {
-            "allowNull": false
-          },
-          "sql": {
-            "searchable": true
-          },
-          "type": "date"
-        },
-        "createdAt": {
-          "docString": "",
-          "isOptional": false,
-          "validator": {
-            "allowNull": false
-          },
-          "sql": {},
-          "type": "date"
-        }
-      },
       "relations": [
         {
           "type": "relation",
@@ -638,7 +601,44 @@
             }
           }
         }
-      ]
+      ],
+      "enableQueries": true,
+      "queryOptions": {
+        "withPrimaryKey": true
+      },
+      "keys": {
+        "expiresAt": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false
+          },
+          "sql": {
+            "searchable": true
+          },
+          "type": "date"
+        },
+        "revokedAt": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false
+          },
+          "sql": {
+            "searchable": true
+          },
+          "type": "date"
+        },
+        "createdAt": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false
+          },
+          "sql": {},
+          "type": "date"
+        }
+      }
     }
   }
 }

@@ -506,7 +506,7 @@ export type ExperimentalBooleanDefinitionInput = {
     | undefined;
   validator: {
     convert: boolean | "true" | "false";
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
   };
   oneOf?: boolean | "true" | "false" | undefined;
 };
@@ -601,7 +601,7 @@ export type ExperimentalDateDefinitionInput = {
       }
     | undefined;
   validator: {
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
     min?: Date | string | number | undefined;
     max?: Date | string | number | undefined;
     inFuture?: boolean | "true" | "false" | undefined;
@@ -698,7 +698,7 @@ export type ExperimentalNumberDefinitionInput = {
     floatingPoint: boolean | "true" | "false";
     min?: number | undefined;
     max?: number | undefined;
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
   };
   oneOf?: number[] | number | undefined;
 };
@@ -718,7 +718,7 @@ export type ExperimentalObjectDefinitionInput = {
       }
     | undefined;
   validator: {
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
     strict: boolean | "true" | "false";
   };
   shortName?: string | undefined;
@@ -753,7 +753,7 @@ export type ExperimentalOmitDefinitionInput = {
       }
     | undefined;
   validator: {
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
     strict: boolean | "true" | "false";
   };
   keys: string[] | string;
@@ -775,7 +775,7 @@ export type ExperimentalPickDefinitionInput = {
       }
     | undefined;
   validator: {
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
     strict: boolean | "true" | "false";
   };
   keys: string[] | string;
@@ -804,7 +804,7 @@ export type ExperimentalStringDefinitionInput = {
     min?: number | undefined;
     max?: number | undefined;
     pattern?: string | undefined;
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
     disallowedCharacters?: string[] | string | undefined;
   };
   oneOf?: string[] | string | undefined;
@@ -825,7 +825,7 @@ export type ExperimentalUuidDefinitionInput = {
       }
     | undefined;
   validator: {
-    allowNull: boolean | "true" | "false";
+    allowNull?: boolean | "true" | "false" | undefined;
   };
 };
 

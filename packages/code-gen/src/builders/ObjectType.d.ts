@@ -5,6 +5,7 @@ export class ObjectType extends TypeBuilder {
       strict: boolean;
     };
     shortName: undefined;
+    relations: never[];
   };
   constructor(group: any, name: any);
   internalKeys: {};

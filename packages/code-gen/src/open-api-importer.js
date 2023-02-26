@@ -120,6 +120,8 @@ function extractRoute(context, path, method) {
     method: method.toUpperCase(),
     path: transformRoutePath(path),
     tags: [],
+    idempotent: false,
+    invalidations: [],
   };
 
   if (context.defaultGroup !== compasStruct.group) {
@@ -179,6 +181,27 @@ function extractRoute(context, path, method) {
     item.responses?.["200"] ?? item.responses?.["201"],
     compasStruct,
   );
+
+  for (const key of ["params", "query", "body", "files", "response"]) {
+    const type = compasStruct[key];
+
+    if (!type) {
+      continue;
+    }
+
+    if (type.type === "reference") {
+      delete type.group;
+      delete type.name;
+      delete type.uniqueName;
+
+      continue;
+    }
+
+    context.result[type.group] ??= {};
+    context.result[type.group][type.name] = type;
+
+    compasStruct[key] = new ReferenceType(type.group, type.name).build();
+  }
 
   context.result[compasStruct.group] = context.result[compasStruct.group] || {};
   context.result[compasStruct.group][compasStruct.name] = compasStruct;
@@ -365,7 +388,6 @@ function resolveReference(context, refString) {
 function convertSchema(context, schema, options = {}) {
   /** @type {CodeGenType} */
   const result = {
-    ...TypeBuilder.getBaseData(),
     type: "any",
   };
 
@@ -420,6 +442,7 @@ function convertSchema(context, schema, options = {}) {
       !schema.anyOf &&
       !schema.allOf)
   ) {
+    assignBaseData();
     return result;
   }
 

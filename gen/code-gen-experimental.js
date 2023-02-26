@@ -363,7 +363,7 @@ export function extendWithCodeGenExperimental(generator) {
         validator: T.object()
           .keys({
             convert: T.bool(),
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
           })
           .loose(),
       })
@@ -426,7 +426,7 @@ export function extendWithCodeGenExperimental(generator) {
         specifier: T.string().oneOf("dateOnly", "timeOnly").optional(),
         validator: T.object()
           .keys({
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
             min: T.date().optional(),
             max: T.date().optional(),
             inFuture: T.bool().optional(),
@@ -482,7 +482,7 @@ export function extendWithCodeGenExperimental(generator) {
             floatingPoint: T.bool(),
             min: T.number().optional(),
             max: T.number().optional(),
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
           })
           .loose(),
       })
@@ -495,7 +495,7 @@ export function extendWithCodeGenExperimental(generator) {
         shortName: T.string().optional(),
         validator: T.object()
           .keys({
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
             strict: T.bool(),
           })
           .loose(),
@@ -525,7 +525,7 @@ export function extendWithCodeGenExperimental(generator) {
         ...namedTypeDefinitionBase,
         validator: T.object()
           .keys({
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
             strict: T.bool(),
           })
           .loose(),
@@ -540,7 +540,7 @@ export function extendWithCodeGenExperimental(generator) {
         ...namedTypeDefinitionBase,
         validator: T.object()
           .keys({
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
             strict: T.bool(),
           })
           .loose(),
@@ -649,7 +649,7 @@ export function extendWithCodeGenExperimental(generator) {
             min: T.number().default(1),
             max: T.number().optional(),
             pattern: T.string().optional(),
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
             disallowedCharacters: T.optional()
               .value([T.string().min(1).max(2)])
               .optional(),
@@ -664,7 +664,7 @@ export function extendWithCodeGenExperimental(generator) {
         ...namedTypeDefinitionBase,
         validator: T.object()
           .keys({
-            allowNull: T.bool(),
+            allowNull: T.bool().default(false),
           })
           .loose(),
       })

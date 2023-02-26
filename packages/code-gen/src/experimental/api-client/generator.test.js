@@ -1,4 +1,6 @@
+import { readFileSync } from "fs";
 import { mainTestFn, test } from "@compas/cli";
+import { loadApiStructureFromOpenAPI } from "../../loaders.js";
 import { testExperimentalGenerateFiles } from "../testing.js";
 
 mainTestFn(import.meta);
@@ -41,6 +43,35 @@ test("code-gen/experimental/api-client/generator", (t) => {
         },
         targetLanguage: "ts",
       });
+
+      t.pass();
+    });
+
+    t.test("test - openapi.json", (t) => {
+      testExperimentalGenerateFiles(
+        t,
+        {
+          outputDirectory: "./.cache/experimental/api-client-open-api",
+          generators: {
+            structure: {},
+
+            apiClient: {
+              target: {
+                targetRuntime: "node.js",
+                library: "axios",
+                globalClient: false,
+              },
+            },
+          },
+          targetLanguage: "js",
+        },
+        loadApiStructureFromOpenAPI(
+          "pet",
+          JSON.parse(
+            readFileSync("./__fixtures__/code-gen/openapi.json", "utf-8"),
+          ),
+        ),
+      );
 
       t.pass();
     });

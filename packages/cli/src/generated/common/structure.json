@@ -11,6 +11,7 @@
       "type": "object",
       "group": "cli",
       "name": "commandDefinition",
+      "relations": [],
       "keys": {
         "name": {
           "docString": "",
@@ -65,6 +66,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "defaultValue": "{\"isDynamic\":false,\"isCosmetic\":false,\"isWatchable\":false}",
           "keys": {
             "isDynamic": {
@@ -100,8 +102,7 @@
               "type": "boolean",
               "defaultValue": "false"
             }
-          },
-          "relations": []
+          }
         },
         "dynamicValue": {
           "docString": "",
@@ -112,6 +113,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "defaultValue": "{}",
           "keys": {
             "validator": {
@@ -140,8 +142,7 @@
               "rawValue": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
               "rawValidator": "((v) => typeof v === \"function\")"
             }
-          },
-          "relations": []
+          }
         },
         "watchSettings": {
           "docString": "",
@@ -152,6 +153,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "defaultValue": "{\"extensions\":[\"js\",\"json\"],\"ignorePatterns\":[\".cache\",\"coverage\",\"node_modules\"]}",
           "keys": {
             "extensions": {
@@ -202,8 +204,7 @@
                 "type": "string"
               }
             }
-          },
-          "relations": []
+          }
         },
         "subCommands": {
           "docString": "",
@@ -262,8 +263,7 @@
           "rawValue": "((logger: import(\"@compas/stdlib\").Logger, state: import(\"../../cli/types\").CliExecutorState) => (Promise<import(\"../../cli/types\").CliResult>|CliResult))",
           "rawValidator": "((v) => typeof v === \"function\")"
         }
-      },
-      "relations": []
+      }
     },
     "completion": {
       "docString": "",
@@ -283,6 +283,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "keys": {
             "type": {
               "docString": "",
@@ -299,8 +300,7 @@
               "type": "string",
               "oneOf": ["directory"]
             }
-          },
-          "relations": []
+          }
         },
         {
           "docString": "",
@@ -311,6 +311,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "keys": {
             "type": {
               "docString": "",
@@ -327,8 +328,7 @@
               "type": "string",
               "oneOf": ["file"]
             }
-          },
-          "relations": []
+          }
         },
         {
           "docString": "",
@@ -339,6 +339,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "keys": {
             "type": {
               "docString": "",
@@ -383,8 +384,7 @@
               "sql": {},
               "type": "string"
             }
-          },
-          "relations": []
+          }
         },
         {
           "docString": "",
@@ -395,6 +395,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "keys": {
             "type": {
               "docString": "",
@@ -440,8 +441,7 @@
               "sql": {},
               "type": "string"
             }
-          },
-          "relations": []
+          }
         }
       ]
     },
@@ -456,6 +456,7 @@
       "type": "object",
       "group": "cli",
       "name": "flagDefinition",
+      "relations": [],
       "keys": {
         "name": {
           "docString": "",
@@ -510,6 +511,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "defaultValue": "{\"isRepeatable\":false,\"isRequired\":false,\"isInternal\":false}",
           "keys": {
             "isRepeatable": {
@@ -545,8 +547,7 @@
               "type": "boolean",
               "defaultValue": "false"
             }
-          },
-          "relations": []
+          }
         },
         "value": {
           "docString": "",
@@ -557,6 +558,7 @@
           },
           "sql": {},
           "type": "object",
+          "relations": [],
           "defaultValue": "{\"specification\":\"boolean\"}",
           "keys": {
             "specification": {
@@ -601,11 +603,9 @@
               "rawValue": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
               "rawValidator": "((v) => typeof v === \"function\")"
             }
-          },
-          "relations": []
+          }
         }
-      },
-      "relations": []
+      }
     }
   }
 }

@@ -2866,9 +2866,7 @@ export function validateExperimentalBooleanDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -4833,9 +4831,7 @@ export function validateExperimentalDateDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -7130,9 +7126,7 @@ export function validateExperimentalNumberDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -7620,9 +7614,7 @@ export function validateExperimentalObjectDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -8390,9 +8382,7 @@ export function validateExperimentalOmitDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -8912,9 +8902,7 @@ export function validateExperimentalPickDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -9643,9 +9631,7 @@ export function validateExperimentalStringDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||
@@ -10180,9 +10166,7 @@ export function validateExperimentalUuidDefinition(value) {
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
-            errorMap[`$.validator.allowNull`] = {
-              key: "validator.undefined",
-            };
+            result["validator"]["allowNull"] = false;
           } else {
             if (
               value["validator"]["allowNull"] === true ||

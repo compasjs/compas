@@ -10,6 +10,7 @@ export class ObjectType extends TypeBuilder {
       strict: true,
     },
     shortName: undefined,
+    relations: [],
   };
 
   build() {
