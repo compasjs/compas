@@ -19,6 +19,24 @@ The supported target languages are:
   [ES Modules](https://nodejs.org/api/esm.html#introduction).
 - `ts`: Generates TypeScript files
 
+Each of the below generators has support for one or more of these target
+languages. They could combine this with supported target libraries, runtimes or
+dialects depending on the generator.
+
+To automatically write the generated files to disk, you can use an
+`outputDirectory`. If it is not specified all generated files will be returned.
+
+```js {7}
+import { Generator } from "@compas/code-gen/experimental";
+
+const generator = new Generator();
+
+generator.generate({
+  targetLanguage: "ts",
+  outputDirectory: "./src/generated",
+});
+```
+
 ## Structure
 
 The structure generator dumps the input Compas structure to disk. This is useful
