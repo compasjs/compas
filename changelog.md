@@ -4,6 +4,58 @@ editLink: false
 
 # Changelog
 
+### [v0.0.226](https://github.com/compasjs/compas/releases/tag/v0.0.226)
+
+#### Features
+
+- feat(cli): improve errors when loading cli definitions
+  [`997bb7`](https://github.com/compasjs/compas/commit/997bb7e8b51f8115a4b4273a477c1015829ee626)
+- feat(code-gen/experimental): add router response validators
+  [`9eeafd`](https://github.com/compasjs/compas/commit/9eeafd2d4b4ca4926fd079954c5d0fede392667d)
+- feat(code-gen/experimental): various fixes around ts-axios. Remove response
+  validation in the ts axios clients
+  [`130cda`](https://github.com/compasjs/compas/commit/130cdae877c52d487ae5959e0cc2a2991c2f8512)
+- feat(code-gen): add `loadApiStructureFromOpenAPI`
+  [`6bacf0`](https://github.com/compasjs/compas/commit/6bacf01b7c55920739c6bab357b84cbff0ba81c4)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): correct open-api-importer compatibility
+  [`666968`](https://github.com/compasjs/compas/commit/6669684370d213d7116413678eae563d647979c7)
+
+#### Other
+
+- chore(docs): link example readme's to the docs
+  [`171d10`](https://github.com/compasjs/compas/commit/171d10e1fefbef746b4d0b9e1116aa15d70880f0)
+- chore(docs): cleanup structure, add generators pages
+  [`60d115`](https://github.com/compasjs/compas/commit/60d1156ee4288da16fcc2de62759a581ee1108d2)
+- chore(docs): add a new generators introduction and write about available
+  targets
+  [`99ebd4`](https://github.com/compasjs/compas/commit/99ebd4606b009b1b5990fa9a18793ddb34a53a67)
+- chore(docs): add note about `outputDirectory` in generator targets
+  [`5757ae`](https://github.com/compasjs/compas/commit/5757aee7ac46d61269f53deeb5cc29e41c677e01)
+- chore(docs): add api clients document
+  [`2e1cd4`](https://github.com/compasjs/compas/commit/2e1cd41e38fb2fa7abfd2937d16ee1302ced1c02)
+
+#### Dependency updates
+
+- build(deps): bump pino from 8.10.0 to 8.11.0
+  ([#2379](https://github.com/compasjs/compas/pull/2379))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.264.0 to 3.279.0
+  ([#2383](https://github.com/compasjs/compas/pull/2383),
+  [#2386](https://github.com/compasjs/compas/pull/2386))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.264.0 to 3.279.0
+  ([#2384](https://github.com/compasjs/compas/pull/2384))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump eslint from 8.34.0 to 8.35.0
+  ([#2388](https://github.com/compasjs/compas/pull/2388))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @babel/core from 7.20.12 to 7.21.0
+  ([#2375](https://github.com/compasjs/compas/pull/2375))
+  - [Release notes](https://github.com/babel/babel/releases)
+
 ### [v0.0.225](https://github.com/compasjs/compas/releases/tag/v0.0.225)
 
 #### Bug fixes
