@@ -31,10 +31,12 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       - Entities
       - Crud
     - Advanced patterns
+      - React query wrapper usage
       - Route specifics (invalidations, idemptotent)
       - Custom entity primary key, sql default, dates, soft deletes
       - Different entity relation types
       - ESLInt ignores
+      - E2E testing with generated api client
   - Node.js backends
     - Introduction
     - ...exiting pages -> filter out code-gen pages

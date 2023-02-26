@@ -120,7 +120,7 @@ function getHomeSidebar() {
           link: "/generators/api-clients.html",
         },
         {
-          text: "Building your first structure",
+          text: "Build a custom structure",
           link: "/generators/build-structure.html",
         },
       ],
