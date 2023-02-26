@@ -33,6 +33,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
       - Route specifics (invalidations, idemptotent)
       - Custom entity primary key, sql default, dates, soft deletes
       - Different entity relation types
+      - ESLInt ignores
   - Node.js backends
     - Introduction
     - ...exiting pages -> filter out code-gen pages
