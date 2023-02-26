@@ -22,7 +22,7 @@
     "@babel/core": "7.20.12",
     "@babel/eslint-parser": "7.19.1",
     "@babel/plugin-syntax-class-properties": "7.12.13",
-    "eslint": "8.34.0",
+    "eslint": "8.35.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsdoc": "40.0.0",
