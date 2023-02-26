@@ -1,6 +1,6 @@
 {
   "name": "@compas/eslint-plugin",
-  "version": "0.0.225",
+  "version": "0.0.226",
   "description": "ESLint plugin",
   "main": "index.js",
   "exports": {
