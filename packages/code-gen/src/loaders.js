@@ -19,6 +19,17 @@ export async function loadApiStructureFromRemote(Axios, url) {
 }
 
 /**
+ * Convert an OpenAPI 3 JSON spec to a Compas compatible structure
+ *
+ * @param {string} name
+ * @param {Record<string, any>} spec
+ * @returns {Record<string, any>}
+ */
+export function loadApiStructureFromOpenAPI(name, spec) {
+  return loadFromOpenAPISpec(name, spec);
+}
+
+/**
  * @param {string} defaultGroup
  * @param {Record<string, any>} data
  * @returns {Record<string, any>}

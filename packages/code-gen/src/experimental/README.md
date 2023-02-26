@@ -5,7 +5,8 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 ## TODO
 
-- [ ] Implement new docs structure
+- [x] Implement new docs structure
+- [ ] Add tests for importing OpenAPI specs for experimental code-gen
 
 ### Docs
 

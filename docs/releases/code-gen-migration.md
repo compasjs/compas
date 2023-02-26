@@ -108,6 +108,8 @@ async function main(logger) {
 ### Other generator changes
 
 - `App#extend` is replaced by `App#addStructure`.
+- `App#extendWithOpenApi` is replaced by
+  `App.addStructure(loadApiStructureFromOpenAPI(...))`
 - `App.defaultEslintIgnore` is removed. You can archieve the same with
   `overrides: [{ files: ["src/generated/**"], rules: {/* ... */ }]` in your
   `.eslintrc`

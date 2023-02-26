@@ -12,4 +12,7 @@
 
 export { TypeCreator } from "./src/builders/index.js";
 export { App } from "./src/App.js";
-export { loadApiStructureFromRemote } from "./src/loaders.js";
+export {
+  loadApiStructureFromRemote,
+  loadApiStructureFromOpenAPI,
+} from "./src/loaders.js";
