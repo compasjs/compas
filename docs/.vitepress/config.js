@@ -48,8 +48,8 @@ export default {
     nav: [
       {
         text: "Docs",
-        link: "/getting-started.html",
-        activeMatch: "/getting-started|features|migrations|references/",
+        link: "/generators/introduction.html",
+        activeMatch: "/generators|features|references/",
       },
       {
         text: "Examples",
@@ -105,17 +105,35 @@ export default {
 function getHomeSidebar() {
   return [
     {
-      text: "Getting started",
+      text: "Generators",
       items: [
         {
-          text: "Installation",
-          link: "/getting-started.html",
+          text: "Introduction",
+          link: "/generators/introduction.html",
+        },
+        {
+          text: "Targets",
+          link: "/generators/targets.html",
+        },
+        {
+          text: "API clients",
+          link: "/generators/api-clients.html",
+        },
+        {
+          text: "Building your first structure",
+          link: "/generators/build-structure.html",
         },
       ],
     },
+
     {
       text: "Features",
       items: [
+        {
+          text: "Getting started",
+          link: "/features/getting-started.html",
+        },
+
         {
           text: "CLI",
           link: "/features/cli.html",
@@ -208,19 +226,9 @@ function getHomeSidebar() {
           text: "CLI Reference",
           link: "/references/cli.html",
         },
-      ],
-    },
-
-    {
-      text: "Migrations",
-      items: [
         {
-          text: "Introduction",
-          link: "/migrations/index.html",
-        },
-        {
-          text: "@compas/store",
-          link: "/migrations/store.html",
+          text: "@compas/store migrations",
+          link: "/references/store.html",
         },
       ],
     },

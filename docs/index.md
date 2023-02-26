@@ -5,20 +5,23 @@ hero:
   tagline: Unified backend tooling
   actions:
     - theme: brand
-      text: Get started
-      link: "/getting-started.html"
+      text: Explore the generators
+      link: "/generators/introduction.html"
     - theme: alt
-      text: Changelog
-      link: "/changelog.html"
+      text: Discover the unified tooling
+      link: "/features/getting-started.html"
 features:
-  - title: Flexible code generators
+  - title: All in one specification
     details:
-      "Code generate routers, validators, api clients and Postgres queries."
-  - title: ES Modules first
+      "Build up a specification based on types, routes and entities with
+      flexible builders, or import an existing OpenAPI schema."
+  - title: Multi target generators
     details:
-      "Contains test, bench and script runner supporting only ES modules."
-  - title: Common utilities
+      "Reuse a specification and generate types, validators, routers, api
+      clients and database queries in different languages and with different
+      base libraries."
+  - title: Unified utilities
     details:
-      "Comes with session handling, job queue, file storage, script runner and
-      more."
+      "Session handling, file storage, test runner and more all in a few
+      packages."
 ---
