@@ -384,6 +384,12 @@ export function generatedUpdateHelper(entity, input) {
     state.hasSet = true;
   }
 
+  if (!state.hasSet) {
+    throw AppError.serverError({
+      message: `Attempting an empty update query on '${entity.name}'. This is not possible. Make sure that there is a fields that needs to be updated before calling '${entity.name}Update(...)'.`,
+    });
+  }
+
   if (entity.injectUpdatedAt && isNil(input.update.updatedAt)) {
     strings.push(`, "updatedAt" = `);
     args.push(new Date());
