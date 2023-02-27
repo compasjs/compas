@@ -329,6 +329,9 @@ async function sessionStoreTokenCount(sql, where) {
  * @returns {Promise<import("../common/types").StoreSessionStoreToken[]>}
  */
 function sessionStoreTokenInsert(sql, insert, options = {}) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
+    return Promise.resolve([]);
+  }
   return sessionStoreTokenInsertInternal({ insert, returning: "*" }).exec(sql);
 }
 

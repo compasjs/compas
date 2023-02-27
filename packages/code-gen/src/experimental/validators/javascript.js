@@ -1188,7 +1188,10 @@ export function validatorJavascriptObject(file, type, validatorState) {
     fileWrite(file, `]);`);
 
     fileBlockStart(file, `for (const key of Object.keys(${valuePath}))`);
-    fileBlockStart(file, `if (!${setVariable}.has(key))`);
+    fileBlockStart(
+      file,
+      `if (!${setVariable}.has(key) && ${valuePath}[key] !== null && ${valuePath}[key] !== undefined)`,
+    );
 
     fileWrite(
       file,

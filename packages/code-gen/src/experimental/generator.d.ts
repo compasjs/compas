@@ -9,6 +9,10 @@ export class Generator {
    */
   constructor(logger: import("@compas/stdlib").Logger);
   /**
+   * @type {boolean}
+   */
+  hasGenerated: boolean;
+  /**
    * @type {import("@compas/stdlib").Logger}
    */
   logger: import("@compas/stdlib").Logger;

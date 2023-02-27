@@ -21,6 +21,11 @@ export class Generator {
    */
   constructor(logger) {
     /**
+     * @type {boolean}
+     */
+    this.hasGenerated = false;
+
+    /**
      * @type {import("@compas/stdlib").Logger}
      */
     this.logger = logger;
@@ -29,12 +34,6 @@ export class Generator {
      * @type {import("./generated/common/types").ExperimentalStructure}
      */
     this.internalStructure = {};
-
-    // TODO: Add support for OpenAPI importing
-
-    // TODO: Add support for specific generator flags
-    //  { *: { *: { apiClientKeepTrailingSlashes: true } }
-    //  { foo: { bar: { apiClientSkipResponseValidation: true } }
   }
 
   /**
@@ -107,10 +106,18 @@ export class Generator {
    * @returns {Generator}
    */
   selectGroups(groups) {
+    if (this.hasGenerated) {
+      throw AppError.serverError({
+        message:
+          "Called 'generator.generate' already on this generator. Make sure to select groups before calling 'generator.generate'.",
+      });
+    }
+
     const nextGenerator = new Generator(this.logger);
-    nextGenerator.internalStructure = structureExtractGroups(
-      this.internalStructure,
-      groups,
+
+    // Extract groups + create a deep copy
+    nextGenerator.internalStructure = JSON.parse(
+      JSON.stringify(structureExtractGroups(this.internalStructure, groups)),
     );
 
     return nextGenerator;
@@ -124,6 +131,13 @@ export class Generator {
    * @returns {Generator}
    */
   selectTypes(typeNames) {
+    if (this.hasGenerated) {
+      throw AppError.serverError({
+        message:
+          "Called 'generator.generate' already on this generator. Make sure to select types before calling 'generator.generate'.",
+      });
+    }
+
     const nextGenerator = new Generator(this.logger);
 
     for (const typeName of typeNames) {
@@ -148,6 +162,11 @@ export class Generator {
       );
     }
 
+    // Create a deep copy.
+    nextGenerator.internalStructure = JSON.parse(
+      JSON.stringify(nextGenerator.internalStructure),
+    );
+
     return nextGenerator;
   }
 
@@ -158,6 +177,15 @@ export class Generator {
    * @returns {import("./generate").OutputFile[]}
    */
   generate(options) {
+    if (this.hasGenerated) {
+      throw AppError.serverError({
+        message:
+          "Called 'generator.generate' already on this generator. This is not allowed. You can create a new generator with the same structure by enabling the 'structure: {}' generator and doing 'new Generator().addStructure('previous/generated/directory')' or by selecting groups from the existing generator via 'generator.selectGroups([])'.",
+      });
+    }
+
+    this.hasGenerated = true;
+
     const validationResultOptions =
       validateExperimentalGenerateOptions(options);
     if (validationResultOptions.error) {

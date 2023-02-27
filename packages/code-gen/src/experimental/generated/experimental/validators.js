@@ -495,7 +495,11 @@ export function validateExperimentalAnyDefinition(value) {
                 for (const key of Object.keys(
                   value["targets"][genericKeyResult1],
                 )) {
-                  if (!knownKeys3.has(key)) {
+                  if (
+                    !knownKeys3.has(key) &&
+                    value["targets"][genericKeyResult1][key] !== null &&
+                    value["targets"][genericKeyResult1][key] !== undefined
+                  ) {
                     errorMap[`$.targets.${genericKeyResult1}`] = {
                       key: "validator.keys",
                       expectedKeys: [...knownKeys3],
@@ -10305,7 +10309,11 @@ export function validateExperimentalGenerateOptions(value) {
             "types",
           ]);
           for (const key of Object.keys(value["generators"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["generators"][key] !== null &&
+              value["generators"][key] !== undefined
+            ) {
               errorMap[`$.generators`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -10335,7 +10343,11 @@ export function validateExperimentalGenerateOptions(value) {
               /** @type {Set<string>} */
               const knownKeys0 = new Set([]);
               for (const key of Object.keys(value["generators"]["structure"])) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["structure"][key] !== null &&
+                  value["generators"]["structure"][key] !== undefined
+                ) {
                   errorMap[`$.generators.structure`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],
@@ -10369,7 +10381,11 @@ export function validateExperimentalGenerateOptions(value) {
                 "openApiRouteExtensions",
               ]);
               for (const key of Object.keys(value["generators"]["openApi"])) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["openApi"][key] !== null &&
+                  value["generators"]["openApi"][key] !== undefined
+                ) {
                   errorMap[`$.generators.openApi`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],
@@ -10412,7 +10428,15 @@ export function validateExperimentalGenerateOptions(value) {
                   for (const key of Object.keys(
                     value["generators"]["openApi"]["openApiExtensions"],
                   )) {
-                    if (!knownKeys0.has(key)) {
+                    if (
+                      !knownKeys0.has(key) &&
+                      value["generators"]["openApi"]["openApiExtensions"][
+                        key
+                      ] !== null &&
+                      value["generators"]["openApi"]["openApiExtensions"][
+                        key
+                      ] !== undefined
+                    ) {
                       errorMap[`$.generators.openApi.openApiExtensions`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys0],
@@ -10668,7 +10692,11 @@ export function validateExperimentalGenerateOptions(value) {
               /** @type {Set<string>} */
               const knownKeys0 = new Set(["target", "exposeApiStructure"]);
               for (const key of Object.keys(value["generators"]["router"])) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["router"][key] !== null &&
+                  value["generators"]["router"][key] !== undefined
+                ) {
                   errorMap[`$.generators.router`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],
@@ -10722,7 +10750,11 @@ export function validateExperimentalGenerateOptions(value) {
                       /** @type {Set<string>} */
                       const knownKeys2 = new Set(["library"]);
                       for (const key of Object.keys(intermediateValue2)) {
-                        if (!knownKeys2.has(key)) {
+                        if (
+                          !knownKeys2.has(key) &&
+                          intermediateValue2[key] !== null &&
+                          intermediateValue2[key] !== undefined
+                        ) {
                           intermediateErrorMap2[`$`] = {
                             key: "validator.keys",
                             expectedKeys: [...knownKeys2],
@@ -10829,7 +10861,11 @@ export function validateExperimentalGenerateOptions(value) {
               /** @type {Set<string>} */
               const knownKeys0 = new Set(["target", "includeEntityDiagram"]);
               for (const key of Object.keys(value["generators"]["database"])) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["database"][key] !== null &&
+                  value["generators"]["database"][key] !== undefined
+                ) {
                   errorMap[`$.generators.database`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],
@@ -10883,7 +10919,11 @@ export function validateExperimentalGenerateOptions(value) {
                       /** @type {Set<string>} */
                       const knownKeys2 = new Set(["dialect", "includeDDL"]);
                       for (const key of Object.keys(intermediateValue2)) {
-                        if (!knownKeys2.has(key)) {
+                        if (
+                          !knownKeys2.has(key) &&
+                          intermediateValue2[key] !== null &&
+                          intermediateValue2[key] !== undefined
+                        ) {
                           intermediateErrorMap2[`$`] = {
                             key: "validator.keys",
                             expectedKeys: [...knownKeys2],
@@ -11021,7 +11061,11 @@ export function validateExperimentalGenerateOptions(value) {
               for (const key of Object.keys(
                 value["generators"]["validators"],
               )) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["validators"][key] !== null &&
+                  value["generators"]["validators"][key] !== undefined
+                ) {
                   errorMap[`$.generators.validators`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],
@@ -11085,7 +11129,11 @@ export function validateExperimentalGenerateOptions(value) {
               /** @type {Set<string>} */
               const knownKeys0 = new Set(["target", "responseValidation"]);
               for (const key of Object.keys(value["generators"]["apiClient"])) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["apiClient"][key] !== null &&
+                  value["generators"]["apiClient"][key] !== undefined
+                ) {
                   errorMap[`$.generators.apiClient`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],
@@ -11144,7 +11192,11 @@ export function validateExperimentalGenerateOptions(value) {
                         "globalClient",
                       ]);
                       for (const key of Object.keys(intermediateValue2)) {
-                        if (!knownKeys2.has(key)) {
+                        if (
+                          !knownKeys2.has(key) &&
+                          intermediateValue2[key] !== null &&
+                          intermediateValue2[key] !== undefined
+                        ) {
                           intermediateErrorMap2[`$`] = {
                             key: "validator.keys",
                             expectedKeys: [...knownKeys2],
@@ -11409,7 +11461,11 @@ export function validateExperimentalGenerateOptions(value) {
                 "declareGlobalTypes",
               ]);
               for (const key of Object.keys(value["generators"]["types"])) {
-                if (!knownKeys0.has(key)) {
+                if (
+                  !knownKeys0.has(key) &&
+                  value["generators"]["types"][key] !== null &&
+                  value["generators"]["types"][key] !== undefined
+                ) {
                   errorMap[`$.generators.types`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys0],

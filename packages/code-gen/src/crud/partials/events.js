@@ -29,7 +29,7 @@ export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   
   const result  = await query${upperCaseFirst(
     data.entityName,
-  )}(builder).exec(sql);
+  )}(builder).execRaw(sql);
   
   const total = result.length;
   const slice = result.slice(queryParams.offset, queryParams.offset + queryParams.limit);

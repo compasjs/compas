@@ -245,6 +245,9 @@ async function sessionStoreCount(sql, where) {
  * @returns {Promise<import("../common/types").StoreSessionStore[]>}
  */
 function sessionStoreInsert(sql, insert, options = {}) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
+    return Promise.resolve([]);
+  }
   return sessionStoreInsertInternal({ insert, returning: "*" }).exec(sql);
 }
 

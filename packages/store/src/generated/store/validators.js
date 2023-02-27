@@ -46,7 +46,11 @@ export function validateStoreFile(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -284,7 +288,11 @@ export function validateStoreFileMeta(value) {
         "altText",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -437,7 +445,11 @@ export function validateStoreFileWhereValidated(value) {
         "updatedAtLowerThan",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -1973,7 +1985,11 @@ export function validateStoreFileOrderBySpec(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -2156,7 +2172,11 @@ export function validateStoreFileQueryBuilderValidated(value) {
         "select",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -2480,7 +2500,11 @@ export function validateStoreFileInsertValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["insert", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -2505,6 +2529,13 @@ export function validateStoreFileInsertValidated(value) {
 
         if (!Array.isArray(intermediateValue1)) {
           intermediateValue1 = [intermediateValue1];
+        }
+        if (intermediateValue1.length < 1) {
+          errorMap[`$.insert`] = {
+            key: "validator.length",
+            minLength: 1,
+            foundLength: intermediateValue1.length,
+          };
         }
         if (intermediateValue1.length > 50000) {
           errorMap[`$.insert`] = {
@@ -2602,7 +2633,11 @@ export function validateStoreFileInsertPartialValidated(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -2829,7 +2864,11 @@ export function validateStoreFileUpdateValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -2928,7 +2967,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -2976,7 +3019,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$divide"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3062,7 +3109,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$multiply"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3148,7 +3199,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3234,7 +3289,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3379,7 +3438,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$append"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3500,7 +3563,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$append"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3621,7 +3688,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$append"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3742,7 +3813,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$set"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -3774,7 +3849,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   /** @type {Set<string>} */
                   const knownKeys2 = new Set(["path", "value"]);
                   for (const key of Object.keys(intermediateValue2["$set"])) {
-                    if (!knownKeys2.has(key)) {
+                    if (
+                      !knownKeys2.has(key) &&
+                      intermediateValue2["$set"][key] !== null &&
+                      intermediateValue2["$set"][key] !== undefined
+                    ) {
                       intermediateErrorMap2[`$.$set`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys2],
@@ -3983,7 +4062,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$remove"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -4017,7 +4100,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   for (const key of Object.keys(
                     intermediateValue2["$remove"],
                   )) {
-                    if (!knownKeys2.has(key)) {
+                    if (
+                      !knownKeys2.has(key) &&
+                      intermediateValue2["$remove"][key] !== null &&
+                      intermediateValue2["$remove"][key] !== undefined
+                    ) {
                       intermediateErrorMap2[`$.$remove`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys2],
@@ -4255,7 +4342,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -4327,7 +4418,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -4449,7 +4544,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -4521,7 +4620,11 @@ export function validateStoreFileUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -4657,7 +4760,11 @@ export function validateStoreJob(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -4997,7 +5104,11 @@ export function validateStoreJobWhereValidated(value) {
         "updatedAtLowerThan",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -7141,7 +7252,11 @@ export function validateStoreJobOrderBySpec(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -7404,7 +7519,11 @@ export function validateStoreJobQueryBuilderValidated(value) {
         "select",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -7734,7 +7853,11 @@ export function validateStoreJobInsertValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["insert", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -7759,6 +7882,13 @@ export function validateStoreJobInsertValidated(value) {
 
         if (!Array.isArray(intermediateValue1)) {
           intermediateValue1 = [intermediateValue1];
+        }
+        if (intermediateValue1.length < 1) {
+          errorMap[`$.insert`] = {
+            key: "validator.length",
+            minLength: 1,
+            foundLength: intermediateValue1.length,
+          };
         }
         if (intermediateValue1.length > 50000) {
           errorMap[`$.insert`] = {
@@ -7858,7 +7988,11 @@ export function validateStoreJobInsertPartialValidated(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -8153,7 +8287,11 @@ export function validateStoreJobUpdateValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -8254,7 +8392,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -8299,7 +8441,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$negate"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8423,7 +8569,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$divide"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8509,7 +8659,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$multiply"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8595,7 +8749,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8681,7 +8839,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8821,7 +8983,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$divide"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8907,7 +9073,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$multiply"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -8993,7 +9163,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9079,7 +9253,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9219,7 +9397,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$divide"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9305,7 +9487,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$multiply"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9391,7 +9577,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9477,7 +9667,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9622,7 +9816,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$append"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9743,7 +9941,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9815,7 +10017,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9937,7 +10143,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$set"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -9969,7 +10179,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   /** @type {Set<string>} */
                   const knownKeys2 = new Set(["path", "value"]);
                   for (const key of Object.keys(intermediateValue2["$set"])) {
-                    if (!knownKeys2.has(key)) {
+                    if (
+                      !knownKeys2.has(key) &&
+                      intermediateValue2["$set"][key] !== null &&
+                      intermediateValue2["$set"][key] !== undefined
+                    ) {
                       intermediateErrorMap2[`$.$set`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys2],
@@ -10178,7 +10392,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$remove"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -10212,7 +10430,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   for (const key of Object.keys(
                     intermediateValue2["$remove"],
                   )) {
-                    if (!knownKeys2.has(key)) {
+                    if (
+                      !knownKeys2.has(key) &&
+                      intermediateValue2["$remove"][key] !== null &&
+                      intermediateValue2["$remove"][key] !== undefined
+                    ) {
                       intermediateErrorMap2[`$.$remove`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys2],
@@ -10442,7 +10664,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -10514,7 +10740,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -10636,7 +10866,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -10708,7 +10942,11 @@ export function validateStoreJobUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -10838,7 +11076,11 @@ export function validateStoreSessionStore(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -11025,7 +11267,11 @@ export function validateStoreSessionStoreWhereValidated(value) {
         "accessTokensNotExists",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -12047,7 +12293,11 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaAccessTokens"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaAccessTokens"][key] !== null &&
+              value["viaAccessTokens"][key] !== undefined
+            ) {
               errorMap[`$.viaAccessTokens`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -12228,7 +12478,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         "accessTokenNotExists",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -13864,7 +14118,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaRefreshToken"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaRefreshToken"][key] !== null &&
+              value["viaRefreshToken"][key] !== undefined
+            ) {
               errorMap[`$.viaRefreshToken`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -13975,7 +14233,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaSession"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaSession"][key] !== null &&
+              value["viaSession"][key] !== undefined
+            ) {
               errorMap[`$.viaSession`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -14089,7 +14351,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaAccessToken"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaAccessToken"][key] !== null &&
+              value["viaAccessToken"][key] !== undefined
+            ) {
               errorMap[`$.viaAccessToken`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -14371,7 +14637,11 @@ export function validateStoreSessionStoreOrderBySpec(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["id", "createdAt", "updatedAt"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -14522,7 +14792,11 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
         "accessTokens",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -14876,7 +15150,11 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
         "accessToken",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -15243,7 +15521,11 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         "revokedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -15626,7 +15908,11 @@ export function validateStoreSessionStoreInsertValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["insert", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -15651,6 +15937,13 @@ export function validateStoreSessionStoreInsertValidated(value) {
 
         if (!Array.isArray(intermediateValue1)) {
           intermediateValue1 = [intermediateValue1];
+        }
+        if (intermediateValue1.length < 1) {
+          errorMap[`$.insert`] = {
+            key: "validator.length",
+            minLength: 1,
+            foundLength: intermediateValue1.length,
+          };
         }
         if (intermediateValue1.length > 50000) {
           errorMap[`$.insert`] = {
@@ -15746,7 +16039,11 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -15906,7 +16203,11 @@ export function validateStoreSessionStoreUpdateValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -16005,7 +16306,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -16050,7 +16355,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$append"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -16171,7 +16480,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -16243,7 +16556,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -16365,7 +16682,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$set"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -16397,7 +16718,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   /** @type {Set<string>} */
                   const knownKeys2 = new Set(["path", "value"]);
                   for (const key of Object.keys(intermediateValue2["$set"])) {
-                    if (!knownKeys2.has(key)) {
+                    if (
+                      !knownKeys2.has(key) &&
+                      intermediateValue2["$set"][key] !== null &&
+                      intermediateValue2["$set"][key] !== undefined
+                    ) {
                       intermediateErrorMap2[`$.$set`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys2],
@@ -16606,7 +16931,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$remove"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -16640,7 +16969,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   for (const key of Object.keys(
                     intermediateValue2["$remove"],
                   )) {
-                    if (!knownKeys2.has(key)) {
+                    if (
+                      !knownKeys2.has(key) &&
+                      intermediateValue2["$remove"][key] !== null &&
+                      intermediateValue2["$remove"][key] !== undefined
+                    ) {
                       intermediateErrorMap2[`$.$remove`] = {
                         key: "validator.keys",
                         expectedKeys: [...knownKeys2],
@@ -16870,7 +17203,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -16942,7 +17279,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -17064,7 +17405,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -17136,7 +17481,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -17266,7 +17615,11 @@ export function validateStoreSessionStoreToken(value) {
         "createdAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -17444,7 +17797,11 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["insert", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -17469,6 +17826,13 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
 
         if (!Array.isArray(intermediateValue1)) {
           intermediateValue1 = [intermediateValue1];
+        }
+        if (intermediateValue1.length < 1) {
+          errorMap[`$.insert`] = {
+            key: "validator.length",
+            minLength: 1,
+            foundLength: intermediateValue1.length,
+          };
         }
         if (intermediateValue1.length > 50000) {
           errorMap[`$.insert`] = {
@@ -17565,7 +17929,11 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
         "createdAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -17741,7 +18109,11 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -17840,7 +18212,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
         "createdAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -17927,7 +18303,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -17999,7 +18379,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -18166,7 +18550,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -18238,7 +18626,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -18360,7 +18752,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$subtract"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -18432,7 +18828,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               /** @type {Set<string>} */
               const knownKeys2 = new Set(["$add"]);
               for (const key of Object.keys(intermediateValue2)) {
-                if (!knownKeys2.has(key)) {
+                if (
+                  !knownKeys2.has(key) &&
+                  intermediateValue2[key] !== null &&
+                  intermediateValue2[key] !== undefined
+                ) {
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
                     expectedKeys: [...knownKeys2],
@@ -18560,7 +18960,11 @@ export function validateStoreFileResponse(value) {
         "altText",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -18996,7 +19400,11 @@ export function validateStoreFileWhereValidated_1(value) {
         "updatedAtLowerThan",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -20357,7 +20765,11 @@ export function validateStoreJobWhereValidated_1(value) {
         "updatedAtLowerThan",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -22281,7 +22693,11 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
         "accessTokensNotExists",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -23247,7 +23663,11 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaAccessTokens"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaAccessTokens"][key] !== null &&
+              value["viaAccessTokens"][key] !== undefined
+            ) {
               errorMap[`$.viaAccessTokens`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -23428,7 +23848,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         "accessTokenNotExists",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -24976,7 +25400,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaRefreshToken"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaRefreshToken"][key] !== null &&
+              value["viaRefreshToken"][key] !== undefined
+            ) {
               errorMap[`$.viaRefreshToken`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -25087,7 +25515,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaSession"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaSession"][key] !== null &&
+              value["viaSession"][key] !== undefined
+            ) {
               errorMap[`$.viaSession`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -25201,7 +25633,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["where", "limit", "offset"]);
           for (const key of Object.keys(value["viaAccessToken"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["viaAccessToken"][key] !== null &&
+              value["viaAccessToken"][key] !== undefined
+            ) {
               errorMap[`$.viaAccessToken`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -25347,7 +25783,11 @@ export function validateStoreFileUpdateValidated_1(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -25438,7 +25878,11 @@ export function validateStoreJobUpdateValidated_1(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -25529,7 +25973,11 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -25622,7 +26070,11 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
       /** @type {Set<string>} */
       const knownKeys0 = new Set(["update", "where", "returning"]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -26253,7 +26705,11 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
         "select",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -26425,7 +26881,11 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
         "select",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -26598,7 +27058,11 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
         "accessTokens",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -26796,7 +27260,11 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
         "accessToken",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],

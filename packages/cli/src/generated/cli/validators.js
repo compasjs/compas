@@ -44,7 +44,11 @@ export function validateCliCommandDefinition(value) {
         "executor",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -161,7 +165,11 @@ export function validateCliCommandDefinition(value) {
             "isWatchable",
           ]);
           for (const key of Object.keys(value["modifiers"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["modifiers"][key] !== null &&
+              value["modifiers"][key] !== undefined
+            ) {
               errorMap[`$.modifiers`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -268,7 +276,11 @@ export function validateCliCommandDefinition(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["validator", "completions"]);
           for (const key of Object.keys(value["dynamicValue"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["dynamicValue"][key] !== null &&
+              value["dynamicValue"][key] !== undefined
+            ) {
               errorMap[`$.dynamicValue`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -321,7 +333,11 @@ export function validateCliCommandDefinition(value) {
           /** @type {Set<string>} */
           const knownKeys0 = new Set(["extensions", "ignorePatterns"]);
           for (const key of Object.keys(value["watchSettings"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["watchSettings"][key] !== null &&
+              value["watchSettings"][key] !== undefined
+            ) {
               errorMap[`$.watchSettings`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -585,7 +601,11 @@ export function validateCliFlagDefinition(value) {
         "value",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -697,7 +717,11 @@ export function validateCliFlagDefinition(value) {
             "isInternal",
           ]);
           for (const key of Object.keys(value["modifiers"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["modifiers"][key] !== null &&
+              value["modifiers"][key] !== undefined
+            ) {
               errorMap[`$.modifiers`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -805,7 +829,11 @@ export function validateCliFlagDefinition(value) {
             "completions",
           ]);
           for (const key of Object.keys(value["value"])) {
-            if (!knownKeys0.has(key)) {
+            if (
+              !knownKeys0.has(key) &&
+              value["value"][key] !== null &&
+              value["value"][key] !== undefined
+            ) {
               errorMap[`$.value`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys0],
@@ -931,7 +959,11 @@ export function validateCliCompletion(value) {
           /** @type {Set<string>} */
           const knownKeys2 = new Set(["type"]);
           for (const key of Object.keys(intermediateValue2)) {
-            if (!knownKeys2.has(key)) {
+            if (
+              !knownKeys2.has(key) &&
+              intermediateValue2[key] !== null &&
+              intermediateValue2[key] !== undefined
+            ) {
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys2],
@@ -1009,7 +1041,11 @@ export function validateCliCompletion(value) {
           /** @type {Set<string>} */
           const knownKeys2 = new Set(["type"]);
           for (const key of Object.keys(intermediateValue2)) {
-            if (!knownKeys2.has(key)) {
+            if (
+              !knownKeys2.has(key) &&
+              intermediateValue2[key] !== null &&
+              intermediateValue2[key] !== undefined
+            ) {
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys2],
@@ -1087,7 +1123,11 @@ export function validateCliCompletion(value) {
           /** @type {Set<string>} */
           const knownKeys2 = new Set(["type", "name", "description"]);
           for (const key of Object.keys(intermediateValue2)) {
-            if (!knownKeys2.has(key)) {
+            if (
+              !knownKeys2.has(key) &&
+              intermediateValue2[key] !== null &&
+              intermediateValue2[key] !== undefined
+            ) {
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys2],
@@ -1217,7 +1257,11 @@ export function validateCliCompletion(value) {
           /** @type {Set<string>} */
           const knownKeys2 = new Set(["type", "specification", "description"]);
           for (const key of Object.keys(intermediateValue2)) {
-            if (!knownKeys2.has(key)) {
+            if (
+              !knownKeys2.has(key) &&
+              intermediateValue2[key] !== null &&
+              intermediateValue2[key] !== undefined
+            ) {
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
                 expectedKeys: [...knownKeys2],

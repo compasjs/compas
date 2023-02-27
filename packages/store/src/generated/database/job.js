@@ -310,6 +310,9 @@ async function jobCount(sql, where) {
  * @returns {Promise<import("../common/types").StoreJob[]>}
  */
 function jobInsert(sql, insert, options = {}) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
+    return Promise.resolve([]);
+  }
   return jobInsertInternal({ insert, returning: "*" }).exec(sql);
 }
 

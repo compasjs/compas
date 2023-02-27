@@ -44,7 +44,11 @@ export function validateQueryResultStoreFile(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -288,7 +292,11 @@ export function validateQueryResultStoreJob(value) {
         "updatedAt",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -597,7 +605,11 @@ export function validateQueryResultStoreSessionStore(value) {
         "accessTokens",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],
@@ -821,7 +833,11 @@ export function validateQueryResultStoreSessionStoreToken(value) {
         "accessToken",
       ]);
       for (const key of Object.keys(value)) {
-        if (!knownKeys0.has(key)) {
+        if (
+          !knownKeys0.has(key) &&
+          value[key] !== null &&
+          value[key] !== undefined
+        ) {
           errorMap[`$`] = {
             key: "validator.keys",
             expectedKeys: [...knownKeys0],

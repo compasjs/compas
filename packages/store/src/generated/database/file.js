@@ -246,6 +246,9 @@ async function fileCount(sql, where) {
  * @returns {Promise<import("../common/types").StoreFile[]>}
  */
 function fileInsert(sql, insert, options = {}) {
+  if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
+    return Promise.resolve([]);
+  }
   return fileInsertInternal({ insert, returning: "*" }).exec(sql);
 }
 

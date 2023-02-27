@@ -577,6 +577,15 @@ export function jsPostgresGenerateInsert(
     file,
     `function ${model.name}Insert(sql, insert, options = {})`,
   );
+
+  fileBlockStart(
+    file,
+    `if (insert === undefined || (Array.isArray(insert) && insert.length === 0))`,
+  );
+
+  fileWrite(file, `return Promise.resolve([]);`);
+  fileBlockEnd(file);
+
   fileWrite(
     file,
     `return ${model.name}InsertInternal({ insert, returning: "*" }).exec(sql);`,
