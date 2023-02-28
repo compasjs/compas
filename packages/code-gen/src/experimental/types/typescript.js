@@ -324,7 +324,7 @@ export function typesTypescriptFormatType(
       fileWriteInline(file, optionalStr);
     }
   } else if (type.type === "date") {
-    if (options.validatorState === "input") {
+    if (options.validatorState === "input" && isNil(type.specifier)) {
       fileWriteInline(file, `Date|string|number`);
     } else if (
       type.specifier ||
