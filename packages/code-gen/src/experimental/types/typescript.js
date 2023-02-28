@@ -425,9 +425,9 @@ export function typesTypescriptFormatType(
       );
 
       if (subIsOptional) {
-        fileWriteInline(file, `${key}?: `);
+        fileWriteInline(file, `"${key}"?: `);
       } else {
-        fileWriteInline(file, `${key}: `);
+        fileWriteInline(file, `"${key}": `);
       }
 
       typesTypescriptFormatType(generateContext, file, type.keys[key], options);
