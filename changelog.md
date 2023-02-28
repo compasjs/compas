@@ -4,6 +4,32 @@ editLink: false
 
 # Changelog
 
+### [v0.0.227](https://github.com/compasjs/compas/releases/tag/v0.0.227)
+
+#### Features
+
+- feat(code-gen/experimental): better handling of regenerating on the same
+  structure
+  [`867942`](https://github.com/compasjs/compas/commit/8679426137f63cfb5e1c2168fefbde98ff23e557)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): various fixes
+  [`8f54ac`](https://github.com/compasjs/compas/commit/8f54ac41060db7dfc8e07d24d9db2e5eb1f7ad60)
+- fix(store): throw error if an empty update object is given in the generator
+  helper
+  [`313fd7`](https://github.com/compasjs/compas/commit/313fd7ddad65f6ba9921573b9467aedd3c633d28)
+- fix(code-gen/experimental): correctly handle allowNull for 'anyOf' values in
+  the validators
+  [`61f5bc`](https://github.com/compasjs/compas/commit/61f5bcbe8c2435e41f04e1ae69dc49bc28e2326a)
+- fix(code-gen/experimental): quote object keys in generated types
+  [`707d6a`](https://github.com/compasjs/compas/commit/707d6a77d0ea9930ee9a707a636ef757d6825a65)
+
+#### Other
+
+- chore: regenerate type definitions
+  [`5d92c8`](https://github.com/compasjs/compas/commit/5d92c8d1d430272d165fb77669758ac40d3ab630)
+
 ### [v0.0.226](https://github.com/compasjs/compas/releases/tag/v0.0.226)
 
 #### Features
