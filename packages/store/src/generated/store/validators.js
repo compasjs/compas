@@ -3780,7 +3780,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
         }
       }
       if (value["meta"] === null || value["meta"] === undefined) {
-        result["meta"] = undefined;
+        result["meta"] = value["meta"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.meta`] = {
@@ -8408,7 +8408,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
       result = Object.create(null);
 
       if (value["isComplete"] === null || value["isComplete"] === undefined) {
-        result["isComplete"] = undefined;
+        result["isComplete"] = value["isComplete"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.isComplete`] = {
@@ -8536,7 +8536,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
         value["handlerTimeout"] === null ||
         value["handlerTimeout"] === undefined
       ) {
-        result["handlerTimeout"] = undefined;
+        result["handlerTimeout"] = value["handlerTimeout"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.handlerTimeout`] = {
@@ -8950,7 +8950,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
         }
       }
       if (value["priority"] === null || value["priority"] === undefined) {
-        result["priority"] = undefined;
+        result["priority"] = value["priority"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.priority`] = {
@@ -9364,7 +9364,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
         }
       }
       if (value["retryCount"] === null || value["retryCount"] === undefined) {
-        result["retryCount"] = undefined;
+        result["retryCount"] = value["retryCount"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.retryCount`] = {
@@ -9908,7 +9908,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
         }
       }
       if (value["scheduledAt"] === null || value["scheduledAt"] === undefined) {
-        result["scheduledAt"] = undefined;
+        result["scheduledAt"] = value["scheduledAt"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.scheduledAt`] = {
@@ -10110,7 +10110,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
         }
       }
       if (value["data"] === null || value["data"] === undefined) {
-        result["data"] = undefined;
+        result["data"] = value["data"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.data`] = {
@@ -16447,7 +16447,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
         }
       }
       if (value["revokedAt"] === null || value["revokedAt"] === undefined) {
-        result["revokedAt"] = undefined;
+        result["revokedAt"] = value["revokedAt"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.revokedAt`] = {
@@ -16649,7 +16649,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
         }
       }
       if (value["data"] === null || value["data"] === undefined) {
-        result["data"] = undefined;
+        result["data"] = value["data"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.data`] = {
@@ -18475,7 +18475,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
         value["refreshToken"] === null ||
         value["refreshToken"] === undefined
       ) {
-        result["refreshToken"] = undefined;
+        result["refreshToken"] = value["refreshToken"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.refreshToken`] = {
@@ -18517,7 +18517,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
         }
       }
       if (value["revokedAt"] === null || value["revokedAt"] === undefined) {
-        result["revokedAt"] = undefined;
+        result["revokedAt"] = value["revokedAt"];
       } else {
         let hasAnyOfMatch0 = false;
         errorMap[`$.revokedAt`] = {

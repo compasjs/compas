@@ -7,6 +7,7 @@ import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
 import { validateExperimentalStructure } from "./generated/experimental/validators.js";
 import { openApiGenerate } from "./open-api/generator.js";
+import { anyOfPreProcess } from "./processors/any-of.js";
 import { crudTypesCreate } from "./processors/crud-types.js";
 import { crudValidation } from "./processors/crud-validation.js";
 import { docStringCleanup } from "./processors/doc-string.js";
@@ -143,6 +144,7 @@ export function generateExecute(generator, options) {
   routeStructureCreate(generateContext);
   routeTrieBuild(generateContext);
 
+  anyOfPreProcess(generateContext);
   docStringCleanup(generateContext);
 
   typesGeneratorInit(generateContext);
