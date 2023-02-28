@@ -190,9 +190,13 @@ export function structureCopyAndSort(structure) {
     const typeNames = Object.keys(structure[group]).sort();
 
     for (const name of typeNames) {
-      structureAddType(newStructure, structure[group][name], {
-        skipReferenceExtraction: true,
-      });
+      structureAddType(
+        newStructure,
+        JSON.parse(JSON.stringify(structure[group][name])),
+        {
+          skipReferenceExtraction: true,
+        },
+      );
     }
   }
 

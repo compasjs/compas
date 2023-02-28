@@ -21,11 +21,6 @@ export class Generator {
    */
   constructor(logger) {
     /**
-     * @type {boolean}
-     */
-    this.hasGenerated = false;
-
-    /**
      * @type {import("@compas/stdlib").Logger}
      */
     this.logger = logger;
@@ -106,13 +101,6 @@ export class Generator {
    * @returns {Generator}
    */
   selectGroups(groups) {
-    if (this.hasGenerated) {
-      throw AppError.serverError({
-        message:
-          "Called 'generator.generate' already on this generator. Make sure to select groups before calling 'generator.generate'.",
-      });
-    }
-
     const nextGenerator = new Generator(this.logger);
 
     // Extract groups + create a deep copy
@@ -131,13 +119,6 @@ export class Generator {
    * @returns {Generator}
    */
   selectTypes(typeNames) {
-    if (this.hasGenerated) {
-      throw AppError.serverError({
-        message:
-          "Called 'generator.generate' already on this generator. Make sure to select types before calling 'generator.generate'.",
-      });
-    }
-
     const nextGenerator = new Generator(this.logger);
 
     for (const typeName of typeNames) {
@@ -177,15 +158,6 @@ export class Generator {
    * @returns {import("./generate").OutputFile[]}
    */
   generate(options) {
-    if (this.hasGenerated) {
-      throw AppError.serverError({
-        message:
-          "Called 'generator.generate' already on this generator. This is not allowed. You can create a new generator with the same structure by enabling the 'structure: {}' generator and doing 'new Generator().addStructure('previous/generated/directory')' or by selecting groups from the existing generator via 'generator.selectGroups([])'.",
-      });
-    }
-
-    this.hasGenerated = true;
-
     const validationResultOptions =
       validateExperimentalGenerateOptions(options);
     if (validationResultOptions.error) {

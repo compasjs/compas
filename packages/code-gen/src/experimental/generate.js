@@ -98,6 +98,7 @@ export function generateExecute(generator, options) {
   }
 
   structureValidateReferences(generator.internalStructure);
+
   const structure = structureCopyAndSort(generator.internalStructure);
 
   const generateContext = {

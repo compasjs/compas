@@ -57,33 +57,31 @@ test("code-gen/experimental/database/generator", (t) => {
         targetLanguage: "js",
       });
 
-      try {
-        generator.generate({
-          generators: {
-            structure: {},
-            apiClient: {
-              target: {
-                targetRuntime: "node.js",
-                library: "axios",
-              },
-            },
-            router: {
-              target: { library: "koa" },
-              exposeApiStructure: true,
-            },
-            database: {
-              target: {
-                dialect: "postgres",
-                includeDDL: true,
-              },
-              includeEntityDiagram: true,
+      generator.generate({
+        generators: {
+          structure: {},
+          apiClient: {
+            target: {
+              targetRuntime: "node.js",
+              library: "axios",
             },
           },
-          targetLanguage: "js",
-        });
-      } catch (e) {
-        t.ok(e.info.message.includes("'generator.generate'"));
-      }
+          router: {
+            target: { library: "koa" },
+            exposeApiStructure: true,
+          },
+          database: {
+            target: {
+              dialect: "postgres",
+              includeDDL: true,
+            },
+            includeEntityDiagram: true,
+          },
+        },
+        targetLanguage: "js",
+      });
+
+      t.pass();
     });
   });
 });
