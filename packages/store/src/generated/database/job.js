@@ -264,7 +264,7 @@ export function jobOrderBy(orderBy, orderBySpec, options = {}) {
       });
     }
     orderBy = validatedOrderBy.value;
-    const validatedOrderBySpec = validateStoreJobOrderBySpec(orderBy);
+    const validatedOrderBySpec = validateStoreJobOrderBySpec(orderBySpec);
     if (validatedOrderBySpec.error) {
       throw AppError.serverError({
         message: "Invalid orderBySpec object",

@@ -200,7 +200,7 @@ export function fileOrderBy(orderBy, orderBySpec, options = {}) {
       });
     }
     orderBy = validatedOrderBy.value;
-    const validatedOrderBySpec = validateStoreFileOrderBySpec(orderBy);
+    const validatedOrderBySpec = validateStoreFileOrderBySpec(orderBySpec);
     if (validatedOrderBySpec.error) {
       throw AppError.serverError({
         message: "Invalid orderBySpec object",

@@ -453,7 +453,7 @@ export function jsPostgresGenerateOrderBy(
 
   fileWrite(
     file,
-    `const validatedOrderBySpec = ${contextNames.orderBySpecType.validatorFunction}(orderBy);`,
+    `const validatedOrderBySpec = ${contextNames.orderBySpecType.validatorFunction}(orderBySpec);`,
   );
 
   fileBlockStart(file, `if (validatedOrderBySpec.error)`);

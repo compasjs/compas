@@ -283,7 +283,7 @@ export function sessionStoreTokenOrderBy(orderBy, orderBySpec, options = {}) {
     }
     orderBy = validatedOrderBy.value;
     const validatedOrderBySpec =
-      validateStoreSessionStoreTokenOrderBySpec(orderBy);
+      validateStoreSessionStoreTokenOrderBySpec(orderBySpec);
     if (validatedOrderBySpec.error) {
       throw AppError.serverError({
         message: "Invalid orderBySpec object",
