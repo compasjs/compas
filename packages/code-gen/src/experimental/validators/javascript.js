@@ -1506,23 +1506,29 @@ export function validatorJavascriptUuid(file, type, validatorState) {
 
   const regex =
     "/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi";
+  const regexWithoutDash = "/^[a-f0-9]{32}$/gi";
 
   fileBlockStart(
     file,
-    `if (typeof ${valuePath} !== "string" || !${regex}.test(${valuePath}))`,
+    `if (typeof ${valuePath} !== "string" || (!${regex}.test(${valuePath}) && !${regexWithoutDash}.test(${valuePath})))`,
   );
 
   fileWrite(
     file,
     `${errorKey} = {
   key: "validator.pattern",
-  patternExplanation: "UUID (v4)",
+  patternExplanation: "UUID",
 };`,
   );
 
   fileBlockEnd(file);
-  fileBlockStart(file, "else");
-
+  fileBlockStart(file, `else if (${valuePath}.length === 32)`);
+  fileWrite(
+    file,
+    `${resultPath} = ${valuePath}.slice(0,8) + "-" + ${valuePath}.slice(8, 12) + "-" + ${valuePath}.slice(12, 16) + "-" + ${valuePath}.slice(16, 20) + "-" + ${valuePath}.slice(20);`,
+  );
+  fileBlockEnd(file);
+  fileBlockStart(file, `else`);
   fileWrite(file, `${resultPath} = ${valuePath};`);
 
   fileBlockEnd(file);

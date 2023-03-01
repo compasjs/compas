@@ -743,6 +743,40 @@ export const codeGenSpecification = {
             },
           ],
         },
+        {
+          type: "suite",
+          name: "uuid",
+          components: [
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "uuid",
+              },
+              input: JSON.stringify("8a8080e6869ccc0f01869ce43956000a"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "uuid",
+              },
+              input: JSON.stringify("8a8080e6-869c-cc0f-0186-9ce43956000a"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "uuid",
+              },
+              input: JSON.stringify("a8080e6-869c-cc0f-01869ce43956000a"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+          ],
+        },
       ],
     },
     {

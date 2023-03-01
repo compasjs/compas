@@ -97,6 +97,8 @@ function specificationExtendWithValidators(generator) {
     T.string("stringOptional").optional(),
     T.string("stringPattern").pattern(/^\d+$/g),
     T.string("stringDisallowCharacters").disallowCharacters(["^", " "]).max(10),
+
+    T.uuid("uuid"),
   );
 }
 

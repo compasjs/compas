@@ -66,14 +66,26 @@ export function validateQueryResultStoreFile(value) {
       } else {
         if (
           typeof value["id"] !== "string" ||
-          !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+          (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
             value["id"],
-          )
+          ) &&
+            !/^[a-f0-9]{32}$/gi.test(value["id"]))
         ) {
           errorMap[`$.id`] = {
             key: "validator.pattern",
-            patternExplanation: "UUID (v4)",
+            patternExplanation: "UUID",
           };
+        } else if (value["id"].length === 32) {
+          result["id"] =
+            value["id"].slice(0, 8) +
+            "-" +
+            value["id"].slice(8, 12) +
+            "-" +
+            value["id"].slice(12, 16) +
+            "-" +
+            value["id"].slice(16, 20) +
+            "-" +
+            value["id"].slice(20);
         } else {
           result["id"] = value["id"];
         }
@@ -627,14 +639,26 @@ export function validateQueryResultStoreSessionStore(value) {
       } else {
         if (
           typeof value["id"] !== "string" ||
-          !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+          (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
             value["id"],
-          )
+          ) &&
+            !/^[a-f0-9]{32}$/gi.test(value["id"]))
         ) {
           errorMap[`$.id`] = {
             key: "validator.pattern",
-            patternExplanation: "UUID (v4)",
+            patternExplanation: "UUID",
           };
+        } else if (value["id"].length === 32) {
+          result["id"] =
+            value["id"].slice(0, 8) +
+            "-" +
+            value["id"].slice(8, 12) +
+            "-" +
+            value["id"].slice(12, 16) +
+            "-" +
+            value["id"].slice(16, 20) +
+            "-" +
+            value["id"].slice(20);
         } else {
           result["id"] = value["id"];
         }
@@ -855,14 +879,26 @@ export function validateQueryResultStoreSessionStoreToken(value) {
       } else {
         if (
           typeof value["id"] !== "string" ||
-          !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+          (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
             value["id"],
-          )
+          ) &&
+            !/^[a-f0-9]{32}$/gi.test(value["id"]))
         ) {
           errorMap[`$.id`] = {
             key: "validator.pattern",
-            patternExplanation: "UUID (v4)",
+            patternExplanation: "UUID",
           };
+        } else if (value["id"].length === 32) {
+          result["id"] =
+            value["id"].slice(0, 8) +
+            "-" +
+            value["id"].slice(8, 12) +
+            "-" +
+            value["id"].slice(12, 16) +
+            "-" +
+            value["id"].slice(16, 20) +
+            "-" +
+            value["id"].slice(20);
         } else {
           result["id"] = value["id"];
         }
@@ -892,14 +928,26 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           } else {
             if (
               typeof intermediateValue2 !== "string" ||
-              !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+              (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
                 intermediateValue2,
-              )
+              ) &&
+                !/^[a-f0-9]{32}$/gi.test(intermediateValue2))
             ) {
               intermediateErrorMap2[`$`] = {
                 key: "validator.pattern",
-                patternExplanation: "UUID (v4)",
+                patternExplanation: "UUID",
               };
+            } else if (intermediateValue2.length === 32) {
+              intermediateResult2 =
+                intermediateValue2.slice(0, 8) +
+                "-" +
+                intermediateValue2.slice(8, 12) +
+                "-" +
+                intermediateValue2.slice(12, 16) +
+                "-" +
+                intermediateValue2.slice(16, 20) +
+                "-" +
+                intermediateValue2.slice(20);
             } else {
               intermediateResult2 = intermediateValue2;
             }
@@ -995,14 +1043,26 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           } else {
             if (
               typeof intermediateValue2 !== "string" ||
-              !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+              (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
                 intermediateValue2,
-              )
+              ) &&
+                !/^[a-f0-9]{32}$/gi.test(intermediateValue2))
             ) {
               intermediateErrorMap2[`$`] = {
                 key: "validator.pattern",
-                patternExplanation: "UUID (v4)",
+                patternExplanation: "UUID",
               };
+            } else if (intermediateValue2.length === 32) {
+              intermediateResult2 =
+                intermediateValue2.slice(0, 8) +
+                "-" +
+                intermediateValue2.slice(8, 12) +
+                "-" +
+                intermediateValue2.slice(12, 16) +
+                "-" +
+                intermediateValue2.slice(16, 20) +
+                "-" +
+                intermediateValue2.slice(20);
             } else {
               intermediateResult2 = intermediateValue2;
             }
