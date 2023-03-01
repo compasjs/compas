@@ -4,6 +4,17 @@ editLink: false
 
 # Changelog
 
+### [v0.0.228](https://github.com/compasjs/compas/releases/tag/v0.0.228)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): correct database validation of 'orderBySpec'
+  [`0ef5d6`](https://github.com/compasjs/compas/commit/0ef5d6f7c48f8511a99b48a415141737d589458a)
+- fix(code-gen/experimental): correct type generation of dates
+  [`2966eb`](https://github.com/compasjs/compas/commit/2966eb3e431de6ae04c6aaa94753630bf3693e95)
+- fix(code-gen/experimental): use form-data package in Node.js axios api client
+  [`9eb8cb`](https://github.com/compasjs/compas/commit/9eb8cb43a9f453e4cdad7a1a3251eefa80974737)
+
 ### [v0.0.227](https://github.com/compasjs/compas/releases/tag/v0.0.227)
 
 #### Features
