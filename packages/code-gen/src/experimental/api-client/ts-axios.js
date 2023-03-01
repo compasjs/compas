@@ -200,6 +200,7 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
     generateContext.options.generators.apiClient?.target.targetRuntime ===
     "node.js"
   ) {
+    importCollector.raw(`import FormData from "form-data";`);
     importCollector.destructure("@compas/stdlib", "AppError");
   } else {
     importCollector.destructure("../common/api-client", "AppErrorResponse");

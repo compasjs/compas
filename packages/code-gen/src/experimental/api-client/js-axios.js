@@ -160,6 +160,7 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
     generateContext.options.generators.apiClient?.target.targetRuntime ===
     "node.js"
   ) {
+    importCollector.raw(`import FormData from "form-data";`);
     importCollector.destructure("@compas/stdlib", "AppError");
   }
 
