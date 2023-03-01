@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.229](https://github.com/compasjs/compas/releases/tag/v0.0.229)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): split `wrapQueryPart` from `common/database.js`
+  [`b334ce`](https://github.com/compasjs/compas/commit/b334ce78f277baa1108ac95a97507b71f2e45bcc)
+
 ### [v0.0.228](https://github.com/compasjs/compas/releases/tag/v0.0.228)
 
 #### Bug fixes
