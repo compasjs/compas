@@ -27,15 +27,31 @@ import { JavascriptImportCollector } from "../target/javascript.js";
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function jsPostgresGenerateUtils(generateContext) {
-  const file = fileContextCreateGeneric(generateContext, "common/database.js", {
-    importCollector: new JavascriptImportCollector(),
-  });
+  const helperFile = fileContextCreateGeneric(
+    generateContext,
+    "common/database-helpers.js",
+    {
+      importCollector: new JavascriptImportCollector(),
+    },
+  );
 
-  const importCollector = JavascriptImportCollector.getImportCollector(file);
-  importCollector.destructure("@compas/stdlib", "AppError");
+  const indexFile = fileContextCreateGeneric(
+    generateContext,
+    "common/database.js",
+    {
+      importCollector: new JavascriptImportCollector(),
+    },
+  );
+
+  const helperImportCollector =
+    JavascriptImportCollector.getImportCollector(helperFile);
+  const indexImportCollector =
+    JavascriptImportCollector.getImportCollector(indexFile);
+
+  helperImportCollector.destructure("@compas/stdlib", "AppError");
 
   fileWrite(
-    file,
+    helperFile,
     `
 /**
  * Wrap a queryPart & validator in something that can either be used directly, or can be chained.
@@ -86,11 +102,16 @@ export function wrapQueryPart(queryPart, validator, options) {
     execRaw: async (sql) => await queryPart.exec(sql),
   };
 }
+`,
+  );
 
+  fileWrite(
+    indexFile,
+    `
 export const queries = {
 ${structureModels(generateContext)
   .map((it) => {
-    importCollector.destructure(
+    indexImportCollector.destructure(
       `../database/${it.name}.js`,
       `${it.name}Queries`,
     );
@@ -121,7 +142,7 @@ export function jsPostgresCreateFile(generateContext, model) {
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
-  importCollector.destructure("../common/database.js", "wrapQueryPart");
+  importCollector.destructure("../common/database-helpers.js", "wrapQueryPart");
   importCollector.destructure("@compas/store", "query");
   importCollector.destructure("@compas/store", "generatedWhereBuilderHelper");
   importCollector.destructure("@compas/store", "generatedUpdateHelper");
