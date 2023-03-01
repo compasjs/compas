@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.230](https://github.com/compasjs/compas/releases/tag/v0.0.230)
+
+#### Features
+
+- feat(code-gen/experimental): add uuid conversion support in the validator
+  [`13e381`](https://github.com/compasjs/compas/commit/13e3816f8d3f7b1f7d93a715f8c75df730e1a802)
+
 ### [v0.0.229](https://github.com/compasjs/compas/releases/tag/v0.0.229)
 
 #### Bug fixes
