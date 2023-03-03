@@ -500,12 +500,18 @@ export function validateExperimentalAnyDefinition(value) {
                     value["targets"][genericKeyResult1][key] !== null &&
                     value["targets"][genericKeyResult1][key] !== undefined
                   ) {
+                    const expectedKeys = [...knownKeys3];
+                    const foundKeys = Object.keys(
+                      value["targets"][genericKeyResult1],
+                    );
+                    const unknownKeys = foundKeys.filter(
+                      (it) => !knownKeys3.has(it),
+                    );
                     errorMap[`$.targets.${genericKeyResult1}`] = {
                       key: "validator.keys",
-                      expectedKeys: [...knownKeys3],
-                      foundKeys: Object.keys(
-                        value["targets"][genericKeyResult1],
-                      ),
+                      unknownKeys,
+                      expectedKeys,
+                      foundKeys,
                     };
                     break;
                   }
@@ -10314,10 +10320,14 @@ export function validateExperimentalGenerateOptions(value) {
               value["generators"][key] !== null &&
               value["generators"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["generators"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.generators`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["generators"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -10348,10 +10358,18 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["structure"][key] !== null &&
                   value["generators"]["structure"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(
+                    value["generators"]["structure"],
+                  );
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.structure`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["structure"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10386,10 +10404,16 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["openApi"][key] !== null &&
                   value["generators"]["openApi"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(value["generators"]["openApi"]);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.openApi`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["openApi"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10437,12 +10461,18 @@ export function validateExperimentalGenerateOptions(value) {
                         key
                       ] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys0];
+                      const foundKeys = Object.keys(
+                        value["generators"]["openApi"]["openApiExtensions"],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys0.has(it),
+                      );
                       errorMap[`$.generators.openApi.openApiExtensions`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys0],
-                        foundKeys: Object.keys(
-                          value["generators"]["openApi"]["openApiExtensions"],
-                        ),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -10697,10 +10727,16 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["router"][key] !== null &&
                   value["generators"]["router"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(value["generators"]["router"]);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.router`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["router"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10755,10 +10791,16 @@ export function validateExperimentalGenerateOptions(value) {
                           intermediateValue2[key] !== null &&
                           intermediateValue2[key] !== undefined
                         ) {
+                          const expectedKeys = [...knownKeys2];
+                          const foundKeys = Object.keys(intermediateValue2);
+                          const unknownKeys = foundKeys.filter(
+                            (it) => !knownKeys2.has(it),
+                          );
                           intermediateErrorMap2[`$`] = {
                             key: "validator.keys",
-                            expectedKeys: [...knownKeys2],
-                            foundKeys: Object.keys(intermediateValue2),
+                            unknownKeys,
+                            expectedKeys,
+                            foundKeys,
                           };
                           break;
                         }
@@ -10866,10 +10908,18 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["database"][key] !== null &&
                   value["generators"]["database"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(
+                    value["generators"]["database"],
+                  );
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.database`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["database"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10924,10 +10974,16 @@ export function validateExperimentalGenerateOptions(value) {
                           intermediateValue2[key] !== null &&
                           intermediateValue2[key] !== undefined
                         ) {
+                          const expectedKeys = [...knownKeys2];
+                          const foundKeys = Object.keys(intermediateValue2);
+                          const unknownKeys = foundKeys.filter(
+                            (it) => !knownKeys2.has(it),
+                          );
                           intermediateErrorMap2[`$`] = {
                             key: "validator.keys",
-                            expectedKeys: [...knownKeys2],
-                            foundKeys: Object.keys(intermediateValue2),
+                            unknownKeys,
+                            expectedKeys,
+                            foundKeys,
                           };
                           break;
                         }
@@ -11066,10 +11122,18 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["validators"][key] !== null &&
                   value["generators"]["validators"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(
+                    value["generators"]["validators"],
+                  );
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.validators`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["validators"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -11134,10 +11198,18 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["apiClient"][key] !== null &&
                   value["generators"]["apiClient"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(
+                    value["generators"]["apiClient"],
+                  );
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.apiClient`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["apiClient"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -11197,10 +11269,16 @@ export function validateExperimentalGenerateOptions(value) {
                           intermediateValue2[key] !== null &&
                           intermediateValue2[key] !== undefined
                         ) {
+                          const expectedKeys = [...knownKeys2];
+                          const foundKeys = Object.keys(intermediateValue2);
+                          const unknownKeys = foundKeys.filter(
+                            (it) => !knownKeys2.has(it),
+                          );
                           intermediateErrorMap2[`$`] = {
                             key: "validator.keys",
-                            expectedKeys: [...knownKeys2],
-                            foundKeys: Object.keys(intermediateValue2),
+                            unknownKeys,
+                            expectedKeys,
+                            foundKeys,
                           };
                           break;
                         }
@@ -11466,10 +11544,16 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["types"][key] !== null &&
                   value["generators"]["types"][key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys0];
+                  const foundKeys = Object.keys(value["generators"]["types"]);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys0.has(it),
+                  );
                   errorMap[`$.generators.types`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys0],
-                    foundKeys: Object.keys(value["generators"]["types"]),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }

@@ -49,10 +49,14 @@ export function validateQueryResultStoreFile(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -309,10 +313,14 @@ export function validateQueryResultStoreJob(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -622,10 +630,14 @@ export function validateQueryResultStoreSessionStore(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -862,10 +874,14 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }

@@ -49,10 +49,14 @@ export function validateCliCommandDefinition(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -170,10 +174,14 @@ export function validateCliCommandDefinition(value) {
               value["modifiers"][key] !== null &&
               value["modifiers"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["modifiers"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.modifiers`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["modifiers"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -281,10 +289,14 @@ export function validateCliCommandDefinition(value) {
               value["dynamicValue"][key] !== null &&
               value["dynamicValue"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["dynamicValue"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.dynamicValue`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["dynamicValue"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -338,10 +350,14 @@ export function validateCliCommandDefinition(value) {
               value["watchSettings"][key] !== null &&
               value["watchSettings"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["watchSettings"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.watchSettings`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["watchSettings"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -606,10 +622,14 @@ export function validateCliFlagDefinition(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -722,10 +742,14 @@ export function validateCliFlagDefinition(value) {
               value["modifiers"][key] !== null &&
               value["modifiers"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["modifiers"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.modifiers`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["modifiers"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -834,10 +858,14 @@ export function validateCliFlagDefinition(value) {
               value["value"][key] !== null &&
               value["value"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["value"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.value`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["value"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -964,10 +992,14 @@ export function validateCliCompletion(value) {
               intermediateValue2[key] !== null &&
               intermediateValue2[key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys2];
+              const foundKeys = Object.keys(intermediateValue2);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys2.has(it));
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys2],
-                foundKeys: Object.keys(intermediateValue2),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -1046,10 +1078,14 @@ export function validateCliCompletion(value) {
               intermediateValue2[key] !== null &&
               intermediateValue2[key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys2];
+              const foundKeys = Object.keys(intermediateValue2);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys2.has(it));
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys2],
-                foundKeys: Object.keys(intermediateValue2),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -1128,10 +1164,14 @@ export function validateCliCompletion(value) {
               intermediateValue2[key] !== null &&
               intermediateValue2[key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys2];
+              const foundKeys = Object.keys(intermediateValue2);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys2.has(it));
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys2],
-                foundKeys: Object.keys(intermediateValue2),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -1262,10 +1302,14 @@ export function validateCliCompletion(value) {
               intermediateValue2[key] !== null &&
               intermediateValue2[key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys2];
+              const foundKeys = Object.keys(intermediateValue2);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys2.has(it));
               intermediateErrorMap2[`$`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys2],
-                foundKeys: Object.keys(intermediateValue2),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }

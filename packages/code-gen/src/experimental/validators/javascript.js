@@ -1192,13 +1192,20 @@ export function validatorJavascriptObject(file, type, validatorState) {
       file,
       `if (!${setVariable}.has(key) && ${valuePath}[key] !== null && ${valuePath}[key] !== undefined)`,
     );
+    fileWrite(file, `const expectedKeys = [...${setVariable}];`);
+    fileWrite(file, `const foundKeys = Object.keys(${valuePath});`);
+    fileWrite(
+      file,
+      `const unknownKeys  = foundKeys.filter(it => !${setVariable}.has(it));`,
+    );
 
     fileWrite(
       file,
       `${errorKey} = {
   key: "validator.keys",
-  expectedKeys: [...${setVariable}],
-  foundKeys: Object.keys(${valuePath}),
+  unknownKeys,
+  expectedKeys,
+  foundKeys,
 };`,
     );
     fileWrite(file, `break;`);

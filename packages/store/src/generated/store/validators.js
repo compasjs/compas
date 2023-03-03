@@ -51,10 +51,14 @@ export function validateStoreFile(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -305,10 +309,14 @@ export function validateStoreFileMeta(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -462,10 +470,14 @@ export function validateStoreFileWhereValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -2050,10 +2062,14 @@ export function validateStoreFileOrderBySpec(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -2237,10 +2253,14 @@ export function validateStoreFileQueryBuilderValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -2565,10 +2585,14 @@ export function validateStoreFileInsertValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -2698,10 +2722,14 @@ export function validateStoreFileInsertPartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -2941,10 +2969,14 @@ export function validateStoreFileUpdateValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -3044,10 +3076,14 @@ export function validateStoreFileUpdatePartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -3096,10 +3132,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3186,10 +3228,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3276,10 +3324,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3366,10 +3420,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3515,10 +3575,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3640,10 +3706,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3765,10 +3837,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3890,10 +3968,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -3926,10 +4010,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                       intermediateValue2["$set"][key] !== null &&
                       intermediateValue2["$set"][key] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys2];
+                      const foundKeys = Object.keys(intermediateValue2["$set"]);
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys2.has(it),
+                      );
                       intermediateErrorMap2[`$.$set`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$set"]),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -4139,10 +4229,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -4177,10 +4273,18 @@ export function validateStoreFileUpdatePartialValidated(value) {
                       intermediateValue2["$remove"][key] !== null &&
                       intermediateValue2["$remove"][key] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys2];
+                      const foundKeys = Object.keys(
+                        intermediateValue2["$remove"],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys2.has(it),
+                      );
                       intermediateErrorMap2[`$.$remove`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$remove"]),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -4419,10 +4523,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -4495,10 +4605,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -4621,10 +4737,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -4697,10 +4819,16 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -4837,10 +4965,14 @@ export function validateStoreJob(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -5181,10 +5313,14 @@ export function validateStoreJobWhereValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -7329,10 +7465,14 @@ export function validateStoreJobOrderBySpec(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -7596,10 +7736,14 @@ export function validateStoreJobQueryBuilderValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -7930,10 +8074,14 @@ export function validateStoreJobInsertValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -8065,10 +8213,14 @@ export function validateStoreJobInsertPartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -8364,10 +8516,14 @@ export function validateStoreJobUpdateValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -8469,10 +8625,14 @@ export function validateStoreJobUpdatePartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -8518,10 +8678,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -8646,10 +8812,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -8736,10 +8908,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -8826,10 +9004,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -8916,10 +9100,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9060,10 +9250,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9150,10 +9346,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9240,10 +9442,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9330,10 +9538,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9474,10 +9688,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9564,10 +9784,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9654,10 +9880,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9744,10 +9976,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -9893,10 +10131,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10018,10 +10262,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10094,10 +10344,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10220,10 +10476,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10256,10 +10518,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                       intermediateValue2["$set"][key] !== null &&
                       intermediateValue2["$set"][key] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys2];
+                      const foundKeys = Object.keys(intermediateValue2["$set"]);
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys2.has(it),
+                      );
                       intermediateErrorMap2[`$.$set`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$set"]),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -10469,10 +10737,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10507,10 +10781,18 @@ export function validateStoreJobUpdatePartialValidated(value) {
                       intermediateValue2["$remove"][key] !== null &&
                       intermediateValue2["$remove"][key] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys2];
+                      const foundKeys = Object.keys(
+                        intermediateValue2["$remove"],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys2.has(it),
+                      );
                       intermediateErrorMap2[`$.$remove`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$remove"]),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -10741,10 +11023,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10817,10 +11105,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -10943,10 +11237,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -11019,10 +11319,16 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -11153,10 +11459,14 @@ export function validateStoreSessionStore(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -11356,10 +11666,14 @@ export function validateStoreSessionStoreWhereValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -12430,10 +12744,14 @@ export function validateStoreSessionStoreWhereValidated(value) {
               value["viaAccessTokens"][key] !== null &&
               value["viaAccessTokens"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaAccessTokens"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaAccessTokens`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessTokens"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -12615,10 +12933,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -14399,10 +14721,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
               value["viaRefreshToken"][key] !== null &&
               value["viaRefreshToken"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaRefreshToken"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaRefreshToken`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaRefreshToken"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -14514,10 +14840,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
               value["viaSession"][key] !== null &&
               value["viaSession"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaSession"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaSession`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaSession"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -14632,10 +14962,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
               value["viaAccessToken"][key] !== null &&
               value["viaAccessToken"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaAccessToken"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaAccessToken`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessToken"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -14918,10 +15252,14 @@ export function validateStoreSessionStoreOrderBySpec(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -15073,10 +15411,14 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -15431,10 +15773,14 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -15802,10 +16148,14 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -16189,10 +16539,14 @@ export function validateStoreSessionStoreInsertValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -16320,10 +16674,14 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -16496,10 +16854,14 @@ export function validateStoreSessionStoreUpdateValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -16599,10 +16961,14 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -16648,10 +17014,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -16773,10 +17145,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -16849,10 +17227,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -16975,10 +17359,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -17011,10 +17401,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                       intermediateValue2["$set"][key] !== null &&
                       intermediateValue2["$set"][key] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys2];
+                      const foundKeys = Object.keys(intermediateValue2["$set"]);
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys2.has(it),
+                      );
                       intermediateErrorMap2[`$.$set`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$set"]),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -17224,10 +17620,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -17262,10 +17664,18 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                       intermediateValue2["$remove"][key] !== null &&
                       intermediateValue2["$remove"][key] !== undefined
                     ) {
+                      const expectedKeys = [...knownKeys2];
+                      const foundKeys = Object.keys(
+                        intermediateValue2["$remove"],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys2.has(it),
+                      );
                       intermediateErrorMap2[`$.$remove`] = {
                         key: "validator.keys",
-                        expectedKeys: [...knownKeys2],
-                        foundKeys: Object.keys(intermediateValue2["$remove"]),
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
                       };
                       break;
                     }
@@ -17496,10 +17906,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -17572,10 +17988,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -17698,10 +18120,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -17774,10 +18202,16 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -17908,10 +18342,14 @@ export function validateStoreSessionStoreToken(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -18126,10 +18564,14 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -18258,10 +18700,14 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -18474,10 +18920,14 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -18577,10 +19027,14 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -18680,10 +19134,16 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -18756,10 +19216,16 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -18939,10 +19405,16 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -19015,10 +19487,16 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -19141,10 +19619,16 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -19217,10 +19701,16 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   intermediateValue2[key] !== null &&
                   intermediateValue2[key] !== undefined
                 ) {
+                  const expectedKeys = [...knownKeys2];
+                  const foundKeys = Object.keys(intermediateValue2);
+                  const unknownKeys = foundKeys.filter(
+                    (it) => !knownKeys2.has(it),
+                  );
                   intermediateErrorMap2[`$`] = {
                     key: "validator.keys",
-                    expectedKeys: [...knownKeys2],
-                    foundKeys: Object.keys(intermediateValue2),
+                    unknownKeys,
+                    expectedKeys,
+                    foundKeys,
                   };
                   break;
                 }
@@ -19349,10 +19839,14 @@ export function validateStoreFileResponse(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -19801,10 +20295,14 @@ export function validateStoreFileWhereValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -21214,10 +21712,14 @@ export function validateStoreJobWhereValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -23142,10 +23644,14 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -24160,10 +24666,14 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
               value["viaAccessTokens"][key] !== null &&
               value["viaAccessTokens"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaAccessTokens"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaAccessTokens`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessTokens"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -24345,10 +24855,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -26041,10 +26555,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
               value["viaRefreshToken"][key] !== null &&
               value["viaRefreshToken"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaRefreshToken"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaRefreshToken`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaRefreshToken"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -26156,10 +26674,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
               value["viaSession"][key] !== null &&
               value["viaSession"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaSession"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaSession`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaSession"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -26274,10 +26796,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
               value["viaAccessToken"][key] !== null &&
               value["viaAccessToken"][key] !== undefined
             ) {
+              const expectedKeys = [...knownKeys0];
+              const foundKeys = Object.keys(value["viaAccessToken"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
               errorMap[`$.viaAccessToken`] = {
                 key: "validator.keys",
-                expectedKeys: [...knownKeys0],
-                foundKeys: Object.keys(value["viaAccessToken"]),
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
               };
               break;
             }
@@ -26424,10 +26950,14 @@ export function validateStoreFileUpdateValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -26519,10 +27049,14 @@ export function validateStoreJobUpdateValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -26614,10 +27148,14 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -26711,10 +27249,14 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -27346,10 +27888,14 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -27522,10 +28068,14 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -27699,10 +28249,14 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
@@ -27901,10 +28455,14 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
           value[key] !== null &&
           value[key] !== undefined
         ) {
+          const expectedKeys = [...knownKeys0];
+          const foundKeys = Object.keys(value);
+          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
           errorMap[`$`] = {
             key: "validator.keys",
-            expectedKeys: [...knownKeys0],
-            foundKeys: Object.keys(value),
+            unknownKeys,
+            expectedKeys,
+            foundKeys,
           };
           break;
         }
