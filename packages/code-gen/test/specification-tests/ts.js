@@ -173,6 +173,7 @@ async function runGenerate(result, spec) {
           resolveJsonModule: true,
           isolatedModules: true,
           jsx: "preserve",
+          noImplicitAny: false,
         },
         exclude: ["node_modules"],
         include: ["**/*.ts", "**/*.d.ts", "**/*.tsx"],

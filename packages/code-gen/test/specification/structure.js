@@ -54,8 +54,8 @@ function specificationExtendWithValidators(generator) {
       js: {
         validatorInputType: "any",
         validatorOutputType: "{}",
-        validatorExpression: "lodash.isPlainObject($value$)",
-        validatorImport: `import lodash from "lodash";`,
+        validatorExpression: "isPlainObject($value$)",
+        validatorImport: `import { isPlainObject } from "@compas/stdlib";`,
       },
       ts: {
         validatorInputType: "any",
