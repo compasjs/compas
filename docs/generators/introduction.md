@@ -2,7 +2,7 @@
 
 Compas' main feature set consists of target aware code generation. By utilizing
 a structure or specification, Compas can generate type definitions, validators,
-API clients, validating routers and database clients.
+API clients, routers and database clients.
 
 Taking the following OpenAPI specification
 
@@ -33,7 +33,17 @@ Compas can generate a Typescript API client with the following signature:
 declare function apiUserList(axiosInstance: AxiosInstance): Promise<string[]>;
 ```
 
-Start discovering the Compas code generators by reading more about
+Or a typed Koa compatible router which can be used like:
+
+```js
+userHandlers.list = async (ctx) => {
+  // ctx.body is typed as `string[]`
+  ctx.body = ["user 1", "user 2"];
+};
+```
+
+And a bunch more! Start discovering the Compas code generators by reading more
+about
 
 - [The supported targets](/generators/targets.html)
 - [Generating API clients](/generators/api-clients.html)
