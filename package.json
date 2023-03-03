@@ -19,7 +19,7 @@
     "meriyah": "4.3.4",
     "react": "18.2.0",
     "typescript": "4.9.5",
-    "vitepress": "1.0.0-alpha.48",
+    "vitepress": "1.0.0-alpha.48"
   },
   "author": {
     "name": "Dirk de Visser",
