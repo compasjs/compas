@@ -32,9 +32,9 @@ export function routeStructureCreate(generateContext) {
 
   routeStructureCache.set(
     generateContext,
-    JSON.stringify(routesOnlyGenerator.internalStructure).replaceAll(
-      /`/g,
-      "\\`",
+    JSON.stringify(routesOnlyGenerator.internalStructure).replace(
+      /([`\\])/gm,
+      (v) => `\\${v}`,
     ),
   );
 

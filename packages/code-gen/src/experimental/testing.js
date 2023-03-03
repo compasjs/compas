@@ -139,6 +139,11 @@ function getDefaultStructure() {
         foo: "bar",
       },
     }),
+    T.object("objectDefault")
+      .keys({
+        foo: T.string(),
+      })
+      .default(`{ foo: "my string" }`),
 
     T.omit("omitFields")
       .object(
@@ -267,6 +272,14 @@ function getDefaultStructure() {
         }),
 
       R.get("/get/file/", "getFile").response(T.file()),
+
+      R.get("/get/default", "getDefault").response(
+        T.object()
+          .keys({
+            foo: T.string(),
+          })
+          .default(`{ foo: "my string" }`),
+      ),
 
       R.post("/post", "post"),
       R.post("/post/idempotent", "postIdempotent")
