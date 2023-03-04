@@ -5,9 +5,11 @@
  */
 export class Generator {
   /**
-   * @param {import("@compas/stdlib").Logger} logger
+   * @param {import("@compas/stdlib").Logger} [logger]
    */
-  constructor(logger: import("@compas/stdlib").Logger);
+  constructor(
+    logger?: import("@compas/stdlib/src/logger.js").Logger | undefined,
+  );
   /**
    * @type {import("@compas/stdlib").Logger}
    */

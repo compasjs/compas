@@ -152,7 +152,7 @@ export function loggerDetermineDefaultDestination() {
 
   if (!["github-actions", "ndjson", "pretty"].includes(printer)) {
     throw AppError.serverError({
-      message: `process.env.COMPAS_LOG_PRINTER is set to an '${printer}', but only accepts 'ndjson', 'pretty' or 'github-actions'.`,
+      message: `process.env.COMPAS_LOG_PRINTER is set to a '${printer}', but only accepts 'ndjson', 'pretty' or 'github-actions'.`,
     });
   }
 

@@ -1,5 +1,14 @@
 import { readFileSync } from "fs";
-import { AppError, pathJoin } from "@compas/stdlib";
+import {
+  AppError,
+  environment,
+  isNil,
+  isProduction,
+  loggerGetPrettyPrinter,
+  loggerSetGlobalDestination,
+  newLogger,
+  pathJoin,
+} from "@compas/stdlib";
 import { buildOrInfer } from "../builders/index.js";
 import { generateExecute } from "./generate.js";
 import { validateExperimentalGenerateOptions } from "./generated/experimental/validators.js";
@@ -17,13 +26,26 @@ import {
  */
 export class Generator {
   /**
-   * @param {import("@compas/stdlib").Logger} logger
+   * @param {import("@compas/stdlib").Logger} [logger]
    */
   constructor(logger) {
+    if (
+      isNil(logger) &&
+      environment.CI !== "true" &&
+      (!isProduction() || isNil(environment.NODE_ENV))
+    ) {
+      // Work nicely when the user doesn't use `mainFn` and doesn't explicitly set
+      // NODE_ENV. Normally, we default to production behaviour when `NODE_ENV` is not
+      // set, but we expect the generator to only be used in dev contexts.
+      loggerSetGlobalDestination(
+        loggerGetPrettyPrinter({ addGitHubActionsAnnotations: false }),
+      );
+    }
+
     /**
      * @type {import("@compas/stdlib").Logger}
      */
-    this.logger = logger;
+    this.logger = logger ?? newLogger();
 
     /**
      * @type {import("./generated/common/types").ExperimentalStructure}
