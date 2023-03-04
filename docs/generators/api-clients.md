@@ -12,20 +12,15 @@ started with API client generation
 To import an OpenAPI specification, make sure it is in JSON instead of YAML.
 Then it can be converted to a Compas structure and added to the generator.
 
-```js {11-12}
+```js {7-8}
 import { readFileSync } from "fs";
 import { loadApiStructureFromOpenAPI } from "@compas/code-gen";
 import { Generator } from "@compas/code-gen/experimental";
-import { mainFn } from "@compas/stdlib";
 
-mainFn(import.meta, main);
+const generator = new Generator();
 
-function main(logger) {
-  const generator = new Generator(logger);
-
-  const spec = JSON.parse(readFileSync("./specs/openapi.json", "utf-8"));
-  generator.addStructure(loadApiStructureFromOpenAPI("pet", spec));
-}
+const spec = JSON.parse(readFileSync("./specs/openapi.json", "utf-8"));
+generator.addStructure(loadApiStructureFromOpenAPI("pet", spec));
 ```
 
 ## Compas (remote) structure
@@ -33,24 +28,19 @@ function main(logger) {
 Loading a Compas structure works almost the same as loading an OpenAPI
 specification.
 
-```js {11-16}
+```js {7-12}
 import { readFileSync } from "fs";
 import { loadApiStructureFromRemote } from "@compas/code-gen";
 import { Generator } from "@compas/code-gen/experimental";
-import { mainFn } from "@compas/stdlib";
 
-mainFn(import.meta, main);
+const generator = new Generator();
 
-function main(logger) {
-  const generator = new Generator(logger);
-
-  const structure = JSON.parse(
-    readFileSync("./src/generated/common/structure.json", "utf-8"),
-  );
-  // Or loading from remote. This will call `/_compas/structure.json`.
-  // const structure = await loadApiStructureFromRemote(Axios, "https://compasjs.com/");
-  generator.addStructure(structure);
-}
+const structure = JSON.parse(
+  readFileSync("./src/generated/common/structure.json", "utf-8"),
+);
+// Or loading from remote. This will call `/_compas/structure.json`.
+// const structure = await loadApiStructureFromRemote(Axios, "https://compasjs.com/");
+generator.addStructure(structure);
 ```
 
 ## Generating
@@ -59,68 +49,62 @@ After adding a structure to the generator it is time to generate.
 
 ::: code-group
 
-```js [React]
-function main(logger) {
-  const generator = new Generator(logger);
-  // ...
-  generator.addStructure(/* ... */);
-  generator.generate({
-    targetLanguage: "ts",
-    outputDirectory: "./src/generated",
-    generators: {
-      apiClient: {
-        target: {
-          library: "axios",
-          targetRuntime: "browser",
-          globalClient: true,
-        },
+```js {5,9-13} [React]
+const generator = new Generator();
+// ...
+generator.addStructure(/* ... */);
+generator.generate({
+  targetLanguage: "ts",
+  outputDirectory: "./src/generated",
+  generators: {
+    apiClient: {
+      target: {
+        library: "axios",
+        targetRuntime: "browser",
+        globalClient: true,
       },
     },
-  });
-}
+  },
+});
 ```
 
-```js [React-Query wrapper]
-function main(logger) {
-  const generator = new Generator(logger);
-  // ...
-  generator.addStructure(/* ... */);
-  generator.generate({
-    targetLanguage: "ts",
-    outputDirectory: "./src/generated",
-    generators: {
-      apiClient: {
-        target: {
-          library: "axios",
-          targetRuntime: "browser",
-          includeWrapper: "react-query",
-          globalClient: true,
-        },
+```js {5,9-14} [React-Query wrapper]
+const generator = new Generator();
+// ...
+generator.addStructure(/* ... */);
+generator.generate({
+  targetLanguage: "ts",
+  outputDirectory: "./src/generated",
+  generators: {
+    apiClient: {
+      target: {
+        library: "axios",
+        targetRuntime: "browser",
+        includeWrapper: "react-query",
+        globalClient: true,
       },
     },
-  });
-}
+  },
+});
 ```
 
-```js [Node.js]
-function main(logger) {
-  const generator = new Generator(logger);
-  // ...
-  generator.addStructure(/* ... */);
-  generator.generate({
-    targetLanguage: "js",
-    outputDirectory: "./src/generated",
-    generators: {
-      apiClient: {
-        target: {
-          library: "axios",
-          targetRuntime: "node.js",
-          globalClient: true,
-        },
+```js {5,9-13} [Node.js]
+const generator = new Generator();
+// ...
+generator.addStructure(/* ... */);
+generator.generate({
+  targetLanguage: "js",
+  outputDirectory: "./src/generated",
+  generators: {
+    apiClient: {
+      target: {
+        library: "axios",
+        targetRuntime: "node.js",
+        globalClient: true,
       },
     },
-  });
-}
+  },
+});
 ```
 
 :::
