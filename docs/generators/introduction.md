@@ -58,4 +58,4 @@ about
 
 - [The supported targets](/generators/targets.html)
 - [Generating API clients](/generators/api-clients.html)
-- [Or building your own structure](/generators/build-structure.html)
+- [Or building your own structure](/generators/build-structure/types-and-validators.html)

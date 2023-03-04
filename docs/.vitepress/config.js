@@ -121,7 +121,12 @@ function getHomeSidebar() {
         },
         {
           text: "Build a custom structure",
-          link: "/generators/build-structure.html",
+          items: [
+            {
+              text: "Types and validators",
+              link: "/generators/build-structure/types-and-validators.html",
+            },
+          ],
         },
       ],
     },
