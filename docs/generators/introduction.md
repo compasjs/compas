@@ -4,6 +4,17 @@ Compas' main feature set consists of target aware code generation. By utilizing
 a structure or specification, Compas can generate type definitions, validators,
 API clients, routers and database clients.
 
+## Installation
+
+Compas requires at least Node.js 18 or higher.
+
+```shell
+npm install --save-dev --save-exact @compas/code-gen  # npm
+yarn add --dev --exact @compas/code-gen               # yarn
+```
+
+## Explore
+
 Taking the following OpenAPI specification
 
 ```yaml
