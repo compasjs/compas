@@ -4,6 +4,47 @@ editLink: false
 
 # Changelog
 
+### [v0.0.231](https://github.com/compasjs/compas/releases/tag/v0.0.231)
+
+#### Features
+
+- feat(code-gen/experimental): add filtered 'unknownKeys' to object strict
+  validation error
+  [`d976f4`](https://github.com/compasjs/compas/commit/d976f417d56b3190393378dea82be15a02aa856a)
+- feat(code-gen/experimental): make logger optional in `new Generator()`
+  [`83ff74`](https://github.com/compasjs/compas/commit/83ff74368fb8b1622eb7905c16937ae9beabbece)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): correct serialization of api structure
+  [`bda488`](https://github.com/compasjs/compas/commit/bda488b08e9afe0753688aa407c3bb8a1d425d82)
+- fix(code-gen/experimental): keep `.convert()` in crud to maintain
+  compatibility with old code-gen
+  [`ea367b`](https://github.com/compasjs/compas/commit/ea367b897b8d8b7407da43ae9cc9ac45e4423a57)
+
+#### Other
+
+- chore(benchmark): cleanup validator benchmark
+  [`8baf41`](https://github.com/compasjs/compas/commit/8baf4111d950e5e5a78d2515285bd293992dfb87)
+- chore: fix package.json
+  [`11fcf7`](https://github.com/compasjs/compas/commit/11fcf7bb8c0a4f41a3b173cd4a3466d479376207)
+- chore: install a version of lodash as dev dep
+  [`bea627`](https://github.com/compasjs/compas/commit/bea627be0db546d223af523ee11fd39fe5c44e04)
+- chore(docs): expand introduction
+  [`e4dc66`](https://github.com/compasjs/compas/commit/e4dc66de55c4c554a85ef2ebc65be55047bf96c2)
+- chore(docs): add installation to generator introduction
+  [`a6ff19`](https://github.com/compasjs/compas/commit/a6ff19224a8a1d7d23858d666dfc433eb277a81f)
+- chore(docs): simplify api client generator logger usage
+  [`f6a01f`](https://github.com/compasjs/compas/commit/f6a01fe21b28e6ea571195ca0c2c67bdc8480cb1)
+- chore(docs): start with building your own types and validators
+  [`4c7972`](https://github.com/compasjs/compas/commit/4c79727fa09b4b548d99d7c37e06cfbb5b124693)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 40.0.0 to 40.0.1
+  ([#2397](https://github.com/compasjs/compas/pull/2397))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.0.230](https://github.com/compasjs/compas/releases/tag/v0.0.230)
 
 #### Features
