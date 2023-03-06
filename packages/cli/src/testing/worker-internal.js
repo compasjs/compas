@@ -68,10 +68,10 @@ export async function runTestsInProcess(options) {
     });
   }
 
-  testLogger.info(`Running setup`);
+  testLogger.info(`Running: setup`);
   await globalSetup();
   await runTestsRecursively(state);
-  testLogger.info(`Running teardown`);
+  testLogger.info(`Running: teardown`);
   await globalTeardown();
 
   return printTestResults();

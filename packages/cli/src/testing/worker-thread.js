@@ -39,7 +39,7 @@ async function main(logger) {
   await loadTestConfig();
 
   try {
-    testLogger.info(`Running setup`);
+    testLogger.info(`Running: setup`);
     await globalSetup();
   } catch (e) {
     logger.error({
@@ -54,7 +54,7 @@ async function main(logger) {
 
   const teardown = async () => {
     try {
-      testLogger.info(`Running teardown`);
+      testLogger.info(`Running: teardown`);
       await globalTeardown();
       await setTimeout(5);
       process.exit(0);
