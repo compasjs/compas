@@ -202,6 +202,7 @@ function transformRouteName(operationId) {
  * @returns {string}
  */
 function transformRoutePath(path) {
+  const hasTrailingSlash = path.endsWith("/");
   return `${path
     .split("/")
     .filter((it) => it.length > 0)
@@ -211,7 +212,7 @@ function transformRoutePath(path) {
       }
       return it;
     })
-    .join("/")}/`;
+    .join("/")}${hasTrailingSlash ? "/" : ""}`;
 }
 
 /**
