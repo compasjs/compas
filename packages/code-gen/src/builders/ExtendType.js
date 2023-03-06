@@ -1,4 +1,5 @@
 import { AppError } from "@compas/stdlib";
+import { upperCaseFirst } from "../utils.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -28,13 +29,18 @@ export class ExtendType extends TypeBuilder {
   }
 
   constructor(group, ref) {
-    super("extend", group, `x${uniqueNameIdx++}`);
+    super("extend", group, `x0`);
 
     if (ref.data.type !== "reference") {
       throw AppError.serverError({
         message: "T.extend() should be called with a T.reference()",
       });
     }
+
+    this.data.name = `${
+      upperCaseFirst(ref.data.reference?.group ?? "") +
+      upperCaseFirst(ref.data.reference?.name ?? "")
+    }CompasExtend${uniqueNameIdx++}`;
 
     this.internalReference = ref;
     this.internalKeys = {};
