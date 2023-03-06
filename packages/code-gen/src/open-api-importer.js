@@ -317,6 +317,10 @@ function resolveReferenceAndConvert(context, refString) {
 
   let currentItem = context.data;
   while (path.length > 0) {
+    if (!currentItem) {
+      return;
+    }
+
     currentItem = currentItem?.[path.shift()];
   }
 
@@ -342,6 +346,10 @@ function resolveReference(context, refString) {
 
   let currentItem = context.data;
   while (path.length > 0) {
+    if (!currentItem) {
+      return;
+    }
+
     currentItem = currentItem?.[path.shift()];
   }
 
