@@ -46,10 +46,8 @@ export function convertOpenAPISpec(defaultGroup, data) {
    *   result: CompasStructure,
    *   defaultGroup: string,
    *   data: any,
-   *   crossReferences: any[],
    *   openAPIReferences: any[],
    * }}
-   * crossReferences are used to link routes to the default group
    *
    * openAPIReferences to resolve $ref's in the document
    */
@@ -62,7 +60,6 @@ export function convertOpenAPISpec(defaultGroup, data) {
     result,
     defaultGroup: lowerCaseFirst(defaultGroup),
     data,
-    crossReferences: [],
     openAPIReferences: [],
   };
 
@@ -71,22 +68,6 @@ export function convertOpenAPISpec(defaultGroup, data) {
     for (const method of Object.keys(data.paths[path])) {
       extractRoute(context, path, method);
     }
-  }
-
-  // Generate refs for all routes that operate in a different group
-  for (const ref of context.crossReferences) {
-    const generatedRef = {
-      ...ReferenceType.getBaseData(),
-      type: "reference",
-      group: defaultGroup,
-      name: `ref${upperCaseFirst(ref.name)}`,
-      reference: {
-        ...ref,
-        uniqueName: upperCaseFirst(ref.group) + upperCaseFirst(ref.name),
-      },
-    };
-
-    context.result[context.defaultGroup][generatedRef.name] = generatedRef;
   }
 
   for (const ref of context.openAPIReferences) {
@@ -123,13 +104,6 @@ function extractRoute(context, path, method) {
     idempotent: false,
     invalidations: [],
   };
-
-  if (context.defaultGroup !== compasStruct.group) {
-    context.crossReferences.push({
-      name: compasStruct.name,
-      group: compasStruct.group,
-    });
-  }
 
   // OpenAPI has the path & query params in a single list
   compasStruct.query = transformQueryOrParams(
