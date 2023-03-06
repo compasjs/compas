@@ -489,6 +489,9 @@ function convertSchema(context, schema, options = {}) {
     } else if (schema.format === "date" || schema.format === "date-time") {
       result.type = "date";
       assignBaseData();
+      if (schema.format === "date") {
+        result.specifier = "dateOnly";
+      }
     } else if (schema.format === "binary") {
       result.type = "file";
       assignBaseData();
