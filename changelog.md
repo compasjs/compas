@@ -4,6 +4,45 @@ editLink: false
 
 # Changelog
 
+### [v0.0.232](https://github.com/compasjs/compas/releases/tag/v0.0.232)
+
+#### Breaking changes
+
+- feat(code-gen): remove cross-references from OpenAPI importer
+  [`c18ca2`](https://github.com/compasjs/compas/commit/c18ca2f2f9033d97b3e947909582ee366c8eed47)
+  - The OpenAPI importer did always cross-reference routes to the default group.
+    This allowed you to only generate on your default group and still get all
+    the types and routes from a specification. This behaviour is now removed.
+    Only impacts when the 'default' group is also used in `enabledGroups` in a
+    generate call.
+
+#### Features
+
+- feat(code-gen): add date 'dateOnly' support in the open api importer
+  [`9e45db`](https://github.com/compasjs/compas/commit/9e45db05fc58a3cf0e862324ebe6f1aef439875f)
+- feat(cli): consistent printing when running test setup and teardown
+  [`4a9e98`](https://github.com/compasjs/compas/commit/4a9e9816fac7421e92b548a931bce396a4b855c7)
+- feat(code-gen): more descriptive extend names
+  [`e113e2`](https://github.com/compasjs/compas/commit/e113e28e20795879354fd369216f2ea46d1148c0)
+
+#### Bug fixes
+
+- fix(code-gen): correctly handling existing trailing slashes in the open api
+  spec
+  [`a04b3b`](https://github.com/compasjs/compas/commit/a04b3bd7b993918e7765f7b1a4e935b743b6a4ed)
+- fix(code-gen): early return if a component can't be found in the OpenAPI
+  importer
+  [`e52cc5`](https://github.com/compasjs/compas/commit/e52cc5fe4330335974da30db80355ca09255e565)
+
+#### Dependency updates
+
+- build(deps): bump cron-parser from 4.7.1 to 4.8.0
+  ([#2401](https://github.com/compasjs/compas/pull/2401))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- build(deps): bump eslint-config-prettier from 8.6.0 to 8.7.0
+  ([#2402](https://github.com/compasjs/compas/pull/2402))
+  - [Release notes](https://github.com/prettier/eslint-config-prettier/releases)
+
 ### [v0.0.231](https://github.com/compasjs/compas/releases/tag/v0.0.231)
 
 #### Features
