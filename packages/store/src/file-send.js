@@ -46,6 +46,11 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
     if (dateValue.getTime() === currentDate.getTime()) {
       // File is not modified
       ctx.status = 304;
+
+      // We always set a Buffer here to conform to response validators.
+      // Koa discards this for status codes that should not send a response.
+      // See https://github.com/koajs/koa/blob/bec13ecccdf7c734bccd5dd0ee9892621415af41/lib/application.js#L272
+      ctx.body = Buffer.alloc(0, 0);
       return;
     }
   }
