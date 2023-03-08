@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.233](https://github.com/compasjs/compas/releases/tag/v0.0.233)
+
+#### Bug fixes
+
+- fix(store): always set an empty buffer as the response
+  [`5bd03c`](https://github.com/compasjs/compas/commit/5bd03c5c14064b53e81eac562c717becb11a6466)
+
 ### [v0.0.232](https://github.com/compasjs/compas/releases/tag/v0.0.232)
 
 #### Breaking changes
