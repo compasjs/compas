@@ -241,7 +241,7 @@ export async function queueWorkerRegisterCronJobs(event, sql, { jobs }) {
  */
 export function queueWorkerCreate(sql, options) {
   /** @type {QueueWorkerInternalOptions} */
-  // @ts-ignore
+  // @ts-expect-error
   const opts = { ...options, isQueueEnabled: true };
   opts.pollInterval = options.pollInterval ?? 1500;
   opts.parallelCount = options.parallelCount ?? 1;
@@ -325,8 +325,7 @@ async function queueWorkerUpsertCronJob(sql, job) {
     .next()
     .toDate();
 
-  // @ts-ignore
-  const [updated] = await queries.jobUpdate(sql, {
+  const updatedJobs = await queries.jobUpdate(sql, {
     update: {
       data: {
         $set: {
@@ -344,7 +343,14 @@ async function queueWorkerUpsertCronJob(sql, job) {
     returning: ["id"],
   });
 
-  if (isNil(updated?.id)) {
+  if (updatedJobs.length > 1) {
+    // If a finished cron job is manually restarted, it will schedule a new job again
+    // without checking if it is necessary. On application startup we correct this by
+    // removing the extra jobs.
+    await queries.jobDelete(sql, {
+      idIn: updatedJobs.slice(1).map((it) => it.id),
+    });
+  } else if (updatedJobs.length === 0) {
     await queries.jobInsert(sql, {
       name: job.name,
       priority: job.priority ?? 4,
@@ -416,7 +422,6 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
   const isCronJob = job.data?.jobType === JOB_TYPE_CRON;
 
   let handler = options.handler[job.name];
-  // @ts-ignore
   const timeout =
     job.handlerTimeout ??
     (typeof handler === "function"
@@ -424,9 +429,9 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
       : handler?.timeout ?? options.handlerTimeout);
   let isJobComplete = false;
 
-  // @ts-ignore
+  // @ts-expect-error
   if (handler?.handler) {
-    // @ts-ignore
+    // @ts-expect-error
     handler = handler.handler;
   }
 
@@ -449,15 +454,13 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
         priority: job.priority,
       },
     }),
-
-    // @ts-ignore
     AbortSignal.timeout(timeout),
   );
 
   try {
-    // @ts-ignore
+    // @ts-expect-error
     await sql.savepoint(async (sql) => {
-      // @ts-ignore
+      // @ts-expect-error
       await handler(event, sql, job);
     });
     isJobComplete = true;
@@ -490,6 +493,10 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
       .next()
       .toDate();
 
+    // This causes an extra insert if a finished cron job is manually restarted. We don't
+    // correct for this behaviour here, since we are kinda in a hot loop. It will be
+    // autocorrected on the next call of `queueWorkerRegisterCronJobs` (at queue
+    // startup).
     await queries.jobInsert(sql, {
       name: job.name,
       priority: job.priority,
