@@ -157,15 +157,6 @@ export async function runMigrations(mc) {
           message: "Could not run migration",
           number: current?.number,
           name: current?.name,
-          postgres: {
-            severity_local: error?.severity_local,
-            severity: error?.severity,
-            code: error?.code,
-            position: error?.position,
-            file: error?.file,
-            line: error?.line,
-            routine: error?.routine,
-          },
         },
         error,
       );
@@ -260,10 +251,10 @@ async function runMigration(sql, migration) {
   }
 
   if (useTransaction) {
-    await sql.begin(async (sql) => [
-      await run(sql),
-      await runInsert(sql, migration),
-    ]);
+    await sql.begin(async (sql) => {
+      await run(sql);
+      await runInsert(sql, migration);
+    });
   } else {
     await run(sql);
     await runInsert(sql, migration);
