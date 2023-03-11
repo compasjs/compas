@@ -246,3 +246,191 @@ T.string().disallowCharacters(["\n"]); // Error when specific characters are in 
 
 T.string().pattern(/^\d{4}$/g); // Enforce a specific regex
 ```
+
+## Uuid
+
+The uuid type does not have any options. It accepts any string in an uuid v4
+like format.
+
+```ts
+T.uuid();
+// -> Typescript type: number
+// -> Valid validator inputs: "70f20a8b-0372-44aa-8135-137981083d9b"
+// -> Validator outputs: "70f20a8b-0372-44aa-8135-137981083d9b"
+```
+
+## Any
+
+Accept any value. Can be used as an escape hatch to validate values that are not
+natively supported by Compas.
+
+```ts
+T.any();
+// -> Typescript type: any
+// -> Valid validator inputs: Buffer.from("Hello world");
+// -> Validator outputs: <Buffer ...>
+```
+
+## Date
+
+The Date input accepts full datetime strings with timezone offsets or a number
+representing milliseconds since Unix epoch.
+
+```ts
+T.date();
+
+T.date().dateOnly(); // Accepts yyyy-MM-dd only
+T.date().timeOnly(); // Accepts HH:mm(:ss(.SSS))
+
+T.date().min(new Date(2023, 0, 1)); // Only accept dates after 2023-01-01
+T.date().max(new Date(2023, 0, 1)); // Only accept dates before 2023-01-01
+
+T.date().inTheFuture(); // Accept dates that are in the future
+T.date().inThePast(); // Accept dates that represent a datetime in the past.
+```
+
+## Array
+
+```ts
+T.array().values(T.bool());
+// -> Typescript type: boolean[]
+// -> Valid validator inputs: true, [false]
+// -> Validator outputs: [true], [false]
+// Note the auto conversion to array for the first input.
+
+T.array().min(1); // Enforce a minimum number of items
+T.array().max(5); // Enforce a maximum number of items
+```
+
+## Object
+
+```ts
+T.object().keys({
+  foo: T.bool(),
+});
+// -> Typescript type: { foo: boolean };
+// -> Valid validator inputs: { foo: true }
+// -> Validator outputs: { foo: true }
+
+// By default objects don't allow extra keys to be provided. Applying `.loose()`
+// will ignore the extra keys.
+T.object().loose();
+```
+
+## Generic
+
+Represent an object with dynamic validated keys and values
+
+```ts
+T.generic().keys(T.string()).values(T.bool());
+// -> Typescript type: { [k: string]: boolean };
+// -> Valid validator inputs: { foo: true }, { bar: true },
+// -> Validator outputs: { foo: true }, { bar: true}
+```
+
+## Any of
+
+Represent a type that could be any of the defined types
+
+```ts
+T.anyOf().values(T.bool(), T.string());
+// -> Typescript type: boolean|string;
+// -> Valid validator inputs: true, "foo"
+// -> Validator outputs: true, "foo"
+
+// A discriminated union with named types is the most common usage
+T.anyOf("state").values(
+  T.object("startState").keys({
+    type: "start",
+    // ... extra keys
+  }),
+  T.object("inProgressState").keys({
+    type: "inProgress",
+    // ... extra keys
+  }),
+);
+```
+
+## File
+
+Only usable in route / api client definitions. This is typed specifically to the
+router or api client target that is used.
+
+```ts
+T.file();
+
+// Static mime type validator if the router supports that.
+T.file().mimeTypes("image/png", "image/jpeg");
+```
+
+## Reference
+
+Named types can be reused as well.
+
+```ts
+generator.add(
+  T.object("item").keys({
+    id: T.uuid(),
+    name: T.string(),
+  }),
+  T.object("itemList").keys({
+    total: T.number(),
+    items: [T.reference("app", "item")],
+  }),
+);
+
+// Generates the following;
+// Note; `App` is the default group if no value is explicitly provided to `new TypeCreator()`;
+type AppItem = { id: string; name: string };
+type AppItemList = { total: number; items: AppItem[] };
+```
+
+## Object extensions
+
+### Omit
+
+Copy all keys from a named object type and omit some of them
+
+```ts
+T.object("bigObject").keys({
+  key1: T.string(),
+  key2: T.string(),
+  key3: T.string(),
+});
+// { key1: string, key2: string, key3: string }
+
+T.omit("ommitBigObject").object(T.reference("app", "bigObject")).keys("key3");
+// { key1: string, key2: string }
+```
+
+### Pick
+
+Copy some fields from a named object type
+
+```ts
+T.object("bigObject").keys({
+  key1: T.string(),
+  key2: T.string(),
+  key3: T.string(),
+});
+// { key1: string, key2: string, key3: string }
+
+T.pick("pickBigObject")
+  .object(T.reference("app", "bigObject"))
+  .keys("key1", "key2");
+// { key1: string, key2: string }
+```
+
+### Extend
+
+It could happen that you want to add extra properties on an `T.objct()` that is
+provided by a library. A use case is when using Compas' store package to save
+files. It provides a typed `fileMeta` type which you can extend to add extra
+properties.
+
+```ts
+T.extendNamedObject(T.reference("store", "fileMeta")).keys({
+  hashCode: T.string(),
+});
+// type StoreFileMeta = { ...existingKeys; hashCode: string, };
+```
