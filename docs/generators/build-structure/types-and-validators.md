@@ -171,9 +171,78 @@ T.object("named").keys({
   inferredArray: [T.string()],
 
   // boolean, number and string literals are supported as well. This uses `.oneOf()`, which
-  // is further explained below.
+  // is further detailed below.
   inferredBoolean: true,
   inferredNumber: 5,
   inferredString: "north",
 });
+```
+
+## Boolean
+
+Boolean types and validators can be customized
+
+```ts
+import { TypeCreator } from "@compas/code-gen";
+
+const T = new TypeCreator();
+
+T.bool();
+// -> Typescript type: boolean
+// -> Valid validator inputs: 0, 1, true, false
+// -> Validator outputs: true, false
+
+// Only allows `true`. Since the validators will auto coerce booleans, `1` is a valid input as well.
+T.bool().oneOf(true);
+```
+
+## Number
+
+Integers and floats are represented by `T.number()`
+
+```ts
+T.number();
+// -> Typescript type: number
+// -> Valid validator inputs: 1, 15, 3, "5"
+// -> Validator outputs: 1, 15, 3, 5
+
+// Number validation defaults to integers only.
+T.number().float();
+
+// Only allow specific values
+T.number().oneOf(1, 2, 3);
+T.number().float().oneOf(1.1, 2.2, 3.3);
+
+T.number().min(4); // >= 4
+T.number().max(4); // <= 4
+```
+
+## String
+
+```ts
+import { TypeCreator } from "@compas/code-gen";
+
+const T = new TypeCreator();
+
+T.string();
+// -> Typescript type: number
+// -> Valid validator inputs: "f", "foo"
+// -> Validator outputs: "f", "foo"
+
+// Allow empty strings.
+T.string().min(0);
+
+// Specific string values
+T.string().oneOf("NORTH", "SOUTH");
+
+T.string().min(3); // str.length >= 3
+T.string().max(3); // str.length <= 3
+
+T.string().trim(); // Remove leading and trailing whitepsace
+T.string().lowerCase(); // Convert the input to lower case
+T.string().upperCase(); // Convert the input to upper case
+
+T.string().disallowCharacters(["\n"]); // Error when specific characters are in the input
+
+T.string().pattern(/^\d{4}$/g); // Enforce a specific regex
 ```
