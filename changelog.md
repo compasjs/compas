@@ -4,6 +4,43 @@ editLink: false
 
 # Changelog
 
+### [v0.0.234](https://github.com/compasjs/compas/releases/tag/v0.0.234)
+
+#### Features
+
+- feat(store): improve error handling around migrations
+  [`73c2dd`](https://github.com/compasjs/compas/commit/73c2dd7f39956fa55678d7d5b526c874e7a1d8c2)
+
+#### Bug fixes
+
+- fix(store): remove cron jobs created via manual reruns
+  [`0cc953`](https://github.com/compasjs/compas/commit/0cc953c49d21a60db0a9128705afdb634cd8983e)
+- fix(code-gen/experimental): correct validator pattern explanation for
+  `timeOnly` dates
+  [`5ca28b`](https://github.com/compasjs/compas/commit/5ca28baaa003feeb107fa1fc2dd37237b30c784c)
+
+#### Other
+
+- chore(docs): add boolean, number and string to build structure
+  [`28ec7e`](https://github.com/compasjs/compas/commit/28ec7e79ca539210555c220daec3625773d6ead6)
+- chore(docs): add the rest to types and validators
+  [`920a29`](https://github.com/compasjs/compas/commit/920a29b5977fea2c73c2a8304255364b12eab8ff)
+- chore(docs): scaffold build-structure pages
+  [`f143c3`](https://github.com/compasjs/compas/commit/f143c3704b8378195ca75967afb36d7d749e3b1b)
+- chore(code-gen/experimental): update todo list
+  [`fb00a6`](https://github.com/compasjs/compas/commit/fb00a6beda630941599b9c67fd27748f829c6494)
+- chore(docs): add route definition docs
+  [`49477a`](https://github.com/compasjs/compas/commit/49477acef135132cc8f978d6781095c7e723260a)
+
+#### Dependency updates
+
+- build(deps): bump cron-parser from 4.8.0 to 4.8.1
+  ([#2405](https://github.com/compasjs/compas/pull/2405))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- build(deps): bump postgres from 3.3.3 to 3.3.4
+  ([#2406](https://github.com/compasjs/compas/pull/2406))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+
 ### [v0.0.233](https://github.com/compasjs/compas/releases/tag/v0.0.233)
 
 #### Bug fixes
