@@ -7,7 +7,7 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 
 - [x] Implement new docs structure
 - [x] Add tests for importing OpenAPI specs for experimental code-gen
-- [ ] Routes docs
+- [x] Routes docs
   - get, post, put, delete
   - params, query params, body, response
   - files
