@@ -715,7 +715,7 @@ export function validatorJavascriptDate(file, type, validatorState) {
       file,
       `${errorKey} = {
   key: "validator.pattern",
-  patternExplanation: "HH:mm(:ss(.SSS)",
+  patternExplanation: "HH:mm(:ss(.SSS))",
 };`,
     );
 
