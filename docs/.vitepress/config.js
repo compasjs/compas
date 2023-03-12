@@ -126,6 +126,18 @@ function getHomeSidebar() {
               text: "Types and validators",
               link: "/generators/build-structure/types-and-validators.html",
             },
+            {
+              text: "Routes",
+              link: "/generators/build-structure/routes.html",
+            },
+            {
+              text: "Entities",
+              link: "/generators/build-structure/entities.html",
+            },
+            {
+              text: "Generating CRUD routes",
+              link: "/generators/build-structure/crud.html",
+            },
           ],
         },
       ],
