@@ -6,61 +6,27 @@ https://github.com/compasjs/compas/issues/2010 for the created issue.
 ## TODO
 
 - [x] Implement new docs structure
-- [ ] Add tests for importing OpenAPI specs for experimental code-gen
-
-### Docs
-
-- Need separate introductions for code-gen and the rest of the tooling
-  - Code-gen should be tailored towards the supported targets
-    - e.g React, Node.js backend (koa), react-query
-  - Backends, about generic tooling and all it's related features
-- Generators should link to specific feature pages for implementations & usage
-- Structure
-  - Generators
-    - Introduction
-    - Explain different targets
-      - Link to OpenAPI import, Structure import and building your own structure
-        to get started
-    - OpenAPI import -> different api clients
-    - Structure import -> different api clients
-    - Building your own structure
-      - Introduction
-        - Groups and naming; group by flow + (types, database) groups
-      - Types
-      - Routes
-      - Entities
-      - Crud
-    - Advanced patterns
-      - React query wrapper usage
-      - Route specifics (invalidations, idemptotent)
-      - Custom entity primary key, sql default, dates, soft deletes
-      - Different entity relation types
-      - ESLInt ignores
-      - E2E testing with generated api client
-  - Node.js backends
-    - Introduction
-    - ...exiting pages -> filter out code-gen pages
-  - Examples
-    - Link up the README's
-  - References
-    - Compas configuration
-    - CLI reference
-    - Base migration @compas/store
-- Home page CTA's
-  - Explore code-gen
-  - Explore backend tooling
-- Features
-  - All in one specification; Build up a specification based on types, routes
-    and entities with flexible builders, or import an existing OpenAPI schema.
-  - Multi target generators; Reuse a specification and generate types,
-    validators, routers, api clients and database queries in different languages
-    and with different base libraries.
-  - Unified utilities; Session handling, file storage, test runner and more all
-    in a few packages.
-- Top bar nav;
-  - Docs; Generators -> introduction
-  - Release notes -> release notes (keep existing sidebar)
-  - Changelog -> Changelog (reuse docs sidebar)
+- [x] Add tests for importing OpenAPI specs for experimental code-gen
+- [ ] Routes docs
+  - get, post, put, delete
+  - params, query params, body, response
+  - files
+  - idempotent
+  - invalidations
+- [ ] Entity docs
+  - default primary key, custom primary key
+  - `withDates`
+  - `.searchable()`
+  - relations: 1-1, M-1, 1-M
+  - sql default
+  - `withSoftDeletes`
+- [ ] CRUD docs
+  - What is supported
+  - What is the equivalent manual declarations
+  - Limitations; eg no file support
+- [ ] Clean up `features/` based on information that is already in the
+      `generators/` docs.
+- [ ] Add `Ky` support in the api client generator
 
 ### Feature ideas
 
