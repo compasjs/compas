@@ -1,6 +1,6 @@
 {
   "name": "@compas/server",
-  "version": "0.0.233",
+  "version": "0.0.234",
   "description": "Koa server and common middleware",
   "main": "./index.js",
   "exports": {
@@ -18,7 +18,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.0.233",
+    "@compas/stdlib": "0.0.234",
     "@types/formidable": "2.0.5",
     "@types/koa": "2.13.5",
     "co-body": "6.1.0",
