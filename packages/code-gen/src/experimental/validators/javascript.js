@@ -1365,7 +1365,10 @@ export function validatorJavascriptString(file, type, validatorState) {
   if (type.isOptional) {
     fileBlockStart(file, `if (${intermediateVariable}.length === 0)`);
 
-    if (!isNil(type.defaultValue)) {
+    if (type.validator.min === 0) {
+      // This is a valid input, so it gets priority over the defaultValue.
+      fileWrite(file, `${resultPath} = "";`);
+    } else if (!isNil(type.defaultValue)) {
       fileWrite(file, `${resultPath} = ${type.defaultValue};`);
     } else {
       fileWrite(
