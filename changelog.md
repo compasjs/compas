@@ -4,6 +4,42 @@ editLink: false
 
 # Changelog
 
+### [v0.0.235](https://github.com/compasjs/compas/releases/tag/v0.0.235)
+
+#### Features
+
+- feat(store): support empty updates in the generated update helper
+  [`b2c546`](https://github.com/compasjs/compas/commit/b2c546386b0475ac3456e1b8a5093030bc5bdf39)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): handle string min(0) in combination with optional
+  in the validators
+  [`a04a54`](https://github.com/compasjs/compas/commit/a04a5483bb87d7b416788b902258da7db6faac2c)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.279.0 to 3.290.0
+  ([#2414](https://github.com/compasjs/compas/pull/2414),
+  [#2421](https://github.com/compasjs/compas/pull/2421))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.279.0 to 3.290.0
+  ([#2413](https://github.com/compasjs/compas/pull/2413),
+  [#2419](https://github.com/compasjs/compas/pull/2419))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.21.0 to 7.21.3
+  ([#2423](https://github.com/compasjs/compas/pull/2423))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint from 8.35.0 to 8.36.0
+  ([#2416](https://github.com/compasjs/compas/pull/2416))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 40.0.1 to 40.0.2
+  ([#2418](https://github.com/compasjs/compas/pull/2418))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @babel/eslint-parser from 7.19.1 to 7.21.3
+  ([#2424](https://github.com/compasjs/compas/pull/2424))
+  - [Release notes](https://github.com/babel/babel/releases)
+
 ### [v0.0.234](https://github.com/compasjs/compas/releases/tag/v0.0.234)
 
 #### Features
