@@ -152,7 +152,7 @@ export async function cliExecutor(logger, state) {
   // instead of directly. We dispatch them, and then print the results.
   const results = [];
 
-  for (let i = 0; i < state.flags.randomizeRounds; ++i) {
+  for (let i = 0; i < Number(state.flags.randomizeRounds); ++i) {
     if (i !== 0) {
       // Shuffle files in place
       // From: https://stackoverflow.com/a/6274381
