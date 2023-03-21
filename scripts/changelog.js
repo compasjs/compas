@@ -360,14 +360,14 @@ function makeChangelog(logger, commits, version) {
 
   // Write others
   // Everything that is left and is not a dependency bump can go here.
-  if (availableCommits().find((it) => !it.title.startsWith("build(deps)"))) {
+  if (availableCommits().find((it) => !it.title.startsWith("build(deps"))) {
     changelog.push(``);
     changelog.push(`#### Other`);
     changelog.push(``);
   }
 
   for (const commit of availableCommits()) {
-    if (commit.title.startsWith("build(deps)")) {
+    if (commit.title.startsWith("build(deps")) {
       continue;
     }
 
@@ -381,13 +381,19 @@ function makeChangelog(logger, commits, version) {
   }
 
   // Write dependency bumps
-  if (availableCommits().length) {
+  if (
+    availableCommits().filter((it) => !it.title.includes("deps-dev")).length
+  ) {
     changelog.push(``);
     changelog.push(`#### Dependency updates`);
     changelog.push(``);
   }
 
   for (const commit of availableCommits()) {
+    if (commit.title.includes("deps-dev")) {
+      continue;
+    }
+
     changelog.push(`- ${commit.title}${formatHash(commit)}`);
 
     for (const note of commit.notes) {
