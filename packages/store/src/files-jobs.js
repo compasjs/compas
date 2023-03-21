@@ -1,13 +1,21 @@
-import { eventStart, eventStop, streamToBuffer } from "@compas/stdlib";
+import {
+  eventStart,
+  eventStop,
+  isNil,
+  isPlainObject,
+  streamToBuffer,
+} from "@compas/stdlib";
 import isAnimated from "is-animated";
 import sharp from "sharp";
 import {
+  fileCreateOrUpdate,
   fileSyncDeletedWithObjectStorage,
   TRANSFORMED_CONTENT_TYPES,
 } from "./file.js";
 import { queryFile } from "./generated/database/file.js";
 import { queries } from "./generated.js";
 import { objectStorageGetObjectStream } from "./object-storage.js";
+import { query } from "./query.js";
 
 /**
  * Returns a {@link QueueWorkerHandler} that syncs the deleted files from Postgres to
@@ -105,4 +113,147 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
 
     eventStop(event);
   };
+}
+
+/**
+ * Returns a {@link QueueWorkerHandler} that generates a trasnformed image for the
+ * provided `fileId` and other settings. This job is inserted by {@link fileSendTransformedImageResponse} when it encounters an not yet transformed option combination.
+ *
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
+ * @returns {import("./queue-worker.js").QueueWorkerHandler}
+ */
+export function jobFileTransformImage(s3Client) {
+  // Disable the Sharp cache. We shouldn't be hitting much of the same files.
+  sharp.cache(false);
+
+  /**
+   * @param {import("@compas/stdlib").InsightEvent} event
+   * @param {import("postgres").Sql<{}>} sql
+   * @param {import("./generated/common/types").StoreJob} job
+   * @returns {Promise<void>}
+   */
+  return async function jobFileTransformImage(event, sql, job) {
+    eventStart(event, "job.fileTransformImage");
+
+    const { fileId, transformKey, options } = job.data;
+
+    if (isNil(fileId) || isNil(transformKey) || !isPlainObject(options)) {
+      event.log.error({
+        message: "Invalid file transform options",
+        data: job.data,
+      });
+
+      eventStop(event);
+      return;
+    }
+
+    const [file] = await queryFile({
+      where: {
+        id: job.data.fileId,
+      },
+    }).exec(sql);
+
+    if (isNil(file)) {
+      event.log.error({
+        message: "Invalid fileId",
+        data: job.data,
+      });
+
+      eventStop(event);
+      return;
+    }
+
+    if (file.contentLength === 0 || file.contentType === "image/svg+xml") {
+      // Empty file is an empty transform, SVG's are not supported
+      await atomicSetTransformKey(sql, file.id, transformKey, file.id);
+
+      eventStop(event);
+      return;
+    }
+
+    const buffer = await streamToBuffer(
+      await objectStorageGetObjectStream(s3Client, {
+        bucketName: file.bucketName,
+        objectKey: file.id,
+      }),
+    );
+
+    if (isAnimated(buffer)) {
+      // Animated gifs can't be transformed
+      // Empty file is an empty transform, SVG's are not supported
+      await atomicSetTransformKey(sql, file.id, transformKey, file.id);
+
+      eventStop(event);
+      return;
+    }
+
+    const sharpInstance = sharp(buffer);
+    sharpInstance.rotate();
+
+    const { width: currentWidth } = await sharpInstance.metadata();
+
+    if (!isNil(currentWidth) && currentWidth > options.w) {
+      // Only resize if width is greater than the needed with, so we don't upscale
+      sharpInstance.resize(options.w);
+    }
+
+    if (options.contentType === "image/webp") {
+      sharpInstance.webp({ quality: options.q });
+    } else if (options.contentType === "image/avif") {
+      sharpInstance.avif({ quality: options.q });
+    } else if (options.contentType === "image/png") {
+      sharpInstance.png({ quality: options.q });
+    } else if (
+      options.contentType === "image/jpg" ||
+      options.contentType === "image/jpeg"
+    ) {
+      sharpInstance.jpeg({ quality: options.q });
+    } else if (options.contentType === "image/gif") {
+      sharpInstance.gif({ quality: options.q });
+    }
+
+    const image = await fileCreateOrUpdate(
+      sql,
+      s3Client,
+      {
+        bucketName: file.bucketName,
+      },
+      {
+        name: transformKey,
+        contentType: options.contentType,
+        meta: {
+          transformedFromOriginal: file.id,
+        },
+      },
+      await sharpInstance.toBuffer(),
+    );
+
+    await atomicSetTransformKey(sql, file.id, transformKey, image.id);
+
+    eventStop(event);
+  };
+
+  /**
+   * Atomically add a transform key
+   *
+   * @param {Postgres} sql
+   * @param {string} fileId
+   * @param {string} transformKey
+   * @param {string} newFileId
+   * @returns {Promise<void>}
+   */
+  async function atomicSetTransformKey(sql, fileId, transformKey, newFileId) {
+    await query`UPDATE "file"
+                SET
+                  "meta" = jsonb_set(CASE
+                                       WHEN coalesce("meta", '{}'::jsonb) ? 'transforms'
+                                         THEN "meta"
+                                       ELSE jsonb_set(coalesce("meta", '{}'::jsonb), '{transforms}', '{}'::jsonb) END,
+                                     ${`{transforms,${transformKey}}`}, ${JSON.stringify(
+      newFileId,
+    )}),
+                  "updatedAt" = now()
+                WHERE
+                  id = ${fileId}`.exec(sql);
+  }
 }

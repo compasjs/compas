@@ -127,6 +127,15 @@ stored on the file object, to support things like
 - In your handler object:
   `{ "compas.file.generatePlaceholderImage": jobFileGeneratePlaceholderImage(s3Client, "bucketName"), }`
 
+### jobFileTransformImage
+
+When you send files with `fileSendTransformedImageResponse`, it adds this job
+when a not yet transformed option combination is found. This job transforms the
+image according to the requested options.
+
+- In your handler object:
+  `{ "compas.file.transformImage": jobFileTransformImage(s3Client), }`
+
 ### jobSessionStoreCleanup
 
 Revoked and expired sessions of the session store are not automatically removed.

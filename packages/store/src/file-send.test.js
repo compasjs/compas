@@ -1,5 +1,5 @@
 import { Duplex, Readable, Writable } from "stream";
-import { mainTestFn, test } from "@compas/cli";
+import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import Koa from "koa";
 import { s3Client, sql, testBucketName } from "../../../src/testing.js";
 import {
@@ -7,7 +7,13 @@ import {
   fileSendTransformedImageResponse,
 } from "./file-send.js";
 import { fileCreateOrUpdate } from "./file.js";
+import {
+  jobFileGeneratePlaceholderImage,
+  jobFileTransformImage,
+} from "./files-jobs.js";
 import { queryFile } from "./generated/database/file.js";
+import { queryJob } from "./generated/database/job.js";
+import { query } from "./query.js";
 
 mainTestFn(import.meta);
 
@@ -50,7 +56,7 @@ test("store/file-send", async (t) => {
     imagePath,
   );
 
-  // These functions operator on the in memory file object, so make sure to reload before
+  // These functions operate on the in memory file object, so make sure to reload before
   // each test case.
   const reloadFile = async () => {
     const [refetched] = await queryFile({
@@ -60,6 +66,28 @@ test("store/file-send", async (t) => {
     }).exec(sql);
 
     file = refetched;
+  };
+
+  const execFileJobs = async () => {
+    const jobs = await queryJob({
+      where: {
+        $raw: query`data->>'fileId' = ${file.id}`,
+      },
+    }).exec(sql);
+
+    for (const job of jobs) {
+      if (job.name === "compas.file.generatePlaceholderImage") {
+        await jobFileGeneratePlaceholderImage(s3Client, testBucketName)(
+          newTestEvent(t),
+          sql,
+          job,
+        );
+      } else if (job.name === "compas.file.transformImage") {
+        await jobFileTransformImage(s3Client)(newTestEvent(t), sql, job);
+      }
+
+      await reloadFile();
+    }
   };
 
   t.test("fileSendResponse", (t) => {
@@ -143,10 +171,14 @@ test("store/file-send", async (t) => {
       ctx.req.headers["accept"] = "*/*";
 
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
-      await reloadFile();
+      await execFileJobs();
 
-      t.equal(ctx.res.getHeader("Content-Type"), "image/webp");
+      t.equal(ctx.res.getHeader("Content-Type"), "image/png");
       t.ok(file.meta.transforms["compas-image-transform-webp-w10-q75"]);
+
+      // Refetch should use the newly transformed image
+      await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
+      t.equal(ctx.res.getHeader("Content-Type"), "image/webp");
     });
 
     t.test("accept avif", async (t) => {
@@ -160,10 +192,14 @@ test("store/file-send", async (t) => {
       ctx.req.headers["accept"] = "image/avif";
 
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
-      await reloadFile();
+      await execFileJobs();
 
-      t.equal(ctx.res.getHeader("Content-Type"), "image/avif");
+      t.equal(ctx.res.getHeader("Content-Type"), "image/png");
       t.ok(file.meta.transforms["compas-image-transform-avif-w10-q75"]);
+
+      // Refetch should use the newly transformed image
+      await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
+      t.equal(ctx.res.getHeader("Content-Type"), "image/avif");
     });
 
     t.test("caches response", async (t) => {
@@ -177,12 +213,12 @@ test("store/file-send", async (t) => {
       ctx.req.headers["accept"] = "*/*";
 
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
-      await reloadFile();
+      await execFileJobs();
 
       const firstLastModified = new Date(ctx.res.getHeader("Last-Modified"));
 
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
-      await reloadFile();
+      await execFileJobs();
 
       const secondLastModified = new Date(ctx.res.getHeader("Last-Modified"));
 
