@@ -55,6 +55,7 @@ export {
 export {
   jobFileCleanup,
   jobFileGeneratePlaceholderImage,
+  jobFileTransformImage,
 } from "./src/files-jobs.js";
 export {
   queueWorkerAddJob,
