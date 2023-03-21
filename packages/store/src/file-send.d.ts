@@ -27,12 +27,14 @@ export function fileSendResponse(
  * the file.meta.
  *
  * Supported extensions: image/png, image/jpeg, image/jpg, image/webp, image/avif,
- * image/gif. It does not supported 'animated' versions of image/webp and image/gif and
+ * image/gif. It does not support 'animated' versions of image/webp and image/gif and
  * just sends those as is. See {@link FileType#mimeTypes} and {@link fileCreateOrUpdate}
  * to enforce this on file upload.
  *
  * Prefers to transform the image to `image/webp` or `image/avif` if the client supports
  * it.
+ *
+ * The transform happens via {@link jobFileTransformImage}. When a transform is not yet possible, the original file is send out, while a transform job is inserted.
  *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client

@@ -1,4 +1,4 @@
-import { isNil } from "@compas/stdlib";
+import { AppError, isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class NumberType extends TypeBuilder {
@@ -43,6 +43,12 @@ export class NumberType extends TypeBuilder {
    * @returns {NumberType}
    */
   oneOf(...values) {
+    if (values.length === 0) {
+      throw AppError.serverError({
+        message: "`.oneOf()` requires at least a single value.",
+      });
+    }
+
     this.data.oneOf = values;
 
     return this;

@@ -27,4 +27,14 @@ export function jobFileGeneratePlaceholderImage(
   s3Client: import("@aws-sdk/client-s3").S3Client,
   bucketName: string,
 ): import("./queue-worker.js").QueueWorkerHandler;
+/**
+ * Returns a {@link QueueWorkerHandler} that generates a trasnformed image for the
+ * provided `fileId` and other settings. This job is inserted by {@link fileSendTransformedImageResponse} when it encounters an not yet transformed option combination.
+ *
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
+ * @returns {import("./queue-worker.js").QueueWorkerHandler}
+ */
+export function jobFileTransformImage(
+  s3Client: import("@aws-sdk/client-s3").S3Client,
+): import("./queue-worker.js").QueueWorkerHandler;
 //# sourceMappingURL=files-jobs.d.ts.map

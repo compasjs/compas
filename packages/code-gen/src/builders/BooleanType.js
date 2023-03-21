@@ -1,3 +1,4 @@
+import { AppError, isNil } from "@compas/stdlib";
 import { TypeBuilder } from "./TypeBuilder.js";
 
 export class BooleanType extends TypeBuilder {
@@ -23,6 +24,12 @@ export class BooleanType extends TypeBuilder {
    * @returns {BooleanType}
    */
   oneOf(value) {
+    if (isNil(value)) {
+      throw AppError.serverError({
+        message: "`.oneOf()` requires exactly one argument.",
+      });
+    }
+
     this.data.oneOf = value;
 
     return this;

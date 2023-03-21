@@ -46,6 +46,12 @@ export class StringType extends TypeBuilder {
    * @returns {StringType}
    */
   oneOf(...values) {
+    if (values.length === 0) {
+      throw AppError.serverError({
+        message: "`.oneOf()` requires at least a single value.",
+      });
+    }
+
     this.data.oneOf = values;
 
     for (const value of values) {
