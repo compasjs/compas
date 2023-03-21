@@ -4,6 +4,46 @@ editLink: false
 
 # Changelog
 
+### [v0.0.236](https://github.com/compasjs/compas/releases/tag/v0.0.236)
+
+#### Breaking changes
+
+- feat(store): migrate image transform to a job
+  [`22eea4`](https://github.com/compasjs/compas/commit/22eea42be2d20adbe5dd998deaba2e9aa297aa4d)
+  - `fileSendTransformedImageResponse` now adds jobs to the queue instead of
+    transforming in request. Add
+    `{ "compas.file.transformImage": jobFileTransformImage(s3Client), }` to your
+    queue handlers.
+
+#### Features
+
+- feat(code-gen): require at least a single oneOf value
+  [`f7322c`](https://github.com/compasjs/compas/commit/f7322cbddfa12d9b1f59ea86820aff9f27f03986)
+
+#### Other
+
+- chore(changelog): double down on ignoring dev deps updates
+  [`f9c8c0`](https://github.com/compasjs/compas/commit/f9c8c0d2e4718d8e262c7c10ee51413f8d72ff2f)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 40.0.2 to 40.1.0
+  ([#2428](https://github.com/compasjs/compas/pull/2428),
+  [#2436](https://github.com/compasjs/compas/pull/2436))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump eslint-config-prettier from 8.7.0 to 8.8.0
+  ([#2443](https://github.com/compasjs/compas/pull/2443))
+  - [Release notes](https://github.com/prettier/eslint-config-prettier/releases)
+- build(deps): bump prettier from 2.8.4 to 2.8.5
+  ([#2439](https://github.com/compasjs/compas/pull/2439))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.290.0 to 3.295.0
+  ([#2442](https://github.com/compasjs/compas/pull/2442))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.290.0 to 3.295.0
+  ([#2444](https://github.com/compasjs/compas/pull/2444))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.0.235](https://github.com/compasjs/compas/releases/tag/v0.0.235)
 
 #### Features
