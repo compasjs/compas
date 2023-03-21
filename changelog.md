@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+
+### [v0.0.237](https://github.com/compasjs/compas/releases/tag/v0.0.237)
+
+#### Bug fixes
+
+- fix(store): export 'jobFileTransformImage' [`022f99`](https://github.com/compasjs/compas/commit/022f99a2b9d484626395eae3b8a8e5ec7f667e21)
+
 ### [v0.0.236](https://github.com/compasjs/compas/releases/tag/v0.0.236)
 
 #### Breaking changes
