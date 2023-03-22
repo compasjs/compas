@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.238](https://github.com/compasjs/compas/releases/tag/v0.0.238)
+
+#### Bug fixes
+
+- fix(store): use `.execRaw` internally on file-send and file-jobs
+  [`e0af17`](https://github.com/compasjs/compas/commit/e0af17d426c4d9bd9d51111306293422165a56a7)
+
 ### [v0.0.237](https://github.com/compasjs/compas/releases/tag/v0.0.237)
 
 #### Bug fixes
