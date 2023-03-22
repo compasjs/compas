@@ -5,14 +5,14 @@
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
- * @param {string[]} accessPath
+ * @param {(string|number)[]} accessPath
  * @param {any} [defaultValue]
  * @returns {any}
  */
 export function referenceUtilsGetProperty(
   generateContext: import("../generate").GenerateContext,
   type: import("../generated/common/types").ExperimentalTypeSystemDefinition,
-  accessPath: string[],
+  accessPath: (string | number)[],
   defaultValue?: any,
 ): any;
 //# sourceMappingURL=reference-utils.d.ts.map

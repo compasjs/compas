@@ -464,7 +464,9 @@ export type ExperimentalAnyOfDefinition = {
     searchable?: boolean | undefined;
     hasDefaultValue?: boolean | undefined;
   };
-  validator: {};
+  validator: {
+    discriminant?: string | undefined;
+  };
   values: ExperimentalTypeSystemDefinition[];
 };
 
@@ -862,7 +864,11 @@ export type ExperimentalAnyOfDefinitionInput = {
         hasDefaultValue?: boolean | "true" | "false" | undefined;
       }
     | undefined;
-  validator?: {} | undefined;
+  validator?:
+    | {
+        discriminant?: string | undefined;
+      }
+    | undefined;
   values:
     | ExperimentalTypeSystemDefinitionInput[]
     | ExperimentalTypeSystemDefinitionInput;

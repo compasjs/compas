@@ -20,6 +20,7 @@
  * .ExperimentalReferenceDefinition[]
  * } dependingValidators
  * @property {boolean} [jsHasInlineTypes]
+ * @property {boolean} [skipFirstNilCheck]
  */
 /**
  * Generate all the 'validated' types in the provided structure. This means that, for
@@ -121,5 +122,6 @@ export type ValidatorState = {
   validatedValuePath: ValidatorPath[];
   dependingValidators: import("../generated/common/types").ExperimentalReferenceDefinition[];
   jsHasInlineTypes?: boolean | undefined;
+  skipFirstNilCheck?: boolean | undefined;
 };
 //# sourceMappingURL=generator.d.ts.map

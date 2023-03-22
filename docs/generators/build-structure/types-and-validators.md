@@ -339,16 +339,20 @@ T.anyOf().values(T.bool(), T.string());
 // -> Validator outputs: true, "foo"
 
 // A discriminated union with named types is the most common usage
-T.anyOf("state").values(
-  T.object("startState").keys({
-    type: "start",
-    // ... extra keys
-  }),
-  T.object("inProgressState").keys({
-    type: "inProgress",
-    // ... extra keys
-  }),
-);
+T.anyOf("state")
+  .values(
+    T.object("startState").keys({
+      type: "start",
+      // ... extra keys
+    }),
+    T.object("inProgressState").keys({
+      type: "inProgress",
+      // ... extra keys
+    }),
+  )
+  // Adding a discriminant ensures faster validators and cleaner validation errors
+  // This can only be used when all possible values are objects and have a literal string value on the 'discriminant' property.
+  .discriminant("type");
 ```
 
 ## File

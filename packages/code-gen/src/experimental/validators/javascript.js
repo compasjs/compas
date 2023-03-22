@@ -10,6 +10,7 @@ import {
 import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
 import { fileImplementations } from "../processors/file-implementations.js";
+import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesCacheGet } from "../types/cache.js";
@@ -350,8 +351,60 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  // TODO(perf): a way to generate a quicker validator here, would be by searching for a
-  //   quick denominator. Ie a `type` key that is always a a oneOf string.
+  // Fast track validators with discriminant. This also gives much better error objects.
+  if (type.validator.discriminant) {
+    const matchableValues = [];
+
+    for (const subType of type.values) {
+      /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      // @ts-expect-error
+      const resolvedSubType =
+        subType.type === "reference"
+          ? structureResolveReference(
+              validatorState.generateContext.structure,
+              subType,
+            )
+          : subType;
+
+      const oneOf = referenceUtilsGetProperty(
+        validatorState.generateContext,
+        resolvedSubType.keys[type.validator.discriminant],
+        ["oneOf", 0],
+      );
+
+      matchableValues.push(oneOf);
+
+      fileBlockStart(file, `if (${valuePath}.type === "${oneOf}")`);
+
+      validatorState.skipFirstNilCheck = true;
+      validatorGeneratorGenerateBody(
+        validatorState.generateContext,
+        file,
+
+        // @ts-ignore-error
+        //
+        // Ref is always a system type here
+        subType,
+        validatorState,
+      );
+
+      fileBlockEnd(file);
+      fileWriteInline(file, `else `);
+    }
+
+    fileBlockStart(file, ``);
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.anyOf",
+  discriminant: "${type.validator.discriminant}",
+  allowedValues: ${JSON.stringify(matchableValues)},
+};`,
+    );
+    fileBlockEnd(file);
+
+    return;
+  }
 
   const anyOfMatchVariable = `hasAnyOfMatch${validatorState.reusedVariableIndex++}`;
 
@@ -939,6 +992,19 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
+  fileBlockStart(
+    file,
+    `if (typeof ${valuePath} !== "object" || Array.isArray(${valuePath}))`,
+  );
+  fileWrite(
+    file,
+    `${errorKey} = {
+  key: "validator.generic",
+};`,
+  );
+  fileBlockEnd(file);
+  fileBlockStart(file, `else`);
+
   const keyVariable = `genericKeyInput${validatorState.reusedVariableIndex++}`;
   const resultVariable = `genericKeyResult${validatorState.reusedVariableIndex++}`;
   const errorMapVariable = `genericKeyErrorMap${validatorState.reusedVariableIndex++}`;
@@ -1014,6 +1080,8 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
     type.values,
     validatorState,
   );
+
+  fileBlockEnd(file);
 
   fileBlockEnd(file);
 

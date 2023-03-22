@@ -236,7 +236,8 @@ export function extendWithCodeGenExperimental(generator) {
         T.reference("experimental", "routeDefinition"),
         T.reference("experimental", "stringDefinition"),
         T.reference("experimental", "uuidDefinition"),
-      ),
+      )
+      .discriminant("type"),
 
     T.anyOf("typeDefinition")
       .docs("This contains all known type definitions.")
@@ -268,7 +269,8 @@ export function extendWithCodeGenExperimental(generator) {
         T.reference("experimental", "referenceDefinition"),
         T.reference("experimental", "stringDefinition"),
         T.reference("experimental", "uuidDefinition"),
-      ),
+      )
+      .discriminant("type"),
 
     T.object("anyDefinition")
       .keys({
@@ -334,6 +336,12 @@ export function extendWithCodeGenExperimental(generator) {
       .keys({
         type: "anyOf",
         ...namedTypeDefinitionBase,
+        validator: T.object()
+          .keys({
+            discriminant: T.string().optional(),
+          })
+          .default(`{}`)
+          .loose(),
         values: T.array()
           .min(1)
           .values(T.reference("experimental", "typeSystemDefinition")),
