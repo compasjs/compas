@@ -68,7 +68,7 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
       where: {
         id: job.data.fileId,
       },
-    }).exec(sql);
+    }).execRaw(sql);
 
     if (!TRANSFORMED_CONTENT_TYPES.includes(file?.contentType)) {
       // not supported
@@ -151,7 +151,7 @@ export function jobFileTransformImage(s3Client) {
       where: {
         id: job.data.fileId,
       },
-    }).exec(sql);
+    }).execRaw(sql);
 
     if (isNil(file)) {
       event.log.error({

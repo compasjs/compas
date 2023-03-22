@@ -188,7 +188,7 @@ export async function fileSendTransformedImageResponse(
     where: {
       id: loadedFile,
     },
-  }).exec(sql);
+  }).execRaw(sql);
 
   if (isNil(transformedFile)) {
     // The transformed file is not correctly saved. Trying again.
