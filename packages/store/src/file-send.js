@@ -211,5 +211,6 @@ export async function fileSendTransformedImageResponse(
     });
   }
 
+  // @ts-expect-error
   return fileSendResponse(s3Client, ctx, transformedFile ?? file, options);
 }

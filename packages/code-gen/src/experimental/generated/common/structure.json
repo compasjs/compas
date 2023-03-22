@@ -605,7 +605,22 @@
           "type": "object",
           "relations": [],
           "defaultValue": "{}",
-          "keys": {}
+          "keys": {
+            "discriminant": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {
+                "convert": false,
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string"
+            }
+          }
         },
         "values": {
           "docString": "",
@@ -3027,7 +3042,9 @@
     "namedTypeDefinition": {
       "docString": "This contains all types that can be added top level to the structure.",
       "isOptional": false,
-      "validator": {},
+      "validator": {
+        "discriminant": "type"
+      },
       "sql": {},
       "type": "anyOf",
       "group": "experimental",
@@ -5616,7 +5633,9 @@
     "typeSystemDefinition": {
       "docString": "All type definitions that can be used inside other types, like object keys.",
       "isOptional": false,
-      "validator": {},
+      "validator": {
+        "discriminant": "type"
+      },
       "sql": {},
       "type": "anyOf",
       "group": "experimental",

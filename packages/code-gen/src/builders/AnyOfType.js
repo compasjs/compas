@@ -3,7 +3,9 @@ import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
 export class AnyOfType extends TypeBuilder {
-  static baseData = {};
+  static baseData = {
+    validator: {},
+  };
 
   build() {
     const result = super.build();
@@ -41,6 +43,18 @@ export class AnyOfType extends TypeBuilder {
    */
   values(...items) {
     this.internalValues.push(...items);
+
+    return this;
+  }
+
+  /**
+   * Set the discriminant for faster validators and concise validator errors
+   *
+   * @param {string} value
+   * @returns {AnyOfType}
+   */
+  discriminant(value) {
+    this.data.validator.discriminant = value;
 
     return this;
   }

@@ -67,6 +67,7 @@ const validatorCache = new WeakMap();
  * .ExperimentalReferenceDefinition[]
  * } dependingValidators
  * @property {boolean} [jsHasInlineTypes]
+ * @property {boolean} [skipFirstNilCheck]
  */
 
 /**
@@ -282,31 +283,36 @@ export function validatorGeneratorGenerateBody(
   type,
   validatorState,
 ) {
-  targetLanguageSwitch(
-    generateContext,
-    {
-      js: validatorJavascriptNilCheck,
-      ts: validatorJavascriptNilCheck,
-    },
-    [
-      file,
-      validatorState,
+  const skipNilCheck = validatorState.skipFirstNilCheck === true;
+  validatorState.skipFirstNilCheck = undefined;
+
+  if (!skipNilCheck) {
+    targetLanguageSwitch(
+      generateContext,
       {
-        isOptional: typesOptionalityIsOptional(generateContext, type, {
-          validatorState: "input",
-        }),
-        defaultValue: referenceUtilsGetProperty(generateContext, type, [
-          "defaultValue",
-        ]),
-        allowNull: referenceUtilsGetProperty(
-          generateContext,
-          type,
-          ["validator", "allowNull"],
-          false,
-        ),
+        js: validatorJavascriptNilCheck,
+        ts: validatorJavascriptNilCheck,
       },
-    ],
-  );
+      [
+        file,
+        validatorState,
+        {
+          isOptional: typesOptionalityIsOptional(generateContext, type, {
+            validatorState: "input",
+          }),
+          defaultValue: referenceUtilsGetProperty(generateContext, type, [
+            "defaultValue",
+          ]),
+          allowNull: referenceUtilsGetProperty(
+            generateContext,
+            type,
+            ["validator", "allowNull"],
+            false,
+          ),
+        },
+      ],
+    );
+  }
 
   switch (type.type) {
     case "any":
@@ -385,14 +391,16 @@ export function validatorGeneratorGenerateBody(
       break;
   }
 
-  targetLanguageSwitch(
-    generateContext,
-    {
-      js: validatorJavascriptFinishElseBlock,
-      ts: validatorJavascriptFinishElseBlock,
-    },
-    [file],
-  );
+  if (!skipNilCheck) {
+    targetLanguageSwitch(
+      generateContext,
+      {
+        js: validatorJavascriptFinishElseBlock,
+        ts: validatorJavascriptFinishElseBlock,
+      },
+      [file],
+    );
+  }
 }
 
 /**

@@ -1,6 +1,8 @@
+import { AppError, isNil } from "@compas/stdlib";
+import { stringFormatNameForError } from "../string-format.js";
 import { typesOptionalityIsOptional } from "../types/optionality.js";
 import { referenceUtilsGetProperty } from "./reference-utils.js";
-import { structureNamedTypes } from "./structure.js";
+import { structureNamedTypes, structureResolveReference } from "./structure.js";
 import { typeDefinitionTraverse } from "./type-definition-traverse.js";
 
 /**
@@ -8,7 +10,8 @@ import { typeDefinitionTraverse } from "./type-definition-traverse.js";
  *
  * - Make optional if one of the values is optional
  * - Make nullable if one of the values is nullable
- * - Pick the first 'defaultValue'
+ *
+ * Double check on discriminant usage
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
@@ -41,11 +44,76 @@ export function anyOfPreProcess(generateContext) {
           // @ts-expect-error
           type.validator.allowNull = allowNull;
         }
+
+        if (type.type === "anyOf" && type.validator.discriminant) {
+          anyOfPreprocessDiscriminant(generateContext, type);
+        }
       },
       {
         isInitialType: true,
         assignResult: false,
       },
     );
+  }
+}
+
+/**
+ * Check discriminant usage
+ *
+ * - All values should resolve to an object type
+ * - The discriminant should be unique and a single `oneOf` string
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generated/common/types.js").ExperimentalAnyOfDefinition} type
+ */
+function anyOfPreprocessDiscriminant(generateContext, type) {
+  const discriminantSet = new Set();
+
+  if (!type.validator.discriminant) {
+    return;
+  }
+
+  for (const subType of type.values) {
+    const resolvedSubType =
+      subType.type === "reference"
+        ? structureResolveReference(generateContext.structure, subType)
+        : subType;
+
+    if (resolvedSubType.type !== "object") {
+      throw AppError.serverError({
+        message: `'T.anyOf().values(...).discriminant("${
+          type.validator.discriminant
+        }")' can only be used if all values are an object. Found '${
+          resolvedSubType.type
+        }' in ${stringFormatNameForError(type)}.`,
+      });
+    }
+
+    const oneOf = referenceUtilsGetProperty(
+      generateContext,
+      resolvedSubType.keys[type.validator.discriminant],
+      ["oneOf"],
+      [],
+    );
+
+    if (
+      isNil(oneOf) ||
+      !Array.isArray(oneOf) ||
+      typeof oneOf[0] !== "string" ||
+      discriminantSet.has(oneOf[0])
+    ) {
+      throw AppError.serverError({
+        message: `'T.anyOf().values(...).discriminant("${
+          type.validator.discriminant
+        }")' is used, but '${
+          type.validator.discriminant
+        }' does not exists, does not resolve to a string literal or is not unique on ${stringFormatNameForError(
+          resolvedSubType,
+        )} via ${stringFormatNameForError(type)}.`,
+        foundDiscriminantValues: [...discriminantSet],
+      });
+    }
+
+    discriminantSet.add(oneOf[0]);
   }
 }

@@ -70,6 +70,7 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
       },
     }).execRaw(sql);
 
+    // @ts-expect-error
     if (!TRANSFORMED_CONTENT_TYPES.includes(file?.contentType)) {
       // not supported
       eventStop(event);
@@ -79,6 +80,8 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
     const buffer = await streamToBuffer(
       await objectStorageGetObjectStream(s3Client, {
         bucketName,
+
+        // @ts-expect-error
         objectKey: file.id,
       }),
     );
@@ -165,6 +168,7 @@ export function jobFileTransformImage(s3Client) {
 
     if (file.contentLength === 0 || file.contentType === "image/svg+xml") {
       // Empty file is an empty transform, SVG's are not supported
+      // @ts-expect-error
       await atomicSetTransformKey(sql, file.id, transformKey, file.id);
 
       eventStop(event);
@@ -173,7 +177,10 @@ export function jobFileTransformImage(s3Client) {
 
     const buffer = await streamToBuffer(
       await objectStorageGetObjectStream(s3Client, {
+        // @ts-expect-error
         bucketName: file.bucketName,
+
+        // @ts-expect-error
         objectKey: file.id,
       }),
     );
@@ -181,6 +188,7 @@ export function jobFileTransformImage(s3Client) {
     if (isAnimated(buffer)) {
       // Animated gifs can't be transformed
       // Empty file is an empty transform, SVG's are not supported
+      // @ts-expect-error
       await atomicSetTransformKey(sql, file.id, transformKey, file.id);
 
       eventStop(event);
@@ -216,6 +224,7 @@ export function jobFileTransformImage(s3Client) {
       sql,
       s3Client,
       {
+        // @ts-expect-error
         bucketName: file.bucketName,
       },
       {
@@ -228,6 +237,7 @@ export function jobFileTransformImage(s3Client) {
       await sharpInstance.toBuffer(),
     );
 
+    // @ts-expect-error
     await atomicSetTransformKey(sql, file.id, transformKey, image.id);
 
     eventStop(event);

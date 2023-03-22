@@ -3,7 +3,8 @@
  *
  * - Make optional if one of the values is optional
  * - Make nullable if one of the values is nullable
- * - Pick the first 'defaultValue'
+ *
+ * Double check on discriminant usage
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
