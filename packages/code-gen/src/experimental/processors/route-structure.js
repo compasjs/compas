@@ -25,7 +25,11 @@ export function routeStructureCreate(generateContext) {
 
   // Remove relations, so the whole entity graph isn't included when an entity is used as the respons type.
   for (const type of structureNamedTypes(generator.internalStructure)) {
-    if (type.relations && type.relations.length) {
+    if (
+      "relations" in type &&
+      Array.isArray(type.relations) &&
+      type.relations.length
+    ) {
       type.relations = [];
     }
   }
