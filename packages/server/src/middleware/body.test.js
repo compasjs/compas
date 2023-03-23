@@ -146,8 +146,8 @@ test("server/middleware/body", async (t) => {
       });
     } catch (e) {
       t.ok(e.isAxiosError);
-      t.equal(e.response.status, 400);
-      t.equal(e.response.data.key, "error.server.maxFieldSize");
+      t.equal(e.response?.status, 400, JSON.stringify(e));
+      t.equal(e.response?.data?.key, "error.server.maxFieldSize");
     }
   });
 

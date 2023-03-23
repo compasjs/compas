@@ -1,7 +1,7 @@
 import { AnyType, RouteBuilder } from "../../builders/index.js";
 import { Generator } from "../generator.js";
 import { structureRoutes } from "./routes.js";
-import { structureAddType } from "./structure.js";
+import { structureAddType, structureNamedTypes } from "./structure.js";
 
 /**
  * Cache the api structure string based on the current generate context.
@@ -21,7 +21,14 @@ export function routeStructureCreate(generateContext) {
   }
 
   const generator = new Generator(generateContext.log);
-  generator.addStructure(generateContext.structure);
+  generator.addStructure(JSON.parse(JSON.stringify(generateContext.structure)));
+
+  // Remove relations, so the whole entity graph isn't included when an entity is used as the respons type.
+  for (const type of structureNamedTypes(generator.internalStructure)) {
+    if (type.relations && type.relations.length) {
+      type.relations = [];
+    }
+  }
 
   const selection = structureRoutes(generateContext).map((it) => ({
     group: it.group,

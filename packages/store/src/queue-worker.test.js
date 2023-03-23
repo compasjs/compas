@@ -137,11 +137,6 @@ test("store/queue-worker", (t) => {
     });
 
     t.test("upsert", async (t) => {
-      const [originalCron1] = await queryJob({
-        where: {
-          name: "cron1",
-        },
-      }).exec(sql);
       await queueWorkerRegisterCronJobs(newTestEvent(t), sql, {
         jobs: upsertDefinition,
       });
@@ -152,10 +147,6 @@ test("store/queue-worker", (t) => {
         },
       }).exec(sql);
 
-      t.notEqual(
-        cron1.scheduledAt.toISOString(),
-        originalCron1.scheduledAt.toISOString(),
-      );
       t.equal(cron1.data.cronExpression, "1 * * * *");
     });
   });

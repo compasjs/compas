@@ -215,6 +215,8 @@ test("store/file-send", async (t) => {
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
       await execFileJobs();
 
+      await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
+
       const firstLastModified = new Date(ctx.res.getHeader("Last-Modified"));
 
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
