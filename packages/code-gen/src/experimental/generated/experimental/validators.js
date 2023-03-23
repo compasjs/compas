@@ -39,25 +39,25 @@ export function validateExperimentalAnyDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "any") {
+          } else if (convertedString1 !== "any") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["any"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -65,22 +65,22 @@ export function validateExperimentalAnyDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -89,22 +89,22 @@ export function validateExperimentalAnyDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -113,17 +113,17 @@ export function validateExperimentalAnyDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -156,139 +156,139 @@ export function validateExperimentalAnyDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -439,83 +439,83 @@ export function validateExperimentalAnyDefinition(value) {
           };
         } else {
           result["targets"] = {};
-          for (let genericKeyInput0 of Object.keys(value["targets"])) {
+          for (let genericKeyInput9 of Object.keys(value["targets"])) {
             /** @type {any} */
-            let genericKeyResult1 = undefined;
+            let genericKeyResult10 = undefined;
             /** @type {ValidatorErrorMap} */
-            const genericKeyErrorMap2 = {};
-            if (genericKeyInput0 === null || genericKeyInput0 === undefined) {
-              genericKeyErrorMap2[`$`] = {
+            const genericKeyErrorMap11 = {};
+            if (genericKeyInput9 === null || genericKeyInput9 === undefined) {
+              genericKeyErrorMap11[`$`] = {
                 key: "validator.undefined",
               };
             } else {
-              const refResult3 =
-                validateExperimentalAnyDefinitionTarget(genericKeyInput0);
+              const refResult12 =
+                validateExperimentalAnyDefinitionTarget(genericKeyInput9);
 
-              if (refResult3.error) {
-                for (const errorKey of Object.keys(refResult3.error)) {
-                  genericKeyErrorMap2[`$${errorKey.substring(1)}`] =
-                    refResult3.error[errorKey];
+              if (refResult12.error) {
+                for (const errorKey of Object.keys(refResult12.error)) {
+                  genericKeyErrorMap11[`$${errorKey.substring(1)}`] =
+                    refResult12.error[errorKey];
                 }
               }
-              genericKeyResult1 = refResult3.value;
+              genericKeyResult10 = refResult12.value;
             }
-            if (Object.keys(genericKeyErrorMap2).length !== 0) {
+            if (Object.keys(genericKeyErrorMap11).length !== 0) {
               if (errorMap[`$.targets`]) {
                 errorMap[`$.targets`].inputs.push({
-                  key: genericKeyInput0,
-                  errors: genericKeyErrorMap2,
+                  key: genericKeyInput9,
+                  errors: genericKeyErrorMap11,
                 });
               } else {
                 errorMap[`$.targets`] = {
                   key: "validator.generic",
                   inputs: [
-                    { key: genericKeyInput0, errors: genericKeyErrorMap2 },
+                    { key: genericKeyInput9, errors: genericKeyErrorMap11 },
                   ],
                 };
               }
             } else {
               if (
-                value["targets"][genericKeyResult1] === null ||
-                value["targets"][genericKeyResult1] === undefined
+                value["targets"][genericKeyResult10] === null ||
+                value["targets"][genericKeyResult10] === undefined
               ) {
-                errorMap[`$.targets.${genericKeyResult1}`] = {
+                errorMap[`$.targets.${genericKeyResult10}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 if (
-                  typeof value["targets"][genericKeyResult1] !== "object" ||
-                  Array.isArray(value["targets"][genericKeyResult1])
+                  typeof value["targets"][genericKeyResult10] !== "object" ||
+                  Array.isArray(value["targets"][genericKeyResult10])
                 ) {
-                  errorMap[`$.targets.${genericKeyResult1}`] = {
+                  errorMap[`$.targets.${genericKeyResult10}`] = {
                     key: "validator.object",
-                    value: value["targets"][genericKeyResult1],
-                    foundType: typeof value["targets"][genericKeyResult1],
+                    value: value["targets"][genericKeyResult10],
+                    foundType: typeof value["targets"][genericKeyResult10],
                   };
                 } else {
                   /** @type {Set<string>} */
-                  const knownKeys3 = new Set([
+                  const knownKeys12 = new Set([
                     "validatorInputType",
                     "validatorOutputType",
                     "validatorExpression",
                     "validatorImport",
                   ]);
                   for (const key of Object.keys(
-                    value["targets"][genericKeyResult1],
+                    value["targets"][genericKeyResult10],
                   )) {
                     if (
-                      !knownKeys3.has(key) &&
-                      value["targets"][genericKeyResult1][key] !== null &&
-                      value["targets"][genericKeyResult1][key] !== undefined
+                      !knownKeys12.has(key) &&
+                      value["targets"][genericKeyResult10][key] !== null &&
+                      value["targets"][genericKeyResult10][key] !== undefined
                     ) {
-                      const expectedKeys = [...knownKeys3];
+                      const expectedKeys = [...knownKeys12];
                       const foundKeys = Object.keys(
-                        value["targets"][genericKeyResult1],
+                        value["targets"][genericKeyResult10],
                       );
                       const unknownKeys = foundKeys.filter(
-                        (it) => !knownKeys3.has(it),
+                        (it) => !knownKeys12.has(it),
                       );
-                      errorMap[`$.targets.${genericKeyResult1}`] = {
+                      errorMap[`$.targets.${genericKeyResult10}`] = {
                         key: "validator.keys",
                         unknownKeys,
                         expectedKeys,
@@ -524,165 +524,167 @@ export function validateExperimentalAnyDefinition(value) {
                       break;
                     }
                   }
-                  result["targets"][genericKeyResult1] = Object.create(null);
+                  result["targets"][genericKeyResult10] = Object.create(null);
 
                   if (
-                    value["targets"][genericKeyResult1][
+                    value["targets"][genericKeyResult10][
                       "validatorInputType"
                     ] === null ||
-                    value["targets"][genericKeyResult1][
+                    value["targets"][genericKeyResult10][
                       "validatorInputType"
                     ] === undefined
                   ) {
                     errorMap[
-                      `$.targets.${genericKeyResult1}.validatorInputType`
+                      `$.targets.${genericKeyResult10}.validatorInputType`
                     ] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString3 =
-                      value["targets"][genericKeyResult1]["validatorInputType"];
-                    if (typeof convertedString3 !== "string") {
+                    let convertedString13 =
+                      value["targets"][genericKeyResult10][
+                        "validatorInputType"
+                      ];
+                    if (typeof convertedString13 !== "string") {
                       errorMap[
-                        `$.targets.${genericKeyResult1}.validatorInputType`
+                        `$.targets.${genericKeyResult10}.validatorInputType`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString3.length < 1) {
+                      if (convertedString13.length < 1) {
                         errorMap[
-                          `$.targets.${genericKeyResult1}.validatorInputType`
+                          `$.targets.${genericKeyResult10}.validatorInputType`
                         ] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        result["targets"][genericKeyResult1][
+                        result["targets"][genericKeyResult10][
                           "validatorInputType"
-                        ] = convertedString3;
+                        ] = convertedString13;
                       }
                     }
                   }
                   if (
-                    value["targets"][genericKeyResult1][
+                    value["targets"][genericKeyResult10][
                       "validatorOutputType"
                     ] === null ||
-                    value["targets"][genericKeyResult1][
+                    value["targets"][genericKeyResult10][
                       "validatorOutputType"
                     ] === undefined
                   ) {
                     errorMap[
-                      `$.targets.${genericKeyResult1}.validatorOutputType`
+                      `$.targets.${genericKeyResult10}.validatorOutputType`
                     ] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString3 =
-                      value["targets"][genericKeyResult1][
+                    let convertedString14 =
+                      value["targets"][genericKeyResult10][
                         "validatorOutputType"
                       ];
-                    if (typeof convertedString3 !== "string") {
+                    if (typeof convertedString14 !== "string") {
                       errorMap[
-                        `$.targets.${genericKeyResult1}.validatorOutputType`
+                        `$.targets.${genericKeyResult10}.validatorOutputType`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString3.length < 1) {
+                      if (convertedString14.length < 1) {
                         errorMap[
-                          `$.targets.${genericKeyResult1}.validatorOutputType`
+                          `$.targets.${genericKeyResult10}.validatorOutputType`
                         ] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        result["targets"][genericKeyResult1][
+                        result["targets"][genericKeyResult10][
                           "validatorOutputType"
-                        ] = convertedString3;
+                        ] = convertedString14;
                       }
                     }
                   }
                   if (
-                    value["targets"][genericKeyResult1][
+                    value["targets"][genericKeyResult10][
                       "validatorExpression"
                     ] === null ||
-                    value["targets"][genericKeyResult1][
+                    value["targets"][genericKeyResult10][
                       "validatorExpression"
                     ] === undefined
                   ) {
-                    result["targets"][genericKeyResult1][
+                    result["targets"][genericKeyResult10][
                       "validatorExpression"
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString3 =
-                      value["targets"][genericKeyResult1][
+                    let convertedString15 =
+                      value["targets"][genericKeyResult10][
                         "validatorExpression"
                       ];
-                    if (typeof convertedString3 !== "string") {
+                    if (typeof convertedString15 !== "string") {
                       errorMap[
-                        `$.targets.${genericKeyResult1}.validatorExpression`
+                        `$.targets.${genericKeyResult10}.validatorExpression`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString3.length === 0) {
-                        result["targets"][genericKeyResult1][
+                      if (convertedString15.length === 0) {
+                        result["targets"][genericKeyResult10][
                           "validatorExpression"
                         ] = undefined;
                       } else {
-                        if (convertedString3.length < 1) {
+                        if (convertedString15.length < 1) {
                           errorMap[
-                            `$.targets.${genericKeyResult1}.validatorExpression`
+                            `$.targets.${genericKeyResult10}.validatorExpression`
                           ] = {
                             key: "validator.length",
                             minLength: 1,
                           };
                         } else {
-                          result["targets"][genericKeyResult1][
+                          result["targets"][genericKeyResult10][
                             "validatorExpression"
-                          ] = convertedString3;
+                          ] = convertedString15;
                         }
                       }
                     }
                   }
                   if (
-                    value["targets"][genericKeyResult1]["validatorImport"] ===
+                    value["targets"][genericKeyResult10]["validatorImport"] ===
                       null ||
-                    value["targets"][genericKeyResult1]["validatorImport"] ===
+                    value["targets"][genericKeyResult10]["validatorImport"] ===
                       undefined
                   ) {
-                    result["targets"][genericKeyResult1]["validatorImport"] =
+                    result["targets"][genericKeyResult10]["validatorImport"] =
                       undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString3 =
-                      value["targets"][genericKeyResult1]["validatorImport"];
-                    if (typeof convertedString3 !== "string") {
+                    let convertedString16 =
+                      value["targets"][genericKeyResult10]["validatorImport"];
+                    if (typeof convertedString16 !== "string") {
                       errorMap[
-                        `$.targets.${genericKeyResult1}.validatorImport`
+                        `$.targets.${genericKeyResult10}.validatorImport`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString3.length === 0) {
-                        result["targets"][genericKeyResult1][
+                      if (convertedString16.length === 0) {
+                        result["targets"][genericKeyResult10][
                           "validatorImport"
                         ] = undefined;
                       } else {
-                        if (convertedString3.length < 1) {
+                        if (convertedString16.length < 1) {
                           errorMap[
-                            `$.targets.${genericKeyResult1}.validatorImport`
+                            `$.targets.${genericKeyResult10}.validatorImport`
                           ] = {
                             key: "validator.length",
                             minLength: 1,
                           };
                         } else {
-                          result["targets"][genericKeyResult1][
+                          result["targets"][genericKeyResult10][
                             "validatorImport"
-                          ] = convertedString3;
+                          ] = convertedString16;
                         }
                       }
                     }
@@ -697,22 +699,22 @@ export function validateExperimentalAnyDefinition(value) {
         result["rawValue"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["rawValue"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString10 = value["rawValue"];
+        if (typeof convertedString10 !== "string") {
           errorMap[`$.rawValue`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString10.length === 0) {
             result["rawValue"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString10.length < 1) {
               errorMap[`$.rawValue`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["rawValue"] = convertedString0;
+              result["rawValue"] = convertedString10;
             }
           }
         }
@@ -744,22 +746,22 @@ export function validateExperimentalAnyDefinition(value) {
             result["rawValueImport"]["javaScript"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["rawValueImport"]["javaScript"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString12 = value["rawValueImport"]["javaScript"];
+            if (typeof convertedString12 !== "string") {
               errorMap[`$.rawValueImport.javaScript`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString12.length === 0) {
                 result["rawValueImport"]["javaScript"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString12.length < 1) {
                   errorMap[`$.rawValueImport.javaScript`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["rawValueImport"]["javaScript"] = convertedString0;
+                  result["rawValueImport"]["javaScript"] = convertedString12;
                 }
               }
             }
@@ -771,22 +773,22 @@ export function validateExperimentalAnyDefinition(value) {
             result["rawValueImport"]["typeScript"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["rawValueImport"]["typeScript"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString13 = value["rawValueImport"]["typeScript"];
+            if (typeof convertedString13 !== "string") {
               errorMap[`$.rawValueImport.typeScript`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString13.length === 0) {
                 result["rawValueImport"]["typeScript"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString13.length < 1) {
                   errorMap[`$.rawValueImport.typeScript`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["rawValueImport"]["typeScript"] = convertedString0;
+                  result["rawValueImport"]["typeScript"] = convertedString13;
                 }
               }
             }
@@ -800,22 +802,22 @@ export function validateExperimentalAnyDefinition(value) {
         result["rawValidator"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["rawValidator"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString12 = value["rawValidator"];
+        if (typeof convertedString12 !== "string") {
           errorMap[`$.rawValidator`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString12.length === 0) {
             result["rawValidator"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString12.length < 1) {
               errorMap[`$.rawValidator`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["rawValidator"] = convertedString0;
+              result["rawValidator"] = convertedString12;
             }
           }
         }
@@ -847,22 +849,23 @@ export function validateExperimentalAnyDefinition(value) {
             result["rawValidatorImport"]["javaScript"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["rawValidatorImport"]["javaScript"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString14 = value["rawValidatorImport"]["javaScript"];
+            if (typeof convertedString14 !== "string") {
               errorMap[`$.rawValidatorImport.javaScript`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString14.length === 0) {
                 result["rawValidatorImport"]["javaScript"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString14.length < 1) {
                   errorMap[`$.rawValidatorImport.javaScript`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["rawValidatorImport"]["javaScript"] = convertedString0;
+                  result["rawValidatorImport"]["javaScript"] =
+                    convertedString14;
                 }
               }
             }
@@ -874,22 +877,23 @@ export function validateExperimentalAnyDefinition(value) {
             result["rawValidatorImport"]["typeScript"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["rawValidatorImport"]["typeScript"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString15 = value["rawValidatorImport"]["typeScript"];
+            if (typeof convertedString15 !== "string") {
               errorMap[`$.rawValidatorImport.typeScript`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString15.length === 0) {
                 result["rawValidatorImport"]["typeScript"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString15.length < 1) {
                   errorMap[`$.rawValidatorImport.typeScript`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["rawValidatorImport"]["typeScript"] = convertedString0;
+                  result["rawValidatorImport"]["typeScript"] =
+                    convertedString15;
                 }
               }
             }
@@ -1000,25 +1004,25 @@ export function validateExperimentalAnyOfDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "anyOf") {
+          } else if (convertedString1 !== "anyOf") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["anyOf"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -1026,22 +1030,22 @@ export function validateExperimentalAnyOfDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -1050,22 +1054,22 @@ export function validateExperimentalAnyOfDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -1074,17 +1078,17 @@ export function validateExperimentalAnyOfDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -1117,139 +1121,139 @@ export function validateExperimentalAnyOfDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -1364,22 +1368,22 @@ export function validateExperimentalAnyOfDefinition(value) {
             result["validator"]["discriminant"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["validator"]["discriminant"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString9 = value["validator"]["discriminant"];
+            if (typeof convertedString9 !== "string") {
               errorMap[`$.validator.discriminant`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString9.length === 0) {
                 result["validator"]["discriminant"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString9.length < 1) {
                   errorMap[`$.validator.discriminant`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["validator"]["discriminant"] = convertedString0;
+                  result["validator"]["discriminant"] = convertedString9;
                 }
               }
             }
@@ -1392,52 +1396,52 @@ export function validateExperimentalAnyOfDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap10 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult10 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["values"];
+        let intermediateValue10 = value["values"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue10)) {
+          intermediateValue10 = [intermediateValue10];
         }
-        if (intermediateValue1.length < 1) {
+        if (intermediateValue10.length < 1) {
           errorMap[`$.values`] = {
             key: "validator.length",
             minLength: 1,
-            foundLength: intermediateValue1.length,
+            foundLength: intermediateValue10.length,
           };
         }
-        result["values"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["values"] = Array.from({ length: intermediateValue10.length });
+        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue10[i10] === null ||
+            intermediateValue10[i10] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap10[`$.${i10}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateExperimentalTypeSystemDefinition(
-              intermediateValue1[i1],
+            const refResult10 = validateExperimentalTypeSystemDefinition(
+              intermediateValue10[i10],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult10.error) {
+              for (const errorKey of Object.keys(refResult10.error)) {
+                intermediateErrorMap10[`$.${i10}${errorKey.substring(1)}`] =
+                  refResult10.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult10[i10] = refResult10.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap10).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap10)) {
             errorMap[`$.values${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap10[errorKey];
           }
         } else {
-          result["values"] = intermediateResult1;
+          result["values"] = intermediateResult10;
         }
       }
     }
@@ -1670,25 +1674,25 @@ export function validateExperimentalArrayDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "array") {
+          } else if (convertedString1 !== "array") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["array"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -1696,22 +1700,22 @@ export function validateExperimentalArrayDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -1720,22 +1724,22 @@ export function validateExperimentalArrayDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -1744,17 +1748,17 @@ export function validateExperimentalArrayDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -1787,139 +1791,139 @@ export function validateExperimentalArrayDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -2062,35 +2066,35 @@ export function validateExperimentalArrayDefinition(value) {
           ) {
             result["validator"]["min"] = undefined;
           } else {
-            let convertedNumber0 = value["validator"]["min"];
+            let convertedNumber10 = value["validator"]["min"];
             if (
-              typeof convertedNumber0 !== "number" &&
-              typeof convertedNumber0 === "string"
+              typeof convertedNumber10 !== "number" &&
+              typeof convertedNumber10 === "string"
             ) {
-              convertedNumber0 = Number(convertedNumber0);
+              convertedNumber10 = Number(convertedNumber10);
             }
             if (
-              typeof convertedNumber0 !== "number" ||
-              isNaN(convertedNumber0) ||
-              !isFinite(convertedNumber0) ||
-              !Number.isInteger(convertedNumber0)
+              typeof convertedNumber10 !== "number" ||
+              isNaN(convertedNumber10) ||
+              !isFinite(convertedNumber10) ||
+              !Number.isInteger(convertedNumber10)
             ) {
               errorMap[`$.validator.min`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber0 < -2147483647) {
+            } else if (convertedNumber10 < -2147483647) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber0 > 2147483647) {
+            } else if (convertedNumber10 > 2147483647) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["validator"]["min"] = convertedNumber0;
+              result["validator"]["min"] = convertedNumber10;
             }
           }
           if (
@@ -2099,35 +2103,35 @@ export function validateExperimentalArrayDefinition(value) {
           ) {
             result["validator"]["max"] = undefined;
           } else {
-            let convertedNumber0 = value["validator"]["max"];
+            let convertedNumber11 = value["validator"]["max"];
             if (
-              typeof convertedNumber0 !== "number" &&
-              typeof convertedNumber0 === "string"
+              typeof convertedNumber11 !== "number" &&
+              typeof convertedNumber11 === "string"
             ) {
-              convertedNumber0 = Number(convertedNumber0);
+              convertedNumber11 = Number(convertedNumber11);
             }
             if (
-              typeof convertedNumber0 !== "number" ||
-              isNaN(convertedNumber0) ||
-              !isFinite(convertedNumber0) ||
-              !Number.isInteger(convertedNumber0)
+              typeof convertedNumber11 !== "number" ||
+              isNaN(convertedNumber11) ||
+              !isFinite(convertedNumber11) ||
+              !Number.isInteger(convertedNumber11)
             ) {
               errorMap[`$.validator.max`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber0 < -2147483647) {
+            } else if (convertedNumber11 < -2147483647) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber0 > 2147483647) {
+            } else if (convertedNumber11 > 2147483647) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["validator"]["max"] = convertedNumber0;
+              result["validator"]["max"] = convertedNumber11;
             }
           }
         }
@@ -2137,17 +2141,17 @@ export function validateExperimentalArrayDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalTypeSystemDefinition(
+        const refResult9 = validateExperimentalTypeSystemDefinition(
           value["values"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult9.error) {
+          for (const errorKey of Object.keys(refResult9.error)) {
             errorMap[`$.values${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult9.error[errorKey];
           }
         }
-        result["values"] = refResult0.value;
+        result["values"] = refResult9.value;
       }
     }
   }
@@ -2187,25 +2191,25 @@ export function validateExperimentalBooleanDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "boolean") {
+          } else if (convertedString1 !== "boolean") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["boolean"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -2213,22 +2217,22 @@ export function validateExperimentalBooleanDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -2237,22 +2241,22 @@ export function validateExperimentalBooleanDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -2261,17 +2265,17 @@ export function validateExperimentalBooleanDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -2304,139 +2308,139 @@ export function validateExperimentalBooleanDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -2660,25 +2664,25 @@ export function validateExperimentalCrudDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "crud") {
+          } else if (convertedString1 !== "crud") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["crud"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -2686,22 +2690,22 @@ export function validateExperimentalCrudDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -2710,22 +2714,22 @@ export function validateExperimentalCrudDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -2734,17 +2738,17 @@ export function validateExperimentalCrudDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -2777,139 +2781,139 @@ export function validateExperimentalCrudDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -3022,22 +3026,22 @@ export function validateExperimentalCrudDefinition(value) {
         result["basePath"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["basePath"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString9 = value["basePath"];
+        if (typeof convertedString9 !== "string") {
           errorMap[`$.basePath`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString9.length === 0) {
             result["basePath"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString9.length < 1) {
               errorMap[`$.basePath`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["basePath"] = convertedString0;
+              result["basePath"] = convertedString9;
             }
           }
         }
@@ -3045,17 +3049,17 @@ export function validateExperimentalCrudDefinition(value) {
       if (value["entity"] === null || value["entity"] === undefined) {
         result["entity"] = undefined;
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult10 = validateExperimentalReferenceDefinition(
           value["entity"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult10.error) {
+          for (const errorKey of Object.keys(refResult10.error)) {
             errorMap[`$.entity${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult10.error[errorKey];
           }
         }
-        result["entity"] = refResult0.value;
+        result["entity"] = refResult10.value;
       }
       if (value["fromParent"] === null || value["fromParent"] === undefined) {
         result["fromParent"] = undefined;
@@ -3081,19 +3085,19 @@ export function validateExperimentalCrudDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString0 = value["fromParent"]["field"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString12 = value["fromParent"]["field"];
+            if (typeof convertedString12 !== "string") {
               errorMap[`$.fromParent.field`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length < 1) {
+              if (convertedString12.length < 1) {
                 errorMap[`$.fromParent.field`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                result["fromParent"]["field"] = convertedString0;
+                result["fromParent"]["field"] = convertedString12;
               }
             }
           }
@@ -3122,23 +3126,23 @@ export function validateExperimentalCrudDefinition(value) {
                 result["fromParent"]["options"]["name"] = undefined;
               } else {
                 /** @type {string} */
-                let convertedString0 = value["fromParent"]["options"]["name"];
-                if (typeof convertedString0 !== "string") {
+                let convertedString14 = value["fromParent"]["options"]["name"];
+                if (typeof convertedString14 !== "string") {
                   errorMap[`$.fromParent.options.name`] = {
                     key: "validator.string",
                   };
                 } else {
-                  if (convertedString0.length === 0) {
+                  if (convertedString14.length === 0) {
                     result["fromParent"]["options"]["name"] = undefined;
                   } else {
-                    if (convertedString0.length < 1) {
+                    if (convertedString14.length < 1) {
                       errorMap[`$.fromParent.options.name`] = {
                         key: "validator.length",
                         minLength: 1,
                       };
                     } else {
                       result["fromParent"]["options"]["name"] =
-                        convertedString0;
+                        convertedString14;
                     }
                   }
                 }
@@ -3339,55 +3343,55 @@ export function validateExperimentalCrudDefinition(value) {
                 result["fieldOptions"]["readable"]["$omit"] = undefined;
               } else {
                 /** @type {ValidatorErrorMap} */
-                const intermediateErrorMap1 = {};
+                const intermediateErrorMap16 = {};
                 /** @type {any[]} */
-                let intermediateResult1 = [];
+                let intermediateResult16 = [];
                 /** @type {any|any[]} */
-                let intermediateValue1 =
+                let intermediateValue16 =
                   value["fieldOptions"]["readable"]["$omit"];
 
-                if (!Array.isArray(intermediateValue1)) {
-                  intermediateValue1 = [intermediateValue1];
+                if (!Array.isArray(intermediateValue16)) {
+                  intermediateValue16 = [intermediateValue16];
                 }
                 result["fieldOptions"]["readable"]["$omit"] = Array.from({
-                  length: intermediateValue1.length,
+                  length: intermediateValue16.length,
                 });
-                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+                for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
                   if (
-                    intermediateValue1[i1] === null ||
-                    intermediateValue1[i1] === undefined
+                    intermediateValue16[i16] === null ||
+                    intermediateValue16[i16] === undefined
                   ) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                    intermediateErrorMap16[`$.${i16}`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString1 = intermediateValue1[i1];
-                    if (typeof convertedString1 !== "string") {
-                      intermediateErrorMap1[`$.${i1}`] = {
+                    let convertedString16 = intermediateValue16[i16];
+                    if (typeof convertedString16 !== "string") {
+                      intermediateErrorMap16[`$.${i16}`] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString1.length < 1) {
-                        intermediateErrorMap1[`$.${i1}`] = {
+                      if (convertedString16.length < 1) {
+                        intermediateErrorMap16[`$.${i16}`] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        intermediateResult1[i1] = convertedString1;
+                        intermediateResult16[i16] = convertedString16;
                       }
                     }
                   }
                 }
-                if (Object.keys(intermediateErrorMap1).length) {
-                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                if (Object.keys(intermediateErrorMap16).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap16)) {
                     errorMap[
                       `$.fieldOptions.readable.$omit${errorKey.substring(1)}`
-                    ] = intermediateErrorMap1[errorKey];
+                    ] = intermediateErrorMap16[errorKey];
                   }
                 } else {
                   result["fieldOptions"]["readable"]["$omit"] =
-                    intermediateResult1;
+                    intermediateResult16;
                 }
               }
               if (
@@ -3397,55 +3401,55 @@ export function validateExperimentalCrudDefinition(value) {
                 result["fieldOptions"]["readable"]["$pick"] = undefined;
               } else {
                 /** @type {ValidatorErrorMap} */
-                const intermediateErrorMap1 = {};
+                const intermediateErrorMap17 = {};
                 /** @type {any[]} */
-                let intermediateResult1 = [];
+                let intermediateResult17 = [];
                 /** @type {any|any[]} */
-                let intermediateValue1 =
+                let intermediateValue17 =
                   value["fieldOptions"]["readable"]["$pick"];
 
-                if (!Array.isArray(intermediateValue1)) {
-                  intermediateValue1 = [intermediateValue1];
+                if (!Array.isArray(intermediateValue17)) {
+                  intermediateValue17 = [intermediateValue17];
                 }
                 result["fieldOptions"]["readable"]["$pick"] = Array.from({
-                  length: intermediateValue1.length,
+                  length: intermediateValue17.length,
                 });
-                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+                for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
                   if (
-                    intermediateValue1[i1] === null ||
-                    intermediateValue1[i1] === undefined
+                    intermediateValue17[i17] === null ||
+                    intermediateValue17[i17] === undefined
                   ) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                    intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString1 = intermediateValue1[i1];
-                    if (typeof convertedString1 !== "string") {
-                      intermediateErrorMap1[`$.${i1}`] = {
+                    let convertedString17 = intermediateValue17[i17];
+                    if (typeof convertedString17 !== "string") {
+                      intermediateErrorMap17[`$.${i17}`] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString1.length < 1) {
-                        intermediateErrorMap1[`$.${i1}`] = {
+                      if (convertedString17.length < 1) {
+                        intermediateErrorMap17[`$.${i17}`] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        intermediateResult1[i1] = convertedString1;
+                        intermediateResult17[i17] = convertedString17;
                       }
                     }
                   }
                 }
-                if (Object.keys(intermediateErrorMap1).length) {
-                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                if (Object.keys(intermediateErrorMap17).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap17)) {
                     errorMap[
                       `$.fieldOptions.readable.$pick${errorKey.substring(1)}`
-                    ] = intermediateErrorMap1[errorKey];
+                    ] = intermediateErrorMap17[errorKey];
                   }
                 } else {
                   result["fieldOptions"]["readable"]["$pick"] =
-                    intermediateResult1;
+                    intermediateResult17;
                 }
               }
             }
@@ -3475,55 +3479,55 @@ export function validateExperimentalCrudDefinition(value) {
                 result["fieldOptions"]["writable"]["$omit"] = undefined;
               } else {
                 /** @type {ValidatorErrorMap} */
-                const intermediateErrorMap1 = {};
+                const intermediateErrorMap17 = {};
                 /** @type {any[]} */
-                let intermediateResult1 = [];
+                let intermediateResult17 = [];
                 /** @type {any|any[]} */
-                let intermediateValue1 =
+                let intermediateValue17 =
                   value["fieldOptions"]["writable"]["$omit"];
 
-                if (!Array.isArray(intermediateValue1)) {
-                  intermediateValue1 = [intermediateValue1];
+                if (!Array.isArray(intermediateValue17)) {
+                  intermediateValue17 = [intermediateValue17];
                 }
                 result["fieldOptions"]["writable"]["$omit"] = Array.from({
-                  length: intermediateValue1.length,
+                  length: intermediateValue17.length,
                 });
-                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+                for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
                   if (
-                    intermediateValue1[i1] === null ||
-                    intermediateValue1[i1] === undefined
+                    intermediateValue17[i17] === null ||
+                    intermediateValue17[i17] === undefined
                   ) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                    intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString1 = intermediateValue1[i1];
-                    if (typeof convertedString1 !== "string") {
-                      intermediateErrorMap1[`$.${i1}`] = {
+                    let convertedString17 = intermediateValue17[i17];
+                    if (typeof convertedString17 !== "string") {
+                      intermediateErrorMap17[`$.${i17}`] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString1.length < 1) {
-                        intermediateErrorMap1[`$.${i1}`] = {
+                      if (convertedString17.length < 1) {
+                        intermediateErrorMap17[`$.${i17}`] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        intermediateResult1[i1] = convertedString1;
+                        intermediateResult17[i17] = convertedString17;
                       }
                     }
                   }
                 }
-                if (Object.keys(intermediateErrorMap1).length) {
-                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                if (Object.keys(intermediateErrorMap17).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap17)) {
                     errorMap[
                       `$.fieldOptions.writable.$omit${errorKey.substring(1)}`
-                    ] = intermediateErrorMap1[errorKey];
+                    ] = intermediateErrorMap17[errorKey];
                   }
                 } else {
                   result["fieldOptions"]["writable"]["$omit"] =
-                    intermediateResult1;
+                    intermediateResult17;
                 }
               }
               if (
@@ -3533,55 +3537,55 @@ export function validateExperimentalCrudDefinition(value) {
                 result["fieldOptions"]["writable"]["$pick"] = undefined;
               } else {
                 /** @type {ValidatorErrorMap} */
-                const intermediateErrorMap1 = {};
+                const intermediateErrorMap18 = {};
                 /** @type {any[]} */
-                let intermediateResult1 = [];
+                let intermediateResult18 = [];
                 /** @type {any|any[]} */
-                let intermediateValue1 =
+                let intermediateValue18 =
                   value["fieldOptions"]["writable"]["$pick"];
 
-                if (!Array.isArray(intermediateValue1)) {
-                  intermediateValue1 = [intermediateValue1];
+                if (!Array.isArray(intermediateValue18)) {
+                  intermediateValue18 = [intermediateValue18];
                 }
                 result["fieldOptions"]["writable"]["$pick"] = Array.from({
-                  length: intermediateValue1.length,
+                  length: intermediateValue18.length,
                 });
-                for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+                for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
                   if (
-                    intermediateValue1[i1] === null ||
-                    intermediateValue1[i1] === undefined
+                    intermediateValue18[i18] === null ||
+                    intermediateValue18[i18] === undefined
                   ) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                    intermediateErrorMap18[`$.${i18}`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString1 = intermediateValue1[i1];
-                    if (typeof convertedString1 !== "string") {
-                      intermediateErrorMap1[`$.${i1}`] = {
+                    let convertedString18 = intermediateValue18[i18];
+                    if (typeof convertedString18 !== "string") {
+                      intermediateErrorMap18[`$.${i18}`] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString1.length < 1) {
-                        intermediateErrorMap1[`$.${i1}`] = {
+                      if (convertedString18.length < 1) {
+                        intermediateErrorMap18[`$.${i18}`] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        intermediateResult1[i1] = convertedString1;
+                        intermediateResult18[i18] = convertedString18;
                       }
                     }
                   }
                 }
-                if (Object.keys(intermediateErrorMap1).length) {
-                  for (const errorKey of Object.keys(intermediateErrorMap1)) {
+                if (Object.keys(intermediateErrorMap18).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap18)) {
                     errorMap[
                       `$.fieldOptions.writable.$pick${errorKey.substring(1)}`
-                    ] = intermediateErrorMap1[errorKey];
+                    ] = intermediateErrorMap18[errorKey];
                   }
                 } else {
                   result["fieldOptions"]["writable"]["$pick"] =
-                    intermediateResult1;
+                    intermediateResult18;
                 }
               }
             }
@@ -3597,47 +3601,47 @@ export function validateExperimentalCrudDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap15 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult15 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["inlineRelations"];
+        let intermediateValue15 = value["inlineRelations"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue15)) {
+          intermediateValue15 = [intermediateValue15];
         }
         result["inlineRelations"] = Array.from({
-          length: intermediateValue1.length,
+          length: intermediateValue15.length,
         });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        for (let i15 = 0; i15 < intermediateValue15.length; ++i15) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue15[i15] === null ||
+            intermediateValue15[i15] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap15[`$.${i15}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateExperimentalCrudDefinition(
-              intermediateValue1[i1],
+            const refResult15 = validateExperimentalCrudDefinition(
+              intermediateValue15[i15],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult15.error) {
+              for (const errorKey of Object.keys(refResult15.error)) {
+                intermediateErrorMap15[`$.${i15}${errorKey.substring(1)}`] =
+                  refResult15.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult15[i15] = refResult15.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap15).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap15)) {
             errorMap[`$.inlineRelations${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap15[errorKey];
           }
         } else {
-          result["inlineRelations"] = intermediateResult1;
+          result["inlineRelations"] = intermediateResult15;
         }
       }
       if (
@@ -3649,47 +3653,47 @@ export function validateExperimentalCrudDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap16 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult16 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["nestedRelations"];
+        let intermediateValue16 = value["nestedRelations"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue16)) {
+          intermediateValue16 = [intermediateValue16];
         }
         result["nestedRelations"] = Array.from({
-          length: intermediateValue1.length,
+          length: intermediateValue16.length,
         });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue16[i16] === null ||
+            intermediateValue16[i16] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap16[`$.${i16}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateExperimentalCrudDefinition(
-              intermediateValue1[i1],
+            const refResult16 = validateExperimentalCrudDefinition(
+              intermediateValue16[i16],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult16.error) {
+              for (const errorKey of Object.keys(refResult16.error)) {
+                intermediateErrorMap16[`$.${i16}${errorKey.substring(1)}`] =
+                  refResult16.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult16[i16] = refResult16.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap16).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap16)) {
             errorMap[`$.nestedRelations${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap16[errorKey];
           }
         } else {
-          result["nestedRelations"] = intermediateResult1;
+          result["nestedRelations"] = intermediateResult16;
         }
       }
     }
@@ -3730,25 +3734,25 @@ export function validateExperimentalReferenceDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "reference") {
+          } else if (convertedString1 !== "reference") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["reference"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -3756,17 +3760,17 @@ export function validateExperimentalReferenceDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["docString"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString2;
             }
           }
         }
@@ -3799,139 +3803,139 @@ export function validateExperimentalReferenceDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch4 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch4) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap6 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue6 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue6 === null || intermediateValue6 === undefined) {
+            intermediateErrorMap6[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString6 = intermediateValue6;
+            if (typeof convertedString6 !== "string") {
+              intermediateErrorMap6[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString6.length < 1) {
+                intermediateErrorMap6[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult6 = convertedString6;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap6).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap6);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch4 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult6;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch4) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap6 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue6 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue6 === null || intermediateValue6 === undefined) {
+            intermediateErrorMap6[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue6 === true ||
+              intermediateValue6 === "true" ||
+              intermediateValue6 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult6 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue6 === false ||
+              intermediateValue6 === "false" ||
+              intermediateValue6 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult6 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap6[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap6).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap6);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch4 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult6;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch4) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap6 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue6 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue6 === null || intermediateValue6 === undefined) {
+            intermediateErrorMap6[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber6 = intermediateValue6;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber6 !== "number" &&
+              typeof convertedNumber6 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber6 = Number(convertedNumber6);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber6 !== "number" ||
+              isNaN(convertedNumber6) ||
+              !isFinite(convertedNumber6) ||
+              !Number.isInteger(convertedNumber6)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap6[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber6 < -2147483647) {
+              intermediateErrorMap6[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber6 > 2147483647) {
+              intermediateErrorMap6[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult6 = convertedNumber6;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap6).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap6);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch4 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult6;
           }
         }
       }
@@ -4065,17 +4069,17 @@ export function validateExperimentalReferenceDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult0 = validateExperimentalNamePart(
+            const refResult8 = validateExperimentalNamePart(
               value["reference"]["group"],
             );
 
-            if (refResult0.error) {
-              for (const errorKey of Object.keys(refResult0.error)) {
+            if (refResult8.error) {
+              for (const errorKey of Object.keys(refResult8.error)) {
                 errorMap[`$.reference.group${errorKey.substring(1)}`] =
-                  refResult0.error[errorKey];
+                  refResult8.error[errorKey];
               }
             }
-            result["reference"]["group"] = refResult0.value;
+            result["reference"]["group"] = refResult8.value;
           }
           if (
             value["reference"]["name"] === null ||
@@ -4085,17 +4089,17 @@ export function validateExperimentalReferenceDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult0 = validateExperimentalNamePart(
+            const refResult9 = validateExperimentalNamePart(
               value["reference"]["name"],
             );
 
-            if (refResult0.error) {
-              for (const errorKey of Object.keys(refResult0.error)) {
+            if (refResult9.error) {
+              for (const errorKey of Object.keys(refResult9.error)) {
                 errorMap[`$.reference.name${errorKey.substring(1)}`] =
-                  refResult0.error[errorKey];
+                  refResult9.error[errorKey];
               }
             }
-            result["reference"]["name"] = refResult0.value;
+            result["reference"]["name"] = refResult9.value;
           }
         }
       }
@@ -4179,25 +4183,25 @@ export function validateExperimentalDateDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "date") {
+          } else if (convertedString1 !== "date") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["date"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -4205,22 +4209,22 @@ export function validateExperimentalDateDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -4229,22 +4233,22 @@ export function validateExperimentalDateDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -4253,17 +4257,17 @@ export function validateExperimentalDateDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -4296,139 +4300,139 @@ export function validateExperimentalDateDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -4675,31 +4679,31 @@ export function validateExperimentalDateDefinition(value) {
         result["specifier"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["specifier"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString9 = value["specifier"];
+        if (typeof convertedString9 !== "string") {
           errorMap[`$.specifier`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString9.length === 0) {
             result["specifier"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString9.length < 1) {
               errorMap[`$.specifier`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else if (
-              convertedString0 !== "dateOnly" &&
-              convertedString0 !== "timeOnly"
+              convertedString9 !== "dateOnly" &&
+              convertedString9 !== "timeOnly"
             ) {
               errorMap[`$.specifier`] = {
                 key: "validator.oneOf",
                 allowedValues: ["dateOnly", "timeOnly"],
-                foundValue: convertedString0,
+                foundValue: convertedString9,
               };
             } else {
-              result["specifier"] = convertedString0;
+              result["specifier"] = convertedString9;
             }
           }
         }
@@ -4742,25 +4746,25 @@ export function validateExperimentalExtendDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "extend") {
+          } else if (convertedString1 !== "extend") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["extend"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -4768,22 +4772,22 @@ export function validateExperimentalExtendDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -4792,22 +4796,22 @@ export function validateExperimentalExtendDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -4816,17 +4820,17 @@ export function validateExperimentalExtendDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -4859,139 +4863,139 @@ export function validateExperimentalExtendDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -5111,68 +5115,68 @@ export function validateExperimentalExtendDefinition(value) {
           };
         } else {
           result["keys"] = {};
-          for (let genericKeyInput0 of Object.keys(value["keys"])) {
+          for (let genericKeyInput9 of Object.keys(value["keys"])) {
             /** @type {any} */
-            let genericKeyResult1 = undefined;
+            let genericKeyResult10 = undefined;
             /** @type {ValidatorErrorMap} */
-            const genericKeyErrorMap2 = {};
-            if (genericKeyInput0 === null || genericKeyInput0 === undefined) {
-              genericKeyErrorMap2[`$`] = {
+            const genericKeyErrorMap11 = {};
+            if (genericKeyInput9 === null || genericKeyInput9 === undefined) {
+              genericKeyErrorMap11[`$`] = {
                 key: "validator.undefined",
               };
             } else {
               /** @type {string} */
-              let convertedString3 = genericKeyInput0;
-              if (typeof convertedString3 !== "string") {
-                genericKeyErrorMap2[`$`] = {
+              let convertedString12 = genericKeyInput9;
+              if (typeof convertedString12 !== "string") {
+                genericKeyErrorMap11[`$`] = {
                   key: "validator.string",
                 };
               } else {
-                if (convertedString3.length < 1) {
-                  genericKeyErrorMap2[`$`] = {
+                if (convertedString12.length < 1) {
+                  genericKeyErrorMap11[`$`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  genericKeyResult1 = convertedString3;
+                  genericKeyResult10 = convertedString12;
                 }
               }
             }
-            if (Object.keys(genericKeyErrorMap2).length !== 0) {
+            if (Object.keys(genericKeyErrorMap11).length !== 0) {
               if (errorMap[`$.keys`]) {
                 errorMap[`$.keys`].inputs.push({
-                  key: genericKeyInput0,
-                  errors: genericKeyErrorMap2,
+                  key: genericKeyInput9,
+                  errors: genericKeyErrorMap11,
                 });
               } else {
                 errorMap[`$.keys`] = {
                   key: "validator.generic",
                   inputs: [
-                    { key: genericKeyInput0, errors: genericKeyErrorMap2 },
+                    { key: genericKeyInput9, errors: genericKeyErrorMap11 },
                   ],
                 };
               }
             } else {
               if (
-                value["keys"][genericKeyResult1] === null ||
-                value["keys"][genericKeyResult1] === undefined
+                value["keys"][genericKeyResult10] === null ||
+                value["keys"][genericKeyResult10] === undefined
               ) {
-                errorMap[`$.keys.${genericKeyResult1}`] = {
+                errorMap[`$.keys.${genericKeyResult10}`] = {
                   key: "validator.undefined",
                 };
               } else {
-                const refResult3 = validateExperimentalTypeSystemDefinition(
-                  value["keys"][genericKeyResult1],
+                const refResult12 = validateExperimentalTypeSystemDefinition(
+                  value["keys"][genericKeyResult10],
                 );
 
-                if (refResult3.error) {
-                  for (const errorKey of Object.keys(refResult3.error)) {
+                if (refResult12.error) {
+                  for (const errorKey of Object.keys(refResult12.error)) {
                     errorMap[
-                      `$.keys.${genericKeyResult1}${errorKey.substring(1)}`
-                    ] = refResult3.error[errorKey];
+                      `$.keys.${genericKeyResult10}${errorKey.substring(1)}`
+                    ] = refResult12.error[errorKey];
                   }
                 }
-                result["keys"][genericKeyResult1] = refResult3.value;
+                result["keys"][genericKeyResult10] = refResult12.value;
               }
             }
           }
@@ -5183,17 +5187,17 @@ export function validateExperimentalExtendDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult10 = validateExperimentalReferenceDefinition(
           value["reference"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult10.error) {
+          for (const errorKey of Object.keys(refResult10.error)) {
             errorMap[`$.reference${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult10.error[errorKey];
           }
         }
-        result["reference"] = refResult0.value;
+        result["reference"] = refResult10.value;
       }
       if (value["relations"] === null || value["relations"] === undefined) {
         errorMap[`$.relations`] = {
@@ -5201,45 +5205,47 @@ export function validateExperimentalExtendDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap12 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult12 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["relations"];
+        let intermediateValue12 = value["relations"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue12)) {
+          intermediateValue12 = [intermediateValue12];
         }
-        result["relations"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["relations"] = Array.from({
+          length: intermediateValue12.length,
+        });
+        for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue12[i12] === null ||
+            intermediateValue12[i12] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap12[`$.${i12}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateExperimentalRelationDefinition(
-              intermediateValue1[i1],
+            const refResult12 = validateExperimentalRelationDefinition(
+              intermediateValue12[i12],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult12.error) {
+              for (const errorKey of Object.keys(refResult12.error)) {
+                intermediateErrorMap12[`$.${i12}${errorKey.substring(1)}`] =
+                  refResult12.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult12[i12] = refResult12.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap12).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap12)) {
             errorMap[`$.relations${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap12[errorKey];
           }
         } else {
-          result["relations"] = intermediateResult1;
+          result["relations"] = intermediateResult12;
         }
       }
     }
@@ -5280,25 +5286,25 @@ export function validateExperimentalRelationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "relation") {
+          } else if (convertedString1 !== "relation") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["relation"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -5308,22 +5314,22 @@ export function validateExperimentalRelationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["subType"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["subType"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.subType`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString2.length < 1) {
             errorMap[`$.subType`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else if (
-            convertedString0 !== "manyToOne" &&
-            convertedString0 !== "oneToMany" &&
-            convertedString0 !== "oneToOne" &&
-            convertedString0 !== "oneToOneReverse"
+            convertedString2 !== "manyToOne" &&
+            convertedString2 !== "oneToMany" &&
+            convertedString2 !== "oneToOne" &&
+            convertedString2 !== "oneToOneReverse"
           ) {
             errorMap[`$.subType`] = {
               key: "validator.oneOf",
@@ -5333,10 +5339,10 @@ export function validateExperimentalRelationDefinition(value) {
                 "oneToOne",
                 "oneToOneReverse",
               ],
-              foundValue: convertedString0,
+              foundValue: convertedString2,
             };
           } else {
-            result["subType"] = convertedString0;
+            result["subType"] = convertedString2;
           }
         }
       }
@@ -5345,17 +5351,17 @@ export function validateExperimentalRelationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult3 = validateExperimentalReferenceDefinition(
           value["reference"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult3.error) {
+          for (const errorKey of Object.keys(refResult3.error)) {
             errorMap[`$.reference${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult3.error[errorKey];
           }
         }
-        result["reference"] = refResult0.value;
+        result["reference"] = refResult3.value;
       }
       if (value["ownKey"] === null || value["ownKey"] === undefined) {
         errorMap[`$.ownKey`] = {
@@ -5363,19 +5369,19 @@ export function validateExperimentalRelationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["ownKey"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["ownKey"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.ownKey`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString4.length < 1) {
             errorMap[`$.ownKey`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["ownKey"] = convertedString0;
+            result["ownKey"] = convertedString4;
           }
         }
       }
@@ -5386,22 +5392,22 @@ export function validateExperimentalRelationDefinition(value) {
         result["referencedKey"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["referencedKey"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString5 = value["referencedKey"];
+        if (typeof convertedString5 !== "string") {
           errorMap[`$.referencedKey`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString5.length === 0) {
             result["referencedKey"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString5.length < 1) {
               errorMap[`$.referencedKey`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["referencedKey"] = convertedString0;
+              result["referencedKey"] = convertedString5;
             }
           }
         }
@@ -5468,25 +5474,25 @@ export function validateExperimentalFileDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "file") {
+          } else if (convertedString1 !== "file") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["file"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -5494,22 +5500,22 @@ export function validateExperimentalFileDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -5518,22 +5524,22 @@ export function validateExperimentalFileDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -5542,17 +5548,17 @@ export function validateExperimentalFileDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -5585,139 +5591,139 @@ export function validateExperimentalFileDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -5834,52 +5840,52 @@ export function validateExperimentalFileDefinition(value) {
             result["validator"]["mimeTypes"] = undefined;
           } else {
             /** @type {ValidatorErrorMap} */
-            const intermediateErrorMap1 = {};
+            const intermediateErrorMap10 = {};
             /** @type {any[]} */
-            let intermediateResult1 = [];
+            let intermediateResult10 = [];
             /** @type {any|any[]} */
-            let intermediateValue1 = value["validator"]["mimeTypes"];
+            let intermediateValue10 = value["validator"]["mimeTypes"];
 
-            if (!Array.isArray(intermediateValue1)) {
-              intermediateValue1 = [intermediateValue1];
+            if (!Array.isArray(intermediateValue10)) {
+              intermediateValue10 = [intermediateValue10];
             }
             result["validator"]["mimeTypes"] = Array.from({
-              length: intermediateValue1.length,
+              length: intermediateValue10.length,
             });
-            for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+            for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
               if (
-                intermediateValue1[i1] === null ||
-                intermediateValue1[i1] === undefined
+                intermediateValue10[i10] === null ||
+                intermediateValue10[i10] === undefined
               ) {
-                intermediateErrorMap1[`$.${i1}`] = {
+                intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 /** @type {string} */
-                let convertedString1 = intermediateValue1[i1];
-                if (typeof convertedString1 !== "string") {
-                  intermediateErrorMap1[`$.${i1}`] = {
+                let convertedString10 = intermediateValue10[i10];
+                if (typeof convertedString10 !== "string") {
+                  intermediateErrorMap10[`$.${i10}`] = {
                     key: "validator.string",
                   };
                 } else {
-                  if (convertedString1.length < 1) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                  if (convertedString10.length < 1) {
+                    intermediateErrorMap10[`$.${i10}`] = {
                       key: "validator.length",
                       minLength: 1,
                     };
                   } else {
-                    intermediateResult1[i1] = convertedString1;
+                    intermediateResult10[i10] = convertedString10;
                   }
                 }
               }
             }
-            if (Object.keys(intermediateErrorMap1).length) {
-              for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            if (Object.keys(intermediateErrorMap10).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap10)) {
                 errorMap[`$.validator.mimeTypes${errorKey.substring(1)}`] =
-                  intermediateErrorMap1[errorKey];
+                  intermediateErrorMap10[errorKey];
               }
             } else {
-              result["validator"]["mimeTypes"] = intermediateResult1;
+              result["validator"]["mimeTypes"] = intermediateResult10;
             }
           }
         }
@@ -5922,25 +5928,25 @@ export function validateExperimentalGenericDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "generic") {
+          } else if (convertedString1 !== "generic") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["generic"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -5948,22 +5954,22 @@ export function validateExperimentalGenericDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -5972,22 +5978,22 @@ export function validateExperimentalGenericDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -5996,17 +6002,17 @@ export function validateExperimentalGenericDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -6039,139 +6045,139 @@ export function validateExperimentalGenericDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -6285,34 +6291,34 @@ export function validateExperimentalGenericDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalTypeSystemDefinition(
+        const refResult9 = validateExperimentalTypeSystemDefinition(
           value["keys"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult9.error) {
+          for (const errorKey of Object.keys(refResult9.error)) {
             errorMap[`$.keys${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult9.error[errorKey];
           }
         }
-        result["keys"] = refResult0.value;
+        result["keys"] = refResult9.value;
       }
       if (value["values"] === null || value["values"] === undefined) {
         errorMap[`$.values`] = {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalTypeSystemDefinition(
+        const refResult10 = validateExperimentalTypeSystemDefinition(
           value["values"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult10.error) {
+          for (const errorKey of Object.keys(refResult10.error)) {
             errorMap[`$.values${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult10.error[errorKey];
           }
         }
-        result["values"] = refResult0.value;
+        result["values"] = refResult10.value;
       }
     }
   }
@@ -6352,25 +6358,25 @@ export function validateExperimentalNumberDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "number") {
+          } else if (convertedString1 !== "number") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["number"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -6378,22 +6384,22 @@ export function validateExperimentalNumberDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -6402,22 +6408,22 @@ export function validateExperimentalNumberDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -6426,17 +6432,17 @@ export function validateExperimentalNumberDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -6469,139 +6475,139 @@ export function validateExperimentalNumberDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -6771,35 +6777,35 @@ export function validateExperimentalNumberDefinition(value) {
           ) {
             result["validator"]["min"] = undefined;
           } else {
-            let convertedNumber0 = value["validator"]["min"];
+            let convertedNumber11 = value["validator"]["min"];
             if (
-              typeof convertedNumber0 !== "number" &&
-              typeof convertedNumber0 === "string"
+              typeof convertedNumber11 !== "number" &&
+              typeof convertedNumber11 === "string"
             ) {
-              convertedNumber0 = Number(convertedNumber0);
+              convertedNumber11 = Number(convertedNumber11);
             }
             if (
-              typeof convertedNumber0 !== "number" ||
-              isNaN(convertedNumber0) ||
-              !isFinite(convertedNumber0) ||
-              !Number.isInteger(convertedNumber0)
+              typeof convertedNumber11 !== "number" ||
+              isNaN(convertedNumber11) ||
+              !isFinite(convertedNumber11) ||
+              !Number.isInteger(convertedNumber11)
             ) {
               errorMap[`$.validator.min`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber0 < -2147483647) {
+            } else if (convertedNumber11 < -2147483647) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber0 > 2147483647) {
+            } else if (convertedNumber11 > 2147483647) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["validator"]["min"] = convertedNumber0;
+              result["validator"]["min"] = convertedNumber11;
             }
           }
           if (
@@ -6808,35 +6814,35 @@ export function validateExperimentalNumberDefinition(value) {
           ) {
             result["validator"]["max"] = undefined;
           } else {
-            let convertedNumber0 = value["validator"]["max"];
+            let convertedNumber12 = value["validator"]["max"];
             if (
-              typeof convertedNumber0 !== "number" &&
-              typeof convertedNumber0 === "string"
+              typeof convertedNumber12 !== "number" &&
+              typeof convertedNumber12 === "string"
             ) {
-              convertedNumber0 = Number(convertedNumber0);
+              convertedNumber12 = Number(convertedNumber12);
             }
             if (
-              typeof convertedNumber0 !== "number" ||
-              isNaN(convertedNumber0) ||
-              !isFinite(convertedNumber0) ||
-              !Number.isInteger(convertedNumber0)
+              typeof convertedNumber12 !== "number" ||
+              isNaN(convertedNumber12) ||
+              !isFinite(convertedNumber12) ||
+              !Number.isInteger(convertedNumber12)
             ) {
               errorMap[`$.validator.max`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber0 < -2147483647) {
+            } else if (convertedNumber12 < -2147483647) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber0 > 2147483647) {
+            } else if (convertedNumber12 > 2147483647) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["validator"]["max"] = convertedNumber0;
+              result["validator"]["max"] = convertedNumber12;
             }
           }
           if (
@@ -6870,64 +6876,64 @@ export function validateExperimentalNumberDefinition(value) {
         result["oneOf"] = undefined;
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap10 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult10 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["oneOf"];
+        let intermediateValue10 = value["oneOf"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue10)) {
+          intermediateValue10 = [intermediateValue10];
         }
-        result["oneOf"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["oneOf"] = Array.from({ length: intermediateValue10.length });
+        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue10[i10] === null ||
+            intermediateValue10[i10] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap10[`$.${i10}`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber1 = intermediateValue1[i1];
+            let convertedNumber10 = intermediateValue10[i10];
             if (
-              typeof convertedNumber1 !== "number" &&
-              typeof convertedNumber1 === "string"
+              typeof convertedNumber10 !== "number" &&
+              typeof convertedNumber10 === "string"
             ) {
-              convertedNumber1 = Number(convertedNumber1);
+              convertedNumber10 = Number(convertedNumber10);
             }
             if (
-              typeof convertedNumber1 !== "number" ||
-              isNaN(convertedNumber1) ||
-              !isFinite(convertedNumber1) ||
-              !Number.isInteger(convertedNumber1)
+              typeof convertedNumber10 !== "number" ||
+              isNaN(convertedNumber10) ||
+              !isFinite(convertedNumber10) ||
+              !Number.isInteger(convertedNumber10)
             ) {
-              intermediateErrorMap1[`$.${i1}`] = {
+              intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber1 < -2147483647) {
-              intermediateErrorMap1[`$.${i1}`] = {
+            } else if (convertedNumber10 < -2147483647) {
+              intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber1 > 2147483647) {
-              intermediateErrorMap1[`$.${i1}`] = {
+            } else if (convertedNumber10 > 2147483647) {
+              intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult1[i1] = convertedNumber1;
+              intermediateResult10[i10] = convertedNumber10;
             }
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap10).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap10)) {
             errorMap[`$.oneOf${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap10[errorKey];
           }
         } else {
-          result["oneOf"] = intermediateResult1;
+          result["oneOf"] = intermediateResult10;
         }
       }
     }
@@ -6968,25 +6974,25 @@ export function validateExperimentalObjectDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "object") {
+          } else if (convertedString1 !== "object") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["object"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -6994,22 +7000,22 @@ export function validateExperimentalObjectDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -7018,22 +7024,22 @@ export function validateExperimentalObjectDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -7042,17 +7048,17 @@ export function validateExperimentalObjectDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -7085,139 +7091,139 @@ export function validateExperimentalObjectDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -7385,22 +7391,22 @@ export function validateExperimentalObjectDefinition(value) {
         result["shortName"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["shortName"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString9 = value["shortName"];
+        if (typeof convertedString9 !== "string") {
           errorMap[`$.shortName`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString9.length === 0) {
             result["shortName"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString9.length < 1) {
               errorMap[`$.shortName`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["shortName"] = convertedString0;
+              result["shortName"] = convertedString9;
             }
           }
         }
@@ -7416,68 +7422,68 @@ export function validateExperimentalObjectDefinition(value) {
           };
         } else {
           result["keys"] = {};
-          for (let genericKeyInput0 of Object.keys(value["keys"])) {
+          for (let genericKeyInput10 of Object.keys(value["keys"])) {
             /** @type {any} */
-            let genericKeyResult1 = undefined;
+            let genericKeyResult11 = undefined;
             /** @type {ValidatorErrorMap} */
-            const genericKeyErrorMap2 = {};
-            if (genericKeyInput0 === null || genericKeyInput0 === undefined) {
-              genericKeyErrorMap2[`$`] = {
+            const genericKeyErrorMap12 = {};
+            if (genericKeyInput10 === null || genericKeyInput10 === undefined) {
+              genericKeyErrorMap12[`$`] = {
                 key: "validator.undefined",
               };
             } else {
               /** @type {string} */
-              let convertedString3 = genericKeyInput0;
-              if (typeof convertedString3 !== "string") {
-                genericKeyErrorMap2[`$`] = {
+              let convertedString13 = genericKeyInput10;
+              if (typeof convertedString13 !== "string") {
+                genericKeyErrorMap12[`$`] = {
                   key: "validator.string",
                 };
               } else {
-                if (convertedString3.length < 1) {
-                  genericKeyErrorMap2[`$`] = {
+                if (convertedString13.length < 1) {
+                  genericKeyErrorMap12[`$`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  genericKeyResult1 = convertedString3;
+                  genericKeyResult11 = convertedString13;
                 }
               }
             }
-            if (Object.keys(genericKeyErrorMap2).length !== 0) {
+            if (Object.keys(genericKeyErrorMap12).length !== 0) {
               if (errorMap[`$.keys`]) {
                 errorMap[`$.keys`].inputs.push({
-                  key: genericKeyInput0,
-                  errors: genericKeyErrorMap2,
+                  key: genericKeyInput10,
+                  errors: genericKeyErrorMap12,
                 });
               } else {
                 errorMap[`$.keys`] = {
                   key: "validator.generic",
                   inputs: [
-                    { key: genericKeyInput0, errors: genericKeyErrorMap2 },
+                    { key: genericKeyInput10, errors: genericKeyErrorMap12 },
                   ],
                 };
               }
             } else {
               if (
-                value["keys"][genericKeyResult1] === null ||
-                value["keys"][genericKeyResult1] === undefined
+                value["keys"][genericKeyResult11] === null ||
+                value["keys"][genericKeyResult11] === undefined
               ) {
-                errorMap[`$.keys.${genericKeyResult1}`] = {
+                errorMap[`$.keys.${genericKeyResult11}`] = {
                   key: "validator.undefined",
                 };
               } else {
-                const refResult3 = validateExperimentalTypeSystemDefinition(
-                  value["keys"][genericKeyResult1],
+                const refResult13 = validateExperimentalTypeSystemDefinition(
+                  value["keys"][genericKeyResult11],
                 );
 
-                if (refResult3.error) {
-                  for (const errorKey of Object.keys(refResult3.error)) {
+                if (refResult13.error) {
+                  for (const errorKey of Object.keys(refResult13.error)) {
                     errorMap[
-                      `$.keys.${genericKeyResult1}${errorKey.substring(1)}`
-                    ] = refResult3.error[errorKey];
+                      `$.keys.${genericKeyResult11}${errorKey.substring(1)}`
+                    ] = refResult13.error[errorKey];
                   }
                 }
-                result["keys"][genericKeyResult1] = refResult3.value;
+                result["keys"][genericKeyResult11] = refResult13.value;
               }
             }
           }
@@ -7635,22 +7641,22 @@ export function validateExperimentalObjectDefinition(value) {
             result["queryOptions"]["schema"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["queryOptions"]["schema"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString17 = value["queryOptions"]["schema"];
+            if (typeof convertedString17 !== "string") {
               errorMap[`$.queryOptions.schema`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString17.length === 0) {
                 result["queryOptions"]["schema"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString17.length < 1) {
                   errorMap[`$.queryOptions.schema`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["queryOptions"]["schema"] = convertedString0;
+                  result["queryOptions"]["schema"] = convertedString17;
                 }
               }
             }
@@ -7663,45 +7669,47 @@ export function validateExperimentalObjectDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap14 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult14 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["relations"];
+        let intermediateValue14 = value["relations"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue14)) {
+          intermediateValue14 = [intermediateValue14];
         }
-        result["relations"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["relations"] = Array.from({
+          length: intermediateValue14.length,
+        });
+        for (let i14 = 0; i14 < intermediateValue14.length; ++i14) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue14[i14] === null ||
+            intermediateValue14[i14] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap14[`$.${i14}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateExperimentalRelationDefinition(
-              intermediateValue1[i1],
+            const refResult14 = validateExperimentalRelationDefinition(
+              intermediateValue14[i14],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult14.error) {
+              for (const errorKey of Object.keys(refResult14.error)) {
+                intermediateErrorMap14[`$.${i14}${errorKey.substring(1)}`] =
+                  refResult14.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult14[i14] = refResult14.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap14).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap14)) {
             errorMap[`$.relations${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap14[errorKey];
           }
         } else {
-          result["relations"] = intermediateResult1;
+          result["relations"] = intermediateResult14;
         }
       }
     }
@@ -7742,25 +7750,25 @@ export function validateExperimentalOmitDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "omit") {
+          } else if (convertedString1 !== "omit") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["omit"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -7768,22 +7776,22 @@ export function validateExperimentalOmitDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -7792,22 +7800,22 @@ export function validateExperimentalOmitDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -7816,17 +7824,17 @@ export function validateExperimentalOmitDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -7859,139 +7867,139 @@ export function validateExperimentalOmitDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -8161,50 +8169,50 @@ export function validateExperimentalOmitDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap10 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult10 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["keys"];
+        let intermediateValue10 = value["keys"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue10)) {
+          intermediateValue10 = [intermediateValue10];
         }
-        result["keys"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["keys"] = Array.from({ length: intermediateValue10.length });
+        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue10[i10] === null ||
+            intermediateValue10[i10] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap10[`$.${i10}`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString1 = intermediateValue1[i1];
-            if (typeof convertedString1 !== "string") {
-              intermediateErrorMap1[`$.${i1}`] = {
+            let convertedString10 = intermediateValue10[i10];
+            if (typeof convertedString10 !== "string") {
+              intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString1.length < 1) {
-                intermediateErrorMap1[`$.${i1}`] = {
+              if (convertedString10.length < 1) {
+                intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult1[i1] = convertedString1;
+                intermediateResult10[i10] = convertedString10;
               }
             }
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap10).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap10)) {
             errorMap[`$.keys${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap10[errorKey];
           }
         } else {
-          result["keys"] = intermediateResult1;
+          result["keys"] = intermediateResult10;
         }
       }
       if (value["reference"] === null || value["reference"] === undefined) {
@@ -8212,17 +8220,17 @@ export function validateExperimentalOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalTypeSystemDefinition(
+        const refResult10 = validateExperimentalTypeSystemDefinition(
           value["reference"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult10.error) {
+          for (const errorKey of Object.keys(refResult10.error)) {
             errorMap[`$.reference${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult10.error[errorKey];
           }
         }
-        result["reference"] = refResult0.value;
+        result["reference"] = refResult10.value;
       }
     }
   }
@@ -8262,25 +8270,25 @@ export function validateExperimentalPickDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "pick") {
+          } else if (convertedString1 !== "pick") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["pick"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -8288,22 +8296,22 @@ export function validateExperimentalPickDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -8312,22 +8320,22 @@ export function validateExperimentalPickDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -8336,17 +8344,17 @@ export function validateExperimentalPickDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -8379,139 +8387,139 @@ export function validateExperimentalPickDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -8681,50 +8689,50 @@ export function validateExperimentalPickDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap10 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult10 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["keys"];
+        let intermediateValue10 = value["keys"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue10)) {
+          intermediateValue10 = [intermediateValue10];
         }
-        result["keys"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["keys"] = Array.from({ length: intermediateValue10.length });
+        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue10[i10] === null ||
+            intermediateValue10[i10] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap10[`$.${i10}`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString1 = intermediateValue1[i1];
-            if (typeof convertedString1 !== "string") {
-              intermediateErrorMap1[`$.${i1}`] = {
+            let convertedString10 = intermediateValue10[i10];
+            if (typeof convertedString10 !== "string") {
+              intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString1.length < 1) {
-                intermediateErrorMap1[`$.${i1}`] = {
+              if (convertedString10.length < 1) {
+                intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult1[i1] = convertedString1;
+                intermediateResult10[i10] = convertedString10;
               }
             }
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap10).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap10)) {
             errorMap[`$.keys${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap10[errorKey];
           }
         } else {
-          result["keys"] = intermediateResult1;
+          result["keys"] = intermediateResult10;
         }
       }
       if (value["reference"] === null || value["reference"] === undefined) {
@@ -8732,17 +8740,17 @@ export function validateExperimentalPickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult0 = validateExperimentalTypeSystemDefinition(
+        const refResult10 = validateExperimentalTypeSystemDefinition(
           value["reference"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult10.error) {
+          for (const errorKey of Object.keys(refResult10.error)) {
             errorMap[`$.reference${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult10.error[errorKey];
           }
         }
-        result["reference"] = refResult0.value;
+        result["reference"] = refResult10.value;
       }
     }
   }
@@ -8782,25 +8790,25 @@ export function validateExperimentalStringDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "string") {
+          } else if (convertedString1 !== "string") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["string"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -8808,22 +8816,22 @@ export function validateExperimentalStringDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -8832,22 +8840,22 @@ export function validateExperimentalStringDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -8856,17 +8864,17 @@ export function validateExperimentalStringDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -8899,139 +8907,139 @@ export function validateExperimentalStringDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -9255,35 +9263,35 @@ export function validateExperimentalStringDefinition(value) {
           ) {
             result["validator"]["min"] = 1;
           } else {
-            let convertedNumber0 = value["validator"]["min"];
+            let convertedNumber13 = value["validator"]["min"];
             if (
-              typeof convertedNumber0 !== "number" &&
-              typeof convertedNumber0 === "string"
+              typeof convertedNumber13 !== "number" &&
+              typeof convertedNumber13 === "string"
             ) {
-              convertedNumber0 = Number(convertedNumber0);
+              convertedNumber13 = Number(convertedNumber13);
             }
             if (
-              typeof convertedNumber0 !== "number" ||
-              isNaN(convertedNumber0) ||
-              !isFinite(convertedNumber0) ||
-              !Number.isInteger(convertedNumber0)
+              typeof convertedNumber13 !== "number" ||
+              isNaN(convertedNumber13) ||
+              !isFinite(convertedNumber13) ||
+              !Number.isInteger(convertedNumber13)
             ) {
               errorMap[`$.validator.min`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber0 < -2147483647) {
+            } else if (convertedNumber13 < -2147483647) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber0 > 2147483647) {
+            } else if (convertedNumber13 > 2147483647) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["validator"]["min"] = convertedNumber0;
+              result["validator"]["min"] = convertedNumber13;
             }
           }
           if (
@@ -9292,35 +9300,35 @@ export function validateExperimentalStringDefinition(value) {
           ) {
             result["validator"]["max"] = undefined;
           } else {
-            let convertedNumber0 = value["validator"]["max"];
+            let convertedNumber14 = value["validator"]["max"];
             if (
-              typeof convertedNumber0 !== "number" &&
-              typeof convertedNumber0 === "string"
+              typeof convertedNumber14 !== "number" &&
+              typeof convertedNumber14 === "string"
             ) {
-              convertedNumber0 = Number(convertedNumber0);
+              convertedNumber14 = Number(convertedNumber14);
             }
             if (
-              typeof convertedNumber0 !== "number" ||
-              isNaN(convertedNumber0) ||
-              !isFinite(convertedNumber0) ||
-              !Number.isInteger(convertedNumber0)
+              typeof convertedNumber14 !== "number" ||
+              isNaN(convertedNumber14) ||
+              !isFinite(convertedNumber14) ||
+              !Number.isInteger(convertedNumber14)
             ) {
               errorMap[`$.validator.max`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber0 < -2147483647) {
+            } else if (convertedNumber14 < -2147483647) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber0 > 2147483647) {
+            } else if (convertedNumber14 > 2147483647) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              result["validator"]["max"] = convertedNumber0;
+              result["validator"]["max"] = convertedNumber14;
             }
           }
           if (
@@ -9330,22 +9338,22 @@ export function validateExperimentalStringDefinition(value) {
             result["validator"]["pattern"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["validator"]["pattern"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString15 = value["validator"]["pattern"];
+            if (typeof convertedString15 !== "string") {
               errorMap[`$.validator.pattern`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString15.length === 0) {
                 result["validator"]["pattern"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString15.length < 1) {
                   errorMap[`$.validator.pattern`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["validator"]["pattern"] = convertedString0;
+                  result["validator"]["pattern"] = convertedString15;
                 }
               }
             }
@@ -9382,58 +9390,60 @@ export function validateExperimentalStringDefinition(value) {
             result["validator"]["disallowedCharacters"] = undefined;
           } else {
             /** @type {ValidatorErrorMap} */
-            const intermediateErrorMap1 = {};
+            const intermediateErrorMap18 = {};
             /** @type {any[]} */
-            let intermediateResult1 = [];
+            let intermediateResult18 = [];
             /** @type {any|any[]} */
-            let intermediateValue1 = value["validator"]["disallowedCharacters"];
+            let intermediateValue18 =
+              value["validator"]["disallowedCharacters"];
 
-            if (!Array.isArray(intermediateValue1)) {
-              intermediateValue1 = [intermediateValue1];
+            if (!Array.isArray(intermediateValue18)) {
+              intermediateValue18 = [intermediateValue18];
             }
             result["validator"]["disallowedCharacters"] = Array.from({
-              length: intermediateValue1.length,
+              length: intermediateValue18.length,
             });
-            for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+            for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
               if (
-                intermediateValue1[i1] === null ||
-                intermediateValue1[i1] === undefined
+                intermediateValue18[i18] === null ||
+                intermediateValue18[i18] === undefined
               ) {
-                intermediateErrorMap1[`$.${i1}`] = {
+                intermediateErrorMap18[`$.${i18}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 /** @type {string} */
-                let convertedString1 = intermediateValue1[i1];
-                if (typeof convertedString1 !== "string") {
-                  intermediateErrorMap1[`$.${i1}`] = {
+                let convertedString18 = intermediateValue18[i18];
+                if (typeof convertedString18 !== "string") {
+                  intermediateErrorMap18[`$.${i18}`] = {
                     key: "validator.string",
                   };
                 } else {
-                  if (convertedString1.length < 1) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                  if (convertedString18.length < 1) {
+                    intermediateErrorMap18[`$.${i18}`] = {
                       key: "validator.length",
                       minLength: 1,
                     };
-                  } else if (convertedString1.length > 2) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                  } else if (convertedString18.length > 2) {
+                    intermediateErrorMap18[`$.${i18}`] = {
                       key: "validator.length",
                       maxLength: 2,
                     };
                   } else {
-                    intermediateResult1[i1] = convertedString1;
+                    intermediateResult18[i18] = convertedString18;
                   }
                 }
               }
             }
-            if (Object.keys(intermediateErrorMap1).length) {
-              for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            if (Object.keys(intermediateErrorMap18).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap18)) {
                 errorMap[
                   `$.validator.disallowedCharacters${errorKey.substring(1)}`
-                ] = intermediateErrorMap1[errorKey];
+                ] = intermediateErrorMap18[errorKey];
               }
             } else {
-              result["validator"]["disallowedCharacters"] = intermediateResult1;
+              result["validator"]["disallowedCharacters"] =
+                intermediateResult18;
             }
           }
         }
@@ -9442,50 +9452,50 @@ export function validateExperimentalStringDefinition(value) {
         result["oneOf"] = undefined;
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap10 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult10 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["oneOf"];
+        let intermediateValue10 = value["oneOf"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue10)) {
+          intermediateValue10 = [intermediateValue10];
         }
-        result["oneOf"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["oneOf"] = Array.from({ length: intermediateValue10.length });
+        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue10[i10] === null ||
+            intermediateValue10[i10] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap10[`$.${i10}`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString1 = intermediateValue1[i1];
-            if (typeof convertedString1 !== "string") {
-              intermediateErrorMap1[`$.${i1}`] = {
+            let convertedString10 = intermediateValue10[i10];
+            if (typeof convertedString10 !== "string") {
+              intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString1.length < 1) {
-                intermediateErrorMap1[`$.${i1}`] = {
+              if (convertedString10.length < 1) {
+                intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult1[i1] = convertedString1;
+                intermediateResult10[i10] = convertedString10;
               }
             }
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap10).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap10)) {
             errorMap[`$.oneOf${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap10[errorKey];
           }
         } else {
-          result["oneOf"] = intermediateResult1;
+          result["oneOf"] = intermediateResult10;
         }
       }
     }
@@ -9526,25 +9536,25 @@ export function validateExperimentalUuidDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "uuid") {
+          } else if (convertedString1 !== "uuid") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["uuid"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -9552,22 +9562,22 @@ export function validateExperimentalUuidDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -9576,22 +9586,22 @@ export function validateExperimentalUuidDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -9600,17 +9610,17 @@ export function validateExperimentalUuidDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -9643,139 +9653,139 @@ export function validateExperimentalUuidDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -9953,25 +9963,25 @@ export function validateExperimentalGenerateOptions(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["targetLanguage"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["targetLanguage"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.targetLanguage`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.targetLanguage`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "js" && convertedString0 !== "ts") {
+          } else if (convertedString1 !== "js" && convertedString1 !== "ts") {
             errorMap[`$.targetLanguage`] = {
               key: "validator.oneOf",
               allowedValues: ["js", "ts"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["targetLanguage"] = convertedString0;
+            result["targetLanguage"] = convertedString1;
           }
         }
       }
@@ -9982,22 +9992,22 @@ export function validateExperimentalGenerateOptions(value) {
         result["outputDirectory"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["outputDirectory"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["outputDirectory"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.outputDirectory`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["outputDirectory"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.outputDirectory`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["outputDirectory"] = convertedString0;
+              result["outputDirectory"] = convertedString2;
             }
           }
         }
@@ -10018,7 +10028,7 @@ export function validateExperimentalGenerateOptions(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys0 = new Set([
+          const knownKeys3 = new Set([
             "structure",
             "openApi",
             "router",
@@ -10029,13 +10039,13 @@ export function validateExperimentalGenerateOptions(value) {
           ]);
           for (const key of Object.keys(value["generators"])) {
             if (
-              !knownKeys0.has(key) &&
+              !knownKeys3.has(key) &&
               value["generators"][key] !== null &&
               value["generators"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys0];
+              const expectedKeys = [...knownKeys3];
               const foundKeys = Object.keys(value["generators"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys3.has(it));
               errorMap[`$.generators`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -10064,19 +10074,19 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set([]);
+              const knownKeys4 = new Set([]);
               for (const key of Object.keys(value["generators"]["structure"])) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys4.has(key) &&
                   value["generators"]["structure"][key] !== null &&
                   value["generators"]["structure"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys4];
                   const foundKeys = Object.keys(
                     value["generators"]["structure"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys4.has(it),
                   );
                   errorMap[`$.generators.structure`] = {
                     key: "validator.keys",
@@ -10107,20 +10117,20 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set([
+              const knownKeys5 = new Set([
                 "openApiExtensions",
                 "openApiRouteExtensions",
               ]);
               for (const key of Object.keys(value["generators"]["openApi"])) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys5.has(key) &&
                   value["generators"]["openApi"][key] !== null &&
                   value["generators"]["openApi"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys5];
                   const foundKeys = Object.keys(value["generators"]["openApi"]);
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys5.has(it),
                   );
                   errorMap[`$.generators.openApi`] = {
                     key: "validator.keys",
@@ -10157,7 +10167,7 @@ export function validateExperimentalGenerateOptions(value) {
                   };
                 } else {
                   /** @type {Set<string>} */
-                  const knownKeys0 = new Set([
+                  const knownKeys6 = new Set([
                     "version",
                     "title",
                     "description",
@@ -10166,7 +10176,7 @@ export function validateExperimentalGenerateOptions(value) {
                     value["generators"]["openApi"]["openApiExtensions"],
                   )) {
                     if (
-                      !knownKeys0.has(key) &&
+                      !knownKeys6.has(key) &&
                       value["generators"]["openApi"]["openApiExtensions"][
                         key
                       ] !== null &&
@@ -10174,12 +10184,12 @@ export function validateExperimentalGenerateOptions(value) {
                         key
                       ] !== undefined
                     ) {
-                      const expectedKeys = [...knownKeys0];
+                      const expectedKeys = [...knownKeys6];
                       const foundKeys = Object.keys(
                         value["generators"]["openApi"]["openApiExtensions"],
                       );
                       const unknownKeys = foundKeys.filter(
-                        (it) => !knownKeys0.has(it),
+                        (it) => !knownKeys6.has(it),
                       );
                       errorMap[`$.generators.openApi.openApiExtensions`] = {
                         key: "validator.keys",
@@ -10206,23 +10216,23 @@ export function validateExperimentalGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString0 =
+                    let convertedString7 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "version"
                       ];
-                    if (typeof convertedString0 !== "string") {
+                    if (typeof convertedString7 !== "string") {
                       errorMap[
                         `$.generators.openApi.openApiExtensions.version`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString0.length === 0) {
+                      if (convertedString7.length === 0) {
                         result["generators"]["openApi"]["openApiExtensions"][
                           "version"
                         ] = undefined;
                       } else {
-                        if (convertedString0.length < 1) {
+                        if (convertedString7.length < 1) {
                           errorMap[
                             `$.generators.openApi.openApiExtensions.version`
                           ] = {
@@ -10232,7 +10242,7 @@ export function validateExperimentalGenerateOptions(value) {
                         } else {
                           result["generators"]["openApi"]["openApiExtensions"][
                             "version"
-                          ] = convertedString0;
+                          ] = convertedString7;
                         }
                       }
                     }
@@ -10250,22 +10260,22 @@ export function validateExperimentalGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString0 =
+                    let convertedString8 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "title"
                       ];
-                    if (typeof convertedString0 !== "string") {
+                    if (typeof convertedString8 !== "string") {
                       errorMap[`$.generators.openApi.openApiExtensions.title`] =
                         {
                           key: "validator.string",
                         };
                     } else {
-                      if (convertedString0.length === 0) {
+                      if (convertedString8.length === 0) {
                         result["generators"]["openApi"]["openApiExtensions"][
                           "title"
                         ] = undefined;
                       } else {
-                        if (convertedString0.length < 1) {
+                        if (convertedString8.length < 1) {
                           errorMap[
                             `$.generators.openApi.openApiExtensions.title`
                           ] = {
@@ -10275,7 +10285,7 @@ export function validateExperimentalGenerateOptions(value) {
                         } else {
                           result["generators"]["openApi"]["openApiExtensions"][
                             "title"
-                          ] = convertedString0;
+                          ] = convertedString8;
                         }
                       }
                     }
@@ -10293,23 +10303,23 @@ export function validateExperimentalGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString0 =
+                    let convertedString9 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "description"
                       ];
-                    if (typeof convertedString0 !== "string") {
+                    if (typeof convertedString9 !== "string") {
                       errorMap[
                         `$.generators.openApi.openApiExtensions.description`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString0.length === 0) {
+                      if (convertedString9.length === 0) {
                         result["generators"]["openApi"]["openApiExtensions"][
                           "description"
                         ] = undefined;
                       } else {
-                        if (convertedString0.length < 1) {
+                        if (convertedString9.length < 1) {
                           errorMap[
                             `$.generators.openApi.openApiExtensions.description`
                           ] = {
@@ -10319,7 +10329,7 @@ export function validateExperimentalGenerateOptions(value) {
                         } else {
                           result["generators"]["openApi"]["openApiExtensions"][
                             "description"
-                          ] = convertedString0;
+                          ] = convertedString9;
                         }
                       }
                     }
@@ -10348,47 +10358,47 @@ export function validateExperimentalGenerateOptions(value) {
                 } else {
                   result["generators"]["openApi"]["openApiRouteExtensions"] =
                     {};
-                  for (let genericKeyInput0 of Object.keys(
+                  for (let genericKeyInput7 of Object.keys(
                     value["generators"]["openApi"]["openApiRouteExtensions"],
                   )) {
                     /** @type {any} */
-                    let genericKeyResult1 = undefined;
+                    let genericKeyResult8 = undefined;
                     /** @type {ValidatorErrorMap} */
-                    const genericKeyErrorMap2 = {};
+                    const genericKeyErrorMap9 = {};
                     if (
-                      genericKeyInput0 === null ||
-                      genericKeyInput0 === undefined
+                      genericKeyInput7 === null ||
+                      genericKeyInput7 === undefined
                     ) {
-                      genericKeyErrorMap2[`$`] = {
+                      genericKeyErrorMap9[`$`] = {
                         key: "validator.undefined",
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString3 = genericKeyInput0;
-                      if (typeof convertedString3 !== "string") {
-                        genericKeyErrorMap2[`$`] = {
+                      let convertedString10 = genericKeyInput7;
+                      if (typeof convertedString10 !== "string") {
+                        genericKeyErrorMap9[`$`] = {
                           key: "validator.string",
                         };
                       } else {
-                        if (convertedString3.length < 1) {
-                          genericKeyErrorMap2[`$`] = {
+                        if (convertedString10.length < 1) {
+                          genericKeyErrorMap9[`$`] = {
                             key: "validator.length",
                             minLength: 1,
                           };
                         } else {
-                          genericKeyResult1 = convertedString3;
+                          genericKeyResult8 = convertedString10;
                         }
                       }
                     }
-                    if (Object.keys(genericKeyErrorMap2).length !== 0) {
+                    if (Object.keys(genericKeyErrorMap9).length !== 0) {
                       if (
                         errorMap[`$.generators.openApi.openApiRouteExtensions`]
                       ) {
                         errorMap[
                           `$.generators.openApi.openApiRouteExtensions`
                         ].inputs.push({
-                          key: genericKeyInput0,
-                          errors: genericKeyErrorMap2,
+                          key: genericKeyInput7,
+                          errors: genericKeyErrorMap9,
                         });
                       } else {
                         errorMap[
@@ -10397,8 +10407,8 @@ export function validateExperimentalGenerateOptions(value) {
                           key: "validator.generic",
                           inputs: [
                             {
-                              key: genericKeyInput0,
-                              errors: genericKeyErrorMap2,
+                              key: genericKeyInput7,
+                              errors: genericKeyErrorMap9,
                             },
                           ],
                         };
@@ -10407,23 +10417,23 @@ export function validateExperimentalGenerateOptions(value) {
                       if (
                         value["generators"]["openApi"][
                           "openApiRouteExtensions"
-                        ][genericKeyResult1] === null ||
+                        ][genericKeyResult8] === null ||
                         value["generators"]["openApi"][
                           "openApiRouteExtensions"
-                        ][genericKeyResult1] === undefined
+                        ][genericKeyResult8] === undefined
                       ) {
                         errorMap[
-                          `$.generators.openApi.openApiRouteExtensions.${genericKeyResult1}`
+                          `$.generators.openApi.openApiRouteExtensions.${genericKeyResult8}`
                         ] = {
                           key: "validator.undefined",
                         };
                       } else {
                         result["generators"]["openApi"][
                           "openApiRouteExtensions"
-                        ][genericKeyResult1] =
+                        ][genericKeyResult8] =
                           value["generators"]["openApi"][
                             "openApiRouteExtensions"
-                          ][genericKeyResult1];
+                          ][genericKeyResult8];
                       }
                     }
                   }
@@ -10448,17 +10458,17 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target", "exposeApiStructure"]);
+              const knownKeys6 = new Set(["target", "exposeApiStructure"]);
               for (const key of Object.keys(value["generators"]["router"])) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys6.has(key) &&
                   value["generators"]["router"][key] !== null &&
                   value["generators"]["router"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys6];
                   const foundKeys = Object.keys(value["generators"]["router"]);
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys6.has(it),
                   );
                   errorMap[`$.generators.router`] = {
                     key: "validator.keys",
@@ -10479,52 +10489,52 @@ export function validateExperimentalGenerateOptions(value) {
                   key: "validator.undefined",
                 };
               } else {
-                let hasAnyOfMatch0 = false;
+                let hasAnyOfMatch7 = false;
                 errorMap[`$.generators.router.target`] = {
                   key: "validator.anyOf",
                   errors: [],
                 };
-                if (!hasAnyOfMatch0) {
+                if (!hasAnyOfMatch7) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap2 = {};
+                  const intermediateErrorMap9 = {};
                   /** @type {any} */
-                  let intermediateResult2 = undefined;
+                  let intermediateResult9 = undefined;
                   /** @type {any} */
-                  let intermediateValue2 =
+                  let intermediateValue9 =
                     value["generators"]["router"]["target"];
 
                   if (
-                    intermediateValue2 === null ||
-                    intermediateValue2 === undefined
+                    intermediateValue9 === null ||
+                    intermediateValue9 === undefined
                   ) {
-                    intermediateErrorMap2[`$`] = {
+                    intermediateErrorMap9[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     if (
-                      typeof intermediateValue2 !== "object" ||
-                      Array.isArray(intermediateValue2)
+                      typeof intermediateValue9 !== "object" ||
+                      Array.isArray(intermediateValue9)
                     ) {
-                      intermediateErrorMap2[`$`] = {
+                      intermediateErrorMap9[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue2,
-                        foundType: typeof intermediateValue2,
+                        value: intermediateValue9,
+                        foundType: typeof intermediateValue9,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys2 = new Set(["library"]);
-                      for (const key of Object.keys(intermediateValue2)) {
+                      const knownKeys9 = new Set(["library"]);
+                      for (const key of Object.keys(intermediateValue9)) {
                         if (
-                          !knownKeys2.has(key) &&
-                          intermediateValue2[key] !== null &&
-                          intermediateValue2[key] !== undefined
+                          !knownKeys9.has(key) &&
+                          intermediateValue9[key] !== null &&
+                          intermediateValue9[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys2];
-                          const foundKeys = Object.keys(intermediateValue2);
+                          const expectedKeys = [...knownKeys9];
+                          const foundKeys = Object.keys(intermediateValue9);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys2.has(it),
+                            (it) => !knownKeys9.has(it),
                           );
-                          intermediateErrorMap2[`$`] = {
+                          intermediateErrorMap9[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -10533,50 +10543,50 @@ export function validateExperimentalGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult2 = Object.create(null);
+                      intermediateResult9 = Object.create(null);
 
                       if (
-                        intermediateValue2["library"] === null ||
-                        intermediateValue2["library"] === undefined
+                        intermediateValue9["library"] === null ||
+                        intermediateValue9["library"] === undefined
                       ) {
-                        intermediateErrorMap2[`$.library`] = {
+                        intermediateErrorMap9[`$.library`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString2 = intermediateValue2["library"];
-                        if (typeof convertedString2 !== "string") {
-                          intermediateErrorMap2[`$.library`] = {
+                        let convertedString10 = intermediateValue9["library"];
+                        if (typeof convertedString10 !== "string") {
+                          intermediateErrorMap9[`$.library`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString2.length < 1) {
-                            intermediateErrorMap2[`$.library`] = {
+                          if (convertedString10.length < 1) {
+                            intermediateErrorMap9[`$.library`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
-                          } else if (convertedString2 !== "koa") {
-                            intermediateErrorMap2[`$.library`] = {
+                          } else if (convertedString10 !== "koa") {
+                            intermediateErrorMap9[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["koa"],
-                              foundValue: convertedString2,
+                              foundValue: convertedString10,
                             };
                           } else {
-                            intermediateResult2["library"] = convertedString2;
+                            intermediateResult9["library"] = convertedString10;
                           }
                         }
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap2).length > 0) {
+                  if (Object.keys(intermediateErrorMap9).length > 0) {
                     errorMap[`$.generators.router.target`].errors.push(
-                      intermediateErrorMap2,
+                      intermediateErrorMap9,
                     );
                   } else {
-                    hasAnyOfMatch0 = true;
+                    hasAnyOfMatch7 = true;
                     delete errorMap[`$.generators.router.target`];
                     result["generators"]["router"]["target"] =
-                      intermediateResult2;
+                      intermediateResult9;
                   }
                 }
               }
@@ -10629,19 +10639,19 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target", "includeEntityDiagram"]);
+              const knownKeys7 = new Set(["target", "includeEntityDiagram"]);
               for (const key of Object.keys(value["generators"]["database"])) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys7.has(key) &&
                   value["generators"]["database"][key] !== null &&
                   value["generators"]["database"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys7];
                   const foundKeys = Object.keys(
                     value["generators"]["database"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys7.has(it),
                   );
                   errorMap[`$.generators.database`] = {
                     key: "validator.keys",
@@ -10662,52 +10672,52 @@ export function validateExperimentalGenerateOptions(value) {
                   key: "validator.undefined",
                 };
               } else {
-                let hasAnyOfMatch0 = false;
+                let hasAnyOfMatch8 = false;
                 errorMap[`$.generators.database.target`] = {
                   key: "validator.anyOf",
                   errors: [],
                 };
-                if (!hasAnyOfMatch0) {
+                if (!hasAnyOfMatch8) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap2 = {};
+                  const intermediateErrorMap10 = {};
                   /** @type {any} */
-                  let intermediateResult2 = undefined;
+                  let intermediateResult10 = undefined;
                   /** @type {any} */
-                  let intermediateValue2 =
+                  let intermediateValue10 =
                     value["generators"]["database"]["target"];
 
                   if (
-                    intermediateValue2 === null ||
-                    intermediateValue2 === undefined
+                    intermediateValue10 === null ||
+                    intermediateValue10 === undefined
                   ) {
-                    intermediateErrorMap2[`$`] = {
+                    intermediateErrorMap10[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     if (
-                      typeof intermediateValue2 !== "object" ||
-                      Array.isArray(intermediateValue2)
+                      typeof intermediateValue10 !== "object" ||
+                      Array.isArray(intermediateValue10)
                     ) {
-                      intermediateErrorMap2[`$`] = {
+                      intermediateErrorMap10[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue2,
-                        foundType: typeof intermediateValue2,
+                        value: intermediateValue10,
+                        foundType: typeof intermediateValue10,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys2 = new Set(["dialect", "includeDDL"]);
-                      for (const key of Object.keys(intermediateValue2)) {
+                      const knownKeys10 = new Set(["dialect", "includeDDL"]);
+                      for (const key of Object.keys(intermediateValue10)) {
                         if (
-                          !knownKeys2.has(key) &&
-                          intermediateValue2[key] !== null &&
-                          intermediateValue2[key] !== undefined
+                          !knownKeys10.has(key) &&
+                          intermediateValue10[key] !== null &&
+                          intermediateValue10[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys2];
-                          const foundKeys = Object.keys(intermediateValue2);
+                          const expectedKeys = [...knownKeys10];
+                          const foundKeys = Object.keys(intermediateValue10);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys2.has(it),
+                            (it) => !knownKeys10.has(it),
                           );
-                          intermediateErrorMap2[`$`] = {
+                          intermediateErrorMap10[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -10716,59 +10726,59 @@ export function validateExperimentalGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult2 = Object.create(null);
+                      intermediateResult10 = Object.create(null);
 
                       if (
-                        intermediateValue2["dialect"] === null ||
-                        intermediateValue2["dialect"] === undefined
+                        intermediateValue10["dialect"] === null ||
+                        intermediateValue10["dialect"] === undefined
                       ) {
-                        intermediateErrorMap2[`$.dialect`] = {
+                        intermediateErrorMap10[`$.dialect`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString2 = intermediateValue2["dialect"];
-                        if (typeof convertedString2 !== "string") {
-                          intermediateErrorMap2[`$.dialect`] = {
+                        let convertedString11 = intermediateValue10["dialect"];
+                        if (typeof convertedString11 !== "string") {
+                          intermediateErrorMap10[`$.dialect`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString2.length < 1) {
-                            intermediateErrorMap2[`$.dialect`] = {
+                          if (convertedString11.length < 1) {
+                            intermediateErrorMap10[`$.dialect`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
-                          } else if (convertedString2 !== "postgres") {
-                            intermediateErrorMap2[`$.dialect`] = {
+                          } else if (convertedString11 !== "postgres") {
+                            intermediateErrorMap10[`$.dialect`] = {
                               key: "validator.oneOf",
                               allowedValues: ["postgres"],
-                              foundValue: convertedString2,
+                              foundValue: convertedString11,
                             };
                           } else {
-                            intermediateResult2["dialect"] = convertedString2;
+                            intermediateResult10["dialect"] = convertedString11;
                           }
                         }
                       }
                       if (
-                        intermediateValue2["includeDDL"] === null ||
-                        intermediateValue2["includeDDL"] === undefined
+                        intermediateValue10["includeDDL"] === null ||
+                        intermediateValue10["includeDDL"] === undefined
                       ) {
-                        intermediateResult2["includeDDL"] = false;
+                        intermediateResult10["includeDDL"] = false;
                       } else {
                         if (
-                          intermediateValue2["includeDDL"] === true ||
-                          intermediateValue2["includeDDL"] === "true" ||
-                          intermediateValue2["includeDDL"] === 1
+                          intermediateValue10["includeDDL"] === true ||
+                          intermediateValue10["includeDDL"] === "true" ||
+                          intermediateValue10["includeDDL"] === 1
                         ) {
-                          intermediateResult2["includeDDL"] = true;
+                          intermediateResult10["includeDDL"] = true;
                         } else if (
-                          intermediateValue2["includeDDL"] === false ||
-                          intermediateValue2["includeDDL"] === "false" ||
-                          intermediateValue2["includeDDL"] === 0
+                          intermediateValue10["includeDDL"] === false ||
+                          intermediateValue10["includeDDL"] === "false" ||
+                          intermediateValue10["includeDDL"] === 0
                         ) {
-                          intermediateResult2["includeDDL"] = false;
+                          intermediateResult10["includeDDL"] = false;
                         } else {
-                          intermediateErrorMap2[`$.includeDDL`] = {
+                          intermediateErrorMap10[`$.includeDDL`] = {
                             key: "validator.type",
                             expectedType: "boolean",
                           };
@@ -10776,15 +10786,15 @@ export function validateExperimentalGenerateOptions(value) {
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap2).length > 0) {
+                  if (Object.keys(intermediateErrorMap10).length > 0) {
                     errorMap[`$.generators.database.target`].errors.push(
-                      intermediateErrorMap2,
+                      intermediateErrorMap10,
                     );
                   } else {
-                    hasAnyOfMatch0 = true;
+                    hasAnyOfMatch8 = true;
                     delete errorMap[`$.generators.database.target`];
                     result["generators"]["database"]["target"] =
-                      intermediateResult2;
+                      intermediateResult10;
                   }
                 }
               }
@@ -10841,21 +10851,21 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set(["includeBaseTypes"]);
+              const knownKeys8 = new Set(["includeBaseTypes"]);
               for (const key of Object.keys(
                 value["generators"]["validators"],
               )) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys8.has(key) &&
                   value["generators"]["validators"][key] !== null &&
                   value["generators"]["validators"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys8];
                   const foundKeys = Object.keys(
                     value["generators"]["validators"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys8.has(it),
                   );
                   errorMap[`$.generators.validators`] = {
                     key: "validator.keys",
@@ -10919,19 +10929,19 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set(["target", "responseValidation"]);
+              const knownKeys9 = new Set(["target", "responseValidation"]);
               for (const key of Object.keys(value["generators"]["apiClient"])) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys9.has(key) &&
                   value["generators"]["apiClient"][key] !== null &&
                   value["generators"]["apiClient"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys9];
                   const foundKeys = Object.keys(
                     value["generators"]["apiClient"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys9.has(it),
                   );
                   errorMap[`$.generators.apiClient`] = {
                     key: "validator.keys",
@@ -10952,57 +10962,57 @@ export function validateExperimentalGenerateOptions(value) {
                   key: "validator.undefined",
                 };
               } else {
-                let hasAnyOfMatch0 = false;
+                let hasAnyOfMatch10 = false;
                 errorMap[`$.generators.apiClient.target`] = {
                   key: "validator.anyOf",
                   errors: [],
                 };
-                if (!hasAnyOfMatch0) {
+                if (!hasAnyOfMatch10) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap2 = {};
+                  const intermediateErrorMap12 = {};
                   /** @type {any} */
-                  let intermediateResult2 = undefined;
+                  let intermediateResult12 = undefined;
                   /** @type {any} */
-                  let intermediateValue2 =
+                  let intermediateValue12 =
                     value["generators"]["apiClient"]["target"];
 
                   if (
-                    intermediateValue2 === null ||
-                    intermediateValue2 === undefined
+                    intermediateValue12 === null ||
+                    intermediateValue12 === undefined
                   ) {
-                    intermediateErrorMap2[`$`] = {
+                    intermediateErrorMap12[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
                     if (
-                      typeof intermediateValue2 !== "object" ||
-                      Array.isArray(intermediateValue2)
+                      typeof intermediateValue12 !== "object" ||
+                      Array.isArray(intermediateValue12)
                     ) {
-                      intermediateErrorMap2[`$`] = {
+                      intermediateErrorMap12[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue2,
-                        foundType: typeof intermediateValue2,
+                        value: intermediateValue12,
+                        foundType: typeof intermediateValue12,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys2 = new Set([
+                      const knownKeys12 = new Set([
                         "library",
                         "targetRuntime",
                         "includeWrapper",
                         "globalClient",
                       ]);
-                      for (const key of Object.keys(intermediateValue2)) {
+                      for (const key of Object.keys(intermediateValue12)) {
                         if (
-                          !knownKeys2.has(key) &&
-                          intermediateValue2[key] !== null &&
-                          intermediateValue2[key] !== undefined
+                          !knownKeys12.has(key) &&
+                          intermediateValue12[key] !== null &&
+                          intermediateValue12[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys2];
-                          const foundKeys = Object.keys(intermediateValue2);
+                          const expectedKeys = [...knownKeys12];
+                          const foundKeys = Object.keys(intermediateValue12);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys2.has(it),
+                            (it) => !knownKeys12.has(it),
                           );
-                          intermediateErrorMap2[`$`] = {
+                          intermediateErrorMap12[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -11011,135 +11021,135 @@ export function validateExperimentalGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult2 = Object.create(null);
+                      intermediateResult12 = Object.create(null);
 
                       if (
-                        intermediateValue2["library"] === null ||
-                        intermediateValue2["library"] === undefined
+                        intermediateValue12["library"] === null ||
+                        intermediateValue12["library"] === undefined
                       ) {
-                        intermediateErrorMap2[`$.library`] = {
+                        intermediateErrorMap12[`$.library`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString2 = intermediateValue2["library"];
-                        if (typeof convertedString2 !== "string") {
-                          intermediateErrorMap2[`$.library`] = {
+                        let convertedString13 = intermediateValue12["library"];
+                        if (typeof convertedString13 !== "string") {
+                          intermediateErrorMap12[`$.library`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString2.length < 1) {
-                            intermediateErrorMap2[`$.library`] = {
+                          if (convertedString13.length < 1) {
+                            intermediateErrorMap12[`$.library`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
-                          } else if (convertedString2 !== "axios") {
-                            intermediateErrorMap2[`$.library`] = {
+                          } else if (convertedString13 !== "axios") {
+                            intermediateErrorMap12[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["axios"],
-                              foundValue: convertedString2,
+                              foundValue: convertedString13,
                             };
                           } else {
-                            intermediateResult2["library"] = convertedString2;
+                            intermediateResult12["library"] = convertedString13;
                           }
                         }
                       }
                       if (
-                        intermediateValue2["targetRuntime"] === null ||
-                        intermediateValue2["targetRuntime"] === undefined
+                        intermediateValue12["targetRuntime"] === null ||
+                        intermediateValue12["targetRuntime"] === undefined
                       ) {
-                        intermediateErrorMap2[`$.targetRuntime`] = {
+                        intermediateErrorMap12[`$.targetRuntime`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString2 =
-                          intermediateValue2["targetRuntime"];
-                        if (typeof convertedString2 !== "string") {
-                          intermediateErrorMap2[`$.targetRuntime`] = {
+                        let convertedString14 =
+                          intermediateValue12["targetRuntime"];
+                        if (typeof convertedString14 !== "string") {
+                          intermediateErrorMap12[`$.targetRuntime`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString2.length < 1) {
-                            intermediateErrorMap2[`$.targetRuntime`] = {
+                          if (convertedString14.length < 1) {
+                            intermediateErrorMap12[`$.targetRuntime`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
                           } else if (
-                            convertedString2 !== "node.js" &&
-                            convertedString2 !== "browser" &&
-                            convertedString2 !== "react-native"
+                            convertedString14 !== "node.js" &&
+                            convertedString14 !== "browser" &&
+                            convertedString14 !== "react-native"
                           ) {
-                            intermediateErrorMap2[`$.targetRuntime`] = {
+                            intermediateErrorMap12[`$.targetRuntime`] = {
                               key: "validator.oneOf",
                               allowedValues: [
                                 "node.js",
                                 "browser",
                                 "react-native",
                               ],
-                              foundValue: convertedString2,
+                              foundValue: convertedString14,
                             };
                           } else {
-                            intermediateResult2["targetRuntime"] =
-                              convertedString2;
+                            intermediateResult12["targetRuntime"] =
+                              convertedString14;
                           }
                         }
                       }
                       if (
-                        intermediateValue2["includeWrapper"] === null ||
-                        intermediateValue2["includeWrapper"] === undefined
+                        intermediateValue12["includeWrapper"] === null ||
+                        intermediateValue12["includeWrapper"] === undefined
                       ) {
-                        intermediateResult2["includeWrapper"] = undefined;
+                        intermediateResult12["includeWrapper"] = undefined;
                       } else {
                         /** @type {string} */
-                        let convertedString2 =
-                          intermediateValue2["includeWrapper"];
-                        if (typeof convertedString2 !== "string") {
-                          intermediateErrorMap2[`$.includeWrapper`] = {
+                        let convertedString15 =
+                          intermediateValue12["includeWrapper"];
+                        if (typeof convertedString15 !== "string") {
+                          intermediateErrorMap12[`$.includeWrapper`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString2.length === 0) {
-                            intermediateResult2["includeWrapper"] = undefined;
+                          if (convertedString15.length === 0) {
+                            intermediateResult12["includeWrapper"] = undefined;
                           } else {
-                            if (convertedString2.length < 1) {
-                              intermediateErrorMap2[`$.includeWrapper`] = {
+                            if (convertedString15.length < 1) {
+                              intermediateErrorMap12[`$.includeWrapper`] = {
                                 key: "validator.length",
                                 minLength: 1,
                               };
-                            } else if (convertedString2 !== "react-query") {
-                              intermediateErrorMap2[`$.includeWrapper`] = {
+                            } else if (convertedString15 !== "react-query") {
+                              intermediateErrorMap12[`$.includeWrapper`] = {
                                 key: "validator.oneOf",
                                 allowedValues: ["react-query"],
-                                foundValue: convertedString2,
+                                foundValue: convertedString15,
                               };
                             } else {
-                              intermediateResult2["includeWrapper"] =
-                                convertedString2;
+                              intermediateResult12["includeWrapper"] =
+                                convertedString15;
                             }
                           }
                         }
                       }
                       if (
-                        intermediateValue2["globalClient"] === null ||
-                        intermediateValue2["globalClient"] === undefined
+                        intermediateValue12["globalClient"] === null ||
+                        intermediateValue12["globalClient"] === undefined
                       ) {
-                        intermediateResult2["globalClient"] = false;
+                        intermediateResult12["globalClient"] = false;
                       } else {
                         if (
-                          intermediateValue2["globalClient"] === true ||
-                          intermediateValue2["globalClient"] === "true" ||
-                          intermediateValue2["globalClient"] === 1
+                          intermediateValue12["globalClient"] === true ||
+                          intermediateValue12["globalClient"] === "true" ||
+                          intermediateValue12["globalClient"] === 1
                         ) {
-                          intermediateResult2["globalClient"] = true;
+                          intermediateResult12["globalClient"] = true;
                         } else if (
-                          intermediateValue2["globalClient"] === false ||
-                          intermediateValue2["globalClient"] === "false" ||
-                          intermediateValue2["globalClient"] === 0
+                          intermediateValue12["globalClient"] === false ||
+                          intermediateValue12["globalClient"] === "false" ||
+                          intermediateValue12["globalClient"] === 0
                         ) {
-                          intermediateResult2["globalClient"] = false;
+                          intermediateResult12["globalClient"] = false;
                         } else {
-                          intermediateErrorMap2[`$.globalClient`] = {
+                          intermediateErrorMap12[`$.globalClient`] = {
                             key: "validator.type",
                             expectedType: "boolean",
                           };
@@ -11147,15 +11157,15 @@ export function validateExperimentalGenerateOptions(value) {
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap2).length > 0) {
+                  if (Object.keys(intermediateErrorMap12).length > 0) {
                     errorMap[`$.generators.apiClient.target`].errors.push(
-                      intermediateErrorMap2,
+                      intermediateErrorMap12,
                     );
                   } else {
-                    hasAnyOfMatch0 = true;
+                    hasAnyOfMatch10 = true;
                     delete errorMap[`$.generators.apiClient.target`];
                     result["generators"]["apiClient"]["target"] =
-                      intermediateResult2;
+                      intermediateResult12;
                   }
                 }
               }
@@ -11262,20 +11272,20 @@ export function validateExperimentalGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys0 = new Set([
+              const knownKeys10 = new Set([
                 "includeBaseTypes",
                 "declareGlobalTypes",
               ]);
               for (const key of Object.keys(value["generators"]["types"])) {
                 if (
-                  !knownKeys0.has(key) &&
+                  !knownKeys10.has(key) &&
                   value["generators"]["types"][key] !== null &&
                   value["generators"]["types"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys0];
+                  const expectedKeys = [...knownKeys10];
                   const foundKeys = Object.keys(value["generators"]["types"]);
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys0.has(it),
+                    (it) => !knownKeys10.has(it),
                   );
                   errorMap[`$.generators.types`] = {
                     key: "validator.keys",
@@ -11620,25 +11630,25 @@ export function validateExperimentalRouteDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "route") {
+          } else if (convertedString1 !== "route") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["route"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -11646,22 +11656,22 @@ export function validateExperimentalRouteDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["group"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["group"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString2.length === 0) {
             result["group"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString2.length < 1) {
               errorMap[`$.group`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["group"] = convertedString0;
+              result["group"] = convertedString2;
             }
           }
         }
@@ -11670,22 +11680,22 @@ export function validateExperimentalRouteDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["name"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["name"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.name`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["name"] = convertedString0;
+              result["name"] = convertedString3;
             }
           }
         }
@@ -11694,17 +11704,17 @@ export function validateExperimentalRouteDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString0 = value["docString"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["docString"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString4.length === 0) {
             result["docString"] = "";
           } else {
             {
-              result["docString"] = convertedString0;
+              result["docString"] = convertedString4;
             }
           }
         }
@@ -11737,139 +11747,139 @@ export function validateExperimentalRouteDefinition(value) {
       ) {
         result["defaultValue"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch6 = false;
         errorMap[`$.defaultValue`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2;
-            if (typeof convertedString2 !== "string") {
-              intermediateErrorMap2[`$`] = {
+            let convertedString8 = intermediateValue8;
+            if (typeof convertedString8 !== "string") {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
-                intermediateErrorMap2[`$`] = {
+              if (convertedString8.length < 1) {
+                intermediateErrorMap8[`$`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2 = convertedString2;
+                intermediateResult8 = convertedString8;
               }
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              intermediateValue2 === true ||
-              intermediateValue2 === "true" ||
-              intermediateValue2 === 1
+              intermediateValue8 === true ||
+              intermediateValue8 === "true" ||
+              intermediateValue8 === 1
             ) {
-              intermediateResult2 = true;
+              intermediateResult8 = true;
             } else if (
-              intermediateValue2 === false ||
-              intermediateValue2 === "false" ||
-              intermediateValue2 === 0
+              intermediateValue8 === false ||
+              intermediateValue8 === "false" ||
+              intermediateValue8 === 0
             ) {
-              intermediateResult2 = false;
+              intermediateResult8 = false;
             } else {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.type",
                 expectedType: "boolean",
               };
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch6) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap8 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["defaultValue"];
+          let intermediateValue8 = value["defaultValue"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue8 === null || intermediateValue8 === undefined) {
+            intermediateErrorMap8[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            let convertedNumber2 = intermediateValue2;
+            let convertedNumber8 = intermediateValue8;
             if (
-              typeof convertedNumber2 !== "number" &&
-              typeof convertedNumber2 === "string"
+              typeof convertedNumber8 !== "number" &&
+              typeof convertedNumber8 === "string"
             ) {
-              convertedNumber2 = Number(convertedNumber2);
+              convertedNumber8 = Number(convertedNumber8);
             }
             if (
-              typeof convertedNumber2 !== "number" ||
-              isNaN(convertedNumber2) ||
-              !isFinite(convertedNumber2) ||
-              !Number.isInteger(convertedNumber2)
+              typeof convertedNumber8 !== "number" ||
+              isNaN(convertedNumber8) ||
+              !isFinite(convertedNumber8) ||
+              !Number.isInteger(convertedNumber8)
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber2 < -2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 < -2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 minValue: -2147483647,
               };
-            } else if (convertedNumber2 > 2147483647) {
-              intermediateErrorMap2[`$`] = {
+            } else if (convertedNumber8 > 2147483647) {
+              intermediateErrorMap8[`$`] = {
                 key: "validator.range",
                 maxValue: 2147483647,
               };
             } else {
-              intermediateResult2 = convertedNumber2;
+              intermediateResult8 = convertedNumber8;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap8).length > 0) {
+            errorMap[`$.defaultValue`].errors.push(intermediateErrorMap8);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch6 = true;
             delete errorMap[`$.defaultValue`];
-            result["defaultValue"] = intermediateResult2;
+            result["defaultValue"] = intermediateResult8;
           }
         }
       }
@@ -11984,32 +11994,32 @@ export function validateExperimentalRouteDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["method"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString9 = value["method"];
+        if (typeof convertedString9 !== "string") {
           errorMap[`$.method`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString9.length < 1) {
             errorMap[`$.method`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else if (
-            convertedString0 !== "GET" &&
-            convertedString0 !== "POST" &&
-            convertedString0 !== "PUT" &&
-            convertedString0 !== "DELETE" &&
-            convertedString0 !== "HEAD" &&
-            convertedString0 !== "PATCH"
+            convertedString9 !== "GET" &&
+            convertedString9 !== "POST" &&
+            convertedString9 !== "PUT" &&
+            convertedString9 !== "DELETE" &&
+            convertedString9 !== "HEAD" &&
+            convertedString9 !== "PATCH"
           ) {
             errorMap[`$.method`] = {
               key: "validator.oneOf",
               allowedValues: ["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"],
-              foundValue: convertedString0,
+              foundValue: convertedString9,
             };
           } else {
-            result["method"] = convertedString0;
+            result["method"] = convertedString9;
           }
         }
       }
@@ -12043,19 +12053,19 @@ export function validateExperimentalRouteDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["path"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString11 = value["path"];
+        if (typeof convertedString11 !== "string") {
           errorMap[`$.path`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString11.length < 1) {
             errorMap[`$.path`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["path"] = convertedString0;
+            result["path"] = convertedString11;
           }
         }
       }
@@ -12065,126 +12075,126 @@ export function validateExperimentalRouteDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap13 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult13 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["tags"];
+        let intermediateValue13 = value["tags"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue13)) {
+          intermediateValue13 = [intermediateValue13];
         }
-        result["tags"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["tags"] = Array.from({ length: intermediateValue13.length });
+        for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue13[i13] === null ||
+            intermediateValue13[i13] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap13[`$.${i13}`] = {
               key: "validator.undefined",
             };
           } else {
             /** @type {string} */
-            let convertedString1 = intermediateValue1[i1];
-            if (typeof convertedString1 !== "string") {
-              intermediateErrorMap1[`$.${i1}`] = {
+            let convertedString13 = intermediateValue13[i13];
+            if (typeof convertedString13 !== "string") {
+              intermediateErrorMap13[`$.${i13}`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString1.length < 1) {
-                intermediateErrorMap1[`$.${i1}`] = {
+              if (convertedString13.length < 1) {
+                intermediateErrorMap13[`$.${i13}`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult1[i1] = convertedString1;
+                intermediateResult13[i13] = convertedString13;
               }
             }
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap13).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap13)) {
             errorMap[`$.tags${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap13[errorKey];
           }
         } else {
-          result["tags"] = intermediateResult1;
+          result["tags"] = intermediateResult13;
         }
       }
       if (value["query"] === null || value["query"] === undefined) {
         result["query"] = undefined;
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult13 = validateExperimentalReferenceDefinition(
           value["query"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult13.error) {
+          for (const errorKey of Object.keys(refResult13.error)) {
             errorMap[`$.query${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult13.error[errorKey];
           }
         }
-        result["query"] = refResult0.value;
+        result["query"] = refResult13.value;
       }
       if (value["params"] === null || value["params"] === undefined) {
         result["params"] = undefined;
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult14 = validateExperimentalReferenceDefinition(
           value["params"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult14.error) {
+          for (const errorKey of Object.keys(refResult14.error)) {
             errorMap[`$.params${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult14.error[errorKey];
           }
         }
-        result["params"] = refResult0.value;
+        result["params"] = refResult14.value;
       }
       if (value["body"] === null || value["body"] === undefined) {
         result["body"] = undefined;
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult15 = validateExperimentalReferenceDefinition(
           value["body"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult15.error) {
+          for (const errorKey of Object.keys(refResult15.error)) {
             errorMap[`$.body${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult15.error[errorKey];
           }
         }
-        result["body"] = refResult0.value;
+        result["body"] = refResult15.value;
       }
       if (value["files"] === null || value["files"] === undefined) {
         result["files"] = undefined;
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult16 = validateExperimentalReferenceDefinition(
           value["files"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult16.error) {
+          for (const errorKey of Object.keys(refResult16.error)) {
             errorMap[`$.files${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult16.error[errorKey];
           }
         }
-        result["files"] = refResult0.value;
+        result["files"] = refResult16.value;
       }
       if (value["response"] === null || value["response"] === undefined) {
         result["response"] = undefined;
       } else {
-        const refResult0 = validateExperimentalReferenceDefinition(
+        const refResult17 = validateExperimentalReferenceDefinition(
           value["response"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult17.error) {
+          for (const errorKey of Object.keys(refResult17.error)) {
             errorMap[`$.response${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult17.error[errorKey];
           }
         }
-        result["response"] = refResult0.value;
+        result["response"] = refResult17.value;
       }
       if (
         value["invalidations"] === null ||
@@ -12195,47 +12205,47 @@ export function validateExperimentalRouteDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap19 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult19 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["invalidations"];
+        let intermediateValue19 = value["invalidations"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue19)) {
+          intermediateValue19 = [intermediateValue19];
         }
         result["invalidations"] = Array.from({
-          length: intermediateValue1.length,
+          length: intermediateValue19.length,
         });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue19[i19] === null ||
+            intermediateValue19[i19] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap19[`$.${i19}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateExperimentalRouteInvalidationDefinition(
-              intermediateValue1[i1],
+            const refResult19 = validateExperimentalRouteInvalidationDefinition(
+              intermediateValue19[i19],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult19.error) {
+              for (const errorKey of Object.keys(refResult19.error)) {
+                intermediateErrorMap19[`$.${i19}${errorKey.substring(1)}`] =
+                  refResult19.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult19[i19] = refResult19.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap19).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap19)) {
             errorMap[`$.invalidations${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap19[errorKey];
           }
         } else {
-          result["invalidations"] = intermediateResult1;
+          result["invalidations"] = intermediateResult19;
         }
       }
       if (value["metadata"] === null || value["metadata"] === undefined) {
@@ -12260,31 +12270,31 @@ export function validateExperimentalRouteDefinition(value) {
             result["metadata"]["requestBodyType"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString0 = value["metadata"]["requestBodyType"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString20 = value["metadata"]["requestBodyType"];
+            if (typeof convertedString20 !== "string") {
               errorMap[`$.metadata.requestBodyType`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString20.length === 0) {
                 result["metadata"]["requestBodyType"] = undefined;
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString20.length < 1) {
                   errorMap[`$.metadata.requestBodyType`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else if (
-                  convertedString0 !== "json" &&
-                  convertedString0 !== "form-data"
+                  convertedString20 !== "json" &&
+                  convertedString20 !== "form-data"
                 ) {
                   errorMap[`$.metadata.requestBodyType`] = {
                     key: "validator.oneOf",
                     allowedValues: ["json", "form-data"],
-                    foundValue: convertedString0,
+                    foundValue: convertedString20,
                   };
                 } else {
-                  result["metadata"]["requestBodyType"] = convertedString0;
+                  result["metadata"]["requestBodyType"] = convertedString20;
                 }
               }
             }
@@ -12329,25 +12339,25 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["type"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["type"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.type`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (convertedString0 !== "routeInvalidation") {
+          } else if (convertedString1 !== "routeInvalidation") {
             errorMap[`$.type`] = {
               key: "validator.oneOf",
               allowedValues: ["routeInvalidation"],
-              foundValue: convertedString0,
+              foundValue: convertedString1,
             };
           } else {
-            result["type"] = convertedString0;
+            result["type"] = convertedString1;
           }
         }
       }
@@ -12376,17 +12386,17 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult0 = validateExperimentalNamePart(
+            const refResult3 = validateExperimentalNamePart(
               value["target"]["group"],
             );
 
-            if (refResult0.error) {
-              for (const errorKey of Object.keys(refResult0.error)) {
+            if (refResult3.error) {
+              for (const errorKey of Object.keys(refResult3.error)) {
                 errorMap[`$.target.group${errorKey.substring(1)}`] =
-                  refResult0.error[errorKey];
+                  refResult3.error[errorKey];
               }
             }
-            result["target"]["group"] = refResult0.value;
+            result["target"]["group"] = refResult3.value;
           }
           if (
             value["target"]["name"] === null ||
@@ -12394,17 +12404,17 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
           ) {
             result["target"]["name"] = undefined;
           } else {
-            const refResult0 = validateExperimentalNamePartOptional(
+            const refResult4 = validateExperimentalNamePartOptional(
               value["target"]["name"],
             );
 
-            if (refResult0.error) {
-              for (const errorKey of Object.keys(refResult0.error)) {
+            if (refResult4.error) {
+              for (const errorKey of Object.keys(refResult4.error)) {
                 errorMap[`$.target.name${errorKey.substring(1)}`] =
-                  refResult0.error[errorKey];
+                  refResult4.error[errorKey];
               }
             }
-            result["target"]["name"] = refResult0.value;
+            result["target"]["name"] = refResult4.value;
           }
         }
       }
@@ -12511,53 +12521,53 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                   };
                 } else {
                   result["properties"]["specification"]["params"] = {};
-                  for (let genericKeyInput0 of Object.keys(
+                  for (let genericKeyInput7 of Object.keys(
                     value["properties"]["specification"]["params"],
                   )) {
                     /** @type {any} */
-                    let genericKeyResult1 = undefined;
+                    let genericKeyResult8 = undefined;
                     /** @type {ValidatorErrorMap} */
-                    const genericKeyErrorMap2 = {};
+                    const genericKeyErrorMap9 = {};
                     if (
-                      genericKeyInput0 === null ||
-                      genericKeyInput0 === undefined
+                      genericKeyInput7 === null ||
+                      genericKeyInput7 === undefined
                     ) {
-                      genericKeyErrorMap2[`$`] = {
+                      genericKeyErrorMap9[`$`] = {
                         key: "validator.undefined",
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString3 = genericKeyInput0;
-                      if (typeof convertedString3 !== "string") {
-                        genericKeyErrorMap2[`$`] = {
+                      let convertedString10 = genericKeyInput7;
+                      if (typeof convertedString10 !== "string") {
+                        genericKeyErrorMap9[`$`] = {
                           key: "validator.string",
                         };
                       } else {
-                        if (convertedString3.length < 1) {
-                          genericKeyErrorMap2[`$`] = {
+                        if (convertedString10.length < 1) {
+                          genericKeyErrorMap9[`$`] = {
                             key: "validator.length",
                             minLength: 1,
                           };
                         } else {
-                          genericKeyResult1 = convertedString3;
+                          genericKeyResult8 = convertedString10;
                         }
                       }
                     }
-                    if (Object.keys(genericKeyErrorMap2).length !== 0) {
+                    if (Object.keys(genericKeyErrorMap9).length !== 0) {
                       if (errorMap[`$.properties.specification.params`]) {
                         errorMap[
                           `$.properties.specification.params`
                         ].inputs.push({
-                          key: genericKeyInput0,
-                          errors: genericKeyErrorMap2,
+                          key: genericKeyInput7,
+                          errors: genericKeyErrorMap9,
                         });
                       } else {
                         errorMap[`$.properties.specification.params`] = {
                           key: "validator.generic",
                           inputs: [
                             {
-                              key: genericKeyInput0,
-                              errors: genericKeyErrorMap2,
+                              key: genericKeyInput7,
+                              errors: genericKeyErrorMap9,
                             },
                           ],
                         };
@@ -12565,75 +12575,79 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                     } else {
                       if (
                         value["properties"]["specification"]["params"][
-                          genericKeyResult1
+                          genericKeyResult8
                         ] === null ||
                         value["properties"]["specification"]["params"][
-                          genericKeyResult1
+                          genericKeyResult8
                         ] === undefined
                       ) {
                         errorMap[
-                          `$.properties.specification.params.${genericKeyResult1}`
+                          `$.properties.specification.params.${genericKeyResult8}`
                         ] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {ValidatorErrorMap} */
-                        const intermediateErrorMap4 = {};
+                        const intermediateErrorMap11 = {};
                         /** @type {any[]} */
-                        let intermediateResult4 = [];
+                        let intermediateResult11 = [];
                         /** @type {any|any[]} */
-                        let intermediateValue4 =
+                        let intermediateValue11 =
                           value["properties"]["specification"]["params"][
-                            genericKeyResult1
+                            genericKeyResult8
                           ];
 
-                        if (!Array.isArray(intermediateValue4)) {
-                          intermediateValue4 = [intermediateValue4];
+                        if (!Array.isArray(intermediateValue11)) {
+                          intermediateValue11 = [intermediateValue11];
                         }
                         result["properties"]["specification"]["params"][
-                          genericKeyResult1
-                        ] = Array.from({ length: intermediateValue4.length });
-                        for (let i4 = 0; i4 < intermediateValue4.length; ++i4) {
+                          genericKeyResult8
+                        ] = Array.from({ length: intermediateValue11.length });
+                        for (
+                          let i11 = 0;
+                          i11 < intermediateValue11.length;
+                          ++i11
+                        ) {
                           if (
-                            intermediateValue4[i4] === null ||
-                            intermediateValue4[i4] === undefined
+                            intermediateValue11[i11] === null ||
+                            intermediateValue11[i11] === undefined
                           ) {
-                            intermediateErrorMap4[`$.${i4}`] = {
+                            intermediateErrorMap11[`$.${i11}`] = {
                               key: "validator.undefined",
                             };
                           } else {
                             /** @type {string} */
-                            let convertedString4 = intermediateValue4[i4];
-                            if (typeof convertedString4 !== "string") {
-                              intermediateErrorMap4[`$.${i4}`] = {
+                            let convertedString11 = intermediateValue11[i11];
+                            if (typeof convertedString11 !== "string") {
+                              intermediateErrorMap11[`$.${i11}`] = {
                                 key: "validator.string",
                               };
                             } else {
-                              if (convertedString4.length < 1) {
-                                intermediateErrorMap4[`$.${i4}`] = {
+                              if (convertedString11.length < 1) {
+                                intermediateErrorMap11[`$.${i11}`] = {
                                   key: "validator.length",
                                   minLength: 1,
                                 };
                               } else {
-                                intermediateResult4[i4] = convertedString4;
+                                intermediateResult11[i11] = convertedString11;
                               }
                             }
                           }
                         }
-                        if (Object.keys(intermediateErrorMap4).length) {
+                        if (Object.keys(intermediateErrorMap11).length) {
                           for (const errorKey of Object.keys(
-                            intermediateErrorMap4,
+                            intermediateErrorMap11,
                           )) {
                             errorMap[
-                              `$.properties.specification.params.${genericKeyResult1}${errorKey.substring(
+                              `$.properties.specification.params.${genericKeyResult8}${errorKey.substring(
                                 1,
                               )}`
-                            ] = intermediateErrorMap4[errorKey];
+                            ] = intermediateErrorMap11[errorKey];
                           }
                         } else {
                           result["properties"]["specification"]["params"][
-                            genericKeyResult1
-                          ] = intermediateResult4;
+                            genericKeyResult8
+                          ] = intermediateResult11;
                         }
                       }
                     }
@@ -12658,53 +12672,53 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                   };
                 } else {
                   result["properties"]["specification"]["query"] = {};
-                  for (let genericKeyInput0 of Object.keys(
+                  for (let genericKeyInput8 of Object.keys(
                     value["properties"]["specification"]["query"],
                   )) {
                     /** @type {any} */
-                    let genericKeyResult1 = undefined;
+                    let genericKeyResult9 = undefined;
                     /** @type {ValidatorErrorMap} */
-                    const genericKeyErrorMap2 = {};
+                    const genericKeyErrorMap10 = {};
                     if (
-                      genericKeyInput0 === null ||
-                      genericKeyInput0 === undefined
+                      genericKeyInput8 === null ||
+                      genericKeyInput8 === undefined
                     ) {
-                      genericKeyErrorMap2[`$`] = {
+                      genericKeyErrorMap10[`$`] = {
                         key: "validator.undefined",
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString3 = genericKeyInput0;
-                      if (typeof convertedString3 !== "string") {
-                        genericKeyErrorMap2[`$`] = {
+                      let convertedString11 = genericKeyInput8;
+                      if (typeof convertedString11 !== "string") {
+                        genericKeyErrorMap10[`$`] = {
                           key: "validator.string",
                         };
                       } else {
-                        if (convertedString3.length < 1) {
-                          genericKeyErrorMap2[`$`] = {
+                        if (convertedString11.length < 1) {
+                          genericKeyErrorMap10[`$`] = {
                             key: "validator.length",
                             minLength: 1,
                           };
                         } else {
-                          genericKeyResult1 = convertedString3;
+                          genericKeyResult9 = convertedString11;
                         }
                       }
                     }
-                    if (Object.keys(genericKeyErrorMap2).length !== 0) {
+                    if (Object.keys(genericKeyErrorMap10).length !== 0) {
                       if (errorMap[`$.properties.specification.query`]) {
                         errorMap[
                           `$.properties.specification.query`
                         ].inputs.push({
-                          key: genericKeyInput0,
-                          errors: genericKeyErrorMap2,
+                          key: genericKeyInput8,
+                          errors: genericKeyErrorMap10,
                         });
                       } else {
                         errorMap[`$.properties.specification.query`] = {
                           key: "validator.generic",
                           inputs: [
                             {
-                              key: genericKeyInput0,
-                              errors: genericKeyErrorMap2,
+                              key: genericKeyInput8,
+                              errors: genericKeyErrorMap10,
                             },
                           ],
                         };
@@ -12712,75 +12726,79 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                     } else {
                       if (
                         value["properties"]["specification"]["query"][
-                          genericKeyResult1
+                          genericKeyResult9
                         ] === null ||
                         value["properties"]["specification"]["query"][
-                          genericKeyResult1
+                          genericKeyResult9
                         ] === undefined
                       ) {
                         errorMap[
-                          `$.properties.specification.query.${genericKeyResult1}`
+                          `$.properties.specification.query.${genericKeyResult9}`
                         ] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {ValidatorErrorMap} */
-                        const intermediateErrorMap4 = {};
+                        const intermediateErrorMap12 = {};
                         /** @type {any[]} */
-                        let intermediateResult4 = [];
+                        let intermediateResult12 = [];
                         /** @type {any|any[]} */
-                        let intermediateValue4 =
+                        let intermediateValue12 =
                           value["properties"]["specification"]["query"][
-                            genericKeyResult1
+                            genericKeyResult9
                           ];
 
-                        if (!Array.isArray(intermediateValue4)) {
-                          intermediateValue4 = [intermediateValue4];
+                        if (!Array.isArray(intermediateValue12)) {
+                          intermediateValue12 = [intermediateValue12];
                         }
                         result["properties"]["specification"]["query"][
-                          genericKeyResult1
-                        ] = Array.from({ length: intermediateValue4.length });
-                        for (let i4 = 0; i4 < intermediateValue4.length; ++i4) {
+                          genericKeyResult9
+                        ] = Array.from({ length: intermediateValue12.length });
+                        for (
+                          let i12 = 0;
+                          i12 < intermediateValue12.length;
+                          ++i12
+                        ) {
                           if (
-                            intermediateValue4[i4] === null ||
-                            intermediateValue4[i4] === undefined
+                            intermediateValue12[i12] === null ||
+                            intermediateValue12[i12] === undefined
                           ) {
-                            intermediateErrorMap4[`$.${i4}`] = {
+                            intermediateErrorMap12[`$.${i12}`] = {
                               key: "validator.undefined",
                             };
                           } else {
                             /** @type {string} */
-                            let convertedString4 = intermediateValue4[i4];
-                            if (typeof convertedString4 !== "string") {
-                              intermediateErrorMap4[`$.${i4}`] = {
+                            let convertedString12 = intermediateValue12[i12];
+                            if (typeof convertedString12 !== "string") {
+                              intermediateErrorMap12[`$.${i12}`] = {
                                 key: "validator.string",
                               };
                             } else {
-                              if (convertedString4.length < 1) {
-                                intermediateErrorMap4[`$.${i4}`] = {
+                              if (convertedString12.length < 1) {
+                                intermediateErrorMap12[`$.${i12}`] = {
                                   key: "validator.length",
                                   minLength: 1,
                                 };
                               } else {
-                                intermediateResult4[i4] = convertedString4;
+                                intermediateResult12[i12] = convertedString12;
                               }
                             }
                           }
                         }
-                        if (Object.keys(intermediateErrorMap4).length) {
+                        if (Object.keys(intermediateErrorMap12).length) {
                           for (const errorKey of Object.keys(
-                            intermediateErrorMap4,
+                            intermediateErrorMap12,
                           )) {
                             errorMap[
-                              `$.properties.specification.query.${genericKeyResult1}${errorKey.substring(
+                              `$.properties.specification.query.${genericKeyResult9}${errorKey.substring(
                                 1,
                               )}`
-                            ] = intermediateErrorMap4[errorKey];
+                            ] = intermediateErrorMap12[errorKey];
                           }
                         } else {
                           result["properties"]["specification"]["query"][
-                            genericKeyResult1
-                          ] = intermediateResult4;
+                            genericKeyResult9
+                          ] = intermediateResult12;
                         }
                       }
                     }

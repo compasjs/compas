@@ -1286,8 +1286,13 @@ export function validatorJavascriptObject(file, type, validatorState) {
 
   fileWrite(file, `${resultPath} = Object.create(null);\n`);
 
+  let variableIndex = 0;
+
   for (const key of Object.keys(type.keys)) {
     validatorState.validatedValuePath.push({ type: "stringKey", key });
+
+    variableIndex++;
+    validatorState.reusedVariableIndex++;
 
     validatorGeneratorGenerateBody(
       validatorState.generateContext,
@@ -1302,6 +1307,8 @@ export function validatorJavascriptObject(file, type, validatorState) {
 
     validatorState.validatedValuePath.pop();
   }
+
+  validatorState.reusedVariableIndex -= variableIndex;
 
   fileBlockEnd(file);
 }

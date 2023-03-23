@@ -69,23 +69,23 @@ export function validateCliCommandDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["name"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.name`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (!/^[a-z-]+$/g.test(convertedString0)) {
+          } else if (!/^[a-z-]+$/g.test(convertedString1)) {
             errorMap[`$.name`] = {
               key: "validator.pattern",
             };
           } else {
-            result["name"] = convertedString0;
+            result["name"] = convertedString1;
           }
         }
       }
@@ -98,23 +98,23 @@ export function validateCliCommandDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["shortDescription"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["shortDescription"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.shortDescription`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString2.length < 1) {
             errorMap[`$.shortDescription`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (!/^[^\n]+$/g.test(convertedString0)) {
+          } else if (!/^[^\n]+$/g.test(convertedString2)) {
             errorMap[`$.shortDescription`] = {
               key: "validator.pattern",
             };
           } else {
-            result["shortDescription"] = convertedString0;
+            result["shortDescription"] = convertedString2;
           }
         }
       }
@@ -125,22 +125,22 @@ export function validateCliCommandDefinition(value) {
         result["longDescription"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["longDescription"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["longDescription"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.longDescription`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["longDescription"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.longDescription`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["longDescription"] = convertedString0;
+              result["longDescription"] = convertedString3;
             }
           }
         }
@@ -163,20 +163,20 @@ export function validateCliCommandDefinition(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys0 = new Set([
+          const knownKeys4 = new Set([
             "isDynamic",
             "isCosmetic",
             "isWatchable",
           ]);
           for (const key of Object.keys(value["modifiers"])) {
             if (
-              !knownKeys0.has(key) &&
+              !knownKeys4.has(key) &&
               value["modifiers"][key] !== null &&
               value["modifiers"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys0];
+              const expectedKeys = [...knownKeys4];
               const foundKeys = Object.keys(value["modifiers"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys4.has(it));
               errorMap[`$.modifiers`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -282,16 +282,16 @@ export function validateCliCommandDefinition(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys0 = new Set(["validator", "completions"]);
+          const knownKeys5 = new Set(["validator", "completions"]);
           for (const key of Object.keys(value["dynamicValue"])) {
             if (
-              !knownKeys0.has(key) &&
+              !knownKeys5.has(key) &&
               value["dynamicValue"][key] !== null &&
               value["dynamicValue"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys0];
+              const expectedKeys = [...knownKeys5];
               const foundKeys = Object.keys(value["dynamicValue"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys5.has(it));
               errorMap[`$.dynamicValue`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -343,16 +343,16 @@ export function validateCliCommandDefinition(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys0 = new Set(["extensions", "ignorePatterns"]);
+          const knownKeys6 = new Set(["extensions", "ignorePatterns"]);
           for (const key of Object.keys(value["watchSettings"])) {
             if (
-              !knownKeys0.has(key) &&
+              !knownKeys6.has(key) &&
               value["watchSettings"][key] !== null &&
               value["watchSettings"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys0];
+              const expectedKeys = [...knownKeys6];
               const foundKeys = Object.keys(value["watchSettings"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys6.has(it));
               errorMap[`$.watchSettings`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -371,52 +371,52 @@ export function validateCliCommandDefinition(value) {
             result["watchSettings"]["extensions"] = ["js", "json"];
           } else {
             /** @type {ValidatorErrorMap} */
-            const intermediateErrorMap1 = {};
+            const intermediateErrorMap8 = {};
             /** @type {any[]} */
-            let intermediateResult1 = [];
+            let intermediateResult8 = [];
             /** @type {any|any[]} */
-            let intermediateValue1 = value["watchSettings"]["extensions"];
+            let intermediateValue8 = value["watchSettings"]["extensions"];
 
-            if (!Array.isArray(intermediateValue1)) {
-              intermediateValue1 = [intermediateValue1];
+            if (!Array.isArray(intermediateValue8)) {
+              intermediateValue8 = [intermediateValue8];
             }
             result["watchSettings"]["extensions"] = Array.from({
-              length: intermediateValue1.length,
+              length: intermediateValue8.length,
             });
-            for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
               if (
-                intermediateValue1[i1] === null ||
-                intermediateValue1[i1] === undefined
+                intermediateValue8[i8] === null ||
+                intermediateValue8[i8] === undefined
               ) {
-                intermediateErrorMap1[`$.${i1}`] = {
+                intermediateErrorMap8[`$.${i8}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 /** @type {string} */
-                let convertedString1 = intermediateValue1[i1];
-                if (typeof convertedString1 !== "string") {
-                  intermediateErrorMap1[`$.${i1}`] = {
+                let convertedString8 = intermediateValue8[i8];
+                if (typeof convertedString8 !== "string") {
+                  intermediateErrorMap8[`$.${i8}`] = {
                     key: "validator.string",
                   };
                 } else {
-                  if (convertedString1.length < 1) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                  if (convertedString8.length < 1) {
+                    intermediateErrorMap8[`$.${i8}`] = {
                       key: "validator.length",
                       minLength: 1,
                     };
                   } else {
-                    intermediateResult1[i1] = convertedString1;
+                    intermediateResult8[i8] = convertedString8;
                   }
                 }
               }
             }
-            if (Object.keys(intermediateErrorMap1).length) {
-              for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            if (Object.keys(intermediateErrorMap8).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap8)) {
                 errorMap[`$.watchSettings.extensions${errorKey.substring(1)}`] =
-                  intermediateErrorMap1[errorKey];
+                  intermediateErrorMap8[errorKey];
               }
             } else {
-              result["watchSettings"]["extensions"] = intermediateResult1;
+              result["watchSettings"]["extensions"] = intermediateResult8;
             }
           }
           if (
@@ -430,53 +430,53 @@ export function validateCliCommandDefinition(value) {
             ];
           } else {
             /** @type {ValidatorErrorMap} */
-            const intermediateErrorMap1 = {};
+            const intermediateErrorMap9 = {};
             /** @type {any[]} */
-            let intermediateResult1 = [];
+            let intermediateResult9 = [];
             /** @type {any|any[]} */
-            let intermediateValue1 = value["watchSettings"]["ignorePatterns"];
+            let intermediateValue9 = value["watchSettings"]["ignorePatterns"];
 
-            if (!Array.isArray(intermediateValue1)) {
-              intermediateValue1 = [intermediateValue1];
+            if (!Array.isArray(intermediateValue9)) {
+              intermediateValue9 = [intermediateValue9];
             }
             result["watchSettings"]["ignorePatterns"] = Array.from({
-              length: intermediateValue1.length,
+              length: intermediateValue9.length,
             });
-            for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
               if (
-                intermediateValue1[i1] === null ||
-                intermediateValue1[i1] === undefined
+                intermediateValue9[i9] === null ||
+                intermediateValue9[i9] === undefined
               ) {
-                intermediateErrorMap1[`$.${i1}`] = {
+                intermediateErrorMap9[`$.${i9}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 /** @type {string} */
-                let convertedString1 = intermediateValue1[i1];
-                if (typeof convertedString1 !== "string") {
-                  intermediateErrorMap1[`$.${i1}`] = {
+                let convertedString9 = intermediateValue9[i9];
+                if (typeof convertedString9 !== "string") {
+                  intermediateErrorMap9[`$.${i9}`] = {
                     key: "validator.string",
                   };
                 } else {
-                  if (convertedString1.length < 1) {
-                    intermediateErrorMap1[`$.${i1}`] = {
+                  if (convertedString9.length < 1) {
+                    intermediateErrorMap9[`$.${i9}`] = {
                       key: "validator.length",
                       minLength: 1,
                     };
                   } else {
-                    intermediateResult1[i1] = convertedString1;
+                    intermediateResult9[i9] = convertedString9;
                   }
                 }
               }
             }
-            if (Object.keys(intermediateErrorMap1).length) {
-              for (const errorKey of Object.keys(intermediateErrorMap1)) {
+            if (Object.keys(intermediateErrorMap9).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap9)) {
                 errorMap[
                   `$.watchSettings.ignorePatterns${errorKey.substring(1)}`
-                ] = intermediateErrorMap1[errorKey];
+                ] = intermediateErrorMap9[errorKey];
               }
             } else {
-              result["watchSettings"]["ignorePatterns"] = intermediateResult1;
+              result["watchSettings"]["ignorePatterns"] = intermediateResult9;
             }
           }
         }
@@ -485,92 +485,92 @@ export function validateCliCommandDefinition(value) {
         result["subCommands"] = [];
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap8 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult8 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["subCommands"];
+        let intermediateValue8 = value["subCommands"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue8)) {
+          intermediateValue8 = [intermediateValue8];
         }
         result["subCommands"] = Array.from({
-          length: intermediateValue1.length,
+          length: intermediateValue8.length,
         });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue8[i8] === null ||
+            intermediateValue8[i8] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap8[`$.${i8}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateCliCommandDefinition(
-              intermediateValue1[i1],
+            const refResult8 = validateCliCommandDefinition(
+              intermediateValue8[i8],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult8.error) {
+              for (const errorKey of Object.keys(refResult8.error)) {
+                intermediateErrorMap8[`$.${i8}${errorKey.substring(1)}`] =
+                  refResult8.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult8[i8] = refResult8.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap8).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap8)) {
             errorMap[`$.subCommands${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap8[errorKey];
           }
         } else {
-          result["subCommands"] = intermediateResult1;
+          result["subCommands"] = intermediateResult8;
         }
       }
       if (value["flags"] === null || value["flags"] === undefined) {
         result["flags"] = [];
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap9 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult9 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["flags"];
+        let intermediateValue9 = value["flags"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue9)) {
+          intermediateValue9 = [intermediateValue9];
         }
-        result["flags"] = Array.from({ length: intermediateValue1.length });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        result["flags"] = Array.from({ length: intermediateValue9.length });
+        for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue9[i9] === null ||
+            intermediateValue9[i9] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap9[`$.${i9}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateCliFlagDefinition(
-              intermediateValue1[i1],
+            const refResult9 = validateCliFlagDefinition(
+              intermediateValue9[i9],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult9.error) {
+              for (const errorKey of Object.keys(refResult9.error)) {
+                intermediateErrorMap9[`$.${i9}${errorKey.substring(1)}`] =
+                  refResult9.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult9[i9] = refResult9.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap9).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap9)) {
             errorMap[`$.flags${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap9[errorKey];
           }
         } else {
-          result["flags"] = intermediateResult1;
+          result["flags"] = intermediateResult9;
         }
       }
       if (value["executor"] === null || value["executor"] === undefined) {
@@ -642,19 +642,19 @@ export function validateCliFlagDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString1 = value["name"];
+        if (typeof convertedString1 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString1.length < 1) {
             errorMap[`$.name`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["name"] = convertedString0;
+            result["name"] = convertedString1;
           }
         }
       }
@@ -664,24 +664,24 @@ export function validateCliFlagDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["rawName"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["rawName"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.rawName`] = {
             key: "validator.string",
           };
         } else {
-          convertedString0 = convertedString0.toLowerCase();
-          if (convertedString0.length < 1) {
+          convertedString2 = convertedString2.toLowerCase();
+          if (convertedString2.length < 1) {
             errorMap[`$.rawName`] = {
               key: "validator.length",
               minLength: 1,
             };
-          } else if (!/^--\w/g.test(convertedString0)) {
+          } else if (!/^--\w/g.test(convertedString2)) {
             errorMap[`$.rawName`] = {
               key: "validator.pattern",
             };
           } else {
-            result["rawName"] = convertedString0;
+            result["rawName"] = convertedString2;
           }
         }
       }
@@ -689,26 +689,26 @@ export function validateCliFlagDefinition(value) {
         result["description"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString0 = value["description"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["description"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.description`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length === 0) {
+          if (convertedString3.length === 0) {
             result["description"] = undefined;
           } else {
-            if (convertedString0.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.description`] = {
                 key: "validator.length",
                 minLength: 1,
               };
-            } else if (!/^[^\n]+$/g.test(convertedString0)) {
+            } else if (!/^[^\n]+$/g.test(convertedString3)) {
               errorMap[`$.description`] = {
                 key: "validator.pattern",
               };
             } else {
-              result["description"] = convertedString0;
+              result["description"] = convertedString3;
             }
           }
         }
@@ -731,20 +731,20 @@ export function validateCliFlagDefinition(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys0 = new Set([
+          const knownKeys4 = new Set([
             "isRepeatable",
             "isRequired",
             "isInternal",
           ]);
           for (const key of Object.keys(value["modifiers"])) {
             if (
-              !knownKeys0.has(key) &&
+              !knownKeys4.has(key) &&
               value["modifiers"][key] !== null &&
               value["modifiers"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys0];
+              const expectedKeys = [...knownKeys4];
               const foundKeys = Object.keys(value["modifiers"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys4.has(it));
               errorMap[`$.modifiers`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -847,20 +847,20 @@ export function validateCliFlagDefinition(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys0 = new Set([
+          const knownKeys5 = new Set([
             "specification",
             "validator",
             "completions",
           ]);
           for (const key of Object.keys(value["value"])) {
             if (
-              !knownKeys0.has(key) &&
+              !knownKeys5.has(key) &&
               value["value"][key] !== null &&
               value["value"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys0];
+              const expectedKeys = [...knownKeys5];
               const foundKeys = Object.keys(value["value"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys5.has(it));
               errorMap[`$.value`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -879,25 +879,25 @@ export function validateCliFlagDefinition(value) {
             result["value"]["specification"] = "boolean";
           } else {
             /** @type {string} */
-            let convertedString0 = value["value"]["specification"];
-            if (typeof convertedString0 !== "string") {
+            let convertedString6 = value["value"]["specification"];
+            if (typeof convertedString6 !== "string") {
               errorMap[`$.value.specification`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString0.length === 0) {
+              if (convertedString6.length === 0) {
                 result["value"]["specification"] = "boolean";
               } else {
-                if (convertedString0.length < 1) {
+                if (convertedString6.length < 1) {
                   errorMap[`$.value.specification`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else if (
-                  convertedString0 !== "boolean" &&
-                  convertedString0 !== "number" &&
-                  convertedString0 !== "string" &&
-                  convertedString0 !== "booleanOrString"
+                  convertedString6 !== "boolean" &&
+                  convertedString6 !== "number" &&
+                  convertedString6 !== "string" &&
+                  convertedString6 !== "booleanOrString"
                 ) {
                   errorMap[`$.value.specification`] = {
                     key: "validator.oneOf",
@@ -907,10 +907,10 @@ export function validateCliFlagDefinition(value) {
                       "string",
                       "booleanOrString",
                     ],
-                    foundValue: convertedString0,
+                    foundValue: convertedString6,
                   };
                 } else {
-                  result["value"]["specification"] = convertedString0;
+                  result["value"]["specification"] = convertedString6;
                 }
               }
             }
@@ -1015,25 +1015,25 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["type"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString3 = intermediateValue2["type"];
+            if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
+              if (convertedString3.length < 1) {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
-              } else if (convertedString2 !== "directory") {
+              } else if (convertedString3 !== "directory") {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.oneOf",
                   allowedValues: ["directory"],
-                  foundValue: convertedString2,
+                  foundValue: convertedString3,
                 };
               } else {
-                intermediateResult2["type"] = convertedString2;
+                intermediateResult2["type"] = convertedString3;
               }
             }
           }
@@ -1101,25 +1101,25 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["type"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString3 = intermediateValue2["type"];
+            if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
+              if (convertedString3.length < 1) {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
-              } else if (convertedString2 !== "file") {
+              } else if (convertedString3 !== "file") {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.oneOf",
                   allowedValues: ["file"],
-                  foundValue: convertedString2,
+                  foundValue: convertedString3,
                 };
               } else {
-                intermediateResult2["type"] = convertedString2;
+                intermediateResult2["type"] = convertedString3;
               }
             }
           }
@@ -1187,25 +1187,25 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["type"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString3 = intermediateValue2["type"];
+            if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
+              if (convertedString3.length < 1) {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
-              } else if (convertedString2 !== "completion") {
+              } else if (convertedString3 !== "completion") {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.oneOf",
                   allowedValues: ["completion"],
-                  foundValue: convertedString2,
+                  foundValue: convertedString3,
                 };
               } else {
-                intermediateResult2["type"] = convertedString2;
+                intermediateResult2["type"] = convertedString3;
               }
             }
           }
@@ -1218,19 +1218,19 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["name"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString4 = intermediateValue2["name"];
+            if (typeof convertedString4 !== "string") {
               intermediateErrorMap2[`$.name`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
+              if (convertedString4.length < 1) {
                 intermediateErrorMap2[`$.name`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else {
-                intermediateResult2["name"] = convertedString2;
+                intermediateResult2["name"] = convertedString4;
               }
             }
           }
@@ -1241,22 +1241,22 @@ export function validateCliCompletion(value) {
             intermediateResult2["description"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["description"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString5 = intermediateValue2["description"];
+            if (typeof convertedString5 !== "string") {
               intermediateErrorMap2[`$.description`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length === 0) {
+              if (convertedString5.length === 0) {
                 intermediateResult2["description"] = undefined;
               } else {
-                if (convertedString2.length < 1) {
+                if (convertedString5.length < 1) {
                   intermediateErrorMap2[`$.description`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  intermediateResult2["description"] = convertedString2;
+                  intermediateResult2["description"] = convertedString5;
                 }
               }
             }
@@ -1325,25 +1325,25 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["type"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString3 = intermediateValue2["type"];
+            if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
+              if (convertedString3.length < 1) {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
-              } else if (convertedString2 !== "value") {
+              } else if (convertedString3 !== "value") {
                 intermediateErrorMap2[`$.type`] = {
                   key: "validator.oneOf",
                   allowedValues: ["value"],
-                  foundValue: convertedString2,
+                  foundValue: convertedString3,
                 };
               } else {
-                intermediateResult2["type"] = convertedString2;
+                intermediateResult2["type"] = convertedString3;
               }
             }
           }
@@ -1356,22 +1356,22 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["specification"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString4 = intermediateValue2["specification"];
+            if (typeof convertedString4 !== "string") {
               intermediateErrorMap2[`$.specification`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length < 1) {
+              if (convertedString4.length < 1) {
                 intermediateErrorMap2[`$.specification`] = {
                   key: "validator.length",
                   minLength: 1,
                 };
               } else if (
-                convertedString2 !== "boolean" &&
-                convertedString2 !== "number" &&
-                convertedString2 !== "string" &&
-                convertedString2 !== "booleanOrString"
+                convertedString4 !== "boolean" &&
+                convertedString4 !== "number" &&
+                convertedString4 !== "string" &&
+                convertedString4 !== "booleanOrString"
               ) {
                 intermediateErrorMap2[`$.specification`] = {
                   key: "validator.oneOf",
@@ -1381,10 +1381,10 @@ export function validateCliCompletion(value) {
                     "string",
                     "booleanOrString",
                   ],
-                  foundValue: convertedString2,
+                  foundValue: convertedString4,
                 };
               } else {
-                intermediateResult2["specification"] = convertedString2;
+                intermediateResult2["specification"] = convertedString4;
               }
             }
           }
@@ -1395,22 +1395,22 @@ export function validateCliCompletion(value) {
             intermediateResult2["description"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString2 = intermediateValue2["description"];
-            if (typeof convertedString2 !== "string") {
+            let convertedString5 = intermediateValue2["description"];
+            if (typeof convertedString5 !== "string") {
               intermediateErrorMap2[`$.description`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString2.length === 0) {
+              if (convertedString5.length === 0) {
                 intermediateResult2["description"] = undefined;
               } else {
-                if (convertedString2.length < 1) {
+                if (convertedString5.length < 1) {
                   intermediateErrorMap2[`$.description`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  intermediateResult2["description"] = convertedString2;
+                  intermediateResult2["description"] = convertedString5;
                 }
               }
             }

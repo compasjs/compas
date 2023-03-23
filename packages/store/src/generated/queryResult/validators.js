@@ -102,35 +102,35 @@ export function validateQueryResultStoreFile(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedNumber0 = value["contentLength"];
+        let convertedNumber2 = value["contentLength"];
         if (
-          typeof convertedNumber0 !== "number" &&
-          typeof convertedNumber0 === "string"
+          typeof convertedNumber2 !== "number" &&
+          typeof convertedNumber2 === "string"
         ) {
-          convertedNumber0 = Number(convertedNumber0);
+          convertedNumber2 = Number(convertedNumber2);
         }
         if (
-          typeof convertedNumber0 !== "number" ||
-          isNaN(convertedNumber0) ||
-          !isFinite(convertedNumber0) ||
-          !Number.isInteger(convertedNumber0)
+          typeof convertedNumber2 !== "number" ||
+          isNaN(convertedNumber2) ||
+          !isFinite(convertedNumber2) ||
+          !Number.isInteger(convertedNumber2)
         ) {
           errorMap[`$.contentLength`] = {
             key: "validator.number",
             subType: "int",
           };
-        } else if (convertedNumber0 < -2147483647) {
+        } else if (convertedNumber2 < -2147483647) {
           errorMap[`$.contentLength`] = {
             key: "validator.range",
             minValue: -2147483647,
           };
-        } else if (convertedNumber0 > 2147483647) {
+        } else if (convertedNumber2 > 2147483647) {
           errorMap[`$.contentLength`] = {
             key: "validator.range",
             maxValue: 2147483647,
           };
         } else {
-          result["contentLength"] = convertedNumber0;
+          result["contentLength"] = convertedNumber2;
         }
       }
       if (value["bucketName"] === null || value["bucketName"] === undefined) {
@@ -139,19 +139,19 @@ export function validateQueryResultStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["bucketName"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString3 = value["bucketName"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString3.length < 1) {
             errorMap[`$.bucketName`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["bucketName"] = convertedString0;
+            result["bucketName"] = convertedString3;
           }
         }
       }
@@ -161,19 +161,19 @@ export function validateQueryResultStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["contentType"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString4 = value["contentType"];
+        if (typeof convertedString4 !== "string") {
           errorMap[`$.contentType`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString4.length < 1) {
             errorMap[`$.contentType`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["contentType"] = convertedString0;
+            result["contentType"] = convertedString4;
           }
         }
       }
@@ -183,34 +183,34 @@ export function validateQueryResultStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString5 = value["name"];
+        if (typeof convertedString5 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString5.length < 1) {
             errorMap[`$.name`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["name"] = convertedString0;
+            result["name"] = convertedString5;
           }
         }
       }
       if (value["meta"] === null || value["meta"] === undefined) {
         result["meta"] = {};
       } else {
-        const refResult0 = validateStoreFileMeta(value["meta"]);
+        const refResult6 = validateStoreFileMeta(value["meta"]);
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult6.error) {
+          for (const errorKey of Object.keys(refResult6.error)) {
             errorMap[`$.meta${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult6.error[errorKey];
           }
         }
-        result["meta"] = refResult0.value;
+        result["meta"] = refResult6.value;
       }
       if (value["createdAt"] === null || value["createdAt"] === undefined) {
         errorMap[`$.createdAt`] = {
@@ -332,35 +332,35 @@ export function validateQueryResultStoreJob(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedNumber0 = value["id"];
+        let convertedNumber1 = value["id"];
         if (
-          typeof convertedNumber0 !== "number" &&
-          typeof convertedNumber0 === "string"
+          typeof convertedNumber1 !== "number" &&
+          typeof convertedNumber1 === "string"
         ) {
-          convertedNumber0 = Number(convertedNumber0);
+          convertedNumber1 = Number(convertedNumber1);
         }
         if (
-          typeof convertedNumber0 !== "number" ||
-          isNaN(convertedNumber0) ||
-          !isFinite(convertedNumber0) ||
-          !Number.isInteger(convertedNumber0)
+          typeof convertedNumber1 !== "number" ||
+          isNaN(convertedNumber1) ||
+          !isFinite(convertedNumber1) ||
+          !Number.isInteger(convertedNumber1)
         ) {
           errorMap[`$.id`] = {
             key: "validator.number",
             subType: "int",
           };
-        } else if (convertedNumber0 < -2147483647) {
+        } else if (convertedNumber1 < -2147483647) {
           errorMap[`$.id`] = {
             key: "validator.range",
             minValue: -2147483647,
           };
-        } else if (convertedNumber0 > 2147483647) {
+        } else if (convertedNumber1 > 2147483647) {
           errorMap[`$.id`] = {
             key: "validator.range",
             maxValue: 2147483647,
           };
         } else {
-          result["id"] = convertedNumber0;
+          result["id"] = convertedNumber1;
         }
       }
       if (value["isComplete"] === null || value["isComplete"] === undefined) {
@@ -391,93 +391,93 @@ export function validateQueryResultStoreJob(value) {
       ) {
         result["handlerTimeout"] = undefined;
       } else {
-        let convertedNumber0 = value["handlerTimeout"];
+        let convertedNumber3 = value["handlerTimeout"];
         if (
-          typeof convertedNumber0 !== "number" &&
-          typeof convertedNumber0 === "string"
+          typeof convertedNumber3 !== "number" &&
+          typeof convertedNumber3 === "string"
         ) {
-          convertedNumber0 = Number(convertedNumber0);
+          convertedNumber3 = Number(convertedNumber3);
         }
         if (
-          typeof convertedNumber0 !== "number" ||
-          isNaN(convertedNumber0) ||
-          !isFinite(convertedNumber0) ||
-          !Number.isInteger(convertedNumber0)
+          typeof convertedNumber3 !== "number" ||
+          isNaN(convertedNumber3) ||
+          !isFinite(convertedNumber3) ||
+          !Number.isInteger(convertedNumber3)
         ) {
           errorMap[`$.handlerTimeout`] = {
             key: "validator.number",
             subType: "int",
           };
-        } else if (convertedNumber0 < 0) {
+        } else if (convertedNumber3 < 0) {
           errorMap[`$.handlerTimeout`] = {
             key: "validator.range",
             minValue: 0,
           };
         } else {
-          result["handlerTimeout"] = convertedNumber0;
+          result["handlerTimeout"] = convertedNumber3;
         }
       }
       if (value["priority"] === null || value["priority"] === undefined) {
         result["priority"] = 0;
       } else {
-        let convertedNumber0 = value["priority"];
+        let convertedNumber4 = value["priority"];
         if (
-          typeof convertedNumber0 !== "number" &&
-          typeof convertedNumber0 === "string"
+          typeof convertedNumber4 !== "number" &&
+          typeof convertedNumber4 === "string"
         ) {
-          convertedNumber0 = Number(convertedNumber0);
+          convertedNumber4 = Number(convertedNumber4);
         }
         if (
-          typeof convertedNumber0 !== "number" ||
-          isNaN(convertedNumber0) ||
-          !isFinite(convertedNumber0) ||
-          !Number.isInteger(convertedNumber0)
+          typeof convertedNumber4 !== "number" ||
+          isNaN(convertedNumber4) ||
+          !isFinite(convertedNumber4) ||
+          !Number.isInteger(convertedNumber4)
         ) {
           errorMap[`$.priority`] = {
             key: "validator.number",
             subType: "int",
           };
-        } else if (convertedNumber0 < 0) {
+        } else if (convertedNumber4 < 0) {
           errorMap[`$.priority`] = {
             key: "validator.range",
             minValue: 0,
           };
         } else {
-          result["priority"] = convertedNumber0;
+          result["priority"] = convertedNumber4;
         }
       }
       if (value["retryCount"] === null || value["retryCount"] === undefined) {
         result["retryCount"] = 0;
       } else {
-        let convertedNumber0 = value["retryCount"];
+        let convertedNumber5 = value["retryCount"];
         if (
-          typeof convertedNumber0 !== "number" &&
-          typeof convertedNumber0 === "string"
+          typeof convertedNumber5 !== "number" &&
+          typeof convertedNumber5 === "string"
         ) {
-          convertedNumber0 = Number(convertedNumber0);
+          convertedNumber5 = Number(convertedNumber5);
         }
         if (
-          typeof convertedNumber0 !== "number" ||
-          isNaN(convertedNumber0) ||
-          !isFinite(convertedNumber0) ||
-          !Number.isInteger(convertedNumber0)
+          typeof convertedNumber5 !== "number" ||
+          isNaN(convertedNumber5) ||
+          !isFinite(convertedNumber5) ||
+          !Number.isInteger(convertedNumber5)
         ) {
           errorMap[`$.retryCount`] = {
             key: "validator.number",
             subType: "int",
           };
-        } else if (convertedNumber0 < -2147483647) {
+        } else if (convertedNumber5 < -2147483647) {
           errorMap[`$.retryCount`] = {
             key: "validator.range",
             minValue: -2147483647,
           };
-        } else if (convertedNumber0 > 2147483647) {
+        } else if (convertedNumber5 > 2147483647) {
           errorMap[`$.retryCount`] = {
             key: "validator.range",
             maxValue: 2147483647,
           };
         } else {
-          result["retryCount"] = convertedNumber0;
+          result["retryCount"] = convertedNumber5;
         }
       }
       if (value["name"] === null || value["name"] === undefined) {
@@ -486,19 +486,19 @@ export function validateQueryResultStoreJob(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["name"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString6 = value["name"];
+        if (typeof convertedString6 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString6.length < 1) {
             errorMap[`$.name`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["name"] = convertedString0;
+            result["name"] = convertedString6;
           }
         }
       }
@@ -681,19 +681,19 @@ export function validateQueryResultStoreSessionStore(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString0 = value["checksum"];
-        if (typeof convertedString0 !== "string") {
+        let convertedString2 = value["checksum"];
+        if (typeof convertedString2 !== "string") {
           errorMap[`$.checksum`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString0.length < 1) {
+          if (convertedString2.length < 1) {
             errorMap[`$.checksum`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["checksum"] = convertedString0;
+            result["checksum"] = convertedString2;
           }
         }
       }
@@ -785,47 +785,47 @@ export function validateQueryResultStoreSessionStore(value) {
         result["accessTokens"] = undefined;
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap1 = {};
+        const intermediateErrorMap8 = {};
         /** @type {any[]} */
-        let intermediateResult1 = [];
+        let intermediateResult8 = [];
         /** @type {any|any[]} */
-        let intermediateValue1 = value["accessTokens"];
+        let intermediateValue8 = value["accessTokens"];
 
-        if (!Array.isArray(intermediateValue1)) {
-          intermediateValue1 = [intermediateValue1];
+        if (!Array.isArray(intermediateValue8)) {
+          intermediateValue8 = [intermediateValue8];
         }
         result["accessTokens"] = Array.from({
-          length: intermediateValue1.length,
+          length: intermediateValue8.length,
         });
-        for (let i1 = 0; i1 < intermediateValue1.length; ++i1) {
+        for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
           if (
-            intermediateValue1[i1] === null ||
-            intermediateValue1[i1] === undefined
+            intermediateValue8[i8] === null ||
+            intermediateValue8[i8] === undefined
           ) {
-            intermediateErrorMap1[`$.${i1}`] = {
+            intermediateErrorMap8[`$.${i8}`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult1 = validateQueryResultStoreSessionStoreToken(
-              intermediateValue1[i1],
+            const refResult8 = validateQueryResultStoreSessionStoreToken(
+              intermediateValue8[i8],
             );
 
-            if (refResult1.error) {
-              for (const errorKey of Object.keys(refResult1.error)) {
-                intermediateErrorMap1[`$.${i1}${errorKey.substring(1)}`] =
-                  refResult1.error[errorKey];
+            if (refResult8.error) {
+              for (const errorKey of Object.keys(refResult8.error)) {
+                intermediateErrorMap8[`$.${i8}${errorKey.substring(1)}`] =
+                  refResult8.error[errorKey];
               }
             }
-            intermediateResult1[i1] = refResult1.value;
+            intermediateResult8[i8] = refResult8.value;
           }
         }
-        if (Object.keys(intermediateErrorMap1).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap1)) {
+        if (Object.keys(intermediateErrorMap8).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap8)) {
             errorMap[`$.accessTokens${errorKey.substring(1)}`] =
-              intermediateErrorMap1[errorKey];
+              intermediateErrorMap8[errorKey];
           }
         } else {
-          result["accessTokens"] = intermediateResult1;
+          result["accessTokens"] = intermediateResult8;
         }
       }
     }
@@ -924,88 +924,88 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           key: "validator.undefined",
         };
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch2 = false;
         errorMap[`$.session`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch2) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap4 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["session"];
+          let intermediateValue4 = value["session"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue4 === null || intermediateValue4 === undefined) {
+            intermediateErrorMap4[`$`] = {
               key: "validator.undefined",
             };
           } else {
             if (
-              typeof intermediateValue2 !== "string" ||
+              typeof intermediateValue4 !== "string" ||
               (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                intermediateValue2,
+                intermediateValue4,
               ) &&
-                !/^[a-f0-9]{32}$/gi.test(intermediateValue2))
+                !/^[a-f0-9]{32}$/gi.test(intermediateValue4))
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap4[`$`] = {
                 key: "validator.pattern",
                 patternExplanation: "UUID",
               };
-            } else if (intermediateValue2.length === 32) {
-              intermediateResult2 =
-                intermediateValue2.slice(0, 8) +
+            } else if (intermediateValue4.length === 32) {
+              intermediateResult4 =
+                intermediateValue4.slice(0, 8) +
                 "-" +
-                intermediateValue2.slice(8, 12) +
+                intermediateValue4.slice(8, 12) +
                 "-" +
-                intermediateValue2.slice(12, 16) +
+                intermediateValue4.slice(12, 16) +
                 "-" +
-                intermediateValue2.slice(16, 20) +
+                intermediateValue4.slice(16, 20) +
                 "-" +
-                intermediateValue2.slice(20);
+                intermediateValue4.slice(20);
             } else {
-              intermediateResult2 = intermediateValue2;
+              intermediateResult4 = intermediateValue4;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.session`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap4).length > 0) {
+            errorMap[`$.session`].errors.push(intermediateErrorMap4);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch2 = true;
             delete errorMap[`$.session`];
-            result["session"] = intermediateResult2;
+            result["session"] = intermediateResult4;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch2) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap4 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["session"];
+          let intermediateValue4 = value["session"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue4 === null || intermediateValue4 === undefined) {
+            intermediateErrorMap4[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 =
-              validateQueryResultStoreSessionStore(intermediateValue2);
+            const refResult4 =
+              validateQueryResultStoreSessionStore(intermediateValue4);
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                intermediateErrorMap2[`$${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult4.error) {
+              for (const errorKey of Object.keys(refResult4.error)) {
+                intermediateErrorMap4[`$${errorKey.substring(1)}`] =
+                  refResult4.error[errorKey];
               }
             }
-            intermediateResult2 = refResult2.value;
+            intermediateResult4 = refResult4.value;
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.session`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap4).length > 0) {
+            errorMap[`$.session`].errors.push(intermediateErrorMap4);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch2 = true;
             delete errorMap[`$.session`];
-            result["session"] = intermediateResult2;
+            result["session"] = intermediateResult4;
           }
         }
       }
@@ -1041,86 +1041,86 @@ export function validateQueryResultStoreSessionStoreToken(value) {
       ) {
         result["refreshToken"] = undefined;
       } else {
-        let hasAnyOfMatch0 = false;
+        let hasAnyOfMatch4 = false;
         errorMap[`$.refreshToken`] = {
           key: "validator.anyOf",
           errors: [],
         };
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch4) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap6 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["refreshToken"];
+          let intermediateValue6 = value["refreshToken"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateResult2 = undefined;
+          if (intermediateValue6 === null || intermediateValue6 === undefined) {
+            intermediateResult6 = undefined;
           } else {
             if (
-              typeof intermediateValue2 !== "string" ||
+              typeof intermediateValue6 !== "string" ||
               (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                intermediateValue2,
+                intermediateValue6,
               ) &&
-                !/^[a-f0-9]{32}$/gi.test(intermediateValue2))
+                !/^[a-f0-9]{32}$/gi.test(intermediateValue6))
             ) {
-              intermediateErrorMap2[`$`] = {
+              intermediateErrorMap6[`$`] = {
                 key: "validator.pattern",
                 patternExplanation: "UUID",
               };
-            } else if (intermediateValue2.length === 32) {
-              intermediateResult2 =
-                intermediateValue2.slice(0, 8) +
+            } else if (intermediateValue6.length === 32) {
+              intermediateResult6 =
+                intermediateValue6.slice(0, 8) +
                 "-" +
-                intermediateValue2.slice(8, 12) +
+                intermediateValue6.slice(8, 12) +
                 "-" +
-                intermediateValue2.slice(12, 16) +
+                intermediateValue6.slice(12, 16) +
                 "-" +
-                intermediateValue2.slice(16, 20) +
+                intermediateValue6.slice(16, 20) +
                 "-" +
-                intermediateValue2.slice(20);
+                intermediateValue6.slice(20);
             } else {
-              intermediateResult2 = intermediateValue2;
+              intermediateResult6 = intermediateValue6;
             }
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.refreshToken`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap6).length > 0) {
+            errorMap[`$.refreshToken`].errors.push(intermediateErrorMap6);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch4 = true;
             delete errorMap[`$.refreshToken`];
-            result["refreshToken"] = intermediateResult2;
+            result["refreshToken"] = intermediateResult6;
           }
         }
-        if (!hasAnyOfMatch0) {
+        if (!hasAnyOfMatch4) {
           /** @type {ValidatorErrorMap} */
-          const intermediateErrorMap2 = {};
+          const intermediateErrorMap6 = {};
           /** @type {any} */
-          let intermediateResult2 = undefined;
+          let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue2 = value["refreshToken"];
+          let intermediateValue6 = value["refreshToken"];
 
-          if (intermediateValue2 === null || intermediateValue2 === undefined) {
-            intermediateErrorMap2[`$`] = {
+          if (intermediateValue6 === null || intermediateValue6 === undefined) {
+            intermediateErrorMap6[`$`] = {
               key: "validator.undefined",
             };
           } else {
-            const refResult2 =
-              validateQueryResultStoreSessionStoreToken(intermediateValue2);
+            const refResult6 =
+              validateQueryResultStoreSessionStoreToken(intermediateValue6);
 
-            if (refResult2.error) {
-              for (const errorKey of Object.keys(refResult2.error)) {
-                intermediateErrorMap2[`$${errorKey.substring(1)}`] =
-                  refResult2.error[errorKey];
+            if (refResult6.error) {
+              for (const errorKey of Object.keys(refResult6.error)) {
+                intermediateErrorMap6[`$${errorKey.substring(1)}`] =
+                  refResult6.error[errorKey];
               }
             }
-            intermediateResult2 = refResult2.value;
+            intermediateResult6 = refResult6.value;
           }
-          if (Object.keys(intermediateErrorMap2).length > 0) {
-            errorMap[`$.refreshToken`].errors.push(intermediateErrorMap2);
+          if (Object.keys(intermediateErrorMap6).length > 0) {
+            errorMap[`$.refreshToken`].errors.push(intermediateErrorMap6);
           } else {
-            hasAnyOfMatch0 = true;
+            hasAnyOfMatch4 = true;
             delete errorMap[`$.refreshToken`];
-            result["refreshToken"] = intermediateResult2;
+            result["refreshToken"] = intermediateResult6;
           }
         }
       }
@@ -1177,17 +1177,17 @@ export function validateQueryResultStoreSessionStoreToken(value) {
       if (value["accessToken"] === null || value["accessToken"] === undefined) {
         result["accessToken"] = undefined;
       } else {
-        const refResult0 = validateQueryResultStoreSessionStoreToken(
+        const refResult7 = validateQueryResultStoreSessionStoreToken(
           value["accessToken"],
         );
 
-        if (refResult0.error) {
-          for (const errorKey of Object.keys(refResult0.error)) {
+        if (refResult7.error) {
+          for (const errorKey of Object.keys(refResult7.error)) {
             errorMap[`$.accessToken${errorKey.substring(1)}`] =
-              refResult0.error[errorKey];
+              refResult7.error[errorKey];
           }
         }
-        result["accessToken"] = refResult0.value;
+        result["accessToken"] = refResult7.value;
       }
     }
   }
