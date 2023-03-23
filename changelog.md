@@ -4,6 +4,25 @@ editLink: false
 
 # Changelog
 
+### [v0.0.239](https://github.com/compasjs/compas/releases/tag/v0.0.239)
+
+#### Features
+
+- feat(code-gen/experimental): add discriminant support to anyOf
+  ([#2448](https://github.com/compasjs/compas/pull/2448))
+  [`ea502f`](https://github.com/compasjs/compas/commit/ea502f11813d0b4988b6312af70d78bc78cb9bb6)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): ignore relations when serializing api structure
+  [`a86a5b`](https://github.com/compasjs/compas/commit/a86a5bafb6ae6a16d0eb472b66c75277a0781455)
+
+#### Other
+
+- chore(code-gen/experimental): generate more unique variable names in the
+  validators
+  [`020ac5`](https://github.com/compasjs/compas/commit/020ac59bf85e920f2d25d18a3b5de0e50cfd1916)
+
 ### [v0.0.238](https://github.com/compasjs/compas/releases/tag/v0.0.238)
 
 #### Bug fixes
