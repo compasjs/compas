@@ -4,6 +4,29 @@ editLink: false
 
 # Changelog
 
+### [v0.0.240](https://github.com/compasjs/compas/releases/tag/v0.0.240)
+
+#### Breaking changes
+
+- fix(store): correctly send untransformed file if the transform is not yet
+  created in `fileSendTransformedImageResponse`
+  [`1fb24c`](https://github.com/compasjs/compas/commit/1fb24c0f70458a6648bbc41c42ec6de78833c8dd)
+  - Compas could have incorrectly send a random image when the necessary
+    transform was not found. This only affects you when you use
+    `fileSendTransformedImageResponse`. We now should correctly send the
+    original file on the first load.
+
+#### Other
+
+- chore(code-gen/experimental): satisfy Typescript
+  [`a496d2`](https://github.com/compasjs/compas/commit/a496d260feec3ab6aa07535bd0729f873799222b)
+
+#### Dependency updates
+
+- build(deps): bump prettier from 2.8.5 to 2.8.6
+  ([#2446](https://github.com/compasjs/compas/pull/2446))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+
 ### [v0.0.239](https://github.com/compasjs/compas/releases/tag/v0.0.239)
 
 #### Features
