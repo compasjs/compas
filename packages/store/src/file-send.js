@@ -175,8 +175,9 @@ export async function fileSendTransformedImageResponse(
             : file.contentType,
         },
       },
-      handlerTimeout: 30 * 1000,
     });
+
+    return fileSendResponse(s3Client, ctx, file, options);
   }
 
   if (loadedFile === file.id) {
@@ -207,7 +208,6 @@ export async function fileSendTransformedImageResponse(
             : file.contentType,
         },
       },
-      handlerTimeout: 30 * 1000,
     });
   }
 
