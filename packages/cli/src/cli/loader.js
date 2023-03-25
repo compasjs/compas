@@ -1,5 +1,5 @@
 import { existsSync } from "fs";
-import { readdir } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 import { pathToFileURL } from "url";
 import {
   AppError,
@@ -41,6 +41,11 @@ export async function cliLoaderLoadDirectories(event, options) {
       }
 
       const filePath = pathJoin(input.directory, f);
+      const fileContents = await readFile(filePath, "utf-8");
+
+      if (!fileContents.includes("export const cliDefinition = {")) {
+        continue;
+      }
 
       try {
         const imported = await import(
