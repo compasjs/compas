@@ -85,7 +85,7 @@ generator.generate({
   specification will be generated. This can be usefull when you utilize Compas
   in libraries.
 
-::: warning
+::: tip
 
 If the `targetLanguage` is set to `js`, TypeScript types will still be
 generated. You can use these generated types in combination with the TypeScript

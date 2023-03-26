@@ -1,16 +1,14 @@
-# Generating API clients
+# Importing a (remote) Compas structure or OpenAPI specification
 
-Compas supports generating API clients for all previously mentioned
-[targets](/generators/targets.html#api-clients). There are two main ways to get
-started with API client generation
-
-- Based on an OpenAPI specification
-- Based on a (remote) Compas structure
+Starting with the code generators requires a structure. Compas supports both
+loading a (remote) Compas structure as well as converting and using an OpenAPI
+specification.
 
 ## Importing an OpenAPI specification
 
-To import an OpenAPI specification, make sure it is in JSON instead of YAML.
-Then it can be converted to a Compas structure and added to the generator.
+To import an OpenAPI specification, make sure it is in JSON OpenAPI 3.x format
+instead of YAML. Then it can be converted to a Compas structure and added to the
+generator.
 
 ```js {7-8}
 import { readFileSync } from "fs";

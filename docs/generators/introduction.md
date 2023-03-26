@@ -57,5 +57,5 @@ And a bunch more! Start discovering the Compas code generators by reading more
 about
 
 - [The supported targets](/generators/targets.html)
-- [Generating API clients](/generators/api-clients.html)
+- [Generating API client from an OpenAPI specification](/generators/importing-structure.html)
 - [Or building your own structure](/generators/build-structure/types-and-validators.html)

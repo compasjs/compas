@@ -116,8 +116,8 @@ function getHomeSidebar() {
           link: "/generators/targets.html",
         },
         {
-          text: "API clients",
-          link: "/generators/api-clients.html",
+          text: "Generating from an structure",
+          link: "/generators/importing-structure.html",
         },
         {
           text: "Build a custom structure",
@@ -137,6 +137,19 @@ function getHomeSidebar() {
             {
               text: "Generating CRUD routes",
               link: "/generators/build-structure/crud.html",
+            },
+          ],
+        },
+        {
+          text: "Using the generated code",
+          items: [
+            {
+              text: "Koa router",
+              link: "/generators/usage/koa-router.html",
+            },
+            {
+              text: "Axios API client",
+              link: "/generators/usage/axios-api-client.html",
             },
           ],
         },
