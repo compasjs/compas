@@ -217,7 +217,7 @@ export function jobFileTransformImage(s3Client) {
     ) {
       sharpInstance.jpeg({ quality: options.q });
     } else if (options.contentType === "image/gif") {
-      sharpInstance.gif({ quality: options.q });
+      sharpInstance.gif({});
     }
 
     const image = await fileCreateOrUpdate(
