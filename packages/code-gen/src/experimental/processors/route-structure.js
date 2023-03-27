@@ -23,7 +23,10 @@ export function routeStructureCreate(generateContext) {
   const generator = new Generator(generateContext.log);
   generator.addStructure(JSON.parse(JSON.stringify(generateContext.structure)));
 
-  // Remove relations, so the whole entity graph isn't included when an entity is used as the respons type.
+  // Remove relations, so the whole entity graph isn't included when an entity is used as
+  // the respons type. Also disables `.enableQueries`. Both are necessary for
+  // backwards compat with existing code-gen. It tries to write out all types instead of
+  // only the selection necessary for an api client.
   for (const type of structureNamedTypes(generator.internalStructure)) {
     if (
       "relations" in type &&
@@ -31,6 +34,10 @@ export function routeStructureCreate(generateContext) {
       type.relations.length
     ) {
       type.relations = [];
+    }
+
+    if ("enableQueries" in type && type.enableQueries) {
+      type.enableQueries = false;
     }
   }
 
