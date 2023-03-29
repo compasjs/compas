@@ -20,7 +20,7 @@
   "dependencies": {
     "@compas/stdlib": "0.0.240",
     "@types/formidable": "2.0.5",
-    "@types/koa": "2.13.5",
+    "@types/koa": "2.13.6",
     "co-body": "6.1.0",
     "formidable": "2.1.1",
     "keygrip": "1.1.0",
