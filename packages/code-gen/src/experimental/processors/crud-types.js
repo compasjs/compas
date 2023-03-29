@@ -64,6 +64,8 @@ export function crudTypesCreate(generateContext) {
 function crudTypesItem(generateContext, crud, options) {
   const model = crudInformationGetModel(crud);
 
+  options.name = upperCaseFirst(options.name);
+
   const itemType = new ObjectType(crud.group, options.name).build();
   itemType.keys = {
     ...model.keys,
@@ -112,7 +114,9 @@ function crudTypesItem(generateContext, crud, options) {
 
     // @ts-expect-error
     crudTypesItem(generateContext, inlineCrud, {
-      name: `${upperCaseFirst(inlineCrud.fromParent?.field)}${options.name}`,
+      name: `${upperCaseFirst(inlineCrud.fromParent?.field)}Inline${
+        options.name
+      }`,
       type: options.type,
     });
 
