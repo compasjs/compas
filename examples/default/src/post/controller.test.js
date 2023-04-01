@@ -2,6 +2,7 @@ import { mainTestFn, test } from "@compas/cli";
 import { closeTestApp, createTestAppAndClient } from "@compas/server";
 import { uuid } from "@compas/stdlib";
 import axios from "axios";
+import { axiosInterceptErrorAndWrapWithAppError } from "../generated/application/common/api-client.js";
 import {
   apiPostCreate,
   apiPostSingle,
@@ -16,6 +17,7 @@ test("post/controller", async (t) => {
   // the baseUrl.
   const axiosInstance = axios.create();
   await createTestAppAndClient(app, axiosInstance);
+  axiosInterceptErrorAndWrapWithAppError(axiosInstance);
 
   // We skip testing `apiPostList`, `apiPostSingle` and `apiPostCreate` since these
   // implementations are generated and do not use `preModifiers`. If you add those

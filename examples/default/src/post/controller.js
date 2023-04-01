@@ -4,7 +4,7 @@ import { postSingle } from "../generated/application/post/events.js";
 import { sql } from "../services/core.js";
 import { postUpdate } from "./events.js";
 
-postHandlers.update = async (ctx, next) => {
+postHandlers.update = async (ctx) => {
   const post = await postSingle(newEventFromEvent(ctx.event), sql, {
     where: {
       id: ctx.validatedParams.postId,
@@ -18,6 +18,4 @@ postHandlers.update = async (ctx, next) => {
   ctx.body = {
     success: true,
   };
-
-  return next();
 };

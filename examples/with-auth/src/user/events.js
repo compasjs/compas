@@ -16,7 +16,7 @@ import {
   sessionStoreSettings,
   sessionTransportSettings,
 } from "../constants.js";
-import { queries } from "../generated/application/database/index.js";
+import { queries } from "../generated/application/common/database.js";
 import { queryUser } from "../generated/application/database/user.js";
 import { sql } from "../services/core.js";
 

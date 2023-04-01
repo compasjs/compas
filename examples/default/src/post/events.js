@@ -1,5 +1,5 @@
 import { eventStart, eventStop } from "@compas/stdlib";
-import { queries } from "../generated/application/database/index.js";
+import { queries } from "../generated/application/common/database.js";
 
 /**
  *

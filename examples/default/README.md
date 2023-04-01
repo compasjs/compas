@@ -6,10 +6,10 @@ template via [create-compas](https://www.npmjs.com/package/create-compas).
 
 ```shell
 # Via NPM
-npx create-compas@latest
+npx create-compas@latest --template default
 
 # Or with Yarn
-yarn create compas
+yarn create compas --template default
 ```
 
 ## Getting started

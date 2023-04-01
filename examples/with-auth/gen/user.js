@@ -3,9 +3,9 @@ import { TypeCreator } from "@compas/code-gen";
 /**
  * Apply the 'post' routes and related types
  *
- * @param {App} app
+ * @param {import("@compas/code-gen/experimental").Generator} generator
  */
-export function extendWithUser(app) {
+export function extendWithUser(generator) {
   const T = new TypeCreator("user");
   const R = T.router("/user");
 
@@ -26,7 +26,7 @@ export function extendWithUser(app) {
     refreshToken: T.string(),
   });
 
-  app.add(
+  generator.add(
     R.post("/register", "register")
       .body({
         email,

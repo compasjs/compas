@@ -6,11 +6,10 @@ import {
   objectStorageCreateClient,
   objectStorageEnsureBucket,
   objectStorageGetDevelopmentConfig,
+  setStoreQueries,
 } from "@compas/store";
-import {
-  router,
-  setBodyParsers,
-} from "./generated/application/common/router.js";
+import { queries } from "./generated/application/common/database.js";
+import { router } from "./generated/application/common/router.js";
 import {
   app,
   bucketName,
@@ -39,6 +38,7 @@ export async function initializeServices() {
       createIfNotExists: !isProduction(),
     }),
   );
+  setStoreQueries(queries);
 
   setS3Client(
     objectStorageCreateClient(
@@ -63,6 +63,7 @@ export async function initializeTestServices() {
   );
 
   setSql(await createTestPostgresDatabase());
+  setStoreQueries(queries);
 
   setS3Client(objectStorageCreateClient(objectStorageGetDevelopmentConfig()));
   setBucketName(uuid());
@@ -98,9 +99,7 @@ async function createAppAndLoadControllers() {
   );
 
   // Use the generated router
-  app.use(router);
-
-  setBodyParsers(createBodyParsers());
+  app.use(router(createBodyParsers()));
 
   // Controller imports;
   // These files are not imported in any other file, but since they are needed to add the

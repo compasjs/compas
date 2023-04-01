@@ -7,10 +7,7 @@ import {
   objectStorageEnsureBucket,
   objectStorageGetDevelopmentConfig,
 } from "@compas/store";
-import {
-  router,
-  setBodyParsers,
-} from "./generated/application/common/router.js";
+import { router } from "./generated/application/common/router.js";
 import { postRegisterCrud } from "./generated/application/post/crud.js";
 import {
   app,
@@ -100,9 +97,8 @@ async function createAppAndLoadControllers() {
   );
 
   // Use the generated router
-  app.use(router);
+  app.use(router(createBodyParsers()));
 
-  setBodyParsers(createBodyParsers());
   postRegisterCrud({ sql });
 
   // Controller imports;

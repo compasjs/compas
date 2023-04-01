@@ -1,4 +1,0 @@
-{
-  "reporter": ["lcov", "text", "json-summary"],
-  "exclude": ["generated", "**/generated", "**/*.test.js"]
-}

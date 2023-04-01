@@ -1,4 +1,4 @@
-import { App } from "@compas/code-gen";
+import { Generator } from "@compas/code-gen/experimental";
 import { spawn } from "@compas/stdlib";
 import { storeGetStructure } from "@compas/store";
 import { extendWithDatabase } from "../gen/database.js";
@@ -37,7 +37,7 @@ async function cliExecutor(logger, state) {
   // No subcommand given, so we generate all targets
   const generateAllTargets = state.command.at(-1) === "generate";
 
-  const steps = [generateTypes];
+  const steps = [];
 
   if (state.flags.skipLint !== true) {
     steps.push(executeLinter);
@@ -78,59 +78,39 @@ async function cliExecutor(logger, state) {
  * It also generates an SVG structure of the database schema.
  *
  * @param {import("@compas/stdlib").Logger} logger
- * @returns {Promise<import("@compas/cli").CliResult|undefined>}
  */
-async function generateApplication(logger) {
-  const app = new App();
-  app.logger = logger;
+function generateApplication(logger) {
+  const generator = new Generator(logger);
 
-  app.extend(storeGetStructure());
-  extendWithDatabase(app);
-  extendWithPost(app);
+  generator.addStructure(storeGetStructure());
+  extendWithDatabase(generator);
+  extendWithPost(generator);
 
-  await app.generate({
-    enabledGenerators: ["validator", "router", "sql", "apiClient"],
+  generator.generate({
     outputDirectory: "./src/generated/application",
-    dumpStructure: true,
-    dumpApiStructure: true,
-    dumpPostgres: true,
-  });
-
-  app.logger.info(`Visualising database structure...`);
-
-  const { exitCode } = await spawn("npx", [
-    "compas",
-    "visualise",
-    "erd",
-    "--generated-directory",
-    "./src/generated/application",
-    "--output",
-    "./docs/erd.svg",
-  ]);
-
-  if (exitCode !== 0) {
-    return {
-      exitStatus: "failed",
-    };
-  }
-}
-
-/**
- * Generate types that combines all generated targats.
- *
- * @param {import("@compas/stdlib").Logger} logger
- * @returns {Promise<import("@compas/cli").CliResult|undefined>}
- */
-async function generateTypes(logger) {
-  const app = new App();
-  app.logger = logger;
-
-  await app.generateTypes({
-    outputDirectory: "./types/generated",
-    inputPaths: [
-      "./src/generated/application" /* you can add other generated directories here */,
-    ],
-    dumpCompasTypes: true,
+    targetLanguage: "js",
+    generators: {
+      router: {
+        target: {
+          library: "koa",
+        },
+        exposeApiStructure: true,
+      },
+      database: {
+        target: {
+          dialect: "postgres",
+          includeDDL: true,
+        },
+        includeEntityDiagram: true,
+      },
+      structure: {},
+      apiClient: {
+        target: {
+          library: "axios",
+          targetRuntime: "node.js",
+        },
+      },
+    },
   });
 }
 

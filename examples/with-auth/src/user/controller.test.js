@@ -2,6 +2,7 @@ import { mainTestFn, test } from "@compas/cli";
 import { closeTestApp, createTestAppAndClient } from "@compas/server";
 import { uuid } from "@compas/stdlib";
 import axios from "axios";
+import { axiosInterceptErrorAndWrapWithAppError } from "../generated/application/common/api-client.js";
 import { queryUser } from "../generated/application/database/user.js";
 import {
   apiUserLogin,
@@ -19,6 +20,7 @@ test("user/controller", async (t) => {
   // the baseUrl.
   const axiosInstance = axios.create();
   await createTestAppAndClient(app, axiosInstance);
+  axiosInterceptErrorAndWrapWithAppError(axiosInstance);
 
   t.test("apiUserRegister", (t) => {
     t.test("success", async (t) => {

@@ -13,7 +13,7 @@ import {
   userResolveSession,
 } from "./events.js";
 
-userHandlers.register = async (ctx, next) => {
+userHandlers.register = async (ctx) => {
   await sql.begin((sql) =>
     userRegister(newEventFromEvent(ctx.event), sql, ctx.validatedBody),
   );
@@ -21,30 +21,24 @@ userHandlers.register = async (ctx, next) => {
   ctx.body = {
     success: true,
   };
-
-  return next();
 };
 
-userHandlers.login = async (ctx, next) => {
+userHandlers.login = async (ctx) => {
   ctx.body = await userLogin(
     newEventFromEvent(ctx.event),
     sql,
     ctx.validatedBody,
   );
-
-  return next();
 };
 
-userHandlers.refreshTokens = async (ctx, next) => {
+userHandlers.refreshTokens = async (ctx) => {
   ctx.body = await userRefreshTokens(
     newEventFromEvent(ctx.event),
     ctx.validatedBody,
   );
-
-  return next();
 };
 
-userHandlers.logout = async (ctx, next) => {
+userHandlers.logout = async (ctx) => {
   const { value } = await sessionTransportLoadFromContext(
     newEventFromEvent(ctx.event),
     sql,
@@ -65,17 +59,13 @@ userHandlers.logout = async (ctx, next) => {
   ctx.body = {
     success: true,
   };
-
-  return next();
 };
 
-userHandlers.me = async (ctx, next) => {
+userHandlers.me = async (ctx) => {
   const user = await userResolveSession(newEventFromEvent(ctx.event), ctx);
 
   ctx.body = {
     email: user.email,
     createdAt: user.createdAt,
   };
-
-  return next();
 };

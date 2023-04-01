@@ -3,12 +3,12 @@ import { TypeCreator } from "@compas/code-gen";
 /**
  * Apply the database structure
  *
- * @param {App} app
+ * @param {import("@compas/code-gen/experimental").Generator} generator
  */
-export function extendWithDatabase(app) {
+export function extendWithDatabase(generator) {
   const T = new TypeCreator("database");
 
-  app.add(
+  generator.add(
     T.object("user")
       .keys({
         email: T.string().searchable(),
