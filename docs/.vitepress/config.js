@@ -276,7 +276,7 @@ function getExamplesSidebar() {
         link: "/examples.html",
       },
       ...files.map((it) => ({
-        text: it.slice(0, 1).toUpperCase() + it.slice(0, -3).replace("-", " "),
+        text: it.slice(0, 1).toUpperCase() + it.slice(1, -3).replace("-", " "),
         link: `/examples/${it.replace(".md", ".html")}`,
       })),
     ],
