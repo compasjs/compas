@@ -216,6 +216,6 @@ T.object("user")
   });
 ```
 
-All select queries will ignore soft deletes by default, except when specifically
-included. The exception is for generated delete queries. These will not ignore
-already soft deleted records, and always hard delete them.
+All generated queries will ignore soft deletes by default, except when
+specifically included. The exception is for generated delete queries. These will
+not ignore already soft deleted records, and always hard delete them.

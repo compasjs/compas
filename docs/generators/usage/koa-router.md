@@ -26,7 +26,30 @@ generator.generate({
 
 ## Setup
 
-```js
+::: code-group
+
+```js [With @compas/server]
+import { getApp, createBodyParsers } from "@compas/server";
+import { router } from "./src/generated/common/router.js";
+
+// Includes logging, error handling, CORS handling and some more, returning a Koa
+// application.
+const app = getApp();
+
+// Add your own middleware and custom route handlers
+app.use((ctx, next) => {
+  // ...
+  return next();
+});
+
+// And finally use the generated router middleware
+// We pass in a compatible body parser from @compas/server as well.
+app.use(router(createBodyParsers()));
+
+app.listen(3000);
+```
+
+```js [Using Koa directly]
 import Koa from "koa";
 import { router } from "./src/generated/common/router.js";
 
@@ -39,10 +62,18 @@ app.use((ctx, next) => {
 });
 
 // And finally use the generated router middleware
-app.use(router());
+app.use(
+  router({
+    bodyParser: async (ctx) => {
+      // use a library to parse the request body
+    },
+  }),
+);
 
 app.listen(3000);
 ```
+
+:::
 
 All your routes are now be accessible but return a `405 Not Implemented` HTTP
 status. Let's see how to add route implementations.
@@ -91,13 +122,6 @@ imaginaryHandlers.route = async (ctx) => {
 ## Integrate with other Compas features
 
 Compas provides a few features to make working with Koa and Compas a more
-integrated experience.
-
-::: details
-
-Under construction
-
-- `getApp` from `@compas/server`
-- `createBodyParsers` from `@compas/server`
-
-:::
+integrated experience. Take a look at for example
+[session handling](/features/session-handling.html) or
+[file handling](/features/file-handling.html).
