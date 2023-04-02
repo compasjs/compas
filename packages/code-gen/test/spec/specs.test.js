@@ -1,3 +1,4 @@
+import { rm } from "node:fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { environment, exec } from "@compas/stdlib";
 import { codeGenSpecification } from "./specification.js";
@@ -11,7 +12,8 @@ test("code-gen/specification", (t) => {
 
   // The list of implementations that can run the specification tests
   const implementations = [
-    "./packages/code-gen/test/specification-tests/js.js",
+    "./packages/code-gen/test/spec-implementations/js.js",
+    "./packages/code-gen/test/spec-implementations/ts.js",
   ];
 
   // Count the number of checks in the provided specification.
@@ -78,5 +80,11 @@ test("code-gen/specification", (t) => {
         }
       });
     }
+  });
+
+  t.test("teardown", async (t) => {
+    await rm("./.cache/specification", { force: true, recursive: true });
+
+    t.pass();
   });
 });

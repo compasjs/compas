@@ -8,7 +8,7 @@ import {
 import { pathJoin, uuid } from "@compas/stdlib";
 import axios from "axios";
 import { sql } from "../../../../../src/testing.js";
-import { codeGenToTemporaryDirectory } from "../../../test/utils.test.js";
+import { codeGenToTemporaryDirectory } from "../../../test/legacy/utils.test.js";
 import { TypeCreator } from "../../builders/index.js";
 
 mainTestFn(import.meta);

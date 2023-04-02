@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { pathJoin } from "@compas/stdlib";
-import { TypeCreator } from "../../src/builders/index.js";
+import { TypeCreator } from "../../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);

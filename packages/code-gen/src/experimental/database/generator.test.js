@@ -1,4 +1,5 @@
 import { mainTestFn, test } from "@compas/cli";
+import { testTemporaryDirectory } from "../../../../../src/testing.js";
 import { Generator } from "../generator.js";
 import {
   testExperimentalGenerateContext,
@@ -11,7 +12,7 @@ test("code-gen/experimental/database/generator", (t) => {
   t.test("databaseGenerator", (t) => {
     t.test("test", (t) => {
       testExperimentalGenerateFiles(t, {
-        outputDirectory: "./.cache/experimental/database",
+        outputDirectory: `${testTemporaryDirectory}/database`,
         generators: {
           structure: {},
           database: {

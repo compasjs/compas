@@ -1,18 +1,10 @@
-import { writeFileSync } from "fs";
-import {
-  AppError,
-  environment,
-  exec,
-  isNil,
-  mainFn,
-  pathJoin,
-} from "@compas/stdlib";
+import { AppError, environment, isNil, mainFn, pathJoin } from "@compas/stdlib";
 import { Generator } from "../../src/experimental/index.js";
 import { upperCaseFirst } from "../../src/utils.js";
-import { codeGenSpecification } from "../specification/specification.js";
-import { codeGenSpecificationCreate } from "../specification/structure.js";
+import { codeGenSpecification } from "../spec/specification.js";
+import { codeGenSpecificationCreate } from "../spec/structure.js";
 
-const generateOutputDirectory = `./.cache/specification/ts/generated`;
+const generateOutputDirectory = `./.cache/specification/js/generated`;
 
 mainFn(import.meta, async (logger) => {
   const IN_TEST = environment.COMPAS_SPEC_TEST === "true";
@@ -42,7 +34,7 @@ mainFn(import.meta, async (logger) => {
  * @param {import("@compas/stdlib").Logger} logger
  * @param {{ enableFullLogging: boolean }} options
  */
-export async function specificationTestsRun(logger, options) {
+async function specificationTestsRun(logger, options) {
   const results = {
     log: logger,
     passed: 0,
@@ -78,7 +70,7 @@ async function dispatchSpec(result, spec) {
       await runSuite(result, spec);
       break;
     case "generate":
-      await runGenerate(result, spec);
+      runGenerate(result, spec);
       break;
     case "validator":
       await runValidator(result, spec);
@@ -134,62 +126,25 @@ async function runSuite(result, spec) {
  * @param {SpecResult} result
  * @param {import("../specification/specification").CodeGenSpecificationGenerate} spec
  */
-async function runGenerate(result, spec) {
+function runGenerate(result, spec) {
   try {
     const generator = new Generator(result.log);
     generator.addStructure(spec.structureDirectory);
     generator.generate({
-      targetLanguage: "ts",
+      targetLanguage: "js",
       outputDirectory: generateOutputDirectory,
       generators: {
         validators: {
           includeBaseTypes: true,
         },
-        apiClient: {
+        router: {
           target: {
-            library: "axios",
-            globalClient: true,
-            targetRuntime: "browser",
-            includeWrapper: "react-query",
+            library: "koa",
           },
+          exposeApiStructure: true,
         },
       },
     });
-
-    writeFileSync(
-      pathJoin(generateOutputDirectory, "../tsconfig.json"),
-      JSON.stringify({
-        compilerOptions: {
-          target: "es5",
-          lib: ["dom", "dom.iterable", "esnext"],
-          allowJs: true,
-          skipLibCheck: true,
-          strict: true,
-          forceConsistentCasingInFileNames: true,
-          downlevelIteration: true,
-          esModuleInterop: true,
-          module: "esnext",
-          moduleResolution: "node",
-          resolveJsonModule: true,
-          isolatedModules: true,
-          jsx: "preserve",
-          noImplicitAny: false,
-        },
-        exclude: ["node_modules"],
-        include: ["**/*.ts", "**/*.d.ts", "**/*.tsx"],
-      }),
-    );
-
-    const { stdout, exitCode } = await exec(
-      `tsc -p ${generateOutputDirectory}/../tsconfig.json`,
-    );
-
-    if (exitCode !== 0) {
-      throw AppError.serverError({
-        message: "Could not compile with tsc",
-        stdout,
-      });
-    }
 
     result.passed++;
   } catch (e) {
@@ -270,8 +225,72 @@ async function runValidator(result, spec) {
  * @param {SpecResult} result
  * @param {import("../specification/specification").CodeGenSpecificationRouteMatcher} spec
  */
-function runRouteMatcher(result, spec) {
-  result.skipped++;
+async function runRouteMatcher(result, spec) {
+  try {
+    const { routeMatcher } = await import(
+      pathJoin(
+        process.cwd(),
+        generateOutputDirectory,
+        `common/route-matcher.js`,
+      )
+    );
 
-  return spec;
+    const routeMatch = routeMatcher(
+      spec.matchInput.method,
+      spec.matchInput.path,
+    );
+
+    if (isNil(routeMatch) && isNil(spec.matchOutput)) {
+      result.passed++;
+    } else if (isNil(spec.matchOutput)) {
+      throw AppError.serverError({
+        message: "Expected no route match, but found a match",
+        spec,
+        routeMatch,
+      });
+    } else if (isNil(routeMatch)) {
+      throw AppError.serverError({
+        message: "Expected a route match, but found no match",
+        spec,
+      });
+    } else {
+      if (
+        routeMatch.route.group !== spec.matchOutput.route.group ||
+        routeMatch.route.name !== spec.matchOutput.route.name
+      ) {
+        throw AppError.serverError({
+          message: "Matched an invalid route",
+          spec,
+          routeMatch,
+        });
+      }
+
+      if (
+        Object.keys(routeMatch.params).length !==
+        Object.keys(spec.matchOutput.params).length
+      ) {
+        throw AppError.serverError({
+          message: "Did not match the appropriate number of params",
+          spec,
+          routeMatch,
+        });
+      }
+
+      for (const [key, value] of Object.entries(spec.matchOutput.params)) {
+        if (routeMatch.params[key] !== value) {
+          throw AppError.serverError({
+            message: "Matched an invalid route param",
+            spec,
+            routeMatch,
+          });
+        }
+      }
+
+      result.passed++;
+    }
+  } catch (e) {
+    result.failed++;
+    result.extraLogs.push(`Failed to route match at ${formatSpecPath(result)}`);
+    result.extraLogs.push(AppError.format(e));
+  }
 }

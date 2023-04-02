@@ -2,8 +2,8 @@ import { readFile } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { AppError, isNil, pathJoin, uuid } from "@compas/stdlib";
 import { query } from "@compas/store";
-import { sql } from "../../../../src/testing.js";
-import { TypeCreator } from "../../src/builders/index.js";
+import { sql } from "../../../../../src/testing.js";
+import { TypeCreator } from "../../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);

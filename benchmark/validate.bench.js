@@ -2,10 +2,13 @@ import { readFileSync } from "fs";
 import { bench, mainBenchFn } from "@compas/cli";
 import { Generator } from "@compas/code-gen/experimental";
 import { AppError, mainFn, pathJoin } from "@compas/stdlib";
+import { testTemporaryDirectory } from "../src/testing.js";
 
 mainFn(import.meta, main);
 
 async function main(logger) {
+  const baseDir = pathJoin(testTemporaryDirectory, `./bench-validate/`);
+
   const generator = new Generator(logger);
   generator.addStructure("./packages/code-gen/src/experimental/generated");
 
@@ -16,14 +19,11 @@ async function main(logger) {
         includeBaseTypes: true,
       },
     },
-    outputDirectory: "./.cache/test-output/code-gen",
+    outputDirectory: baseDir,
   });
 
   const { validateExperimentalStructure } = await import(
-    pathJoin(
-      process.cwd(),
-      "./.cache/test-output/code-gen/experimental/validators.js",
-    )
+    pathJoin(process.cwd(), baseDir, "./experimental/validators.js")
   );
 
   const structures = [

@@ -2,7 +2,7 @@
 import { pathToFileURL } from "url";
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
-import { TypeCreator } from "../../src/builders/index.js";
+import { TypeCreator } from "../../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);

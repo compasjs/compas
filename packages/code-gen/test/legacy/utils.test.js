@@ -1,6 +1,7 @@
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { exec, pathJoin, uuid } from "@compas/stdlib";
-import { App } from "../src/App.js";
+import { testTemporaryDirectory } from "../../../../src/testing.js";
+import { App } from "../../src/App.js";
 
 /**
  * Try to generate with the provided builders in a temporary directory.
@@ -9,7 +10,9 @@ import { App } from "../src/App.js";
  * - Execute file and capture stdout, stderr
  * - Return stdout, stderr, exitCode and the generated path.
  *
- * Since we use a sub directory on the 'temporaryDirectory', we don't have to clean up.
+ * Since we use a subdirectory on the 'temporaryDirectory', we don't have to clean up.
+ *
+ * @deprecated
  *
  * @param {{
  *   add?: Parameters<typeof App.prototype.add>,
@@ -27,7 +30,7 @@ import { App } from "../src/App.js";
  *  }>}
  */
 export async function codeGenToTemporaryDirectory(input, opts = {}) {
-  const baseDirectory = pathJoin(process.cwd(), ".cache/test-output", uuid());
+  const baseDirectory = pathJoin(process.cwd(), testTemporaryDirectory, uuid());
   const structureDirectory = pathJoin(baseDirectory, "/structure");
   const generatedDirectory = pathJoin(baseDirectory, "/generated");
 

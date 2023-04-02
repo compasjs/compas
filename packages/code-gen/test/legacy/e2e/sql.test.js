@@ -8,8 +8,8 @@ import {
   query,
   storeGetStructure,
 } from "@compas/store";
-import { sql as rootSql } from "../../../../src/testing.js";
-import { TypeCreator } from "../../src/builders/index.js";
+import { sql as rootSql } from "../../../../../src/testing.js";
+import { TypeCreator } from "../../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);

@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { mainTestFn, test } from "@compas/cli";
+import { testTemporaryDirectory } from "../../../../../src/testing.js";
 import { loadApiStructureFromOpenAPI } from "../../loaders.js";
 import { testExperimentalGenerateFiles } from "../testing.js";
 
@@ -9,7 +10,7 @@ test("code-gen/experimental/api-client/generator", (t) => {
   t.test("apiClientGenerator", (t) => {
     t.test("test", (t) => {
       testExperimentalGenerateFiles(t, {
-        outputDirectory: "./.cache/experimental/api-client",
+        outputDirectory: `${testTemporaryDirectory}/api-client`,
         generators: {
           structure: {},
 
@@ -29,7 +30,7 @@ test("code-gen/experimental/api-client/generator", (t) => {
 
     t.test("test - ts", (t) => {
       testExperimentalGenerateFiles(t, {
-        outputDirectory: "./.cache/experimental/api-client-ts",
+        outputDirectory: `${testTemporaryDirectory}/api-client-ts`,
         generators: {
           structure: {},
           apiClient: {
@@ -51,7 +52,7 @@ test("code-gen/experimental/api-client/generator", (t) => {
       testExperimentalGenerateFiles(
         t,
         {
-          outputDirectory: "./.cache/experimental/api-client-open-api",
+          outputDirectory: `${testTemporaryDirectory}/api-client-open-api`,
           generators: {
             structure: {},
 

@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { pathJoin } from "@compas/stdlib";
-import { codeGenToTemporaryDirectory } from "../../test/utils.test.js";
+import { codeGenToTemporaryDirectory } from "../../test/legacy/utils.test.js";
 import { TypeCreator } from "../builders/index.js";
 import { formatDocString, normalizeIndentationAndTrim } from "./comments.js";
 

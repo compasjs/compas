@@ -5,7 +5,7 @@ import { validateExperimentalGenerateOptions } from "./generated/experimental/va
 import { Generator } from "./generator.js";
 
 /**
- * Create a CodeGen context for used for testing
+ * Create a code-gen context for used for testing. Can be used for functions accepting a {@link GenerateContext}
  *
  * @param {Parameters<Parameters<typeof import("@compas/cli").test>[1]>[0]} t
  * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
@@ -16,8 +16,8 @@ export function testExperimentalGenerateContext(t, options, structure) {
   return {
     log: t.log,
     options,
-    files: new Map(),
     structure: structure ?? getDefaultStructure(),
+    files: new Map(),
   };
 }
 
@@ -30,7 +30,6 @@ export function testExperimentalGenerateContext(t, options, structure) {
  * @returns {import("./generate").OutputFile[]}
  */
 export function testExperimentalGenerateFiles(t, options, structure) {
-  const context = testExperimentalGenerateContext(t, options, structure);
   const validatedOptions = validateExperimentalGenerateOptions(options);
 
   if (validatedOptions.error) {
@@ -41,7 +40,7 @@ export function testExperimentalGenerateFiles(t, options, structure) {
   }
 
   return generateExecute(
-    new Generator(t.log).addStructure(context.structure),
+    new Generator(t.log).addStructure(structure ?? getDefaultStructure()),
     validatedOptions.value,
   );
 }

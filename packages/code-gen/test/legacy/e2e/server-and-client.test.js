@@ -17,7 +17,7 @@ import {
   streamToBuffer,
 } from "@compas/stdlib";
 import axios from "axios";
-import { TypeCreator } from "../../src/builders/index.js";
+import { TypeCreator } from "../../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);

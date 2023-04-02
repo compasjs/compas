@@ -4,9 +4,9 @@ import assert from "assert";
 import { readFileSync } from "fs";
 import { pathToFileURL } from "url";
 import { bench, mainBenchFn } from "@compas/cli";
+import { codeGenToTemporaryDirectory } from "@compas/code-gen/test/legacy/utils.test.js";
 import { createBodyParsers } from "@compas/server";
 import { AppError, mainFn, pathJoin } from "@compas/stdlib";
-import { codeGenToTemporaryDirectory } from "../packages/code-gen/test/utils.test.js";
 
 mainFn(import.meta, main);
 

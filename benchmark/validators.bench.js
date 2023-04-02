@@ -6,6 +6,7 @@ import { TypeCreator } from "@compas/code-gen";
 import { Generator } from "@compas/code-gen/experimental";
 import { mainFn, pathJoin } from "@compas/stdlib";
 import FastestValidator from "fastest-validator";
+import { testTemporaryDirectory } from "../src/testing.js";
 
 const simpleInput = {
   foo: true,
@@ -117,6 +118,8 @@ const fastestValidatorNested = fastestValidator.compile({
 mainFn(import.meta, main);
 
 async function main(logger) {
+  const baseDir = pathJoin(testTemporaryDirectory, `./bench-validators/`);
+
   const T = new TypeCreator("bench");
 
   const reusable = {
@@ -138,7 +141,7 @@ async function main(logger) {
   generator.add(...types);
   generator.generate({
     targetLanguage: "js",
-    outputDirectory: `./.cache/test-output/brrrr/`,
+    outputDirectory: baseDir,
     generators: {
       validators: {
         includeBaseTypes: true,
@@ -147,9 +150,7 @@ async function main(logger) {
   });
 
   const experimentalValidators = await import(
-    pathToFileURL(
-      pathJoin("./.cache/test-output/brrrr/", "bench/validators.js"),
-    )
+    pathToFileURL(pathJoin(baseDir, "bench/validators.js"))
   );
 
   bench("compas/experimental validator simple", (b) => {

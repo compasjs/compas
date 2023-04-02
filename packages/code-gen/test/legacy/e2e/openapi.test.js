@@ -1,8 +1,9 @@
 import { readFile, rm } from "fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { isNil, pathJoin, uuid } from "@compas/stdlib";
-import { App } from "../../src/App.js";
-import { TypeCreator } from "../../src/builders/index.js";
+import { testTemporaryDirectory } from "../../../../../src/testing.js";
+import { App } from "../../../src/App.js";
+import { TypeCreator } from "../../../src/builders/index.js";
 import { codeGenToTemporaryDirectory } from "../utils.test.js";
 
 mainTestFn(import.meta);
@@ -149,7 +150,7 @@ test("code-gen/e2e/openapi", async (t) => {
 
   const outputFile = pathJoin(
     process.cwd(),
-    ".cache/test-output",
+    testTemporaryDirectory,
     uuid(),
     "openapi.json",
   );

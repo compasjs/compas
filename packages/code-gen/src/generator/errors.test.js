@@ -1,5 +1,5 @@
 import { mainTestFn, test } from "@compas/cli";
-import { codeGenToTemporaryDirectory } from "../../test/utils.test.js";
+import { codeGenToTemporaryDirectory } from "../../test/legacy/utils.test.js";
 import { TypeCreator } from "../builders/TypeCreator.js";
 
 mainTestFn(import.meta);

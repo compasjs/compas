@@ -7,6 +7,6 @@ lerna.json
 reactQueries.tsx
 docs/.vitepress/dist
 test/tmp
-.cache/test-output
+.cache/
 /docs/.vitepress/cache
 /docs/.vitepress/dist

@@ -1,3 +1,5 @@
+import { mkdir, rm } from "node:fs/promises";
+import { threadId } from "node:worker_threads";
 import { uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
@@ -23,6 +25,14 @@ export let s3Client;
 export const testBucketName = uuid();
 
 /**
+ * A temporary directory to write files to. Automatically accounts for multiple threads
+ * when running in tests.
+ *
+ * @type {string}
+ */
+export let testTemporaryDirectory = ".cache/tmp";
+
+/**
  * Inject services that can be used in tests across this repo.
  *
  * @returns {Promise<void>}
@@ -43,6 +53,9 @@ export async function injectTestServices() {
     await sql`SELECT now() AS db, ${new Date()}::timestamptz AS js`;
   sql.systemTimeOffset =
     new Date(result.js).getTime() - new Date(result.db).getTime();
+
+  testTemporaryDirectory = `.cache/tmp/${threadId}`;
+  await mkdir(testTemporaryDirectory, { recursive: true });
 }
 
 /**
@@ -56,4 +69,6 @@ export async function destroyTestServices() {
     bucketName: testBucketName,
     includeAllObjects: true,
   });
+
+  await rm(testTemporaryDirectory, { recursive: true, force: true });
 }
