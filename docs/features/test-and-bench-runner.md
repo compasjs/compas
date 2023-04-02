@@ -299,8 +299,8 @@ Compare `value` and `expected` using the Node.js built-in
 There are two ways to run tests:
 
 - `compas test` runs all tests in files where the name ends with `.test.js`
-- `compas ./path/to/file.test.js` runs a single test file, provided that the
-  file calls `mainTestFn(import.meta)`.
+- `compas run ./path/to/file.test.js` runs a single test file, if the file calls
+  `mainTestFn(import.meta)`.
 
 Whe running all tests, Compas will automatically utilize
 [worker threads](https://nodejs.org/api/worker_threads.html) to do some parallel

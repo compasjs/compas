@@ -197,26 +197,6 @@ function getHomeSidebar() {
           link: "/features/postgres-and-s3.html",
         },
         {
-          text: "Code generation",
-          link: "/features/code-gen-validators.html",
-        },
-        {
-          text: "Code generation API",
-          link: "/features/code-gen-api.html",
-        },
-        {
-          text: "Code generation API client",
-          link: "/features/code-gen-api-client.html",
-        },
-        {
-          text: "Code generation SQL queries",
-          link: "/features/code-gen-sql.html",
-        },
-        {
-          text: "Code generation CRUD",
-          link: "/features/code-gen-crud.html",
-        },
-        {
           text: "Postgres migrations",
           link: "/features/migrations.html",
         },
@@ -235,10 +215,6 @@ function getHomeSidebar() {
         {
           text: "Extending the CLI",
           link: "/features/extending-the-cli.html",
-        },
-        {
-          text: "Route invalidations",
-          link: "/features/route-invalidations.html",
         },
       ],
     },

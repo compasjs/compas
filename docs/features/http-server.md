@@ -30,7 +30,7 @@ async function main() {
 When we run this file we can already check out some default features.
 
 ```shell
-compas api
+compas run api
 # Or
 node ./scripts/api.js
 ```
