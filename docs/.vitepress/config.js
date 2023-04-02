@@ -151,6 +151,10 @@ function getHomeSidebar() {
               text: "Axios API client",
               link: "/generators/usage/axios-api-client.html",
             },
+            {
+              text: "Postgres database client",
+              link: "/generators/usage/js-postgres.html",
+            },
           ],
         },
       ],
