@@ -5,24 +5,9 @@ import { validateExperimentalGenerateOptions } from "./generated/experimental/va
 import { Generator } from "./generator.js";
 
 /**
- * Create a code-gen context for used for testing. Can be used for functions accepting a {@link GenerateContext}
- *
- * @param {Parameters<Parameters<typeof import("@compas/cli").test>[1]>[0]} t
- * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
- * @param {import("./generated/common/types").ExperimentalStructure} [structure]
- * @returns {import("./generate").GenerateContext}
- */
-export function testExperimentalGenerateContext(t, options, structure) {
-  return {
-    log: t.log,
-    options,
-    structure: structure ?? getDefaultStructure(),
-    files: new Map(),
-  };
-}
-
-/**
  * Fully run the generators and return the output files
+ *
+ * @deprecated
  *
  * @param {Parameters<Parameters<typeof import("@compas/cli").test>[1]>[0]} t
  * @param {import("./generated/common/types").ExperimentalGenerateOptions} options
