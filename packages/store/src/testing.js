@@ -172,7 +172,12 @@ export async function cleanupTestPostgresDatabase(sql) {
       ...sql.options,
       database: undefined,
     });
-    await deletionSql.unsafe(`DROP DATABASE ${sql.options.database}`);
+    try {
+      await deletionSql.unsafe(`DROP DATABASE ${sql.options.database}`);
+    } catch {
+      // We tried... Leftover databases will be cleaned up by `compas docker clean
+      // --project`.
+    }
     await deletionSql.end();
   }
 }
