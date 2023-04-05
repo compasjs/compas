@@ -5,6 +5,8 @@ export class AnyOfType extends TypeBuilder {
   constructor(group: any, name: any);
   internalValues: any[];
   /**
+   * Note that if duplicate types are found, they are deduplicated.
+   *
    * @param {...TypeBuilderLike} items
    * @returns {AnyOfType}
    */

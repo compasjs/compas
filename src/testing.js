@@ -44,6 +44,10 @@ export async function injectTestServices() {
 
   await objectStorageEnsureBucket(s3Client, {
     bucketName: testBucketName,
+
+    // @ts-expect-error
+    //
+    // The enum isn't resolved correctly for some reason
     locationConstraint: "eu-central-1",
   });
 
@@ -51,6 +55,7 @@ export async function injectTestServices() {
   // sql.systemTimeOffset is the amount of milliseconds system is ahead of Docker
   const [result] =
     await sql`SELECT now() AS db, ${new Date()}::timestamptz AS js`;
+  // @ts-expect-error
   sql.systemTimeOffset =
     new Date(result.js).getTime() - new Date(result.db).getTime();
 

@@ -42,6 +42,8 @@
  * } CodeGenSpecification
  */
 /**
+ * The full specification which can be used by implementations to check static behavior.
+ *
  * @type {CodeGenSpecification}
  */
 export const codeGenSpecification: CodeGenSpecification;

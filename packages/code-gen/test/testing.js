@@ -6,7 +6,7 @@ import { Generator } from "../src/experimental/index.js";
 
 /**
  * @param {{
- *   withOutputDirectory: string|undefined,
+ *   withOutputDirectory?: string,
  * }} options
  * @returns {import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions}
  */
@@ -24,6 +24,9 @@ function testGeneratorDefaultGenerateOptions(options) {
           library: "axios",
           targetRuntime: "node.js",
           globalClient: false,
+        },
+        responseValidation: {
+          looseObjectValidation: false,
         },
       },
       database: {
@@ -43,7 +46,6 @@ function testGeneratorDefaultGenerateOptions(options) {
         openApiRouteExtensions: {},
         openApiExtensions: {},
       },
-      types: {},
     },
   };
 }
@@ -51,7 +53,7 @@ function testGeneratorDefaultGenerateOptions(options) {
 /**
  * Tests errors that could occur while generating.
  *
- * @param {TestRunner} t
+ * @param {import("@compas/cli").TestRunner} t
  * @param {{
  *   partialError: string,
  *   generateOptions:
@@ -73,12 +75,17 @@ export function testGeneratorError(t, options, builders) {
       options.generateOptions ?? testGeneratorDefaultGenerateOptions({}),
     );
 
+    // @ts-expect-error
     if (options.pass) {
       t.pass();
     } else {
-      t.fail(`Expected an error: '${options.partialError}'.`);
+      t.fail(
+        // @ts-expect-error
+        `Expected an error, but the generator succeeded: '${options.partialError}'.`,
+      );
     }
   } catch (e) {
+    // @ts-expect-error
     if (options.pass) {
       t.fail(
         `Expected the input to pass. Found '${JSON.stringify(
@@ -87,6 +94,7 @@ export function testGeneratorError(t, options, builders) {
       );
       return;
     }
+
     if (!AppError.instanceOf(e)) {
       t.fail(
         `Expected the thrown error to be an AppError. Found '${JSON.stringify(
@@ -97,11 +105,13 @@ export function testGeneratorError(t, options, builders) {
       return;
     }
 
+    // @ts-expect-error
     if (e.key?.includes(options.partialError)) {
       t.pass();
       return;
     }
 
+    // @ts-expect-error
     if (e.info.message?.includes(options.partialError)) {
       t.pass();
       return;
@@ -109,6 +119,7 @@ export function testGeneratorError(t, options, builders) {
 
     if (
       Array.isArray(e.info.messages) &&
+      // @ts-expect-error
       e.info.messages.find((it) => it.includes(options.partialError))
     ) {
       t.pass();
@@ -116,6 +127,7 @@ export function testGeneratorError(t, options, builders) {
     }
 
     t.fail(
+      // @ts-expect-error
       `Could not match '${options.partialError}' in '${JSON.stringify(
         AppError.format(e),
       )}'`,
@@ -126,7 +138,7 @@ export function testGeneratorError(t, options, builders) {
 /**
  * Tests types that have been generated via the JS validators
  *
- * @param {TestRunner} t
+ * @param {import("@compas/cli").TestRunner} t
  * @param {{
  *   group: string,
  *   validatorName: string,
@@ -160,7 +172,7 @@ export async function testGeneratorType(t, options, builders) {
     });
   }
 
-  const file = await import(filePath);
+  const file = await import(pathJoin(process.cwd(), filePath));
 
   if (isNil(file[options.validatorName])) {
     throw AppError.serverError({
@@ -177,7 +189,7 @@ export async function testGeneratorType(t, options, builders) {
 /**
  * Tests if the outputFiles include the provided value
  *
- * @param {TestRunner} t
+ * @param {import("@compas/cli").TestRunner} t
  * @param {{
  *   relativePath: string,
  *   partialValue: string,
@@ -199,7 +211,17 @@ export function testGeneratorStaticOutput(t, options, builders) {
     (it) => it.relativePath === options.relativePath,
   );
 
-  t.fail(`The relative path '${options.relativePath}' could not be found.`);
+  if (!outputFile) {
+    t.fail(
+      `The relative path '${
+        options.relativePath
+      }' could not be found. Available files: ${JSON.stringify(
+        generatedFiles.map((it) => it.relativePath),
+      )}`,
+    );
+
+    return;
+  }
 
   t.ok(
     outputFile.contents.includes(options.partialValue),
@@ -210,7 +232,7 @@ export function testGeneratorStaticOutput(t, options, builders) {
 /**
  * Test the dynamic generator output. Returns the path where the files are written to.
  *
- * @param {TestRunner} t
+ * @param {import("@compas/cli").TestRunner} t
  * @param {{
  *   generateOptions:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,

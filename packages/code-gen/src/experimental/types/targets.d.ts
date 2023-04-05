@@ -1,5 +1,6 @@
 /**
- * Recursively check which targets are used by the provided type, including the references.
+ * Recursively check which targets are used by the provided type, including the
+ * references.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalTypeSystemDefinition} type
@@ -10,7 +11,8 @@ export function typeTargetsDetermine(
   type: import("../generated/common/types").ExperimentalTypeSystemDefinition,
 ): import("../generated/common/types").ExperimentalAnyDefinitionTarget[];
 /**
- * Filter out the targets that will be used based on the targets that the type provides special handling for and which targets can be used by the provider.
+ * Filter out the targets that will be used based on the targets that the type provides
+ * special handling for and which targets can be used by the provider.
  *
  * Does not alter the order of the provided {@link usedTargetsByGenerator} array.
  *
