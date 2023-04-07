@@ -945,7 +945,12 @@ export function validateExperimentalAnyDefinitionTarget(value) {
         convertedString0 !== "tsAxios" &&
         convertedString0 !== "jsAxiosNode" &&
         convertedString0 !== "tsAxiosBrowser" &&
-        convertedString0 !== "tsAxiosReactNative"
+        convertedString0 !== "tsAxiosReactNative" &&
+        convertedString0 !== "jsFetch" &&
+        convertedString0 !== "tsFetch" &&
+        convertedString0 !== "jsFetchNode" &&
+        convertedString0 !== "tsFetchBrowser" &&
+        convertedString0 !== "tsFetchReactNative"
       ) {
         errorMap[`$`] = {
           key: "validator.oneOf",
@@ -960,6 +965,11 @@ export function validateExperimentalAnyDefinitionTarget(value) {
             "jsAxiosNode",
             "tsAxiosBrowser",
             "tsAxiosReactNative",
+            "jsFetch",
+            "tsFetch",
+            "jsFetchNode",
+            "tsFetchBrowser",
+            "tsFetchReactNative",
           ],
           foundValue: convertedString0,
         };
@@ -9931,6 +9941,8 @@ export function validateExperimentalUuidDefinition(value) {
 }
 
 /**
+ * Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
+ *
  * @param {import("../common/types").ExperimentalGenerateOptionsInput|any} value
  * @returns {Either<import("../common/types").ExperimentalGenerateOptions, ValidatorErrorMap>}
  */
@@ -11047,6 +11059,207 @@ export function validateExperimentalGenerateOptions(value) {
                             intermediateErrorMap12[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["axios"],
+                              foundValue: convertedString13,
+                            };
+                          } else {
+                            intermediateResult12["library"] = convertedString13;
+                          }
+                        }
+                      }
+                      if (
+                        intermediateValue12["targetRuntime"] === null ||
+                        intermediateValue12["targetRuntime"] === undefined
+                      ) {
+                        intermediateErrorMap12[`$.targetRuntime`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        /** @type {string} */
+                        let convertedString14 =
+                          intermediateValue12["targetRuntime"];
+                        if (typeof convertedString14 !== "string") {
+                          intermediateErrorMap12[`$.targetRuntime`] = {
+                            key: "validator.string",
+                          };
+                        } else {
+                          if (convertedString14.length < 1) {
+                            intermediateErrorMap12[`$.targetRuntime`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (
+                            convertedString14 !== "node.js" &&
+                            convertedString14 !== "browser" &&
+                            convertedString14 !== "react-native"
+                          ) {
+                            intermediateErrorMap12[`$.targetRuntime`] = {
+                              key: "validator.oneOf",
+                              allowedValues: [
+                                "node.js",
+                                "browser",
+                                "react-native",
+                              ],
+                              foundValue: convertedString14,
+                            };
+                          } else {
+                            intermediateResult12["targetRuntime"] =
+                              convertedString14;
+                          }
+                        }
+                      }
+                      if (
+                        intermediateValue12["includeWrapper"] === null ||
+                        intermediateValue12["includeWrapper"] === undefined
+                      ) {
+                        intermediateResult12["includeWrapper"] = undefined;
+                      } else {
+                        /** @type {string} */
+                        let convertedString15 =
+                          intermediateValue12["includeWrapper"];
+                        if (typeof convertedString15 !== "string") {
+                          intermediateErrorMap12[`$.includeWrapper`] = {
+                            key: "validator.string",
+                          };
+                        } else {
+                          if (convertedString15.length === 0) {
+                            intermediateResult12["includeWrapper"] = undefined;
+                          } else {
+                            if (convertedString15.length < 1) {
+                              intermediateErrorMap12[`$.includeWrapper`] = {
+                                key: "validator.length",
+                                minLength: 1,
+                              };
+                            } else if (convertedString15 !== "react-query") {
+                              intermediateErrorMap12[`$.includeWrapper`] = {
+                                key: "validator.oneOf",
+                                allowedValues: ["react-query"],
+                                foundValue: convertedString15,
+                              };
+                            } else {
+                              intermediateResult12["includeWrapper"] =
+                                convertedString15;
+                            }
+                          }
+                        }
+                      }
+                      if (
+                        intermediateValue12["globalClient"] === null ||
+                        intermediateValue12["globalClient"] === undefined
+                      ) {
+                        intermediateResult12["globalClient"] = false;
+                      } else {
+                        if (
+                          intermediateValue12["globalClient"] === true ||
+                          intermediateValue12["globalClient"] === "true" ||
+                          intermediateValue12["globalClient"] === 1
+                        ) {
+                          intermediateResult12["globalClient"] = true;
+                        } else if (
+                          intermediateValue12["globalClient"] === false ||
+                          intermediateValue12["globalClient"] === "false" ||
+                          intermediateValue12["globalClient"] === 0
+                        ) {
+                          intermediateResult12["globalClient"] = false;
+                        } else {
+                          intermediateErrorMap12[`$.globalClient`] = {
+                            key: "validator.type",
+                            expectedType: "boolean",
+                          };
+                        }
+                      }
+                    }
+                  }
+                  if (Object.keys(intermediateErrorMap12).length > 0) {
+                    errorMap[`$.generators.apiClient.target`].errors.push(
+                      intermediateErrorMap12,
+                    );
+                  } else {
+                    hasAnyOfMatch10 = true;
+                    delete errorMap[`$.generators.apiClient.target`];
+                    result["generators"]["apiClient"]["target"] =
+                      intermediateResult12;
+                  }
+                }
+                if (!hasAnyOfMatch10) {
+                  /** @type {ValidatorErrorMap} */
+                  const intermediateErrorMap12 = {};
+                  /** @type {any} */
+                  let intermediateResult12 = undefined;
+                  /** @type {any} */
+                  let intermediateValue12 =
+                    value["generators"]["apiClient"]["target"];
+
+                  if (
+                    intermediateValue12 === null ||
+                    intermediateValue12 === undefined
+                  ) {
+                    intermediateErrorMap12[`$`] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    if (
+                      typeof intermediateValue12 !== "object" ||
+                      Array.isArray(intermediateValue12)
+                    ) {
+                      intermediateErrorMap12[`$`] = {
+                        key: "validator.object",
+                        value: intermediateValue12,
+                        foundType: typeof intermediateValue12,
+                      };
+                    } else {
+                      /** @type {Set<string>} */
+                      const knownKeys12 = new Set([
+                        "library",
+                        "targetRuntime",
+                        "includeWrapper",
+                        "globalClient",
+                      ]);
+                      for (const key of Object.keys(intermediateValue12)) {
+                        if (
+                          !knownKeys12.has(key) &&
+                          intermediateValue12[key] !== null &&
+                          intermediateValue12[key] !== undefined
+                        ) {
+                          const expectedKeys = [...knownKeys12];
+                          const foundKeys = Object.keys(intermediateValue12);
+                          const unknownKeys = foundKeys.filter(
+                            (it) => !knownKeys12.has(it),
+                          );
+                          intermediateErrorMap12[`$`] = {
+                            key: "validator.keys",
+                            unknownKeys,
+                            expectedKeys,
+                            foundKeys,
+                          };
+                          break;
+                        }
+                      }
+                      intermediateResult12 = Object.create(null);
+
+                      if (
+                        intermediateValue12["library"] === null ||
+                        intermediateValue12["library"] === undefined
+                      ) {
+                        intermediateErrorMap12[`$.library`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        /** @type {string} */
+                        let convertedString13 = intermediateValue12["library"];
+                        if (typeof convertedString13 !== "string") {
+                          intermediateErrorMap12[`$.library`] = {
+                            key: "validator.string",
+                          };
+                        } else {
+                          if (convertedString13.length < 1) {
+                            intermediateErrorMap12[`$.library`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (convertedString13 !== "fetch") {
+                            intermediateErrorMap12[`$.library`] = {
+                              key: "validator.oneOf",
+                              allowedValues: ["fetch"],
                               foundValue: convertedString13,
                             };
                           } else {

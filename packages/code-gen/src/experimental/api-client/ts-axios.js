@@ -1,4 +1,3 @@
-import { AppError, isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../../utils.js";
 import { fileBlockEnd, fileBlockStart } from "../file/block.js";
 import {
@@ -11,6 +10,7 @@ import {
 import { fileWrite } from "../file/write.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
+import { apiClientDistilledTargetInfo } from "./generator.js";
 
 /**
  * Write the global clients to the common directory
@@ -214,26 +214,16 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
- * @param {import("../generated/common/types").ExperimentalGenerateOptions["generators"]["apiClient"]} options
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function tsAxiosGenerateFunction(
   generateContext,
   file,
-  options,
   route,
   contextNames,
 ) {
-  if (isNil(options)) {
-    throw AppError.serverError({
-      message: "Received unknown apiClient generator options",
-    });
-  }
-
-  const skipResponseValidation =
-    options.target.targetRuntime === "browser" ||
-    options.target.targetRuntime === "react-native";
+  const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
 
   const args = [];
   fileWrite(file, `/**`);
@@ -243,7 +233,7 @@ export function tsAxiosGenerateFunction(
   }
   fileWrite(file, `Tags: ${JSON.stringify(route.tags)}\n`);
 
-  if (!options.target.globalClient) {
+  if (!distilledTargetInfo.useGlobalClients) {
     args.push("axiosInstance: AxiosInstance");
   }
 
@@ -267,7 +257,7 @@ export function tsAxiosGenerateFunction(
   // Allow overwriting any request config
   args.push(
     `requestConfig?: AxiosRequestConfig${
-      route.response && !skipResponseValidation
+      route.response && !distilledTargetInfo.skipResponseValidation
         ? ` & { skipResponseValidation?: boolean }`
         : ""
     }`,
@@ -296,7 +286,7 @@ for (const key of Object.keys(files)) {
     );
     fileContextSetIndent(file, 2);
 
-    if (options.target.targetRuntime === "react-native") {
+    if (distilledTargetInfo.isReactNative) {
       fileWrite(file, `data.append(key, file);`);
     } else {
       fileWrite(file, `data.append(key, file.data, file.name);`);
@@ -344,9 +334,9 @@ for (const key of Object.keys(files)) {
     fileWrite(file, `data: body,`);
   }
 
-  if (options.target.targetRuntime === "react-native") {
+  if (distilledTargetInfo.isReactNative) {
     fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
-  } else if (options.target.targetRuntime === "node.js" && route.files) {
+  } else if (distilledTargetInfo.isNode && route.files) {
     fileWrite(
       file,
       `headers: typeof data.getHeaders === "function" ? data.getHeaders() : {},`,
@@ -358,7 +348,7 @@ for (const key of Object.keys(files)) {
     structureResolveReference(generateContext.structure, route.response)
       .type === "file"
   ) {
-    if (options.target.targetRuntime === "node.js") {
+    if (distilledTargetInfo.isNode) {
       fileWrite(file, `responseType: "stream",`);
     } else {
       fileWrite(file, `responseType: "blob",`);
@@ -370,7 +360,7 @@ for (const key of Object.keys(files)) {
   fileContextSetIndent(file, -1);
   fileWrite(file, `});`);
 
-  if (route.response && !skipResponseValidation) {
+  if (route.response && !distilledTargetInfo.skipResponseValidation) {
     fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
     fileWrite(file, `return response.data;`);
     fileBlockEnd(file);

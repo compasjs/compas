@@ -130,14 +130,17 @@ some supported libraries, there is even a need to specify the language runtime.
 
 Supported libraries:
 
+- [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API): This
+  standard is supported in combination with the `js` or `ts` target languages.
 - [Axios](https://axios-http.com/docs/intro): This library is supported in
   combination with the `js` or `ts` target languages.
 - ...we are currently thinking about the next target to support. Feel free to
   open an [issue](https://github.com/compasjs/compas/issues/)!
 
-The Axios based API client also needs to differentiate between the supported
-runtimes. This is necessary to determine if `Blob` or `ReadableStream` is used,
-or to switch between specific `FormData` implementations.
+The Axios and Fetch based API clients also need to differentiate between the
+supported runtimes. This is necessary to determine if response validation should
+be enabled, and to work around compatibilities of different `FormData`
+implementations.
 
 ```js {8-15}
 import { Generator } from "@compas/code-gen/experimental";
@@ -149,7 +152,7 @@ generator.generate({
   generators: {
     apiClient: {
       target: {
-        library: "axios",
+        library: "fetch",
         targetRuntime: "browser",
         globalClient: true,
         includeWrapper: "react-query",
@@ -163,16 +166,16 @@ generator.generate({
   supported libraries
 - `target.targetRuntime`: Specify the runtime which will be used. Accepted
   values are: `node.js`, `browser` and `react-native`. This is only necessary
-  for the `axios` library.
+  for the `axios` and `fetch` targets.
 - `target.includeWrapper`: Also generate an API client wrapper to ease
   integration with your UI framework. Supports
   [`react-query`](https://tanstack.com/query/latest/docs/react/overview) to
   generate React hooks, including auto query invalidations if the structure
   includes them.
-- `target.globalClient`: Used by the `axios` library to generate a global
-  `AxiosInstance`. This removes the need to pass the client to each generated
-  function. Also supports a global `QueryClient` if the `react-query` wrapper is
-  used.
+- `target.globalClient`: Used by the `axios` and `fetch` targets to generate a
+  global `AxiosInstance` or `Fetch`-function. This removes the need to pass the
+  client to each generated function. Also supports a global `QueryClient` if the
+  `react-query` wrapper is used.
 - `responseValidation.looseObjectValidation`: When the `target.targetRuntime` is
   set to `node.js`, the API client responses are automatically validated. This
   defaults to a loose object validation, allowing the response to contain more

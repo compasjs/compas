@@ -1,4 +1,3 @@
-import { AppError, isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../../utils.js";
 import { fileBlockEnd, fileBlockStart } from "../file/block.js";
 import {
@@ -12,6 +11,7 @@ import { fileWrite, fileWriteInline } from "../file/write.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesOptionalityIsOptional } from "../types/optionality.js";
+import { apiClientDistilledTargetInfo } from "./generator.js";
 
 /**
  * Get the api client file
@@ -20,7 +20,7 @@ import { typesOptionalityIsOptional } from "../types/optionality.js";
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function axiosReactQueryGetApiClientFile(generateContext, route) {
+export function reactQueryGetApiClientFile(generateContext, route) {
   let file = fileContextGetOptional(
     generateContext,
     `${route.group}/reactQueries.tsx`,
@@ -38,24 +38,33 @@ export function axiosReactQueryGetApiClientFile(generateContext, route) {
     },
   );
 
+  const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
-  if (generateContext.options.generators.apiClient?.target.globalClient) {
+  if (distilledTargetInfo.useGlobalClients) {
     // Import the global clients, this has affect on a bunch of the generated api's where we don't have to accept these arguments
-    importCollector.destructure(`../common/api-client`, "axiosInstance");
+    if (distilledTargetInfo.isAxios) {
+      importCollector.destructure(`../common/api-client`, "axiosInstance");
+    }
+
     importCollector.destructure("../common/api-client", "queryClient");
   } else {
     // Import ways to infer or accept the clients
     importCollector.destructure("../common/api-client", "useApi");
     importCollector.destructure("@tanstack/react-query", "useQueryClient");
-    importCollector.destructure("axios", "AxiosInstance");
+
+    if (distilledTargetInfo.isAxios) {
+      importCollector.destructure("axios", "AxiosInstance");
+    }
   }
 
   // Error handling
   importCollector.destructure("../common/api-client", "AppErrorResponse");
-  importCollector.destructure("axios", "AxiosError");
 
-  importCollector.destructure("axios", "AxiosRequestConfig");
+  if (distilledTargetInfo.isAxios) {
+    importCollector.destructure("axios", "AxiosError");
+    importCollector.destructure("axios", "AxiosRequestConfig");
+  }
 
   // @tanstack/react-query imports
   importCollector.destructure("@tanstack/react-query", "QueryKey");
@@ -75,26 +84,17 @@ export function axiosReactQueryGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
- * @param {import("../generated/common/types").ExperimentalGenerateOptions["generators"]["apiClient"]} options
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function axiosReactQueryGenerateFunction(
+export function reactQueryGenerateFunction(
   generateContext,
   file,
-  options,
   route,
   contextNames,
 ) {
-  if (isNil(options)) {
-    throw AppError.serverError({
-      message: "Received unknown apiClient generator options",
-    });
-  }
+  const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
 
-  const skipResponseValidation =
-    options.target.targetRuntime === "browser" ||
-    options.target.targetRuntime === "react-native";
   const hookName = `use${upperCaseFirst(route.group)}${upperCaseFirst(
     route.name,
   )}`;
@@ -123,42 +123,108 @@ export function axiosReactQueryGenerateFunction(
   }
 
   // Helper variables for reusable patterns
-  const argumentList = ({ suffix, withRequestConfig }) =>
-    [
-      route.params ? `params: ${contextNames.paramsTypeName}` : undefined,
-      route.query ? `query: ${contextNames.queryTypeName}` : undefined,
-      route.body ? `body: ${contextNames.bodyTypeName}` : undefined,
-      route.files ? `files: ${contextNames.filesTypeName}` : undefined,
+  const joinedArgumentType = ({ withRequestConfig, withQueryOptions }) => {
+    const list = [
+      contextNames.paramsTypeName,
+      contextNames.queryTypeName,
+      contextNames.bodyTypeName,
+      contextNames.filesTypeName,
       withRequestConfig
-        ? `requestConfig?: AxiosRequestConfig${
-            route.response && !skipResponseValidation
-              ? ` & { skipResponseValidation?: boolean }`
+        ? `{ requestConfig?: ${
+            distilledTargetInfo.isAxios
+              ? `AxiosRequestConfig`
+              : distilledTargetInfo.isFetch
+              ? `RequestInit`
+              : "unknown"
+          }${
+            route.response && !distilledTargetInfo.skipResponseValidation
+              ? `, skipResponseValidation?: boolean`
               : ""
-          }`
+          } }`
         : undefined,
-    ]
-      .filter((it) => !!it)
-      .map((it) => `${it}${suffix}`);
-  const parameterList = ({ prefix, withRequestConfig }) => {
-    return [
-      route.params ? `${prefix}params,` : undefined,
-      route.query ? `${prefix}query,` : undefined,
-      route.body ? `${prefix}body,` : undefined,
-      route.files ? `${prefix}files,` : undefined,
-      withRequestConfig
-        ? `${prefix.replace(".", "?.")}requestConfig,`
+      withQueryOptions
+        ? `{ queryOptions?: UseQueryOptions<${
+            contextNames.responseTypeName ?? "unknown"
+          }, AppErrorResponse, TData> }`
         : undefined,
-    ]
-      .filter((it) => !!it)
-      .join("");
+    ].filter((it) => !!it);
+
+    if (list.length === 0) {
+      list.push(`{}`);
+    }
+
+    return list.join(` & `);
   };
 
-  const hasGlobalClient = options.target.globalClient;
-  const axiosInstanceArgument = hasGlobalClient
+  const parameterListWithExtraction = ({ prefix, withRequestConfig }) => {
+    let result = "";
+
+    if (route.params) {
+      const params = structureResolveReference(
+        generateContext.structure,
+        route.params,
+      );
+
+      result += `{ ${Object.keys(params.keys)
+        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .join(", ")} }, `;
+    }
+
+    if (route.query) {
+      const query = structureResolveReference(
+        generateContext.structure,
+        route.query,
+      );
+
+      result += `{ ${Object.keys(query.keys)
+        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .join(", ")} }, `;
+    }
+
+    if (route.body) {
+      const body = structureResolveReference(
+        generateContext.structure,
+        route.body,
+      );
+
+      result += `{ ${Object.keys(body.keys)
+        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .join(", ")} }, `;
+    }
+
+    if (route.files) {
+      const files = structureResolveReference(
+        generateContext.structure,
+        route.files,
+      );
+
+      result += `{ ${Object.keys(files.keys)
+        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .join(", ")} }, `;
+    }
+
+    if (withRequestConfig) {
+      result += `${prefix}.requestConfig`;
+    }
+
+    return result;
+  };
+
+  const apiInstanceArgument = distilledTargetInfo.useGlobalClients
     ? ""
-    : `axiosInstance: AxiosInstance,`;
-  const axiosInstanceParameter = hasGlobalClient ? "" : "axiosInstance,";
-  const queryClientArgument = hasGlobalClient
+    : distilledTargetInfo.isAxios
+    ? `axiosInstance: AxiosInstance,`
+    : distilledTargetInfo.isFetch
+    ? "fetchFn: Fetch"
+    : "";
+  const apiInstanceParameter = distilledTargetInfo.useGlobalClients
+    ? ""
+    : distilledTargetInfo.isAxios
+    ? "axiosInstance,"
+    : distilledTargetInfo.isFetch
+    ? "fetchFn,"
+    : "";
+  const queryClientArgument = distilledTargetInfo.useGlobalClients
     ? ""
     : `queryClient: QueryClient,`;
 
@@ -170,58 +236,61 @@ export function axiosReactQueryGenerateFunction(
 
     // When no arguments are required, the whole opts object is optional
     if (route.params || route.query || route.body) {
-      fileWrite(file, `opts: {`);
+      fileWrite(file, `opts: `);
     } else {
-      fileWrite(file, `opts?: {`);
+      fileWrite(file, `opts?: `);
     }
 
-    fileContextSetIndent(file, 1);
     fileWrite(
       file,
-      argumentList({ suffix: ";", withRequestConfig: true }).join("\n"),
+      joinedArgumentType({
+        withRequestConfig: true,
+        withQueryOptions: true,
+      }),
     );
-    fileWrite(
-      file,
-      `options?: UseQueryOptions<${contextNames.responseTypeName}, AppErrorResponse, TData>`,
-    );
-    fileContextSetIndent(file, -1);
 
     // When no arguments are required, the whole opts object is optional
     if (route.params || route.query || route.body) {
-      fileBlockStart(file, `})`);
+      fileBlockStart(file, `)`);
     } else {
-      fileBlockStart(file, `}|undefined)`);
+      fileBlockStart(file, `|undefined)`);
     }
 
-    if (!hasGlobalClient) {
+    if (!distilledTargetInfo.useGlobalClients) {
       // Get the api client from the React context
-      fileWrite(file, `const axiosInstance = useApi();`);
+      if (distilledTargetInfo.isAxios) {
+        fileWrite(file, `const axiosInstance = useApi();`);
+      }
+      if (distilledTargetInfo.isFetch) {
+        fileWrite(file, `const fetchFn = useApi();`);
+      }
     }
 
     if (!route.params && !route.query && !route.body) {
       fileWrite(file, `opts ??= {};`);
     }
 
-    fileWrite(file, `const options = opts?.options ?? {};`);
-    axiosReactQueryWriteIsEnabled(generateContext, file, route);
+    fileWrite(file, `const options = opts?.queryOptions ?? {};`);
+    reactQueryWriteIsEnabled(generateContext, file, route);
 
-    fileWriteInline(file, `return useQuery(${hookName}.queryKey(`);
     fileWriteInline(
       file,
-      parameterList({ prefix: "opts.", withRequestConfig: false }),
+      `return useQuery(${hookName}.queryKey(${
+        route.params || route.query || route.body ? "opts" : ""
+      }),`,
     );
     fileWriteInline(
       file,
-      `), ({ signal }) => {
+      `({ signal }) => {
   ${!route.params && !route.query && !route.body ? "if (opts) {" : ""}
   opts.requestConfig ??= {};
   opts.requestConfig.signal = signal;
   ${!route.params && !route.query && !route.body ? "}" : ""}
   
     
-  return ${apiName}(${axiosInstanceParameter}
-  ${parameterList({
-    prefix: "opts.",
+  return ${apiName}(${apiInstanceParameter}
+  ${parameterListWithExtraction({
+    prefix: "opts",
     withRequestConfig: true,
   })}
   );
@@ -241,10 +310,17 @@ ${hookName}.baseKey = (): QueryKey => ["${route.group}", "${route.name}"];
  * Query key used by ${hookName}
  */
 ${hookName}.queryKey = (
-  ${argumentList({ suffix: ",", withRequestConfig: false }).join("")}
+  ${
+    route.params || route.query || route.body
+      ? `opts: ${joinedArgumentType({
+          withQueryOptions: false,
+          withRequestConfig: false,
+        })},`
+      : ""
+  }
 ): QueryKey => [
   ...${hookName}.baseKey(),
-  ${parameterList({ prefix: "", withRequestConfig: false })}
+  ${parameterListWithExtraction({ prefix: "opts", withRequestConfig: false })}
 ];
 
 /**
@@ -252,39 +328,48 @@ ${hookName}.queryKey = (
  */
  ${hookName}.fetch = (
   ${queryClientArgument}
-  ${axiosInstanceArgument}
-  ${`data${
+  ${apiInstanceArgument}
+  opts${
     route.params || route.query || route.body ? "" : "?"
-  }: { ${argumentList({ suffix: ";", withRequestConfig: true }).join("\n")} }`}
+  }: ${joinedArgumentType({
+        withQueryOptions: false,
+        withRequestConfig: true,
+      })}
  ) => {
-  return queryClient.fetchQuery(${hookName}.queryKey(
-  ${parameterList({ prefix: "data.", withRequestConfig: false })}
-  ), () => ${apiName}(
-   ${axiosInstanceParameter}
-  ${parameterList({
-    prefix: "data.",
+  return queryClient.fetchQuery(
+    ${hookName}.queryKey(${
+        route.params || route.query || route.body ? "opts" : ""
+      }),
+    () => ${apiName}(
+   ${apiInstanceParameter}
+  ${parameterListWithExtraction({
+    prefix: "opts",
     withRequestConfig: true,
   })}
   ));
 }
+
 /**
  * Prefetch ${hookName} via the queryClient
  */
  ${hookName}.prefetch = (
   ${queryClientArgument}
-  ${axiosInstanceArgument}
- data${route.params || route.query || route.body ? "" : "?"}: { ${argumentList({
-        suffix: ";",
+  ${apiInstanceArgument}
+  opts${
+    route.params || route.query || route.body ? "" : "?"
+  }: ${joinedArgumentType({
+        withQueryOptions: false,
         withRequestConfig: true,
-      }).join("\n")} },
- 
+      })},
  ) => {
-  return queryClient.prefetchQuery(${hookName}.queryKey(
-    ${parameterList({ prefix: "data.", withRequestConfig: false })}
-  ), () => ${apiName}(
-     ${axiosInstanceParameter}
-     ${parameterList({
-       prefix: "data.",
+  return queryClient.prefetchQuery(
+    ${hookName}.queryKey(${
+        route.params || route.query || route.body ? "opts" : ""
+      }),
+    () => ${apiName}(
+     ${apiInstanceParameter}
+     ${parameterListWithExtraction({
+       prefix: "opts",
        withRequestConfig: true,
      })}
   ));
@@ -297,44 +382,44 @@ ${hookName}.invalidate = (
   ${queryClientArgument}
   ${
     route.params || route.query || route.body
-      ? `queryKey: { ${argumentList({
-          suffix: ";",
+      ? `opts: ${joinedArgumentType({
+          withQueryOptions: false,
           withRequestConfig: false,
-        }).join("\n")} }`
+        })},`
       : ""
   }
-) => queryClient.invalidateQueries(${hookName}.queryKey(
-    ${parameterList({ prefix: "queryKey.", withRequestConfig: false })}
-));
+) => queryClient.invalidateQueries(${hookName}.queryKey(${
+        route.params || route.query || route.body ? "opts" : ""
+      }));
   
 
 /**
  * Set query data for ${hookName} via the queryClient
  */
 ${hookName}.setQueryData = (
-   ${queryClientArgument}
+  ${queryClientArgument}
   ${
     route.params || route.query || route.body
-      ? `queryKey: { ${argumentList({
-          suffix: ";",
+      ? `opts: ${joinedArgumentType({
+          withQueryOptions: false,
           withRequestConfig: false,
-        }).join("\n")} },`
+        })},`
       : ""
   }
-      data: ${contextNames.responseTypeName},
-) => queryClient.setQueryData(${hookName}.queryKey(
-  ${parameterList({ prefix: "queryKey.", withRequestConfig: false })}
-), data);
+  data: ${contextNames.responseTypeName ?? "unknown"},
+) => queryClient.setQueryData(${hookName}.queryKey(${
+        route.params || route.query || route.body ? "opts" : ""
+      }), data);
 `,
     );
   } else {
     // Write the props type
-    fileBlockStart(file, `interface ${upperCaseFirst(hookName)}Props`);
     fileWrite(
       file,
-      argumentList({ suffix: ";", withRequestConfig: true }).join("\n"),
+      `type ${upperCaseFirst(hookName)}Props = ${joinedArgumentType({
+        withRequestConfig: true,
+      })}`,
     );
-    fileBlockEnd(file);
 
     fileWriteInline(
       file,
@@ -358,12 +443,18 @@ ${hookName}.setQueryData = (
       }, AppErrorResponse, ${upperCaseFirst(hookName)}Props, unknown> {`,
     );
 
-    if (!hasGlobalClient) {
-      fileWrite(file, `const axiosInstance = useApi();`);
+    if (!distilledTargetInfo.useGlobalClients) {
+      // Get the api client from the React context
+      if (distilledTargetInfo.isAxios) {
+        fileWrite(file, `const axiosInstance = useApi();`);
+      }
+      if (distilledTargetInfo.isFetch) {
+        fileWrite(file, `const fetchFn = useApi();`);
+      }
     }
 
     if (route.invalidations) {
-      if (!hasGlobalClient) {
+      if (!distilledTargetInfo.useGlobalClients) {
         fileWrite(file, `const queryClient = useQueryClient();`);
       }
     }
@@ -371,15 +462,18 @@ ${hookName}.setQueryData = (
     if (route.invalidations.length > 0) {
       // Write out the invalidatiosn
       fileBlockStart(file, `if (hookOptions.invalidateQueries)`);
-      axiosReactQueryWriteInvalidations(file, route);
+      reactQueryWriteInvalidations(file, route);
       fileBlockEnd(file);
     }
 
     fileWrite(
       file,
       `return useMutation((variables) => ${apiName}(
-   ${axiosInstanceParameter}
-  ${parameterList({ prefix: "variables.", withRequestConfig: true })}
+   ${apiInstanceParameter}
+  ${parameterListWithExtraction({
+    prefix: "variables",
+    withRequestConfig: true,
+  })}
 ), options);
 `,
     );
@@ -396,7 +490,7 @@ ${hookName}.setQueryData = (
  * @param {import("../file/context").GenerateFile} file
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  */
-function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
+function reactQueryWriteIsEnabled(generateContext, file, route) {
   const keysAffectingEnabled = [];
 
   for (const key of ["params", "query", "body"]) {
@@ -409,26 +503,13 @@ function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
       route[key],
     );
 
-    if (type.type !== "object") {
-      // @ts-expect-error
-      const isOptional = typesOptionalityIsOptional(generateContext, type, {
-        validatorState: "input",
-      });
-
-      if (!isOptional) {
-        keysAffectingEnabled.push(`opts.${key}`);
-      }
-
-      continue;
-    }
-
     for (const [subKey, field] of Object.entries(type.keys)) {
       const isOptional = typesOptionalityIsOptional(generateContext, field, {
         validatorState: "input",
       });
 
       if (!isOptional) {
-        keysAffectingEnabled.push(`opts.${key}.${subKey}`);
+        keysAffectingEnabled.push(`opts.${subKey}`);
       }
     }
   }
@@ -459,7 +540,7 @@ function axiosReactQueryWriteIsEnabled(generateContext, file, route) {
  * @param {import("../file/context").GenerateFile} file
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  */
-function axiosReactQueryWriteInvalidations(file, route) {
+function reactQueryWriteInvalidations(file, route) {
   fileWrite(file, `const originalOnSuccess = options.onSuccess;`);
   fileBlockStart(
     file,
@@ -479,7 +560,7 @@ function axiosReactQueryWriteInvalidations(file, route) {
       for (const [key, value] of Object.entries(
         invalidation.properties?.specification?.params ?? {},
       )) {
-        params += `${key}: variables.${value.join(".")},\n`;
+        params += `${key}: variables.${value.slice(1).join(".")},\n`;
       }
       params += `},`;
     }
@@ -492,7 +573,7 @@ function axiosReactQueryWriteInvalidations(file, route) {
       for (const [key, value] of Object.entries(
         invalidation.properties?.specification?.query ?? {},
       )) {
-        query += `${key}: variables.${value.join(".")},\n`;
+        query += `${key}: variables.${value.slice(1).join(".")},\n`;
       }
       query += `},`;
     }

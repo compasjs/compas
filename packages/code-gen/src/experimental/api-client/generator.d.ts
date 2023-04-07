@@ -3,8 +3,6 @@
  *
  * TODO: extend docs
  *
- * TODO: throw when js-axios is used with react-query wrapper
- *
  * @param {import("../generate").GenerateContext} generateContext
  */
 export function apiClientGenerator(
@@ -25,11 +23,11 @@ export function apiClientFormatTarget(
  * Format the api client wrapper target.
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {"axiosReactQuery"|undefined}
+ * @returns {"axiosReactQuery"|"fetchReactQuery"|undefined}
  */
 export function apiClientFormatWrapperTarget(
   generateContext: import("../generate").GenerateContext,
-): "axiosReactQuery" | undefined;
+): "axiosReactQuery" | "fetchReactQuery" | undefined;
 /**
  * Check if we should run the router generator.
  *
@@ -39,12 +37,19 @@ export function apiClientIsEnabled(
   generateContext: import("../generate").GenerateContext,
 ):
   | {
-      target: {
-        library: "axios";
-        targetRuntime: "browser" | "react-native" | "node.js";
-        includeWrapper?: "react-query" | undefined;
-        globalClient: boolean;
-      };
+      target:
+        | {
+            library: "axios";
+            targetRuntime: "browser" | "react-native" | "node.js";
+            includeWrapper?: "react-query" | undefined;
+            globalClient: boolean;
+          }
+        | {
+            library: "fetch";
+            targetRuntime: "browser" | "react-native" | "node.js";
+            includeWrapper?: "react-query" | undefined;
+            globalClient: boolean;
+          };
       responseValidation: {
         looseObjectValidation: boolean;
       };

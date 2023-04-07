@@ -18,11 +18,24 @@ export const fileImplementations = {
     validatorOutputType: `import("stream").Readable`,
     validatorExpression: `typeof $value$.pipe === "function" && typeof $value$._read === "function"`,
   },
+  jsFetch: {
+    validatorInputType: `{ name?: string, data: Blob }`,
+    validatorOutputType: `Blob`,
+    validatorExpression: `$value$?.data instanceof Blob && (!$value$.name || typeof $value$.name === "string")`,
+  },
   tsAxiosBrowser: {
     validatorInputType: `{ name?: string, data: Blob }`,
     validatorOutputType: `Blob`,
   },
+  tsFetchBrowser: {
+    validatorInputType: `{ name?: string, data: Blob }`,
+    validatorOutputType: `Blob`,
+  },
   tsAxiosReactNative: {
+    validatorInputType: `(string | { name?: string, type?: string, uri: string })`,
+    validatorOutputType: `Blob`,
+  },
+  tsFetchReactNative: {
     validatorInputType: `(string | { name?: string, type?: string, uri: string })`,
     validatorOutputType: `Blob`,
   },

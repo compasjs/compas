@@ -46,12 +46,14 @@ export function extendWithCodeGenExperimental(generator) {
 
     T.object("generateOptions")
       .keys({
-        // TODO: Add link to docs with compatibility between language and runtime.
         targetLanguage: T.string().oneOf("js", "ts"),
 
-        outputDirectory: T.string().optional(),
+        outputDirectory: T.string()
+          .optional()
+          .docs(
+            "Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.",
+          ),
 
-        // This will most likely be the only strictly validated object of the bunch.
         generators: {
           structure: T.object()
             .keys({})
@@ -83,8 +85,6 @@ export function extendWithCodeGenExperimental(generator) {
 
           router: T.object()
             .keys({
-              // TODO: Add link to docs with compatibility between
-              //  language and target library.
               target: T.anyOf()
                 .values({
                   library: "koa",
@@ -106,8 +106,6 @@ export function extendWithCodeGenExperimental(generator) {
 
           database: T.object()
             .keys({
-              // TODO: Add link to docs with compatibility between
-              //  language and target dialect / target library.
               target: T.anyOf()
                 .values({
                   dialect: "postgres",
@@ -145,33 +143,51 @@ export function extendWithCodeGenExperimental(generator) {
 
           apiClient: T.object()
             .keys({
-              // TODO: Add link to docs with compatibility between
-              //  language and target library.
               target: T.anyOf()
-                .values({
-                  library: "axios",
-                  targetRuntime: T.string().oneOf(
-                    "node.js",
-                    "browser",
-                    "react-native",
-                  ),
-
-                  // TODO: Add link to docs with
-                  //  compatibility between  language
-                  //  and target library.
-                  includeWrapper: T.string()
-                    .oneOf("react-query")
-                    .optional()
-                    .docs(
-                      "Include an API client wrapper to use the api easier with your user interface library.",
+                .values(
+                  {
+                    library: "axios",
+                    targetRuntime: T.string().oneOf(
+                      "node.js",
+                      "browser",
+                      "react-native",
                     ),
 
-                  globalClient: T.bool()
-                    .default(false)
-                    .docs(
-                      "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
+                    includeWrapper: T.string()
+                      .oneOf("react-query")
+                      .optional()
+                      .docs(
+                        "Include an API client wrapper to use the api easier with your user interface library.",
+                      ),
+
+                    globalClient: T.bool()
+                      .default(false)
+                      .docs(
+                        "Use a global api client that will be used for all requests.",
+                      ),
+                  },
+                  {
+                    library: "fetch",
+                    targetRuntime: T.string().oneOf(
+                      "node.js",
+                      "browser",
+                      "react-native",
                     ),
-                })
+
+                    includeWrapper: T.string()
+                      .oneOf("react-query")
+                      .optional()
+                      .docs(
+                        "Include an API client wrapper to use the api easier with your user interface library.",
+                      ),
+
+                    globalClient: T.bool()
+                      .default(false)
+                      .docs(
+                        "Use a global api client that will be used for all requests.",
+                      ),
+                  },
+                )
                 .docs("Select your HTTP client of choice."),
 
               responseValidation: T.object()
@@ -209,6 +225,9 @@ export function extendWithCodeGenExperimental(generator) {
             ),
         },
       })
+      .docs(
+        "Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.",
+      )
       .loose(),
 
     // NOTE:
@@ -289,6 +308,11 @@ export function extendWithCodeGenExperimental(generator) {
               "jsAxiosNode",
               "tsAxiosBrowser",
               "tsAxiosReactNative",
+              "jsFetch",
+              "tsFetch",
+              "jsFetchNode",
+              "tsFetchBrowser",
+              "tsFetchReactNative",
             ),
           )
           .values({

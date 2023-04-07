@@ -419,7 +419,12 @@
         "tsAxios",
         "jsAxiosNode",
         "tsAxiosBrowser",
-        "tsAxiosReactNative"
+        "tsAxiosReactNative",
+        "jsFetch",
+        "tsFetch",
+        "jsFetchNode",
+        "tsFetchBrowser",
+        "tsFetchReactNative"
       ]
     },
     "anyOfDefinition": {
@@ -2317,7 +2322,7 @@
       }
     },
     "generateOptions": {
-      "docString": "",
+      "docString": "Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.",
       "isOptional": false,
       "validator": {
         "allowNull": false,
@@ -2345,7 +2350,7 @@
           "oneOf": ["js", "ts"]
         },
         "outputDirectory": {
-          "docString": "",
+          "docString": "Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.",
           "isOptional": true,
           "validator": {
             "convert": false,
@@ -2715,7 +2720,76 @@
                           "oneOf": ["react-query"]
                         },
                         "globalClient": {
-                          "docString": "Use a global api client that will be used for all requests. Only applicable when using 'axios'.",
+                          "docString": "Use a global api client that will be used for all requests.",
+                          "isOptional": true,
+                          "validator": {
+                            "convert": false,
+                            "allowNull": false
+                          },
+                          "sql": {},
+                          "type": "boolean",
+                          "defaultValue": "false"
+                        }
+                      }
+                    },
+                    {
+                      "docString": "",
+                      "isOptional": false,
+                      "validator": {
+                        "allowNull": false,
+                        "strict": true
+                      },
+                      "sql": {},
+                      "type": "object",
+                      "relations": [],
+                      "keys": {
+                        "library": {
+                          "docString": "",
+                          "isOptional": false,
+                          "validator": {
+                            "convert": false,
+                            "allowNull": false,
+                            "trim": false,
+                            "lowerCase": false,
+                            "upperCase": false,
+                            "min": 1
+                          },
+                          "sql": {},
+                          "type": "string",
+                          "oneOf": ["fetch"]
+                        },
+                        "targetRuntime": {
+                          "docString": "",
+                          "isOptional": false,
+                          "validator": {
+                            "convert": false,
+                            "allowNull": false,
+                            "trim": false,
+                            "lowerCase": false,
+                            "upperCase": false,
+                            "min": 1
+                          },
+                          "sql": {},
+                          "type": "string",
+                          "oneOf": ["node.js", "browser", "react-native"]
+                        },
+                        "includeWrapper": {
+                          "docString": "Include an API client wrapper to use the api easier with your user interface library.",
+                          "isOptional": true,
+                          "validator": {
+                            "convert": false,
+                            "allowNull": false,
+                            "trim": false,
+                            "lowerCase": false,
+                            "upperCase": false,
+                            "min": 1
+                          },
+                          "sql": {},
+                          "type": "string",
+                          "oneOf": ["react-query"]
+                        },
+                        "globalClient": {
+                          "docString": "Use a global api client that will be used for all requests.",
                           "isOptional": true,
                           "validator": {
                             "convert": false,
