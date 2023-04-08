@@ -160,6 +160,8 @@ export function reactQueryGenerateFunction(
     let result = "";
 
     if (route.params) {
+      /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      // @ts-expect-error
       const params = structureResolveReference(
         generateContext.structure,
         route.params,
@@ -171,6 +173,8 @@ export function reactQueryGenerateFunction(
     }
 
     if (route.query) {
+      /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      // @ts-expect-error
       const query = structureResolveReference(
         generateContext.structure,
         route.query,
@@ -182,6 +186,8 @@ export function reactQueryGenerateFunction(
     }
 
     if (route.body) {
+      /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      // @ts-expect-error
       const body = structureResolveReference(
         generateContext.structure,
         route.body,
@@ -193,6 +199,8 @@ export function reactQueryGenerateFunction(
     }
 
     if (route.files) {
+      /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      // @ts-expect-error
       const files = structureResolveReference(
         generateContext.structure,
         route.files,
@@ -401,6 +409,7 @@ ${hookName}.setQueryData = (
       file,
       `type ${upperCaseFirst(hookName)}Props = ${joinedArgumentType({
         withRequestConfig: true,
+        withQueryOptions: false,
       })}`,
     );
 
@@ -481,6 +490,8 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
       continue;
     }
 
+    /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+    // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,
       route[key],

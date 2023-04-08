@@ -220,15 +220,15 @@ export function apiClientDistilledTargetInfo(generateContext) {
   const apiClientOpts = generateContext.options.generators.apiClient;
 
   return {
-    isAxios: apiClientOpts.target.library === "axios",
-    isFetch: apiClientOpts.target.library === "fetch",
-    isNode: apiClientOpts.target.targetRuntime === "node.js",
-    isBrowser: apiClientOpts.target.targetRuntime === "browser",
-    isReactNative: apiClientOpts.target.targetRuntime === "react-native",
-    useGlobalClients: apiClientOpts.target.globalClient,
+    isAxios: apiClientOpts?.target.library === "axios",
+    isFetch: apiClientOpts?.target.library === "fetch",
+    isNode: apiClientOpts?.target.targetRuntime === "node.js",
+    isBrowser: apiClientOpts?.target.targetRuntime === "browser",
+    isReactNative: apiClientOpts?.target.targetRuntime === "react-native",
+    useGlobalClients: apiClientOpts?.target.globalClient ?? false,
     skipResponseValidation:
-      apiClientOpts.target.targetRuntime === "browser" ||
-      apiClientOpts.target.targetRuntime === "react-native",
+      apiClientOpts?.target.targetRuntime === "browser" ||
+      apiClientOpts?.target.targetRuntime === "react-native",
   };
 }
 
@@ -265,7 +265,7 @@ export function apiClientFormatTarget(generateContext) {
  */
 export function apiClientFormatWrapperTarget(generateContext) {
   if (
-    generateContext.options.generators.apiClient.target.includeWrapper ===
+    generateContext.options.generators.apiClient?.target.includeWrapper ===
     "react-query"
   ) {
     return "reactQuery";

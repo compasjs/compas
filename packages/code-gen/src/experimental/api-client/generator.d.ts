@@ -9,6 +9,31 @@ export function apiClientGenerator(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
+ * Distill the targets in to a short list of booleans.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {{
+ *  isAxios: boolean,
+ *  isFetch: boolean,
+ *  isNode: boolean,
+ *  isBrowser: boolean,
+ *  isReactNative: boolean,
+ *  useGlobalClients: boolean,
+ *  skipResponseValidation: boolean,
+ * }}
+ */
+export function apiClientDistilledTargetInfo(
+  generateContext: import("../generate").GenerateContext,
+): {
+  isAxios: boolean;
+  isFetch: boolean;
+  isNode: boolean;
+  isBrowser: boolean;
+  isReactNative: boolean;
+  useGlobalClients: boolean;
+  skipResponseValidation: boolean;
+};
+/**
  * Format the target to use.
  *
  * TODO: Apply this return type on other target format functions in other generators
@@ -23,11 +48,11 @@ export function apiClientFormatTarget(
  * Format the api client wrapper target.
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {"axiosReactQuery"|"fetchReactQuery"|undefined}
+ * @returns {"reactQuery"|undefined}
  */
 export function apiClientFormatWrapperTarget(
   generateContext: import("../generate").GenerateContext,
-): "axiosReactQuery" | "fetchReactQuery" | undefined;
+): "reactQuery" | undefined;
 /**
  * Check if we should run the router generator.
  *

@@ -1,31 +1,23 @@
 /**
- * Write the global clients to the common directory
- *
- * @param {import("../generate").GenerateContext} generateContext
- */
-export function jsAxiosGenerateCommonFile(
-  generateContext: import("../generate").GenerateContext,
-): void;
-/**
- * Write the global clients to the common directory
+ * Get the api client file
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function jsAxiosGetApiClientFile(
+export function reactQueryGetApiClientFile(
   generateContext: import("../generate").GenerateContext,
   route: import("../generated/common/types").ExperimentalRouteDefinition,
 ): import("../file/context").GenerateFile;
 /**
- * Generate the api client function
+ * Generate the api client hooks
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../file/context").GenerateFile} file
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function jsAxiosGenerateFunction(
+export function reactQueryGenerateFunction(
   generateContext: import("../generate").GenerateContext,
   file: import("../file/context").GenerateFile,
   route: import("../types").NamedType<
@@ -33,4 +25,4 @@ export function jsAxiosGenerateFunction(
   >,
   contextNames: Record<string, string>,
 ): void;
-//# sourceMappingURL=js-axios.d.ts.map
+//# sourceMappingURL=react-query.d.ts.map
