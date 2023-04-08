@@ -39,34 +39,14 @@ export function jsAxiosGenerateCommonFile(generateContext) {
 export const axiosInstance = axios.create();
 `,
     );
-
-    if (
-      generateContext.options.generators.apiClient?.target.includeWrapper ===
-      "react-query"
-    ) {
-      importCollector.destructure("@tanstack/react-query", "QueryClient");
-
-      fileWrite(
-        file,
-        `/**
- * @type {import("@tanstack/react-query").QueryClient}
- */
-export const queryClient = new QueryClient();
-`,
-      );
-    }
   }
 
-  if (
-    generateContext.options.generators.apiClient?.target?.targetRuntime ===
-    "node.js"
-  ) {
-    importCollector.destructure("@compas/stdlib", "AppError");
-    importCollector.destructure("@compas/stdlib", "streamToBuffer");
+  importCollector.destructure("@compas/stdlib", "AppError");
+  importCollector.destructure("@compas/stdlib", "streamToBuffer");
 
-    fileWrite(
-      file,
-      `/**
+  fileWrite(
+    file,
+    `/**
  * Adds an interceptor to the provided Axios instance, wrapping any error in an AppError.
  * This allows directly testing against an error key or property.
  *
@@ -114,8 +94,7 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
   });
 }
 `,
-    );
-  }
+  );
 }
 
 /**
@@ -147,22 +126,10 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
     importCollector.destructure(`../common/api-client.js`, "axiosInstance");
-
-    if (
-      generateContext.options.generators.apiClient.target.includeWrapper ===
-      "react-query"
-    ) {
-      importCollector.destructure(`../common/api-client.js`, "queryClient");
-    }
   }
 
-  if (
-    generateContext.options.generators.apiClient?.target.targetRuntime ===
-    "node.js"
-  ) {
-    importCollector.raw(`import FormData from "form-data";`);
-    importCollector.destructure("@compas/stdlib", "AppError");
-  }
+  importCollector.raw(`import FormData from "form-data";`);
+  importCollector.destructure("@compas/stdlib", "AppError");
 
   return file;
 }
@@ -254,11 +221,7 @@ for (const key of Object.keys(files)) {
     );
     fileContextSetIndent(file, 2);
 
-    if (distilledTargetInfo.isReactNative) {
-      fileWrite(file, `data.append(key, file);`);
-    } else {
-      fileWrite(file, `data.append(key, file.data, file.name);`);
-    }
+    fileWrite(file, `data.append(key, file.data, file.name);`);
 
     fileContextSetIndent(file, -2);
     fileWrite(file, `}\n}`);
@@ -302,9 +265,7 @@ for (const key of Object.keys(files)) {
     fileWrite(file, `data: body,`);
   }
 
-  if (distilledTargetInfo.isReactNative) {
-    fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
-  } else if (distilledTargetInfo.isNode && route.files) {
+  if (route.files) {
     fileWrite(
       file,
       `headers: typeof data.getHeaders === "function" ? data.getHeaders() : {},`,
@@ -316,11 +277,7 @@ for (const key of Object.keys(files)) {
     structureResolveReference(generateContext.structure, route.response)
       .type === "file"
   ) {
-    if (distilledTargetInfo.isNode) {
-      fileWrite(file, `responseType: "stream",`);
-    } else {
-      fileWrite(file, `responseType: "blob",`);
-    }
+    fileWrite(file, `responseType: "stream",`);
   }
 
   fileWrite(file, `...requestConfig,`);

@@ -51,6 +51,15 @@ export function targetValidateCombinationsJavascript(generateContext) {
         message: `Compas code-gen doesn't support generating a Javascript compatible wrapper around the api client. It currently only supports generating an Axios or Fetch api clients. Use 'targetLanguage' set to 'ts' to include a @tanstack/react-query wrapper. Feel free to open a feature request on the repository (https://github.com/compasjs/compas).`,
       });
     }
+
+    if (
+      generateContext.options.generators.apiClient.target.targetRuntime !==
+      "node.js"
+    ) {
+      throw AppError.serverError({
+        message: `Compas code-gen only supports generating a JavaScript api client for Node.js. Use 'targetLanguage' set to 'ts' to use the '${generateContext.options.generators.apiClient.target.targetRuntime}' runtime. Feel free to open a feature request on the repository (https://github.com/compasjs/compas).`,
+      });
+    }
   }
 }
 

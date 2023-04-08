@@ -53,69 +53,11 @@ export function tsAxiosGenerateCommonFile(generateContext) {
     }
   }
 
-  if (
-    generateContext.options.generators.apiClient?.target?.targetRuntime ===
-    "node.js"
-  ) {
-    importCollector.destructure("@compas/stdlib", "AppError");
-    importCollector.destructure("@compas/stdlib", "streamToBuffer");
-    importCollector.destructure("axios", "AxiosInstance");
+  importCollector.destructure("axios", "AxiosError");
 
-    fileWrite(
-      file,
-      `/**
- * Adds an interceptor to the provided Axios instance, wrapping any error in an AppError.
- * This allows directly testing against an error key or property.
- */
-export function axiosInterceptErrorAndWrapWithAppError(axiosInstance: AxiosInstance) {
-  axiosInstance.interceptors.response.use(undefined, async (error) => {
-    // Validator error
-    if (AppError.instanceOf(error)) {
-      // If it is an AppError already, it most likely is thrown by the response
-      // validators. So we rethrow it as is.
-      throw error;
-    }
-
-    if (typeof error?.response?.data?.pipe === "function") {
-      const buffer = await streamToBuffer(error.response.data);
-      try {
-        error.response.data = JSON.parse(buffer.toString("utf-8"));
-      } catch {
-        // Unknown error
-        throw new AppError(
-          \`response.error\`,
-          error.response?.status ?? 500,
-          {
-            message:
-              "Could not decode the response body for further information.",
-          },
-          error,
-        );
-      }
-    }
-
-    // Server AppError
-    const { key, info } = error.response?.data ?? {};
-    if (typeof key === "string" && !!info && typeof info === "object") {
-      throw new AppError(key, error.response.status, info, error);
-    }
-
-    // Unknown error
-    throw new AppError(
-      \`response.error\`,
-      error.response?.status ?? 500,
-      AppError.format(error),
-    );
-  });
-}
-`,
-    );
-  } else {
-    importCollector.destructure("axios", "AxiosError");
-
-    fileWrite(
-      file,
-      `\nexport type AppErrorResponse = AxiosError<{
+  fileWrite(
+    file,
+    `\nexport type AppErrorResponse = AxiosError<{
   key?: string;
   status?: number;
   requestId?: number;
@@ -124,21 +66,21 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance: AxiosInsta
   };
 }>;
 `,
-    );
+  );
 
-    if (
-      includeWrapper &&
-      !generateContext.options.generators.apiClient?.target.globalClient
-    ) {
-      importCollector.destructure("axios", "AxiosError");
-      importCollector.destructure("axios", "AxiosInstance");
-      importCollector.raw(`import React from "react";`);
-      importCollector.destructure("react", "createContext");
-      importCollector.destructure("react", "PropsWithChildren");
-      importCollector.destructure("react", "useContext");
-      fileWrite(
-        file,
-        `const ApiContext = createContext<AxiosInstance | undefined>(undefined);
+  if (
+    includeWrapper &&
+    !generateContext.options.generators.apiClient?.target.globalClient
+  ) {
+    importCollector.destructure("axios", "AxiosError");
+    importCollector.destructure("axios", "AxiosInstance");
+    importCollector.raw(`import React from "react";`);
+    importCollector.destructure("react", "createContext");
+    importCollector.destructure("react", "PropsWithChildren");
+    importCollector.destructure("react", "useContext");
+    fileWrite(
+      file,
+      `const ApiContext = createContext<AxiosInstance | undefined>(undefined);
 
 export function ApiProvider({
   instance, children,
@@ -157,8 +99,7 @@ export const useApi = () => {
 
   return context;
 };`,
-      );
-    }
+    );
   }
 }
 
@@ -196,15 +137,7 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
     importCollector.destructure("axios", "AxiosInstance");
   }
 
-  if (
-    generateContext.options.generators.apiClient?.target.targetRuntime ===
-    "node.js"
-  ) {
-    importCollector.raw(`import FormData from "form-data";`);
-    importCollector.destructure("@compas/stdlib", "AppError");
-  } else {
-    importCollector.destructure("../common/api-client", "AppErrorResponse");
-  }
+  importCollector.destructure("../common/api-client", "AppErrorResponse");
 
   return file;
 }
@@ -255,13 +188,7 @@ export function tsAxiosGenerateFunction(
   }
 
   // Allow overwriting any request config
-  args.push(
-    `requestConfig?: AxiosRequestConfig${
-      route.response && !distilledTargetInfo.skipResponseValidation
-        ? ` & { skipResponseValidation?: boolean }`
-        : ""
-    }`,
-  );
+  args.push(`requestConfig?: AxiosRequestConfig`);
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);
@@ -336,11 +263,6 @@ for (const key of Object.keys(files)) {
 
   if (distilledTargetInfo.isReactNative) {
     fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
-  } else if (distilledTargetInfo.isNode && route.files) {
-    fileWrite(
-      file,
-      `headers: typeof data.getHeaders === "function" ? data.getHeaders() : {},`,
-    );
   }
 
   if (
@@ -348,11 +270,7 @@ for (const key of Object.keys(files)) {
     structureResolveReference(generateContext.structure, route.response)
       .type === "file"
   ) {
-    if (distilledTargetInfo.isNode) {
-      fileWrite(file, `responseType: "stream",`);
-    } else {
-      fileWrite(file, `responseType: "blob",`);
-    }
+    fileWrite(file, `responseType: "blob",`);
   }
 
   fileWrite(file, `...requestConfig,`);
@@ -360,32 +278,7 @@ for (const key of Object.keys(files)) {
   fileContextSetIndent(file, -1);
   fileWrite(file, `});`);
 
-  if (route.response && !distilledTargetInfo.skipResponseValidation) {
-    fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
-    fileWrite(file, `return response.data;`);
-    fileBlockEnd(file);
-
-    fileWrite(
-      file,
-      `const { value, error } = ${contextNames.responseValidator}(response.data);`,
-    );
-    fileBlockStart(file, `if (error)`);
-    fileWrite(
-      file,
-      `throw AppError.validationError("validator.error", {
-  route: { group: "${route.group}", name: "${route.name}", },
-  error,
-});`,
-    );
-
-    fileBlockEnd(file);
-
-    fileBlockStart(file, `else`);
-    fileWrite(file, `return value;`);
-    fileBlockEnd(file);
-  } else {
-    fileWrite(file, `return response.data;`);
-  }
+  fileWrite(file, `return response.data;`);
 
   fileBlockEnd(file);
 
