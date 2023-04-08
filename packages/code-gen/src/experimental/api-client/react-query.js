@@ -235,7 +235,9 @@ export function reactQueryGenerateFunction(
     );
 
     // When no arguments are required, the whole opts object is optional
-    if (route.params || route.query || route.body) {
+    const routeHasMandatoryInputs =
+      route.params || route.query || route.body || route.files;
+    if (routeHasMandatoryInputs) {
       fileWrite(file, `opts: `);
     } else {
       fileWrite(file, `opts?: `);
@@ -250,7 +252,7 @@ export function reactQueryGenerateFunction(
     );
 
     // When no arguments are required, the whole opts object is optional
-    if (route.params || route.query || route.body) {
+    if (routeHasMandatoryInputs) {
       fileBlockStart(file, `)`);
     } else {
       fileBlockStart(file, `|undefined)`);
@@ -266,7 +268,7 @@ export function reactQueryGenerateFunction(
       }
     }
 
-    if (!route.params && !route.query && !route.body) {
+    if (!routeHasMandatoryInputs) {
       fileWrite(file, `opts ??= {};`);
     }
 
@@ -276,16 +278,16 @@ export function reactQueryGenerateFunction(
     fileWriteInline(
       file,
       `return useQuery(${hookName}.queryKey(${
-        route.params || route.query || route.body ? "opts" : ""
+        routeHasMandatoryInputs ? "opts" : ""
       }),`,
     );
     fileWriteInline(
       file,
       `({ signal }) => {
-  ${!route.params && !route.query && !route.body ? "if (opts) {" : ""}
+  ${!routeHasMandatoryInputs ? "if (opts) {" : ""}
   opts.requestConfig ??= {};
   opts.requestConfig.signal = signal;
-  ${!route.params && !route.query && !route.body ? "}" : ""}
+  ${!routeHasMandatoryInputs ? "}" : ""}
   
     
   return ${apiName}(${apiInstanceParameter}
@@ -311,7 +313,7 @@ ${hookName}.baseKey = (): QueryKey => ["${route.group}", "${route.name}"];
  */
 ${hookName}.queryKey = (
   ${
-    route.params || route.query || route.body
+    routeHasMandatoryInputs
       ? `opts: ${joinedArgumentType({
           withQueryOptions: false,
           withRequestConfig: false,
@@ -329,17 +331,13 @@ ${hookName}.queryKey = (
  ${hookName}.fetch = (
   ${queryClientArgument}
   ${apiInstanceArgument}
-  opts${
-    route.params || route.query || route.body ? "" : "?"
-  }: ${joinedArgumentType({
+  opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
         withQueryOptions: false,
         withRequestConfig: true,
       })}
  ) => {
   return queryClient.fetchQuery(
-    ${hookName}.queryKey(${
-        route.params || route.query || route.body ? "opts" : ""
-      }),
+    ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
     () => ${apiName}(
    ${apiInstanceParameter}
   ${parameterListWithExtraction({
@@ -355,17 +353,13 @@ ${hookName}.queryKey = (
  ${hookName}.prefetch = (
   ${queryClientArgument}
   ${apiInstanceArgument}
-  opts${
-    route.params || route.query || route.body ? "" : "?"
-  }: ${joinedArgumentType({
+  opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
         withQueryOptions: false,
         withRequestConfig: true,
       })},
  ) => {
   return queryClient.prefetchQuery(
-    ${hookName}.queryKey(${
-        route.params || route.query || route.body ? "opts" : ""
-      }),
+    ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
     () => ${apiName}(
      ${apiInstanceParameter}
      ${parameterListWithExtraction({
@@ -381,7 +375,7 @@ ${hookName}.queryKey = (
 ${hookName}.invalidate = (
   ${queryClientArgument}
   ${
-    route.params || route.query || route.body
+    routeHasMandatoryInputs
       ? `opts: ${joinedArgumentType({
           withQueryOptions: false,
           withRequestConfig: false,
@@ -389,7 +383,7 @@ ${hookName}.invalidate = (
       : ""
   }
 ) => queryClient.invalidateQueries(${hookName}.queryKey(${
-        route.params || route.query || route.body ? "opts" : ""
+        routeHasMandatoryInputs ? "opts" : ""
       }));
   
 
@@ -399,7 +393,7 @@ ${hookName}.invalidate = (
 ${hookName}.setQueryData = (
   ${queryClientArgument}
   ${
-    route.params || route.query || route.body
+    routeHasMandatoryInputs
       ? `opts: ${joinedArgumentType({
           withQueryOptions: false,
           withRequestConfig: false,
@@ -408,7 +402,7 @@ ${hookName}.setQueryData = (
   }
   data: ${contextNames.responseTypeName ?? "unknown"},
 ) => queryClient.setQueryData(${hookName}.queryKey(${
-        route.params || route.query || route.body ? "opts" : ""
+        routeHasMandatoryInputs ? "opts" : ""
       }), data);
 `,
     );
