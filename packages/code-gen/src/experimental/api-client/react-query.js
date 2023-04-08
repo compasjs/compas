@@ -204,7 +204,7 @@ export function reactQueryGenerateFunction(
     }
 
     if (withRequestConfig) {
-      result += `${prefix}.requestConfig`;
+      result += `${prefix}?.requestConfig`;
     }
 
     return result;
@@ -237,12 +237,8 @@ export function reactQueryGenerateFunction(
     // When no arguments are required, the whole opts object is optional
     const routeHasMandatoryInputs =
       route.params || route.query || route.body || route.files;
-    if (routeHasMandatoryInputs) {
-      fileWrite(file, `opts: `);
-    } else {
-      fileWrite(file, `opts?: `);
-    }
 
+    fileWrite(file, `opts: `);
     fileWrite(
       file,
       joinedArgumentType({
@@ -255,7 +251,7 @@ export function reactQueryGenerateFunction(
     if (routeHasMandatoryInputs) {
       fileBlockStart(file, `)`);
     } else {
-      fileBlockStart(file, `|undefined)`);
+      fileBlockStart(file, ` = {})`);
     }
 
     if (!distilledTargetInfo.useGlobalClients) {
@@ -266,10 +262,6 @@ export function reactQueryGenerateFunction(
       if (distilledTargetInfo.isFetch) {
         fileWrite(file, `const fetchFn = useApi();`);
       }
-    }
-
-    if (!routeHasMandatoryInputs) {
-      fileWrite(file, `opts ??= {};`);
     }
 
     fileWrite(file, `const options = opts?.queryOptions ?? {};`);
@@ -284,11 +276,8 @@ export function reactQueryGenerateFunction(
     fileWriteInline(
       file,
       `({ signal }) => {
-  ${!routeHasMandatoryInputs ? "if (opts) {" : ""}
   opts.requestConfig ??= {};
   opts.requestConfig.signal = signal;
-  ${!routeHasMandatoryInputs ? "}" : ""}
-  
     
   return ${apiName}(${apiInstanceParameter}
   ${parameterListWithExtraction({
