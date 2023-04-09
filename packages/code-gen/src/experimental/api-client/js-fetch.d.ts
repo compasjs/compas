@@ -3,7 +3,7 @@
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsAxiosGenerateCommonFile(
+export function jsFetchGenerateCommonFile(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
@@ -13,7 +13,7 @@ export function jsAxiosGenerateCommonFile(
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function jsAxiosGetApiClientFile(
+export function jsFetchGetApiClientFile(
   generateContext: import("../generate").GenerateContext,
   route: import("../generated/common/types").ExperimentalRouteDefinition,
 ): import("../file/context").GenerateFile;
@@ -25,7 +25,7 @@ export function jsAxiosGetApiClientFile(
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function jsAxiosGenerateFunction(
+export function jsFetchGenerateFunction(
   generateContext: import("../generate").GenerateContext,
   file: import("../file/context").GenerateFile,
   route: import("../types").NamedType<
@@ -33,4 +33,4 @@ export function jsAxiosGenerateFunction(
   >,
   contextNames: Record<string, string>,
 ): void;
-//# sourceMappingURL=js-axios.d.ts.map
+//# sourceMappingURL=js-fetch.d.ts.map

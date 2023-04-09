@@ -10,7 +10,12 @@ export type ExperimentalAnyDefinitionTarget =
   | "tsAxios"
   | "jsAxiosNode"
   | "tsAxiosBrowser"
-  | "tsAxiosReactNative";
+  | "tsAxiosReactNative"
+  | "jsFetch"
+  | "tsFetch"
+  | "jsFetchNode"
+  | "tsFetchBrowser"
+  | "tsFetchReactNative";
 
 export type ExperimentalAnyDefinition = {
   type: "any";
@@ -874,8 +879,11 @@ export type ExperimentalAnyOfDefinitionInput = {
     | ExperimentalTypeSystemDefinitionInput;
 };
 
+// Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
 export type ExperimentalGenerateOptions = {
   targetLanguage: "js" | "ts";
+
+  // Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
   outputDirectory?: string | undefined;
   generators: {
     // Enable a structure dump. This way this structure can be reused via 'Generator#addStructure
@@ -937,16 +945,27 @@ export type ExperimentalGenerateOptions = {
     apiClient?:
       | {
           // Select your HTTP client of choice.
-          target: {
-            library: "axios";
-            targetRuntime: "node.js" | "browser" | "react-native";
+          target:
+            | {
+                library: "axios";
+                targetRuntime: "node.js" | "browser" | "react-native";
 
-            // Include an API client wrapper to use the api easier with your user interface library.
-            includeWrapper?: "react-query" | undefined;
+                // Include an API client wrapper to use the api easier with your user interface library.
+                includeWrapper?: "react-query" | undefined;
 
-            // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
-            globalClient: boolean;
-          };
+                // Use a global api client that will be used for all requests.
+                globalClient: boolean;
+              }
+            | {
+                library: "fetch";
+                targetRuntime: "node.js" | "browser" | "react-native";
+
+                // Include an API client wrapper to use the api easier with your user interface library.
+                includeWrapper?: "react-query" | undefined;
+
+                // Use a global api client that will be used for all requests.
+                globalClient: boolean;
+              };
 
           // Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
           responseValidation: {
@@ -968,8 +987,11 @@ export type ExperimentalGenerateOptions = {
   };
 };
 
+// Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
 export type ExperimentalGenerateOptionsInput = {
   targetLanguage: "js" | "ts";
+
+  // Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
   outputDirectory?: string | undefined;
   generators: {
     // Enable a structure dump. This way this structure can be reused via 'Generator#addStructure
@@ -1033,16 +1055,27 @@ export type ExperimentalGenerateOptionsInput = {
     apiClient?:
       | {
           // Select your HTTP client of choice.
-          target: {
-            library: "axios";
-            targetRuntime: "node.js" | "browser" | "react-native";
+          target:
+            | {
+                library: "axios";
+                targetRuntime: "node.js" | "browser" | "react-native";
 
-            // Include an API client wrapper to use the api easier with your user interface library.
-            includeWrapper?: "react-query" | undefined;
+                // Include an API client wrapper to use the api easier with your user interface library.
+                includeWrapper?: "react-query" | undefined;
 
-            // Use a global api client that will be used for all requests. Only applicable when using 'axios'.
-            globalClient?: boolean | "true" | "false" | undefined;
-          };
+                // Use a global api client that will be used for all requests.
+                globalClient?: boolean | "true" | "false" | undefined;
+              }
+            | {
+                library: "fetch";
+                targetRuntime: "node.js" | "browser" | "react-native";
+
+                // Include an API client wrapper to use the api easier with your user interface library.
+                includeWrapper?: "react-query" | undefined;
+
+                // Use a global api client that will be used for all requests.
+                globalClient?: boolean | "true" | "false" | undefined;
+              };
 
           // Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
           responseValidation?:

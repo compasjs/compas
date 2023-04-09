@@ -147,8 +147,8 @@ async function runGenerate(result, spec) {
         },
         apiClient: {
           target: {
-            library: "axios",
-            globalClient: true,
+            library: "fetch",
+            globalClient: false,
             targetRuntime: "browser",
             includeWrapper: "react-query",
           },

@@ -13,26 +13,34 @@ import {
   validatorGetNameAndImport,
 } from "../validators/generator.js";
 import {
-  axiosReactQueryGenerateFunction,
-  axiosReactQueryGetApiClientFile,
-} from "./axios-react-query.js";
-import {
   jsAxiosGenerateCommonFile,
   jsAxiosGenerateFunction,
   jsAxiosGetApiClientFile,
 } from "./js-axios.js";
 import {
+  jsFetchGenerateCommonFile,
+  jsFetchGenerateFunction,
+  jsFetchGetApiClientFile,
+} from "./js-fetch.js";
+import {
+  reactQueryGenerateFunction,
+  reactQueryGetApiClientFile,
+} from "./react-query.js";
+import {
   tsAxiosGenerateCommonFile,
   tsAxiosGenerateFunction,
   tsAxiosGetApiClientFile,
 } from "./ts-axios.js";
+import {
+  tsFetchGenerateCommonFile,
+  tsFetchGenerateFunction,
+  tsFetchGetApiClientFile,
+} from "./ts-fetch.js";
 
 /**
  * Run the API client generator.
  *
  * TODO: extend docs
- *
- * TODO: throw when js-axios is used with react-query wrapper
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
@@ -41,30 +49,33 @@ export function apiClientGenerator(generateContext) {
     return;
   }
 
+  const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
   const target = apiClientFormatTarget(generateContext);
   const wrapperTarget = apiClientFormatWrapperTarget(generateContext);
 
   /** @type {import("../generated/common/types").ExperimentalAnyDefinitionTarget[]} */
   const typeTargets = [generateContext.options.targetLanguage, target];
-  if (
-    generateContext.options.generators.apiClient?.target.targetRuntime ===
-    "browser"
-  ) {
-    typeTargets.push("tsAxiosBrowser");
-  } else if (
-    generateContext.options.generators.apiClient?.target.targetRuntime ===
-    "react-native"
-  ) {
-    typeTargets.push("tsAxiosReactNative");
+
+  if (distilledTargetInfo.isAxios) {
+    if (distilledTargetInfo.isBrowser) {
+      typeTargets.push("tsAxiosBrowser");
+    } else if (distilledTargetInfo.isReactNative) {
+      typeTargets.push("tsAxiosReactNative");
+    }
+  } else if (distilledTargetInfo.isFetch) {
+    if (distilledTargetInfo.isBrowser) {
+      typeTargets.push("tsFetchBrowser");
+    } else if (distilledTargetInfo.isReactNative) {
+      typeTargets.push("tsFetchReactNative");
+    }
   }
-  const skipResponseValidation =
-    typeTargets.includes("tsAxiosBrowser") ||
-    typeTargets.includes("tsAxiosReactNative");
 
   targetCustomSwitch(
     {
       jsAxios: jsAxiosGenerateCommonFile,
       tsAxios: tsAxiosGenerateCommonFile,
+      jsFetch: jsFetchGenerateCommonFile,
+      tsFetch: tsFetchGenerateCommonFile,
     },
     target,
     [generateContext],
@@ -75,6 +86,8 @@ export function apiClientGenerator(generateContext) {
       {
         jsAxios: jsAxiosGetApiClientFile,
         tsAxios: tsAxiosGetApiClientFile,
+        jsFetch: jsFetchGetApiClientFile,
+        tsFetch: tsFetchGetApiClientFile,
       },
       target,
       [generateContext, route],
@@ -82,7 +95,7 @@ export function apiClientGenerator(generateContext) {
 
     const wrapperFile = targetCustomSwitch(
       {
-        axiosReactQuery: axiosReactQueryGetApiClientFile,
+        reactQuery: reactQueryGetApiClientFile,
       },
       wrapperTarget,
       [generateContext, route],
@@ -115,7 +128,7 @@ export function apiClientGenerator(generateContext) {
         type,
       );
 
-      if (name === "response" && !skipResponseValidation) {
+      if (name === "response" && !distilledTargetInfo.skipResponseValidation) {
         // @ts-expect-error
         validatorGeneratorGenerateValidator(generateContext, typeRef, {
           validatorState: "output",
@@ -156,7 +169,7 @@ export function apiClientGenerator(generateContext) {
         );
       }
 
-      if (name === "response" && !skipResponseValidation) {
+      if (name === "response" && !distilledTargetInfo.skipResponseValidation) {
         contextNames[`${name}Validator`] = validatorGetNameAndImport(
           generateContext,
           file,
@@ -172,28 +185,29 @@ export function apiClientGenerator(generateContext) {
       {
         jsAxios: jsAxiosGenerateFunction,
         tsAxios: tsAxiosGenerateFunction,
+        jsFetch: jsFetchGenerateFunction,
+        tsFetch: tsFetchGenerateFunction,
       },
       target,
       [
         generateContext,
         file,
-        generateContext.options.generators.apiClient,
         route,
 
         // @ts-expect-error
         contextNames,
       ],
     );
+
     if (wrapperFile) {
       targetCustomSwitch(
         {
-          axiosReactQuery: axiosReactQueryGenerateFunction,
+          reactQuery: reactQueryGenerateFunction,
         },
         wrapperTarget,
         [
           generateContext,
           wrapperFile,
-          generateContext.options.generators.apiClient,
           route,
 
           // @ts-expect-error
@@ -205,12 +219,42 @@ export function apiClientGenerator(generateContext) {
 }
 
 /**
+ * Distill the targets in to a short list of booleans.
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @returns {{
+ *  isAxios: boolean,
+ *  isFetch: boolean,
+ *  isNode: boolean,
+ *  isBrowser: boolean,
+ *  isReactNative: boolean,
+ *  useGlobalClients: boolean,
+ *  skipResponseValidation: boolean,
+ * }}
+ */
+export function apiClientDistilledTargetInfo(generateContext) {
+  const apiClientOpts = generateContext.options.generators.apiClient;
+
+  return {
+    isAxios: apiClientOpts?.target.library === "axios",
+    isFetch: apiClientOpts?.target.library === "fetch",
+    isNode: apiClientOpts?.target.targetRuntime === "node.js",
+    isBrowser: apiClientOpts?.target.targetRuntime === "browser",
+    isReactNative: apiClientOpts?.target.targetRuntime === "react-native",
+    useGlobalClients: apiClientOpts?.target.globalClient ?? false,
+    skipResponseValidation:
+      apiClientOpts?.target.targetRuntime === "browser" ||
+      apiClientOpts?.target.targetRuntime === "react-native",
+  };
+}
+
+/**
  * Format the target to use.
  *
  * TODO: Apply this return type on other target format functions in other generators
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {"jsAxios"|"tsAxios"}
+ * @returns {"jsAxios"|"tsAxios"|"jsFetch"|"tsFetch"}
  */
 export function apiClientFormatTarget(generateContext) {
   if (!generateContext.options.generators.apiClient?.target) {
@@ -233,15 +277,14 @@ export function apiClientFormatTarget(generateContext) {
  * Format the api client wrapper target.
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {"axiosReactQuery"|undefined}
+ * @returns {"reactQuery"|undefined}
  */
 export function apiClientFormatWrapperTarget(generateContext) {
   if (
-    generateContext.options.generators.apiClient?.target.library === "axios" &&
-    generateContext.options.generators.apiClient.target.includeWrapper ===
-      "react-query"
+    generateContext.options.generators.apiClient?.target.includeWrapper ===
+    "react-query"
   ) {
-    return "axiosReactQuery";
+    return "reactQuery";
   }
 
   return undefined;

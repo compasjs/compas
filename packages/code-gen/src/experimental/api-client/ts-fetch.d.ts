@@ -3,17 +3,17 @@
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsAxiosGenerateCommonFile(
+export function tsFetchGenerateCommonFile(
   generateContext: import("../generate").GenerateContext,
 ): void;
 /**
- * Write the global clients to the common directory
+ * Get a specific api client file.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function jsAxiosGetApiClientFile(
+export function tsFetchGetApiClientFile(
   generateContext: import("../generate").GenerateContext,
   route: import("../generated/common/types").ExperimentalRouteDefinition,
 ): import("../file/context").GenerateFile;
@@ -25,7 +25,7 @@ export function jsAxiosGetApiClientFile(
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function jsAxiosGenerateFunction(
+export function tsFetchGenerateFunction(
   generateContext: import("../generate").GenerateContext,
   file: import("../file/context").GenerateFile,
   route: import("../types").NamedType<
@@ -33,4 +33,4 @@ export function jsAxiosGenerateFunction(
   >,
   contextNames: Record<string, string>,
 ): void;
-//# sourceMappingURL=js-axios.d.ts.map
+//# sourceMappingURL=ts-fetch.d.ts.map

@@ -17,7 +17,7 @@ import { apiClientDistilledTargetInfo } from "./generator.js";
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsAxiosGenerateCommonFile(generateContext) {
+export function jsFetchGenerateCommonFile(generateContext) {
   const file = fileContextCreateGeneric(
     generateContext,
     "common/api-client.js",
@@ -28,70 +28,91 @@ export function jsAxiosGenerateCommonFile(generateContext) {
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
-  if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure("axios", "axios");
+  fileWrite(
+    file,
+    `/**
+ * @typedef {(input: string|URL, init?: RequestInit) => Promise<Response>} FetchFn
+ */
+`,
+  );
 
+  if (generateContext.options.generators.apiClient?.target.globalClient) {
     fileWrite(
       file,
       `/**
- * @type {import("axios").AxiosInstance}
+ * @type {FetchFn}
  */
-export const axiosInstance = axios.create();
+export let fetchFn = fetch;
+
+/**
+ * Override the global fetch function. This can be used to apply defaults to each call.
+ *
+ * @param {FetchFn} newFetchFn
+ */
+export function setFetchFn(newFetchFn) {
+  fetchFn = newFetchFn;
+}
 `,
     );
   }
 
   importCollector.destructure("@compas/stdlib", "AppError");
-  importCollector.destructure("@compas/stdlib", "streamToBuffer");
 
   fileWrite(
     file,
-    `/**
- * Adds an interceptor to the provided Axios instance, wrapping any error in an AppError.
- * This allows directly testing against an error key or property.
+    `
+/**
+ * Wrap the provided fetch function, adding the baseUrl to each invocation.
  *
- * @param {import("axios").AxiosInstance} axiosInstance
+ * @param {FetchFn} originalFetch
+ * @param {string} baseUrl
+ * @returns {FetchFn}
  */
-export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
-  axiosInstance.interceptors.response.use(undefined, async (error) => {
-    // Validator error
-    if (AppError.instanceOf(error)) {
-      // If it is an AppError already, it most likely is thrown by the response
-      // validators. So we rethrow it as is.
-      throw error;
-    }
-
-    if (typeof error?.response?.data?.pipe === "function") {
-      const buffer = await streamToBuffer(error.response.data);
-      try {
-        error.response.data = JSON.parse(buffer.toString("utf-8"));
-      } catch {
-        // Unknown error
-        throw new AppError(
-          \`response.error\`,
-          error.response?.status ?? 500,
-          {
-            message:
-              "Could not decode the response body for further information.",
-          },
-          error,
-        );
+export function fetchWithBaseUrl(originalFetch, baseUrl) {
+  return function fetchWithBaseUrl(input, init) {
+    return originalFetch(new URL(input, baseUrl), init);
+  };
+}
+    
+/**
+ * Wrap the provided fetch function, to catch errors and convert where possible to an AppError
+ *
+ * @param {FetchFn} originalFetch
+ * @returns {FetchFn}
+ */
+export function fetchCatchErrorAndWrapWithAppError(originalFetch) {
+  return async function fetchCatchErrorAndWrapWithAppError(input, init) {
+    try {
+      const response = await originalFetch(input, init);
+      
+      if (!response.ok) {
+        const body = await response.json();
+        
+        if (typeof body.key === "string" && !!body.info && typeof body.info === "object") {
+          throw new AppError(body.key, response.status, body.info);
+        } else {
+          throw new AppError("response.error", response.status, {
+            fetch: {
+              request: { input, init },
+              response: {
+                status: response.status,
+                body,
+              },
+            },
+          });
+        }
       }
+     
+      return response;
+    } catch (error) {
+      if (AppError.instanceOf(error)) {
+        throw error;
+      }
+      
+      // Unknown error, wrap with a hard '500' since this is most likely unexecpted.
+      throw new AppError("response.error", 500, AppError.format(error));
     }
-
-    // Server AppError
-    const { key, info } = error.response?.data ?? {};
-    if (typeof key === "string" && !!info && typeof info === "object") {
-      throw new AppError(key, error.response.status, info, error);
-    }
-
-    // Unknown error
-    throw new AppError(
-      \`response.error\`,
-      error.response?.status ?? 500,
-      AppError.format(error),
-    );
-  });
+  };
 }
 `,
   );
@@ -104,7 +125,7 @@ export function axiosInterceptErrorAndWrapWithAppError(axiosInstance) {
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function jsAxiosGetApiClientFile(generateContext, route) {
+export function jsFetchGetApiClientFile(generateContext, route) {
   let file = fileContextGetOptional(
     generateContext,
     `${route.group}/apiClient.js`,
@@ -125,10 +146,9 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure(`../common/api-client.js`, "axiosInstance");
+    importCollector.destructure(`../common/api-client.js`, "fetchFn");
   }
 
-  importCollector.raw(`import FormData from "form-data";`);
   importCollector.destructure("@compas/stdlib", "AppError");
 
   return file;
@@ -142,7 +162,7 @@ export function jsAxiosGetApiClientFile(generateContext, route) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function jsAxiosGenerateFunction(
+export function jsFetchGenerateFunction(
   generateContext,
   file,
   route,
@@ -159,8 +179,8 @@ export function jsAxiosGenerateFunction(
   fileWrite(file, `Tags: ${JSON.stringify(route.tags)}\n`);
 
   if (!distilledTargetInfo.useGlobalClients) {
-    args.push("axiosInstance");
-    fileWrite(file, `@param {import("axios").AxiosInstance} axiosInstance`);
+    args.push("fetchFn");
+    fileWrite(file, `@param {FetchFn} fetchFn`);
   }
 
   if (route.params) {
@@ -189,13 +209,15 @@ export function jsAxiosGenerateFunction(
   args.push("requestConfig");
   fileWrite(
     file,
-    `@param {import("axios").AxiosRequestConfig${
+    `@param {RequestInit${
       route.response ? ` & { skipResponseValidation?: boolean }` : ""
     }} [requestConfig]`,
   );
 
   if (route.response) {
     fileWrite(file, `@returns {Promise<${contextNames.responseTypeName}>}`);
+  } else {
+    fileWrite(file, `@returns {Promise<Response>}`);
   }
 
   fileContextRemoveLinePrefix(file, 3);
@@ -240,59 +262,67 @@ for (const key of Object.keys(files)) {
     fileBlockEnd(file);
   }
 
-  fileWrite(file, `const response = await axiosInstance.request({`);
+  fileWrite(file, `const response = await fetchFn(`);
   fileContextSetIndent(file, 1);
 
-  // Format axios arguments
-  fileWrite(
-    file,
-    `url: \`${route.path
-      .split("/")
-      .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
-      .join("/")}\`,`,
-  );
-  fileWrite(file, `method: "${route.method}",`);
-
   if (route.query) {
-    fileWrite(file, `params: query,`);
+    fileWrite(
+      file,
+      `\`${route.path
+        .split("/")
+        .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
+        .join("/")}?$\{new URLSearchParams(query).toString()}\`,`,
+    );
+  } else {
+    fileWrite(
+      file,
+      `\`${route.path
+        .split("/")
+        .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
+        .join("/")}\`,`,
+    );
   }
 
+  fileWrite(file, `{`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `method: "${route.method}",`);
+
   if (route.files || route.metadata?.requestBodyType === "form-data") {
-    fileWrite(file, `data,`);
+    fileWrite(file, `body: data,`);
   }
 
   if (route.body && route.metadata?.requestBodyType !== "form-data") {
-    fileWrite(file, `data: body,`);
+    fileWrite(file, `body: JSON.stringify(body),`);
+    fileWrite(file, `headers: { "Content-Type": "application/json", },`);
   }
 
-  if (route.files) {
-    fileWrite(
-      file,
-      `headers: typeof data.getHeaders === "function" ? data.getHeaders() : {},`,
-    );
-  }
+  fileWrite(file, `...requestConfig,`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `}`);
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `);`);
 
   if (
     route.response &&
     structureResolveReference(generateContext.structure, route.response)
       .type === "file"
   ) {
-    fileWrite(file, `responseType: "stream",`);
+    fileWrite(file, `const result = await response.blob();`);
+  } else {
+    fileWrite(file, `const result = await response.json();`);
   }
-
-  fileWrite(file, `...requestConfig,`);
-
-  fileContextSetIndent(file, -1);
-  fileWrite(file, `});`);
 
   if (route.response) {
     fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
-    fileWrite(file, `return response.data;`);
+    fileWrite(file, `return result;`);
     fileBlockEnd(file);
 
     fileWrite(
       file,
-      `const { value, error } = ${contextNames.responseValidator}(response.data);`,
+      `const { value, error } = ${contextNames.responseValidator}(result);`,
     );
     fileBlockStart(file, `if (error)`);
 
@@ -310,7 +340,7 @@ for (const key of Object.keys(files)) {
     fileWrite(file, `return value;`);
     fileBlockEnd(file);
   } else {
-    fileWrite(file, `return response.data;`);
+    fileWrite(file, `return response;`);
   }
 
   fileBlockEnd(file);

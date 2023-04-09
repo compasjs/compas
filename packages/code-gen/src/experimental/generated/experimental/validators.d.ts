@@ -205,6 +205,8 @@ export function validateExperimentalUuidDefinition(
   ValidatorErrorMap
 >;
 /**
+ * Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
+ *
  * @param {import("../common/types").ExperimentalGenerateOptionsInput|any} value
  * @returns {Either<import("../common/types").ExperimentalGenerateOptions, ValidatorErrorMap>}
  */

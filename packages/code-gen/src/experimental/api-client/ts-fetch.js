@@ -17,7 +17,7 @@ import { apiClientDistilledTargetInfo } from "./generator.js";
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function tsAxiosGenerateCommonFile(generateContext) {
+export function tsFetchGenerateCommonFile(generateContext) {
   const includeWrapper =
     generateContext.options.generators.apiClient?.target.includeWrapper ===
     "react-query";
@@ -32,13 +32,22 @@ export function tsAxiosGenerateCommonFile(generateContext) {
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
-  if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.raw(`import axios from "axios"`);
-    importCollector.destructure("axios", "AxiosInstance");
+  fileWrite(
+    file,
+    `export type FetchFn = (input: URL|string, init?: RequestInit) => Promise<Response>;`,
+  );
 
+  if (generateContext.options.generators.apiClient?.target.globalClient) {
     fileWrite(
       file,
-      `export const axiosInstance: AxiosInstance = axios.create();
+      `export let fetchFn: FetchFn = fetch;
+
+/**
+ * Override the global fetch function. This can be used to apply defaults to each call.
+ */
+export function setFetchFn(newFetchFn: FetchFn) {
+  fetchFn = newFetchFn;
+}
 `,
     );
 
@@ -53,18 +62,28 @@ export function tsAxiosGenerateCommonFile(generateContext) {
     }
   }
 
-  importCollector.destructure("axios", "AxiosError");
-
   fileWrite(
     file,
-    `\nexport type AppErrorResponse = AxiosError<{
-  key?: string;
-  status?: number;
-  requestId?: number;
-  info?: {
-    [key: string]: unknown;
+    `
+export class AppErrorResponse extends Error {
+  public originalError: Error|undefined;
+  public request: {
+    input: URL|string;
+    init?: RequestInit;
   };
-}>;
+  public response: Response|undefined;
+  public body?: unknown;
+  
+  constructor(originalError: Error|undefined, input: URL|string, init: RequestInit|undefined, response: Response|undefined, body?: unknown) {
+    super('Request failed.');
+    
+    this.name = "AppErrorResponse";
+    this.originalError = originalError;
+    this.request = { input, init };
+    this.response = response;
+    this.body = body;
+  }
+}
 `,
   );
 
@@ -72,22 +91,20 @@ export function tsAxiosGenerateCommonFile(generateContext) {
     includeWrapper &&
     !generateContext.options.generators.apiClient?.target.globalClient
   ) {
-    importCollector.destructure("axios", "AxiosError");
-    importCollector.destructure("axios", "AxiosInstance");
     importCollector.raw(`import React from "react";`);
     importCollector.destructure("react", "createContext");
     importCollector.destructure("react", "PropsWithChildren");
     importCollector.destructure("react", "useContext");
     fileWrite(
       file,
-      `const ApiContext = createContext<AxiosInstance | undefined>(undefined);
+      `const ApiContext = createContext<FetchFn | undefined>(undefined);
 
 export function ApiProvider({
-  instance, children,
+  fetchFn, children,
 }: PropsWithChildren<{
-  instance: AxiosInstance;
+  fetchFn: FetchFn;
 }>) {
-  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
+  return <ApiContext.Provider value={fetchFn}>{children}</ApiContext.Provider>;
 }
 
 export const useApi = () => {
@@ -101,16 +118,56 @@ export const useApi = () => {
 };`,
     );
   }
+
+  fileWrite(
+    file,
+    `
+/**
+ * Wrap the provided fetch function, adding the baseUrl to each invocation.
+ */
+export function fetchWithBaseUrl(originalFetch: FetchFn, baseUrl: string): FetchFn {
+  return function fetchWithBaseUrl(input: URL|string, init?: RequestInit) {
+    return originalFetch(new URL(input, baseUrl), init);
+  };
+}
+    
+/**
+ * Wrap the provided fetch function, to catch errors and convert where possible to an AppError
+ */
+export function fetchCatchErrorAndWrapWithAppError(originalFetch: FetchFn): FetchFn {
+  return async function fetchCatchErrorAndWrapWithAppError(input: URL|string, init?: RequestInit) {
+    const response = await originalFetch(input, init);
+  
+    try {
+      
+      if (!response.ok) {
+        const body = await response.json();
+        
+        throw new AppErrorResponse(undefined, input, init, response, body);
+      }
+     
+      return response;
+    } catch (error: any) {
+      if (error instanceof AppErrorResponse) {
+        throw error;
+      }
+      
+      throw new AppErrorResponse(error, input, init, response);
+    }
+  };
+}
+`,
+  );
 }
 
 /**
- * Write the global clients to the common directory
+ * Get a specific api client file.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function tsAxiosGetApiClientFile(generateContext, route) {
+export function tsFetchGetApiClientFile(generateContext, route) {
   let file = fileContextGetOptional(
     generateContext,
     `${route.group}/apiClient.ts`,
@@ -129,12 +186,11 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
   );
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
-  importCollector.destructure("axios", "AxiosRequestConfig");
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure(`../common/api-client`, "axiosInstance");
+    importCollector.destructure(`../common/api-client`, "fetchFn");
   } else {
-    importCollector.destructure("axios", "AxiosInstance");
+    importCollector.destructure(`../common/api-client`, "FetchFn");
   }
 
   importCollector.destructure("../common/api-client", "AppErrorResponse");
@@ -150,7 +206,7 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function tsAxiosGenerateFunction(
+export function tsFetchGenerateFunction(
   generateContext,
   file,
   route,
@@ -167,7 +223,7 @@ export function tsAxiosGenerateFunction(
   fileWrite(file, `Tags: ${JSON.stringify(route.tags)}\n`);
 
   if (!distilledTargetInfo.useGlobalClients) {
-    args.push("axiosInstance: AxiosInstance");
+    args.push("fetchFn: FetchFn");
   }
 
   if (route.params) {
@@ -188,7 +244,7 @@ export function tsAxiosGenerateFunction(
   }
 
   // Allow overwriting any request config
-  args.push(`requestConfig?: AxiosRequestConfig`);
+  args.push(`requestConfig?: RequestInit`);
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);
@@ -197,7 +253,9 @@ export function tsAxiosGenerateFunction(
     file,
     `export async function api${upperCaseFirst(route.group)}${upperCaseFirst(
       route.name,
-    )}(${args.join(", ")}): Promise<${contextNames.responseTypeName}>`,
+    )}(${args.join(", ")}): Promise<${
+      contextNames.responseTypeName ?? "Response"
+    }>`,
   );
 
   if (route.files) {
@@ -236,49 +294,65 @@ for (const key of Object.keys(files)) {
     fileBlockEnd(file);
   }
 
-  fileWrite(file, `const response = await axiosInstance.request({`);
+  fileWrite(file, `const response = await fetchFn(`);
   fileContextSetIndent(file, 1);
 
-  // Format axios arguments
-  fileWrite(
-    file,
-    `url: \`${route.path
-      .split("/")
-      .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
-      .join("/")}\`,`,
-  );
-  fileWrite(file, `method: "${route.method}",`);
-
   if (route.query) {
-    fileWrite(file, `params: query,`);
+    fileWrite(
+      file,
+      `\`${route.path
+        .split("/")
+        .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
+        .join("/")}?$\{new URLSearchParams(query as any).toString()}\`,`,
+    );
+  } else {
+    fileWrite(
+      file,
+      `\`${route.path
+        .split("/")
+        .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
+        .join("/")}\`,`,
+    );
   }
 
+  fileWrite(file, `{`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `method: "${route.method}",`);
+
   if (route.files || route.metadata?.requestBodyType === "form-data") {
-    fileWrite(file, `data,`);
+    fileWrite(file, `body: data,`);
+
+    if (distilledTargetInfo.isReactNative) {
+      fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
+    }
   }
 
   if (route.body && route.metadata?.requestBodyType !== "form-data") {
-    fileWrite(file, `data: body,`);
-  }
-
-  if (distilledTargetInfo.isReactNative) {
-    fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
-  }
-
-  if (
-    route.response &&
-    structureResolveReference(generateContext.structure, route.response)
-      .type === "file"
-  ) {
-    fileWrite(file, `responseType: "blob",`);
+    fileWrite(file, `body: JSON.stringify(body),`);
+    fileWrite(file, `headers: { "Content-Type": "application/json", },`);
   }
 
   fileWrite(file, `...requestConfig,`);
 
   fileContextSetIndent(file, -1);
-  fileWrite(file, `});`);
+  fileWrite(file, `}`);
 
-  fileWrite(file, `return response.data;`);
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `);`);
+
+  if (route.response) {
+    if (
+      structureResolveReference(generateContext.structure, route.response)
+        .type === "file"
+    ) {
+      fileWrite(file, `return response.blob();`);
+    } else {
+      fileWrite(file, `return response.json();`);
+    }
+  } else {
+    fileWrite(file, `return response;`);
+  }
 
   fileBlockEnd(file);
 
