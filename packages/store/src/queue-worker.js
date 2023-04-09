@@ -41,7 +41,7 @@ import { query } from "./query.js";
  * @property {number} [maxRetryCount] The worker will automatically catch any
  *    errors thrown by the handler, and retry the job at a later stage. This property
  *    defines the max number of retries before forcing the job to be completed. Defaults
- *    to 5 retries.
+ *    to 2 retries.
  * @property {number} [handlerTimeout] Maximum time the handler could take to
  *    fulfill a job in milliseconds. Defaults to 30 seconds.
  * @property {string[]} [includedNames] Included job names for this job worker,
@@ -245,7 +245,7 @@ export function queueWorkerCreate(sql, options) {
   const opts = { ...options, isQueueEnabled: true };
   opts.pollInterval = options.pollInterval ?? 1500;
   opts.parallelCount = options.parallelCount ?? 1;
-  opts.maxRetryCount = options.maxRetryCount ?? 5;
+  opts.maxRetryCount = options.maxRetryCount ?? 2;
   opts.handlerTimeout = options.handlerTimeout ?? 30 * 1000;
   opts.unsafeIgnoreSorting = options.unsafeIgnoreSorting ?? false;
 
