@@ -17,10 +17,14 @@ import { apiClientDistilledTargetInfo } from "./generator.js";
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
-export function jsFetchGenerateCommonFile(generateContext) {
+export function tsFetchGenerateCommonFile(generateContext) {
+  const includeWrapper =
+    generateContext.options.generators.apiClient?.target.includeWrapper ===
+    "react-query";
+
   const file = fileContextCreateGeneric(
     generateContext,
-    "common/api-client.js",
+    `common/api-client.ts${includeWrapper ? "x" : ""}`,
     {
       importCollector: new JavascriptImportCollector(),
     },
@@ -30,87 +34,125 @@ export function jsFetchGenerateCommonFile(generateContext) {
 
   fileWrite(
     file,
-    `/**
- * @typedef {(input: string|URL, init?: RequestInit) => Promise<Response>} FetchFn
- */
-`,
+    `export type FetchFn = (input: URL|string, init?: RequestInit) => Promise<Response>;`,
   );
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
     fileWrite(
       file,
-      `/**
- * @type {FetchFn}
- */
-export let fetchFn = fetch;
+      `export let fetchFn: FetchFn = fetch;
 
 /**
  * Override the global fetch function. This can be used to apply defaults to each call.
- *
- * @param {FetchFn} newFetchFn
  */
-export function setFetchFn(newFetchFn) {
+export function setFetchFn(newFetchFn: FetchFn) {
   fetchFn = newFetchFn;
 }
 `,
     );
+
+    if (includeWrapper) {
+      importCollector.destructure("@tanstack/react-query", "QueryClient");
+
+      fileWrite(
+        file,
+        `export const queryClient = new QueryClient();
+`,
+      );
+    }
   }
 
-  importCollector.destructure("@compas/stdlib", "AppError");
+  fileWrite(
+    file,
+    `
+export class AppErrorResponse extends Error {
+  public originalError: Error|undefined;
+  public request: {
+    input: URL|string;
+    init?: RequestInit;
+  };
+  public response: Response|undefined;
+  public body?: unknown;
+  
+  constructor(originalError: Error|undefined, input: URL|string, init: RequestInit|undefined, response: Response|undefined, body?: unknown) {
+    super('Request failed.');
+    
+    this.name = "AppErrorResponse";
+    this.originalError = originalError;
+    this.request = { input, init };
+    this.response = response;
+    this.body = body;
+  }
+}
+`,
+  );
+
+  if (
+    includeWrapper &&
+    !generateContext.options.generators.apiClient?.target.globalClient
+  ) {
+    importCollector.raw(`import React from "react";`);
+    importCollector.destructure("react", "createContext");
+    importCollector.destructure("react", "PropsWithChildren");
+    importCollector.destructure("react", "useContext");
+    fileWrite(
+      file,
+      `const ApiContext = createContext<FetchFn | undefined>(undefined);
+
+export function ApiProvider({
+  fetchFn, children,
+}: PropsWithChildren<{
+  fetchFn: FetchFn;
+}>) {
+  return <ApiContext.Provider value={fetchFn}>{children}</ApiContext.Provider>;
+}
+
+export const useApi = () => {
+  const context = useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};`,
+    );
+  }
 
   fileWrite(
     file,
     `
 /**
  * Wrap the provided fetch function, adding the baseUrl to each invocation.
- *
- * @param {FetchFn} originalFetch
- * @param {string} baseUrl
- * @returns {FetchFn}
  */
-export function fetchWithBaseUrl(originalFetch, baseUrl) {
-  return function fetchWithBaseUrl(input, init) {
+export function fetchWithBaseUrl(originalFetch: FetchFn, baseUrl: string): FetchFn {
+  return function fetchWithBaseUrl(input: URL|string, init?: RequestInit) {
     return originalFetch(new URL(input, baseUrl), init);
   };
 }
     
 /**
  * Wrap the provided fetch function, to catch errors and convert where possible to an AppError
- *
- * @param {FetchFn} originalFetch
- * @returns {FetchFn}
  */
-export function fetchCatchErrorAndWrapWithAppError(originalFetch) {
-  return async function fetchCatchErrorAndWrapWithAppError(input, init) {
+export function fetchCatchErrorAndWrapWithAppError(originalFetch: FetchFn): FetchFn {
+  return async function fetchCatchErrorAndWrapWithAppError(input: URL|string, init?: RequestInit) {
+    const response = await originalFetch(input, init);
+  
     try {
-      const response = await originalFetch(input, init);
       
       if (!response.ok) {
         const body = await response.json();
         
-        if (typeof body.key === "string" && !!body.info && typeof body.info === "object") {
-          throw new AppError(body.key, response.status, body.info);
-        } else {
-          throw new AppError("response.error", response.status, {
-            fetch: {
-              request: { input, init },
-              response: {
-                status: response.status,
-                body,
-              },
-            },
-          });
-        }
+        throw new AppErrorResponse(undefined, input, init, response, body);
       }
      
       return response;
-    } catch (error) {
-      if (AppError.instanceOf(error)) {
+    } catch (error: any) {
+      if (error instanceof AppErrorResponse) {
         throw error;
       }
       
-      // Unknown error, wrap with a hard '500' since this is most likely unexecpted.
-      throw new AppError("response.error", 500, AppError.format(error));
+      throw new AppErrorResponse(error, input, init, response);
     }
   };
 }
@@ -119,16 +161,16 @@ export function fetchCatchErrorAndWrapWithAppError(originalFetch) {
 }
 
 /**
- * Write the global clients to the common directory
+ * Get a specific api client file.
  *
  * @param {import("../generate").GenerateContext} generateContext
  * @param {import("../generated/common/types").ExperimentalRouteDefinition} route
  * @returns {import("../file/context").GenerateFile}
  */
-export function jsFetchGetApiClientFile(generateContext, route) {
+export function tsFetchGetApiClientFile(generateContext, route) {
   let file = fileContextGetOptional(
     generateContext,
-    `${route.group}/apiClient.js`,
+    `${route.group}/apiClient.ts`,
   );
 
   if (file) {
@@ -137,7 +179,7 @@ export function jsFetchGetApiClientFile(generateContext, route) {
 
   file = fileContextCreateGeneric(
     generateContext,
-    `${route.group}/apiClient.js`,
+    `${route.group}/apiClient.ts`,
     {
       importCollector: new JavascriptImportCollector(),
     },
@@ -146,10 +188,12 @@ export function jsFetchGetApiClientFile(generateContext, route) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure(`../common/api-client.js`, "fetchFn");
+    importCollector.destructure(`../common/api-client`, "fetchFn");
+  } else {
+    importCollector.destructure(`../common/api-client`, "FetchFn");
   }
 
-  importCollector.destructure("@compas/stdlib", "AppError");
+  importCollector.destructure("../common/api-client", "AppErrorResponse");
 
   return file;
 }
@@ -162,7 +206,7 @@ export function jsFetchGetApiClientFile(generateContext, route) {
  * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
-export function jsFetchGenerateFunction(
+export function tsFetchGenerateFunction(
   generateContext,
   file,
   route,
@@ -179,46 +223,28 @@ export function jsFetchGenerateFunction(
   fileWrite(file, `Tags: ${JSON.stringify(route.tags)}\n`);
 
   if (!distilledTargetInfo.useGlobalClients) {
-    args.push("fetchFn");
-    fileWrite(file, `@param {FetchFn} fetchFn`);
+    args.push("fetchFn: FetchFn");
   }
 
   if (route.params) {
-    args.push("params");
-    fileWrite(file, `@param {${contextNames.paramsTypeName}} params`);
+    args.push(`params: ${contextNames.paramsTypeName}`);
   }
   if (route.query) {
-    args.push("query");
-    fileWrite(file, `@param {${contextNames.queryTypeName}} query`);
+    args.push(`query: ${contextNames.queryTypeName}`);
   }
   if (route.body) {
-    args.push("body");
-    fileWrite(
-      file,
-      `@param {${contextNames.bodyTypeName}${
+    args.push(
+      `body: ${contextNames.bodyTypeName}${
         route.metadata?.requestBodyType === "form-data" ? "|FormData" : ""
-      }} body`,
+      }`,
     );
   }
   if (route.files) {
-    args.push("files");
-    fileWrite(file, `@param {${contextNames.filesTypeName}} files`);
+    args.push(`files: ${contextNames.filesTypeName}`);
   }
 
   // Allow overwriting any request config
-  args.push("requestConfig");
-  fileWrite(
-    file,
-    `@param {RequestInit${
-      route.response ? ` & { skipResponseValidation?: boolean }` : ""
-    }} [requestConfig]`,
-  );
-
-  if (route.response) {
-    fileWrite(file, `@returns {Promise<${contextNames.responseTypeName}>}`);
-  } else {
-    fileWrite(file, `@returns {Promise<Response>}`);
-  }
+  args.push(`requestConfig?: RequestInit`);
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);
@@ -227,7 +253,9 @@ export function jsFetchGenerateFunction(
     file,
     `export async function api${upperCaseFirst(route.group)}${upperCaseFirst(
       route.name,
-    )}(${args.join(", ")})`,
+    )}(${args.join(", ")}): Promise<${
+      contextNames.responseTypeName ?? "Response"
+    }>`,
   );
 
   if (route.files) {
@@ -243,7 +271,11 @@ for (const key of Object.keys(files)) {
     );
     fileContextSetIndent(file, 2);
 
-    fileWrite(file, `data.append(key, file.data, file.name);`);
+    if (distilledTargetInfo.isReactNative) {
+      fileWrite(file, `data.append(key, file);`);
+    } else {
+      fileWrite(file, `data.append(key, file.data, file.name);`);
+    }
 
     fileContextSetIndent(file, -2);
     fileWrite(file, `}\n}`);
@@ -271,7 +303,7 @@ for (const key of Object.keys(files)) {
       `\`${route.path
         .split("/")
         .map((it) => (it.startsWith(":") ? `$\{params.${it.slice(1)}}` : it))
-        .join("/")}?$\{new URLSearchParams(query).toString()}\`,`,
+        .join("/")}?$\{new URLSearchParams(query as any).toString()}\`,`,
     );
   } else {
     fileWrite(
@@ -290,6 +322,10 @@ for (const key of Object.keys(files)) {
 
   if (route.files || route.metadata?.requestBodyType === "form-data") {
     fileWrite(file, `body: data,`);
+
+    if (distilledTargetInfo.isReactNative) {
+      fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
+    }
   }
 
   if (route.body && route.metadata?.requestBodyType !== "form-data") {
@@ -305,40 +341,15 @@ for (const key of Object.keys(files)) {
   fileContextSetIndent(file, -1);
   fileWrite(file, `);`);
 
-  if (
-    route.response &&
-    structureResolveReference(generateContext.structure, route.response)
-      .type === "file"
-  ) {
-    fileWrite(file, `const result = await response.blob();`);
-  } else {
-    fileWrite(file, `const result = await response.json();`);
-  }
-
   if (route.response) {
-    fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
-    fileWrite(file, `return result;`);
-    fileBlockEnd(file);
-
-    fileWrite(
-      file,
-      `const { value, error } = ${contextNames.responseValidator}(result);`,
-    );
-    fileBlockStart(file, `if (error)`);
-
-    fileWrite(
-      file,
-      `throw AppError.validationError("validator.error", {
-  route: { group: "${route.group}", name: "${route.name}", },
-  error,
-});`,
-    );
-
-    fileBlockEnd(file);
-
-    fileBlockStart(file, `else`);
-    fileWrite(file, `return value;`);
-    fileBlockEnd(file);
+    if (
+      structureResolveReference(generateContext.structure, route.response)
+        .type === "file"
+    ) {
+      fileWrite(file, `return response.blob();`);
+    } else {
+      fileWrite(file, `return response.json();`);
+    }
   } else {
     fileWrite(file, `return response;`);
   }

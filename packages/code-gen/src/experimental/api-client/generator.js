@@ -31,6 +31,11 @@ import {
   tsAxiosGenerateFunction,
   tsAxiosGetApiClientFile,
 } from "./ts-axios.js";
+import {
+  tsFetchGenerateCommonFile,
+  tsFetchGenerateFunction,
+  tsFetchGetApiClientFile,
+} from "./ts-fetch.js";
 
 /**
  * Run the API client generator.
@@ -70,6 +75,7 @@ export function apiClientGenerator(generateContext) {
       jsAxios: jsAxiosGenerateCommonFile,
       tsAxios: tsAxiosGenerateCommonFile,
       jsFetch: jsFetchGenerateCommonFile,
+      tsFetch: tsFetchGenerateCommonFile,
     },
     target,
     [generateContext],
@@ -81,6 +87,7 @@ export function apiClientGenerator(generateContext) {
         jsAxios: jsAxiosGetApiClientFile,
         tsAxios: tsAxiosGetApiClientFile,
         jsFetch: jsFetchGetApiClientFile,
+        tsFetch: tsFetchGetApiClientFile,
       },
       target,
       [generateContext, route],
@@ -179,6 +186,7 @@ export function apiClientGenerator(generateContext) {
         jsAxios: jsAxiosGenerateFunction,
         tsAxios: tsAxiosGenerateFunction,
         jsFetch: jsFetchGenerateFunction,
+        tsFetch: tsFetchGenerateFunction,
       },
       target,
       [

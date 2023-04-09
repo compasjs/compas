@@ -45,6 +45,8 @@ export function reactQueryGetApiClientFile(generateContext, route) {
     // Import the global clients, this has affect on a bunch of the generated api's where we don't have to accept these arguments
     if (distilledTargetInfo.isAxios) {
       importCollector.destructure(`../common/api-client`, "axiosInstance");
+    } else if (distilledTargetInfo.isFetch) {
+      importCollector.destructure(`../common/api-client`, "fetchFn");
     }
 
     importCollector.destructure("../common/api-client", "queryClient");
@@ -55,6 +57,8 @@ export function reactQueryGetApiClientFile(generateContext, route) {
 
     if (distilledTargetInfo.isAxios) {
       importCollector.destructure("axios", "AxiosInstance");
+    } else {
+      importCollector.destructure("../common/api-client", "FetchFn");
     }
   }
 
@@ -223,7 +227,7 @@ export function reactQueryGenerateFunction(
     : distilledTargetInfo.isAxios
     ? `axiosInstance: AxiosInstance,`
     : distilledTargetInfo.isFetch
-    ? "fetchFn: Fetch"
+    ? "fetchFn: FetchFn,"
     : "";
   const apiInstanceParameter = distilledTargetInfo.useGlobalClients
     ? ""
@@ -431,7 +435,7 @@ ${hookName}.setQueryData = (
     fileWrite(
       file,
       `): UseMutationResult<${
-        contextNames.responseTypeName
+        contextNames.responseTypeName ?? "Response"
       }, AppErrorResponse, ${upperCaseFirst(hookName)}Props, unknown> {`,
     );
 

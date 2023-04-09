@@ -48,7 +48,7 @@ test("code-gen/experimental/api-client/generator", (t) => {
       t.pass();
     });
 
-    t.test("test - ts - fetch", (t) => {
+    t.test("test - js - fetch", (t) => {
       testExperimentalGenerateFiles(t, {
         outputDirectory: `${testTemporaryDirectory}/api-client-fetch`,
         generators: {
@@ -65,7 +65,25 @@ test("code-gen/experimental/api-client/generator", (t) => {
       });
 
       t.pass();
-      process.exit(1);
+    });
+
+    t.test("test - ts - fetch", (t) => {
+      testExperimentalGenerateFiles(t, {
+        outputDirectory: `${testTemporaryDirectory}/api-client-fetch-ts`,
+        generators: {
+          structure: {},
+          apiClient: {
+            target: {
+              targetRuntime: "browser",
+              library: "fetch",
+              includeWrapper: "react-query",
+            },
+          },
+        },
+        targetLanguage: "ts",
+      });
+
+      t.pass();
     });
 
     t.test("test - openapi.json", (t) => {
