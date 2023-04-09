@@ -18,6 +18,11 @@ import {
   jsAxiosGetApiClientFile,
 } from "./js-axios.js";
 import {
+  jsFetchGenerateCommonFile,
+  jsFetchGenerateFunction,
+  jsFetchGetApiClientFile,
+} from "./js-fetch.js";
+import {
   reactQueryGenerateFunction,
   reactQueryGetApiClientFile,
 } from "./react-query.js";
@@ -64,6 +69,7 @@ export function apiClientGenerator(generateContext) {
     {
       jsAxios: jsAxiosGenerateCommonFile,
       tsAxios: tsAxiosGenerateCommonFile,
+      jsFetch: jsFetchGenerateCommonFile,
     },
     target,
     [generateContext],
@@ -74,6 +80,7 @@ export function apiClientGenerator(generateContext) {
       {
         jsAxios: jsAxiosGetApiClientFile,
         tsAxios: tsAxiosGetApiClientFile,
+        jsFetch: jsFetchGetApiClientFile,
       },
       target,
       [generateContext, route],
@@ -171,6 +178,7 @@ export function apiClientGenerator(generateContext) {
       {
         jsAxios: jsAxiosGenerateFunction,
         tsAxios: tsAxiosGenerateFunction,
+        jsFetch: jsFetchGenerateFunction,
       },
       target,
       [
@@ -238,7 +246,7 @@ export function apiClientDistilledTargetInfo(generateContext) {
  * TODO: Apply this return type on other target format functions in other generators
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {"jsAxios"|"tsAxios"}
+ * @returns {"jsAxios"|"tsAxios"|"jsFetch"|"tsFetch"}
  */
 export function apiClientFormatTarget(generateContext) {
   if (!generateContext.options.generators.apiClient?.target) {

@@ -21,7 +21,7 @@ export const fileImplementations = {
   jsFetch: {
     validatorInputType: `{ name?: string, data: Blob }`,
     validatorOutputType: `Blob`,
-    validatorExpression: `$value$?.data instanceof Blob && (!$value$.name || typeof $value$.name === "string")`,
+    validatorExpression: `$value$ instanceof Blob`,
   },
   tsAxiosBrowser: {
     validatorInputType: `{ name?: string, data: Blob }`,
