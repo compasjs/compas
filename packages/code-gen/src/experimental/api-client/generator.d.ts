@@ -39,11 +39,11 @@ export function apiClientDistilledTargetInfo(
  * TODO: Apply this return type on other target format functions in other generators
  *
  * @param {import("../generate").GenerateContext} generateContext
- * @returns {"jsAxios"|"tsAxios"}
+ * @returns {"jsAxios"|"tsAxios"|"jsFetch"|"tsFetch"}
  */
 export function apiClientFormatTarget(
   generateContext: import("../generate").GenerateContext,
-): "jsAxios" | "tsAxios";
+): "jsAxios" | "tsAxios" | "jsFetch" | "tsFetch";
 /**
  * Format the api client wrapper target.
  *
