@@ -4,6 +4,104 @@ editLink: false
 
 # Changelog
 
+### [v0.0.241](https://github.com/compasjs/compas/releases/tag/v0.0.241)
+
+#### Breaking changes
+
+- feat(code-gen/experimental): add fetch api client support, flatten accepted
+  properties in react-query wrapper
+  ([#2490](https://github.com/compasjs/compas/pull/2490))
+  [`7b5c44`](https://github.com/compasjs/compas/commit/7b5c44f7b7c3004f7b48dd8c04dfc2529315a515)
+  - Closes [#2471](https://github.com/compasjs/compas/pull/2471)
+  - Closes [#2489](https://github.com/compasjs/compas/pull/2489)
+  - The generated react-query wrapper for the experimental Axios based apiClient
+    now accepts a flattened object. Internally, this is split back out again in
+    to the `params`, `query`, `body` and `files` objects to pass in to the
+    apiClient.
+- feat(store): change queue `maxRetryCount` to 2
+  [`04c957`](https://github.com/compasjs/compas/commit/04c9574efe29b5a33301a14f770a8d60175f267f)
+  - The default number of retries goes down from 5 to 2 times. Most of the time
+    if a job fails, it will fail on all retries as well. If you have a flaky
+    job, you may want to catch all errors, and let the job schedule itself
+    another time, instead of relying on auto retries.
+
+#### Features
+
+- feat(cli): only try to load commands from files that statically have an
+  exported `cliDefinition`
+  [`219644`](https://github.com/compasjs/compas/commit/219644d047c5104f181a7bbd542f3e4a8496b205)
+- feat(code-gen/experimental): ensure unique name for inline CRUD items
+  [`201c03`](https://github.com/compasjs/compas/commit/201c0317a1d92de6942c4ffca5ca5cc13312fd2e)
+- feat(code-gen/experimental): consistent generate api client paths without
+  leading slash
+  [`65ad67`](https://github.com/compasjs/compas/commit/65ad67a07d9e2ea424129d9efb2925ed88c17d1f)
+- feat(code-gen/experimental): cleanup tests, document ways of testing and
+  implement utils
+  [`29717d`](https://github.com/compasjs/compas/commit/29717d90ab120f0888f3089ae000657b30b00678)
+
+#### Bug fixes
+
+- fix(store): remove quality support for resized gifs
+  [`0e13d6`](https://github.com/compasjs/compas/commit/0e13d66dba4fa0e5f611c152a72b61917c08329b)
+- fix(code-gen/experimental): disable `enableQueries` in the route structure
+  [`fc8d57`](https://github.com/compasjs/compas/commit/fc8d57955a65c934ee9fe76788ce7072629d3137)
+- fix(store): catch any error when cleaning up the test PG database
+  [`52417b`](https://github.com/compasjs/compas/commit/52417b9da32152013305a94bb65d1ace2125274c)
+
+#### Other
+
+- chore(docs): add some contents in entity structure creation
+  [`d55cfa`](https://github.com/compasjs/compas/commit/d55cfafbcd587e5a1836d071efbabae88659e742)
+- chore(docs): add some contents about crud generation
+  [`ff2222`](https://github.com/compasjs/compas/commit/ff22220ba9175d4a5db441b898363bc142943cc2)
+- chore(docs): add usage koa-router and axios-api-client
+  [`f89839`](https://github.com/compasjs/compas/commit/f8983926fb898882ac129bf588f9210ac3406396)
+- chore(examples): replace 'default' and 'with-auth' examples w/ the
+  `-experimental` ones
+  [`e57394`](https://github.com/compasjs/compas/commit/e57394a07800d68580346faf06ab6aec3519eaf3)
+- chore(docs): fix sidebar names for the examples
+  [`fb6abe`](https://github.com/compasjs/compas/commit/fb6abea8e348ec077e7930f13ccab6b51d93427b)
+- chore(docs): small improvements and added references to generated koa router
+  usage
+  [`451873`](https://github.com/compasjs/compas/commit/4518736574dc33f11c2f142f852a4d04983d7483)
+- chore(docs): clean up old code-gen docs
+  [`40d20b`](https://github.com/compasjs/compas/commit/40d20b9e398955be7fceabafc564e896546c5e8d)
+- chore(docs): re-add generated query usage
+  [`77a355`](https://github.com/compasjs/compas/commit/77a3555ca7224cd88c25524f08b5ecb9d9826705)
+- chore(tests): cleanup .cache directory usage
+  [`030185`](https://github.com/compasjs/compas/commit/030185765bd7569579ce5352ec48594b83796bbc)
+- chore(code-gen/experimental): add some tests, run and satisfy tsc
+  [`ee9b7a`](https://github.com/compasjs/compas/commit/ee9b7a5b36b30a05879eb96a6c3d520caa36bc82)
+
+#### Dependency updates
+
+- build(deps): bump sharp from 0.31.3 to 0.32.0
+  ([#2455](https://github.com/compasjs/compas/pull/2455))
+  - Major version bump
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump prettier from 2.8.6 to 2.8.7
+  ([#2458](https://github.com/compasjs/compas/pull/2458))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.295.0 to 3.299.0
+  ([#2456](https://github.com/compasjs/compas/pull/2456))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.295.0 to 3.299.0
+  ([#2454](https://github.com/compasjs/compas/pull/2454))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @types/koa from 2.13.5 to 2.13.6
+  ([#2463](https://github.com/compasjs/compas/pull/2463))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump eslint from 8.36.0 to 8.38.0
+  ([#2467](https://github.com/compasjs/compas/pull/2467),
+  [#2492](https://github.com/compasjs/compas/pull/2492))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @babel/core from 7.21.3 to 7.21.4
+  ([#2481](https://github.com/compasjs/compas/pull/2481))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint-plugin-jsdoc from 40.1.0 to 40.1.1
+  ([#2477](https://github.com/compasjs/compas/pull/2477))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.0.240](https://github.com/compasjs/compas/releases/tag/v0.0.240)
 
 #### Breaking changes
