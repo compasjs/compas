@@ -1,1 +1,0 @@
-export * from "@compas/store";

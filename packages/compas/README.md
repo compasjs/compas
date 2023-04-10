@@ -15,5 +15,5 @@
 
 ---
 
-Combines all Compas packages, except for `@compas/eslint-plugin`. Take a look at
+Combines all Compas packages into a single installable package. Take a look at
 the [documentation](https://compasjs.com/getting-started.html).

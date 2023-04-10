@@ -3,11 +3,6 @@
   "version": "0.0.241",
   "description": "Unified backend tooling",
   "exports": {
-    "./cli": "./src/exports/cli.js",
-    "./code-gen": "./src/exports/code-gen.js",
-    "./server": "./src/exports/server.js",
-    "./stdlib": "./src/exports/stdlib.js",
-    "./store": "./src/exports/store.js",
     "./package.json": "./package.json"
   },
   "types": "./index.d.ts",
@@ -24,6 +19,7 @@
   "dependencies": {
     "@compas/cli": "0.0.241",
     "@compas/code-gen": "0.0.241",
+    "@compas/eslint-plugin": "0.0.241",
     "@compas/server": "0.0.241",
     "@compas/stdlib": "0.0.241",
     "@compas/store": "0.0.241"
