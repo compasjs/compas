@@ -101,6 +101,7 @@ module.exports = {
         "jsdoc/check-values": "error",
         "jsdoc/empty-tags": "error",
         "jsdoc/newline-after-description": ["error", "always"],
+        "jsdoc/require-asterisk-prefix": "error",
         "jsdoc/require-param-name": "error",
         "jsdoc/require-property": "error",
         "jsdoc/require-property-name": "error",
