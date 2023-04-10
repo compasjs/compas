@@ -102,6 +102,7 @@ module.exports = {
         "jsdoc/empty-tags": "error",
         "jsdoc/newline-after-description": ["error", "always"],
         "jsdoc/require-asterisk-prefix": "error",
+        "jsdoc/require-hyphen-before-param-description": ["error", "never"],
         "jsdoc/require-param-name": "error",
         "jsdoc/require-property": "error",
         "jsdoc/require-property-name": "error",
