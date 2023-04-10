@@ -28,9 +28,9 @@ import { lowerCaseFirst } from "./utils.js";
 /**
  * @typedef {object} GenerateOpts
  * @property {string[]|undefined} [enabledGroups] Enabling specific groups so different
- *    generator combinations can be used. The machinery will automatically find
- *    referenced types and include those If this is undefined, all groups will be
- *    enabled.
+ *   generator combinations can be used. The machinery will automatically find
+ *   referenced types and include those If this is undefined, all groups will be
+ *   enabled.
  * @property {boolean|undefined} [isBrowser]
  * @property {boolean|undefined} [isNode]
  * @property {boolean|undefined} [isNodeServer]
@@ -47,16 +47,16 @@ import { lowerCaseFirst } from "./utils.js";
  *   "reactQuery"
  *   )[]|undefined} [enabledGenerators] Enabling specific generators.
  * @property {boolean|undefined} [useTypescript] Enable Typescript for the generators
- *    that support it
+ *   that support it
  * @property {boolean|undefined} [dumpStructure] Dump a structure.js file with the used
- *    structure in it.
+ *   structure in it.
  * @property {boolean|undefined} [dumpApiStructure] An api only variant of
- *    'dumpStructure'. Includes all referenced types by defined 'route' types.
+ *   'dumpStructure'. Includes all referenced types by defined 'route' types.
  * @property {boolean|undefined} [dumpPostgres] Dump a structure.sql based on all
- *    'enableQueries' object types.
+ *   'enableQueries' object types.
  * @property {string|undefined} [fileHeader] Custom file header.
  * @property {string} outputDirectory Directory to write files to. Note that this is
- *    recursively cleaned before writing the new files.
+ *   recursively cleaned before writing the new files.
  * @property {false|undefined} [declareGlobalTypes]
  */
 

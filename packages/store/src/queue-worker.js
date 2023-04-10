@@ -33,17 +33,17 @@ import { query } from "./query.js";
  *   specific handler is provided, the handlerTimeout value is used. The timeout should
  *   be in milliseconds.
  * @property {number} [pollInterval] Determine the poll interval in
- *    milliseconds if the queue did not have available jobs. Defaults to 1500 ms.
+ *   milliseconds if the queue did not have available jobs. Defaults to 1500 ms.
  * @property {number} [parallelCount] Set the amount of parallel jobs to
- *    process. Defaults to 1. Make sure it is not higher than the number of Postgres
- *    connections in the pool. Note that if you set a higher number than 1 that some jobs
+ *   process. Defaults to 1. Make sure it is not higher than the number of Postgres
+ *   connections in the pool. Note that if you set a higher number than 1 that some jobs
  *   may run in parallel, so make sure your code expects that.
  * @property {number} [maxRetryCount] The worker will automatically catch any
- *    errors thrown by the handler, and retry the job at a later stage. This property
- *    defines the max number of retries before forcing the job to be completed. Defaults
- *    to 2 retries.
+ *   errors thrown by the handler, and retry the job at a later stage. This property
+ *   defines the max number of retries before forcing the job to be completed. Defaults
+ *   to 2 retries.
  * @property {number} [handlerTimeout] Maximum time the handler could take to
- *    fulfill a job in milliseconds. Defaults to 30 seconds.
+ *   fulfill a job in milliseconds. Defaults to 30 seconds.
  * @property {string[]} [includedNames] Included job names for this job worker,
  *   ignores all other jobs.
  * @property {string[]} [excludedNames] Excluded job names for this job worker,

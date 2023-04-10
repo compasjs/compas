@@ -91,6 +91,8 @@ module.exports = {
         // ESLint plugin jsdoc
         "jsdoc/check-alignment": "error",
         "jsdoc/check-examples": "off",
+        "jsdoc/check-indentation": "off",
+        "jsdoc/check-line-alignment": ["error", "never", { wrapIndent: "  " }],
         "jsdoc/check-param-names": "error",
         "jsdoc/check-property-names": "error",
         "jsdoc/check-syntax": "error",

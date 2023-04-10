@@ -5,11 +5,11 @@ mainFn(import.meta, main);
 
 /**
  * @typedef {object} ChangelogCommit
- * @property {string} title  Full commit title
+ * @property {string} title Full commit title
  * @property {string} hash The full commit hash
  * @property {string} body Full commit body
  * @property {string|undefined} [breakingChange] Commit body breaking change or major
- *    bumps
+ *   bumps
  * @property {string[]} notes Changelog notes
  */
 

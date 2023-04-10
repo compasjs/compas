@@ -20,7 +20,7 @@ import {
  *   headers.
  * @property {boolean|undefined} [disableHealthRoute] Disable GET /_health
  * @property {ErrorHandlerOptions|undefined} [errorOptions] Flexible error handling
- *    options
+ *   options
  * @property {HeaderOptions|undefined} [headers] Argument for defaultHeader middleware.
  *   Can only be completely disabled by setting `disableHeaders`.
  * @property {import("./middleware/log.js").LogOptions|undefined} [logOptions] Pass
@@ -48,12 +48,12 @@ import {
 /**
  * @typedef {object} CorsOptions
  * @property {string|((ctx: Koa.Context) => (string|undefined))} [origin]
- *    'Access-Control-Allow-Origin', defaults to the 'Origin' header.
+ *   'Access-Control-Allow-Origin', defaults to the 'Origin' header.
  * @property {string|string[]|undefined} [exposeHeaders] 'Access-Control-Expose-Headers'
  * @property {string|number|undefined} [maxAge] 'Access-Control-Max-Age' in seconds
  * @property {boolean|undefined} [credentials] 'Access-Control-Allow-Credentials'
  * @property {string|string[]|undefined} [allowMethods] 'Access-Control-Allow-Methods',
- *    defaults to ["DELETE", "GET", "PUT", "POST", "PATCH", "HEAD", "OPTIONS"]
+ *   defaults to ["DELETE", "GET", "PUT", "POST", "PATCH", "HEAD", "OPTIONS"]
  * @property {string|string[]|undefined} [allowHeaders] 'Access-Control-Allow-Headers'
  */
 
