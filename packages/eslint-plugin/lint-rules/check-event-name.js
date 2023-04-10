@@ -64,7 +64,7 @@ module.exports = {
           value = node.arguments[1].quasis[0].value.raw;
         }
 
-        if (!value) {
+        if (value === null || value === undefined) {
           return;
         }
 
