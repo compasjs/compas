@@ -16,7 +16,7 @@ export function setBenchLogger(logger: Logger): void;
  * @typedef {object} BenchRunner
  * @property {number} N Amount of iterations this call should do
  * @property {() => void} resetTime Reset the start time. Should be used if some setup is
- *    necessary, but shouldn't be counted to wards the time spent.
+ *   necessary, but shouldn't be counted to wards the time spent.
  */
 /**
  * @typedef {(b: BenchRunner) => (void|Promise<void>)} BenchCallback

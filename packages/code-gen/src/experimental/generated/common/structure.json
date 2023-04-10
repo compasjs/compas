@@ -120,8 +120,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -547,8 +547,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -771,8 +771,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -851,8 +851,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": 0,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -864,8 +864,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": 0,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -1006,8 +1006,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -1224,8 +1224,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -1727,8 +1727,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -1978,8 +1978,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -2231,8 +2231,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -2988,8 +2988,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -3438,8 +3438,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -3528,8 +3528,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -3541,8 +3541,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -3575,8 +3575,8 @@
               "convert": false,
               "allowNull": false,
               "floatingPoint": false,
-              "min": -2147483647,
-              "max": 2147483647
+              "min": -9007199254740991,
+              "max": 9007199254740991
             },
             "sql": {},
             "type": "number"
@@ -3704,8 +3704,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -4057,8 +4057,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -4300,8 +4300,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -4515,8 +4515,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -4832,8 +4832,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -5389,8 +5389,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -5499,8 +5499,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": 0,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number",
@@ -5513,8 +5513,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": 0,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"
@@ -6029,8 +6029,8 @@
                 "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
-                "min": -2147483647,
-                "max": 2147483647
+                "min": -9007199254740991,
+                "max": 9007199254740991
               },
               "sql": {},
               "type": "number"

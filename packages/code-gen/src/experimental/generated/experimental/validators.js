@@ -269,15 +269,15 @@ export function validateExperimentalAnyDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -1244,15 +1244,15 @@ export function validateExperimentalAnyOfDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -1914,15 +1914,15 @@ export function validateExperimentalArrayDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -2093,15 +2093,15 @@ export function validateExperimentalArrayDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber10 < -2147483647) {
+            } else if (convertedNumber10 < 0) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: 0,
               };
-            } else if (convertedNumber10 > 2147483647) {
+            } else if (convertedNumber10 > 9007199254740991) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               result["validator"]["min"] = convertedNumber10;
@@ -2130,15 +2130,15 @@ export function validateExperimentalArrayDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber11 < -2147483647) {
+            } else if (convertedNumber11 < 0) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: 0,
               };
-            } else if (convertedNumber11 > 2147483647) {
+            } else if (convertedNumber11 > 9007199254740991) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               result["validator"]["max"] = convertedNumber11;
@@ -2431,15 +2431,15 @@ export function validateExperimentalBooleanDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -2904,15 +2904,15 @@ export function validateExperimentalCrudDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -3926,15 +3926,15 @@ export function validateExperimentalReferenceDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber6 < -2147483647) {
+            } else if (convertedNumber6 < -9007199254740991) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber6 > 2147483647) {
+            } else if (convertedNumber6 > 9007199254740991) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult6 = convertedNumber6;
@@ -4423,15 +4423,15 @@ export function validateExperimentalDateDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -4986,15 +4986,15 @@ export function validateExperimentalExtendDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -5714,15 +5714,15 @@ export function validateExperimentalFileDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -6168,15 +6168,15 @@ export function validateExperimentalGenericDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -6598,15 +6598,15 @@ export function validateExperimentalNumberDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -6804,15 +6804,15 @@ export function validateExperimentalNumberDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber11 < -2147483647) {
+            } else if (convertedNumber11 < -9007199254740991) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber11 > 2147483647) {
+            } else if (convertedNumber11 > 9007199254740991) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               result["validator"]["min"] = convertedNumber11;
@@ -6841,15 +6841,15 @@ export function validateExperimentalNumberDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber12 < -2147483647) {
+            } else if (convertedNumber12 < -9007199254740991) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber12 > 2147483647) {
+            } else if (convertedNumber12 > 9007199254740991) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               result["validator"]["max"] = convertedNumber12;
@@ -6922,15 +6922,15 @@ export function validateExperimentalNumberDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber10 < -2147483647) {
+            } else if (convertedNumber10 < -9007199254740991) {
               intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber10 > 2147483647) {
+            } else if (convertedNumber10 > 9007199254740991) {
               intermediateErrorMap10[`$.${i10}`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult10[i10] = convertedNumber10;
@@ -7214,15 +7214,15 @@ export function validateExperimentalObjectDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -7990,15 +7990,15 @@ export function validateExperimentalOmitDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -8510,15 +8510,15 @@ export function validateExperimentalPickDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -9030,15 +9030,15 @@ export function validateExperimentalStringDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -9290,15 +9290,15 @@ export function validateExperimentalStringDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber13 < -2147483647) {
+            } else if (convertedNumber13 < 0) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: 0,
               };
-            } else if (convertedNumber13 > 2147483647) {
+            } else if (convertedNumber13 > 9007199254740991) {
               errorMap[`$.validator.min`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               result["validator"]["min"] = convertedNumber13;
@@ -9327,15 +9327,15 @@ export function validateExperimentalStringDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber14 < -2147483647) {
+            } else if (convertedNumber14 < 0) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: 0,
               };
-            } else if (convertedNumber14 > 2147483647) {
+            } else if (convertedNumber14 > 9007199254740991) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               result["validator"]["max"] = convertedNumber14;
@@ -9776,15 +9776,15 @@ export function validateExperimentalUuidDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;
@@ -12073,15 +12073,15 @@ export function validateExperimentalRouteDefinition(value) {
                 key: "validator.number",
                 subType: "int",
               };
-            } else if (convertedNumber8 < -2147483647) {
+            } else if (convertedNumber8 < -9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                minValue: -2147483647,
+                minValue: -9007199254740991,
               };
-            } else if (convertedNumber8 > 2147483647) {
+            } else if (convertedNumber8 > 9007199254740991) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.range",
-                maxValue: 2147483647,
+                maxValue: 9007199254740991,
               };
             } else {
               intermediateResult8 = convertedNumber8;

@@ -16,7 +16,11 @@ export function extendWithCodeGenExperimental(generator) {
     docString: T.string().min(0).default(`""`),
     isOptional: T.bool().default(false),
     defaultValue: T.anyOf()
-      .values(T.string().min(1), T.bool(), T.number())
+      .values(
+        T.string().min(1),
+        T.bool(),
+        T.number().min(Number.MIN_SAFE_INTEGER).max(Number.MAX_SAFE_INTEGER),
+      )
       .optional(),
     sql: T.object()
       .keys({
@@ -380,8 +384,8 @@ export function extendWithCodeGenExperimental(generator) {
         validator: T.object()
           .keys({
             convert: T.bool(),
-            min: T.number().optional(),
-            max: T.number().optional(),
+            min: T.number().min(0).max(Number.MAX_SAFE_INTEGER).optional(),
+            max: T.number().min(0).max(Number.MAX_SAFE_INTEGER).optional(),
           })
           .loose(),
       })
@@ -507,13 +511,25 @@ export function extendWithCodeGenExperimental(generator) {
       .keys({
         type: "number",
         ...namedTypeDefinitionBase,
-        oneOf: T.array().values(T.number()).optional(),
+        oneOf: T.array()
+          .values(
+            T.number()
+              .min(Number.MIN_SAFE_INTEGER)
+              .max(Number.MAX_SAFE_INTEGER),
+          )
+          .optional(),
         validator: T.object()
           .keys({
             convert: T.bool(),
             floatingPoint: T.bool(),
-            min: T.number().optional(),
-            max: T.number().optional(),
+            min: T.number()
+              .min(Number.MIN_SAFE_INTEGER)
+              .max(Number.MAX_SAFE_INTEGER)
+              .optional(),
+            max: T.number()
+              .min(Number.MIN_SAFE_INTEGER)
+              .max(Number.MAX_SAFE_INTEGER)
+              .optional(),
             allowNull: T.bool().default(false),
           })
           .loose(),
@@ -678,8 +694,8 @@ export function extendWithCodeGenExperimental(generator) {
             trim: T.bool(),
             lowerCase: T.bool(),
             upperCase: T.bool(),
-            min: T.number().default(1),
-            max: T.number().optional(),
+            min: T.number().min(0).max(Number.MAX_SAFE_INTEGER).default(1),
+            max: T.number().min(0).max(Number.MAX_SAFE_INTEGER).optional(),
             pattern: T.string().optional(),
             allowNull: T.bool().default(false),
             disallowedCharacters: T.optional()

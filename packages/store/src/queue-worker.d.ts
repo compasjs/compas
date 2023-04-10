@@ -135,7 +135,7 @@ export type QueueWorkerOptions = {
    * The worker will automatically catch any
    * errors thrown by the handler, and retry the job at a later stage. This property
    * defines the max number of retries before forcing the job to be completed. Defaults
-   * to 5 retries.
+   * to 2 retries.
    */
   maxRetryCount?: number | undefined;
   /**
