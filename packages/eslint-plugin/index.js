@@ -109,7 +109,7 @@ module.exports = {
         "jsdoc/require-property-type": "error",
         "jsdoc/require-returns-check": "off",
         "jsdoc/require-returns-description": "off",
-        "jsdoc/require-returns-type": "off",
+        "jsdoc/require-returns-type": "error",
         "jsdoc/valid-types": "off",
       },
       env: {
