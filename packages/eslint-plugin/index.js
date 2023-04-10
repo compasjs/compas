@@ -67,7 +67,7 @@ module.exports = {
         "require-await": "error",
 
         // ESLint plugin import
-        "import/export": "off",
+        "import/export": "error",
         "import/first": "error",
         "import/named": "off",
         "import/namespace": "off",
