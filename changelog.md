@@ -4,6 +4,46 @@ editLink: false
 
 # Changelog
 
+### [v0.0.242](https://github.com/compasjs/compas/releases/tag/v0.0.242)
+
+#### Features
+
+- feat(eslint-plugin): enforce multiline JSDoc description indentation
+  [`5c108a`](https://github.com/compasjs/compas/commit/5c108abb9289a7263240433702eb398662e18b35)
+- feat(eslint-plugin): enforce asterisks on each line of JSDoc blocks
+  [`1a23f6`](https://github.com/compasjs/compas/commit/1a23f6bc2f2ebea87f7baef27effeb11cea30bf8)
+- feat(eslint-plugin): disallow hyphen before param description in JSDoc blocks
+  [`8a543f`](https://github.com/compasjs/compas/commit/8a543f66d50fae4e2809870f7f31151e1a12ba2f)
+- feat(eslint-plugin): require a return type if the `@returns` tag is present in
+  JSDoc blocks
+  [`3e54b1`](https://github.com/compasjs/compas/commit/3e54b172df67204f4520a86bc7ab144451ad1a49)
+- feat(eslint-plugin): check duplicate export names
+  [`718f8e`](https://github.com/compasjs/compas/commit/718f8ee15a556fa69693ddd368e8e6c474a72aa8)
+- feat(eslint-plugin): stricter checks on existence of imported symbols
+  [`f6096f`](https://github.com/compasjs/compas/commit/f6096f201167087f693efedf8172624e15fc67f9)
+- feat(eslint-plugin): report event-name error on empty string
+  [`8b26de`](https://github.com/compasjs/compas/commit/8b26deaa40053b624b38c88dc12d06b45dfa0611)
+- feat(compas): remove all exports, include all packages
+  [`9043fc`](https://github.com/compasjs/compas/commit/9043fc449cdb2c7a9fd44d997a70ab070c5e55bd)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): allow custom `.min` & `.max` values greater than
+  normal int sizes
+  [`89f829`](https://github.com/compasjs/compas/commit/89f829d46f96cd91101c598166cbddfbb38dba0a)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 40.1.1 to 40.1.2
+  ([#2495](https://github.com/compasjs/compas/pull/2495))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.299.0 to 3.309.0
+  ([#2494](https://github.com/compasjs/compas/pull/2494))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.299.0 to 3.309.0
+  ([#2493](https://github.com/compasjs/compas/pull/2493))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.0.241](https://github.com/compasjs/compas/releases/tag/v0.0.241)
 
 #### Breaking changes
