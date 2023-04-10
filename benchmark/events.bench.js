@@ -2,13 +2,13 @@ import { bench, mainBenchFn } from "@compas/cli";
 import {
   eventStart,
   eventStop,
-  loggerSetDestination,
+  loggerSetGlobalDestination,
   newEvent,
   newEventFromEvent,
   newLogger,
 } from "@compas/stdlib";
 
-loggerSetDestination({
+loggerSetGlobalDestination({
   write() {},
 });
 mainBenchFn(import.meta);

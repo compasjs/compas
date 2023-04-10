@@ -68,11 +68,13 @@ module.exports = {
 
         // ESLint plugin import
         "import/export": "error",
+        "import/no-empty-named-blocks": "error",
+        "import/no-commonjs": "error",
+        "import/no-amd": "error",
+        "import/named": "error",
         "import/first": "error",
-        "import/named": "off",
         "import/namespace": "off",
         "import/newline-after-import": ["error", { count: 1 }],
-        "import/no-commonjs": "error",
         "import/no-default-export": "error",
         "import/order": [
           "error",
