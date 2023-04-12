@@ -23,6 +23,7 @@ import {
   jsFetchGetApiClientFile,
 } from "./js-fetch.js";
 import {
+  reactQueryGenerateCommonFile,
   reactQueryGenerateFunction,
   reactQueryGetApiClientFile,
 } from "./react-query.js";
@@ -78,6 +79,14 @@ export function apiClientGenerator(generateContext) {
       tsFetch: tsFetchGenerateCommonFile,
     },
     target,
+    [generateContext],
+  );
+
+  targetCustomSwitch(
+    {
+      reactQuery: reactQueryGenerateCommonFile,
+    },
+    wrapperTarget,
     [generateContext],
   );
 

@@ -44,10 +44,6 @@ export async function injectTestServices() {
 
   await objectStorageEnsureBucket(s3Client, {
     bucketName: testBucketName,
-
-    // @ts-expect-error
-    //
-    // The enum isn't resolved correctly for some reason
     locationConstraint: "eu-central-1",
   });
 

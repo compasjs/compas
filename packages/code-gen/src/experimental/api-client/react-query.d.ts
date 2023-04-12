@@ -1,4 +1,12 @@
 /**
+ * Write wrapper context to the common directory
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ */
+export function reactQueryGenerateCommonFile(
+  generateContext: import("../generate").GenerateContext,
+): void;
+/**
  * Get the api client file
  *
  * @param {import("../generate").GenerateContext} generateContext

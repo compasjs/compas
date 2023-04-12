@@ -87,38 +87,6 @@ export class AppErrorResponse extends Error {
 `,
   );
 
-  if (
-    includeWrapper &&
-    !generateContext.options.generators.apiClient?.target.globalClient
-  ) {
-    importCollector.raw(`import React from "react";`);
-    importCollector.destructure("react", "createContext");
-    importCollector.destructure("react", "PropsWithChildren");
-    importCollector.destructure("react", "useContext");
-    fileWrite(
-      file,
-      `const ApiContext = createContext<FetchFn | undefined>(undefined);
-
-export function ApiProvider({
-  fetchFn, children,
-}: PropsWithChildren<{
-  fetchFn: FetchFn;
-}>) {
-  return <ApiContext.Provider value={fetchFn}>{children}</ApiContext.Provider>;
-}
-
-export const useApi = () => {
-  const context = useContext(ApiContext);
-
-  if (!context) {
-    throw Error("Be sure to wrap your application with <ApiProvider>.");
-  }
-
-  return context;
-};`,
-    );
-  }
-
   fileWrite(
     file,
     `

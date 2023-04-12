@@ -180,9 +180,12 @@ Other changes around the api clients are:
 - The Node.js compatible api clients now need an explicit interceptor to turn
   any error thrown in a `AppError`. You can add this interceptor via
   `axiosInterceptErrorAndWrapWithAppError`
-- The `common/reactQuery.ts` file is replaced by `common/api-client.ts`. This
-  file will also contain the global clients if enabled via
-  `globalClients: true`.
+- The `common/reactQuery.ts` file is replaced by `common/api-client.ts(x)` &
+  `common/api-client-wrapper.tsx`. This file will also contain the global
+  clients if enabled via `globalClients: true`.
+- The React-query hooks now accept a flattened object. This improves the
+  experience where invoking autocomplete immediately shows the required fields
+  instead of needing `params` / `body` / etc first.
 
 ## Validating router responses
 

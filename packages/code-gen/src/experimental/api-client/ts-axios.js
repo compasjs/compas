@@ -67,40 +67,6 @@ export function tsAxiosGenerateCommonFile(generateContext) {
 }>;
 `,
   );
-
-  if (
-    includeWrapper &&
-    !generateContext.options.generators.apiClient?.target.globalClient
-  ) {
-    importCollector.destructure("axios", "AxiosError");
-    importCollector.destructure("axios", "AxiosInstance");
-    importCollector.raw(`import React from "react";`);
-    importCollector.destructure("react", "createContext");
-    importCollector.destructure("react", "PropsWithChildren");
-    importCollector.destructure("react", "useContext");
-    fileWrite(
-      file,
-      `const ApiContext = createContext<AxiosInstance | undefined>(undefined);
-
-export function ApiProvider({
-  instance, children,
-}: PropsWithChildren<{
-  instance: AxiosInstance;
-}>) {
-  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
-}
-
-export const useApi = () => {
-  const context = useContext(ApiContext);
-
-  if (!context) {
-    throw Error("Be sure to wrap your application with <ApiProvider>.");
-  }
-
-  return context;
-};`,
-    );
-  }
 }
 
 /**

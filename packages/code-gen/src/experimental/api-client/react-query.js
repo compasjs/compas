@@ -14,6 +14,89 @@ import { typesOptionalityIsOptional } from "../types/optionality.js";
 import { apiClientDistilledTargetInfo } from "./generator.js";
 
 /**
+ * Write wrapper context to the common directory
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ */
+export function reactQueryGenerateCommonFile(generateContext) {
+  const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
+
+  if (distilledTargetInfo.useGlobalClients) {
+    return;
+  }
+
+  const file = fileContextCreateGeneric(
+    generateContext,
+    `common/api-client-wrapper.tsx`,
+    {
+      importCollector: new JavascriptImportCollector(),
+    },
+  );
+
+  file.contents = `"use client";\n\n${file.contents}`;
+
+  const importCollector = JavascriptImportCollector.getImportCollector(file);
+
+  importCollector.raw(`import React from "react";`);
+  importCollector.destructure("react", "createContext");
+  importCollector.destructure("react", "PropsWithChildren");
+  importCollector.destructure("react", "useContext");
+
+  if (distilledTargetInfo.isAxios) {
+    importCollector.destructure("axios", "AxiosInstance");
+
+    fileWrite(
+      file,
+      `
+const ApiContext = createContext<AxiosInstance | undefined>(undefined);
+
+export function ApiProvider({
+  instance, children,
+}: PropsWithChildren<{
+  instance: AxiosInstance;
+}>) {
+  return <ApiContext.Provider value={instance}>{children}</ApiContext.Provider>;
+}
+
+export const useApi = () => {
+  const context = useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};`,
+    );
+  } else if (distilledTargetInfo.isFetch) {
+    importCollector.destructure("./api-client", "FetchFn");
+    fileWrite(
+      file,
+      `
+const ApiContext = createContext<FetchFn | undefined>(undefined);
+
+export function ApiProvider({
+  fetchFn, children,
+}: PropsWithChildren<{
+  fetchFn: FetchFn;
+}>) {
+  return <ApiContext.Provider value={fetchFn}>{children}</ApiContext.Provider>;
+}
+
+export const useApi = () => {
+  const context = useContext(ApiContext);
+
+  if (!context) {
+    throw Error("Be sure to wrap your application with <ApiProvider>.");
+  }
+
+  return context;
+};`,
+    );
+  }
+}
+
+/**
  * Get the api client file
  *
  * @param {import("../generate").GenerateContext} generateContext
@@ -52,7 +135,7 @@ export function reactQueryGetApiClientFile(generateContext, route) {
     importCollector.destructure("../common/api-client", "queryClient");
   } else {
     // Import ways to infer or accept the clients
-    importCollector.destructure("../common/api-client", "useApi");
+    importCollector.destructure("../common/api-client-wrapper", "useApi");
     importCollector.destructure("@tanstack/react-query", "useQueryClient");
 
     if (distilledTargetInfo.isAxios) {
