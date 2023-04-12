@@ -648,7 +648,11 @@ export async function sessionStoreVerifyAndDecodeJWT(
 ) {
   eventStart(event, "sessionStore.verifyAndDecodeJWT");
 
-  if (isNil(tokenString) || tokenString.length === 0) {
+  if (
+    isNil(tokenString) ||
+    typeof tokenString !== "string" ||
+    tokenString.length === 0
+  ) {
     eventStop(event);
 
     return {
