@@ -4,6 +4,21 @@ editLink: false
 
 # Changelog
 
+### [v0.0.243](https://github.com/compasjs/compas/releases/tag/v0.0.243)
+
+#### Features
+
+- feat(code-gen/experimental): separate common wrapper file
+  [`d2c76d`](https://github.com/compasjs/compas/commit/d2c76d080bccabdbd826e8e9d9824e18f675ba56)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 40.1.2 to 41.1.1
+  ([#2497](https://github.com/compasjs/compas/pull/2497),
+  [#2501](https://github.com/compasjs/compas/pull/2501))
+  - Major version bump
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.0.242](https://github.com/compasjs/compas/releases/tag/v0.0.242)
 
 #### Features
