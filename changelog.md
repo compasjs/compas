@@ -4,6 +4,25 @@ editLink: false
 
 # Changelog
 
+### [v0.0.244](https://github.com/compasjs/compas/releases/tag/v0.0.244)
+
+#### Bug fixes
+
+- fix(store): stricter checks on missing tokens
+  [`df6cfb`](https://github.com/compasjs/compas/commit/df6cfb2c028bebbd4366426a24d23daddffb9e2d)
+
+#### Dependency updates
+
+- build(deps): bump koa from 2.14.1 to 2.14.2
+  ([#2503](https://github.com/compasjs/compas/pull/2503))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.309.0 to 3.312.0
+  ([#2502](https://github.com/compasjs/compas/pull/2502))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.309.0 to 3.312.0
+  ([#2504](https://github.com/compasjs/compas/pull/2504))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.0.243](https://github.com/compasjs/compas/releases/tag/v0.0.243)
 
 #### Features
