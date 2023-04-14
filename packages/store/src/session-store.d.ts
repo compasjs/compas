@@ -27,7 +27,7 @@ export function sessionStoreCreate(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
- * @param {string} accessTokenString
+ * @param {string} [accessTokenString]
  * @returns {Promise<Either<{session:
  *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
  */
@@ -35,7 +35,7 @@ export function sessionStoreGet(
   event: import("@compas/stdlib").InsightEvent,
   sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
-  accessTokenString: string,
+  accessTokenString?: string | undefined,
 ): Promise<
   Either<{
     session: import("./generated/common/types").QueryResultStoreSessionStore;
@@ -78,7 +78,7 @@ export function sessionStoreInvalidate(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
- * @param {string} refreshTokenString
+ * @param {string} [refreshTokenString]
  * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string,
@@ -88,7 +88,7 @@ export function sessionStoreRefreshTokens(
   event: import("@compas/stdlib").InsightEvent,
   sql: import("postgres").Sql<{}>,
   sessionSettings: SessionStoreSettings,
-  refreshTokenString: string,
+  refreshTokenString?: string | undefined,
 ): Promise<
   Either<{
     accessToken: string;
@@ -174,7 +174,7 @@ export function sessionStoreCreateJWT(
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {SessionStoreSettings} sessionSettings
- * @param {string} tokenString
+ * @param {string} [tokenString]
  * @returns {Promise<Either<{
  *   header: object,
  *   payload: {
@@ -187,7 +187,7 @@ export function sessionStoreCreateJWT(
 export function sessionStoreVerifyAndDecodeJWT(
   event: import("@compas/stdlib").InsightEvent,
   sessionSettings: SessionStoreSettings,
-  tokenString: string,
+  tokenString?: string | undefined,
 ): Promise<
   Either<{
     header: object;

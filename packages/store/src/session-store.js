@@ -85,7 +85,7 @@ export async function sessionStoreCreate(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
- * @param {string} accessTokenString
+ * @param {string} [accessTokenString]
  * @returns {Promise<Either<{session:
  *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
  */
@@ -268,7 +268,7 @@ export async function sessionStoreInvalidate(event, sql, session) {
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
- * @param {string} refreshTokenString
+ * @param {string} [refreshTokenString]
  * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string,
@@ -631,7 +631,7 @@ export function sessionStoreCreateJWT(
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {SessionStoreSettings} sessionSettings
- * @param {string} tokenString
+ * @param {string} [tokenString]
  * @returns {Promise<Either<{
  *   header: object,
  *   payload: {
@@ -648,11 +648,26 @@ export async function sessionStoreVerifyAndDecodeJWT(
 ) {
   eventStart(event, "sessionStore.verifyAndDecodeJWT");
 
-  if (
-    isNil(tokenString) ||
-    typeof tokenString !== "string" ||
-    tokenString.length === 0
-  ) {
+  if (isNil(tokenString)) {
+    eventStop(event);
+
+    return {
+      error: AppError.validationError(`${event.name}.missingToken`),
+    };
+  }
+
+  if (typeof tokenString !== "string") {
+    eventStop(event);
+
+    return {
+      error: AppError.validationError(`${event.name}.missingToken`),
+    };
+  }
+
+  tokenString = tokenString.trim();
+
+  // Arbitrary length check, jws verify checks the contents but expects 3 parts for a valid JWT
+  if (tokenString.length < 6 || tokenString.split(".").length !== 3) {
     eventStop(event);
 
     return {
@@ -670,7 +685,13 @@ export async function sessionStoreVerifyAndDecodeJWT(
         // Wrap unexpected errors, they are most likely a Compas or related backend bug.
         // @ts-ignore
         resolve({
-          error: AppError.serverError({}, error),
+          error: AppError.serverError(
+            {
+              message: "Something went wrong validating the JWT.",
+              tokenString,
+            },
+            error,
+          ),
         });
       })
       .once("done", function (valid, obj) {

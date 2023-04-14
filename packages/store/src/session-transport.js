@@ -52,7 +52,7 @@ export async function sessionTransportLoadFromContext(
     newEventFromEvent(event),
     sql,
     settings.sessionStoreSettings,
-    accessToken ?? "",
+    accessToken,
   );
 
   eventStop(event);
@@ -89,9 +89,9 @@ export function validateSessionTransportSettings(opts) {
 function sessionTransportLoadAuthorizationHeader(ctx) {
   const header = ctx.headers?.["authorization"] ?? "";
 
-  if (!header.startsWith("Bearer ") || header.substring(7).length === 0) {
+  if (!header.startsWith("Bearer")) {
     return undefined;
   }
 
-  return header.substring(7);
+  return header.slice("Bearer".length);
 }
