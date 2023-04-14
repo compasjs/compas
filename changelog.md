@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.0.245](https://github.com/compasjs/compas/releases/tag/v0.0.245)
+
+#### Bug fixes
+
+- fix(store): stricter session token checks before verify and decode
+  [`28282a`](https://github.com/compasjs/compas/commit/28282a66775db4664c65c33c31f80d6dbd6bd786)
+
 ### [v0.0.244](https://github.com/compasjs/compas/releases/tag/v0.0.244)
 
 #### Bug fixes
