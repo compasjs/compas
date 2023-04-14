@@ -141,5 +141,28 @@ function specificationExtendWithRouteMatchers(generator) {
 
     R.get("/wildcard/*", "wildcardBase"),
     R.get("/wildcard/nested/*", "wildcardNested"),
+
+    R.post("/types/response/file", "typesResponseFile")
+      .query({
+        foo: T.number(),
+        bar: T.string(),
+        baz: T.bool(),
+      })
+      .body({
+        nested: {
+          object: [
+            {
+              withArray: true,
+            },
+          ],
+        },
+      })
+      .response(T.file()),
+
+    R.post("/types/input/file", "typesInputFile")
+      .files({
+        image: T.file(),
+      })
+      .response({}),
   );
 }

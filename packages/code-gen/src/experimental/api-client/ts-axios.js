@@ -173,7 +173,7 @@ export function tsAxiosGenerateFunction(
 const data = new FormData();
 
 for (const key of Object.keys(files)) {
-  const keyFiles = Array.isArray(files[key]) ? files[key] : [files[key]];
+  const keyFiles = Array.isArray((files as any)[key]) ? (files as any)[key] : [(files as any)[key]];
   
   for (const file of keyFiles) {`,
     );
