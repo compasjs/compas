@@ -29,6 +29,9 @@ import {
 export function logMiddleware(app, options) {
   const requestInformation = options.requestInformation ?? {
     includePath: true,
+    includeEventName: true,
+    includeValidatedParams: true,
+    includeValidatedQuery: true,
   };
 
   /**
