@@ -346,6 +346,7 @@ function crudTypesBuildWhereObject(generateContext, crud) {
           // Array values should never be optional.
           isOptional: false,
         },
+        ...defaults,
       };
     } else if (
       ["isNull", "isNotNull", "includeNotNull"].includes(whereField.variant)
