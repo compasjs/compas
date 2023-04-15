@@ -20,7 +20,11 @@ test("crud-simple-todo", async (t) => {
 
   await injectTestServices();
 
-  const server = app.listen(apiPort);
+  const server = await new Promise((r) => {
+    const server = app.listen(apiPort, () => {
+      r(server);
+    });
+  });
 
   const fetchFn = fetchCatchErrorAndWrapWithAppError(
     fetchWithBaseUrl(fetch, `http://localhost:${apiPort}/`),
