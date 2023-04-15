@@ -42,6 +42,11 @@ export class CrudType extends TypeBuilder {
      */
     this.nestedRelationsCache = [];
 
+    /**
+     * @private
+     */
+    this.readableType = undefined;
+
     /** @type {any} */
     this.data = {
       ...this.data,
@@ -114,7 +119,7 @@ export class CrudType extends TypeBuilder {
    *   readable: {
    *     $omit?: string[],
    *     $pick?: string[],
-   *   },
+   *   }|TypeBuilderLike,
    *   writable: {
    *     $omit?: string[],
    *     $pick?: string[],
@@ -123,7 +128,24 @@ export class CrudType extends TypeBuilder {
    * @returns {CrudType}
    */
   fields(fieldOptions) {
-    this.data.fieldOptions = fieldOptions;
+    const { readable, writable } = fieldOptions;
+
+    if (readable instanceof TypeBuilder) {
+      if (!readable.data.name) {
+        throw AppError.serverError({
+          message:
+            "A custom readable type should have a name, e.g 'T.object('item').keys(...)'.",
+        });
+      }
+
+      this.data.fieldOptions = {
+        readable: {},
+        writable,
+      };
+      this.readableType = readable;
+    } else {
+      this.data.fieldOptions = fieldOptions;
+    }
 
     return this;
   }
@@ -164,6 +186,10 @@ export class CrudType extends TypeBuilder {
     }
 
     const result = super.build();
+
+    if (this.readableType) {
+      result.fieldOptions.readableType = buildOrInfer(this.readableType);
+    }
 
     result.inlineRelations = this.inlineRelationsCache.map((it) =>
       this.processRelation("inline", result, it),

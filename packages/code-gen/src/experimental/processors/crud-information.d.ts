@@ -118,6 +118,25 @@ export function crudInformationGetWritableType(
   group: string;
   name: string;
 };
+/**
+ * Cache when the provided CRUD has a custom readable type.
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {boolean} hasCustomReadableType
+ */
+export function crudInformationSetHasCustomReadableType(
+  crud: import("../generated/common/types").ExperimentalCrudDefinition,
+  hasCustomReadableType: boolean,
+): void;
+/**
+ * Check if the crud or parent has a custom readable type
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @returns {boolean}
+ */
+export function crudInformationGetHasCustomReadableType(
+  crud: import("../generated/common/types").ExperimentalCrudDefinition,
+): boolean;
 export type CrudInformation = {
   model: import("../generated/common/types").ExperimentalObjectDefinition;
   parent?:
@@ -134,5 +153,6 @@ export type CrudInformation = {
     group: string;
     name: string;
   };
+  hasCustomReadableType: boolean;
 };
 //# sourceMappingURL=crud-information.d.ts.map

@@ -17,6 +17,7 @@ import {
 import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite } from "../file/write.js";
 import {
+  crudInformationGetHasCustomReadableType,
   crudInformationGetModel,
   crudInformationGetName,
   crudInformationGetParamName,
@@ -118,6 +119,19 @@ function crudHandlersGetModifiers(crud) {
   const crudName =
     crud.group + upperCaseFirst(crudInformationGetName(crud, ""));
   const upperCrudName = upperCaseFirst(crudName);
+
+  if (crudInformationGetHasCustomReadableType(crud)) {
+    modifierDocs.push(
+      `${crudName}Transform: (entity: QueryResult${modelUniqueName}) => ${upperCaseFirst(
+        // @ts-expect-error
+        crud.fieldOptions.readableType.reference.group,
+      )}${upperCaseFirst(
+        // @ts-expect-error
+        crud.fieldOptions.readableType.reference.name,
+      )},`,
+    );
+    modifierDestructure.push(`${crudName}Transform,`);
+  }
 
   if (crud.routeOptions.listRoute) {
     modifierDocs.push(
@@ -248,8 +262,11 @@ function crudHandlersList(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
   importCollector.destructure("./events.js", `${data.crudName}Count`);
   importCollector.destructure("./events.js", `${data.crudName}List`);
-  importCollector.destructure("./events.js", `${data.crudName}Transform`);
   importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+
+  if (!crudInformationGetHasCustomReadableType(crud)) {
+    importCollector.destructure("./events.js", `${data.crudName}Transform`);
+  }
 
   fileWrite(file, crudPartialRouteList(data));
 }
@@ -282,8 +299,11 @@ function crudHandlersSingle(generateContext, file, crud) {
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
   importCollector.destructure("./events.js", `${data.crudName}Single`);
-  importCollector.destructure("./events.js", `${data.crudName}Transform`);
   importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+
+  if (!crudInformationGetHasCustomReadableType(crud)) {
+    importCollector.destructure("./events.js", `${data.crudName}Transform`);
+  }
 
   fileWrite(file, crudPartialRouteSingle(data));
 }
@@ -326,8 +346,11 @@ function crudHandlersCreate(generateContext, file, crud) {
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
   importCollector.destructure("./events.js", `${data.crudName}Create`);
-  importCollector.destructure("./events.js", `${data.crudName}Transform`);
   importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+
+  if (!crudInformationGetHasCustomReadableType(crud)) {
+    importCollector.destructure("./events.js", `${data.crudName}Transform`);
+  }
 
   if (relation?.subType === "oneToOneReverse") {
     importCollector.destructure("@compas/stdlib", "AppError");

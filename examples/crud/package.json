@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "dependencies": {
+    "@compas/cli": "*",
+    "@compas/server": "*",
+    "@compas/stdlib": "*",
+    "@compas/store": "*"
+  },
+  "devDependencies": {
+    "@compas/code-gen": "*",
+    "@compas/eslint-plugin": "*"
+  },
+  "prettier": "@compas/eslint-plugin/prettierrc",
+  "exampleMetadata": {
+    "generating": "compas run generate",
+    "testing": [
+      "compas migrate",
+      "compas test --serial"
+    ],
+    "initMessage": "Started a new project with the 'crud' template. See the README.md for how to get started."
+  }
+}

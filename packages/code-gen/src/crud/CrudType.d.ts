@@ -35,6 +35,10 @@ export class CrudType extends TypeBuilder {
    */
   private nestedRelationsCache;
   /**
+   * @private
+   */
+  private readableType;
+  /**
    * Entity for which this crud route is created
    *
    * @param {import("../../types/advanced-types.js").TypeBuilderLike} reference
@@ -91,7 +95,7 @@ export class CrudType extends TypeBuilder {
    *   readable: {
    *     $omit?: string[],
    *     $pick?: string[],
-   *   },
+   *   }|TypeBuilderLike,
    *   writable: {
    *     $omit?: string[],
    *     $pick?: string[],
@@ -100,10 +104,12 @@ export class CrudType extends TypeBuilder {
    * @returns {CrudType}
    */
   fields(fieldOptions: {
-    readable: {
-      $omit?: string[];
-      $pick?: string[];
-    };
+    readable:
+      | {
+          $omit?: string[];
+          $pick?: string[];
+        }
+      | TypeBuilderLike;
     writable: {
       $omit?: string[];
       $pick?: string[];

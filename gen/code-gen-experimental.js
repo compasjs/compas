@@ -441,6 +441,10 @@ export function extendWithCodeGenExperimental(generator) {
               })
               .loose()
               .optional(),
+            readableType: T.reference(
+              "experimental",
+              "referenceDefinition",
+            ).optional(),
             writable: T.object()
               .keys({
                 $omit: T.array().values(T.string()).optional(),

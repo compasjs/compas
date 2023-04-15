@@ -12,6 +12,7 @@ import { upperCaseFirst } from "../../utils.js";
 import { fileContextCreateGeneric } from "../file/context.js";
 import { fileWrite } from "../file/write.js";
 import {
+  crudInformationGetHasCustomReadableType,
   crudInformationGetModel,
   crudInformationGetName,
   crudInformationGetRelation,
@@ -65,9 +66,10 @@ function crudEventsGenerateForType(generateContext, file, crud) {
   );
 
   if (
-    crud.routeOptions.listRoute ||
-    crud.routeOptions.singleRoute ||
-    crud.routeOptions.createRoute
+    crudInformationGetHasCustomReadableType(crud) === false &&
+    (crud.routeOptions.listRoute ||
+      crud.routeOptions.singleRoute ||
+      crud.routeOptions.createRoute)
   ) {
     crudEventsTransform(generateContext, file, crud);
   }

@@ -3465,6 +3465,25 @@ export function validateExperimentalCrudDefinition(value) {
             }
           }
           if (
+            value["fieldOptions"]["readableType"] === null ||
+            value["fieldOptions"]["readableType"] === undefined
+          ) {
+            result["fieldOptions"]["readableType"] = undefined;
+          } else {
+            const refResult15 = validateExperimentalReferenceDefinition(
+              value["fieldOptions"]["readableType"],
+            );
+
+            if (refResult15.error) {
+              for (const errorKey of Object.keys(refResult15.error)) {
+                errorMap[
+                  `$.fieldOptions.readableType${errorKey.substring(1)}`
+                ] = refResult15.error[errorKey];
+              }
+            }
+            result["fieldOptions"]["readableType"] = refResult15.value;
+          }
+          if (
             value["fieldOptions"]["writable"] === null ||
             value["fieldOptions"]["writable"] === undefined
           ) {
@@ -3489,75 +3508,17 @@ export function validateExperimentalCrudDefinition(value) {
                 result["fieldOptions"]["writable"]["$omit"] = undefined;
               } else {
                 /** @type {ValidatorErrorMap} */
-                const intermediateErrorMap17 = {};
-                /** @type {any[]} */
-                let intermediateResult17 = [];
-                /** @type {any|any[]} */
-                let intermediateValue17 =
-                  value["fieldOptions"]["writable"]["$omit"];
-
-                if (!Array.isArray(intermediateValue17)) {
-                  intermediateValue17 = [intermediateValue17];
-                }
-                result["fieldOptions"]["writable"]["$omit"] = Array.from({
-                  length: intermediateValue17.length,
-                });
-                for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-                  if (
-                    intermediateValue17[i17] === null ||
-                    intermediateValue17[i17] === undefined
-                  ) {
-                    intermediateErrorMap17[`$.${i17}`] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString17 = intermediateValue17[i17];
-                    if (typeof convertedString17 !== "string") {
-                      intermediateErrorMap17[`$.${i17}`] = {
-                        key: "validator.string",
-                      };
-                    } else {
-                      if (convertedString17.length < 1) {
-                        intermediateErrorMap17[`$.${i17}`] = {
-                          key: "validator.length",
-                          minLength: 1,
-                        };
-                      } else {
-                        intermediateResult17[i17] = convertedString17;
-                      }
-                    }
-                  }
-                }
-                if (Object.keys(intermediateErrorMap17).length) {
-                  for (const errorKey of Object.keys(intermediateErrorMap17)) {
-                    errorMap[
-                      `$.fieldOptions.writable.$omit${errorKey.substring(1)}`
-                    ] = intermediateErrorMap17[errorKey];
-                  }
-                } else {
-                  result["fieldOptions"]["writable"]["$omit"] =
-                    intermediateResult17;
-                }
-              }
-              if (
-                value["fieldOptions"]["writable"]["$pick"] === null ||
-                value["fieldOptions"]["writable"]["$pick"] === undefined
-              ) {
-                result["fieldOptions"]["writable"]["$pick"] = undefined;
-              } else {
-                /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap18 = {};
                 /** @type {any[]} */
                 let intermediateResult18 = [];
                 /** @type {any|any[]} */
                 let intermediateValue18 =
-                  value["fieldOptions"]["writable"]["$pick"];
+                  value["fieldOptions"]["writable"]["$omit"];
 
                 if (!Array.isArray(intermediateValue18)) {
                   intermediateValue18 = [intermediateValue18];
                 }
-                result["fieldOptions"]["writable"]["$pick"] = Array.from({
+                result["fieldOptions"]["writable"]["$omit"] = Array.from({
                   length: intermediateValue18.length,
                 });
                 for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
@@ -3590,12 +3551,70 @@ export function validateExperimentalCrudDefinition(value) {
                 if (Object.keys(intermediateErrorMap18).length) {
                   for (const errorKey of Object.keys(intermediateErrorMap18)) {
                     errorMap[
-                      `$.fieldOptions.writable.$pick${errorKey.substring(1)}`
+                      `$.fieldOptions.writable.$omit${errorKey.substring(1)}`
                     ] = intermediateErrorMap18[errorKey];
                   }
                 } else {
-                  result["fieldOptions"]["writable"]["$pick"] =
+                  result["fieldOptions"]["writable"]["$omit"] =
                     intermediateResult18;
+                }
+              }
+              if (
+                value["fieldOptions"]["writable"]["$pick"] === null ||
+                value["fieldOptions"]["writable"]["$pick"] === undefined
+              ) {
+                result["fieldOptions"]["writable"]["$pick"] = undefined;
+              } else {
+                /** @type {ValidatorErrorMap} */
+                const intermediateErrorMap19 = {};
+                /** @type {any[]} */
+                let intermediateResult19 = [];
+                /** @type {any|any[]} */
+                let intermediateValue19 =
+                  value["fieldOptions"]["writable"]["$pick"];
+
+                if (!Array.isArray(intermediateValue19)) {
+                  intermediateValue19 = [intermediateValue19];
+                }
+                result["fieldOptions"]["writable"]["$pick"] = Array.from({
+                  length: intermediateValue19.length,
+                });
+                for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
+                  if (
+                    intermediateValue19[i19] === null ||
+                    intermediateValue19[i19] === undefined
+                  ) {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    /** @type {string} */
+                    let convertedString19 = intermediateValue19[i19];
+                    if (typeof convertedString19 !== "string") {
+                      intermediateErrorMap19[`$.${i19}`] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString19.length < 1) {
+                        intermediateErrorMap19[`$.${i19}`] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        intermediateResult19[i19] = convertedString19;
+                      }
+                    }
+                  }
+                }
+                if (Object.keys(intermediateErrorMap19).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap19)) {
+                    errorMap[
+                      `$.fieldOptions.writable.$pick${errorKey.substring(1)}`
+                    ] = intermediateErrorMap19[errorKey];
+                  }
+                } else {
+                  result["fieldOptions"]["writable"]["$pick"] =
+                    intermediateResult19;
                 }
               }
             }

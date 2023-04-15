@@ -32,6 +32,10 @@ export const typeDefinitionTraversePaths = {
   boolean: [],
   crud: [
     {
+      key: "fieldOptions.readableType",
+      amount: "single",
+    },
+    {
       key: "entity",
       amount: "single",
     },
@@ -197,32 +201,48 @@ export function typeDefinitionTraverse(typeToTraverse, callback, options) {
       }
 
       for (const spec of pathSpecs) {
-        if (spec.amount === "single" && !isNil(currentType[spec.key])) {
-          const nestedResult = callback(currentType[spec.key], nestedCallback);
+        let specKey = spec.key;
+        let nestedType = currentType;
+
+        if (spec.key.includes(".")) {
+          const pathParts = spec.key.split(".");
+          specKey = pathParts.pop();
+
+          for (const part of pathParts) {
+            nestedType = nestedType[part] ?? {};
+          }
+        }
+
+        if (spec.amount === "single" && !isNil(nestedType[specKey])) {
+          const nestedResult = callback(nestedType[specKey], nestedCallback);
 
           if (nestedResult && options.assignResult) {
-            currentType[spec.key] = nestedResult;
+            nestedType[specKey] = nestedResult;
           }
-        } else if (Array.isArray(currentType[spec.key])) {
-          for (let i = 0; i < currentType[spec.key].length; ++i) {
+        } else if (Array.isArray(nestedType[specKey])) {
+          // Many array handling
+
+          for (let i = 0; i < nestedType[specKey].length; ++i) {
             const nestedResult = callback(
-              currentType[spec.key][i],
+              nestedType[specKey][i],
               nestedCallback,
             );
 
             if (nestedResult && options.assignResult) {
-              currentType[spec.key][i] = nestedResult;
+              nestedType[specKey][i] = nestedResult;
             }
           }
         } else {
-          for (const key of Object.keys(currentType[spec.key] ?? {})) {
+          // Many -> object handling
+
+          for (const key of Object.keys(nestedType[specKey] ?? {})) {
             const nestedResult = callback(
-              currentType[spec.key][key],
+              nestedType[specKey][key],
               nestedCallback,
             );
 
             if (nestedResult && options.assignResult) {
-              currentType[spec.key][key] = nestedResult;
+              nestedType[specKey][key] = nestedResult;
             }
           }
         }

@@ -208,6 +208,7 @@ export type ExperimentalCrudDefinition = {
           $pick?: string[] | undefined;
         }
       | undefined;
+    readableType?: ExperimentalReferenceDefinition | undefined;
     writable?:
       | {
           $omit?: string[] | undefined;
@@ -578,6 +579,7 @@ export type ExperimentalCrudDefinitionInput = {
           $pick?: string[] | string | undefined;
         }
       | undefined;
+    readableType?: ExperimentalReferenceDefinitionInput | undefined;
     writable?:
       | {
           $omit?: string[] | string | undefined;

@@ -129,6 +129,39 @@ userRegisterCrud({
 });
 ```
 
+A custom readable type is supported as well on top level CRUD definitions.
+Allowing you to flatten many-to-many relations or adding computed fields.
+
+```ts
+T.crud("/todo")
+  .entity(T.reference("database", "todo"))
+  .routes({
+    listRoute: true,
+  })
+  .fields({
+    readable: T.object("readable").keys({
+      id: T.uuid(),
+      title: T.string(),
+      isCompleted: T.bool(),
+      createdAt: T.date(),
+    }),
+    writable: {},
+  });
+
+// This also adds a required parameter when registering the CRUD handlers
+todoRegisterCrud({
+  sql,
+  todoTransform: (entity) => ({
+    id: entity.id,
+    title: entity.title,
+    createdAt: entity.createdAt,
+
+    // Our custom field
+    isCompleted: !isNil(entity.completedAt) && entity.completedAt < new Date(),
+  }),
+});
+```
+
 ## Relations
 
 Relations are supported in two ways, inline or nested. Inline CRUD allows sub

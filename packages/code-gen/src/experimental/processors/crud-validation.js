@@ -2,8 +2,11 @@ import { AppError, isNil } from "@compas/stdlib";
 import { errorsThrowCombinedError } from "../errors.js";
 import { stringFormatNameForError } from "../string-format.js";
 import {
+  crudInformationGetHasCustomReadableType,
   crudInformationGetModel,
+  crudInformationGetParent,
   crudInformationGetRelation,
+  crudInformationSetHasCustomReadableType,
   crudInformationSetModel,
   crudInformationSetRelationAndParent,
 } from "./crud-information.js";
@@ -108,6 +111,30 @@ function crudValidateType(generateContext, crud) {
     // @ts-expect-error
     crudValidateRelation(generateContext, crud, relation);
   }
+
+  // Resolve custom readable type
+  const parent = crudInformationGetParent(crud);
+  const isInlineRelation = parent?.inlineRelations.includes(crud) ?? false;
+  const hasCustomReadableType = !isNil(crud.fieldOptions.readableType);
+
+  if (parent && isInlineRelation) {
+    if (hasCustomReadableType) {
+      throw AppError.serverError({
+        message: `Inline relations in a 'T.crud()' definition can not have custom 'readable' type. Remove the custom 'readable' type for the 'T.crud().fromParent("${crud.fromParent?.field}").fieldOptions()' call in '${parent.group}'.`,
+      });
+    }
+
+    if (
+      crudInformationGetHasCustomReadableType(parent) &&
+      crud.fieldOptions.readable
+    ) {
+      throw AppError.serverError({
+        message: `Inline relations in a 'T.crud()' definition can not specify 'readable' field options when a parent has defined a custom readable type. Remove the custom 'readable' type for the 'T.crud().fromParent("${crud.fromParent?.field}").fieldOptions()' call in '${parent.group}'.`,
+      });
+    }
+  }
+
+  crudInformationSetHasCustomReadableType(crud, hasCustomReadableType);
 
   for (const relation of crud.inlineRelations) {
     // @ts-expect-error

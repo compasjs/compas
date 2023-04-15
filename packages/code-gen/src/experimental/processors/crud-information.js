@@ -6,9 +6,10 @@ import { modelKeyGetPrimary } from "./model-keys.js";
  * @property {import("../generated/common/types").ExperimentalObjectDefinition} model
  * @property {import("../generated/common/types").ExperimentalCrudDefinition} [parent]
  * @property {import("../generated/common/types").
- * ExperimentalRelationDefinition} [relation]
+ *   ExperimentalRelationDefinition} [relation]
  * @property {{ group: string, name: string }} readableType
  * @property {{ group: string, name: string }} writableType
+ * @property {boolean} hasCustomReadableType
  */
 
 /**
@@ -188,4 +189,48 @@ export function crudInformationSetWritableType(crud, writable) {
 export function crudInformationGetWritableType(crud) {
   // @ts-expect-error
   return crudCache.get(crud).writableType;
+}
+
+/**
+ * Cache when the provided CRUD has a custom readable type.
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @param {boolean} hasCustomReadableType
+ */
+export function crudInformationSetHasCustomReadableType(
+  crud,
+  hasCustomReadableType,
+) {
+  const obj = crudCache.get(crud) ?? {};
+  // @ts-expect-error
+  obj.hasCustomReadableType = hasCustomReadableType;
+
+  // @ts-expect-error
+  crudCache.set(crud, obj);
+}
+
+/**
+ * Check if the crud or parent has a custom readable type
+ *
+ * @param {import("../generated/common/types").ExperimentalCrudDefinition} crud
+ * @returns {boolean}
+ */
+export function crudInformationGetHasCustomReadableType(crud) {
+  const information = crudCache.get(crud) ?? {};
+
+  // @ts-expect-error
+  if (information.hasCustomReadableType) {
+    return true;
+  }
+
+  // @ts-expect-error
+  if (information.parent && information.parent.inlineRelations.includes(crud)) {
+    // Nested relations can define for themselves if they have a custom readable type, so
+    // we only traverse upwards when we are in an inline relation.
+
+    // @ts-expect-error
+    return crudInformationGetHasCustomReadableType(information.parent);
+  }
+
+  return false;
 }

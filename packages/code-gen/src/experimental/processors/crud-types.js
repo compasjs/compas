@@ -7,6 +7,7 @@ import {
 } from "../../builders/index.js";
 import { upperCaseFirst } from "../../utils.js";
 import {
+  crudInformationGetHasCustomReadableType,
   crudInformationGetModel,
   crudInformationGetName,
   crudInformationGetParamName,
@@ -62,6 +63,21 @@ export function crudTypesCreate(generateContext) {
  * }} options
  */
 function crudTypesItem(generateContext, crud, options) {
+  if (
+    options.type === "readable" &&
+    crudInformationGetHasCustomReadableType(crud)
+  ) {
+    crudInformationSetReadableType(crud, {
+      // @ts-expect-error
+      group: crud.fieldOptions.readableType.reference.group,
+
+      // @ts-expect-error
+      name: crud.fieldOptions.readableType.reference.name,
+    });
+
+    return;
+  }
+
   const model = crudInformationGetModel(crud);
 
   options.name = upperCaseFirst(options.name);

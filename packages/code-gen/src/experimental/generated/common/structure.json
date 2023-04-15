@@ -1502,6 +1502,18 @@
                 }
               }
             },
+            "readableType": {
+              "docString": "",
+              "isOptional": true,
+              "validator": {},
+              "sql": {},
+              "type": "reference",
+              "reference": {
+                "group": "experimental",
+                "name": "referenceDefinition",
+                "uniqueName": "ExperimentalReferenceDefinition"
+              }
+            },
             "writable": {
               "docString": "",
               "isOptional": true,
