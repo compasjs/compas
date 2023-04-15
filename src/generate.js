@@ -122,7 +122,7 @@ export async function generateExamples(logger, state) {
       parts[0] = "../../node_modules/.bin/compas";
     }
 
-    if (state.flags.skipLint) {
+    if (state.flags.skipLint && !cmd.includes(" run ")) {
       parts.push("--skip-lint");
     }
 
