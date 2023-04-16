@@ -5,6 +5,7 @@ import {
   newPostgresConnection,
 } from "@compas/store";
 import { router } from "./generated/common/router.js";
+import { completedTodoRegisterCrud } from "./generated/completedTodo/crud.js";
 import { todoRegisterCrud } from "./generated/todo/crud.js";
 
 export let app = undefined;
@@ -44,5 +45,9 @@ function injectCrud() {
       isCompleted:
         !isNil(entity.completedAt) && entity.completedAt < new Date(),
     }),
+  });
+
+  completedTodoRegisterCrud({
+    sql,
   });
 }

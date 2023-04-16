@@ -6,11 +6,11 @@ mainFn(import.meta, main);
 
 function main() {
   const generator = new Generator();
-  const T = new TypeCreator("todo");
+  const T = new TypeCreator();
+  const Tdatabase = new TypeCreator("database");
 
   generator.add(
-    new TypeCreator("database")
-      .object("todo")
+    Tdatabase.object("todo")
       .keys({
         title: T.string().min(3).searchable(),
         completedAt: T.date().optional().searchable(),
@@ -19,7 +19,18 @@ function main() {
         withDates: true,
       }),
 
-    T.crud("/todo")
+    Tdatabase.object("todoView")
+      .keys({
+        title: T.string(),
+        isCompleted: T.bool().searchable(),
+        completedAt: T.date().optional(),
+      })
+      .enableQueries({
+        isView: true,
+      }),
+
+    new TypeCreator("todo")
+      .crud("/todo")
       .entity(T.reference("database", "todo"))
       .routes({
         listRoute: true,
@@ -37,6 +48,14 @@ function main() {
         }),
         writable: {},
       }),
+
+    new TypeCreator("completedTodo")
+      .crud("/completed-todo")
+      .entity(T.reference("database", "todoView"))
+      .routes({
+        listRoute: true,
+        singleRoute: true,
+      }),
   );
 
   generator.generate({
@@ -46,6 +65,7 @@ function main() {
       database: {
         target: {
           dialect: "postgres",
+          includeDDL: true,
         },
       },
       apiClient: {

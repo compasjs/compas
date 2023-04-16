@@ -76,6 +76,18 @@ function crudValidateType(generateContext, crud) {
     });
   }
 
+  if (model.queryOptions?.isView) {
+    if (
+      crud.routeOptions.createRoute ||
+      crud.routeOptions.updateRoute ||
+      crud.routeOptions.deleteRoute
+    ) {
+      throw AppError.serverError({
+        message: `CRUD generation on database views does not allow generating a 'create', 'update' or 'delete' route. Make sure to disable these in the '${crud.group}' group.`,
+      });
+    }
+  }
+
   if (
     crud.fromParent &&
     crudInformationGetRelation(crud).subType === "oneToOneReverse"
