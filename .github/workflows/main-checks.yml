@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [16, 18]
+        node: [18, 19]
         postgresVersion: [12, 13, 14]
     runs-on: ubuntu-latest
     env:
