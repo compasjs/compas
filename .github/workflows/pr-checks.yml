@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [16, 18]
+        node: [18, 19]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -40,7 +40,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [16, 18]
+        node: [18, 19]
         postgresVersion: [12, 13, 14]
     runs-on: ubuntu-latest
     env:
@@ -75,7 +75,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [16, 18]
+        node: [18]
         postgresVersion: [14]
     runs-on: ubuntu-latest
     env:
@@ -105,7 +105,6 @@ jobs:
           npx compas test --coverage
 
       - name: Upload coverage
-        if: matrix.node == '18'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -115,7 +114,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [16, 18]
+        node: [18]
     runs-on: ubuntu-latest
     env:
       CI: true
