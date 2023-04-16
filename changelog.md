@@ -4,6 +4,43 @@ editLink: false
 
 # Changelog
 
+### [v0.0.246](https://github.com/compasjs/compas/releases/tag/v0.0.246)
+
+#### Breaking changes
+
+- chore: change the minimum supported version to Node.js 18
+  ([#2506](https://github.com/compasjs/compas/pull/2506))
+  [`354b15`](https://github.com/compasjs/compas/commit/354b15d82d106170c3d1eb10e8d427dcf103bbc1)
+  - Dropped support for Node.js 16
+
+#### Features
+
+- feat(server): always log the structured request information in the log
+  middleware
+  [`1a4716`](https://github.com/compasjs/compas/commit/1a4716f63673bc34f9b238a88a14be50ff62e96f)
+- feat(code-gen/experimental): support custom readable types
+  [`1f5c99`](https://github.com/compasjs/compas/commit/1f5c99214272fbcfbb593d8c32489fa808b87a78)
+  - Closes [#2472](https://github.com/compasjs/compas/pull/2472)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): satisfy typescript when working with upload files
+  in the api clients
+  [`d6544a`](https://github.com/compasjs/compas/commit/d6544a82d2db4a73d0d58bda5f8f868a78750806)
+- fix(code-gen/experimental): make sure array based filters in crud are optional
+  [`f26766`](https://github.com/compasjs/compas/commit/f267666f999bcf88c261b8fe2e79a9ad0a7a96ed)
+
+#### Other
+
+- examples(crud-simple-todo): init example
+  [`b10b20`](https://github.com/compasjs/compas/commit/b10b20b21c3d513e08cc127149c1b4078fde62bb)
+- chore: fix example generation on CI
+  [`9b6c14`](https://github.com/compasjs/compas/commit/9b6c146bb6c94f81554a928de0a11613192c3477)
+- examples(crud-simple-todo): fix flaky tests
+  [`6be87f`](https://github.com/compasjs/compas/commit/6be87ffcfc51ed1a62cc159eaadd73a4cbc1b2de)
+- chore(code-gen/experimental): copy CRUD partials from legacy
+  [`d75aa2`](https://github.com/compasjs/compas/commit/d75aa288d03a6d49a56cefb501c143578473d80b)
+
 ### [v0.0.245](https://github.com/compasjs/compas/releases/tag/v0.0.245)
 
 #### Bug fixes
