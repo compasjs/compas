@@ -27,7 +27,7 @@ CREATE INDEX "todoCompletedAtIdx" ON "todo" ("completedAt");
 CREATE OR REPLACE VIEW "todoView"
 AS
   SELECT id,
-         coalesce("completedAt" < now(), false)::boolean AS "isCompleted",
+         coalesce("completedAt" < now(), FALSE)::boolean AS "isCompleted",
          title,
          "completedAt"
   FROM "todo";

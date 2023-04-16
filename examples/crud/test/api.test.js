@@ -6,6 +6,7 @@ import {
 } from "../src/generated/common/api-client.js";
 import { apiCompletedTodoList } from "../src/generated/completedTodo/apiClient.js";
 import { queryTodoView } from "../src/generated/database/todoView.js";
+import { apiPostWithCommentCountList } from "../src/generated/postWithCommentCount/apiClient.js";
 import {
   apiTodoCreate,
   apiTodoList,
@@ -136,10 +137,6 @@ test("crud", async (t) => {
         },
       },
     );
-
-    t.log.error({
-      todo: await queryTodoView({}).exec(sql),
-    });
 
     const { total: completedTodoTotal } = await apiCompletedTodoList(
       fetchFn,
