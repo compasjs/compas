@@ -1,13 +1,4 @@
 import { isNil } from "@compas/stdlib";
-import {
-  crudPartialEventCount,
-  crudPartialEventCreate,
-  crudPartialEventDelete,
-  crudPartialEventList,
-  crudPartialEventSingle,
-  crudPartialEventTransformer,
-  crudPartialEventUpdate,
-} from "../../crud/partials/events.js";
 import { upperCaseFirst } from "../../utils.js";
 import { fileContextCreateGeneric } from "../file/context.js";
 import { fileWrite } from "../file/write.js";
@@ -21,6 +12,15 @@ import { crudRouteSwitch, structureCrud } from "../processors/crud.js";
 import { modelKeyGetPrimary } from "../processors/model-keys.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
+import {
+  crudPartialEventCount,
+  crudPartialEventCreate,
+  crudPartialEventDelete,
+  crudPartialEventList,
+  crudPartialEventSingle,
+  crudPartialEventTransformer,
+  crudPartialEventUpdate,
+} from "./partials/events.js";
 import { crudQueryBuilderGet } from "./query-builder.js";
 
 /**

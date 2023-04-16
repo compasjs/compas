@@ -1,11 +1,4 @@
 import { isNil } from "@compas/stdlib";
-import {
-  crudPartialRouteCreate,
-  crudPartialRouteDelete,
-  crudPartialRouteList,
-  crudPartialRouteSingle,
-  crudPartialRouteUpdate,
-} from "../../crud/partials/routes.js";
 import { upperCaseFirst } from "../../utils.js";
 import { fileBlockEnd, fileBlockStart } from "../file/block.js";
 import {
@@ -27,6 +20,13 @@ import {
 import { crudRouteSwitch, structureCrud } from "../processors/crud.js";
 import { modelKeyGetPrimary } from "../processors/model-keys.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
+import {
+  crudPartialRouteCreate,
+  crudPartialRouteDelete,
+  crudPartialRouteList,
+  crudPartialRouteSingle,
+  crudPartialRouteUpdate,
+} from "./partials/routes.js";
 import { crudQueryBuilderGet } from "./query-builder.js";
 
 /**
