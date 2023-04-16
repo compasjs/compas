@@ -41,6 +41,16 @@ test("server/middleware/body", async (t) => {
   const fileClient = axios.create();
   await createTestAppAndClient(fileApp, fileClient);
 
+  const connections = {};
+
+  fileApp._server.on("connection", function (conn) {
+    const key = `${conn.remoteAddress}:${conn.remotePort}`;
+    connections[key] = conn;
+    conn.on("close", function () {
+      delete connections[key];
+    });
+  });
+
   t.test("text payload", async (t) => {
     const { data } = await client.request({
       url: "/",
@@ -152,6 +162,11 @@ test("server/middleware/body", async (t) => {
   });
 
   t.test("teardown", async (t) => {
+    // TODO!: Why is this necessary in Node.js 19?
+    for (const key of Object.keys(connections)) {
+      connections[key].destroy();
+    }
+
     await closeTestApp(app);
     await closeTestApp(fileApp);
     t.pass();
