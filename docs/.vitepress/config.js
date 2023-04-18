@@ -1,6 +1,7 @@
 import { readdirSync } from "fs";
+import { defineConfig } from "vitepress";
 
-export default {
+export default defineConfig({
   lang: "en-US",
   title: "Compas",
   description: "Unified backend tooling",
@@ -43,6 +44,10 @@ export default {
     editLink: {
       pattern: "https://github.com/compasjs/compas/edit/main/docs/:path",
       text: "Edit this page on GitHub",
+    },
+
+    search: {
+      provider: "local",
     },
 
     nav: [
@@ -100,7 +105,7 @@ export default {
   vite: {
     envDir: process.cwd() + "/docs",
   },
-};
+});
 
 function getHomeSidebar() {
   return [
