@@ -5067,13 +5067,15 @@ export function validateStoreJob(value) {
         if (
           value["isComplete"] === true ||
           value["isComplete"] === "true" ||
-          value["isComplete"] === 1
+          value["isComplete"] === 1 ||
+          value["isComplete"] === "1"
         ) {
           result["isComplete"] = true;
         } else if (
           value["isComplete"] === false ||
           value["isComplete"] === "false" ||
-          value["isComplete"] === 0
+          value["isComplete"] === 0 ||
+          value["isComplete"] === "0"
         ) {
           result["isComplete"] = false;
         } else {
@@ -5824,13 +5826,15 @@ export function validateStoreJobWhereValidated(value) {
         if (
           value["isComplete"] === true ||
           value["isComplete"] === "true" ||
-          value["isComplete"] === 1
+          value["isComplete"] === 1 ||
+          value["isComplete"] === "1"
         ) {
           result["isComplete"] = true;
         } else if (
           value["isComplete"] === false ||
           value["isComplete"] === "false" ||
-          value["isComplete"] === 0
+          value["isComplete"] === 0 ||
+          value["isComplete"] === "0"
         ) {
           result["isComplete"] = false;
         } else {
@@ -5849,13 +5853,15 @@ export function validateStoreJobWhereValidated(value) {
         if (
           value["isCompleteIsNull"] === true ||
           value["isCompleteIsNull"] === "true" ||
-          value["isCompleteIsNull"] === 1
+          value["isCompleteIsNull"] === 1 ||
+          value["isCompleteIsNull"] === "1"
         ) {
           result["isCompleteIsNull"] = true;
         } else if (
           value["isCompleteIsNull"] === false ||
           value["isCompleteIsNull"] === "false" ||
-          value["isCompleteIsNull"] === 0
+          value["isCompleteIsNull"] === 0 ||
+          value["isCompleteIsNull"] === "0"
         ) {
           result["isCompleteIsNull"] = false;
         } else {
@@ -5874,13 +5880,15 @@ export function validateStoreJobWhereValidated(value) {
         if (
           value["isCompleteIsNotNull"] === true ||
           value["isCompleteIsNotNull"] === "true" ||
-          value["isCompleteIsNotNull"] === 1
+          value["isCompleteIsNotNull"] === 1 ||
+          value["isCompleteIsNotNull"] === "1"
         ) {
           result["isCompleteIsNotNull"] = true;
         } else if (
           value["isCompleteIsNotNull"] === false ||
           value["isCompleteIsNotNull"] === "false" ||
-          value["isCompleteIsNotNull"] === 0
+          value["isCompleteIsNotNull"] === 0 ||
+          value["isCompleteIsNotNull"] === "0"
         ) {
           result["isCompleteIsNotNull"] = false;
         } else {
@@ -6621,13 +6629,15 @@ export function validateStoreJobWhereValidated(value) {
         if (
           value["scheduledAtIsNull"] === true ||
           value["scheduledAtIsNull"] === "true" ||
-          value["scheduledAtIsNull"] === 1
+          value["scheduledAtIsNull"] === 1 ||
+          value["scheduledAtIsNull"] === "1"
         ) {
           result["scheduledAtIsNull"] = true;
         } else if (
           value["scheduledAtIsNull"] === false ||
           value["scheduledAtIsNull"] === "false" ||
-          value["scheduledAtIsNull"] === 0
+          value["scheduledAtIsNull"] === 0 ||
+          value["scheduledAtIsNull"] === "0"
         ) {
           result["scheduledAtIsNull"] = false;
         } else {
@@ -6646,13 +6656,15 @@ export function validateStoreJobWhereValidated(value) {
         if (
           value["scheduledAtIsNotNull"] === true ||
           value["scheduledAtIsNotNull"] === "true" ||
-          value["scheduledAtIsNotNull"] === 1
+          value["scheduledAtIsNotNull"] === 1 ||
+          value["scheduledAtIsNotNull"] === "1"
         ) {
           result["scheduledAtIsNotNull"] = true;
         } else if (
           value["scheduledAtIsNotNull"] === false ||
           value["scheduledAtIsNotNull"] === "false" ||
-          value["scheduledAtIsNotNull"] === 0
+          value["scheduledAtIsNotNull"] === 0 ||
+          value["scheduledAtIsNotNull"] === "0"
         ) {
           result["scheduledAtIsNotNull"] = false;
         } else {
@@ -8373,13 +8385,15 @@ export function validateStoreJobInsertPartialValidated(value) {
         if (
           value["isComplete"] === true ||
           value["isComplete"] === "true" ||
-          value["isComplete"] === 1
+          value["isComplete"] === 1 ||
+          value["isComplete"] === "1"
         ) {
           result["isComplete"] = true;
         } else if (
           value["isComplete"] === false ||
           value["isComplete"] === "false" ||
-          value["isComplete"] === 0
+          value["isComplete"] === 0 ||
+          value["isComplete"] === "0"
         ) {
           result["isComplete"] = false;
         } else {
@@ -8811,13 +8825,15 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 if (
                   intermediateValue3["$negate"] === true ||
                   intermediateValue3["$negate"] === "true" ||
-                  intermediateValue3["$negate"] === 1
+                  intermediateValue3["$negate"] === 1 ||
+                  intermediateValue3["$negate"] === "1"
                 ) {
                   intermediateResult3["$negate"] = true;
                 } else if (
                   intermediateValue3["$negate"] === false ||
                   intermediateValue3["$negate"] === "false" ||
-                  intermediateValue3["$negate"] === 0
+                  intermediateValue3["$negate"] === 0 ||
+                  intermediateValue3["$negate"] === "0"
                 ) {
                   intermediateResult3["$negate"] = false;
                 } else {
@@ -8851,13 +8867,15 @@ export function validateStoreJobUpdatePartialValidated(value) {
             if (
               intermediateValue3 === true ||
               intermediateValue3 === "true" ||
-              intermediateValue3 === 1
+              intermediateValue3 === 1 ||
+              intermediateValue3 === "1"
             ) {
               intermediateResult3 = true;
             } else if (
               intermediateValue3 === false ||
               intermediateValue3 === "false" ||
-              intermediateValue3 === 0
+              intermediateValue3 === 0 ||
+              intermediateValue3 === "0"
             ) {
               intermediateResult3 = false;
             } else {
@@ -14463,13 +14481,15 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         if (
           value["refreshTokenIsNull"] === true ||
           value["refreshTokenIsNull"] === "true" ||
-          value["refreshTokenIsNull"] === 1
+          value["refreshTokenIsNull"] === 1 ||
+          value["refreshTokenIsNull"] === "1"
         ) {
           result["refreshTokenIsNull"] = true;
         } else if (
           value["refreshTokenIsNull"] === false ||
           value["refreshTokenIsNull"] === "false" ||
-          value["refreshTokenIsNull"] === 0
+          value["refreshTokenIsNull"] === 0 ||
+          value["refreshTokenIsNull"] === "0"
         ) {
           result["refreshTokenIsNull"] = false;
         } else {
@@ -14488,13 +14508,15 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         if (
           value["refreshTokenIsNotNull"] === true ||
           value["refreshTokenIsNotNull"] === "true" ||
-          value["refreshTokenIsNotNull"] === 1
+          value["refreshTokenIsNotNull"] === 1 ||
+          value["refreshTokenIsNotNull"] === "1"
         ) {
           result["refreshTokenIsNotNull"] = true;
         } else if (
           value["refreshTokenIsNotNull"] === false ||
           value["refreshTokenIsNotNull"] === "false" ||
-          value["refreshTokenIsNotNull"] === 0
+          value["refreshTokenIsNotNull"] === 0 ||
+          value["refreshTokenIsNotNull"] === "0"
         ) {
           result["refreshTokenIsNotNull"] = false;
         } else {
@@ -14872,13 +14894,15 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         if (
           value["revokedAtIsNull"] === true ||
           value["revokedAtIsNull"] === "true" ||
-          value["revokedAtIsNull"] === 1
+          value["revokedAtIsNull"] === 1 ||
+          value["revokedAtIsNull"] === "1"
         ) {
           result["revokedAtIsNull"] = true;
         } else if (
           value["revokedAtIsNull"] === false ||
           value["revokedAtIsNull"] === "false" ||
-          value["revokedAtIsNull"] === 0
+          value["revokedAtIsNull"] === 0 ||
+          value["revokedAtIsNull"] === "0"
         ) {
           result["revokedAtIsNull"] = false;
         } else {
@@ -14897,13 +14921,15 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         if (
           value["revokedAtIsNotNull"] === true ||
           value["revokedAtIsNotNull"] === "true" ||
-          value["revokedAtIsNotNull"] === 1
+          value["revokedAtIsNotNull"] === 1 ||
+          value["revokedAtIsNotNull"] === "1"
         ) {
           result["revokedAtIsNotNull"] = true;
         } else if (
           value["revokedAtIsNotNull"] === false ||
           value["revokedAtIsNotNull"] === "false" ||
-          value["revokedAtIsNotNull"] === 0
+          value["revokedAtIsNotNull"] === 0 ||
+          value["revokedAtIsNotNull"] === "0"
         ) {
           result["revokedAtIsNotNull"] = false;
         } else {
@@ -22419,13 +22445,15 @@ export function validateStoreJobWhereValidated_1(value) {
         if (
           value["isComplete"] === true ||
           value["isComplete"] === "true" ||
-          value["isComplete"] === 1
+          value["isComplete"] === 1 ||
+          value["isComplete"] === "1"
         ) {
           result["isComplete"] = true;
         } else if (
           value["isComplete"] === false ||
           value["isComplete"] === "false" ||
-          value["isComplete"] === 0
+          value["isComplete"] === 0 ||
+          value["isComplete"] === "0"
         ) {
           result["isComplete"] = false;
         } else {
@@ -22444,13 +22472,15 @@ export function validateStoreJobWhereValidated_1(value) {
         if (
           value["isCompleteIsNull"] === true ||
           value["isCompleteIsNull"] === "true" ||
-          value["isCompleteIsNull"] === 1
+          value["isCompleteIsNull"] === 1 ||
+          value["isCompleteIsNull"] === "1"
         ) {
           result["isCompleteIsNull"] = true;
         } else if (
           value["isCompleteIsNull"] === false ||
           value["isCompleteIsNull"] === "false" ||
-          value["isCompleteIsNull"] === 0
+          value["isCompleteIsNull"] === 0 ||
+          value["isCompleteIsNull"] === "0"
         ) {
           result["isCompleteIsNull"] = false;
         } else {
@@ -22469,13 +22499,15 @@ export function validateStoreJobWhereValidated_1(value) {
         if (
           value["isCompleteIsNotNull"] === true ||
           value["isCompleteIsNotNull"] === "true" ||
-          value["isCompleteIsNotNull"] === 1
+          value["isCompleteIsNotNull"] === 1 ||
+          value["isCompleteIsNotNull"] === "1"
         ) {
           result["isCompleteIsNotNull"] = true;
         } else if (
           value["isCompleteIsNotNull"] === false ||
           value["isCompleteIsNotNull"] === "false" ||
-          value["isCompleteIsNotNull"] === 0
+          value["isCompleteIsNotNull"] === 0 ||
+          value["isCompleteIsNotNull"] === "0"
         ) {
           result["isCompleteIsNotNull"] = false;
         } else {
@@ -23184,13 +23216,15 @@ export function validateStoreJobWhereValidated_1(value) {
         if (
           value["scheduledAtIsNull"] === true ||
           value["scheduledAtIsNull"] === "true" ||
-          value["scheduledAtIsNull"] === 1
+          value["scheduledAtIsNull"] === 1 ||
+          value["scheduledAtIsNull"] === "1"
         ) {
           result["scheduledAtIsNull"] = true;
         } else if (
           value["scheduledAtIsNull"] === false ||
           value["scheduledAtIsNull"] === "false" ||
-          value["scheduledAtIsNull"] === 0
+          value["scheduledAtIsNull"] === 0 ||
+          value["scheduledAtIsNull"] === "0"
         ) {
           result["scheduledAtIsNull"] = false;
         } else {
@@ -23209,13 +23243,15 @@ export function validateStoreJobWhereValidated_1(value) {
         if (
           value["scheduledAtIsNotNull"] === true ||
           value["scheduledAtIsNotNull"] === "true" ||
-          value["scheduledAtIsNotNull"] === 1
+          value["scheduledAtIsNotNull"] === 1 ||
+          value["scheduledAtIsNotNull"] === "1"
         ) {
           result["scheduledAtIsNotNull"] = true;
         } else if (
           value["scheduledAtIsNotNull"] === false ||
           value["scheduledAtIsNotNull"] === "false" ||
-          value["scheduledAtIsNotNull"] === 0
+          value["scheduledAtIsNotNull"] === 0 ||
+          value["scheduledAtIsNotNull"] === "0"
         ) {
           result["scheduledAtIsNotNull"] = false;
         } else {
@@ -26513,13 +26549,15 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         if (
           value["refreshTokenIsNull"] === true ||
           value["refreshTokenIsNull"] === "true" ||
-          value["refreshTokenIsNull"] === 1
+          value["refreshTokenIsNull"] === 1 ||
+          value["refreshTokenIsNull"] === "1"
         ) {
           result["refreshTokenIsNull"] = true;
         } else if (
           value["refreshTokenIsNull"] === false ||
           value["refreshTokenIsNull"] === "false" ||
-          value["refreshTokenIsNull"] === 0
+          value["refreshTokenIsNull"] === 0 ||
+          value["refreshTokenIsNull"] === "0"
         ) {
           result["refreshTokenIsNull"] = false;
         } else {
@@ -26538,13 +26576,15 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         if (
           value["refreshTokenIsNotNull"] === true ||
           value["refreshTokenIsNotNull"] === "true" ||
-          value["refreshTokenIsNotNull"] === 1
+          value["refreshTokenIsNotNull"] === 1 ||
+          value["refreshTokenIsNotNull"] === "1"
         ) {
           result["refreshTokenIsNotNull"] = true;
         } else if (
           value["refreshTokenIsNotNull"] === false ||
           value["refreshTokenIsNotNull"] === "false" ||
-          value["refreshTokenIsNotNull"] === 0
+          value["refreshTokenIsNotNull"] === 0 ||
+          value["refreshTokenIsNotNull"] === "0"
         ) {
           result["refreshTokenIsNotNull"] = false;
         } else {
@@ -26906,13 +26946,15 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         if (
           value["revokedAtIsNull"] === true ||
           value["revokedAtIsNull"] === "true" ||
-          value["revokedAtIsNull"] === 1
+          value["revokedAtIsNull"] === 1 ||
+          value["revokedAtIsNull"] === "1"
         ) {
           result["revokedAtIsNull"] = true;
         } else if (
           value["revokedAtIsNull"] === false ||
           value["revokedAtIsNull"] === "false" ||
-          value["revokedAtIsNull"] === 0
+          value["revokedAtIsNull"] === 0 ||
+          value["revokedAtIsNull"] === "0"
         ) {
           result["revokedAtIsNull"] = false;
         } else {
@@ -26931,13 +26973,15 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         if (
           value["revokedAtIsNotNull"] === true ||
           value["revokedAtIsNotNull"] === "true" ||
-          value["revokedAtIsNotNull"] === 1
+          value["revokedAtIsNotNull"] === 1 ||
+          value["revokedAtIsNotNull"] === "1"
         ) {
           result["revokedAtIsNotNull"] = true;
         } else if (
           value["revokedAtIsNotNull"] === false ||
           value["revokedAtIsNotNull"] === "false" ||
-          value["revokedAtIsNotNull"] === 0
+          value["revokedAtIsNotNull"] === 0 ||
+          value["revokedAtIsNotNull"] === "0"
         ) {
           result["revokedAtIsNotNull"] = false;
         } else {

@@ -369,13 +369,15 @@ export function validateQueryResultStoreJob(value) {
         if (
           value["isComplete"] === true ||
           value["isComplete"] === "true" ||
-          value["isComplete"] === 1
+          value["isComplete"] === 1 ||
+          value["isComplete"] === "1"
         ) {
           result["isComplete"] = true;
         } else if (
           value["isComplete"] === false ||
           value["isComplete"] === "false" ||
-          value["isComplete"] === 0
+          value["isComplete"] === 0 ||
+          value["isComplete"] === "0"
         ) {
           result["isComplete"] = false;
         } else {

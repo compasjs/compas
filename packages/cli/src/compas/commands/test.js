@@ -45,6 +45,12 @@ Collecting and processing coverage information is done using C8. Use one of the 
         "Run tests serially instead of in parallel. Alternatively set '--parallel-count 1'",
     },
     {
+      name: "bail",
+      rawName: "--bail",
+      description:
+        "Exit the test runner after the first failed assertion. Requires '--serial'.",
+    },
+    {
       name: "parallelCount",
       rawName: "--parallel-count",
       description:
@@ -104,6 +110,13 @@ export async function cliExecutor(logger, state) {
     };
   }
 
+  if (state.flags.bail && !state.flags.serial) {
+    logger.error("Can only use '--bail' with '--serial'.");
+    return {
+      exitStatus: "failed",
+    };
+  }
+
   /** @type {number} */
   // @ts-ignore
   const parallelCount = state.flags.serial
@@ -138,7 +151,9 @@ export async function cliExecutor(logger, state) {
 
   if (parallelCount === 1 && state.flags.randomizeRounds === 1) {
     // Run serial tests in the same process
-    const exitCode = await runTestsInProcess();
+    const exitCode = await runTestsInProcess({
+      bail: !!state.flags.bail,
+    });
 
     return {
       exitStatus: exitCode === 0 ? "passed" : "failed",
@@ -234,7 +249,13 @@ async function runTests(workers, files) {
           const file = files[idx];
           idx++;
 
-          worker.postMessage({ type: "provide_file", file, isDebugging });
+          worker.postMessage({
+            type: "provide_file",
+            file,
+            options: {
+              isDebugging,
+            },
+          });
         }
       } else if (message.type === "provide_result") {
         results.push(message);

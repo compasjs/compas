@@ -1,14 +1,25 @@
 import { AssertionError, deepStrictEqual } from "assert";
 import { url } from "inspector";
 import { isNil, newLogger } from "@compas/stdlib";
+import { markTestFailuresRecursively } from "./printer.js";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
 /**
+ * Run the tests recursively.
+ *
+ * When the debugger is attached, we ignore any timeouts.
+ *
  * @param {import("./state").TestState} testState
- * @param {boolean} [isDebugging] If debugging, we should ignore the timeout
+ * @param {{
+ *   isDebugging?: boolean,
+ *   bail?: boolean,
+ * }} options
  * @returns {Promise<void>}
  */
-export async function runTestsRecursively(testState, isDebugging = !!url()) {
+export async function runTestsRecursively(testState, options = {}) {
+  options.isDebugging ??= !!url();
+  options.bail ??= false;
+
   const abortController = new AbortController();
   const runner = createRunnerForState(testState, abortController.signal);
 
@@ -21,7 +32,7 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
       const result = testState.callback(runner);
 
       if (typeof result?.then === "function") {
-        if (isDebugging) {
+        if (options.isDebugging) {
           const timeoutReminder = setTimeout(() => {
             testLogger.info(
               `Ignoring timeout for '${testState.name}', detected an active inspector.`,
@@ -89,8 +100,22 @@ export async function runTestsRecursively(testState, isDebugging = !!url()) {
     delete testState.caughtException.stack;
   }
 
+  if (options.bail) {
+    markTestFailuresRecursively(state);
+    if (state.hasFailure) {
+      return;
+    }
+  }
+
   for (const child of testState.children) {
-    await runTestsRecursively(child, isDebugging);
+    await runTestsRecursively(child, options);
+
+    if (options.bail) {
+      markTestFailuresRecursively(state);
+      if (state.hasFailure) {
+        return;
+      }
+    }
   }
 
   setTestTimeout(originalTimeout);

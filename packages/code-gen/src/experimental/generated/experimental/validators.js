@@ -134,13 +134,15 @@ export function validateExperimentalAnyDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -215,13 +217,15 @@ export function validateExperimentalAnyDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -313,13 +317,15 @@ export function validateExperimentalAnyDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -338,13 +344,15 @@ export function validateExperimentalAnyDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -363,13 +371,15 @@ export function validateExperimentalAnyDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -409,13 +419,15 @@ export function validateExperimentalAnyDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -1109,13 +1121,15 @@ export function validateExperimentalAnyOfDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -1190,13 +1204,15 @@ export function validateExperimentalAnyOfDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -1288,13 +1304,15 @@ export function validateExperimentalAnyOfDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -1313,13 +1331,15 @@ export function validateExperimentalAnyOfDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -1338,13 +1358,15 @@ export function validateExperimentalAnyOfDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -1779,13 +1801,15 @@ export function validateExperimentalArrayDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -1860,13 +1884,15 @@ export function validateExperimentalArrayDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -1958,13 +1984,15 @@ export function validateExperimentalArrayDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -1983,13 +2011,15 @@ export function validateExperimentalArrayDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -2008,13 +2038,15 @@ export function validateExperimentalArrayDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -2054,13 +2086,15 @@ export function validateExperimentalArrayDefinition(value) {
             if (
               value["validator"]["convert"] === true ||
               value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1
+              value["validator"]["convert"] === 1 ||
+              value["validator"]["convert"] === "1"
             ) {
               result["validator"]["convert"] = true;
             } else if (
               value["validator"]["convert"] === false ||
               value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0
+              value["validator"]["convert"] === 0 ||
+              value["validator"]["convert"] === "0"
             ) {
               result["validator"]["convert"] = false;
             } else {
@@ -2296,13 +2330,15 @@ export function validateExperimentalBooleanDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -2377,13 +2413,15 @@ export function validateExperimentalBooleanDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -2475,13 +2513,15 @@ export function validateExperimentalBooleanDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -2500,13 +2540,15 @@ export function validateExperimentalBooleanDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -2525,13 +2567,15 @@ export function validateExperimentalBooleanDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -2571,13 +2615,15 @@ export function validateExperimentalBooleanDefinition(value) {
             if (
               value["validator"]["convert"] === true ||
               value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1
+              value["validator"]["convert"] === 1 ||
+              value["validator"]["convert"] === "1"
             ) {
               result["validator"]["convert"] = true;
             } else if (
               value["validator"]["convert"] === false ||
               value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0
+              value["validator"]["convert"] === 0 ||
+              value["validator"]["convert"] === "0"
             ) {
               result["validator"]["convert"] = false;
             } else {
@@ -2596,13 +2642,15 @@ export function validateExperimentalBooleanDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -2620,13 +2668,15 @@ export function validateExperimentalBooleanDefinition(value) {
         if (
           value["oneOf"] === true ||
           value["oneOf"] === "true" ||
-          value["oneOf"] === 1
+          value["oneOf"] === 1 ||
+          value["oneOf"] === "1"
         ) {
           result["oneOf"] = true;
         } else if (
           value["oneOf"] === false ||
           value["oneOf"] === "false" ||
-          value["oneOf"] === 0
+          value["oneOf"] === 0 ||
+          value["oneOf"] === "0"
         ) {
           result["oneOf"] = false;
         } else {
@@ -2769,13 +2819,15 @@ export function validateExperimentalCrudDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -2850,13 +2902,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -2948,13 +3002,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -2973,13 +3029,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -2998,13 +3056,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -3190,13 +3250,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["routeOptions"]["listRoute"] === true ||
               value["routeOptions"]["listRoute"] === "true" ||
-              value["routeOptions"]["listRoute"] === 1
+              value["routeOptions"]["listRoute"] === 1 ||
+              value["routeOptions"]["listRoute"] === "1"
             ) {
               result["routeOptions"]["listRoute"] = true;
             } else if (
               value["routeOptions"]["listRoute"] === false ||
               value["routeOptions"]["listRoute"] === "false" ||
-              value["routeOptions"]["listRoute"] === 0
+              value["routeOptions"]["listRoute"] === 0 ||
+              value["routeOptions"]["listRoute"] === "0"
             ) {
               result["routeOptions"]["listRoute"] = false;
             } else {
@@ -3215,13 +3277,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["routeOptions"]["singleRoute"] === true ||
               value["routeOptions"]["singleRoute"] === "true" ||
-              value["routeOptions"]["singleRoute"] === 1
+              value["routeOptions"]["singleRoute"] === 1 ||
+              value["routeOptions"]["singleRoute"] === "1"
             ) {
               result["routeOptions"]["singleRoute"] = true;
             } else if (
               value["routeOptions"]["singleRoute"] === false ||
               value["routeOptions"]["singleRoute"] === "false" ||
-              value["routeOptions"]["singleRoute"] === 0
+              value["routeOptions"]["singleRoute"] === 0 ||
+              value["routeOptions"]["singleRoute"] === "0"
             ) {
               result["routeOptions"]["singleRoute"] = false;
             } else {
@@ -3240,13 +3304,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["routeOptions"]["createRoute"] === true ||
               value["routeOptions"]["createRoute"] === "true" ||
-              value["routeOptions"]["createRoute"] === 1
+              value["routeOptions"]["createRoute"] === 1 ||
+              value["routeOptions"]["createRoute"] === "1"
             ) {
               result["routeOptions"]["createRoute"] = true;
             } else if (
               value["routeOptions"]["createRoute"] === false ||
               value["routeOptions"]["createRoute"] === "false" ||
-              value["routeOptions"]["createRoute"] === 0
+              value["routeOptions"]["createRoute"] === 0 ||
+              value["routeOptions"]["createRoute"] === "0"
             ) {
               result["routeOptions"]["createRoute"] = false;
             } else {
@@ -3265,13 +3331,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["routeOptions"]["updateRoute"] === true ||
               value["routeOptions"]["updateRoute"] === "true" ||
-              value["routeOptions"]["updateRoute"] === 1
+              value["routeOptions"]["updateRoute"] === 1 ||
+              value["routeOptions"]["updateRoute"] === "1"
             ) {
               result["routeOptions"]["updateRoute"] = true;
             } else if (
               value["routeOptions"]["updateRoute"] === false ||
               value["routeOptions"]["updateRoute"] === "false" ||
-              value["routeOptions"]["updateRoute"] === 0
+              value["routeOptions"]["updateRoute"] === 0 ||
+              value["routeOptions"]["updateRoute"] === "0"
             ) {
               result["routeOptions"]["updateRoute"] = false;
             } else {
@@ -3290,13 +3358,15 @@ export function validateExperimentalCrudDefinition(value) {
             if (
               value["routeOptions"]["deleteRoute"] === true ||
               value["routeOptions"]["deleteRoute"] === "true" ||
-              value["routeOptions"]["deleteRoute"] === 1
+              value["routeOptions"]["deleteRoute"] === 1 ||
+              value["routeOptions"]["deleteRoute"] === "1"
             ) {
               result["routeOptions"]["deleteRoute"] = true;
             } else if (
               value["routeOptions"]["deleteRoute"] === false ||
               value["routeOptions"]["deleteRoute"] === "false" ||
-              value["routeOptions"]["deleteRoute"] === 0
+              value["routeOptions"]["deleteRoute"] === 0 ||
+              value["routeOptions"]["deleteRoute"] === "0"
             ) {
               result["routeOptions"]["deleteRoute"] = false;
             } else {
@@ -3810,13 +3880,15 @@ export function validateExperimentalReferenceDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -3891,13 +3963,15 @@ export function validateExperimentalReferenceDefinition(value) {
             if (
               intermediateValue6 === true ||
               intermediateValue6 === "true" ||
-              intermediateValue6 === 1
+              intermediateValue6 === 1 ||
+              intermediateValue6 === "1"
             ) {
               intermediateResult6 = true;
             } else if (
               intermediateValue6 === false ||
               intermediateValue6 === "false" ||
-              intermediateValue6 === 0
+              intermediateValue6 === 0 ||
+              intermediateValue6 === "0"
             ) {
               intermediateResult6 = false;
             } else {
@@ -3989,13 +4063,15 @@ export function validateExperimentalReferenceDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -4014,13 +4090,15 @@ export function validateExperimentalReferenceDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -4039,13 +4117,15 @@ export function validateExperimentalReferenceDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -4307,13 +4387,15 @@ export function validateExperimentalDateDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -4388,13 +4470,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -4486,13 +4570,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -4511,13 +4597,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -4536,13 +4624,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -4580,13 +4670,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -4661,13 +4753,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               value["validator"]["inFuture"] === true ||
               value["validator"]["inFuture"] === "true" ||
-              value["validator"]["inFuture"] === 1
+              value["validator"]["inFuture"] === 1 ||
+              value["validator"]["inFuture"] === "1"
             ) {
               result["validator"]["inFuture"] = true;
             } else if (
               value["validator"]["inFuture"] === false ||
               value["validator"]["inFuture"] === "false" ||
-              value["validator"]["inFuture"] === 0
+              value["validator"]["inFuture"] === 0 ||
+              value["validator"]["inFuture"] === "0"
             ) {
               result["validator"]["inFuture"] = false;
             } else {
@@ -4686,13 +4780,15 @@ export function validateExperimentalDateDefinition(value) {
             if (
               value["validator"]["inPast"] === true ||
               value["validator"]["inPast"] === "true" ||
-              value["validator"]["inPast"] === 1
+              value["validator"]["inPast"] === 1 ||
+              value["validator"]["inPast"] === "1"
             ) {
               result["validator"]["inPast"] = true;
             } else if (
               value["validator"]["inPast"] === false ||
               value["validator"]["inPast"] === "false" ||
-              value["validator"]["inPast"] === 0
+              value["validator"]["inPast"] === 0 ||
+              value["validator"]["inPast"] === "0"
             ) {
               result["validator"]["inPast"] = false;
             } else {
@@ -4870,13 +4966,15 @@ export function validateExperimentalExtendDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -4951,13 +5049,15 @@ export function validateExperimentalExtendDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -5049,13 +5149,15 @@ export function validateExperimentalExtendDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -5074,13 +5176,15 @@ export function validateExperimentalExtendDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -5099,13 +5203,15 @@ export function validateExperimentalExtendDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -5449,13 +5555,15 @@ export function validateExperimentalRelationDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -5598,13 +5706,15 @@ export function validateExperimentalFileDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -5679,13 +5789,15 @@ export function validateExperimentalFileDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -5777,13 +5889,15 @@ export function validateExperimentalFileDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -5802,13 +5916,15 @@ export function validateExperimentalFileDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -5827,13 +5943,15 @@ export function validateExperimentalFileDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -6052,13 +6170,15 @@ export function validateExperimentalGenericDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -6133,13 +6253,15 @@ export function validateExperimentalGenericDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -6231,13 +6353,15 @@ export function validateExperimentalGenericDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -6256,13 +6380,15 @@ export function validateExperimentalGenericDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -6281,13 +6407,15 @@ export function validateExperimentalGenericDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -6482,13 +6610,15 @@ export function validateExperimentalNumberDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -6563,13 +6693,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -6661,13 +6793,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -6686,13 +6820,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -6711,13 +6847,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -6757,13 +6895,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               value["validator"]["convert"] === true ||
               value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1
+              value["validator"]["convert"] === 1 ||
+              value["validator"]["convert"] === "1"
             ) {
               result["validator"]["convert"] = true;
             } else if (
               value["validator"]["convert"] === false ||
               value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0
+              value["validator"]["convert"] === 0 ||
+              value["validator"]["convert"] === "0"
             ) {
               result["validator"]["convert"] = false;
             } else {
@@ -6784,13 +6924,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               value["validator"]["floatingPoint"] === true ||
               value["validator"]["floatingPoint"] === "true" ||
-              value["validator"]["floatingPoint"] === 1
+              value["validator"]["floatingPoint"] === 1 ||
+              value["validator"]["floatingPoint"] === "1"
             ) {
               result["validator"]["floatingPoint"] = true;
             } else if (
               value["validator"]["floatingPoint"] === false ||
               value["validator"]["floatingPoint"] === "false" ||
-              value["validator"]["floatingPoint"] === 0
+              value["validator"]["floatingPoint"] === 0 ||
+              value["validator"]["floatingPoint"] === "0"
             ) {
               result["validator"]["floatingPoint"] = false;
             } else {
@@ -6883,13 +7025,15 @@ export function validateExperimentalNumberDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -7098,13 +7242,15 @@ export function validateExperimentalObjectDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -7179,13 +7325,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -7277,13 +7425,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -7302,13 +7452,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -7327,13 +7479,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -7371,13 +7525,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -7398,13 +7554,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["validator"]["strict"] === true ||
               value["validator"]["strict"] === "true" ||
-              value["validator"]["strict"] === 1
+              value["validator"]["strict"] === 1 ||
+              value["validator"]["strict"] === "1"
             ) {
               result["validator"]["strict"] = true;
             } else if (
               value["validator"]["strict"] === false ||
               value["validator"]["strict"] === "false" ||
-              value["validator"]["strict"] === 0
+              value["validator"]["strict"] === 0 ||
+              value["validator"]["strict"] === "0"
             ) {
               result["validator"]["strict"] = false;
             } else {
@@ -7527,13 +7685,15 @@ export function validateExperimentalObjectDefinition(value) {
         if (
           value["enableQueries"] === true ||
           value["enableQueries"] === "true" ||
-          value["enableQueries"] === 1
+          value["enableQueries"] === 1 ||
+          value["enableQueries"] === "1"
         ) {
           result["enableQueries"] = true;
         } else if (
           value["enableQueries"] === false ||
           value["enableQueries"] === "false" ||
-          value["enableQueries"] === 0
+          value["enableQueries"] === 0 ||
+          value["enableQueries"] === "0"
         ) {
           result["enableQueries"] = false;
         } else {
@@ -7570,13 +7730,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["queryOptions"]["withSoftDeletes"] === true ||
               value["queryOptions"]["withSoftDeletes"] === "true" ||
-              value["queryOptions"]["withSoftDeletes"] === 1
+              value["queryOptions"]["withSoftDeletes"] === 1 ||
+              value["queryOptions"]["withSoftDeletes"] === "1"
             ) {
               result["queryOptions"]["withSoftDeletes"] = true;
             } else if (
               value["queryOptions"]["withSoftDeletes"] === false ||
               value["queryOptions"]["withSoftDeletes"] === "false" ||
-              value["queryOptions"]["withSoftDeletes"] === 0
+              value["queryOptions"]["withSoftDeletes"] === 0 ||
+              value["queryOptions"]["withSoftDeletes"] === "0"
             ) {
               result["queryOptions"]["withSoftDeletes"] = false;
             } else {
@@ -7595,13 +7757,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["queryOptions"]["withDates"] === true ||
               value["queryOptions"]["withDates"] === "true" ||
-              value["queryOptions"]["withDates"] === 1
+              value["queryOptions"]["withDates"] === 1 ||
+              value["queryOptions"]["withDates"] === "1"
             ) {
               result["queryOptions"]["withDates"] = true;
             } else if (
               value["queryOptions"]["withDates"] === false ||
               value["queryOptions"]["withDates"] === "false" ||
-              value["queryOptions"]["withDates"] === 0
+              value["queryOptions"]["withDates"] === 0 ||
+              value["queryOptions"]["withDates"] === "0"
             ) {
               result["queryOptions"]["withDates"] = false;
             } else {
@@ -7622,13 +7786,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["queryOptions"]["withPrimaryKey"] === true ||
               value["queryOptions"]["withPrimaryKey"] === "true" ||
-              value["queryOptions"]["withPrimaryKey"] === 1
+              value["queryOptions"]["withPrimaryKey"] === 1 ||
+              value["queryOptions"]["withPrimaryKey"] === "1"
             ) {
               result["queryOptions"]["withPrimaryKey"] = true;
             } else if (
               value["queryOptions"]["withPrimaryKey"] === false ||
               value["queryOptions"]["withPrimaryKey"] === "false" ||
-              value["queryOptions"]["withPrimaryKey"] === 0
+              value["queryOptions"]["withPrimaryKey"] === 0 ||
+              value["queryOptions"]["withPrimaryKey"] === "0"
             ) {
               result["queryOptions"]["withPrimaryKey"] = false;
             } else {
@@ -7647,13 +7813,15 @@ export function validateExperimentalObjectDefinition(value) {
             if (
               value["queryOptions"]["isView"] === true ||
               value["queryOptions"]["isView"] === "true" ||
-              value["queryOptions"]["isView"] === 1
+              value["queryOptions"]["isView"] === 1 ||
+              value["queryOptions"]["isView"] === "1"
             ) {
               result["queryOptions"]["isView"] = true;
             } else if (
               value["queryOptions"]["isView"] === false ||
               value["queryOptions"]["isView"] === "false" ||
-              value["queryOptions"]["isView"] === 0
+              value["queryOptions"]["isView"] === 0 ||
+              value["queryOptions"]["isView"] === "0"
             ) {
               result["queryOptions"]["isView"] = false;
             } else {
@@ -7874,13 +8042,15 @@ export function validateExperimentalOmitDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -7955,13 +8125,15 @@ export function validateExperimentalOmitDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -8053,13 +8225,15 @@ export function validateExperimentalOmitDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -8078,13 +8252,15 @@ export function validateExperimentalOmitDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -8103,13 +8279,15 @@ export function validateExperimentalOmitDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -8147,13 +8325,15 @@ export function validateExperimentalOmitDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -8174,13 +8354,15 @@ export function validateExperimentalOmitDefinition(value) {
             if (
               value["validator"]["strict"] === true ||
               value["validator"]["strict"] === "true" ||
-              value["validator"]["strict"] === 1
+              value["validator"]["strict"] === 1 ||
+              value["validator"]["strict"] === "1"
             ) {
               result["validator"]["strict"] = true;
             } else if (
               value["validator"]["strict"] === false ||
               value["validator"]["strict"] === "false" ||
-              value["validator"]["strict"] === 0
+              value["validator"]["strict"] === 0 ||
+              value["validator"]["strict"] === "0"
             ) {
               result["validator"]["strict"] = false;
             } else {
@@ -8394,13 +8576,15 @@ export function validateExperimentalPickDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -8475,13 +8659,15 @@ export function validateExperimentalPickDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -8573,13 +8759,15 @@ export function validateExperimentalPickDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -8598,13 +8786,15 @@ export function validateExperimentalPickDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -8623,13 +8813,15 @@ export function validateExperimentalPickDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -8667,13 +8859,15 @@ export function validateExperimentalPickDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -8694,13 +8888,15 @@ export function validateExperimentalPickDefinition(value) {
             if (
               value["validator"]["strict"] === true ||
               value["validator"]["strict"] === "true" ||
-              value["validator"]["strict"] === 1
+              value["validator"]["strict"] === 1 ||
+              value["validator"]["strict"] === "1"
             ) {
               result["validator"]["strict"] = true;
             } else if (
               value["validator"]["strict"] === false ||
               value["validator"]["strict"] === "false" ||
-              value["validator"]["strict"] === 0
+              value["validator"]["strict"] === 0 ||
+              value["validator"]["strict"] === "0"
             ) {
               result["validator"]["strict"] = false;
             } else {
@@ -8914,13 +9110,15 @@ export function validateExperimentalStringDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -8995,13 +9193,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -9093,13 +9293,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -9118,13 +9320,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -9143,13 +9347,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -9189,13 +9395,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["validator"]["convert"] === true ||
               value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1
+              value["validator"]["convert"] === 1 ||
+              value["validator"]["convert"] === "1"
             ) {
               result["validator"]["convert"] = true;
             } else if (
               value["validator"]["convert"] === false ||
               value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0
+              value["validator"]["convert"] === 0 ||
+              value["validator"]["convert"] === "0"
             ) {
               result["validator"]["convert"] = false;
             } else {
@@ -9216,13 +9424,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["validator"]["trim"] === true ||
               value["validator"]["trim"] === "true" ||
-              value["validator"]["trim"] === 1
+              value["validator"]["trim"] === 1 ||
+              value["validator"]["trim"] === "1"
             ) {
               result["validator"]["trim"] = true;
             } else if (
               value["validator"]["trim"] === false ||
               value["validator"]["trim"] === "false" ||
-              value["validator"]["trim"] === 0
+              value["validator"]["trim"] === 0 ||
+              value["validator"]["trim"] === "0"
             ) {
               result["validator"]["trim"] = false;
             } else {
@@ -9243,13 +9453,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["validator"]["lowerCase"] === true ||
               value["validator"]["lowerCase"] === "true" ||
-              value["validator"]["lowerCase"] === 1
+              value["validator"]["lowerCase"] === 1 ||
+              value["validator"]["lowerCase"] === "1"
             ) {
               result["validator"]["lowerCase"] = true;
             } else if (
               value["validator"]["lowerCase"] === false ||
               value["validator"]["lowerCase"] === "false" ||
-              value["validator"]["lowerCase"] === 0
+              value["validator"]["lowerCase"] === 0 ||
+              value["validator"]["lowerCase"] === "0"
             ) {
               result["validator"]["lowerCase"] = false;
             } else {
@@ -9270,13 +9482,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["validator"]["upperCase"] === true ||
               value["validator"]["upperCase"] === "true" ||
-              value["validator"]["upperCase"] === 1
+              value["validator"]["upperCase"] === 1 ||
+              value["validator"]["upperCase"] === "1"
             ) {
               result["validator"]["upperCase"] = true;
             } else if (
               value["validator"]["upperCase"] === false ||
               value["validator"]["upperCase"] === "false" ||
-              value["validator"]["upperCase"] === 0
+              value["validator"]["upperCase"] === 0 ||
+              value["validator"]["upperCase"] === "0"
             ) {
               result["validator"]["upperCase"] = false;
             } else {
@@ -9396,13 +9610,15 @@ export function validateExperimentalStringDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -9660,13 +9876,15 @@ export function validateExperimentalUuidDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -9741,13 +9959,15 @@ export function validateExperimentalUuidDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -9839,13 +10059,15 @@ export function validateExperimentalUuidDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -9864,13 +10086,15 @@ export function validateExperimentalUuidDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -9889,13 +10113,15 @@ export function validateExperimentalUuidDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -9933,13 +10159,15 @@ export function validateExperimentalUuidDefinition(value) {
             if (
               value["validator"]["allowNull"] === true ||
               value["validator"]["allowNull"] === "true" ||
-              value["validator"]["allowNull"] === 1
+              value["validator"]["allowNull"] === 1 ||
+              value["validator"]["allowNull"] === "1"
             ) {
               result["validator"]["allowNull"] = true;
             } else if (
               value["validator"]["allowNull"] === false ||
               value["validator"]["allowNull"] === "false" ||
-              value["validator"]["allowNull"] === 0
+              value["validator"]["allowNull"] === 0 ||
+              value["validator"]["allowNull"] === "0"
             ) {
               result["validator"]["allowNull"] = false;
             } else {
@@ -10633,7 +10861,8 @@ export function validateExperimentalGenerateOptions(value) {
                     true ||
                   value["generators"]["router"]["exposeApiStructure"] ===
                     "true" ||
-                  value["generators"]["router"]["exposeApiStructure"] === 1
+                  value["generators"]["router"]["exposeApiStructure"] === 1 ||
+                  value["generators"]["router"]["exposeApiStructure"] === "1"
                 ) {
                   result["generators"]["router"]["exposeApiStructure"] = true;
                 } else if (
@@ -10641,7 +10870,8 @@ export function validateExperimentalGenerateOptions(value) {
                     false ||
                   value["generators"]["router"]["exposeApiStructure"] ===
                     "false" ||
-                  value["generators"]["router"]["exposeApiStructure"] === 0
+                  value["generators"]["router"]["exposeApiStructure"] === 0 ||
+                  value["generators"]["router"]["exposeApiStructure"] === "0"
                 ) {
                   result["generators"]["router"]["exposeApiStructure"] = false;
                 } else {
@@ -10799,13 +11029,15 @@ export function validateExperimentalGenerateOptions(value) {
                         if (
                           intermediateValue10["includeDDL"] === true ||
                           intermediateValue10["includeDDL"] === "true" ||
-                          intermediateValue10["includeDDL"] === 1
+                          intermediateValue10["includeDDL"] === 1 ||
+                          intermediateValue10["includeDDL"] === "1"
                         ) {
                           intermediateResult10["includeDDL"] = true;
                         } else if (
                           intermediateValue10["includeDDL"] === false ||
                           intermediateValue10["includeDDL"] === "false" ||
-                          intermediateValue10["includeDDL"] === 0
+                          intermediateValue10["includeDDL"] === 0 ||
+                          intermediateValue10["includeDDL"] === "0"
                         ) {
                           intermediateResult10["includeDDL"] = false;
                         } else {
@@ -10843,7 +11075,10 @@ export function validateExperimentalGenerateOptions(value) {
                     true ||
                   value["generators"]["database"]["includeEntityDiagram"] ===
                     "true" ||
-                  value["generators"]["database"]["includeEntityDiagram"] === 1
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    1 ||
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    "1"
                 ) {
                   result["generators"]["database"]["includeEntityDiagram"] =
                     true;
@@ -10852,7 +11087,10 @@ export function validateExperimentalGenerateOptions(value) {
                     false ||
                   value["generators"]["database"]["includeEntityDiagram"] ===
                     "false" ||
-                  value["generators"]["database"]["includeEntityDiagram"] === 0
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    0 ||
+                  value["generators"]["database"]["includeEntityDiagram"] ===
+                    "0"
                 ) {
                   result["generators"]["database"]["includeEntityDiagram"] =
                     false;
@@ -10922,7 +11160,8 @@ export function validateExperimentalGenerateOptions(value) {
                     true ||
                   value["generators"]["validators"]["includeBaseTypes"] ===
                     "true" ||
-                  value["generators"]["validators"]["includeBaseTypes"] === 1
+                  value["generators"]["validators"]["includeBaseTypes"] === 1 ||
+                  value["generators"]["validators"]["includeBaseTypes"] === "1"
                 ) {
                   result["generators"]["validators"]["includeBaseTypes"] = true;
                 } else if (
@@ -10930,7 +11169,8 @@ export function validateExperimentalGenerateOptions(value) {
                     false ||
                   value["generators"]["validators"]["includeBaseTypes"] ===
                     "false" ||
-                  value["generators"]["validators"]["includeBaseTypes"] === 0
+                  value["generators"]["validators"]["includeBaseTypes"] === 0 ||
+                  value["generators"]["validators"]["includeBaseTypes"] === "0"
                 ) {
                   result["generators"]["validators"]["includeBaseTypes"] =
                     false;
@@ -11170,13 +11410,15 @@ export function validateExperimentalGenerateOptions(value) {
                         if (
                           intermediateValue12["globalClient"] === true ||
                           intermediateValue12["globalClient"] === "true" ||
-                          intermediateValue12["globalClient"] === 1
+                          intermediateValue12["globalClient"] === 1 ||
+                          intermediateValue12["globalClient"] === "1"
                         ) {
                           intermediateResult12["globalClient"] = true;
                         } else if (
                           intermediateValue12["globalClient"] === false ||
                           intermediateValue12["globalClient"] === "false" ||
-                          intermediateValue12["globalClient"] === 0
+                          intermediateValue12["globalClient"] === 0 ||
+                          intermediateValue12["globalClient"] === "0"
                         ) {
                           intermediateResult12["globalClient"] = false;
                         } else {
@@ -11371,13 +11613,15 @@ export function validateExperimentalGenerateOptions(value) {
                         if (
                           intermediateValue12["globalClient"] === true ||
                           intermediateValue12["globalClient"] === "true" ||
-                          intermediateValue12["globalClient"] === 1
+                          intermediateValue12["globalClient"] === 1 ||
+                          intermediateValue12["globalClient"] === "1"
                         ) {
                           intermediateResult12["globalClient"] = true;
                         } else if (
                           intermediateValue12["globalClient"] === false ||
                           intermediateValue12["globalClient"] === "false" ||
-                          intermediateValue12["globalClient"] === 0
+                          intermediateValue12["globalClient"] === 0 ||
+                          intermediateValue12["globalClient"] === "0"
                         ) {
                           intermediateResult12["globalClient"] = false;
                         } else {
@@ -11455,7 +11699,10 @@ export function validateExperimentalGenerateOptions(value) {
                       ] === "true" ||
                       value["generators"]["apiClient"]["responseValidation"][
                         "looseObjectValidation"
-                      ] === 1
+                      ] === 1 ||
+                      value["generators"]["apiClient"]["responseValidation"][
+                        "looseObjectValidation"
+                      ] === "1"
                     ) {
                       result["generators"]["apiClient"]["responseValidation"][
                         "looseObjectValidation"
@@ -11469,7 +11716,10 @@ export function validateExperimentalGenerateOptions(value) {
                       ] === "false" ||
                       value["generators"]["apiClient"]["responseValidation"][
                         "looseObjectValidation"
-                      ] === 0
+                      ] === 0 ||
+                      value["generators"]["apiClient"]["responseValidation"][
+                        "looseObjectValidation"
+                      ] === "0"
                     ) {
                       result["generators"]["apiClient"]["responseValidation"][
                         "looseObjectValidation"
@@ -11539,14 +11789,16 @@ export function validateExperimentalGenerateOptions(value) {
                 if (
                   value["generators"]["types"]["includeBaseTypes"] === true ||
                   value["generators"]["types"]["includeBaseTypes"] === "true" ||
-                  value["generators"]["types"]["includeBaseTypes"] === 1
+                  value["generators"]["types"]["includeBaseTypes"] === 1 ||
+                  value["generators"]["types"]["includeBaseTypes"] === "1"
                 ) {
                   result["generators"]["types"]["includeBaseTypes"] = true;
                 } else if (
                   value["generators"]["types"]["includeBaseTypes"] === false ||
                   value["generators"]["types"]["includeBaseTypes"] ===
                     "false" ||
-                  value["generators"]["types"]["includeBaseTypes"] === 0
+                  value["generators"]["types"]["includeBaseTypes"] === 0 ||
+                  value["generators"]["types"]["includeBaseTypes"] === "0"
                 ) {
                   result["generators"]["types"]["includeBaseTypes"] = false;
                 } else {
@@ -11566,7 +11818,8 @@ export function validateExperimentalGenerateOptions(value) {
                   value["generators"]["types"]["declareGlobalTypes"] === true ||
                   value["generators"]["types"]["declareGlobalTypes"] ===
                     "true" ||
-                  value["generators"]["types"]["declareGlobalTypes"] === 1
+                  value["generators"]["types"]["declareGlobalTypes"] === 1 ||
+                  value["generators"]["types"]["declareGlobalTypes"] === "1"
                 ) {
                   result["generators"]["types"]["declareGlobalTypes"] = true;
                 } else if (
@@ -11574,7 +11827,8 @@ export function validateExperimentalGenerateOptions(value) {
                     false ||
                   value["generators"]["types"]["declareGlobalTypes"] ===
                     "false" ||
-                  value["generators"]["types"]["declareGlobalTypes"] === 0
+                  value["generators"]["types"]["declareGlobalTypes"] === 0 ||
+                  value["generators"]["types"]["declareGlobalTypes"] === "0"
                 ) {
                   result["generators"]["types"]["declareGlobalTypes"] = false;
                 } else {
@@ -11957,13 +12211,15 @@ export function validateExperimentalRouteDefinition(value) {
         if (
           value["isOptional"] === true ||
           value["isOptional"] === "true" ||
-          value["isOptional"] === 1
+          value["isOptional"] === 1 ||
+          value["isOptional"] === "1"
         ) {
           result["isOptional"] = true;
         } else if (
           value["isOptional"] === false ||
           value["isOptional"] === "false" ||
-          value["isOptional"] === 0
+          value["isOptional"] === 0 ||
+          value["isOptional"] === "0"
         ) {
           result["isOptional"] = false;
         } else {
@@ -12038,13 +12294,15 @@ export function validateExperimentalRouteDefinition(value) {
             if (
               intermediateValue8 === true ||
               intermediateValue8 === "true" ||
-              intermediateValue8 === 1
+              intermediateValue8 === 1 ||
+              intermediateValue8 === "1"
             ) {
               intermediateResult8 = true;
             } else if (
               intermediateValue8 === false ||
               intermediateValue8 === "false" ||
-              intermediateValue8 === 0
+              intermediateValue8 === 0 ||
+              intermediateValue8 === "0"
             ) {
               intermediateResult8 = false;
             } else {
@@ -12136,13 +12394,15 @@ export function validateExperimentalRouteDefinition(value) {
             if (
               value["sql"]["primary"] === true ||
               value["sql"]["primary"] === "true" ||
-              value["sql"]["primary"] === 1
+              value["sql"]["primary"] === 1 ||
+              value["sql"]["primary"] === "1"
             ) {
               result["sql"]["primary"] = true;
             } else if (
               value["sql"]["primary"] === false ||
               value["sql"]["primary"] === "false" ||
-              value["sql"]["primary"] === 0
+              value["sql"]["primary"] === 0 ||
+              value["sql"]["primary"] === "0"
             ) {
               result["sql"]["primary"] = false;
             } else {
@@ -12161,13 +12421,15 @@ export function validateExperimentalRouteDefinition(value) {
             if (
               value["sql"]["searchable"] === true ||
               value["sql"]["searchable"] === "true" ||
-              value["sql"]["searchable"] === 1
+              value["sql"]["searchable"] === 1 ||
+              value["sql"]["searchable"] === "1"
             ) {
               result["sql"]["searchable"] = true;
             } else if (
               value["sql"]["searchable"] === false ||
               value["sql"]["searchable"] === "false" ||
-              value["sql"]["searchable"] === 0
+              value["sql"]["searchable"] === 0 ||
+              value["sql"]["searchable"] === "0"
             ) {
               result["sql"]["searchable"] = false;
             } else {
@@ -12186,13 +12448,15 @@ export function validateExperimentalRouteDefinition(value) {
             if (
               value["sql"]["hasDefaultValue"] === true ||
               value["sql"]["hasDefaultValue"] === "true" ||
-              value["sql"]["hasDefaultValue"] === 1
+              value["sql"]["hasDefaultValue"] === 1 ||
+              value["sql"]["hasDefaultValue"] === "1"
             ) {
               result["sql"]["hasDefaultValue"] = true;
             } else if (
               value["sql"]["hasDefaultValue"] === false ||
               value["sql"]["hasDefaultValue"] === "false" ||
-              value["sql"]["hasDefaultValue"] === 0
+              value["sql"]["hasDefaultValue"] === 0 ||
+              value["sql"]["hasDefaultValue"] === "0"
             ) {
               result["sql"]["hasDefaultValue"] = false;
             } else {
@@ -12263,13 +12527,15 @@ export function validateExperimentalRouteDefinition(value) {
         if (
           value["idempotent"] === true ||
           value["idempotent"] === "true" ||
-          value["idempotent"] === 1
+          value["idempotent"] === 1 ||
+          value["idempotent"] === "1"
         ) {
           result["idempotent"] = true;
         } else if (
           value["idempotent"] === false ||
           value["idempotent"] === "false" ||
-          value["idempotent"] === 0
+          value["idempotent"] === 0 ||
+          value["idempotent"] === "0"
         ) {
           result["idempotent"] = false;
         } else {
@@ -12676,13 +12942,15 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
             if (
               value["properties"]["useSharedParams"] === true ||
               value["properties"]["useSharedParams"] === "true" ||
-              value["properties"]["useSharedParams"] === 1
+              value["properties"]["useSharedParams"] === 1 ||
+              value["properties"]["useSharedParams"] === "1"
             ) {
               result["properties"]["useSharedParams"] = true;
             } else if (
               value["properties"]["useSharedParams"] === false ||
               value["properties"]["useSharedParams"] === "false" ||
-              value["properties"]["useSharedParams"] === 0
+              value["properties"]["useSharedParams"] === 0 ||
+              value["properties"]["useSharedParams"] === "0"
             ) {
               result["properties"]["useSharedParams"] = false;
             } else {
@@ -12701,13 +12969,15 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
             if (
               value["properties"]["useSharedQuery"] === true ||
               value["properties"]["useSharedQuery"] === "true" ||
-              value["properties"]["useSharedQuery"] === 1
+              value["properties"]["useSharedQuery"] === 1 ||
+              value["properties"]["useSharedQuery"] === "1"
             ) {
               result["properties"]["useSharedQuery"] = true;
             } else if (
               value["properties"]["useSharedQuery"] === false ||
               value["properties"]["useSharedQuery"] === "false" ||
-              value["properties"]["useSharedQuery"] === 0
+              value["properties"]["useSharedQuery"] === 0 ||
+              value["properties"]["useSharedQuery"] === "0"
             ) {
               result["properties"]["useSharedQuery"] = false;
             } else {

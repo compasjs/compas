@@ -112,7 +112,7 @@ function createMessageDispatcher(logger, callback) {
         if (state.children[idx]) {
           // Handle multiple added suites for a single import
           for (let i = idx; i < state.children.length; ++i) {
-            await runTestsRecursively(state.children[i], message.isDebugging);
+            await runTestsRecursively(state.children[i], message.options);
           }
         }
         // @ts-ignore

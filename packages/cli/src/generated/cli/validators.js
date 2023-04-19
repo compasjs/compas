@@ -197,13 +197,15 @@ export function validateCliCommandDefinition(value) {
             if (
               value["modifiers"]["isDynamic"] === true ||
               value["modifiers"]["isDynamic"] === "true" ||
-              value["modifiers"]["isDynamic"] === 1
+              value["modifiers"]["isDynamic"] === 1 ||
+              value["modifiers"]["isDynamic"] === "1"
             ) {
               result["modifiers"]["isDynamic"] = true;
             } else if (
               value["modifiers"]["isDynamic"] === false ||
               value["modifiers"]["isDynamic"] === "false" ||
-              value["modifiers"]["isDynamic"] === 0
+              value["modifiers"]["isDynamic"] === 0 ||
+              value["modifiers"]["isDynamic"] === "0"
             ) {
               result["modifiers"]["isDynamic"] = false;
             } else {
@@ -222,13 +224,15 @@ export function validateCliCommandDefinition(value) {
             if (
               value["modifiers"]["isCosmetic"] === true ||
               value["modifiers"]["isCosmetic"] === "true" ||
-              value["modifiers"]["isCosmetic"] === 1
+              value["modifiers"]["isCosmetic"] === 1 ||
+              value["modifiers"]["isCosmetic"] === "1"
             ) {
               result["modifiers"]["isCosmetic"] = true;
             } else if (
               value["modifiers"]["isCosmetic"] === false ||
               value["modifiers"]["isCosmetic"] === "false" ||
-              value["modifiers"]["isCosmetic"] === 0
+              value["modifiers"]["isCosmetic"] === 0 ||
+              value["modifiers"]["isCosmetic"] === "0"
             ) {
               result["modifiers"]["isCosmetic"] = false;
             } else {
@@ -247,13 +251,15 @@ export function validateCliCommandDefinition(value) {
             if (
               value["modifiers"]["isWatchable"] === true ||
               value["modifiers"]["isWatchable"] === "true" ||
-              value["modifiers"]["isWatchable"] === 1
+              value["modifiers"]["isWatchable"] === 1 ||
+              value["modifiers"]["isWatchable"] === "1"
             ) {
               result["modifiers"]["isWatchable"] = true;
             } else if (
               value["modifiers"]["isWatchable"] === false ||
               value["modifiers"]["isWatchable"] === "false" ||
-              value["modifiers"]["isWatchable"] === 0
+              value["modifiers"]["isWatchable"] === 0 ||
+              value["modifiers"]["isWatchable"] === "0"
             ) {
               result["modifiers"]["isWatchable"] = false;
             } else {
@@ -765,13 +771,15 @@ export function validateCliFlagDefinition(value) {
             if (
               value["modifiers"]["isRepeatable"] === true ||
               value["modifiers"]["isRepeatable"] === "true" ||
-              value["modifiers"]["isRepeatable"] === 1
+              value["modifiers"]["isRepeatable"] === 1 ||
+              value["modifiers"]["isRepeatable"] === "1"
             ) {
               result["modifiers"]["isRepeatable"] = true;
             } else if (
               value["modifiers"]["isRepeatable"] === false ||
               value["modifiers"]["isRepeatable"] === "false" ||
-              value["modifiers"]["isRepeatable"] === 0
+              value["modifiers"]["isRepeatable"] === 0 ||
+              value["modifiers"]["isRepeatable"] === "0"
             ) {
               result["modifiers"]["isRepeatable"] = false;
             } else {
@@ -790,13 +798,15 @@ export function validateCliFlagDefinition(value) {
             if (
               value["modifiers"]["isRequired"] === true ||
               value["modifiers"]["isRequired"] === "true" ||
-              value["modifiers"]["isRequired"] === 1
+              value["modifiers"]["isRequired"] === 1 ||
+              value["modifiers"]["isRequired"] === "1"
             ) {
               result["modifiers"]["isRequired"] = true;
             } else if (
               value["modifiers"]["isRequired"] === false ||
               value["modifiers"]["isRequired"] === "false" ||
-              value["modifiers"]["isRequired"] === 0
+              value["modifiers"]["isRequired"] === 0 ||
+              value["modifiers"]["isRequired"] === "0"
             ) {
               result["modifiers"]["isRequired"] = false;
             } else {
@@ -815,13 +825,15 @@ export function validateCliFlagDefinition(value) {
             if (
               value["modifiers"]["isInternal"] === true ||
               value["modifiers"]["isInternal"] === "true" ||
-              value["modifiers"]["isInternal"] === 1
+              value["modifiers"]["isInternal"] === 1 ||
+              value["modifiers"]["isInternal"] === "1"
             ) {
               result["modifiers"]["isInternal"] = true;
             } else if (
               value["modifiers"]["isInternal"] === false ||
               value["modifiers"]["isInternal"] === "false" ||
-              value["modifiers"]["isInternal"] === 0
+              value["modifiers"]["isInternal"] === 0 ||
+              value["modifiers"]["isInternal"] === "0"
             ) {
               result["modifiers"]["isInternal"] = false;
             } else {

@@ -7,14 +7,16 @@
 export function listTestFiles(): Promise<string[]>;
 /**
  * @param {{
- *   singleFileMode: boolean
+ *   singleFileMode?: boolean,
+ *   bail?: boolean,
  * }} [options]
  * @returns {Promise<number>}
  */
 export function runTestsInProcess(
   options?:
     | {
-        singleFileMode: boolean;
+        singleFileMode?: boolean | undefined;
+        bail?: boolean | undefined;
       }
     | undefined,
 ): Promise<number>;

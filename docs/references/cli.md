@@ -282,6 +282,7 @@ https://www.npmjs.com/package/c8 for more information.
 | Option             | Description                                                                                                                            |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
 | --serial           | Run tests serially instead of in parallel. Alternatively set '--parallel-count 1' (boolean)                                            |
+| --bail             | Exit the test runner after the first failed assertion. Requires '--serial'. (boolean)                                                  |
 | --parallel-count   | The number of workers to use, when running in parallel. Defaulting to (the number of CPU cores - 1) or 4, whichever is lower. (number) |
 | --randomize-rounds | Runs test the specified amount of times, shuffling the test file order between runs. (number)                                          |
 | --coverage         | Collect coverage information while running the tests. (boolean)                                                                        |

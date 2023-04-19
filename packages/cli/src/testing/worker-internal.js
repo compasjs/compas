@@ -48,7 +48,8 @@ export async function listTestFiles() {
 
 /**
  * @param {{
- *   singleFileMode: boolean
+ *   singleFileMode?: boolean,
+ *   bail?: boolean,
  * }} [options]
  * @returns {Promise<number>}
  */
@@ -70,7 +71,9 @@ export async function runTestsInProcess(options) {
 
   testLogger.info(`Running: setup`);
   await globalSetup();
-  await runTestsRecursively(state);
+  await runTestsRecursively(state, {
+    bail: options?.bail,
+  });
   testLogger.info(`Running: teardown`);
   await globalTeardown();
 
