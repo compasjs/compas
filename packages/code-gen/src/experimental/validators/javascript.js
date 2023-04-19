@@ -678,7 +678,9 @@ export function validatorJavascriptBoolean(file, type, validatorState) {
       file,
       `if (${valuePath} === ${type.oneOf} || ${valuePath} === "${
         type.oneOf
-      }" || ${valuePath} === ${type.oneOf ? 1 : 0})`,
+      }" || ${valuePath} === ${type.oneOf ? 1 : 0} || ${valuePath} === "${
+        type.oneOf ? 1 : 0
+      }")`,
     );
 
     fileWrite(file, `${resultPath} = ${type.oneOf};`);
@@ -699,14 +701,14 @@ export function validatorJavascriptBoolean(file, type, validatorState) {
   } else {
     fileBlockStart(
       file,
-      `if (${valuePath} === true || ${valuePath} === "true" || ${valuePath} === 1)`,
+      `if (${valuePath} === true || ${valuePath} === "true" || ${valuePath} === 1 || ${valuePath} === "1")`,
     );
     fileWrite(file, `${resultPath} = true;`);
 
     fileBlockEnd(file);
     fileBlockStart(
       file,
-      `else if (${valuePath} === false || ${valuePath} === "false" || ${valuePath} === 0)`,
+      `else if (${valuePath} === false || ${valuePath} === "false" || ${valuePath} === 0 || ${valuePath} === "0")`,
     );
     fileWrite(file, `${resultPath} = false;`);
 
