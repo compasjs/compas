@@ -4,6 +4,45 @@ editLink: false
 
 # Changelog
 
+### [v0.0.247](https://github.com/compasjs/compas/releases/tag/v0.0.247)
+
+#### Features
+
+- feat(code-gen/experimental): auto convert string 0/1 to boolean in the
+  validators
+  [`129deb`](https://github.com/compasjs/compas/commit/129debc49b1fb132d98161df50fd8f741ef0569a)
+- feat(cli): add `--bail` support to the test runner
+  [`99db0d`](https://github.com/compasjs/compas/commit/99db0db12dbaf9b257c0f0cdb637751b26bb3ad6)
+- feat(cli): cleaner logging of `t.equal` when non-primitives are passed in
+  [`d33607`](https://github.com/compasjs/compas/commit/d3360794b5b4e283053ec9f0f1ec55f473319606)
+- feat(cli): don't log test suites that are skipped due to a bail after a failed
+  assertion
+  [`fa57c8`](https://github.com/compasjs/compas/commit/fa57c895589f8777d8b4cd6398991f0c783345c7)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): restrict CRUD on views to only allow list & single
+  routes
+  [`d078d6`](https://github.com/compasjs/compas/commit/d078d63dde80695d51c46dd3d5d93388da85790e)
+
+#### Other
+
+- examples(crud): remove test logs
+  [`6e7278`](https://github.com/compasjs/compas/commit/6e727872a4c0be1e656a3e872f9e0bbb4b71e541)
+- examples(crud): remove unused imports
+  [`82440e`](https://github.com/compasjs/compas/commit/82440eca2a65a40bbe488a37e889bd2d24ae4374)
+- chore(docs): enable the 'local' search feature from Vitepress
+  [`97a3a8`](https://github.com/compasjs/compas/commit/97a3a8a234a23ae3643778e62bf258606add8aed)
+- chore: run tests and lint on Node.js 20
+  ([#2514](https://github.com/compasjs/compas/pull/2514))
+  [`b7b30f`](https://github.com/compasjs/compas/commit/b7b30fdbaa2185b27e9c22fa46f3735a114a1de2)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 41.1.1 to 41.1.2
+  ([#2508](https://github.com/compasjs/compas/pull/2508))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.0.246](https://github.com/compasjs/compas/releases/tag/v0.0.246)
 
 #### Breaking changes
