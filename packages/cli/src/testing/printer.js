@@ -170,10 +170,20 @@ export function printFailedResults(state, result, indentCount) {
         // @ts-ignore
         const { expected, actual } = assertion.meta;
         // We print the `typeof` as well, so it's more clear that "5" !== 5
-        result.push(`${subIndent}Expected: (${typeof expected}) ${expected}`);
         result.push(
           `${subIndent}Actual: (${typeof actual}) ${JSON.stringify(actual)}`,
         );
+        result.push(
+          `${subIndent}Expected: (${typeof expected}) ${JSON.stringify(
+            expected,
+          )}`,
+        );
+
+        if (typeof expected === "object") {
+          result.push(
+            `${subIndent}Tip: Use 't.deepEqual' to compare object contents.`,
+          );
+        }
       }
     }
   }
