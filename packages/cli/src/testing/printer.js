@@ -87,9 +87,9 @@ export function printTestResultsFromWorkers(testResults) {
 function printTreeSummary(state, result, indentCount) {
   const { passed, failed } = sumAssertions(state);
 
-  if (passed === 0 && failed === 0) {
+  if (!state.caughtException && passed === 0 && failed === 0) {
     // When we bailed, don't print skipped tests.
-    // In normal scenario's this can't happen, since we enforce that each test has at least a subset or an assertion
+    // In a normal scenario, this can't happen, since we enforce that each test has at least a subset or an assertion
     return;
   }
 
