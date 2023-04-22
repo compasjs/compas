@@ -476,13 +476,17 @@ function transformType(generateContext, openApiSpec, type) {
  * @returns {string}
  */
 function openApiGetCompasVersion() {
-  const { version } = JSON.parse(
+  const localPackageJson = JSON.parse(
     readFileSync(
       // take on of the packages for reference
-      pathJoin(process.cwd(), "./node_modules/@compas/code-gen/package.json"),
+      pathJoin(process.cwd(), "./package.json"),
       "utf-8",
     ),
   );
 
-  return version ?? "0.0.1";
+  return (
+    localPackageJson.dependencies?.["@compas/code-gen"] ??
+    localPackageJson.dependencies?.["@compas/code-gen"] ??
+    "0.0.1"
+  );
 }
