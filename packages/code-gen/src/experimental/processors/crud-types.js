@@ -33,25 +33,45 @@ import { structureAddType } from "./structure.js";
  */
 export function crudTypesCreate(generateContext) {
   for (const crud of structureCrud(generateContext)) {
-    if (
-      crud.routeOptions.listRoute ||
-      crud.routeOptions.singleRoute ||
-      crud.routeOptions.createRoute
-    ) {
-      crudTypesItem(generateContext, crud, {
-        name: "item",
-        type: "readable",
-      });
-    }
-
-    if (crud.routeOptions.createRoute || crud.routeOptions.updateRoute) {
-      crudTypesItem(generateContext, crud, {
-        name: "itemWrite",
-        type: "writable",
-      });
-    }
-
+    crudTypesCreateItemTypes(generateContext, crud);
     crudTypesRoutes(generateContext, crud);
+  }
+}
+
+/**
+ * Generate the readable and writable types recursively for the provided CRUD
+ *
+ * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {string} [name]
+ */
+function crudTypesCreateItemTypes(generateContext, crud, name) {
+  if (
+    crud.routeOptions.listRoute ||
+    crud.routeOptions.singleRoute ||
+    crud.routeOptions.createRoute
+  ) {
+    crudTypesItem(generateContext, crud, {
+      name: `item${name ?? ""}`,
+      type: "readable",
+    });
+  }
+
+  if (crud.routeOptions.createRoute || crud.routeOptions.updateRoute) {
+    crudTypesItem(generateContext, crud, {
+      name: `itemWrite${name ?? ""}`,
+      type: "writable",
+    });
+  }
+
+  for (const nestedCrud of crud.nestedRelations) {
+    crudTypesCreateItemTypes(
+      generateContext,
+
+      // @ts-expect-error
+      nestedCrud,
+      (name ?? "") + upperCaseFirst(nestedCrud.fromParent?.field),
+    );
   }
 }
 
@@ -173,14 +193,6 @@ function crudTypesItem(generateContext, crud, options) {
       itemType.keys[inlineCrud.fromParent.field].isOptional =
         inlineCrud.isOptional;
     }
-  }
-
-  for (const nestedCrud of crud.nestedRelations) {
-    // @ts-expect-error
-    crudTypesItem(generateContext, nestedCrud, {
-      name: `${options.name}${upperCaseFirst(nestedCrud.fromParent?.field)}`,
-      type: options.type,
-    });
   }
 
   structureAddType(generateContext.structure, itemType, {
