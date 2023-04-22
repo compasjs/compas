@@ -6,7 +6,9 @@ import {
   crudInformationGetHasCustomReadableType,
   crudInformationGetModel,
   crudInformationGetName,
+  crudInformationGetReadableType,
   crudInformationGetRelation,
+  crudInformationGetWritableType,
 } from "../processors/crud-information.js";
 import { crudRouteSwitch, structureCrud } from "../processors/crud.js";
 import { modelKeyGetPrimary } from "../processors/model-keys.js";
@@ -179,6 +181,7 @@ function crudEventsCreate(generateContext, file, crud) {
     entityName: model.name,
     entityUniqueName: upperCaseFirst(model.group) + upperCaseFirst(model.name),
     primaryKey: primaryKeyName,
+    writableType: crudInformationGetWritableType(crud),
 
     inlineRelations: crudEventsGetInlineRelations(crud),
     builder: crudQueryBuilderGet(crud, {
@@ -215,6 +218,7 @@ function crudEventsUpdate(generateContext, file, crud) {
     entityName: model.name,
     entityUniqueName: upperCaseFirst(model.group) + upperCaseFirst(model.name),
     primaryKey: primaryKeyName,
+    writableType: crudInformationGetWritableType(crud),
 
     inlineRelations: crudEventsGetInlineRelations(crud),
   };
@@ -268,6 +272,7 @@ function crudEventsTransform(generateContext, file, crud) {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     entityName: model.name,
     entityUniqueName: upperCaseFirst(model.group) + upperCaseFirst(model.name),
+    readableType: crudInformationGetReadableType(crud),
 
     entity: crudEventsGetEntityTransformer(crud),
   };
@@ -298,6 +303,8 @@ function crudEventsGetInlineRelations(crud) {
       referencedKey: relation.referencedKey,
       entityName: model.name,
       isInlineArray: relation.subType === "oneToMany",
+      isOwningSideOfRelation:
+        relation.subType === "manyToOne" || relation.subType === "oneToOne",
 
       // @ts-expect-error
       inlineRelations: crudEventsGetInlineRelations(inlineCrud),

@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import {
   ArrayType,
   BooleanType,
@@ -79,6 +80,7 @@ function crudTypesItem(generateContext, crud, options) {
   }
 
   const model = crudInformationGetModel(crud);
+  const relation = crudInformationGetRelation(crud);
 
   options.name = upperCaseFirst(options.name);
 
@@ -115,7 +117,13 @@ function crudTypesItem(generateContext, crud, options) {
   }
 
   if (crud.fromParent) {
-    delete itemType.keys[crud.fromParent.field];
+    if (
+      relation.subType === "oneToMany" ||
+      relation.subType === "oneToOneReverse"
+    ) {
+      // Don't include the parent primary key again
+      delete itemType.keys[crud.fromParent.field];
+    }
   }
 
   for (const inlineCrud of crud.inlineRelations) {
@@ -141,7 +149,21 @@ function crudTypesItem(generateContext, crud, options) {
         ? crudInformationGetReadableType(inlineCrud)
         : crudInformationGetWritableType(inlineCrud);
 
-    if (relation.subType === "oneToOneReverse") {
+    if (relation.subType === "oneToMany") {
+      // oneToMany always results in an array type, the other relation types return a
+      // single entity
+
+      // @ts-expect-error
+      itemType.keys[inlineCrud.fromParent.field] = new ArrayType()
+        .values(new ReferenceType(inlineType.group, inlineType.name))
+        .build();
+    } else if (
+      options.type === "readable" ||
+      relation.subType === "oneToOneReverse"
+    ) {
+      // On the writable type, we don't support overwriting the referenced side of a
+      // relation, since that would break the relation.
+
       // @ts-expect-error
       itemType.keys[inlineCrud.fromParent.field] = new ReferenceType(
         inlineType.group,
@@ -150,11 +172,6 @@ function crudTypesItem(generateContext, crud, options) {
       // @ts-expect-error
       itemType.keys[inlineCrud.fromParent.field].isOptional =
         inlineCrud.isOptional;
-    } else {
-      // @ts-expect-error
-      itemType.keys[inlineCrud.fromParent.field] = new ArrayType()
-        .values(new ReferenceType(inlineType.group, inlineType.name))
-        .build();
     }
   }
 
@@ -223,7 +240,7 @@ function crudTypesBuildParamsObject(crud, options) {
     const relation = crudInformationGetRelation(crudType);
     const { primaryKeyDefinition } = modelKeyGetPrimary(model);
 
-    if (relation?.subType !== "oneToOneReverse") {
+    if (isNil(relation) || relation?.subType === "oneToMany") {
       object.keys[crudInformationGetParamName(crudType)] = primaryKeyDefinition;
     }
 
@@ -391,9 +408,9 @@ function crudTypesSingleRoute(generateContext, crud) {
   const routeName = crudInformationGetName(crud, "single");
   const routePath = crudInformationGetPath(
     crud,
-    relation?.subType === "oneToOneReverse"
-      ? "/single"
-      : `/:${crudInformationGetParamName(crud)}/single`,
+    isNil(relation) || relation.subType === "oneToMany"
+      ? `/:${crudInformationGetParamName(crud)}/single`
+      : "/single",
   );
 
   const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
@@ -507,9 +524,9 @@ function crudTypesUpdateRoute(generateContext, crud) {
   const routeName = crudInformationGetName(crud, "update");
   const routePath = crudInformationGetPath(
     crud,
-    relation?.subType === "oneToOneReverse"
-      ? "/update"
-      : `/:${crudInformationGetParamName(crud)}/update`,
+    isNil(relation) || relation.subType === "oneToMany"
+      ? `/:${crudInformationGetParamName(crud)}/update`
+      : "/update",
   );
 
   const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
@@ -566,9 +583,9 @@ function crudTypesDeleteRoute(generateContext, crud) {
   const routeName = crudInformationGetName(crud, "delete");
   const routePath = crudInformationGetPath(
     crud,
-    relation?.subType === "oneToOneReverse"
-      ? "/delete"
-      : `/:${crudInformationGetParamName(crud)}/delete`,
+    isNil(relation) || relation.subType === "oneToMany"
+      ? `/:${crudInformationGetParamName(crud)}/delete`
+      : "/delete",
   );
 
   const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });

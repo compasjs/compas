@@ -21,11 +21,16 @@ export function crudPartialEventCreate(data: {
   entityName: string;
   builder: string;
   primaryKey: string;
+  writableType: {
+    group: string;
+    name: string;
+  };
   inlineRelations: {
     name: string;
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
+    isOwningSideOfRelation: boolean;
     isOptional: boolean;
     parentPrimaryKey: string;
     inlineRelations: any[];
@@ -36,11 +41,16 @@ export function crudPartialEventUpdate(data: {
   entityUniqueName: string;
   entityName: string;
   primaryKey: string;
+  writableType: {
+    group: string;
+    name: string;
+  };
   inlineRelations: {
     name: string;
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
+    isOwningSideOfRelation: boolean;
     isOptional: boolean;
     parentPrimaryKey: string;
     inlineRelations: any[];
@@ -52,6 +62,7 @@ export function crudPartialInlineRelationInserts(
     referencedKey: string;
     entityName: string;
     isInlineArray: boolean;
+    isOwningSideOfRelation: boolean;
     isOptional: boolean;
     parentPrimaryKey: string;
     inlineRelations: any[];
@@ -69,5 +80,9 @@ export function crudPartialEventTransformer(data: {
   entityUniqueName: string;
   entityName: string;
   entity: Record<string, boolean | Record<string, boolean>>;
+  readableType: {
+    group: string;
+    name: string;
+  };
 }): string;
 //# sourceMappingURL=events.d.ts.map

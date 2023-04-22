@@ -1,3 +1,4 @@
+import { isNil } from "@compas/stdlib";
 import { upperCaseFirst } from "../../utils.js";
 import {
   crudInformationGetModel,
@@ -54,7 +55,10 @@ function crudQueryBuilderBuild(crud, options) {
     }
   }
 
-  if (options.includeOwnParam && relation?.subType !== "oneToOneReverse") {
+  if (
+    options.includeOwnParam &&
+    (isNil(relation) || relation?.subType === "oneToMany")
+  ) {
     result.where[
       primaryKeyName
     ] = `ctx.validatedParams.${crudInformationGetParamName(crud)}`;

@@ -30,7 +30,8 @@ import {
 import { crudQueryBuilderGet } from "./query-builder.js";
 
 /**
- * Generate the handler implementations that are necessary for CRUD. This currently only works with js and Koa.
+ * Generate the handler implementations that are necessary for CRUD. This currently only
+ * works with js and Koa.
  *
  * @param {import("../generate").GenerateContext} generateContext
  */
@@ -150,9 +151,9 @@ function crudHandlersGetModifiers(crud) {
   if (crud.routeOptions.createRoute) {
     modifierDocs.push(
       `${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx ${
-        relation?.subType === "oneToOneReverse"
-          ? `, singleBuilder: ${modelUniqueName}QueryBuilder`
-          : ""
+        relation?.subType === "oneToMany"
+          ? ""
+          : `, singleBuilder: ${modelUniqueName}QueryBuilder`
       }) => void|Promise<void>,`,
     );
     modifierDestructure.push(`${crudName}CreatePreModifier,`);
@@ -256,7 +257,6 @@ function crudHandlersList(generateContext, file, crud) {
       },
     }),
     primaryKey: primaryKeyName,
-    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -294,7 +294,6 @@ function crudHandlersSingle(generateContext, file, crud) {
       traverseParents: true,
     }),
     primaryKey: primaryKeyName,
-    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -341,7 +340,6 @@ function crudHandlersCreate(generateContext, file, crud) {
             }),
           }
         : undefined,
-    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -379,7 +377,6 @@ function crudHandlersUpdate(generateContext, file, crud) {
       includeJoins: true,
       traverseParents: true,
     }),
-    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -409,7 +406,6 @@ function crudHandlersDelete(generateContext, file, crud) {
       includeJoins: false,
       traverseParents: true,
     }),
-    skipNext: true,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");

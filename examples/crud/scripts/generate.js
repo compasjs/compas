@@ -17,7 +17,21 @@ function main() {
       })
       .enableQueries({
         withDates: true,
-      }),
+      })
+      .relations(
+        T.oneToMany("comments", T.reference("database", "todoComment")),
+      ),
+
+    Tdatabase.object("todoComment")
+      .keys({
+        comment: T.string(),
+      })
+      .enableQueries({
+        withDates: true,
+      })
+      .relations(
+        T.manyToOne("todo", T.reference("database", "todo"), "comments"),
+      ),
 
     Tdatabase.object("todoView")
       .keys({
@@ -56,6 +70,27 @@ function main() {
         listRoute: true,
         singleRoute: true,
       }),
+
+    new TypeCreator("todoComment")
+      .crud("/todo-comment")
+      .entity(T.reference("database", "todoComment"))
+      .routes({
+        listRoute: true,
+        singleRoute: true,
+        createRoute: true,
+        updateRoute: true,
+        deleteRoute: true,
+      })
+      .inlineRelations(new TypeCreator("todoComment").crud().fromParent("todo"))
+      .nestedRelations(
+        new TypeCreator("todoComment").crud("/todo").fromParent("todo").routes({
+          listRoute: true,
+          singleRoute: true,
+          createRoute: true,
+          updateRoute: true,
+          deleteRoute: true,
+        }),
+      ),
   );
 
   generator.generate({

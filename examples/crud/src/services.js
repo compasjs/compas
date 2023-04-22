@@ -7,6 +7,7 @@ import {
 import { router } from "./generated/common/router.js";
 import { completedTodoRegisterCrud } from "./generated/completedTodo/crud.js";
 import { todoRegisterCrud } from "./generated/todo/crud.js";
+import { todoCommentRegisterCrud } from "./generated/todoComment/crud.js";
 
 export let app = undefined;
 
@@ -50,4 +51,6 @@ function injectCrud() {
   completedTodoRegisterCrud({
     sql,
   });
+
+  todoCommentRegisterCrud({ sql });
 }

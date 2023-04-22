@@ -114,11 +114,13 @@ export async function ${data.crudName}Single(event, sql, builder) {
  *   entityName: string,
  *   builder: string,
  *   primaryKey: string,
+ *   writableType: { group: string, name: string },
  *   inlineRelations: {
  *     name: string,
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
+ *     isOwningSideOfRelation: boolean,
  *     isOptional: boolean,
  *     parentPrimaryKey: string,
  *     inlineRelations: any[],
@@ -132,17 +134,21 @@ export const crudPartialEventCreate = (data) => `
  *
  * @param {InsightEvent} event
  * @param {Postgres} sql
- * @param {${upperCaseFirst(data.crudName)}CreateBody} body
+ * @param {${upperCaseFirst(data.writableType.group)}${upperCaseFirst(
+  data.writableType.name,
+)}} body
  * @returns {Promise<QueryResult${data.entityUniqueName}>}
  */
 export async function ${data.crudName}Create(event, sql, body) {
   eventStart(event, "${data.crudName}.create");
   
   ${partialAsString(
-    data.inlineRelations.map((it) => [
-      `let ${it.name} = [body.${it.name}];`,
-      `delete body.${it.name}`,
-    ]),
+    data.inlineRelations
+      .filter((it) => !it.isOwningSideOfRelation)
+      .map((it) => [
+        `let ${it.name} = [body.${it.name}];`,
+        `delete body.${it.name}`,
+      ]),
   )}
   
   
@@ -168,11 +174,13 @@ export async function ${data.crudName}Create(event, sql, body) {
  *   entityUniqueName: string,
  *   entityName: string,
  *   primaryKey: string,
+ *   writableType: { group: string, name: string },
  *   inlineRelations: {
  *     name: string,
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
+ *     isOwningSideOfRelation: boolean,
  *     isOptional: boolean,
  *     parentPrimaryKey: string,
  *     inlineRelations: any[],
@@ -187,17 +195,21 @@ export const crudPartialEventUpdate = (data) => `
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {QueryResult${data.entityUniqueName}} entity
- * @param {${upperCaseFirst(data.crudName)}UpdateBody} body
+ * @param {${upperCaseFirst(data.writableType.group)}${upperCaseFirst(
+  data.writableType.name,
+)}} body
  * @returns {Promise<void>}
  */
 export async function ${data.crudName}Update(event, sql, entity, body) {
   eventStart(event, "${data.crudName}.update");
   
   ${partialAsString(
-    data.inlineRelations.map((it) => [
-      `let ${it.name} = [body.${it.name}];`,
-      `delete body.${it.name}`,
-    ]),
+    data.inlineRelations
+      .filter((it) => !it.isOwningSideOfRelation)
+      .map((it) => [
+        `let ${it.name} = [body.${it.name}];`,
+        `delete body.${it.name}`,
+      ]),
   )}
   
   const result = await queries.${data.entityName}Update(sql, {
@@ -208,14 +220,24 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
     returning: ["${data.primaryKey}"],
   });
   
-  ${data.inlineRelations.length > 0 ? "await Promise.all([" : ""}
+  ${
+    data.inlineRelations.filter((it) => !it.isOwningSideOfRelation).length > 0
+      ? "await Promise.all(["
+      : ""
+  }
   ${partialAsString(
-    data.inlineRelations.map(
-      (it) =>
-        `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: result[0].${data.primaryKey} }),`,
-    ),
+    data.inlineRelations
+      .filter((it) => !it.isOwningSideOfRelation)
+      .map(
+        (it) =>
+          `queries.${it.entityName}Delete(sql, { ${it.referencedKey}: result[0].${data.primaryKey} }),`,
+      ),
   )}
-  ${data.inlineRelations.length > 0 ? "])" : ""}
+  ${
+    data.inlineRelations.filter((it) => !it.isOwningSideOfRelation).length > 0
+      ? "])"
+      : ""
+  }
   
   ${crudPartialInlineRelationInserts(data.inlineRelations, "result")}
   
@@ -229,6 +251,7 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
  *     referencedKey: string,
  *     entityName: string,
  *     isInlineArray: boolean,
+ *     isOwningSideOfRelation: boolean,
  *     isOptional: boolean,
  *     parentPrimaryKey: string,
  *     inlineRelations: any[],
@@ -238,8 +261,10 @@ export async function ${data.crudName}Update(event, sql, entity, body) {
  */
 export const crudPartialInlineRelationInserts = (relations, parentName) =>
   partialAsString(
-    relations.map(
-      (relation) => `{
+    relations
+      .filter((it) => !it.isOwningSideOfRelation)
+      .map(
+        (relation) => `{
       for (let i = 0; i < ${relation.name}.length; ++i) {
         ${
           relation.isInlineArray
@@ -286,8 +311,8 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
       }
       
       ${relation.name} = await queries.${relation.entityName}Insert(sql, ${
-        relation.name
-      });
+          relation.name
+        });
       
       ${crudPartialInlineRelationInserts(
         relation.inlineRelations,
@@ -295,7 +320,7 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
       )}
     }
     `,
-    ),
+      ),
   );
 
 /**
@@ -332,7 +357,8 @@ export async function ${data.crudName}Delete(event, sql, entity) {
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
- *   entity: Record<string, boolean|Record<string, boolean>>
+ *   entity: Record<string, boolean|Record<string, boolean>>,
+ *   readableType: { group: string, name: string },
  * }} data
  * @returns {string}
  */
@@ -341,7 +367,9 @@ export const crudPartialEventTransformer = (data) => `
  * Transform ${data.entityName} entity to the response type 
  *
  * @param {QueryResult${data.entityUniqueName}} input
- * @returns {${upperCaseFirst(data.crudName)}Item}
+ * @returns {${upperCaseFirst(data.readableType.group)}${upperCaseFirst(
+  data.readableType.name,
+)}}
  */
 export function ${data.crudName}Transform(input) {
   return {

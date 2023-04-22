@@ -30,7 +30,9 @@ export function crudInformationGetName(crud, suffix) {
   let result = lowerCaseFirst(suffix);
 
   if (crud.fromParent) {
-    result = (crud.fromParent?.options?.name ?? "") + upperCaseFirst(result);
+    result =
+      (crud.fromParent?.options?.name ?? crud.fromParent.field) +
+      upperCaseFirst(result);
 
     return crudInformationGetName(crudInformationGetParent(crud), result);
   }
@@ -56,9 +58,13 @@ export function crudInformationGetPath(crud, suffix) {
     const parent = crudInformationGetParent(crud);
     const relation = crudInformationGetRelation(crud);
 
-    if (relation.subType === "oneToOneReverse") {
+    if (
+      relation.subType === "oneToOneReverse" ||
+      relation.subType === "oneToOne"
+    ) {
       return crudInformationGetPath(parent, path);
     }
+
     return crudInformationGetPath(
       parent,
       `/:${crudInformationGetParamName(parent)}${path}`,

@@ -88,22 +88,35 @@ function crudValidateType(generateContext, crud) {
     }
   }
 
-  if (
-    crud.fromParent &&
-    crudInformationGetRelation(crud).subType === "oneToOneReverse"
-  ) {
-    // One to one routes don't support list routes. So silently disable them
-    crud.routeOptions.listRoute = false;
-  }
+  if (crud.fromParent) {
+    const relation = crudInformationGetRelation(crud);
 
-  if (
-    crud.fromParent &&
-    crudInformationGetRelation(crud).subType === "oneToMany" &&
-    isNil(crud.fromParent?.options?.name)
-  ) {
-    throw AppError.serverError({
-      message: `'T.crud().fromParent("field", { name: "singular" })' is mandatory when the inferred relation is 'oneToMany'. This singular name is used in the route parameter.`,
-    });
+    if (relation.subType === "oneToOneReverse") {
+      // One to one routes don't support list routes. So silently disable them
+      crud.routeOptions.listRoute = false;
+    }
+
+    if (["oneToOne", "manyToOne"].includes(relation.subType)) {
+      // Don't allow list, create and delete routes on the owning side of a relation.
+      // These always reference to a single entity and when removed or recreated don't link
+      // to this entity anymore.
+      crud.routeOptions ??= {};
+
+      Object.assign(crud.routeOptions, {
+        listRoute: false,
+        createRoute: false,
+        deleteRoute: false,
+      });
+    }
+
+    if (
+      relation.subType === "oneToMany" &&
+      isNil(crud.fromParent?.options?.name)
+    ) {
+      throw AppError.serverError({
+        message: `'T.crud().fromParent("field", { name: "singular" })' is mandatory when the inferred relation is 'oneToMany'. This singular name is used in the route parameter.`,
+      });
+    }
   }
 
   if (crud.basePath && !crud.basePath.startsWith("/")) {
@@ -118,6 +131,7 @@ function crudValidateType(generateContext, crud) {
     // @ts-expect-error
     crudValidateRelation(generateContext, crud, relation);
   }
+
   for (const relation of crud.nestedRelations) {
     relation.group = crud.group;
     // @ts-expect-error
@@ -178,23 +192,9 @@ function crudValidateRelation(generateContext, crud, relation) {
         model,
       )} via '${relation.fromParent?.field}' could not be resolved in the '${
         crud.group
-      }' group. There should be a 'T.oneToOne("${
+      }' group. Make sure there is a relation with '${
         relation.fromParent?.field
-      }", ...)' or 'T.oneToOne("...", T.reference("${model.group}", "${
-        model.name
-      }"), "${
-        relation.fromParent?.field
-      }")' on the owning side of the relation.`,
-    });
-  }
-
-  if (!["oneToMany", "oneToOneReverse"].includes(usedRelation.subType)) {
-    throw AppError.serverError({
-      message: `CRUD generation can't be generated from the owning side of a relation. This is done from entity ${stringFormatNameForError(
-        model,
-      )} via field '${relation.fromParent?.field}' in the '${
-        crud.group
-      }' group. See the docs for more information.`,
+      }' on ${stringFormatNameForError(model)}.`,
     });
   }
 

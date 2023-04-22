@@ -31,3 +31,17 @@ AS
          title,
          "completedAt"
   FROM "todo";
+
+
+CREATE TABLE "todoComment"
+(
+  "id"        uuid PRIMARY KEY NOT NULL DEFAULT uuid_generate_v4(),
+  "todo"      uuid             NOT NULL,
+  "comment"   varchar          NOT NULL,
+  "createdAt" timestamptz      NOT NULL DEFAULT now(),
+  "updatedAt" timestamptz      NOT NULL DEFAULT now(),
+  CONSTRAINT "todoCommentTodoFk" FOREIGN KEY ("todo") REFERENCES "todo" ("id") ON DELETE CASCADE
+);
+
+CREATE INDEX "todoCommentDatesIdx" ON "todoComment" ("createdAt", "updatedAt");
+CREATE INDEX "todoCommentTodoIdx" ON "todoComment" ("todo");

@@ -186,7 +186,10 @@ export function modelRelationCheckAllRelations(generateContext) {
       }
 
       const inverseRelations = modelRelationGetInverse(inverseModel).filter(
-        (it) => it.ownKey === relation.referencedKey,
+        (it) =>
+          it.ownKey === relation.referencedKey &&
+          it.reference.reference.group === model.group &&
+          it.reference.reference.name === model.name,
       );
 
       if (inverseRelations.length === 0) {

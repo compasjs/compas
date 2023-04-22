@@ -89,7 +89,11 @@ export function fetchCatchErrorAndWrapWithAppError(originalFetch) {
         const body = await response.json();
         
         if (typeof body.key === "string" && !!body.info && typeof body.info === "object") {
-          throw new AppError(body.key, response.status, body.info);
+          throw new AppError(
+            body.key,
+            response.status,
+            body.cause ? { info: body.info, cause: body.cause } : body.info,
+          );
         } else {
           throw new AppError("response.error", response.status, {
             fetch: {
