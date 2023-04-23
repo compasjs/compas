@@ -18,7 +18,6 @@ import { loggerWriteGithubActions, loggerWritePretty } from "./log-writers.js";
  * The log functions only accept a single parameter. This prevents magic
  * outputs like automatic concatenating strings in to a single message, or always having
  *   a top-level array as a message.
- *
  * @property {function(*): void} info
  * @property {function(*): void} error
  */

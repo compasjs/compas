@@ -51,7 +51,6 @@ export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
  * Forked from "Koa-Body" with original license:
  * https://github.com/dlau/koa-body/blob/a6ca8c78015e326154269d272410a11bf40e1a07/LICENSE
  *
- *
  * @param {KoaBodyOptions} opts Options that will be passed to koa-body
  */
 function koaBody(opts = {}) {

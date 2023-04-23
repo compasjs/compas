@@ -6,7 +6,6 @@
  */
 /**
  * @typedef {object} ValidatorState
- *
  * @property {import("../generate").GenerateContext} generateContext
  * @property {string} inputVariableName
  * @property {string} outputVariableName

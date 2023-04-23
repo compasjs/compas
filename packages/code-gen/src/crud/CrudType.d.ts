@@ -21,7 +21,6 @@ export class CrudType extends TypeBuilder {
    *        deleteRoute: false,
    *      })
    *  );
-   *
    * @param {string} group
    * @param {string} [basePath]
    */

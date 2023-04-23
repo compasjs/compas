@@ -18,7 +18,6 @@ import { App } from "../../src/App.js";
  *   add?: Parameters<typeof App.prototype.add>,
  *   extend?: Parameters<typeof App.prototype.extend>[],
  *   extendWithOpenApi?: Parameters<typeof App.prototype.extendWithOpenApi>[],
- *
  * }|TypeBuilderLike[]} input
  * @param {GenerateOpts} [opts]
  * @returns {Promise<{

@@ -53,7 +53,6 @@ const validatorCache = new WeakMap();
 
 /**
  * @typedef {object} ValidatorState
- *
  * @property {import("../generate").GenerateContext} generateContext
  * @property {string} inputVariableName
  * @property {string} outputVariableName

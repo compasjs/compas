@@ -102,7 +102,6 @@ module.exports = {
         "jsdoc/check-types": ["error"],
         "jsdoc/check-values": "error",
         "jsdoc/empty-tags": "error",
-        "jsdoc/newline-after-description": ["error", "always"],
         "jsdoc/require-asterisk-prefix": "error",
         "jsdoc/require-hyphen-before-param-description": ["error", "never"],
         "jsdoc/require-param-name": "error",
@@ -112,6 +111,23 @@ module.exports = {
         "jsdoc/require-returns-check": "off",
         "jsdoc/require-returns-description": "off",
         "jsdoc/require-returns-type": "error",
+        "jsdoc/tag-lines": [
+          "error",
+          "never",
+          {
+            startLines: 1,
+            endLines: 0,
+            tags: {
+              deprecated: { lines: "any" },
+              public: { lines: "any" },
+              private: { lines: "any" },
+              see: { lines: "any" },
+              since: { lines: "any" },
+              summary: { lines: "any" },
+              template: { lines: "any" },
+            },
+          },
+        ],
         "jsdoc/valid-types": "off",
       },
       env: {

@@ -6,10 +6,8 @@
  * @typedef {object} SessionTransportSettings
  * @property {import("./session-store").SessionStoreSettings} sessionStoreSettings JWT
  *   generation settings
- *
  * @property {boolean} [enableHeaderTransport] Defaults to true, can be used to disable
  *   reading the `Authorization` header
- *
  * @property {object} [headerOptions] Object containing options to configure reading from
  *   the 'Authorization' header.
  */

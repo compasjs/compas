@@ -27,7 +27,6 @@ export function codeGenSpecificationCreate(logger) {
 /**
  * Create all validator types that are used in the specification.
  *
- *
  * @param {Generator} generator
  */
 function specificationExtendWithValidators(generator) {

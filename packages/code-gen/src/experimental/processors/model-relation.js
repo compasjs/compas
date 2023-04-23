@@ -28,7 +28,6 @@ import { structureNamedTypes, structureResolveReference } from "./structure.js";
  *   primaryKeyDefinitionInverse:
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition,
  * }} ModelRelationInformation
- *
  */
 
 /**

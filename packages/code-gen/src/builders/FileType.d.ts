@@ -11,7 +11,6 @@ export class FileType extends TypeBuilder {
    * Common mimetypes for images, as supported by {@link sendTransformedImage}:
    * - image/png, image/jpeg, image/jpg, image/webp, image/avif, image/gif
    *
-   *
    * @param {...string} mimeTypes
    * @returns {FileType}
    */
