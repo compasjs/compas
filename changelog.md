@@ -4,6 +4,53 @@ editLink: false
 
 # Changelog
 
+### [v0.0.248](https://github.com/compasjs/compas/releases/tag/v0.0.248)
+
+#### Breaking changes
+
+- feat(eslint-plugin): replace `jsdoc/newline-after-description` with
+  `jsdoc/tag-lines`
+  [`53e32c`](https://github.com/compasjs/compas/commit/53e32c5ac6fc0eedc1d9f1326831af6495892b98)
+  - The `jsdoc/tag-lines` rule is stricter on newlines in JSDoc blocks between
+    different tags. The auto-fix may break multiline types with a new line in
+    between, so make sure to check the diffs.
+
+#### Features
+
+- feat(code-gen/experimental): add crud generation support for `oneToOne` and
+  `manyToOne` relations
+  [`791803`](https://github.com/compasjs/compas/commit/791803dac90608c3171261ee2fb2eb485ba79a41)
+
+#### Bug fixes
+
+- fix(cli): make sure bail prints caughtExceptions under the correct subtest
+  name
+  [`7c5134`](https://github.com/compasjs/compas/commit/7c51349f76eb3f1e8b951c99fd8d0da596a1862a)
+- fix(code-gen/experimental): load Compas version from package.json when
+  exporting OpenAPI spec
+  [`ed1d67`](https://github.com/compasjs/compas/commit/ed1d67d951f1027feea041b129351f306a6a81b8)
+- fix(code-gen/experimental): resolve readable & writable types of nested crud
+  even if parent doesn't have those types
+  [`602c39`](https://github.com/compasjs/compas/commit/602c39a7c46c9352c1357897d3edd92183a5472f)
+
+#### Dependency updates
+
+- build(deps): bump prettier from 2.8.7 to 2.8.8
+  ([#2526](https://github.com/compasjs/compas/pull/2526))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump eslint from 8.38.0 to 8.39.0
+  ([#2527](https://github.com/compasjs/compas/pull/2527))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.312.0 to 3.317.0
+  ([#2520](https://github.com/compasjs/compas/pull/2520))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.312.0 to 3.317.0
+  ([#2522](https://github.com/compasjs/compas/pull/2522))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump eslint-plugin-jsdoc from 41.1.2 to 43.0.7
+  - Major version bump
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.0.247](https://github.com/compasjs/compas/releases/tag/v0.0.247)
 
 #### Features
