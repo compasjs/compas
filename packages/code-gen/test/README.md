@@ -3,7 +3,8 @@
 The code generators are tested with 2 different kinds of tests:
 
 - Target behaviour tests
-- Structure modification tests
+- Generator tests
+- E2E tests
 
 ## Target behaviour tests
 
@@ -32,8 +33,9 @@ following:
   - E.g `t.equal(validateFooBar("").error["$"].key, "validator.length")`
 - Statically assert on the output files
   - E.g `t.ok(typesOutputFile.includes("type Foo = string;"));`
-- Execute the generated code to check target-specific behaviour
-  - E.g `t.equal((await queryFoo().exec(sql)).length, 0);`
+- Dynamically assert on the output files
+  - E.g
+    `t.ok(generatedFiles.find(it => it.relativePath === "common/structure.json")));`
 
 Each variant has different test abstractions to use:
 
@@ -81,7 +83,7 @@ t.test("produced type test", async (t) => {
   t.equal(error.$, "validator.length");
 });
 
-t.test("static output file", (t) => {
+t.test("static output check", (t) => {
   testGeneratorStaticOutput(
     t,
     {
@@ -95,21 +97,15 @@ t.test("static output file", (t) => {
   );
 });
 
-t.test("execute target test", async (t) => {
-  const outputDirectory = testGeneratorDynamicOutput(
-    t,
-    {
-      generateOptions: {
-        /* optionally pass in generate options */
-      },
-    },
-    buildersFn,
-  );
+t.test("static files list", (t) => {
+  const outputFiles = testGeneratorStaticFiles(t, {}, buildersFn);
 
-  const structure = JSON.parse(
-    readFileSync(outputDirectory + "common/structure.json", "utf-8"),
-  );
-
-  t.equal(Object.keys(structure).length, 3);
+  t.equal(outputFiles.length, 4);
 });
 ```
+
+## E2E tests
+
+For execution of the generated code that does not belong in target beaviour
+tests or generator tests, we have E2E tests. We write these in the form of
+examples, showing a minimal e2e flow of various features.

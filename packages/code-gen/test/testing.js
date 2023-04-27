@@ -60,7 +60,7 @@ function testGeneratorDefaultGenerateOptions(options) {
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }|{
  *   pass: true,
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
@@ -143,7 +143,7 @@ export function testGeneratorError(t, options, builders) {
  *   group: string,
  *   validatorName: string,
  *   validatorInput: any,
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
@@ -193,7 +193,7 @@ export async function testGeneratorType(t, options, builders) {
  * @param {{
  *   relativePath: string,
  *   partialValue: string,
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
@@ -230,27 +230,21 @@ export function testGeneratorStaticOutput(t, options, builders) {
 }
 
 /**
- * Test the dynamic generator output. Returns the path where the files are written to.
+ * Get the list of generated output files
  *
  * @param {import("@compas/cli").TestRunner} t
  * @param {{
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
- * @returns {string}
+ * @returns {import("../src/experimental/generate.js").OutputFile[]}
  */
-export function testGeneratorDynamicOutput(t, options, builders) {
+export function testGeneratorStaticFiles(t, options, builders) {
   const generator = new Generator(t.log);
-  const outputDirectory = `${testTemporaryDirectory}/${uuid()}`;
 
   generator.add(...builders(new TypeCreator("app")));
-  generator.generate(
-    options.generateOptions ??
-      testGeneratorDefaultGenerateOptions({
-        withOutputDirectory: outputDirectory,
-      }),
+  return generator.generate(
+    options.generateOptions ?? testGeneratorDefaultGenerateOptions({}),
   );
-
-  return outputDirectory;
 }
