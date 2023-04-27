@@ -4,7 +4,7 @@ import {
   newPostgresConnection,
 } from "@compas/store";
 import { router } from "./generated/common/router.js";
-import { todoRegisterCrud } from "./generated/todo/crud.js";
+import { postRegisterCrud } from "./generated/post/crud.js";
 
 export let app = undefined;
 
@@ -14,9 +14,7 @@ export async function injectServices() {
   app = getApp({});
   sql = await newPostgresConnection({ max: 10 });
 
-  await todoRegisterCrud({
-    sql,
-  });
+  injectCrud();
 
   app.use(router(createBodyParsers()));
 }
@@ -25,9 +23,14 @@ export async function injectTestServices() {
   app = getApp({});
   sql = await createTestPostgresDatabase();
 
-  await todoRegisterCrud({
-    sql,
-  });
+  injectCrud();
 
   app.use(router(createBodyParsers()));
+}
+
+/**
+ * Register all crud routes
+ */
+function injectCrud() {
+  postRegisterCrud({ sql });
 }

@@ -1,18 +1,16 @@
-# CRUD API
+# CRUD basics
 
 This project is created using the
-[crud](https://github.com/compasjs/compas/tree/main/examples/crud) template via
-[create-compas](https://www.npmjs.com/package/create-compas).
+[crud-inline](https://github.com/compasjs/compas/tree/main/examples/crud-inline)
+template via [create-compas](https://www.npmjs.com/package/create-compas).
 
 ```shell
 # Via NPM
-npx create-compas@latest --template crud
+npx create-compas@latest --template crud-inline
 
 # Or with Yarn
-yarn create compas --template crud
+yarn create compas --template crud-inline
 ```
-
-This example includes acts as a showcase for various CRUD features.
 
 ## Getting started
 

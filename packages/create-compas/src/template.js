@@ -225,8 +225,7 @@ export async function templatePostProcess(logger, options, compasVersion) {
     cwd: options.outputDirectory,
   });
 
-  logger.info(`Done!`);
-  if (metadata?.initMessage) {
-    logger.info(metadata.initMessage);
-  }
+  logger.info(
+    `Started a new Compas project in ${options.outputDirectory}. See the README.md for how to get started.`,
+  );
 }

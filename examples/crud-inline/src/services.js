@@ -1,13 +1,10 @@
 import { createBodyParsers, getApp } from "@compas/server";
-import { isNil } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
   newPostgresConnection,
 } from "@compas/store";
 import { router } from "./generated/common/router.js";
-import { completedTodoRegisterCrud } from "./generated/completedTodo/crud.js";
-import { todoRegisterCrud } from "./generated/todo/crud.js";
-import { todoCommentRegisterCrud } from "./generated/todoComment/crud.js";
+import { postRegisterCrud } from "./generated/post/crud.js";
 
 export let app = undefined;
 
@@ -35,22 +32,5 @@ export async function injectTestServices() {
  * Register all crud routes
  */
 function injectCrud() {
-  todoRegisterCrud({
-    sql,
-    todoTransform: (entity) => ({
-      id: entity.id,
-      title: entity.title,
-      createdAt: entity.createdAt,
-
-      // Our custom field
-      isCompleted:
-        !isNil(entity.completedAt) && entity.completedAt < new Date(),
-    }),
-  });
-
-  completedTodoRegisterCrud({
-    sql,
-  });
-
-  todoCommentRegisterCrud({ sql });
+  postRegisterCrud({ sql });
 }

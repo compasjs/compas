@@ -20,7 +20,6 @@
     "testing": [
       "compas migrate",
       "compas test --serial"
-    ],
-    "initMessage": "Started a new project with the 'with-auth' template. See the README.md for how to get started."
+    ]
   }
 }

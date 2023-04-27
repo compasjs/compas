@@ -18,7 +18,6 @@
     "testing": [
       "compas migrate",
       "compas test --serial"
-    ],
-    "initMessage": "Started a new project with the 'crud-simple-todo' template. See the README.md for how to get started."
+    ]
   }
 }

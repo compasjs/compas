@@ -1,22 +1,16 @@
-# Minimal CRUD api for managing todo's
+# CRUD basics
 
 This project is created using the
-[crud-simple-todo](https://github.com/compasjs/compas/tree/main/examples/crud-simple-todo)
+[crud-basic](https://github.com/compasjs/compas/tree/main/examples/crud-basic)
 template via [create-compas](https://www.npmjs.com/package/create-compas).
 
 ```shell
 # Via NPM
-npx create-compas@latest --template crud-simple-todo
+npx create-compas@latest --template crud-basic
 
 # Or with Yarn
-yarn create compas --template crud-simple-todo
+yarn create compas --template crud-basic
 ```
-
-It uses a few Compas features, most notably:
-
-- The code-generators, more specifically, CRUD generators and the generated api
-  clients
-- Postgres related features like migrations and test databases
 
 ## Getting started
 
