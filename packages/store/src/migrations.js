@@ -140,6 +140,28 @@ export async function runMigrations(mc) {
   try {
     const migrationFiles = filterMigrationsToBeApplied(mc);
 
+    if (mc.missingMigrationTable && migrationFiles.length > 0) {
+      mc.missingMigrationTable = false;
+
+      if (
+        !migrationFiles[0]?.source.includes(`migration_namespace_number_idx`)
+      ) {
+        // Automatically create the migration table
+        await mc.sql.unsafe(`
+        CREATE TABLE IF NOT EXISTS migration
+        (
+          "namespace" varchar NOT NULL,
+          "number"    int,
+          "name"      varchar NOT NULL,
+          "createdAt" timestamptz DEFAULT now(),
+          "hash"      varchar
+        );
+
+        CREATE INDEX IF NOT EXISTS migration_namespace_number_idx ON "migration" ("namespace", "number");
+      `);
+      }
+    }
+
     for (const migration of migrationFiles) {
       current = migration;
       await runMigration(mc.sql, migration);
@@ -175,7 +197,10 @@ export async function runMigrations(mc) {
 export async function rebuildMigrations(mc) {
   try {
     await mc.sql.begin(async (sql) => {
-      await sql`DELETE FROM "migration" WHERE 1 = 1`;
+      await sql`DELETE
+                FROM "migration"
+                WHERE
+                  1 = 1`;
 
       for (const file of mc.files) {
         await runInsert(sql, file);
@@ -279,12 +304,14 @@ async function syncWithSchemaState(mc) {
   let rows = [];
   try {
     rows = await mc.sql`
-        SELECT DISTINCT ON (number) number, hash
-        FROM migration
-        ORDER BY number, "createdAt" DESC
-      `;
+      SELECT DISTINCT ON (number) number, hash
+      FROM migration
+      ORDER BY number, "createdAt" DESC
+    `;
   } catch (/** @type {any} */ e) {
-    if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
+    if ((e.message ?? "").includes(`"migration" does not exist`)) {
+      mc.missingMigrationTable = true;
+    } else {
       throw new AppError(
         "store.migrateSync.error",
         500,
