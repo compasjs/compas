@@ -15,7 +15,7 @@ export function formatGraphOfSql(codeGen, structure) {
   const entities = codeGen.getQueryEnabledObjects({ structure });
 
   let src = `
-  digraph ${environment.APP_NAME} {
+  digraph "${environment.APP_NAME}" {
     label = "label";
     fontsize = 14;
     rankdir = "TB";

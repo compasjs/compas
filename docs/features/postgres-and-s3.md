@@ -61,11 +61,12 @@ POSTGRES_PASSWORD=postgres
 ```
 
 Let's break it down a bit. `APP_NAME` is used in various places, but most
-importantly it is the default name for your database, file bucket and logs. Then
-we have some PostgreSQL connection configuration, kept as simple as possible.
-For the S3 connection to Minio we don't need to configure anything. Compas
-provides a function to use the default connection settings in development. For
-production you should use one of the recommended ways as per the
+importantly, it is the default name for your database, file bucket and logs.
+Then we have some PostgreSQL connection configuration, kept as simple as
+possible. For the S3 connection to Minio we don't need to configure anything.
+Compas provides a function to use the default connection settings in
+development. For production you should use one of the recommended ways as per
+the
 [AWS SDK docs](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html).
 
 And lastly we need to install `@compas/store`:
