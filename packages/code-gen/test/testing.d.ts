@@ -8,7 +8,7 @@
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }|{
  *   pass: true,
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
@@ -25,7 +25,7 @@ export function testGeneratorError(
       }
     | {
         pass: true;
-        generateOptions:
+        generateOptions?:
           | import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions
           | undefined;
       },
@@ -39,7 +39,7 @@ export function testGeneratorError(
  *   group: string,
  *   validatorName: string,
  *   validatorInput: any,
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
@@ -51,7 +51,7 @@ export function testGeneratorType(
     group: string;
     validatorName: string;
     validatorInput: any;
-    generateOptions:
+    generateOptions?:
       | import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions
       | undefined;
   },
@@ -67,7 +67,7 @@ export function testGeneratorType(
  * @param {{
  *   relativePath: string,
  *   partialValue: string,
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
@@ -78,31 +78,31 @@ export function testGeneratorStaticOutput(
   options: {
     relativePath: string;
     partialValue: string;
-    generateOptions:
+    generateOptions?:
       | import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions
       | undefined;
   },
   builders: (T: TypeCreator) => (TypeBuilder | TypeBuilderLike)[],
 ): void;
 /**
- * Test the dynamic generator output. Returns the path where the files are written to.
+ * Get the list of generated output files
  *
  * @param {import("@compas/cli").TestRunner} t
  * @param {{
- *   generateOptions:
+ *   generateOptions?:
  *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
  * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
- * @returns {string}
+ * @returns {import("../src/experimental/generate.js").OutputFile[]}
  */
-export function testGeneratorDynamicOutput(
+export function testGeneratorStaticFiles(
   t: import("@compas/cli").TestRunner,
   options: {
-    generateOptions:
+    generateOptions?:
       | import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions
       | undefined;
   },
   builders: (T: TypeCreator) => (TypeBuilder | TypeBuilderLike)[],
-): string;
+): import("../src/experimental/generate.js").OutputFile[];
 import { TypeCreator } from "../src/builders/index.js";
 //# sourceMappingURL=testing.d.ts.map

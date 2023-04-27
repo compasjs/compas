@@ -16,6 +16,7 @@
  * @property {any|undefined} [info]
  * @property {any|undefined} [do]
  * @property {Record<number, string>} storedHashes
+ * @property {boolean} [missingMigrationTable]
  */
 /**
  * Create a new  migration context, resolves all migrations and collects the current
@@ -96,5 +97,6 @@ export type MigrateContext = {
   info?: any | undefined;
   do?: any | undefined;
   storedHashes: Record<number, string>;
+  missingMigrationTable?: boolean | undefined;
 };
 //# sourceMappingURL=migrations.d.ts.map

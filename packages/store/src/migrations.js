@@ -23,6 +23,7 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
  * @property {any|undefined} [info]
  * @property {any|undefined} [do]
  * @property {Record<number, string>} storedHashes
+ * @property {boolean} [missingMigrationTable]
  */
 
 /**

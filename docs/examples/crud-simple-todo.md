@@ -1,1 +1,0 @@
-../../examples/crud-simple-todo/README.md
