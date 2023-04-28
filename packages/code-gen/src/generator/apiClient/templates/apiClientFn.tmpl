@@ -89,7 +89,7 @@ export async function api{{= item.uniqueName }}(
     {{ } }}
 
     const response = await instance.request({
-      url: `{{= !!item.internalSettings?.stripTrailingSlash ? url.slice(0, -1) : url }}`,
+      url: `{{= !!item.internalSettings?.stripTrailingSlash && url.endsWith("/") ? url.slice(0, -1) : url }}`,
       method: "{{= item.method.toLowerCase() }}",
       {{ if (item.query) { }}
       params: query,
