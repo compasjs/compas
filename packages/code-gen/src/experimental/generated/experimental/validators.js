@@ -1649,6 +1649,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       errorMap[`$`] = {
         key: "validator.anyOf",
         discriminant: "type",
+        foundValue: value.type,
         allowedValues: [
           "any",
           "anyOf",
@@ -12059,6 +12060,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       errorMap[`$`] = {
         key: "validator.anyOf",
         discriminant: "type",
+        foundValue: value.type,
         allowedValues: [
           "any",
           "anyOf",

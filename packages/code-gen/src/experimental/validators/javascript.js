@@ -374,7 +374,10 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
       matchableValues.push(oneOf);
 
-      fileBlockStart(file, `if (${valuePath}.type === "${oneOf}")`);
+      fileBlockStart(
+        file,
+        `if (${valuePath}.${type.validator.discriminant} === "${oneOf}")`,
+      );
 
       validatorState.skipFirstNilCheck = true;
       validatorGeneratorGenerateBody(
@@ -398,6 +401,7 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
       `${errorKey} = {
   key: "validator.anyOf",
   discriminant: "${type.validator.discriminant}",
+  foundValue: ${valuePath}.${type.validator.discriminant},
   allowedValues: ${JSON.stringify(matchableValues)},
 };`,
     );
