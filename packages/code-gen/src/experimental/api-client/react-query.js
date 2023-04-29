@@ -7,6 +7,7 @@ import {
   fileContextRemoveLinePrefix,
   fileContextSetIndent,
 } from "../file/context.js";
+import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
@@ -188,6 +189,63 @@ export function reactQueryGenerateFunction(
   const apiName = `api${upperCaseFirst(route.group)}${upperCaseFirst(
     route.name,
   )}`;
+
+  if (route.body) {
+    const body = structureResolveReference(
+      generateContext.structure,
+      route.body,
+    );
+    if (body.type !== "object") {
+      fileWrite(file, "\n\n");
+      fileWrite(
+        file,
+        fileFormatInlineComment(
+          file,
+          `Skipped generation of '${hookName}' since a custom body type is used.`,
+        ),
+      );
+      fileWrite(file, "\n\n");
+      return;
+    }
+  }
+
+  if (route.query) {
+    const query = structureResolveReference(
+      generateContext.structure,
+      route.query,
+    );
+    if (query.type !== "object") {
+      fileWrite(file, "\n\n");
+      fileWrite(
+        file,
+        fileFormatInlineComment(
+          file,
+          `Skipped generation of '${hookName}' since a custom query type is used.`,
+        ),
+      );
+      fileWrite(file, "\n\n");
+      return;
+    }
+  }
+
+  if (route.files) {
+    const files = structureResolveReference(
+      generateContext.structure,
+      route.files,
+    );
+    if (files.type !== "object") {
+      fileWrite(file, "\n\n");
+      fileWrite(
+        file,
+        fileFormatInlineComment(
+          file,
+          `Skipped generation of '${hookName}' since a custom files type is used.`,
+        ),
+      );
+      fileWrite(file, "\n\n");
+      return;
+    }
+  }
 
   // Import the corresponding api client function.
   const importCollector = JavascriptImportCollector.getImportCollector(file);
