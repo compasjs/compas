@@ -90,15 +90,6 @@ export function typesGeneratorFinalize(generateContext) {
     });
   }
 
-  targetLanguageSwitch(
-    generateContext,
-    {
-      js: typesTypescriptEndDeclareGlobal,
-      ts: typesTypescriptEndDeclareGlobal,
-    },
-    [generateContext, file],
-  );
-
   const hasDeclaredTypes = targetLanguageSwitch(
     generateContext,
     {
@@ -106,6 +97,15 @@ export function typesGeneratorFinalize(generateContext) {
       ts: typesTypescriptHasDeclaredTypes,
     },
     [file],
+  );
+
+  targetLanguageSwitch(
+    generateContext,
+    {
+      js: typesTypescriptEndDeclareGlobal,
+      ts: typesTypescriptEndDeclareGlobal,
+    },
+    [generateContext, file],
   );
 
   if (hasDeclaredTypes === false) {

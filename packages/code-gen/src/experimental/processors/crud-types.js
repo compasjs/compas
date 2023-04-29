@@ -109,18 +109,38 @@ function crudTypesItem(generateContext, crud, options) {
     ...model.keys,
   };
 
+  crud.fieldOptions ??= {};
+  crud.fieldOptions.writable ??= {};
+  crud.fieldOptions.writable.$omit ??= [];
+
   if (options.type === "writable") {
+    // Don't allow setting the primary key
     const { primaryKeyName } = modelKeyGetPrimary(model);
-    delete itemType.keys[primaryKeyName];
+    crud.fieldOptions.writable.$omit.push(primaryKeyName);
   }
 
   if (
     options.type === "writable" &&
     (model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes)
   ) {
-    // We don't allow overwriting these fields
-    delete itemType.keys.createdAt;
-    delete itemType.keys.updatedAt;
+    // We don't allow overwriting system fields
+    crud.fieldOptions.writable.$omit.push(
+      "createdAt",
+      "updatedAt",
+      "deletedAt",
+    );
+  }
+
+  if (options.type === "writable" && crud.fromParent) {
+    if (
+      relation.referencedKey &&
+      (relation.subType === "oneToMany" ||
+        relation.subType === "oneToOneReverse")
+    ) {
+      crud.fieldOptions.writable.$omit.push(relation.referencedKey);
+    } else {
+      crud.fieldOptions.writable.$omit.push(relation.ownKey);
+    }
   }
 
   if (Array.isArray(crud.fieldOptions?.[options.type]?.$pick)) {
@@ -133,16 +153,6 @@ function crudTypesItem(generateContext, crud, options) {
   if (Array.isArray(crud.fieldOptions?.[options.type]?.$omit)) {
     for (const key of crud.fieldOptions?.[options.type]?.$omit ?? []) {
       delete itemType.keys[key];
-    }
-  }
-
-  if (crud.fromParent) {
-    if (
-      relation.subType === "oneToMany" ||
-      relation.subType === "oneToOneReverse"
-    ) {
-      // Don't include the parent primary key again
-      delete itemType.keys[crud.fromParent.field];
     }
   }
 

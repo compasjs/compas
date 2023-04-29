@@ -68,6 +68,15 @@ function crudEventsGenerateForType(generateContext, file, crud) {
   );
 
   if (
+    !crud.routeOptions.singleRoute &&
+    (crud.routeOptions.createRoute ||
+      crud.routeOptions.updateRoute ||
+      crud.routeOptions.deleteRoute)
+  ) {
+    crudEventsSingle(generateContext, file, crud);
+  }
+
+  if (
     crudInformationGetHasCustomReadableType(crud) === false &&
     (crud.routeOptions.listRoute ||
       crud.routeOptions.singleRoute ||
@@ -172,10 +181,6 @@ function crudEventsCreate(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
   importCollector.destructure(`../common/database.js`, `queries`);
 
-  if (!crud.routeOptions.singleRoute) {
-    crudEventsSingle(generateContext, file, crud);
-  }
-
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     entityName: model.name,
@@ -209,10 +214,6 @@ function crudEventsUpdate(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "eventStop");
   importCollector.destructure(`../common/database.js`, `queries`);
 
-  if (!crud.routeOptions.singleRoute) {
-    crudEventsSingle(generateContext, file, crud);
-  }
-
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     entityName: model.name,
@@ -241,10 +242,6 @@ function crudEventsDelete(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "eventStop");
   importCollector.destructure(`../common/database.js`, `queries`);
 
-  if (!crud.routeOptions.singleRoute) {
-    crudEventsSingle(generateContext, file, crud);
-  }
-
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     entityName: model.name,
@@ -263,10 +260,6 @@ function crudEventsDelete(generateContext, file, crud) {
  */
 function crudEventsTransform(generateContext, file, crud) {
   const model = crudInformationGetModel(crud);
-
-  if (!crud.routeOptions.singleRoute) {
-    crudEventsSingle(generateContext, file, crud);
-  }
 
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),

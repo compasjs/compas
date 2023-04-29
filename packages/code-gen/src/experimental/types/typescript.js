@@ -73,6 +73,7 @@ export function typesTypescriptEndDeclareGlobal(generateContext, file) {
   if (generateContext.options.generators.types?.declareGlobalTypes) {
     fileContextSetIndent(file, -1);
     fileWrite(file, `}`);
+    fileWrite(file, `export {};`);
   }
 }
 
@@ -83,7 +84,7 @@ export function typesTypescriptEndDeclareGlobal(generateContext, file) {
  * @param {import("../file/context").GenerateFile} file
  */
 export function typesTypescriptHasDeclaredTypes(file) {
-  if (file.contents.match(/declare global \{\s+}/gim)) {
+  if (file.contents.match(/declare global \{\s+$/gim)) {
     return false;
   }
 
