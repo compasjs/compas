@@ -115,27 +115,29 @@ export async function generateExamples(logger, state) {
 
   logger.info(`Regenerating ${configs.length} examples...`);
 
-  for (const config of configs) {
-    const cmd = config.exampleMetadata.generating;
-    const parts = cmd.split(" ");
-    if (parts[0] === "compas") {
-      parts[0] = "../../node_modules/.bin/compas";
-    }
+  await Promise.all(
+    configs.map(async (config) => {
+      const cmd = config.exampleMetadata.generating;
+      const parts = cmd.split(" ");
+      if (parts[0] === "compas") {
+        parts[0] = "../../node_modules/.bin/compas";
+      }
 
-    if (state.flags.skipLint && !cmd.includes(" run ")) {
-      parts.push("--skip-lint");
-    }
+      if (state.flags.skipLint && !cmd.includes(" run ")) {
+        parts.push("--skip-lint");
+      }
 
-    const { exitCode, stdout } = await exec(parts.join(" "), {
-      cwd: config.exampleMetadata.path,
-    });
-
-    if (exitCode !== 0) {
-      throw AppError.serverError({
-        message: "One of the examples failed to generate",
-        stdout,
-        path: config.exampleMetadata.path,
+      const { exitCode, stdout } = await exec(parts.join(" "), {
+        cwd: config.exampleMetadata.path,
       });
-    }
-  }
+
+      if (exitCode !== 0) {
+        throw AppError.serverError({
+          message: "One of the examples failed to generate",
+          stdout,
+          path: config.exampleMetadata.path,
+        });
+      }
+    }),
+  );
 }
