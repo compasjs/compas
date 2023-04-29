@@ -208,35 +208,41 @@ export function jsAxiosGenerateFunction(
     )}(${args.join(", ")})`,
   );
 
-  if (route.files) {
+  if (route.files || route.metadata?.requestBodyType === "form-data") {
+    const parameter = route.body ? "body" : "files";
+
     fileWrite(
       file,
-      `
-const data = new FormData();
-
-for (const key of Object.keys(files)) {
-  const keyFiles = Array.isArray(files[key]) ? files[key] : [files[key]];
-  
-  for (const file of keyFiles) {`,
+      `const data = ${parameter} instanceof FormData ? ${parameter} : new FormData();`,
     );
-    fileContextSetIndent(file, 2);
 
-    fileWrite(file, `data.append(key, file.data, file.name);`);
+    fileBlockStart(file, `if (!(${parameter} instanceof FormData))`);
 
-    fileContextSetIndent(file, -2);
-    fileWrite(file, `}\n}`);
-  }
+    /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+    // @ts-expect-error
+    const type = structureResolveReference(
+      generateContext.structure,
 
-  if (route.metadata?.requestBodyType === "form-data") {
-    fileWrite(
-      file,
-      `const data = body instanceof FormData ? body : new FormData();`,
+      // @ts-expect-error
+      route.body ?? route.files,
     );
-    fileBlockStart(file, `if (!(body instanceof FormData))`);
-    fileWrite(
-      file,
-      `for (const key of Object.keys(body)) { data.append(key, body[key]); }`,
-    );
+
+    for (const key of Object.keys(type.keys)) {
+      const fieldType =
+        type.keys[key].type === "reference"
+          ? structureResolveReference(generateContext.structure, type.keys[key])
+          : type.keys[key];
+
+      if (fieldType.type === "file") {
+        fileWrite(
+          file,
+          `data.append("${key}", ${parameter}["${key}"].data, ${parameter}["${key}"].name);`,
+        );
+      } else {
+        fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
+      }
+    }
+
     fileBlockEnd(file);
   }
 

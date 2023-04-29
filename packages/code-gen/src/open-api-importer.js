@@ -144,11 +144,7 @@ function extractRoute(context, path, method) {
     compasStruct,
   );
 
-  if (body && JSON.stringify(body).includes(`type":"file"`)) {
-    compasStruct.files = body;
-  } else {
-    compasStruct.body = body;
-  }
+  compasStruct.body = body;
 
   compasStruct.response = transformResponse(
     context,

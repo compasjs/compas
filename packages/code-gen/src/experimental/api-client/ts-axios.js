@@ -166,39 +166,45 @@ export function tsAxiosGenerateFunction(
     )}(${args.join(", ")}): Promise<${contextNames.responseTypeName}>`,
   );
 
-  if (route.files) {
+  if (route.files || route.metadata?.requestBodyType === "form-data") {
+    const parameter = route.body ? "body" : "files";
+
     fileWrite(
       file,
-      `
-const data = new FormData();
-
-for (const key of Object.keys(files)) {
-  const keyFiles = Array.isArray((files as any)[key]) ? (files as any)[key] : [(files as any)[key]];
-  
-  for (const file of keyFiles) {`,
+      `const data = ${parameter} instanceof FormData ? ${parameter} : new FormData();`,
     );
-    fileContextSetIndent(file, 2);
 
-    if (distilledTargetInfo.isReactNative) {
-      fileWrite(file, `data.append(key, file);`);
-    } else {
-      fileWrite(file, `data.append(key, file.data, file.name);`);
+    fileBlockStart(file, `if (!(${parameter} instanceof FormData))`);
+
+    /** @type {import("../generated/common/types.js").ExperimentalObjectDefinition} */
+    // @ts-expect-error
+    const type = structureResolveReference(
+      generateContext.structure,
+
+      // @ts-expect-error
+      route.body ?? route.files,
+    );
+
+    for (const key of Object.keys(type.keys)) {
+      const fieldType =
+        type.keys[key].type === "reference"
+          ? structureResolveReference(generateContext.structure, type.keys[key])
+          : type.keys[key];
+
+      if (fieldType.type === "file") {
+        if (distilledTargetInfo.isReactNative) {
+          fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
+        } else {
+          fileWrite(
+            file,
+            `data.append("${key}", ${parameter}["${key}"].data, ${parameter}["${key}"].name);`,
+          );
+        }
+      } else {
+        fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
+      }
     }
 
-    fileContextSetIndent(file, -2);
-    fileWrite(file, `}\n}`);
-  }
-
-  if (route.metadata?.requestBodyType === "form-data") {
-    fileWrite(
-      file,
-      `const data = body instanceof FormData ? body : new FormData();`,
-    );
-    fileBlockStart(file, `if (!(body instanceof FormData))`);
-    fileWrite(
-      file,
-      `for (const key of Object.keys(body)) { data.append(key, body[key]); }`,
-    );
     fileBlockEnd(file);
   }
 
@@ -221,14 +227,14 @@ for (const key of Object.keys(files)) {
 
   if (route.files || route.metadata?.requestBodyType === "form-data") {
     fileWrite(file, `data,`);
+
+    if (distilledTargetInfo.isReactNative) {
+      fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
+    }
   }
 
   if (route.body && route.metadata?.requestBodyType !== "form-data") {
     fileWrite(file, `data: body,`);
-  }
-
-  if (distilledTargetInfo.isReactNative) {
-    fileWrite(file, `headers: { "Content-Type": "multipart/form-data" },`);
   }
 
   if (
