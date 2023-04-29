@@ -415,11 +415,14 @@ function convertSchema(context, schema, options = {}) {
         break;
     }
     Object.assign(result, data);
+
+    result.docString = schema?.description ?? "";
   };
 
   if (
     !schema ||
     (!schema.type &&
+      !schema.properties &&
       !schema.$ref &&
       !schema.oneOf &&
       !schema.anyOf &&
@@ -440,7 +443,7 @@ function convertSchema(context, schema, options = {}) {
     if (schema.maxItems !== undefined) {
       result.validator.max = schema.maxItems;
     }
-  } else if (schema.type === "object") {
+  } else if (schema.type === "object" || schema.properties) {
     result.type = "object";
 
     const freeForm = schema.properties === undefined;
