@@ -1,4 +1,5 @@
 import { cpus } from "os";
+import { executeApiClientToExperimentalCodeGen } from "./mods/api-client-to-experimental-code-gen.js";
 import { executeLintConfigToEslintPlugin } from "./mods/lint-config-to-eslint-plugin.js";
 import { executeUpdateQueriesSignatureChange } from "./mods/update-queries-signature-change.js";
 
@@ -48,10 +49,34 @@ export const codeModMap = {
     exec: executeUpdateQueriesSignatureChange,
   },
   "lint-config-to-eslint-plugin": {
-    description: `Converts all known usages of @compas/lint-config to use @compas/eslint-plugin.
+    description: `Convert all known usages of @compas/lint-config to use @compas/eslint-plugin.
 
   This only updates the configuration files and does not update the code to be consistent with the newly enforced rules.
 `,
     exec: executeLintConfigToEslintPlugin,
+  },
+  "api-client-to-experimental-code-gen": {
+    description: `Convert the project to use experimental code-gen based on a list of structures in '$project/structures.txt'.
+
+  'structures.txt' has the following format;
+     https://a.remote.compas.backend -- src/generated
+     ./local-openapi.json -- src/generated/foo -- defaultGroup
+     
+  The code-mode executes the following steps:
+    - Resolve and validated 'structures.txt'
+    - Resolve all mentioned structures from 'structures.txt'
+    - Overwrite 'scripts/generate.mjs'
+    - Execute 'scripts/generate.mjs'
+    - Try to overwrite as much type usages as possible based on the cleaner type name generation.
+    
+  Manual cleanup:
+    - Remove structures.txt
+    - Copy-edit & cleanup 'scripts/generate.mjs'
+      - Use environment variables where appropriate
+      - Cleanup imports
+      - Correct 'targetRuntime' when using React-native.
+    - Go through 'mutation' hooks usage & flatten arguments
+    `,
+    exec: executeApiClientToExperimentalCodeGen,
   },
 };

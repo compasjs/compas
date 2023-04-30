@@ -81,6 +81,7 @@ export async function cliExecutor(logger, state) {
   ${value.description}
   
   Execute with '${state.cli.name} code-mod exec --name ${key}'
+
 `;
     }
     logger.info(str);
