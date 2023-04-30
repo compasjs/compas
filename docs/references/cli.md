@@ -298,25 +298,6 @@ Print the installed Compas version and exit
 | ---------- | -------------------------------------------------------- |
 | -h, --help | Display information about the current command. (boolean) |
 
-## `compas visualise`
-
-Visualise various code-generated structures.
-
-| Option     | Description                                              |
-| ---------- | -------------------------------------------------------- |
-| -h, --help | Display information about the current command. (boolean) |
-
-### `compas visualise erd`
-
-Visualise entity structure and relations in a diagram.
-
-| Option                | Description                                                                    |
-| --------------------- | ------------------------------------------------------------------------------ |
-| --generated-directory | The directory containing the generated files. (string, required)               |
-| --format              | Output file format. Supports png, webp, pdf and svg. Defaults to svg. (string) |
-| --output              | Path to write the output to. Defaults to a random temporary file. (string)     |
-| -h, --help            | Display information about the current command. (boolean)                       |
-
 ## `compas help`
 
 Display help for any of the available commands.

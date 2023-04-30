@@ -230,46 +230,16 @@ test("cli/internal-commands/completions", async (t) => {
       t.ok(isNil(flagCompletions.find((it) => it.name === "--timings")));
     });
 
-    t.test("custom flag completion function is called", async (t) => {
+    t.test("file completion is returned", async (t) => {
       const { flagCompletions } = await generateCompletions([
         "compas",
-        "visualise",
-        "erd",
-        "--format",
-        "",
-      ]);
-
-      t.ok(flagCompletions.length > 0);
-      t.ok(isNil(flagCompletions.find((it) => it.name.startsWith("--"))));
-      t.ok(flagCompletions.find((it) => it.name === "svg"));
-    });
-
-    t.test("--flag=svg syntax is supported", async (t) => {
-      const { flagCompletions } = await generateCompletions([
-        "compas",
-        "visualise",
-        "erd",
-        "--format=",
-      ]);
-
-      t.ok(flagCompletions.length > 0);
-      t.ok(
-        isNil(flagCompletions.find((it) => !it.name.startsWith("--format="))),
-      );
-      t.ok(flagCompletions.find((it) => it.name === "--format=svg"));
-    });
-
-    t.test("directory completion is returned", async (t) => {
-      const { flagCompletions } = await generateCompletions([
-        "compas",
-        "visualise",
-        "erd",
-        "--generated-directory",
+        "migrate",
+        "--connection-settings",
         "./",
       ]);
 
       t.equal(flagCompletions.length, 1);
-      t.ok(flagCompletions.find((it) => it.type === "directory"));
+      t.ok(flagCompletions.find((it) => it.type === "file"));
       t.equal(flagCompletions.length, 1);
     });
 
