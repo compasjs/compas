@@ -604,10 +604,7 @@ export function validatorJavascriptArray(file, type, validatorState) {
   }
 
   // Initialize result array
-  fileWrite(
-    file,
-    `${resultPath} = Array.from({ length: ${currentValuePath}.length });`,
-  );
+  fileWrite(file, `${resultPath} = [];`);
 
   // Loop through array
   const idxVariable = `i${validatorState.reusedVariableIndex++}`;

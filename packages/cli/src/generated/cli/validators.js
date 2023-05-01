@@ -386,9 +386,7 @@ export function validateCliCommandDefinition(value) {
             if (!Array.isArray(intermediateValue8)) {
               intermediateValue8 = [intermediateValue8];
             }
-            result["watchSettings"]["extensions"] = Array.from({
-              length: intermediateValue8.length,
-            });
+            result["watchSettings"]["extensions"] = [];
             for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
               if (
                 intermediateValue8[i8] === null ||
@@ -445,9 +443,7 @@ export function validateCliCommandDefinition(value) {
             if (!Array.isArray(intermediateValue9)) {
               intermediateValue9 = [intermediateValue9];
             }
-            result["watchSettings"]["ignorePatterns"] = Array.from({
-              length: intermediateValue9.length,
-            });
+            result["watchSettings"]["ignorePatterns"] = [];
             for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
               if (
                 intermediateValue9[i9] === null ||
@@ -500,9 +496,7 @@ export function validateCliCommandDefinition(value) {
         if (!Array.isArray(intermediateValue8)) {
           intermediateValue8 = [intermediateValue8];
         }
-        result["subCommands"] = Array.from({
-          length: intermediateValue8.length,
-        });
+        result["subCommands"] = [];
         for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
           if (
             intermediateValue8[i8] === null ||
@@ -547,7 +541,7 @@ export function validateCliCommandDefinition(value) {
         if (!Array.isArray(intermediateValue9)) {
           intermediateValue9 = [intermediateValue9];
         }
-        result["flags"] = Array.from({ length: intermediateValue9.length });
+        result["flags"] = [];
         for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
           if (
             intermediateValue9[i9] === null ||

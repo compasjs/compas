@@ -796,9 +796,7 @@ export function validateQueryResultStoreSessionStore(value) {
         if (!Array.isArray(intermediateValue8)) {
           intermediateValue8 = [intermediateValue8];
         }
-        result["accessTokens"] = Array.from({
-          length: intermediateValue8.length,
-        });
+        result["accessTokens"] = [];
         for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
           if (
             intermediateValue8[i8] === null ||

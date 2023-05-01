@@ -1444,7 +1444,7 @@ export function validateExperimentalAnyOfDefinition(value) {
             foundLength: intermediateValue10.length,
           };
         }
-        result["values"] = Array.from({ length: intermediateValue10.length });
+        result["values"] = [];
         for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
             intermediateValue10[i10] === null ||
@@ -3434,9 +3434,7 @@ export function validateExperimentalCrudDefinition(value) {
                 if (!Array.isArray(intermediateValue16)) {
                   intermediateValue16 = [intermediateValue16];
                 }
-                result["fieldOptions"]["readable"]["$omit"] = Array.from({
-                  length: intermediateValue16.length,
-                });
+                result["fieldOptions"]["readable"]["$omit"] = [];
                 for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
                   if (
                     intermediateValue16[i16] === null ||
@@ -3492,9 +3490,7 @@ export function validateExperimentalCrudDefinition(value) {
                 if (!Array.isArray(intermediateValue17)) {
                   intermediateValue17 = [intermediateValue17];
                 }
-                result["fieldOptions"]["readable"]["$pick"] = Array.from({
-                  length: intermediateValue17.length,
-                });
+                result["fieldOptions"]["readable"]["$pick"] = [];
                 for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
                   if (
                     intermediateValue17[i17] === null ||
@@ -3589,9 +3585,7 @@ export function validateExperimentalCrudDefinition(value) {
                 if (!Array.isArray(intermediateValue18)) {
                   intermediateValue18 = [intermediateValue18];
                 }
-                result["fieldOptions"]["writable"]["$omit"] = Array.from({
-                  length: intermediateValue18.length,
-                });
+                result["fieldOptions"]["writable"]["$omit"] = [];
                 for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
                   if (
                     intermediateValue18[i18] === null ||
@@ -3647,9 +3641,7 @@ export function validateExperimentalCrudDefinition(value) {
                 if (!Array.isArray(intermediateValue19)) {
                   intermediateValue19 = [intermediateValue19];
                 }
-                result["fieldOptions"]["writable"]["$pick"] = Array.from({
-                  length: intermediateValue19.length,
-                });
+                result["fieldOptions"]["writable"]["$pick"] = [];
                 for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
                   if (
                     intermediateValue19[i19] === null ||
@@ -3710,9 +3702,7 @@ export function validateExperimentalCrudDefinition(value) {
         if (!Array.isArray(intermediateValue15)) {
           intermediateValue15 = [intermediateValue15];
         }
-        result["inlineRelations"] = Array.from({
-          length: intermediateValue15.length,
-        });
+        result["inlineRelations"] = [];
         for (let i15 = 0; i15 < intermediateValue15.length; ++i15) {
           if (
             intermediateValue15[i15] === null ||
@@ -3762,9 +3752,7 @@ export function validateExperimentalCrudDefinition(value) {
         if (!Array.isArray(intermediateValue16)) {
           intermediateValue16 = [intermediateValue16];
         }
-        result["nestedRelations"] = Array.from({
-          length: intermediateValue16.length,
-        });
+        result["nestedRelations"] = [];
         for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
           if (
             intermediateValue16[i16] === null ||
@@ -5350,9 +5338,7 @@ export function validateExperimentalExtendDefinition(value) {
         if (!Array.isArray(intermediateValue12)) {
           intermediateValue12 = [intermediateValue12];
         }
-        result["relations"] = Array.from({
-          length: intermediateValue12.length,
-        });
+        result["relations"] = [];
         for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
           if (
             intermediateValue12[i12] === null ||
@@ -5997,9 +5983,7 @@ export function validateExperimentalFileDefinition(value) {
             if (!Array.isArray(intermediateValue10)) {
               intermediateValue10 = [intermediateValue10];
             }
-            result["validator"]["mimeTypes"] = Array.from({
-              length: intermediateValue10.length,
-            });
+            result["validator"]["mimeTypes"] = [];
             for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
               if (
                 intermediateValue10[i10] === null ||
@@ -7059,7 +7043,7 @@ export function validateExperimentalNumberDefinition(value) {
         if (!Array.isArray(intermediateValue10)) {
           intermediateValue10 = [intermediateValue10];
         }
-        result["oneOf"] = Array.from({ length: intermediateValue10.length });
+        result["oneOf"] = [];
         for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
             intermediateValue10[i10] === null ||
@@ -7876,9 +7860,7 @@ export function validateExperimentalObjectDefinition(value) {
         if (!Array.isArray(intermediateValue14)) {
           intermediateValue14 = [intermediateValue14];
         }
-        result["relations"] = Array.from({
-          length: intermediateValue14.length,
-        });
+        result["relations"] = [];
         for (let i14 = 0; i14 < intermediateValue14.length; ++i14) {
           if (
             intermediateValue14[i14] === null ||
@@ -8390,7 +8372,7 @@ export function validateExperimentalOmitDefinition(value) {
         if (!Array.isArray(intermediateValue10)) {
           intermediateValue10 = [intermediateValue10];
         }
-        result["keys"] = Array.from({ length: intermediateValue10.length });
+        result["keys"] = [];
         for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
             intermediateValue10[i10] === null ||
@@ -8924,7 +8906,7 @@ export function validateExperimentalPickDefinition(value) {
         if (!Array.isArray(intermediateValue10)) {
           intermediateValue10 = [intermediateValue10];
         }
-        result["keys"] = Array.from({ length: intermediateValue10.length });
+        result["keys"] = [];
         for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
             intermediateValue10[i10] === null ||
@@ -9646,9 +9628,7 @@ export function validateExperimentalStringDefinition(value) {
             if (!Array.isArray(intermediateValue18)) {
               intermediateValue18 = [intermediateValue18];
             }
-            result["validator"]["disallowedCharacters"] = Array.from({
-              length: intermediateValue18.length,
-            });
+            result["validator"]["disallowedCharacters"] = [];
             for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
               if (
                 intermediateValue18[i18] === null ||
@@ -9707,7 +9687,7 @@ export function validateExperimentalStringDefinition(value) {
         if (!Array.isArray(intermediateValue10)) {
           intermediateValue10 = [intermediateValue10];
         }
-        result["oneOf"] = Array.from({ length: intermediateValue10.length });
+        result["oneOf"] = [];
         for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
           if (
             intermediateValue10[i10] === null ||
@@ -12584,7 +12564,7 @@ export function validateExperimentalRouteDefinition(value) {
         if (!Array.isArray(intermediateValue13)) {
           intermediateValue13 = [intermediateValue13];
         }
-        result["tags"] = Array.from({ length: intermediateValue13.length });
+        result["tags"] = [];
         for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
           if (
             intermediateValue13[i13] === null ||
@@ -12714,9 +12694,7 @@ export function validateExperimentalRouteDefinition(value) {
         if (!Array.isArray(intermediateValue19)) {
           intermediateValue19 = [intermediateValue19];
         }
-        result["invalidations"] = Array.from({
-          length: intermediateValue19.length,
-        });
+        result["invalidations"] = [];
         for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
           if (
             intermediateValue19[i19] === null ||
@@ -13106,7 +13084,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                         }
                         result["properties"]["specification"]["params"][
                           genericKeyResult8
-                        ] = Array.from({ length: intermediateValue11.length });
+                        ] = [];
                         for (
                           let i11 = 0;
                           i11 < intermediateValue11.length;
@@ -13257,7 +13235,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
                         }
                         result["properties"]["specification"]["query"][
                           genericKeyResult9
-                        ] = Array.from({ length: intermediateValue12.length });
+                        ] = [];
                         for (
                           let i12 = 0;
                           i12 < intermediateValue12.length;
