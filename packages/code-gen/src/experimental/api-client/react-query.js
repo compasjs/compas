@@ -9,6 +9,7 @@ import {
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/format.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
+import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesOptionalityIsOptional } from "../types/optionality.js";
@@ -301,7 +302,11 @@ export function reactQueryGenerateFunction(
     return list.join(` & `);
   };
 
-  const parameterListWithExtraction = ({ prefix, withRequestConfig }) => {
+  const parameterListWithExtraction = ({
+    prefix,
+    withRequestConfig,
+    defaultToNull,
+  }) => {
     let result = "";
 
     if (route.params) {
@@ -313,7 +318,21 @@ export function reactQueryGenerateFunction(
       );
 
       result += `{ ${Object.keys(params.keys)
-        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .map((it) => {
+          if (
+            defaultToNull &&
+            referenceUtilsGetProperty(
+              generateContext,
+              params.keys[it],
+              ["isOptional"],
+              false,
+            )
+          ) {
+            return `"${it}": ${prefix}["${it}"] ?? null`;
+          }
+
+          return `"${it}": ${prefix}["${it}"]`;
+        })
         .join(", ")} }, `;
     }
 
@@ -326,7 +345,21 @@ export function reactQueryGenerateFunction(
       );
 
       result += `{ ${Object.keys(query.keys)
-        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .map((it) => {
+          if (
+            defaultToNull &&
+            referenceUtilsGetProperty(
+              generateContext,
+              query.keys[it],
+              ["isOptional"],
+              false,
+            )
+          ) {
+            return `"${it}": ${prefix}["${it}"] ?? null`;
+          }
+
+          return `"${it}": ${prefix}["${it}"]`;
+        })
         .join(", ")} }, `;
     }
 
@@ -339,7 +372,21 @@ export function reactQueryGenerateFunction(
       );
 
       result += `{ ${Object.keys(body.keys)
-        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .map((it) => {
+          if (
+            defaultToNull &&
+            referenceUtilsGetProperty(
+              generateContext,
+              body.keys[it],
+              ["isOptional"],
+              false,
+            )
+          ) {
+            return `"${it}": ${prefix}["${it}"] ?? null`;
+          }
+
+          return `"${it}": ${prefix}["${it}"]`;
+        })
         .join(", ")} }, `;
     }
 
@@ -352,7 +399,21 @@ export function reactQueryGenerateFunction(
       );
 
       result += `{ ${Object.keys(files.keys)
-        .map((it) => `"${it}": ${prefix}["${it}"]`)
+        .map((it) => {
+          if (
+            defaultToNull &&
+            referenceUtilsGetProperty(
+              generateContext,
+              files.keys[it],
+              ["isOptional"],
+              false,
+            )
+          ) {
+            return `"${it}": ${prefix}["${it}"] ?? null`;
+          }
+
+          return `"${it}": ${prefix}["${it}"]`;
+        })
         .join(", ")} }, `;
     }
 
@@ -464,7 +525,11 @@ ${hookName}.queryKey = (
   }
 ): QueryKey => [
   ...${hookName}.baseKey(),
-  ${parameterListWithExtraction({ prefix: "opts", withRequestConfig: false })}
+  ${parameterListWithExtraction({
+    prefix: "opts",
+    withRequestConfig: false,
+    defaultToNull: true,
+  })}
 ];
 
 /**
