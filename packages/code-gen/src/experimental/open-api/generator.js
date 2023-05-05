@@ -486,7 +486,7 @@ function openApiGetCompasVersion() {
 
   return (
     localPackageJson.dependencies?.["@compas/code-gen"] ??
-    localPackageJson.dependencies?.["@compas/code-gen"] ??
+    localPackageJson.devDependencies?.["@compas/code-gen"] ??
     "0.0.1"
   );
 }
