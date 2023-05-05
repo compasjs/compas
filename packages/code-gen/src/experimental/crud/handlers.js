@@ -7,7 +7,7 @@ import {
   fileContextRemoveLinePrefix,
   fileContextSetIndent,
 } from "../file/context.js";
-import { fileFormatInlineComment } from "../file/format.js";
+import { fileFormatInlineComment } from "../file/docs.js";
 import { fileWrite } from "../file/write.js";
 import {
   crudInformationGetHasCustomReadableType,

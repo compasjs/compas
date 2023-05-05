@@ -4,7 +4,7 @@ import {
   fileContextCreateGeneric,
   fileContextSetIndent,
 } from "../file/context.js";
-import { fileFormatInlineComment } from "../file/format.js";
+import { fileFormatInlineComment } from "../file/docs.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
 import {
   modelKeyGetPrimary,

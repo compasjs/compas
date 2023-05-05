@@ -33,7 +33,9 @@ export type ExperimentalAnyDefinition = {
     allowNull: boolean;
   };
 
-  // Support different 'any' behaviours for different targets. All targets are optional and will be tried from most specific to least specific.
+  /**
+   * Support different 'any' behaviours for different targets. All targets are optional and will be tried from most specific to least specific.
+   */
   targets?:
     | Partial<
         Record<
@@ -42,10 +44,14 @@ export type ExperimentalAnyDefinition = {
             validatorInputType: string;
             validatorOutputType: string;
 
-            // Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated
+            /**
+             * Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated
+             */
             validatorExpression?: string | undefined;
 
-            // A raw import that is added to the files where the provided validator expression is used.
+            /**
+             * A raw import that is added to the files where the provided validator expression is used.
+             */
             validatorImport?: string | undefined;
           }
         >
@@ -81,7 +87,9 @@ export type ExperimentalAnyDefinitionInput = {
     allowNull: boolean | "true" | "false";
   };
 
-  // Support different 'any' behaviours for different targets. All targets are optional and will be tried from most specific to least specific.
+  /**
+   * Support different 'any' behaviours for different targets. All targets are optional and will be tried from most specific to least specific.
+   */
   targets?:
     | Partial<
         Record<
@@ -90,10 +98,14 @@ export type ExperimentalAnyDefinitionInput = {
             validatorInputType: string;
             validatorOutputType: string;
 
-            // Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated
+            /**
+             * Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated
+             */
             validatorExpression?: string | undefined;
 
-            // A raw import that is added to the files where the provided validator expression is used.
+            /**
+             * A raw import that is added to the files where the provided validator expression is used.
+             */
             validatorImport?: string | undefined;
           }
         >
@@ -439,7 +451,9 @@ export type ExperimentalUuidDefinition = {
   };
 };
 
-// All type definitions that can be used inside other types, like object keys.
+/**
+ * All type definitions that can be used inside other types, like object keys.
+ */
 export type ExperimentalTypeSystemDefinition =
   | ExperimentalAnyDefinition
   | ExperimentalAnyOfDefinition
@@ -838,7 +852,9 @@ export type ExperimentalUuidDefinitionInput = {
   };
 };
 
-// All type definitions that can be used inside other types, like object keys.
+/**
+ * All type definitions that can be used inside other types, like object keys.
+ */
 export type ExperimentalTypeSystemDefinitionInput =
   | ExperimentalAnyDefinitionInput
   | ExperimentalAnyOfDefinitionInput
@@ -881,128 +897,188 @@ export type ExperimentalAnyOfDefinitionInput = {
     | ExperimentalTypeSystemDefinitionInput;
 };
 
-// Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
+/**
+ * Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
+ */
 export type ExperimentalGenerateOptions = {
   targetLanguage: "js" | "ts";
 
-  // Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
+  /**
+   * Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
+   */
   outputDirectory?: string | undefined;
   generators: {
-    // Enable a structure dump. This way this structure can be reused via 'Generator#addStructure
+    /**
+     * Enable a structure dump. This way this structure can be reused via 'Generator#addStructure
+     */
     structure?: {} | undefined;
 
-    // Enable the OpenAPI generator.
+    /**
+     * Enable the OpenAPI generator.
+     */
     openApi?:
       | {
-          // Custom top level properties.
+          /**
+           * Custom top level properties.
+           */
           openApiExtensions: {
             version?: string | undefined;
             title?: string | undefined;
             description?: string | undefined;
           };
 
-          // Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.
+          /**
+           * Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.
+           */
           openApiRouteExtensions: { [key: string]: any };
         }
       | undefined;
 
-    // Generate a validating router with entry points for your route handlers.
+    /**
+     * Generate a validating router with entry points for your route handlers.
+     */
     router?:
       | {
-          // Select one of the supported libraries to generate a router for.
+          /**
+           * Select one of the supported libraries to generate a router for.
+           */
           target: {
             library: "koa";
           };
 
-          // Adds a Compas '_compas/structure.json' route to the generated router that includes all available routes.
+          /**
+           * Adds a Compas '_compas/structure.json' route to the generated router that includes all available routes.
+           */
           exposeApiStructure: boolean;
         }
       | undefined;
 
-    // Generate one of the compatible database interfaces.
+    /**
+     * Generate one of the compatible database interfaces.
+     */
     database?:
       | {
-          // Select one of the supported dialects to generate queries for.
+          /**
+           * Select one of the supported dialects to generate queries for.
+           */
           target: {
             dialect: "postgres";
 
-            // Write out 'common/structure.sql' with a naive DDL approach.
+            /**
+             * Write out 'common/structure.sql' with a naive DDL approach.
+             */
             includeDDL: boolean;
           };
 
-          // Create a markdown file containing the ERD in a 'mermaid' block.
+          /**
+           * Create a markdown file containing the ERD in a 'mermaid' block.
+           */
           includeEntityDiagram: boolean;
         }
       | undefined;
 
-    // Alter the output of generated validators. Other generators will always include validators in their output if necessary.
+    /**
+     * Alter the output of generated validators. Other generators will always include validators in their output if necessary.
+     */
     validators?:
       | {
-          // Always generate validators for all named types even if no other generator needs it. This implies {@link ExperimentalGenerateOptions.generators.types.includeBaseTypes}.
+          /**
+           * Always generate validators for all named types even if no other generator needs it. This implies {@link ExperimentalGenerateOptions.generators.types.includeBaseTypes}.
+           */
           includeBaseTypes: boolean;
         }
       | undefined;
 
-    // Generate an API client, based on the routes in your structure.
+    /**
+     * Generate an API client, based on the routes in your structure.
+     */
     apiClient?:
       | {
-          // Select your HTTP client of choice.
+          /**
+           * Select your HTTP client of choice.
+           */
           target:
             | {
                 library: "axios";
                 targetRuntime: "node.js" | "browser" | "react-native";
 
-                // Include an API client wrapper to use the api easier with your user interface library.
+                /**
+                 * Include an API client wrapper to use the api easier with your user interface library.
+                 */
                 includeWrapper?: "react-query" | undefined;
 
-                // Use a global api client that will be used for all requests.
+                /**
+                 * Use a global api client that will be used for all requests.
+                 */
                 globalClient: boolean;
               }
             | {
                 library: "fetch";
                 targetRuntime: "node.js" | "browser" | "react-native";
 
-                // Include an API client wrapper to use the api easier with your user interface library.
+                /**
+                 * Include an API client wrapper to use the api easier with your user interface library.
+                 */
                 includeWrapper?: "react-query" | undefined;
 
-                // Use a global api client that will be used for all requests.
+                /**
+                 * Use a global api client that will be used for all requests.
+                 */
                 globalClient: boolean;
               };
 
-          // Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
+          /**
+           * Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
+           */
           responseValidation: {
             looseObjectValidation: boolean;
           };
         }
       | undefined;
 
-    // Alter the output of the generated types, they are always generated as a result of other enabled generators.
+    /**
+     * Alter the output of the generated types, they are always generated as a result of other enabled generators.
+     */
     types?:
       | {
-          // Always generate types for all named types even if no other generator needs it.
+          /**
+           * Always generate types for all named types even if no other generator needs it.
+           */
           includeBaseTypes: boolean;
 
-          // Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.
+          /**
+           * Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.
+           */
           declareGlobalTypes: boolean;
         }
       | undefined;
   };
 };
 
-// Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
+/**
+ * Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
+ */
 export type ExperimentalGenerateOptionsInput = {
   targetLanguage: "js" | "ts";
 
-  // Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
+  /**
+   * Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
+   */
   outputDirectory?: string | undefined;
   generators: {
-    // Enable a structure dump. This way this structure can be reused via 'Generator#addStructure
+    /**
+     * Enable a structure dump. This way this structure can be reused via 'Generator#addStructure
+     */
     structure?: {} | undefined;
 
-    // Enable the OpenAPI generator.
+    /**
+     * Enable the OpenAPI generator.
+     */
     openApi?:
       | {
-          // Custom top level properties.
+          /**
+           * Custom top level properties.
+           */
           openApiExtensions?:
             | {
                 version?: string | undefined;
@@ -1011,75 +1087,109 @@ export type ExperimentalGenerateOptionsInput = {
               }
             | undefined;
 
-          // Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.
+          /**
+           * Add or overwrite specific properties per route. The keys should be formatted as 'upperCaseFirst(group) + upperCaseFirst(name)'.
+           */
           openApiRouteExtensions?: { [key: string]: any } | undefined;
         }
       | undefined;
 
-    // Generate a validating router with entry points for your route handlers.
+    /**
+     * Generate a validating router with entry points for your route handlers.
+     */
     router?:
       | {
-          // Select one of the supported libraries to generate a router for.
+          /**
+           * Select one of the supported libraries to generate a router for.
+           */
           target: {
             library: "koa";
           };
 
-          // Adds a Compas '_compas/structure.json' route to the generated router that includes all available routes.
+          /**
+           * Adds a Compas '_compas/structure.json' route to the generated router that includes all available routes.
+           */
           exposeApiStructure?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 
-    // Generate one of the compatible database interfaces.
+    /**
+     * Generate one of the compatible database interfaces.
+     */
     database?:
       | {
-          // Select one of the supported dialects to generate queries for.
+          /**
+           * Select one of the supported dialects to generate queries for.
+           */
           target: {
             dialect: "postgres";
 
-            // Write out 'common/structure.sql' with a naive DDL approach.
+            /**
+             * Write out 'common/structure.sql' with a naive DDL approach.
+             */
             includeDDL?: boolean | "true" | "false" | undefined;
           };
 
-          // Create a markdown file containing the ERD in a 'mermaid' block.
+          /**
+           * Create a markdown file containing the ERD in a 'mermaid' block.
+           */
           includeEntityDiagram?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 
-    // Alter the output of generated validators. Other generators will always include validators in their output if necessary.
+    /**
+     * Alter the output of generated validators. Other generators will always include validators in their output if necessary.
+     */
     validators?:
       | {
-          // Always generate validators for all named types even if no other generator needs it. This implies {@link ExperimentalGenerateOptions.generators.types.includeBaseTypes}.
+          /**
+           * Always generate validators for all named types even if no other generator needs it. This implies {@link ExperimentalGenerateOptions.generators.types.includeBaseTypes}.
+           */
           includeBaseTypes?: boolean | "true" | "false" | undefined;
         }
       | undefined;
 
-    // Generate an API client, based on the routes in your structure.
+    /**
+     * Generate an API client, based on the routes in your structure.
+     */
     apiClient?:
       | {
-          // Select your HTTP client of choice.
+          /**
+           * Select your HTTP client of choice.
+           */
           target:
             | {
                 library: "axios";
                 targetRuntime: "node.js" | "browser" | "react-native";
 
-                // Include an API client wrapper to use the api easier with your user interface library.
+                /**
+                 * Include an API client wrapper to use the api easier with your user interface library.
+                 */
                 includeWrapper?: "react-query" | undefined;
 
-                // Use a global api client that will be used for all requests.
+                /**
+                 * Use a global api client that will be used for all requests.
+                 */
                 globalClient?: boolean | "true" | "false" | undefined;
               }
             | {
                 library: "fetch";
                 targetRuntime: "node.js" | "browser" | "react-native";
 
-                // Include an API client wrapper to use the api easier with your user interface library.
+                /**
+                 * Include an API client wrapper to use the api easier with your user interface library.
+                 */
                 includeWrapper?: "react-query" | undefined;
 
-                // Use a global api client that will be used for all requests.
+                /**
+                 * Use a global api client that will be used for all requests.
+                 */
                 globalClient?: boolean | "true" | "false" | undefined;
               };
 
-          // Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
+          /**
+           * Determine how strict the API client response validations are. This defaults to loose object validation, allowing extra values in the responses which are not returned in the validated result. It is advised to disable this when you use the API client for e2e testing your server.
+           */
           responseValidation?:
             | {
                 looseObjectValidation: boolean | "true" | "false";
@@ -1088,13 +1198,19 @@ export type ExperimentalGenerateOptionsInput = {
         }
       | undefined;
 
-    // Alter the output of the generated types, they are always generated as a result of other enabled generators.
+    /**
+     * Alter the output of the generated types, they are always generated as a result of other enabled generators.
+     */
     types?:
       | {
-          // Always generate types for all named types even if no other generator needs it.
+          /**
+           * Always generate types for all named types even if no other generator needs it.
+           */
           includeBaseTypes?: boolean | "true" | "false" | undefined;
 
-          // Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.
+          /**
+           * Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.
+           */
           declareGlobalTypes?: boolean | "true" | "false" | undefined;
         }
       | undefined;
@@ -1151,7 +1267,9 @@ export type ExperimentalRouteDefinition = {
     | undefined;
 };
 
-// This contains all types that can be added top level to the structure.
+/**
+ * This contains all types that can be added top level to the structure.
+ */
 export type ExperimentalNamedTypeDefinition =
   | ExperimentalAnyDefinition
   | ExperimentalAnyOfDefinition
@@ -1222,7 +1340,9 @@ export type ExperimentalRouteDefinitionInput = {
     | undefined;
 };
 
-// This contains all types that can be added top level to the structure.
+/**
+ * This contains all types that can be added top level to the structure.
+ */
 export type ExperimentalNamedTypeDefinitionInput =
   | ExperimentalAnyDefinitionInput
   | ExperimentalAnyOfDefinitionInput
@@ -1253,14 +1373,18 @@ export type ExperimentalStructureInput = {
   };
 };
 
-// This contains all known type definitions.
+/**
+ * This contains all known type definitions.
+ */
 export type ExperimentalTypeDefinition =
   | ExperimentalNamedTypeDefinition
   | ExperimentalReferenceDefinition
   | ExperimentalRelationDefinition
   | ExperimentalRouteInvalidationDefinition;
 
-// This contains all known type definitions.
+/**
+ * This contains all known type definitions.
+ */
 export type ExperimentalTypeDefinitionInput =
   | ExperimentalNamedTypeDefinitionInput
   | ExperimentalReferenceDefinitionInput

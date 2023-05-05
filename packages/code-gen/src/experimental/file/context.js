@@ -1,5 +1,5 @@
 import { AppError } from "@compas/stdlib";
-import { fileFormatInlineComment } from "./format.js";
+import { fileFormatInlineComment } from "./docs.js";
 import {
   fileImportsAddPlaceholder,
   fileImportsStringifyImports,

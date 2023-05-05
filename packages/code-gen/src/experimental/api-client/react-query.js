@@ -7,7 +7,7 @@ import {
   fileContextRemoveLinePrefix,
   fileContextSetIndent,
 } from "../file/context.js";
-import { fileFormatInlineComment } from "../file/format.js";
+import { fileFormatInlineComment } from "../file/docs.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
@@ -497,6 +497,7 @@ export function reactQueryGenerateFunction(
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: true,
+    defaultToNull: false,
   })}
   );
   }, options);`,
@@ -550,6 +551,7 @@ ${hookName}.queryKey = (
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: true,
+    defaultToNull: false,
   })}
   ));
 }
@@ -572,6 +574,7 @@ ${hookName}.queryKey = (
      ${parameterListWithExtraction({
        prefix: "opts",
        withRequestConfig: true,
+       defaultToNull: false,
      })}
   ));
 }
@@ -675,6 +678,7 @@ ${hookName}.setQueryData = (
   ${parameterListWithExtraction({
     prefix: "variables",
     withRequestConfig: true,
+    defaultToNull: false,
   })}
 ), options);
 `,

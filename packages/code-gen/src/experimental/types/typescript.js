@@ -5,7 +5,7 @@ import {
   fileContextGet,
   fileContextSetIndent,
 } from "../file/context.js";
-import { fileFormatInlineComment } from "../file/format.js";
+import { fileWriteDocBlock } from "../file/docs.js";
 import {
   fileWrite,
   fileWriteInline,
@@ -156,7 +156,7 @@ export function typesTypescriptGenerateNamedType(
   );
 
   if (type.docString) {
-    fileWrite(file, fileFormatInlineComment(file, type.docString));
+    fileWriteDocBlock(file, type.docString);
   }
 
   fileWriteLinePrefix(file);
@@ -410,11 +410,9 @@ export function typesTypescriptFormatType(
     for (const key of Object.keys(type.keys)) {
       fileWriteNewLine(file);
       if (type.keys[key].docString) {
+        // Add a new line between the previous prop and this prop.
         fileWrite(file, "");
-        fileWrite(
-          file,
-          fileFormatInlineComment(file, type.keys[key].docString),
-        );
+        fileWriteDocBlock(file, type.keys[key].docString);
       }
 
       const subIsOptional = typesOptionalityIsOptional(
