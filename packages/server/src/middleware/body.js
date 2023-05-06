@@ -11,7 +11,7 @@ import formidable from "formidable";
  * @property {object|undefined} [queryString] Options for the 'qs' package
  * @property {string|undefined} [jsonLimit]
  * @property {string|undefined} [textLimit]
- * @property {string|undefined} [formLimit]
+ * @property {string|undefined} [urlencodedLimit]
  * @property {string[]|undefined} [parsedMethods]
  */
 
@@ -54,15 +54,15 @@ export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
  * @param {KoaBodyOptions} opts Options that will be passed to koa-body
  */
 function koaBody(opts = {}) {
-  opts.urlencoded = opts.urlencoded ?? true;
   opts.json = opts.json ?? true;
+  opts.urlencoded = opts.urlencoded ?? true;
   opts.text = opts.text ?? true;
 
   opts.encoding = opts.encoding ?? "utf-8";
   opts.queryString = opts.queryString ?? null;
 
   opts.jsonLimit = opts.jsonLimit ?? "1mb";
-  opts.formLimit = opts.formLimit ?? "1mb";
+  opts.urlencodedLimit = opts.urlencodedLimit ?? "1mb";
   opts.textLimit = opts.textLimit ?? "56kb";
 
   opts.parsedMethods = opts.parsedMethods ?? ["POST", "PUT", "PATCH"];
@@ -83,7 +83,7 @@ function koaBody(opts = {}) {
         } else if (opts.urlencoded && ctx.is("urlencoded")) {
           bodyResult = await coBody.form(ctx, {
             encoding: opts.encoding,
-            limit: opts.formLimit,
+            limit: opts.urlencodedLimit,
             queryString: opts.queryString,
             returnRawBody: false,
           });
