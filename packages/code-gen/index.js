@@ -11,7 +11,7 @@
  */
 
 export { TypeCreator } from "./src/builders/index.js";
-export { App } from "./src/App.js";
+export { Generator } from "./src/generator.js";
 export {
   loadApiStructureFromRemote,
   loadApiStructureFromOpenAPI,

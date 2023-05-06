@@ -1,4 +1,3 @@
-import { stringifyType } from "../stringify.js";
 import { TypeBuilder } from "./TypeBuilder.js";
 import { buildOrInfer } from "./utils.js";
 
@@ -15,7 +14,7 @@ export class AnyOfType extends TypeBuilder {
 
     for (const v of this.internalValues) {
       const buildValue = buildOrInfer(v);
-      const stringValueOfBuild = stringifyType(buildValue, true);
+      const stringValueOfBuild = JSON.stringify(buildValue);
 
       if (!set.has(stringValueOfBuild)) {
         set.add(stringValueOfBuild);
@@ -40,7 +39,7 @@ export class AnyOfType extends TypeBuilder {
   /**
    * Note that if duplicate types are found, they are deduplicated.
    *
-   * @param {...TypeBuilderLike} items
+   * @param {...import("../../types/advanced-types.js").TypeBuilderLike} items
    * @returns {AnyOfType}
    */
   values(...items) {

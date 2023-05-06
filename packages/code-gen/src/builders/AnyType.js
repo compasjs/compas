@@ -69,7 +69,7 @@ export class AnyType extends TypeBuilder {
    *
    * TODO: update above comment
    *
-   * @param {import("../experimental/generated/common/types.js").ExperimentalAnyDefinition["targets"]} targets
+   * @param {import("../generated/common/types.js").ExperimentalAnyDefinition["targets"]} targets
    * @returns {AnyType}
    */
   implementations(targets) {

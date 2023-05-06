@@ -14,7 +14,7 @@ import { query } from "./query.js";
 
 /**
  * @typedef {(
- *   event: InsightEvent,
+ *   event: import("@compas/stdlib").InsightEvent,
  *   sql: import("postgres").Sql<{}>,
  *   job: import("./generated/common/types").StoreJob,
  * ) => (void | Promise<void>)} QueueWorkerHandler

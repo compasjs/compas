@@ -1,5 +1,5 @@
 import { TypeCreator } from "../../src/builders/index.js";
-import { Generator } from "../../src/experimental/index.js";
+import { Generator } from "../../src/index.js";
 
 export const specificationStructureDirectory =
   "./.cache/specification/generated";

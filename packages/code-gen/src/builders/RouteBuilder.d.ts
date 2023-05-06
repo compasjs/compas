@@ -135,7 +135,7 @@ export class RouteCreator {
    *
    * @param {string} group
    * @param {string} [name]
-   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @param {import("../generated/common/types").ExperimentalRouteInvalidationDefinition["properties"]} [properties]
    * @returns {RouteInvalidationType}
    */
   invalidates(
@@ -147,16 +147,12 @@ export class RouteCreator {
           useSharedQuery?: boolean | undefined;
           specification?:
             | {
-                params?:
-                  | {
-                      [key: string]: string[];
-                    }
-                  | undefined;
-                query?:
-                  | {
-                      [key: string]: string[];
-                    }
-                  | undefined;
+                params: {
+                  [key: string]: string[];
+                };
+                query: {
+                  [key: string]: string[];
+                };
               }
             | undefined;
         }

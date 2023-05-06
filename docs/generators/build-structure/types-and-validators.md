@@ -9,8 +9,7 @@ the group or flow that the type belongs to and all the methods for building your
 own structure which we will explore later.
 
 ```js
-import { TypeCreator } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator, TypeCreator } from "@compas/code-gen";
 
 const generator = new Generator();
 const T = new TypeCreator("myFlowName"); // like 'user' or 'userOnboarding'
@@ -60,8 +59,7 @@ T.date();
 Top level types provided to `generator.add` need to have a name:
 
 ```js
-import { TypeCreator } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator, TypeCreator } from "@compas/code-gen";
 
 const generator = new Generator();
 const T = new TypeCreator(); // defaults to `App`

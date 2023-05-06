@@ -25,13 +25,13 @@ export async function main() {
 function cleanUpTypeDefinitionFiles() {
   const files = [];
   processDirectoryRecursiveSync(process.cwd(), (file) => {
-    if (file.includes("types/generated/common/")) {
-      // Exclude global generated types
+    if (file.includes("generated/")) {
+      // Exclude generated directory
       return;
     }
 
-    if (file.includes("generated/common/types.d.ts")) {
-      // Exclude package specific types
+    if (file.includes("types/compas.d.ts")) {
+      // Exclude compas global definition
       return;
     }
 

@@ -30,8 +30,8 @@ This project is structured according to the
 
 - Uses `@compas/eslint-plugin` with `compas lint` for running ESLint and
   Prettier
-- Has code generation based on `@compas/code-gen/experimental`, with the
-  definitions stored in `gen/*` and a custom command in `commands/generate.js`
+- Has code generation based on `@compas/code-gen`, with the definitions stored
+  in `gen/*` and a custom command in `commands/generate.js`
 - Contains 'global' services via
   [ES Module live bindings](https://stackoverflow.com/a/57552682) in
   `services/core.js`.

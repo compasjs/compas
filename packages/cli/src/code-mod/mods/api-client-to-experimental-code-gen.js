@@ -80,8 +80,7 @@ function writeGenerateFile(structureInformation) {
   writeFileSync(
     "./scripts/generate.mjs",
     `
-import { Generator } from "@compas/code-gen/experimental";
-import { loadApiStructureFromOpenAPI, loadApiStructureFromRemote } from "@compas/code-gen";
+import { Generator, loadApiStructureFromOpenAPI, loadApiStructureFromRemote } from "@compas/code-gen";
 import Axios from "axios";
 import { readFileSync } from "node:fs";
 import { mainFn } from "@compas/stdlib";

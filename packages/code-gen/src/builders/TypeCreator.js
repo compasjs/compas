@@ -1,10 +1,8 @@
-import { AppError } from "@compas/stdlib";
-import { CrudType } from "../crud/CrudType.js";
-import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { AnyOfType } from "./AnyOfType.js";
 import { AnyType } from "./AnyType.js";
 import { ArrayType } from "./ArrayType.js";
 import { BooleanType } from "./BooleanType.js";
+import { CrudType } from "./CrudType.js";
 import { DateType } from "./DateType.js";
 import { ExtendType } from "./ExtendType.js";
 import { FileType } from "./FileType.js";
@@ -32,13 +30,6 @@ export class TypeCreator {
       throw new Error(
         `The '.' is reserved for later use when creating nested groups`,
       );
-    }
-
-    const { error } = validateCodeGenNamePart(this.group);
-    if (error) {
-      throw AppError.serverError({
-        message: `Specified group name '${this.group}' is not valid. Expects only lowercase and uppercase characters.`,
-      });
     }
   }
 
@@ -147,7 +138,7 @@ export class TypeCreator {
   }
 
   /**
-   * @param {string|TypeBuilder} groupOrOther
+   * @param {string|import("./TypeBuilder.js").TypeBuilder} groupOrOther
    * @param {string} [name]
    * @returns {ReferenceType}
    */

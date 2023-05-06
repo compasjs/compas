@@ -32,7 +32,7 @@ export function cleanupPostgresDatabaseTemplate(): Promise<void>;
  *   verboseSql?: boolean
  * }} [options] If verboseSql is true, creates a new logger and prints all
  *   queries.
- * @returns {Promise<Postgres>}
+ * @returns {Promise<import("@compas/store").Postgres>}
  */
 export function createTestPostgresDatabase(
   rawOpts?: import("postgres").Options<any> | undefined,
@@ -41,7 +41,7 @@ export function createTestPostgresDatabase(
         verboseSql?: boolean | undefined;
       }
     | undefined,
-): Promise<Postgres>;
+): Promise<import("@compas/store").Postgres>;
 /**
  * Try to remove a test database. Can only happen if the connection is created by
  * 'createTestPostgresDatabase'.

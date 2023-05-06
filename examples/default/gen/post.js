@@ -3,7 +3,7 @@ import { TypeCreator } from "@compas/code-gen";
 /**
  * Apply the 'post' routes and related types
  *
- * @param {import("@compas/code-gen/experimental").Generator} generator
+ * @param {import("@compas/code-gen").Generator} generator
  */
 export function extendWithPost(generator) {
   const T = new TypeCreator("post");

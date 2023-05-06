@@ -12,8 +12,7 @@ generator.
 
 ```js {7-8}
 import { readFileSync } from "fs";
-import { loadApiStructureFromOpenAPI } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator, loadApiStructureFromOpenAPI } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -28,8 +27,7 @@ specification.
 
 ```js {7-12}
 import { readFileSync } from "fs";
-import { loadApiStructureFromRemote } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator, loadApiStructureFromRemote } from "@compas/code-gen";
 
 const generator = new Generator();
 

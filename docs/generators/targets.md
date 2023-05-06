@@ -4,7 +4,7 @@ Compas code generators are based on a combination of targets. The most important
 target is which programming language you want to use: the `targetLanguage`.
 
 ```js {6}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -27,7 +27,7 @@ To automatically write the generated files to disk, you can use an
 `outputDirectory`. If it is not specified all generated files will be returned.
 
 ```js {7}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -44,7 +44,7 @@ for libraries to expose some types to the user or can be used for post
 processing. It ignores all targets.
 
 ```js {8}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -63,7 +63,7 @@ generators will utilize it to write their specific types. There are few options
 you can optionally specify
 
 ```js {8-11}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -102,7 +102,7 @@ parts of the generated output to ensure that only structurally correct values
 can pass. Preventing wrong data or even over sharing information.
 
 ```js {8-10}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -143,7 +143,7 @@ be enabled, and to work around compatibilities of different `FormData`
 implementations.
 
 ```js {8-15}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -207,7 +207,7 @@ It has support for the following target libraries:
   open an [issue](https://github.com/compasjs/compas/issues/)!
 
 ```js {8-13}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -236,7 +236,7 @@ format. This loses some information like [invalidations](/#todo). It can be used
 to generate API clients for targets not supported by Compas.
 
 ```js {8-11}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
@@ -269,7 +269,7 @@ Supported dialects
   [porsager/postgres](https://www.npmjs.com/package/postgres) package.
 
 ```js {8-11}
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 

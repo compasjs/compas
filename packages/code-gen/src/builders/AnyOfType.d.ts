@@ -7,10 +7,12 @@ export class AnyOfType extends TypeBuilder {
   /**
    * Note that if duplicate types are found, they are deduplicated.
    *
-   * @param {...TypeBuilderLike} items
+   * @param {...import("../../types/advanced-types.js").TypeBuilderLike} items
    * @returns {AnyOfType}
    */
-  values(...items: TypeBuilderLike[]): AnyOfType;
+  values(
+    ...items: import("../../types/advanced-types.js").TypeBuilderLike[]
+  ): AnyOfType;
   /**
    * Set the discriminant for faster validators and concise validator errors
    *

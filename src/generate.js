@@ -1,12 +1,10 @@
 import { readFile } from "fs/promises";
 import { readdir } from "node:fs/promises";
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 import { AppError, exec, newLogger } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
-import { extendWithCodeGenExperimental } from "../gen/code-gen-experimental.js";
-import { applyCodeGenStructure } from "../gen/code-gen.js";
+import { extendWithCodeGen } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
-import { App } from "../packages/code-gen/index.js";
 
 export function generateCli(logger) {
   const generator = new Generator(logger);
@@ -26,29 +24,14 @@ export function generateCli(logger) {
   });
 }
 
-export async function generateCodeGen() {
-  const app = new App({
-    verbose: true,
-  });
-
-  applyCodeGenStructure(app);
-
-  await app.generate({
-    outputDirectory: `packages/code-gen/src/generated`,
-    enabledGroups: ["codeGen"],
-    isNode: true,
-    enabledGenerators: ["validator", "type"],
-    dumpStructure: true,
-    declareGlobalTypes: false,
-  });
-
+export function generateCodeGen() {
   const generator = new Generator(newLogger());
 
-  extendWithCodeGenExperimental(generator);
+  extendWithCodeGen(generator);
 
   generator.generate({
     targetLanguage: "js",
-    outputDirectory: "packages/code-gen/src/experimental/generated",
+    outputDirectory: "packages/code-gen/src/generated",
     generators: {
       structure: {},
       validators: {

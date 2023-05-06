@@ -1,11 +1,5 @@
 # Migration guide for the code-gen rewrite
 
-::: warning
-
-`@compas/code-gen/experimental` is still experimental!
-
-:::
-
 The new code generators are here! With built-in support for different target
 combinations, a more consistent output and a better safety-net with validators
 sprinkled in, in more parts of your application. We've tried to keep the amount
@@ -147,6 +141,10 @@ would be to execute the following replacements over your codebase;
 - `ResponseApi` -> `Response`
 - Other renames are less straight forward removing the `Api` or `Input`
   suffixes.
+
+Alternatively use the 'api-client-to-experimental-code-gen' code-mode via
+`NODE_ENV=development npx compas code-mode exec --name api-client-to-experimental-code-gen`.
+See `NODE_ENV=development npx compas code-mod list` for more information.
 
 ## Auto converting validators
 

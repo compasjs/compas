@@ -2,13 +2,13 @@ import { existsSync } from "fs";
 import { AppError, isNil, pathJoin, uuid } from "@compas/stdlib";
 import { testTemporaryDirectory } from "../../../src/testing.js";
 import { TypeCreator } from "../src/builders/index.js";
-import { Generator } from "../src/experimental/index.js";
+import { Generator } from "../src/index.js";
 
 /**
  * @param {{
  *   withOutputDirectory?: string,
  * }} options
- * @returns {import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions}
+ * @returns {import("../src/generated/common/types.js").ExperimentalGenerateOptions}
  */
 function testGeneratorDefaultGenerateOptions(options) {
   return {
@@ -57,13 +57,13 @@ function testGeneratorDefaultGenerateOptions(options) {
  * @param {{
  *   partialError: string,
  *   generateOptions:
- *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }|{
  *   pass: true,
  *   generateOptions?:
- *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
- * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
+ * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {void}
  */
 export function testGeneratorError(t, options, builders) {
@@ -144,9 +144,9 @@ export function testGeneratorError(t, options, builders) {
  *   validatorName: string,
  *   validatorInput: any,
  *   generateOptions?:
- *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
- * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
+ * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {Promise<{ value: any, error: Record<string, ValidatorErrorMap> }>}
  */
 export async function testGeneratorType(t, options, builders) {
@@ -194,9 +194,9 @@ export async function testGeneratorType(t, options, builders) {
  *   relativePath: string,
  *   partialValue: string,
  *   generateOptions?:
- *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
- * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
+ * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {void}
  */
 export function testGeneratorStaticOutput(t, options, builders) {
@@ -235,10 +235,10 @@ export function testGeneratorStaticOutput(t, options, builders) {
  * @param {import("@compas/cli").TestRunner} t
  * @param {{
  *   generateOptions?:
- *   import("../src/experimental/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
  * }} options
- * @param {(T: TypeCreator) => ((TypeBuilder|TypeBuilderLike)[])} builders
- * @returns {import("../src/experimental/generate.js").OutputFile[]}
+ * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
+ * @returns {import("../src/generate.js").OutputFile[]}
  */
 export function testGeneratorStaticFiles(t, options, builders) {
   const generator = new Generator(t.log);

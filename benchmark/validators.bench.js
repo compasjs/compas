@@ -2,8 +2,7 @@
 
 import { pathToFileURL } from "url";
 import { bench, mainBenchFn } from "@compas/cli";
-import { TypeCreator } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { TypeCreator, Generator } from "@compas/code-gen";
 import { mainFn, pathJoin } from "@compas/stdlib";
 import FastestValidator from "fastest-validator";
 import { testTemporaryDirectory } from "../src/testing.js";

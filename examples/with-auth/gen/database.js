@@ -3,7 +3,7 @@ import { TypeCreator } from "@compas/code-gen";
 /**
  * Apply the database structure
  *
- * @param {import("@compas/code-gen/experimental").Generator} generator
+ * @param {import("@compas/code-gen").Generator} generator
  */
 export function extendWithDatabase(generator) {
   const T = new TypeCreator("database");

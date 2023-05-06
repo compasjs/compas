@@ -7,7 +7,7 @@ generated interface looks practically the same over all of them. In this
 documented we use the Typescript variant for the broswer runtime
 
 ```js
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 
