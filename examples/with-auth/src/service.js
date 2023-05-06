@@ -1,4 +1,4 @@
-import { createBodyParsers, getApp } from "@compas/server";
+import { createBodyParser, getApp } from "@compas/server";
 import { environment, isProduction, newLogger, uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
@@ -99,7 +99,7 @@ async function createAppAndLoadControllers() {
   );
 
   // Use the generated router
-  app.use(router(createBodyParsers()));
+  app.use(router(createBodyParser()));
 
   // Controller imports;
   // These files are not imported in any other file, but since they are needed to add the

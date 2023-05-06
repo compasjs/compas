@@ -26,7 +26,7 @@ Files are handled separately by the generator and validators, and are put on
 [formidable](https://www.npmjs.com/package/formidable). In the generated api
 clients we generate the correct type (`ReadableStream` or `Blob`) depending on
 the context. And allow for setting custom file parsing options
-`createBodyParsers` provided by `@compas/server`
+`createBodyParser` provided by `@compas/server`
 
 ## Saving files
 

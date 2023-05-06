@@ -1,12 +1,10 @@
 import { isProduction } from "@compas/stdlib";
 import Koa from "koa";
-import {
-  defaultHeaders,
-  errorHandler,
-  healthHandler,
-  logMiddleware,
-  notFoundHandler,
-} from "./middleware/index.js";
+import { errorHandler } from "./middleware/error.js";
+import { defaultHeaders } from "./middleware/headers.js";
+import { healthHandler } from "./middleware/health.js";
+import { logMiddleware } from "./middleware/log.js";
+import { notFoundHandler } from "./middleware/notFound.js";
 
 /**
  * @typedef {ReturnType<getApp>} KoaApplication

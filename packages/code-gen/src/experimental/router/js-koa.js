@@ -249,14 +249,14 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
   fileContextAddLinePrefix(file, ` * `);
   fileWrite(file, `The full router and dispatching\n`);
 
-  fileWrite(file, `@param {import("@compas/server").BodyParserPair} parsers`);
+  fileWrite(file, `@param {import("@compas/server").Middleware} bodyParser`);
   fileWrite(file, `@returns {import("@compas/server").Middleware}`);
 
   fileContextRemoveLinePrefix(file, 1);
   fileWrite(file, `/`);
   fileContextRemoveLinePrefix(file, 2);
 
-  fileBlockStart(file, `export function router(parsers)`);
+  fileBlockStart(file, `export function router(bodyParser)`);
 
   fileWrite(file, `const routes = {`);
   fileContextSetIndent(file, 1);
@@ -281,9 +281,9 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
       fileWrite(file, `ctx.request.params = params;`);
 
       if (route.files) {
-        fileWrite(file, `await parsers.multipartBodyParser(ctx);`);
+        fileWrite(file, `await bodyParser(ctx);`);
       } else if (route.body || route.query) {
-        fileWrite(file, `await parsers.bodyParser(ctx);`);
+        fileWrite(file, `await bodyParser(ctx);`);
       }
 
       if (route.params) {

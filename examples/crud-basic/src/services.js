@@ -1,4 +1,4 @@
-import { createBodyParsers, getApp } from "@compas/server";
+import { createBodyParser, getApp } from "@compas/server";
 import {
   createTestPostgresDatabase,
   newPostgresConnection,
@@ -16,7 +16,7 @@ export async function injectServices() {
 
   injectCrud();
 
-  app.use(router(createBodyParsers()));
+  app.use(router(createBodyParser()));
 }
 
 export async function injectTestServices() {
@@ -25,7 +25,7 @@ export async function injectTestServices() {
 
   injectCrud();
 
-  app.use(router(createBodyParsers()));
+  app.use(router(createBodyParser()));
 }
 
 /**

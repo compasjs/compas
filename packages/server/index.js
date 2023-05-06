@@ -15,10 +15,7 @@
  * @typedef {import("koa").Next} Next
  */
 
-/**
- * @typedef {import("./src/middleware/body").BodyParserPair} BodyParserPair
- */
-
 export { getApp } from "./src/app.js";
-export { createBodyParsers, compose } from "./src/middleware/index.js";
+export { createBodyParser } from "./src/middleware/body.js";
+export { compose } from "./src/middleware/compose.js";
 export { closeTestApp, createTestAppAndClient } from "./src/testing.js";

@@ -1,7 +1,7 @@
 import { mainTestFn, test } from "@compas/cli";
 import {
   closeTestApp,
-  createBodyParsers,
+  createBodyParser,
   createTestAppAndClient,
   getApp,
 } from "@compas/server";
@@ -95,7 +95,8 @@ test("code-gen/crud/e2e/modifiers", async (t) => {
   } = await import(pathJoin(generatedDirectory, "./role/apiClient.js"));
 
   const api = getApp();
-  setBodyParsers(createBodyParsers({}, {}));
+  const bodyParser = createBodyParser({});
+  setBodyParsers({ bodyParser, multipartBodyParser: bodyParser });
   api.use(router);
 
   const modifierCallResults = [];

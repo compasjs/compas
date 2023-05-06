@@ -3,24 +3,32 @@ import coBody from "co-body";
 import formidable from "formidable";
 
 /**
- * @typedef {object} KoaBodyOptions
- * @property {boolean|undefined} [urlencoded]
- * @property {boolean|undefined} [json]
- * @property {boolean|undefined} [text]
- * @property {string|undefined} [encoding]
+ * @typedef {object} BodyOptions
+ * @property {boolean|undefined} [json] Allow JSON body parsing, defaults to true
+ * @property {boolean|undefined} [urlencoded] Allow urlencoded body parsing, defaults to
+ *   true
+ * @property {boolean|undefined} [text] Allow text body parsing, defaults to true
+ * @property {boolean|undefined} [multipart] Allow multipart body parsing, defaults to
+ *   false.
+ * @property {string|undefined} [encoding] Request body encoding, defaults to 'utf-8'
  * @property {object|undefined} [queryString] Options for the 'qs' package
- * @property {string|undefined} [jsonLimit]
- * @property {string|undefined} [textLimit]
- * @property {string|undefined} [urlencodedLimit]
- * @property {string[]|undefined} [parsedMethods]
+ * @property {string|undefined} [jsonLimit] Max body size when parsing JSON, defaults to
+ *   '5mb'
+ * @property {string|undefined} [textLimit] Max body size when parsing text, defaults to
+ *   '56kb'
+ * @property {string|undefined} [urlencodedLimit] Max body size when parsing urlencoded,
+ *   defaults to '1mb'
+ * @property {string[]|undefined} [parsedMethods] The HTTP methods which enable body
+ *   parsing.
+ * @property {formidable.Options} [multipartOptions] Optionally specify multipart
+ *   options. If no options are present, it uses the defaults from formidable and uses a
+ *   custom  '1mb' field size limit, '35mb' file size limit and a max body size of
+ *   '175mb'.
  */
 
 /**
- * @typedef {object} BodyParserPair
- * @property {import("koa").Middleware} bodyParser
- * @property {import("koa").Middleware} multipartBodyParser
+ * @type {string[]}
  */
-
 const jsonTypes = [
   "application/json",
   "application/json-patch+json",
@@ -29,43 +37,44 @@ const jsonTypes = [
 ];
 
 /**
- * Creates a body parser and a body parser with multipart enabled.
- * Note that koa-body parses url-encoded, form data, json and text by default.
+ * Koa body parsers. Supports json, text, urlencoded & multipart bodies.
  *
- * @since 0.1.0
+ * Based on co-body & formidable.
  *
- * @param {KoaBodyOptions} [bodyOpts={}] Options that will be passed to koa-body
- * @param {formidable.Options} [multipartBodyOpts={}] Options that will be passed to
- *   formidable
- * @returns {BodyParserPair}
- */
-export function createBodyParsers(bodyOpts = {}, multipartBodyOpts = {}) {
-  return {
-    bodyParser: koaBody(bodyOpts),
-    multipartBodyParser: koaFormidable(multipartBodyOpts),
-  };
-}
-
-/**
- * Wrapper around Co-Body.
- * Forked from "Koa-Body" with original license:
+ * By default the following settings are used
+ * - json is allowed with a 5mb limit
+ * - urlencoded is allowed with a 1mb limit
+ * - text is allowed with a 56kb limit
+ * - multipart is disallowed by default. If enabled and no limits are specified a 1mb
+ * field size limit, 35mb file size limit and a 175mb total file size limit is enforced.
+ *
+ *
+ * Originally forked from "Koa-Body" with original license:
  * https://github.com/dlau/koa-body/blob/a6ca8c78015e326154269d272410a11bf40e1a07/LICENSE
  *
- * @param {KoaBodyOptions} opts Options that will be passed to koa-body
+ * @param {BodyOptions} [opts={}] Options that will be passed to koa-body
+ * @returns {import("koa").Middleware}
  */
-function koaBody(opts = {}) {
-  opts.json = opts.json ?? true;
-  opts.urlencoded = opts.urlencoded ?? true;
-  opts.text = opts.text ?? true;
+export function createBodyParser(opts = {}) {
+  opts.json ??= true;
+  opts.urlencoded ??= true;
+  opts.text ??= true;
+  opts.multipart ??= false;
 
-  opts.encoding = opts.encoding ?? "utf-8";
-  opts.queryString = opts.queryString ?? null;
+  opts.encoding ??= "utf-8";
+  opts.queryString ??= null;
 
-  opts.jsonLimit = opts.jsonLimit ?? "1mb";
-  opts.urlencodedLimit = opts.urlencodedLimit ?? "1mb";
-  opts.textLimit = opts.textLimit ?? "56kb";
+  opts.jsonLimit ??= "5mb";
+  opts.urlencodedLimit ??= "1mb";
+  opts.textLimit ??= "56kb";
 
-  opts.parsedMethods = opts.parsedMethods ?? ["POST", "PUT", "PATCH"];
+  opts.parsedMethods ??= ["POST", "PUT", "PATCH"];
+
+  opts.multipartOptions ??= {};
+  opts.multipartOptions.maxFieldsSize ??= 1 * 1024 * 1024;
+  opts.multipartOptions.maxFileSize ??= 35 * 1024 * 1024;
+  opts.multipartOptions.maxTotalFileSize ??=
+    opts.multipartOptions.maxFileSize * 5;
 
   return async function (ctx, next) {
     let bodyResult;
@@ -93,6 +102,26 @@ function koaBody(opts = {}) {
             limit: opts.textLimit,
             returnRawBody: false,
           });
+        } else if (opts.multipart && ctx.is("multipart/*")) {
+          const form = formidable(opts.multipartOptions);
+          await new Promise((resolve, reject) => {
+            form.parse(ctx.req, (err, fields, files) => {
+              if (err) {
+                reject(err);
+                return;
+              }
+
+              bodyResult = { ...fields, ...files };
+
+              // @ts-expect-error
+              //
+              // Compat with code-gen
+              ctx.request.files = files;
+
+              // @ts-expect-error
+              resolve();
+            });
+          });
         }
       } catch (/** @type {any} */ parsingError) {
         if (parsingError instanceof SyntaxError) {
@@ -104,6 +133,12 @@ function koaBody(opts = {}) {
             // @ts-ignore
             rawBody: parsingError.body,
           });
+        } else if (parsingError.message?.includes("exceeded, received")) {
+          throw AppError.validationError(
+            "error.server.maxFieldSize",
+            {},
+            parsingError,
+          );
         } else {
           throw AppError.validationError(
             "error.server.unsupportedBodyFormat",
@@ -114,68 +149,11 @@ function koaBody(opts = {}) {
       }
     }
 
+    // @ts-expect-error
     ctx.request.body = bodyResult;
 
     if (typeof next === "function") {
       return next();
     }
-  };
-}
-
-/**
- * Wrapper around Formidable, making it compatible with KoaMiddleware
- * Implementation is based on formidable.parse callback method, with some
- * changes for 'boolean' and 'array' support. multiples enabled and required.
- *
- * Source;
- * https://github.com/node-formidable/formidable/blob/master/src/Formidable.js#L103
- *
- * @param {formidable.Options} opts
- * @returns {import("koa").Middleware}
- */
-function koaFormidable(opts = {}) {
-  // support for arrays
-  opts.multiples = true;
-
-  return (ctx, next) => {
-    if (!ctx.is("multipart/*")) {
-      throw new AppError("error.server.unsupportedMediaType", 415);
-    }
-
-    return new Promise((resolve, reject) => {
-      const form = formidable(opts);
-
-      const files = {};
-
-      form.on("file", (name, file) => {
-        if (Object.prototype.hasOwnProperty.call(files, name)) {
-          if (!Array.isArray(files[name])) {
-            files[name] = [files[name]];
-          }
-          files[name].push(file);
-        } else {
-          files[name] = file;
-        }
-      });
-      form.on("error", (err) => {
-        if (err.message?.includes("exceeded, received")) {
-          reject(AppError.validationError("error.server.maxFieldSize"));
-        } else {
-          reject(AppError.serverError({ files }, err));
-        }
-      });
-      form.on("end", () => {
-        // @ts-ignore
-        ctx.request.files = files;
-        // @ts-ignore
-        resolve();
-      });
-      // @ts-ignore
-      form.parse(ctx.req);
-    }).then(() => {
-      if (typeof next === "function") {
-        return next();
-      }
-    });
   };
 }

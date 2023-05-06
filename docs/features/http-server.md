@@ -69,8 +69,8 @@ These two together are explained in
 
 ## Other middleware
 
-- `createBodyParsers` can be used to create a json body parser, and a separate
-  multipart body parser.
+- `createBodyParser` can be used to create a middleware that is able to parse
+  json or multipart bodies.
 - `compose` can be used to manually compose multiple middleware in to a single
   callable middleware
 - `sendFile` is a utility to easily send out files. Supports partial responses,

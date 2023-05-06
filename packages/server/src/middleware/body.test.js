@@ -4,7 +4,7 @@ import axios from "axios";
 import FormData from "form-data";
 import { getApp } from "../app.js";
 import { closeTestApp, createTestAppAndClient } from "../testing.js";
-import { createBodyParsers } from "./body.js";
+import { createBodyParser } from "./body.js";
 
 mainTestFn(import.meta);
 
@@ -14,21 +14,21 @@ test("server/middleware/body", async (t) => {
     disableHealthRoute: true,
   });
 
-  const parsers = createBodyParsers(
-    {},
-    {
+  const parser = createBodyParser({
+    multipart: true,
+    multipartOptions: {
       maxFileSize: 512,
     },
-  );
+  });
 
-  app.use(parsers.bodyParser);
+  app.use(parser);
   app.use((ctx, next) => {
     ctx.body = ctx.request.body;
 
     return next();
   });
 
-  fileApp.use(parsers.multipartBodyParser);
+  fileApp.use(parser);
   fileApp.use((ctx, next) => {
     ctx.type = "application/json";
     ctx.body = JSON.stringify({ files: ctx.request.files }, null, 2);

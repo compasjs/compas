@@ -5,7 +5,7 @@ import { pathToFileURL } from "url";
 import { mainTestFn, test } from "@compas/cli";
 import {
   closeTestApp,
-  createBodyParsers,
+  createBodyParser,
   createTestAppAndClient,
   getApp,
 } from "@compas/server";
@@ -540,7 +540,14 @@ async function buildTestApp(importDir) {
     },
   });
   app.use(commonImport.router);
-  commonImport.setBodyParsers(createBodyParsers({}));
+
+  const bodyParser = createBodyParser({
+    multipart: true,
+  });
+  commonImport.setBodyParsers({
+    bodyParser,
+    multipartBodyParser: bodyParser,
+  });
 
   controllerImport.serverHandlers.routeWithReferencedTypes = (ctx, next) => {
     ctx.body = ctx.validatedQuery;
