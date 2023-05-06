@@ -245,7 +245,7 @@ export function jobFileTransformImage(s3Client) {
   /**
    * Atomically add a transform key
    *
-   * @param {Postgres} sql
+   * @param {import("postgres").Sql<{}>} sql
    * @param {string} fileId
    * @param {string} transformKey
    * @param {string} newFileId

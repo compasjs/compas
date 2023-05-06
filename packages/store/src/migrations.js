@@ -250,7 +250,7 @@ async function runMigration(sql, migration) {
     !migration.source.includes("-- disable auto transaction") &&
     !migration.source.includes("// disable auto transaction");
 
-  /** @type {(sql: Postgres) => (Promise<void|any>|void)} */
+  /** @type {(sql: import("@compas/store").Postgres) => (Promise<void|any>|void)} */
   let run = () => {
     throw AppError.serverError({
       message: "Unknown migration file",

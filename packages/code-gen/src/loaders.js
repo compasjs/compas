@@ -12,7 +12,7 @@ export async function loadApiStructureFromRemote(Axios, url) {
       "Missing 'url'. Please pass in the base url of an compas based backend.",
     );
   }
-  url = url.endsWith("/") ? url.substr(0, url.length - 1) : url;
+  url = url.endsWith("/") ? url.slice(0, -1) : url;
   const response = await Axios.get(`${url}/_compas/structure.json`);
 
   return response.data;
@@ -26,28 +26,15 @@ export async function loadApiStructureFromRemote(Axios, url) {
  * @returns {Record<string, any>}
  */
 export function loadApiStructureFromOpenAPI(name, spec) {
-  return loadFromOpenAPISpec(name, spec);
-}
-
-/**
- * @param {string} defaultGroup
- * @param {Record<string, any>} data
- * @returns {Record<string, any>}
- */
-export function loadFromOpenAPISpec(defaultGroup, data) {
-  if (!isPlainObject(data)) {
+  if (!isPlainObject(spec)) {
     throw new TypeError("Expecting a plain js object");
   }
 
-  if (
-    typeof defaultGroup !== "string" ||
-    defaultGroup.length === 0 ||
-    /[^\w]/g.test(defaultGroup)
-  ) {
+  if (typeof name !== "string" || name.length === 0 || /[^\w]/g.test(name)) {
     throw AppError.serverError({
-      message: `The 'defaultGroup' passed to 'app.extendWithOpenAPI' should be a 'camelCase' name, found '${defaultGroup}'.`,
+      message: `The 'name' passed to 'app.extendWithOpenAPI' should be a 'camelCase' name, found '${name}'.`,
     });
   }
 
-  return convertOpenAPISpec(defaultGroup, data);
+  return convertOpenAPISpec(name, spec);
 }

@@ -17,7 +17,8 @@ export class FileType extends TypeBuilder {
   }
 
   /**
-   * Provide mimetypes which are statically checked based on what the client sends as the mimetype.
+   * Provide mimetypes which are statically checked based on what the client sends as the
+   * mimetype.
    *
    * Common mimetypes for images, as supported by {@link sendTransformedImage}:
    * - image/png, image/jpeg, image/jpg, image/webp, image/avif, image/gif

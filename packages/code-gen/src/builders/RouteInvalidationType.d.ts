@@ -1,7 +1,7 @@
 export class RouteInvalidationType {
   constructor(group: any, name: any, properties: any);
-  /** @type {import("../generated/common/types.js").CodeGenRouteInvalidationType} */
-  data: import("../generated/common/types.js").CodeGenRouteInvalidationType;
+  /** @type {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition} */
+  data: import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition;
   /**
    * @returns {Record<string, any>}
    */

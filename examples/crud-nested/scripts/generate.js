@@ -1,5 +1,4 @@
-import { TypeCreator } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { TypeCreator, Generator } from "@compas/code-gen";
 import { mainFn } from "@compas/stdlib";
 
 mainFn(import.meta, main);

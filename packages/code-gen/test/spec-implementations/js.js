@@ -1,5 +1,5 @@
 import { AppError, environment, isNil, mainFn, pathJoin } from "@compas/stdlib";
-import { Generator } from "../../src/experimental/index.js";
+import { Generator } from "../../src/index.js";
 import { upperCaseFirst } from "../../src/utils.js";
 import { codeGenSpecification } from "../spec/specification.js";
 import { codeGenSpecificationCreate } from "../spec/structure.js";

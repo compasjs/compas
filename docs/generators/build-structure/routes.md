@@ -10,8 +10,7 @@ Route definitions built on top of the `TypeCreator` that we use for defining
 types.
 
 ```ts
-import { TypeCreator } from "@compas/code-gen";
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator, TypeCreator } from "@compas/code-gen";
 import { generate } from "@vue/compiler-core";
 
 const generator = new Generator();

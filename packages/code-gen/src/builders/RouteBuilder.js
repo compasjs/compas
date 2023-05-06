@@ -1,5 +1,4 @@
 import { AppError, isNil } from "@compas/stdlib";
-import { validateCodeGenNamePart } from "../generated/codeGen/validators.js";
 import { lowerCaseFirst, upperCaseFirst } from "../utils.js";
 import { RouteInvalidationType } from "./RouteInvalidationType.js";
 import { TypeBuilder } from "./TypeBuilder.js";
@@ -375,7 +374,7 @@ export class RouteCreator {
    *
    * @param {string} group
    * @param {string} [name]
-   * @param {import("../generated/common/types").CodeGenRouteInvalidationTypeInput["properties"]} [properties]
+   * @param {import("../generated/common/types").ExperimentalRouteInvalidationDefinition["properties"]} [properties]
    * @returns {RouteInvalidationType}
    */
   invalidates(group, name, properties) {
@@ -388,12 +387,6 @@ export class RouteCreator {
    * @returns {RouteCreator}
    */
   group(name, path) {
-    const { error } = validateCodeGenNamePart(name);
-    if (error) {
-      throw AppError.serverError({
-        message: `Specified group name '${name}' is not valid. Expects only lowercase and uppercase characters.`,
-      });
-    }
     return new RouteCreator(name, concatenateRoutePaths(this.data.path, path));
   }
 

@@ -16,7 +16,7 @@ const defaultOnAppError = () => ({});
  * Handle any upstream errors
  *
  * @param {import("../app").ErrorHandlerOptions} opts
- * @returns {Middleware}
+ * @returns {import("koa").Middleware}
  */
 export function errorHandler(opts) {
   const onAppError = opts.onAppError ?? defaultOnAppError;

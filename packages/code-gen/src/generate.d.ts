@@ -1,37 +1,51 @@
 /**
- * Provided that input is empty, copy over all enabled groups from structure,
- * automatically include references of groups that are not enabled.
- *
- * @param {CodeGenStructure} input
- * @param {CodeGenStructure} structure
- * @param {string[]} groups
+ * @typedef {object} OutputFile
+ * @property {string} contents
+ * @property {string} relativePath
  */
-export function addGroupsToGeneratorInput(
-  input: CodeGenStructure,
-  structure: CodeGenStructure,
-  groups: string[],
-): void;
 /**
- * Find nested references and add to generatorInput in the correct group
- *
- * @param {CodeGenStructure} structure
- * @param {CodeGenStructure} input
- * @returns {void}
+ * @typedef {object} GenerateContext
+ * @property {import("@compas/stdlib").Logger} log
+ * @property {import("./generated/common/types.d.ts").ExperimentalGenerateOptions} options
+ * @property {import("./generated/common/types.d.ts").ExperimentalStructure} structure
+ * @property {import("./file/context.js").GenerateFileMap} files
  */
-export function includeReferenceTypes(
-  structure: CodeGenStructure,
-  input: CodeGenStructure,
-): void;
 /**
- * Using some more memory, but ensures a mostly consistent output.
- * JS Object iterators mostly follow insert order.
- * We do this so diffs are more logical
+ * Execute the generators based on de provided Generator instance and included options.
  *
- * @param {CodeGenStructure} input
- * @param {CodeGenStructure} copy
+ * TODO: expand docs
+ *
+ * - flat structure, no resolved references
+ * - Preprocess everything
+ * - talk about caching
+ * - targetLanguageSwitch & targetCustomSwitch
+ *
+ * @param {import("./generator.js").Generator} generator
+ * @param {import("./generated/common/types.js").ExperimentalGenerateOptions} options
+ * @returns {OutputFile[]}
  */
-export function copyAndSort(
-  input: CodeGenStructure,
-  copy: CodeGenStructure,
+export function generateExecute(
+  generator: import("./generator.js").Generator,
+  options: import("./generated/common/types.js").ExperimentalGenerateOptions,
+): OutputFile[];
+/**
+ * Write output files if an output directory is provided
+ *
+ * @param {GenerateContext} generateContext
+ * @param {OutputFile[]} outputFiles
+ */
+export function generateWriteOutputFiles(
+  generateContext: GenerateContext,
+  outputFiles: OutputFile[],
 ): void;
+export type OutputFile = {
+  contents: string;
+  relativePath: string;
+};
+export type GenerateContext = {
+  log: import("@compas/stdlib").Logger;
+  options: import("./generated/common/types.d.ts").ExperimentalGenerateOptions;
+  structure: import("./generated/common/types.d.ts").ExperimentalStructure;
+  files: import("./file/context.js").GenerateFileMap;
+};
 //# sourceMappingURL=generate.d.ts.map

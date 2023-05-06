@@ -1,7 +1,7 @@
 import { TypeCreator } from "@compas/code-gen";
 
 /**
- * @param {import("@compas/code-gen/experimental").Generator} generator
+ * @param {import("@compas/code-gen").Generator} generator
  */
 export function applyStoreStructure(generator) {
   const T = new TypeCreator("store");

@@ -4,7 +4,7 @@ As mentioned in [the targets](/generators/targets.html), Compas supports
 generating a [Koa](https://koajs.com/) compatible router.
 
 ```js
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 

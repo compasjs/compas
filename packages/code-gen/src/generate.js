@@ -1,90 +1,211 @@
-// @ts-nocheck
-
-import { AppError, isNil, isPlainObject } from "@compas/stdlib";
-import { structureAddType } from "./structure/structureAddType.js";
-import { upperCaseFirst } from "./utils.js";
+import { mkdirSync, rmSync, writeFileSync } from "fs";
+import { AppError, isNil, pathJoin } from "@compas/stdlib";
+import { apiClientGenerator } from "./api-client/generator.js";
+import { crudEventsGenerate } from "./crud/events.js";
+import { crudHandlersGenerate } from "./crud/handlers.js";
+import { databaseGenerator } from "./database/generator.js";
+import { fileContextConvertToOutputFiles } from "./file/context.js";
+import { validateExperimentalStructure } from "./generated/experimental/validators.js";
+import { openApiGenerate } from "./open-api/generator.js";
+import { anyOfPreProcess } from "./processors/any-of.js";
+import { crudTypesCreate } from "./processors/crud-types.js";
+import { crudValidation } from "./processors/crud-validation.js";
+import { docStringCleanup } from "./processors/doc-string.js";
+import {
+  modelKeyAddDateKeys,
+  modelKeyAddPrimary,
+} from "./processors/model-keys.js";
+import { modelNameValidation } from "./processors/model-name.js";
+import {
+  modelPartialInsertTypes,
+  modelPartialOrderByTypes,
+  modelPartialReturningTypes,
+  modelPartialUpdateTypes,
+} from "./processors/model-partials.js";
+import {
+  modelQueryBuilderTypes,
+  modelQueryResultTypes,
+} from "./processors/model-query.js";
+import {
+  modelRelationAddKeys,
+  modelRelationBuildRelationInformationCache,
+  modelRelationCheckAllRelations,
+} from "./processors/model-relation.js";
+import {
+  modelSortAllKeys,
+  modelSortAllRelations,
+} from "./processors/model-sort.js";
+import {
+  modelWhereBuildWhereInformation,
+  modelWhereBuildWhereTypes,
+} from "./processors/model-where.js";
+import { objectExpansionExecute } from "./processors/object-expansion.js";
+import { routeInvalidationsCheck } from "./processors/route-invalidation.js";
+import { routeStructureCreate } from "./processors/route-structure.js";
+import { routeTrieBuild } from "./processors/route-trie.js";
+import { structureNameChecks } from "./processors/structure-name-checks.js";
+import {
+  structureCopyAndSort,
+  structureValidateReferences,
+} from "./processors/structure.js";
+import { routerGenerator } from "./router/generator.js";
+import { structureGenerator } from "./structure/generator.js";
+import { targetValidateCombinations } from "./target/validation.js";
+import {
+  typesGeneratorFinalize,
+  typesGeneratorInit,
+} from "./types/generator.js";
+import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
 
 /**
- * Provided that input is empty, copy over all enabled groups from structure,
- * automatically include references of groups that are not enabled.
- *
- * @param {CodeGenStructure} input
- * @param {CodeGenStructure} structure
- * @param {string[]} groups
+ * @typedef {object} OutputFile
+ * @property {string} contents
+ * @property {string} relativePath
  */
-export function addGroupsToGeneratorInput(input, structure, groups) {
-  for (const group of groups) {
-    input[group] = structure[group] || {};
+
+/**
+ * @typedef {object} GenerateContext
+ * @property {import("@compas/stdlib").Logger} log
+ * @property {import("./generated/common/types.d.ts").ExperimentalGenerateOptions} options
+ * @property {import("./generated/common/types.d.ts").ExperimentalStructure} structure
+ * @property {import("./file/context.js").GenerateFileMap} files
+ */
+
+/**
+ * Execute the generators based on de provided Generator instance and included options.
+ *
+ * TODO: expand docs
+ *
+ * - flat structure, no resolved references
+ * - Preprocess everything
+ * - talk about caching
+ * - targetLanguageSwitch & targetCustomSwitch
+ *
+ * @param {import("./generator.js").Generator} generator
+ * @param {import("./generated/common/types.js").ExperimentalGenerateOptions} options
+ * @returns {OutputFile[]}
+ */
+export function generateExecute(generator, options) {
+  const validationResultStructure = validateExperimentalStructure(
+    generator.internalStructure,
+  );
+
+  if (validationResultStructure.error) {
+    throw AppError.serverError({
+      message: "Static validation on the structure failed",
+      error: validationResultStructure.error,
+    });
   }
 
-  includeReferenceTypes(structure, input);
+  structureValidateReferences(generator.internalStructure);
+
+  const structure = structureCopyAndSort(generator.internalStructure);
+
+  const generateContext = {
+    log: generator.logger,
+    options: options,
+    structure,
+    files: new Map(),
+  };
+
+  targetValidateCombinations(generateContext);
+
+  structureGenerator(generateContext);
+
+  structureNameChecks(generateContext);
+  objectExpansionExecute(generateContext);
+
+  modelNameValidation(generateContext);
+
+  modelKeyAddPrimary(generateContext);
+  modelKeyAddDateKeys(generateContext);
+
+  modelRelationCheckAllRelations(generateContext);
+  modelRelationAddKeys(generateContext);
+  modelRelationBuildRelationInformationCache(generateContext);
+
+  modelSortAllRelations(generateContext);
+  modelSortAllKeys(generateContext);
+
+  modelWhereBuildWhereInformation(generateContext);
+  modelWhereBuildWhereTypes(generateContext);
+
+  modelPartialReturningTypes(generateContext);
+  modelPartialInsertTypes(generateContext);
+  modelPartialUpdateTypes(generateContext);
+  modelPartialOrderByTypes(generateContext);
+
+  modelQueryBuilderTypes(generateContext);
+  modelQueryResultTypes(generateContext);
+
+  crudValidation(generateContext);
+  crudTypesCreate(generateContext);
+
+  routeInvalidationsCheck(generateContext);
+  routeStructureCreate(generateContext);
+  routeTrieBuild(generateContext);
+
+  anyOfPreProcess(generateContext);
+  docStringCleanup(generateContext);
+
+  typesGeneratorInit(generateContext);
+
+  databaseGenerator(generateContext);
+
+  routerGenerator(generateContext);
+  apiClientGenerator(generateContext);
+
+  openApiGenerate(generateContext);
+
+  crudEventsGenerate(generateContext);
+  crudHandlersGenerate(generateContext);
+
+  validatorGeneratorGenerateBaseTypes(generateContext);
+
+  typesGeneratorFinalize(generateContext);
+
+  const outputFiles = fileContextConvertToOutputFiles(generateContext);
+  generateWriteOutputFiles(generateContext, outputFiles);
+
+  return outputFiles;
 }
 
 /**
- * Find nested references and add to generatorInput in the correct group
+ * Write output files if an output directory is provided
  *
- * @param {CodeGenStructure} structure
- * @param {CodeGenStructure} input
- * @returns {void}
+ * @param {GenerateContext} generateContext
+ * @param {OutputFile[]} outputFiles
  */
-export function includeReferenceTypes(structure, input) {
-  const stack = [input];
-
-  while (stack.length) {
-    const currentObject = stack.shift();
-
-    // handle values
-    if (currentObject?.type === "reference") {
-      const { group, name } = currentObject.reference;
-
-      // ensure ref does not already exits
-      if (!isNil(structure[group]?.[name]) && isNil(input[group]?.[name])) {
-        structureAddType(input, structure[group][name]);
-
-        // Note that we need the full referenced object here, since
-        // currentObject.reference only contains { group, name, uniqueName }
-        stack.push(input[group][name]);
-
-        continue;
-      } else if (isNil(structure[group]?.[name])) {
-        throw new AppError("codeGen.app.followReferences", 500, {
-          message: `Could not resolve reference '${
-            upperCaseFirst(group) + upperCaseFirst(name)
-          }'`,
-        });
-      }
-    }
-
-    // extend stack
-    if (Array.isArray(currentObject)) {
-      for (const it of currentObject) {
-        stack.push(it);
-      }
-    } else if (isPlainObject(currentObject)) {
-      for (const key of Object.keys(currentObject)) {
-        stack.push(currentObject[key]);
-      }
-    }
+export function generateWriteOutputFiles(generateContext, outputFiles) {
+  if (isNil(generateContext.options.outputDirectory)) {
+    return;
   }
-}
 
-/**
- * Using some more memory, but ensures a mostly consistent output.
- * JS Object iterators mostly follow insert order.
- * We do this so diffs are more logical
- *
- * @param {CodeGenStructure} input
- * @param {CodeGenStructure} copy
- */
-export function copyAndSort(input, copy) {
-  const groups = Object.keys(input).sort();
+  rmSync(generateContext.options.outputDirectory, {
+    recursive: true,
+    force: true,
+  });
 
-  for (const group of groups) {
-    copy[group] = {};
+  mkdirSync(generateContext.options.outputDirectory, {
+    recursive: true,
+  });
 
-    const names = Object.keys(input[group]).sort();
-    for (const name of names) {
-      copy[group][name] = input[group][name];
+  for (const file of outputFiles) {
+    if (file.relativePath.includes("/")) {
+      const subDirectory = file.relativePath.split("/").slice(0, -1).join("/");
+
+      mkdirSync(
+        pathJoin(generateContext.options.outputDirectory, subDirectory),
+        {
+          recursive: true,
+        },
+      );
     }
+
+    writeFileSync(
+      pathJoin(generateContext.options.outputDirectory, file.relativePath),
+      file.contents,
+      "utf-8",
+    );
   }
 }

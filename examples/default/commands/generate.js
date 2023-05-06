@@ -1,4 +1,4 @@
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 import { spawn } from "@compas/stdlib";
 import { storeGetStructure } from "@compas/store";
 import { extendWithDatabase } from "../gen/database.js";

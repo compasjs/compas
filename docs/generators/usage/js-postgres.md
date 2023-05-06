@@ -6,7 +6,7 @@ provided entities, using
 Compas `@compas/store` provided `query` helper.
 
 ```js
-import { Generator } from "@compas/code-gen/experimental";
+import { Generator } from "@compas/code-gen";
 
 const generator = new Generator();
 

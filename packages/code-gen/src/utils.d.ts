@@ -12,11 +12,4 @@ export function upperCaseFirst(str?: string | undefined): string;
  * @returns {string}
  */
 export function lowerCaseFirst(str?: string | undefined): string;
-/**
- * Hash the input string
- *
- * @param {string} string
- * @returns {number}
- */
-export function getHashForString(string: string): number;
 //# sourceMappingURL=utils.d.ts.map

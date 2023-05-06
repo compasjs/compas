@@ -2,9 +2,9 @@
  * Handle any upstream errors
  *
  * @param {import("../app").ErrorHandlerOptions} opts
- * @returns {Middleware}
+ * @returns {import("koa").Middleware}
  */
 export function errorHandler(
   opts: import("../app").ErrorHandlerOptions,
-): Middleware;
+): import("koa").Middleware;
 //# sourceMappingURL=error.d.ts.map

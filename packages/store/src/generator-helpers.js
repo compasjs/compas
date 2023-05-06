@@ -77,7 +77,7 @@ export function generatedWhereBuilderHelper(
   shortName,
 ) {
   const strings = ["1 = 1"];
-  /** @type {QueryPartArg[]} */
+  /** @type {import("../types/advanced-types").QueryPartArg[]} */
   const values = [undefined];
 
   if (typeof entityWhereInformation === "function") {

@@ -70,12 +70,12 @@ export class TypeCreator {
    */
   extendNamedObject(reference: ReferenceType): ExtendType;
   /**
-   * @param {string|TypeBuilder} groupOrOther
+   * @param {string|import("./TypeBuilder.js").TypeBuilder} groupOrOther
    * @param {string} [name]
    * @returns {ReferenceType}
    */
   reference(
-    groupOrOther: string | TypeBuilder,
+    groupOrOther: string | import("./TypeBuilder.js").TypeBuilder,
     name?: string | undefined,
   ): ReferenceType;
   /**
@@ -150,6 +150,6 @@ import { SearchableType } from "./SearchableType.js";
 import { StringType } from "./StringType.js";
 import { UuidType } from "./UuidType.js";
 import { RouteCreator } from "./RouteBuilder.js";
-import { CrudType } from "../crud/CrudType.js";
+import { CrudType } from "./CrudType.js";
 import { RelationType } from "./RelationType.js";
 //# sourceMappingURL=TypeCreator.d.ts.map

@@ -1,12 +1,12 @@
 /**
  * @param value
  * @returns {value is
- *   Omit<import("../experimental/generated/common/types").ExperimentalNamedTypeDefinition,
+ *   Omit<import("../generated/common/types").ExperimentalNamedTypeDefinition,
  *   "name"|"group"> & { name: string, group: string,
  *   }}
  */
 export function isNamedTypeBuilderLike(value: any): value is Omit<
-  import("../experimental/generated/common/types").ExperimentalNamedTypeDefinition,
+  import("../generated/common/types").ExperimentalNamedTypeDefinition,
   "name" | "group"
 > & {
   name: string;
