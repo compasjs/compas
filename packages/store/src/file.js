@@ -270,7 +270,7 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
 export function fileFormatMetadata(file, options) {
   if (!options.url) {
     throw AppError.serverError({
-      message: `'fileFormatResponse' requires that the url is provided.`,
+      message: `'fileFormatMetadata' requires that the url is provided.`,
     });
   }
 

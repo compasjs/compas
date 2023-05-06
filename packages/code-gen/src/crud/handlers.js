@@ -173,9 +173,11 @@ function crudHandlersGetModifiers(crud) {
     modifierDestructure.push(`${crudName}DeletePreModifier,`);
   }
 
+  // Include all custom modifiers for the nested relations
   for (const nestedCrud of crud.nestedRelations) {
     // @ts-expect-error
     const result = crudHandlersGetModifiers(nestedCrud);
+
     modifierDocs.push(...result.modifierDocs);
     modifierDestructure.push(...result.modifierDestructure);
   }

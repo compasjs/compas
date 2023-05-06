@@ -63,16 +63,11 @@ function crudValidateType(generateContext, crud) {
     });
   }
 
-  if (
-    (model.group === "store" && model.name === "file") ||
-    model.relations.find(
-      (it) =>
-        it.reference.reference.group === "store" &&
-        it.reference.reference.name === "file",
-    )
-  ) {
+  if (model.group === "store" && model.name === "file") {
     throw AppError.serverError({
-      message: `CRUD generation does not support generating routes that include files. This is used either directly via 'T.crud()' or via a relation of the defined '.entity()' in the '${crud.group}' group.`,
+      message: `CRUD generation does not support generating routes for ${stringFormatNameForError(
+        model,
+      )}.`,
     });
   }
 
@@ -98,8 +93,8 @@ function crudValidateType(generateContext, crud) {
 
     if (["oneToOne", "manyToOne"].includes(relation.subType)) {
       // Don't allow list, create and delete routes on the owning side of a relation.
-      // These always reference to a single entity and when removed or recreated don't link
-      // to this entity anymore.
+      // These always reference to a single entity and when removed or recreated don't
+      // link to this entity anymore.
       crud.routeOptions ??= {};
 
       Object.assign(crud.routeOptions, {
@@ -162,6 +157,7 @@ function crudValidateType(generateContext, crud) {
 
   crudInformationSetHasCustomReadableType(crud, hasCustomReadableType);
 
+  // Recurse in to the relations
   for (const relation of crud.inlineRelations) {
     // @ts-expect-error
     crudValidateType(generateContext, relation);
