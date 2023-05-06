@@ -4,6 +4,100 @@ editLink: false
 
 # Changelog
 
+### [v0.1.0](https://github.com/compasjs/compas/releases/tag/v0.1.0)
+
+#### Breaking changes
+
+- fix(server): rename `formLimit` option to `urlencodedLimit` in
+  `createBodyParsers`
+  [`d600ac`](https://github.com/compasjs/compas/commit/d600ac5bc47c0506ced0d5f68767df818c49b201)
+  - Rename your usage of `formLimit` to `urlencodedLimit` in the first argument
+    to `createBodyParsers`
+- feat(server,code-gen): combine json & multipart 'createBodyParsers' into a
+  single 'createBodyParser'
+  [`df9e43`](https://github.com/compasjs/compas/commit/df9e43ec0fcd09ed394acff6158da9fd0866c3d7)
+  - Removed `createBodyParsers` use `createBodyParser` instead.
+  - `createBodyParser` by default does not parse multipart bodies. This should
+    be explicitly enabled with `multipart: true`. Configure its options with
+    'multipartOptions' to set a custom `maxFileSize` for example.
+  - Changed the `jsonLimit` default to '5mb'.
+  - The generated Koa router now accepts a single body parser instead of the
+    previous body parser pair returned by 'createBodyParsers'.
+  - The updated usage looks something like:
+  ```js
+  app.use(
+    router(
+      createBodyParser({
+        multipart: true,
+        multipartOptions: {
+          maxFileSize: 15 * 1024 * 2024,
+        },
+      }),
+    ),
+  );
+  ```
+- feat(code-gen): promote experimental to stable
+  ([#2559](https://github.com/compasjs/compas/pull/2559))
+  [`247aa0`](https://github.com/compasjs/compas/commit/247aa0af3876919428c659107c6110bc357a4788)
+  - Removes support for old code-gen. Use the new target based code-gen instead.
+    See the new [docs](https://compasjs.com/generators/introduction.html) and
+    [migration guide](https://compasjs.com/releases/code-gen-migration.html).
+  - It is expected that future Compas release fully break structure
+    compatibility with legacy clients, so make sure to migrate as soon as
+    possible.
+  - Update any `@compas/code-gen/experimental` import to `@compas/code-gen`
+
+#### Features
+
+- feat(code-gen/experimental: few percent speedup of array validation
+  [`26fb77`](https://github.com/compasjs/compas/commit/26fb77938c754cbeb3641698df25d02c4514a7dc)
+- feat(code-gen/experimental): generate serializable query keys in the
+  react-query wrapper
+  [`8d74da`](https://github.com/compasjs/compas/commit/8d74da0dfa4bc5a331b08fe1424c3b7913443d2c)
+- feat(code-gen/experimental): generate type docs strings as JSDoc blocks
+  [`a94ee5`](https://github.com/compasjs/compas/commit/a94ee518f0350f1e886a31faa57c97fdc0cd9762)
+- feat(code-gen): allow CRUD generation for entities with file relations
+  [`727b50`](https://github.com/compasjs/compas/commit/727b5041773e0978cbe5c57b0195ecc83d9400f9)
+
+#### Bug fixes
+
+- fix(code-gen/experimental): correctly resolve code-gen version when generating
+  OpenAPI specs
+  [`28fa44`](https://github.com/compasjs/compas/commit/28fa445cf51996e5f2184993838228e328a86dcc)
+
+#### Other
+
+- chore: cleanup release notes and changelogs
+  [`143743`](https://github.com/compasjs/compas/commit/14374390606bc3e3a66c7848cc3873ece8d622ad)
+
+#### Dependency updates
+
+- build(deps): bump tar from 6.1.13 to 6.1.14
+  ([#2547](https://github.com/compasjs/compas/pull/2547))
+  - [Release notes](https://github.com/isaacs/node-tar/releases)
+- build(deps): bump pino from 8.11.0 to 8.12.1
+  ([#2546](https://github.com/compasjs/compas/pull/2546),
+  [#2552](https://github.com/compasjs/compas/pull/2552))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump @babel/core from 7.21.4 to 7.21.8
+  ([#2549](https://github.com/compasjs/compas/pull/2549))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.321.1 to 3.327.0
+  ([#2558](https://github.com/compasjs/compas/pull/2558))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/eslint-parser from 7.21.3 to 7.21.8
+  ([#2550](https://github.com/compasjs/compas/pull/2550))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.321.1 to 3.327.0
+  ([#2557](https://github.com/compasjs/compas/pull/2557))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump eslint-plugin-jsdoc from 43.1.1 to 43.2.0
+  ([#2560](https://github.com/compasjs/compas/pull/2560))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump eslint from 8.39.0 to 8.40.0
+  ([#2562](https://github.com/compasjs/compas/pull/2562))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+
 ### [v0.0.249](https://github.com/compasjs/compas/releases/tag/v0.0.249)
 
 #### Breaking changes
