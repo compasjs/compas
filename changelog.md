@@ -4,6 +4,22 @@ editLink: false
 
 # Changelog
 
+### [v0.2.0](https://github.com/compasjs/compas/releases/tag/v0.2.0)
+
+#### Features
+
+- feat(code-gen): disable array auto-conversion types for the TS target
+  [`4e5961`](https://github.com/compasjs/compas/commit/4e5961b559a82f82f3971b69be8fa6e268efe914)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/lib-storage from 3.327.0 to 3.328.0
+  ([#2563](https://github.com/compasjs/compas/pull/2563))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.327.0 to 3.328.0
+  ([#2561](https://github.com/compasjs/compas/pull/2561))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.1.0](https://github.com/compasjs/compas/releases/tag/v0.1.0)
 
 #### Breaking changes
