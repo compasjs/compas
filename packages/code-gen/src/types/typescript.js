@@ -295,7 +295,11 @@ export function typesTypescriptFormatType(
     fileWriteInline(file, `)`);
     fileWriteInline(file, `[]`);
 
-    if (options.validatorState === "input") {
+    if (
+      // TS performance tanks because of auto-array conversion, so this is disabled
+      generateContext.options.targetLanguage !== "ts" &&
+      options.validatorState === "input"
+    ) {
       if (type.values.type !== "anyOf") {
         // AnyOf always starts with a `|`.
         fileWriteInline(file, "|");

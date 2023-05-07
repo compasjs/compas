@@ -90,7 +90,10 @@ export function typesHasDifferentTypeAfterValidators(generateContext, type) {
         hasOptionalityDifferences || inputOptionality !== outputOptionality;
 
       if (
-        nestedType.type === "array" ||
+        // tsc performance tanks because of array auto-conversion, so it's disabled. Which
+        // means that optional & non-optional types don't have a diff
+        (generateContext.options.targetLanguage !== "ts" &&
+          nestedType.type === "array") ||
         nestedType.type === "number" ||
         nestedType.type === "date" ||
         nestedType.type === "boolean"
