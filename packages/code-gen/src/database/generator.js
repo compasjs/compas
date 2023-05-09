@@ -1,10 +1,9 @@
 import { AppError, noop } from "@compas/stdlib";
 import { structureModels } from "../processors/models.js";
-import { stringFormatNameForError } from "../string-format.js";
 import { targetCustomSwitch } from "../target/switcher.js";
 import { typesCacheGet } from "../types/cache.js";
 import { typesGeneratorUseTypeName } from "../types/generator.js";
-import { upperCaseFirst } from "../utils.js";
+import { stringFormatNameForError, upperCaseFirst } from "../utils.js";
 import {
   validatorGeneratorGenerateValidator,
   validatorGetNameAndImport,

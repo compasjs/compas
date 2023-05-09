@@ -16,9 +16,8 @@ import {
 import { structureModels } from "../processors/models.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
-import { stringFormatNameForError } from "../string-format.js";
 import { typesOptionalityIsOptional } from "../types/optionality.js";
-import { upperCaseFirst } from "../utils.js";
+import { stringFormatNameForError, upperCaseFirst } from "../utils.js";
 
 /**
  * Write the DDL out for Postgres

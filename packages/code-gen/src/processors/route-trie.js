@@ -1,6 +1,8 @@
 import { AppError } from "@compas/stdlib";
-import { errorsThrowCombinedError } from "../errors.js";
-import { stringFormatNameForError } from "../string-format.js";
+import {
+  errorsThrowCombinedError,
+  stringFormatNameForError,
+} from "../utils.js";
 import { structureRoutes } from "./routes.js";
 
 /**

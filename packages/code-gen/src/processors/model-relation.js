@@ -1,11 +1,11 @@
 import { AppError } from "@compas/stdlib";
 import { ReferenceType, RelationType } from "../builders/index.js";
-import { errorsThrowCombinedError } from "../errors.js";
+import { typesOptionalityIsOptional } from "../types/optionality.js";
 import {
+  errorsThrowCombinedError,
   stringFormatNameForError,
   stringFormatRelation,
-} from "../string-format.js";
-import { typesOptionalityIsOptional } from "../types/optionality.js";
+} from "../utils.js";
 import { modelKeyGetPrimary } from "./model-keys.js";
 import { structureModels } from "./models.js";
 import { structureNamedTypes, structureResolveReference } from "./structure.js";

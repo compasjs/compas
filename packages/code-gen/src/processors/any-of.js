@@ -1,6 +1,6 @@
 import { AppError, isNil } from "@compas/stdlib";
-import { stringFormatNameForError } from "../string-format.js";
 import { typesOptionalityIsOptional } from "../types/optionality.js";
+import { stringFormatNameForError } from "../utils.js";
 import { referenceUtilsGetProperty } from "./reference-utils.js";
 import { structureNamedTypes, structureResolveReference } from "./structure.js";
 import { typeDefinitionTraverse } from "./type-definition-traverse.js";

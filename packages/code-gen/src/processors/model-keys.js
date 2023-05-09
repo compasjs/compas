@@ -1,7 +1,9 @@
 import { AppError, isNil } from "@compas/stdlib";
 import { DateType, UuidType } from "../builders/index.js";
-import { errorsThrowCombinedError } from "../errors.js";
-import { stringFormatNameForError } from "../string-format.js";
+import {
+  errorsThrowCombinedError,
+  stringFormatNameForError,
+} from "../utils.js";
 import { structureModels } from "./models.js";
 import { referenceUtilsGetProperty } from "./reference-utils.js";
 

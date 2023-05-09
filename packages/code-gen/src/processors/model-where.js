@@ -7,8 +7,7 @@ import {
   ObjectType,
   ReferenceType,
 } from "../builders/index.js";
-import { stringFormatNameForError } from "../string-format.js";
-import { upperCaseFirst } from "../utils.js";
+import { stringFormatNameForError, upperCaseFirst } from "../utils.js";
 import { modelKeyGetSearchable } from "./model-keys.js";
 import {
   modelRelationGetInformation,

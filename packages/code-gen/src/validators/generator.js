@@ -4,11 +4,11 @@ import {
   structureNamedTypes,
   structureResolveReference,
 } from "../processors/structure.js";
-import { stringFormatNameForError } from "../string-format.js";
 import { targetLanguageSwitch } from "../target/switcher.js";
 import { typesCacheGet } from "../types/cache.js";
 import { typesGeneratorGenerateNamedType } from "../types/generator.js";
 import { typesOptionalityIsOptional } from "../types/optionality.js";
+import { stringFormatNameForError } from "../utils.js";
 import {
   validatorJavascriptAny,
   validatorJavascriptAnyOf,
