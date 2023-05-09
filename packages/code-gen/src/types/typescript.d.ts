@@ -55,14 +55,14 @@ export function typesTypescriptHasDeclaredTypes(
  * earlier, since references need this to format their reference name.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  */
 export function typesTypescriptGenerateNamedType(
   generateContext: import("../generate.js").GenerateContext,
-  type: import("../types.js").NamedType<
+  type: import("../../types/advanced-types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
   options: import("./generator.js").GenerateTypeOptions,

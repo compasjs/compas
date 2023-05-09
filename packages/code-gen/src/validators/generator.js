@@ -105,7 +105,7 @@ export function validatorGeneratorGenerateBaseTypes(generateContext) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {string} outputTypeName
@@ -139,7 +139,7 @@ export function validatorGetNameAndImport(
  * - Resolved & unique names
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {import("../types/generator.js").GenerateTypeOptions & {
@@ -273,7 +273,7 @@ export function validatorGeneratorGenerateValidator(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 export function validatorGeneratorGenerateBody(
@@ -406,7 +406,7 @@ export function validatorGeneratorGenerateBody(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorAny(generateContext, file, type, validatorState) {
@@ -428,7 +428,7 @@ function validatorGeneratorAny(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorAnyOf(generateContext, file, type, validatorState) {
@@ -450,7 +450,7 @@ function validatorGeneratorAnyOf(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorArray(generateContext, file, type, validatorState) {
@@ -472,7 +472,7 @@ function validatorGeneratorArray(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorBoolean(
@@ -499,7 +499,7 @@ function validatorGeneratorBoolean(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorDate(generateContext, file, type, validatorState) {
@@ -521,7 +521,7 @@ function validatorGeneratorDate(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorFile(generateContext, file, type, validatorState) {
@@ -543,7 +543,7 @@ function validatorGeneratorFile(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorGeneric(
@@ -570,7 +570,7 @@ function validatorGeneratorGeneric(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorNumber(generateContext, file, type, validatorState) {
@@ -592,7 +592,7 @@ function validatorGeneratorNumber(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorObject(generateContext, file, type, validatorState) {
@@ -614,7 +614,7 @@ function validatorGeneratorObject(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorReference(
@@ -641,7 +641,7 @@ function validatorGeneratorReference(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorString(generateContext, file, type, validatorState) {
@@ -663,7 +663,7 @@ function validatorGeneratorString(generateContext, file, type, validatorState) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 function validatorGeneratorUuid(generateContext, file, type, validatorState) {

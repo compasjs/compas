@@ -52,7 +52,7 @@ export function crudEventsGenerate(generateContext) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsGenerateForType(generateContext, file, crud) {
   crudRouteSwitch(
@@ -93,7 +93,7 @@ function crudEventsGenerateForType(generateContext, file, crud) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsFile(generateContext, crud) {
   return fileContextCreateGeneric(generateContext, `${crud.group}/events.js`, {
@@ -104,7 +104,7 @@ function crudEventsFile(generateContext, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsList(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -142,7 +142,7 @@ function crudEventsList(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsSingle(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -169,7 +169,7 @@ function crudEventsSingle(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsCreate(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -203,7 +203,7 @@ function crudEventsCreate(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsUpdate(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -231,7 +231,7 @@ function crudEventsUpdate(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsDelete(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -256,7 +256,7 @@ function crudEventsDelete(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsTransform(generateContext, file, crud) {
   const model = crudInformationGetModel(crud);
@@ -277,7 +277,7 @@ function crudEventsTransform(generateContext, file, crud) {
 /**
  * Get metadata about inline relations for create and update events
  *
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsGetInlineRelations(crud) {
   const result = [];
@@ -312,7 +312,7 @@ function crudEventsGetInlineRelations(crud) {
 /**
  * Get the transformer mapping for the provided crud
  *
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudEventsGetEntityTransformer(crud) {
   const model = crudInformationGetModel(crud);

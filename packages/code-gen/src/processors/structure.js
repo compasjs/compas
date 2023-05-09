@@ -53,7 +53,7 @@ export function structureAddType(structure, type, options) {
  * ```
  *
  * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @returns {(import("../types.js").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
+ * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
  */
 export function structureNamedTypes(structure) {
   // @ts-expect-error
@@ -119,7 +119,7 @@ export function structureValidateReferences(structure) {
  *
  * @param {import("../generated/common/types.js").ExperimentalStructure} structure
  * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} reference
- * @returns {import("../types.js").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
+ * @returns {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
  */
 export function structureResolveReference(structure, reference) {
   if (reference.type !== "reference") {

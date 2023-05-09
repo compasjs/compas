@@ -42,7 +42,7 @@ export function crudTypesCreate(generateContext) {
  * Generate the readable and writable types recursively for the provided CRUD
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  * @param {string} [name]
  */
 function crudTypesCreateItemTypes(generateContext, crud, name) {
@@ -77,7 +77,7 @@ function crudTypesCreateItemTypes(generateContext, crud, name) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  * @param {{
  *   name: string,
  *   type: "readable"|"writable"
@@ -224,7 +224,7 @@ function crudTypesItem(generateContext, crud, options) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesRoutes(generateContext, crud) {
   crudRouteSwitch(
@@ -249,7 +249,7 @@ function crudTypesRoutes(generateContext, crud) {
  * Build the params object for the provided crud object. Including params necessary for
  * 'parents'.
  *
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  * @param {{ includeSelf: boolean }} options
  */
 function crudTypesBuildParamsObject(crud, options) {
@@ -280,7 +280,7 @@ function crudTypesBuildParamsObject(crud, options) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesListRoute(generateContext, crud) {
   const model = crudInformationGetModel(crud);
@@ -373,7 +373,7 @@ function crudTypesListRoute(generateContext, crud) {
  * query-able where object could lead to slowdowns.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesBuildWhereObject(generateContext, crud) {
   const model = crudInformationGetModel(crud);
@@ -420,7 +420,7 @@ function crudTypesBuildWhereObject(generateContext, crud) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesSingleRoute(generateContext, crud) {
   const model = crudInformationGetModel(crud);
@@ -479,7 +479,7 @@ function crudTypesSingleRoute(generateContext, crud) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesCreateRoute(generateContext, crud) {
   const model = crudInformationGetModel(crud);
@@ -536,7 +536,7 @@ function crudTypesCreateRoute(generateContext, crud) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesUpdateRoute(generateContext, crud) {
   const model = crudInformationGetModel(crud);
@@ -596,7 +596,7 @@ function crudTypesUpdateRoute(generateContext, crud) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudTypesDeleteRoute(generateContext, crud) {
   const model = crudInformationGetModel(crud);
@@ -653,7 +653,7 @@ function crudTypesDeleteRoute(generateContext, crud) {
 }
 
 /**
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  * @param {{ skipSingleRoute: boolean}} [options]
  * @returns {import("../generated/common/types.d.ts").ExperimentalRouteInvalidationDefinition[]}
  */

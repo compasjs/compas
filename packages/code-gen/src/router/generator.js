@@ -55,7 +55,7 @@ export function routerGenerator(generateContext) {
   /** @type {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]} */
   const typeTargets = ["js", "jsKoaReceive"];
 
-  /** @type Record<string, (import("../types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]>} */
+  /** @type Record<string, (import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]>} */
   const routesPerGroup = {};
 
   for (const route of structureRoutes(generateContext)) {

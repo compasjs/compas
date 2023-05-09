@@ -12,7 +12,7 @@ import { typesGeneratorUseTypeName } from "../types/generator.js";
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {string} outputTypeName
@@ -37,7 +37,7 @@ export function validatorTypescriptGetNameAndImport(
  * Get or create a Javascript validation file for the group that the type belongs to.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @returns {import("../file/context.js").GenerateFile}
@@ -71,7 +71,7 @@ type ValidatorErrorMap = Record<string, any|undefined>;`,
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").ValidatorState} validatorState

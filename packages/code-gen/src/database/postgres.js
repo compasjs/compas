@@ -61,7 +61,7 @@ The order of this output is alphabetically sorted, dependencies between tables a
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
  */
 function databasePostgresWriteModelDDL(generateContext, file, model) {
   if (model.queryOptions?.isView) {

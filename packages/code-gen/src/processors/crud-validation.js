@@ -37,11 +37,11 @@ export function crudValidation(generateContext) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  */
 function crudValidateType(generateContext, crud) {
   /**
-   * @type {import("../types.js").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>}
+   * @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>}
    */
   // @ts-expect-error
   const model = structureResolveReference(
@@ -172,8 +172,8 @@ function crudValidateType(generateContext, crud) {
  * Resolve and validate the relation used in the nested crud.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} relation
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} relation
  */
 function crudValidateRelation(generateContext, crud, relation) {
   const model = crudInformationGetModel(crud);

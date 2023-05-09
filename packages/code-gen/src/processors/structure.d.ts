@@ -35,11 +35,11 @@ export function structureAddType(
  * ```
  *
  * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @returns {(import("../types.js").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
+ * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
  */
 export function structureNamedTypes(
   structure: import("../generated/common/types.js").ExperimentalStructure,
-): import("../types.js").NamedType<
+): import("../../types/advanced-types").NamedType<
   import("../generated/common/types").ExperimentalNamedTypeDefinition
 >[];
 /**
@@ -72,12 +72,12 @@ export function structureValidateReferences(
  *
  * @param {import("../generated/common/types.js").ExperimentalStructure} structure
  * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} reference
- * @returns {import("../types.js").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
+ * @returns {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
  */
 export function structureResolveReference(
   structure: import("../generated/common/types.js").ExperimentalStructure,
   reference: import("../generated/common/types.js").ExperimentalTypeDefinition,
-): import("../types.js").NamedType<
+): import("../../types/advanced-types").NamedType<
   import("../generated/common/types").ExperimentalNamedTypeDefinition
 >;
 /**

@@ -163,7 +163,7 @@ export function modelRelationCheckAllRelations(generateContext) {
   // relation
   for (const model of structureModels(generateContext)) {
     for (const relation of modelRelationGetOwn(model)) {
-      /** @type {import("../types.js").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
+      /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
       // @ts-expect-error
       const inverseModel = structureResolveReference(
         generateContext.structure,
@@ -331,7 +331,7 @@ export function modelRelationAddKeys(generateContext) {
       // We allow the user to define their own key for this relation, however it should
       // have the same type as the referenced primary key.
       if (model.keys[relation.ownKey]) {
-        /** @type {import("../types.js").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
+        /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
         // @ts-expect-error
         const modelInverse = structureResolveReference(
           generateContext.structure,

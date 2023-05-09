@@ -2,21 +2,21 @@
  * Get or create a Javascript validation file for the group that the type belongs to.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function validatorJavascriptGetFile(
   generateContext: import("../generate.js").GenerateContext,
-  type: import("../types.js").NamedType<
+  type: import("../../types/advanced-types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
 ): import("../file/context.js").GenerateFile;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {string} outputTypeName
@@ -24,7 +24,7 @@ export function validatorJavascriptGetFile(
  */
 export function validatorJavascriptGetNameAndImport(
   file: import("../file/context.js").GenerateFile,
-  type: import("../types.js").NamedType<
+  type: import("../../types/advanced-types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
   outputTypeName: string,
@@ -34,7 +34,7 @@ export function validatorJavascriptGetNameAndImport(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").ValidatorState} validatorState
@@ -42,7 +42,7 @@ export function validatorJavascriptGetNameAndImport(
 export function validatorJavascriptStartValidator(
   generateContext: import("../generate.js").GenerateContext,
   file: import("../file/context.js").GenerateFile,
-  type: import("../types.js").NamedType<
+  type: import("../../types/advanced-types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
   validatorState: import("./generator.js").ValidatorState,

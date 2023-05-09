@@ -33,7 +33,7 @@ export function routeInvalidationsCheck(generateContext) {
 /**
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition} invalidation
  */
 function routeInvalidationProcess(generateContext, route, invalidation) {

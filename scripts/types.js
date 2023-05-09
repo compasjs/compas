@@ -25,7 +25,7 @@ export async function main() {
 function cleanUpTypeDefinitionFiles() {
   const files = [];
   processDirectoryRecursiveSync(process.cwd(), (file) => {
-    if (file.includes("generated/")) {
+    if (file.includes("generated/common/types")) {
       // Exclude generated directory
       return;
     }

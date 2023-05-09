@@ -39,14 +39,14 @@ export function typesGeneratorFinalize(
  * This does not return a way to use a type, this will be added later.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../types.js").NamedType<
+ * @param {import("../../types/advanced-types").NamedType<
  *   import("../generated/common/types").ExperimentalTypeSystemDefinition
  * >} type
  * @param {GenerateTypeOptions} options
  */
 export function typesGeneratorGenerateNamedType(
   generateContext: import("../generate.js").GenerateContext,
-  type: import("../types.js").NamedType<
+  type: import("../../types/advanced-types").NamedType<
     import("../generated/common/types").ExperimentalTypeSystemDefinition
   >,
   options: GenerateTypeOptions,

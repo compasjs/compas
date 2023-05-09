@@ -173,7 +173,7 @@ export function reactQueryGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function reactQueryGenerateFunction(
@@ -694,7 +694,7 @@ ${hookName}.setQueryData = (
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  */
 function reactQueryWriteIsEnabled(generateContext, file, route) {
   const keysAffectingEnabled = [];
@@ -746,7 +746,7 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
  * Write the invalidations in the mutation hook
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
  */
 function reactQueryWriteInvalidations(file, route) {
   fileWrite(file, `const originalOnSuccess = options.onSuccess;`);

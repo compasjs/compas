@@ -11,7 +11,7 @@ import { upperCaseFirst } from "../utils.js";
 /**
  * Get the query builder to use for the provided crud and options
  *
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  * @param {{
  *   includeOwnParam: boolean,
  *   includeJoins: boolean,
@@ -28,7 +28,7 @@ export function crudQueryBuilderGet(crud, options) {
 }
 
 /**
- * @param {import("../types.js").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
  * @param {{
  *   includeOwnParam: boolean,
  *   includeJoins: boolean,
