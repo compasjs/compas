@@ -112,7 +112,6 @@ export async function ${data.crudName}Single(event, sql, builder) {
  *   crudName: string,
  *   entityUniqueName: string,
  *   entityName: string,
- *   builder: string,
  *   primaryKey: string,
  *   writableType: { group: string, name: string },
  *   inlineRelations: {
@@ -137,9 +136,10 @@ export const crudPartialEventCreate = (data) => `
  * @param {${upperCaseFirst(data.writableType.group)}${upperCaseFirst(
   data.writableType.name,
 )}} body
+ * @param {${data.entityUniqueName}QueryBuilder} builder
  * @returns {Promise<QueryResult${data.entityUniqueName}>}
  */
-export async function ${data.crudName}Create(event, sql, body) {
+export async function ${data.crudName}Create(event, sql, body, builder) {
   eventStart(event, "${data.crudName}.create");
   
   ${partialAsString(
@@ -156,7 +156,6 @@ export async function ${data.crudName}Create(event, sql, body) {
   
   ${crudPartialInlineRelationInserts(data.inlineRelations, "result")}
   
-  const builder = ${data.builder};
   builder.where.${data.primaryKey} = result[0].${data.primaryKey};
   const _item = await ${
     data.crudName

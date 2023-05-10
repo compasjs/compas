@@ -123,7 +123,10 @@ function crudHandlersGetModifiers(crud) {
 
   if (crudInformationGetHasCustomReadableType(crud)) {
     modifierDocs.push(
-      `${crudName}Transform: (entity: QueryResult${modelUniqueName}) => ${upperCaseFirst(
+      `${crudName}TransformContext?: (ctx: Context) => (any|Promise<any>),`,
+    );
+    modifierDocs.push(
+      `${crudName}Transform: (entity: QueryResult${modelUniqueName}, transformContext?: any) => ${upperCaseFirst(
         // @ts-expect-error
         crud.fieldOptions.readableType.reference.group,
       )}${upperCaseFirst(
@@ -131,6 +134,8 @@ function crudHandlersGetModifiers(crud) {
         crud.fieldOptions.readableType.reference.name,
       )},`,
     );
+
+    modifierDestructure.push(`${crudName}TransformContext,`);
     modifierDestructure.push(`${crudName}Transform,`);
   }
 
@@ -150,8 +155,8 @@ function crudHandlersGetModifiers(crud) {
 
   if (crud.routeOptions.createRoute) {
     modifierDocs.push(
-      `${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx ${
-        relation?.subType === "oneToMany"
+      `${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx, builder: ${modelUniqueName}QueryBuilder${
+        relation?.subType !== "oneToOneReverse"
           ? ""
           : `, singleBuilder: ${modelUniqueName}QueryBuilder`
       }) => void|Promise<void>,`,
@@ -238,6 +243,7 @@ function crudHandlersList(generateContext, file, crud) {
       crud,
       "list",
     )}`,
+    hasTransformContext: crudInformationGetHasCustomReadableType(crud),
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     countBuilder: crudQueryBuilderGet(crud, {
       includeOwnParam: false,
@@ -290,6 +296,7 @@ function crudHandlersSingle(generateContext, file, crud) {
       "single",
     )}`,
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
+    hasTransformContext: crudInformationGetHasCustomReadableType(crud),
     builder: crudQueryBuilderGet(crud, {
       includeOwnParam: true,
       includeJoins: true,
@@ -326,12 +333,18 @@ function crudHandlersCreate(generateContext, file, crud) {
       "create",
     )}`,
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
+    hasTransformContext: crudInformationGetHasCustomReadableType(crud),
     applyParams: crud.fromParent
       ? {
           bodyKey: relation.referencedKey,
           paramsKey: crudInformationGetParamName(parent),
         }
       : undefined,
+    builder: crudQueryBuilderGet(crud, {
+      includeOwnParam: false,
+      includeJoins: true,
+      traverseParents: false,
+    }),
     oneToOneChecks:
       relation?.subType === "oneToOneReverse"
         ? {

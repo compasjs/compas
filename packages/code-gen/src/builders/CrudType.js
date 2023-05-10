@@ -130,7 +130,7 @@ export class CrudType extends TypeBuilder {
     const { readable, writable } = fieldOptions;
 
     if (readable instanceof TypeBuilder) {
-      if (!readable.data.name) {
+      if (!readable.data.name && !readable.data.reference?.name) {
         throw AppError.serverError({
           message:
             "A custom readable type should have a name, e.g 'T.object('item').keys(...)'.",

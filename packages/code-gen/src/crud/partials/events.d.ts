@@ -19,7 +19,6 @@ export function crudPartialEventCreate(data: {
   crudName: string;
   entityUniqueName: string;
   entityName: string;
-  builder: string;
   primaryKey: string;
   writableType: {
     group: string;

@@ -23,7 +23,6 @@ import {
   crudPartialEventTransformer,
   crudPartialEventUpdate,
 } from "./partials/events.js";
-import { crudQueryBuilderGet } from "./query-builder.js";
 
 /**
  * Generate events that are necessary for CRUD. This currently only works with js and Koa.
@@ -189,11 +188,6 @@ function crudEventsCreate(generateContext, file, crud) {
     writableType: crudInformationGetWritableType(crud),
 
     inlineRelations: crudEventsGetInlineRelations(crud),
-    builder: crudQueryBuilderGet(crud, {
-      includeOwnParam: false,
-      includeJoins: true,
-      traverseParents: false,
-    }),
   };
 
   // @ts-expect-error
