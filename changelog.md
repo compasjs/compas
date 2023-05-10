@@ -4,6 +4,37 @@ editLink: false
 
 # Changelog
 
+### [v0.3.0](https://github.com/compasjs/compas/releases/tag/v0.3.0)
+
+#### Features
+
+- feat(code-gen): add support for `transformContext` with custom readable types
+  in CRUD
+  [`65979a`](https://github.com/compasjs/compas/commit/65979a0f2880c6dad0a137a55d6298bbd6d10f8c)
+
+#### Other
+
+- chore(code-gen): cleanup 'NamedType' usages
+  [`8a8434`](https://github.com/compasjs/compas/commit/8a84348f0037323da3f948509f910b58fd9faac8)
+- chore(code-gen): cleanup experimental development test setup
+  [`85918b`](https://github.com/compasjs/compas/commit/85918bd786d6e4341a0ecc546b054c2269bbed52)
+- chore(code-gen): combine all internal utils
+  [`6a61e7`](https://github.com/compasjs/compas/commit/6a61e7c588272ff31b33eae48d41cf95cd3cb6e2)
+- chore(code-gen): speed up examples test by running them in parallel
+  [`69cfb6`](https://github.com/compasjs/compas/commit/69cfb6a0de4090fb0663f0cd494f2538407de5d4)
+- chore(test): increase timeout of examples test
+  [`4ecd95`](https://github.com/compasjs/compas/commit/4ecd95d50e00a46c3435d09b338a7288581be75f)
+
+#### Dependency updates
+
+- build(deps): bump pino from 8.12.1 to 8.14.1
+  ([#2567](https://github.com/compasjs/compas/pull/2567))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump eslint-plugin-jsdoc from 43.2.0 to 44.0.1
+  ([#2568](https://github.com/compasjs/compas/pull/2568))
+  - Major version bump
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.2.0](https://github.com/compasjs/compas/releases/tag/v0.2.0)
 
 #### Features
