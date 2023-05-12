@@ -7,6 +7,7 @@ import {
   fileContextSetIndent,
 } from "../file/context.js";
 import { fileWrite } from "../file/write.js";
+import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { upperCaseFirst } from "../utils.js";
@@ -266,6 +267,33 @@ export function tsFetchGenerateFunction(
     }
 
     fileBlockEnd(file);
+  }
+
+  if (route.query) {
+    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    // @ts-expect-error
+    const type = structureResolveReference(
+      generateContext.structure,
+      route.query,
+    );
+
+    if (type.type === "object") {
+      for (const key of Object.keys(type.keys)) {
+        const isOptional = referenceUtilsGetProperty(
+          generateContext,
+          type.keys[key],
+          ["isOptional"],
+          false,
+        );
+
+        if (isOptional) {
+          fileWrite(
+            file,
+            `if (query["${key}"] === null || query["${key}"] === undefined) { delete query["${key}"]; }`,
+          );
+        }
+      }
+    }
   }
 
   fileWrite(file, `const response = await fetchFn(`);
