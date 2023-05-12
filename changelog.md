@@ -4,6 +4,18 @@ editLink: false
 
 # Changelog
 
+### [v0.3.1](https://github.com/compasjs/compas/releases/tag/v0.3.1)
+
+#### Bug fixes
+
+- fix(code-gen): strip undefined query parameters in the fetch api clients
+  [`d3b51e`](https://github.com/compasjs/compas/commit/d3b51ecabf076f01ebbbc4a9cdf888725fc85c5c)
+
+#### Dependency updates
+
+- build(deps): bump file-type from 18.3.0 to 18.4.0
+  ([#2576](https://github.com/compasjs/compas/pull/2576))
+
 ### [v0.3.0](https://github.com/compasjs/compas/releases/tag/v0.3.0)
 
 #### Features
