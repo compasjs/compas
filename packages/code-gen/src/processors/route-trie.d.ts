@@ -29,7 +29,7 @@ export function trieCleanAndCollapse(trie: RouteTrie): void;
 export function trieSort(trie: RouteTrie): void;
 export type RouteTrie = {
   route?:
-    | import("../generated/common/types.js").ExperimentalRouteDefinition
+    | import("../generated/common/types.js").StructureRouteDefinition
     | undefined;
   prio: keyof typeof RoutePrio;
   children: RouteTrie[];

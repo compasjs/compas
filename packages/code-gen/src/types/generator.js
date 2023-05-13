@@ -20,7 +20,7 @@ import {
  *   input: string,
  *   output: string,
  * }} nameSuffixes
- * @property {(import("../generated/common/types.d.ts").ExperimentalAnyDefinitionTarget
+ * @property {(import("../generated/common/types.d.ts").StructureAnyDefinitionTarget
  *  )[]} targets
  */
 
@@ -155,7 +155,7 @@ function typesGeneratorGenerateBaseTypes(generateContext) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {GenerateTypeOptions} options
  */

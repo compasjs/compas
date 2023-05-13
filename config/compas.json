@@ -2,7 +2,7 @@
   "cli": {
     "globalWatchOptions": {
       "extensions": [],
-      "ignorePatterns": ["__fixtures__", "test/tmp"]
+      "ignorePatterns": ["__fixtures__", ".cache"]
     }
   }
 }

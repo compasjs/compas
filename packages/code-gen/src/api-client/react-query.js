@@ -102,7 +102,7 @@ export const useApi = () => {
  * Get the api client file
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition} route
+ * @param {import("../generated/common/types.js").StructureRouteDefinition} route
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function reactQueryGetApiClientFile(generateContext, route) {
@@ -173,7 +173,7 @@ export function reactQueryGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function reactQueryGenerateFunction(
@@ -310,7 +310,7 @@ export function reactQueryGenerateFunction(
     let result = "";
 
     if (route.params) {
-      /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+      /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
       // @ts-expect-error
       const params = structureResolveReference(
         generateContext.structure,
@@ -337,7 +337,7 @@ export function reactQueryGenerateFunction(
     }
 
     if (route.query) {
-      /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+      /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
       // @ts-expect-error
       const query = structureResolveReference(
         generateContext.structure,
@@ -364,7 +364,7 @@ export function reactQueryGenerateFunction(
     }
 
     if (route.body) {
-      /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+      /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
       // @ts-expect-error
       const body = structureResolveReference(
         generateContext.structure,
@@ -391,7 +391,7 @@ export function reactQueryGenerateFunction(
     }
 
     if (route.files) {
-      /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+      /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
       // @ts-expect-error
       const files = structureResolveReference(
         generateContext.structure,
@@ -694,7 +694,7 @@ ${hookName}.setQueryData = (
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  */
 function reactQueryWriteIsEnabled(generateContext, file, route) {
   const keysAffectingEnabled = [];
@@ -704,7 +704,7 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
       continue;
     }
 
-    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
     // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,
@@ -746,7 +746,7 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
  * Write the invalidations in the mutation hook
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  */
 function reactQueryWriteInvalidations(file, route) {
   fileWrite(file, `const originalOnSuccess = options.onSuccess;`);

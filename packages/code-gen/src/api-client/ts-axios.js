@@ -73,7 +73,7 @@ export function tsAxiosGenerateCommonFile(generateContext) {
  * Write the global clients to the common directory
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition} route
+ * @param {import("../generated/common/types.js").StructureRouteDefinition} route
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function tsAxiosGetApiClientFile(generateContext, route) {
@@ -113,7 +113,7 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function tsAxiosGenerateFunction(
@@ -176,7 +176,7 @@ export function tsAxiosGenerateFunction(
 
     fileBlockStart(file, `if (!(${parameter} instanceof FormData))`);
 
-    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
     // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,

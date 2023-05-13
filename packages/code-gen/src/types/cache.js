@@ -7,7 +7,7 @@ import { typeTargetsDetermine, typeTargetsGetUsed } from "./targets.js";
  * For each type, we can save multiple generated type names based on the different input
  * options.
  *
- * @type {WeakMap<import("../generated/common/types.js").ExperimentalTypeSystemDefinition,
+ * @type {WeakMap<import("../generated/common/types.js").StructureTypeSystemDefinition,
  *   Record<string, string>>}
  */
 const typeCache = new WeakMap();
@@ -16,7 +16,7 @@ const typeCache = new WeakMap();
  * Add a cache entry for the type and its options to resolve to the generated type name.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  * @param {string} name
  */
@@ -47,7 +47,7 @@ export function typesCacheAdd(generateContext, type, options, name) {
  * already exists.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  * @returns {string|undefined} name
  */
@@ -77,7 +77,7 @@ export function typesCacheGet(generateContext, type, options) {
 /**
  * Get the already used type names for the provided type.
  *
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @returns {string[]}
  */
 export function typesCacheGetUsedNames(type) {

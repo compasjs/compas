@@ -6,8 +6,8 @@
 /**
  * @typedef {object} GenerateContext
  * @property {import("@compas/stdlib").Logger} log
- * @property {import("./generated/common/types.d.ts").ExperimentalGenerateOptions} options
- * @property {import("./generated/common/types.d.ts").ExperimentalStructure} structure
+ * @property {import("./generated/common/types.d.ts").StructureGenerateOptions} options
+ * @property {import("./generated/common/types.d.ts").StructureStructure} structure
  * @property {import("./file/context.js").GenerateFileMap} files
  */
 /**
@@ -21,12 +21,12 @@
  * - targetLanguageSwitch & targetCustomSwitch
  *
  * @param {import("./generator.js").Generator} generator
- * @param {import("./generated/common/types.js").ExperimentalGenerateOptions} options
+ * @param {import("./generated/common/types.js").StructureGenerateOptions} options
  * @returns {OutputFile[]}
  */
 export function generateExecute(
   generator: import("./generator.js").Generator,
-  options: import("./generated/common/types.js").ExperimentalGenerateOptions,
+  options: import("./generated/common/types.js").StructureGenerateOptions,
 ): OutputFile[];
 /**
  * Write output files if an output directory is provided
@@ -44,8 +44,8 @@ export type OutputFile = {
 };
 export type GenerateContext = {
   log: import("@compas/stdlib").Logger;
-  options: import("./generated/common/types.d.ts").ExperimentalGenerateOptions;
-  structure: import("./generated/common/types.d.ts").ExperimentalStructure;
+  options: import("./generated/common/types.d.ts").StructureGenerateOptions;
+  structure: import("./generated/common/types.d.ts").StructureStructure;
   files: import("./file/context.js").GenerateFileMap;
 };
 //# sourceMappingURL=generate.d.ts.map

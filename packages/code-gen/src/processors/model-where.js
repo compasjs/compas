@@ -46,7 +46,7 @@ const modelWhereTypeTable = {
  * Cache where information per model.
  *
  * @type {WeakMap<
- *   import("../generated/common/types.js").ExperimentalObjectDefinition,
+ *   import("../generated/common/types.js").StructureObjectDefinition,
  *   ModelWhereInformation
  * >}
  */
@@ -54,7 +54,7 @@ const whereCache = new WeakMap();
 
 /**
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {ModelWhereInformation}
  */
 export function modelWhereGetInformation(model) {

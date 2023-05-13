@@ -5,7 +5,7 @@ import { typeDefinitionTraverse } from "../processors/type-definition-traverse.j
 /**
  * Cache to check if for the provided type we already have resolved the used optionality
  *
- * @type {WeakMap<import("../generated/common/types.js").ExperimentalTypeSystemDefinition,
+ * @type {WeakMap<import("../generated/common/types.js").StructureTypeSystemDefinition,
  *   boolean>}
  */
 const typeOptionalityCache = new WeakMap();
@@ -16,7 +16,7 @@ const typeOptionalityCache = new WeakMap();
  * applied.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @param {Pick<import("./generator.js").GenerateTypeOptions, "validatorState">} options
  * @returns {boolean}
  */
@@ -51,7 +51,7 @@ export function typesOptionalityIsOptional(generateContext, type, options) {
  * Check if the type recursively has optionality differences
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @returns {boolean}
  */
 export function typesHasDifferentTypeAfterValidators(generateContext, type) {

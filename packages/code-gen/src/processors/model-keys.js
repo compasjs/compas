@@ -13,7 +13,7 @@ import { referenceUtilsGetProperty } from "./reference-utils.js";
  * @type {WeakMap<object, {
  *   primaryKeyName: string,
  *   primaryKeyDefinition:
- *   import("../generated/common/types.js").ExperimentalTypeDefinition
+ *   import("../generated/common/types.js").StructureTypeDefinition
  * }>}
  */
 const primaryKeyCache = new WeakMap();
@@ -112,11 +112,11 @@ export function modelKeyAddDateKeys(generateContext) {
  *
  * The result is cached and early returned in the next call with the same model.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {{
  *   primaryKeyName: string,
  *   primaryKeyDefinition:
- *   import("../generated/common/types.js").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types.js").StructureTypeSystemDefinition
  * }}
  */
 export function modelKeyGetPrimary(model) {
@@ -155,7 +155,7 @@ export function modelKeyGetPrimary(model) {
  * The result is cached and early returned in the next call with the same model.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {string[]}
  */
 export function modelKeyGetSearchable(generateContext, model) {

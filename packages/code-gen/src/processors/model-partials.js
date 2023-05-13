@@ -291,7 +291,7 @@ export function modelPartialOrderByTypes(generateContext) {
  * Get unnamed orderBy & orderBySpec type
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {{
  *   orderByType: any,
  *   orderBySpecType: any,

@@ -3,21 +3,21 @@
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function validatorJavascriptGetFile(
   generateContext: import("../generate.js").GenerateContext,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
 ): import("../file/context.js").GenerateFile;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {string} outputTypeName
  * @returns {string}
@@ -25,7 +25,7 @@ export function validatorJavascriptGetFile(
 export function validatorJavascriptGetNameAndImport(
   file: import("../file/context.js").GenerateFile,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   outputTypeName: string,
 ): string;
@@ -35,7 +35,7 @@ export function validatorJavascriptGetNameAndImport(
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
@@ -43,7 +43,7 @@ export function validatorJavascriptStartValidator(
   generateContext: import("../generate.js").GenerateContext,
   file: import("../file/context.js").GenerateFile,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
@@ -78,134 +78,134 @@ export function validatorJavascriptNilCheck(
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalAnyDefinition} type
+ * @param {import("../generated/common/types.js").StructureAnyDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptAny(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalAnyDefinition,
+  type: import("../generated/common/types.js").StructureAnyDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalAnyOfDefinition} type
+ * @param {import("../generated/common/types.js").StructureAnyOfDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptAnyOf(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalAnyOfDefinition,
+  type: import("../generated/common/types.js").StructureAnyOfDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalArrayDefinition} type
+ * @param {import("../generated/common/types.js").StructureArrayDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptArray(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalArrayDefinition,
+  type: import("../generated/common/types.js").StructureArrayDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalBooleanDefinition} type
+ * @param {import("../generated/common/types.js").StructureBooleanDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptBoolean(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalBooleanDefinition,
+  type: import("../generated/common/types.js").StructureBooleanDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalDateDefinition} type
+ * @param {import("../generated/common/types.js").StructureDateDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptDate(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalDateDefinition,
+  type: import("../generated/common/types.js").StructureDateDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalFileDefinition} type
+ * @param {import("../generated/common/types.js").StructureFileDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptFile(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalFileDefinition,
+  type: import("../generated/common/types.js").StructureFileDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalGenericDefinition} type
+ * @param {import("../generated/common/types.js").StructureGenericDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptGeneric(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalGenericDefinition,
+  type: import("../generated/common/types.js").StructureGenericDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalNumberDefinition} type
+ * @param {import("../generated/common/types.js").StructureNumberDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptNumber(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalNumberDefinition,
+  type: import("../generated/common/types.js").StructureNumberDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} type
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptObject(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalObjectDefinition,
+  type: import("../generated/common/types.js").StructureObjectDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalReferenceDefinition} type
+ * @param {import("../generated/common/types.js").StructureReferenceDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptReference(
   generateContext: import("../generate.js").GenerateContext,
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalReferenceDefinition,
+  type: import("../generated/common/types.js").StructureReferenceDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalStringDefinition} type
+ * @param {import("../generated/common/types.js").StructureStringDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptString(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalStringDefinition,
+  type: import("../generated/common/types.js").StructureStringDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalUuidDefinition} type
+ * @param {import("../generated/common/types.js").StructureUuidDefinition} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */
 export function validatorJavascriptUuid(
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalUuidDefinition,
+  type: import("../generated/common/types.js").StructureUuidDefinition,
   validatorState: import("./generator.js").ValidatorState,
 ): void;
 /**

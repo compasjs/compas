@@ -374,7 +374,7 @@ export class RouteCreator {
    *
    * @param {string} group
    * @param {string} [name]
-   * @param {import("../generated/common/types").ExperimentalRouteInvalidationDefinition["properties"]} [properties]
+   * @param {import("../generated/common/types").StructureRouteInvalidationDefinition["properties"]} [properties]
    * @returns {RouteInvalidationType}
    */
   invalidates(group, name, properties) {

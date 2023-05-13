@@ -127,7 +127,7 @@ export function fetchCatchErrorAndWrapWithAppError(originalFetch) {
  * Write the global clients to the common directory
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition} route
+ * @param {import("../generated/common/types.js").StructureRouteDefinition} route
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function jsFetchGetApiClientFile(generateContext, route) {
@@ -164,7 +164,7 @@ export function jsFetchGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function jsFetchGenerateFunction(
@@ -244,7 +244,7 @@ export function jsFetchGenerateFunction(
 
     fileBlockStart(file, `if (!(${parameter} instanceof FormData))`);
 
-    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
     // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,
@@ -273,7 +273,7 @@ export function jsFetchGenerateFunction(
   }
 
   if (route.query) {
-    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
     // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,

@@ -4,12 +4,12 @@ import { typeDefinitionTraverse } from "../processors/type-definition-traverse.j
 /**
  * Cache to check if for the provided type we already have resolved the used targets.
  *
- * @type {WeakMap<import("../generated/common/types.js").ExperimentalTypeSystemDefinition,
- *   import("../generated/common/types").ExperimentalAnyDefinitionTarget[]>}
+ * @type {WeakMap<import("../generated/common/types.js").StructureTypeSystemDefinition,
+ *   import("../generated/common/types").StructureAnyDefinitionTarget[]>}
  */
 const typeTargetCache = new WeakMap();
 
-/** @type {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]} */
+/** @type {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} */
 const fileTargets = [
   "jsAxiosNode",
   "jsKoaReceive",
@@ -23,8 +23,8 @@ const fileTargets = [
  * references.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
- * @returns {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]}
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
+ * @returns {import("../generated/common/types.js").StructureAnyDefinitionTarget[]}
  */
 export function typeTargetsDetermine(generateContext, type) {
   if (typeTargetCache.has(type)) {
@@ -78,9 +78,9 @@ export function typeTargetsDetermine(generateContext, type) {
  *
  * Does not alter the order of the provided {@link usedTargetsByGenerator} array.
  *
- * @param {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]} availableTargetsInType
- * @param {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]} usedTargetsByGenerator
- * @returns {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]}
+ * @param {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} availableTargetsInType
+ * @param {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} usedTargetsByGenerator
+ * @returns {import("../generated/common/types.js").StructureAnyDefinitionTarget[]}
  */
 export function typeTargetsGetUsed(
   availableTargetsInType,

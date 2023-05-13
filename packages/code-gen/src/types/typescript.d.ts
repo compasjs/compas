@@ -56,14 +56,14 @@ export function typesTypescriptHasDeclaredTypes(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  */
 export function typesTypescriptGenerateNamedType(
   generateContext: import("../generate.js").GenerateContext,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   options: import("./generator.js").GenerateTypeOptions,
 ): void;
@@ -72,14 +72,14 @@ export function typesTypescriptGenerateNamedType(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  * @returns {void}
  */
 export function typesTypescriptFormatType(
   generateContext: import("../generate.js").GenerateContext,
   file: import("../file/context.js").GenerateFile,
-  type: import("../generated/common/types.js").ExperimentalTypeSystemDefinition,
+  type: import("../generated/common/types.js").StructureTypeSystemDefinition,
   options: import("./generator.js").GenerateTypeOptions,
 ): void;
 /**

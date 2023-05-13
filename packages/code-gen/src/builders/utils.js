@@ -8,7 +8,7 @@ import { StringType } from "./StringType.js";
 /**
  * @param value
  * @returns {value is
- *   Omit<import("../generated/common/types").ExperimentalNamedTypeDefinition,
+ *   Omit<import("../generated/common/types").StructureNamedTypeDefinition,
  *   "name"|"group"> & { name: string, group: string,
  *   }}
  */

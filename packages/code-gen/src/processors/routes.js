@@ -4,11 +4,11 @@ import { structureNamedTypes } from "./structure.js";
  * Get a list of routes in the structure.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]}
+ * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>)[]}
  */
 export function structureRoutes(generateContext) {
   /**
-   * @type {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]}
+   * @type {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>)[]}
    */
   const result = [];
 

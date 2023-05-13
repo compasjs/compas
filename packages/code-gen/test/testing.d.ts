@@ -5,11 +5,11 @@
  * @param {{
  *   partialError: string,
  *   generateOptions:
- *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }|{
  *   pass: true,
  *   generateOptions?:
- *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
  * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {void}
@@ -20,13 +20,13 @@ export function testGeneratorError(
     | {
         partialError: string;
         generateOptions:
-          | import("../src/generated/common/types.js").ExperimentalGenerateOptions
+          | import("../src/generated/common/types.js").StructureGenerateOptions
           | undefined;
       }
     | {
         pass: true;
         generateOptions?:
-          | import("../src/generated/common/types.js").ExperimentalGenerateOptions
+          | import("../src/generated/common/types.js").StructureGenerateOptions
           | undefined;
       },
   builders: (
@@ -45,7 +45,7 @@ export function testGeneratorError(
  *   validatorName: string,
  *   validatorInput: any,
  *   generateOptions?:
- *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
  * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {Promise<{ value: any, error: Record<string, ValidatorErrorMap> }>}
@@ -57,7 +57,7 @@ export function testGeneratorType(
     validatorName: string;
     validatorInput: any;
     generateOptions?:
-      | import("../src/generated/common/types.js").ExperimentalGenerateOptions
+      | import("../src/generated/common/types.js").StructureGenerateOptions
       | undefined;
   },
   builders: (
@@ -78,7 +78,7 @@ export function testGeneratorType(
  *   relativePath: string,
  *   partialValue: string,
  *   generateOptions?:
- *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
  * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {void}
@@ -89,7 +89,7 @@ export function testGeneratorStaticOutput(
     relativePath: string;
     partialValue: string;
     generateOptions?:
-      | import("../src/generated/common/types.js").ExperimentalGenerateOptions
+      | import("../src/generated/common/types.js").StructureGenerateOptions
       | undefined;
   },
   builders: (
@@ -105,7 +105,7 @@ export function testGeneratorStaticOutput(
  * @param {import("@compas/cli").TestRunner} t
  * @param {{
  *   generateOptions?:
- *   import("../src/generated/common/types.js").ExperimentalGenerateOptions|undefined,
+ *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
  * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
  * @returns {import("../src/generate.js").OutputFile[]}
@@ -114,7 +114,7 @@ export function testGeneratorStaticFiles(
   t: import("@compas/cli").TestRunner,
   options: {
     generateOptions?:
-      | import("../src/generated/common/types.js").ExperimentalGenerateOptions
+      | import("../src/generated/common/types.js").StructureGenerateOptions
       | undefined;
   },
   builders: (

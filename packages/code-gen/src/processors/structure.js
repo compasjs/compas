@@ -13,8 +13,8 @@ import { typeDefinitionTraverse } from "./type-definition-traverse.js";
  * This function can be used all over the generation process, to optimize cases where
  * references are already normalized, it supports to skip reference extraction.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalNamedTypeDefinition} type
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureNamedTypeDefinition} type
  * @param {{ skipReferenceExtraction: boolean }} options
  */
 export function structureAddType(structure, type, options) {
@@ -54,8 +54,8 @@ export function structureAddType(structure, type, options) {
  * }
  * ```
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>)[]}
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureNamedTypeDefinition>)[]}
  */
 export function structureNamedTypes(structure) {
   // @ts-expect-error
@@ -70,12 +70,12 @@ export function structureNamedTypes(structure) {
  * Extract a selection of groups from the provided structure. This function resolves
  * references that point to not included groups and will try to include them.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
+ * @param {import("../generated/common/types.js").StructureStructure} structure
  * @param {string[]} groups
- * @returns {import("../generated/common/types.js").ExperimentalStructure}
+ * @returns {import("../generated/common/types.js").StructureStructure}
  */
 export function structureExtractGroups(structure, groups) {
-  /** @type {import("../generated/common/types.js").ExperimentalStructure} */
+  /** @type {import("../generated/common/types.js").StructureStructure} */
   const newStructure = {};
 
   for (const group of groups) {
@@ -96,7 +96,7 @@ export function structureExtractGroups(structure, groups) {
  * errors as possible before throwing a combined error via {@link
  * errorsThrowCombinedError}.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
+ * @param {import("../generated/common/types.js").StructureStructure} structure
  */
 export function structureValidateReferences(structure) {
   /** @type {import("@compas/stdlib").AppError[]} */
@@ -119,9 +119,9 @@ export function structureValidateReferences(structure) {
  * Throws if the provided value is not a reference or if the reference can not be
  * resolved.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} reference
- * @returns {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalNamedTypeDefinition>}
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} reference
+ * @returns {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureNamedTypeDefinition>}
  */
 export function structureResolveReference(structure, reference) {
   if (reference.type !== "reference") {
@@ -153,7 +153,7 @@ export function structureResolveReference(structure, reference) {
  *
  * @param {string} group
  * @param {string} name
- * @returns {import("../generated/common/types.js").ExperimentalReferenceDefinition}
+ * @returns {import("../generated/common/types.js").StructureReferenceDefinition}
  */
 export function structureCreateReference(group, name) {
   return {
@@ -176,11 +176,11 @@ export function structureCreateReference(group, name) {
  * - The JS iterators in Node.js are based on object insertion order, so this ensures
  * that our output is stable.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @returns {import("../generated/common/types.js").ExperimentalStructure}
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @returns {import("../generated/common/types.js").StructureStructure}
  */
 export function structureCopyAndSort(structure) {
-  /** @type {import("../generated/common/types.js").ExperimentalStructure} */
+  /** @type {import("../generated/common/types.js").StructureStructure} */
   const newStructure = {};
 
   const groups = Object.keys(structure).sort();
@@ -212,8 +212,8 @@ export function structureCopyAndSort(structure) {
  * possible and resolve them on the fly. This prevents weird recursion errors and should
  * simplify conditional logic down in the generators.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} type
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} type
  * @returns {void}
  */
 export function structureExtractReferences(structure, type) {
@@ -282,9 +282,9 @@ export function structureExtractReferences(structure, type) {
  * This is used when extracting groups or specific types from the structure in to a new
  * structure. By resolving out of group references a valid structure is created.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} fullStructure
- * @param {import("../generated/common/types.js").ExperimentalStructure} newStructure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} type
+ * @param {import("../generated/common/types.js").StructureStructure} fullStructure
+ * @param {import("../generated/common/types.js").StructureStructure} newStructure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} type
  */
 export function structureIncludeReferences(fullStructure, newStructure, type) {
   typeDefinitionTraverse(
@@ -331,8 +331,8 @@ export function structureIncludeReferences(fullStructure, newStructure, type) {
  * We do this early in the generation process to check the user input, and expect that
  * processors don't create invalid references.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} type
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} type
  */
 export function structureValidateReferenceForType(structure, type) {
   // Keep a type stack so we can give the user pointers where this happened.

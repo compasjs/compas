@@ -15,9 +15,7 @@
  * @property {import("../types/generator.js").GenerateTypeOptions} outputTypeOptions
  * @property {number} reusedVariableIndex
  * @property {ValidatorPath[]} validatedValuePath
- * @property {import("../generated/common/types.js")
- * .ExperimentalReferenceDefinition[]
- * } dependingValidators
+ * @property {import("../generated/common/types.js").StructureReferenceDefinition[]} dependingValidators
  * @property {boolean} [jsHasInlineTypes]
  * @property {boolean} [skipFirstNilCheck]
  */
@@ -40,7 +38,7 @@ export function validatorGeneratorGenerateBaseTypes(
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {string} outputTypeName
  * @returns {string}
@@ -49,7 +47,7 @@ export function validatorGetNameAndImport(
   generateContext: import("../generate.js").GenerateContext,
   file: import("../file/context.js").GenerateFile,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   outputTypeName: string,
 ): string;
@@ -65,7 +63,7 @@ export function validatorGetNameAndImport(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {import("../types/generator.js").GenerateTypeOptions & {
  *   preferInputBaseName?: boolean;
@@ -74,7 +72,7 @@ export function validatorGetNameAndImport(
 export function validatorGeneratorGenerateValidator(
   generateContext: import("../generate.js").GenerateContext,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   outputTypeOptions: import("../types/generator.js").GenerateTypeOptions & {
     preferInputBaseName?: boolean;
@@ -86,14 +84,14 @@ export function validatorGeneratorGenerateValidator(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalTypeSystemDefinition>} type
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureTypeSystemDefinition>} type
  * @param {ValidatorState} validatorState
  */
 export function validatorGeneratorGenerateBody(
   generateContext: import("../generate.js").GenerateContext,
   file: import("../file/context.js").GenerateFile,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   validatorState: ValidatorState,
 ): void;
@@ -119,7 +117,7 @@ export type ValidatorState = {
   outputTypeOptions: import("../types/generator.js").GenerateTypeOptions;
   reusedVariableIndex: number;
   validatedValuePath: ValidatorPath[];
-  dependingValidators: import("../generated/common/types.js").ExperimentalReferenceDefinition[];
+  dependingValidators: import("../generated/common/types.js").StructureReferenceDefinition[];
   jsHasInlineTypes?: boolean | undefined;
   skipFirstNilCheck?: boolean | undefined;
 };

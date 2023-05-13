@@ -25,18 +25,18 @@ export function modelKeyAddDateKeys(
  *
  * The result is cached and early returned in the next call with the same model.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {{
  *   primaryKeyName: string,
  *   primaryKeyDefinition:
- *   import("../generated/common/types.js").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types.js").StructureTypeSystemDefinition
  * }}
  */
 export function modelKeyGetPrimary(
-  model: import("../generated/common/types.js").ExperimentalObjectDefinition,
+  model: import("../generated/common/types.js").StructureObjectDefinition,
 ): {
   primaryKeyName: string;
-  primaryKeyDefinition: import("../generated/common/types.js").ExperimentalTypeSystemDefinition;
+  primaryKeyDefinition: import("../generated/common/types.js").StructureTypeSystemDefinition;
 };
 /**
  * Get the searchable model keys for the provided model.
@@ -44,11 +44,11 @@ export function modelKeyGetPrimary(
  * The result is cached and early returned in the next call with the same model.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {string[]}
  */
 export function modelKeyGetSearchable(
   generateContext: import("../generate.js").GenerateContext,
-  model: import("../generated/common/types.js").ExperimentalObjectDefinition,
+  model: import("../generated/common/types.js").StructureObjectDefinition,
 ): string[];
 //# sourceMappingURL=model-keys.d.ts.map

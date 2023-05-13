@@ -5,7 +5,7 @@ import { crudEventsGenerate } from "./crud/events.js";
 import { crudHandlersGenerate } from "./crud/handlers.js";
 import { databaseGenerator } from "./database/generator.js";
 import { fileContextConvertToOutputFiles } from "./file/context.js";
-import { validateExperimentalStructure } from "./generated/experimental/validators.js";
+import { validateStructureStructure } from "./generated/structure/validators.js";
 import { openApiGenerate } from "./open-api/generator.js";
 import { anyOfPreProcess } from "./processors/any-of.js";
 import { crudTypesCreate } from "./processors/crud-types.js";
@@ -66,8 +66,8 @@ import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
 /**
  * @typedef {object} GenerateContext
  * @property {import("@compas/stdlib").Logger} log
- * @property {import("./generated/common/types.d.ts").ExperimentalGenerateOptions} options
- * @property {import("./generated/common/types.d.ts").ExperimentalStructure} structure
+ * @property {import("./generated/common/types.d.ts").StructureGenerateOptions} options
+ * @property {import("./generated/common/types.d.ts").StructureStructure} structure
  * @property {import("./file/context.js").GenerateFileMap} files
  */
 
@@ -82,11 +82,11 @@ import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
  * - targetLanguageSwitch & targetCustomSwitch
  *
  * @param {import("./generator.js").Generator} generator
- * @param {import("./generated/common/types.js").ExperimentalGenerateOptions} options
+ * @param {import("./generated/common/types.js").StructureGenerateOptions} options
  * @returns {OutputFile[]}
  */
 export function generateExecute(generator, options) {
-  const validationResultStructure = validateExperimentalStructure(
+  const validationResultStructure = validateStructureStructure(
     generator.internalStructure,
   );
 

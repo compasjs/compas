@@ -2,18 +2,18 @@
  * Get a list of CRUD objects in the structure
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>)[]}
+ * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>)[]}
  */
 export function structureCrud(
   generateContext: import("../generate.js").GenerateContext,
 ): import("../../types/advanced-types").NamedType<
-  import("../generated/common/types").ExperimentalCrudDefinition
+  import("../generated/common/types").StructureCrudDefinition
 >[];
 /**
  * Call the route specific functions that are enabled on the CRUD object.
  *
  * @template {any[]} X
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
  * @param {{
  *   listRoute: (...X) => void,
  *   singleRoute: (...X) => void,
@@ -25,7 +25,7 @@ export function structureCrud(
  */
 export function crudRouteSwitch<X extends any[]>(
   crud: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalCrudDefinition
+    import("../generated/common/types").StructureCrudDefinition
   >,
   functions: {
     listRoute: (...X: any[]) => void;

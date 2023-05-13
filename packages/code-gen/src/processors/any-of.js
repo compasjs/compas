@@ -64,7 +64,7 @@ export function anyOfPreProcess(generateContext) {
  * - The discriminant should be unique and a single `oneOf` string
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.d.ts").ExperimentalAnyOfDefinition} type
+ * @param {import("../generated/common/types.d.ts").StructureAnyOfDefinition} type
  */
 function anyOfPreprocessDiscriminant(generateContext, type) {
   const discriminantSet = new Set();

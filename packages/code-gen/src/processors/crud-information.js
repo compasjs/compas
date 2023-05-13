@@ -3,10 +3,10 @@ import { modelKeyGetPrimary } from "./model-keys.js";
 
 /**
  * @typedef {object} CrudInformation
- * @property {import("../generated/common/types.js").ExperimentalObjectDefinition} model
- * @property {import("../generated/common/types.js").ExperimentalCrudDefinition} [parent]
+ * @property {import("../generated/common/types.js").StructureObjectDefinition} model
+ * @property {import("../generated/common/types.js").StructureCrudDefinition} [parent]
  * @property {import("../generated/common/types.js").
- *   ExperimentalRelationDefinition} [relation]
+ *   StructureRelationDefinition} [relation]
  * @property {{ group: string, name: string }} readableType
  * @property {{ group: string, name: string }} writableType
  * @property {boolean} hasCustomReadableType
@@ -22,7 +22,7 @@ const crudCache = new WeakMap();
 /**
  * Get the resolved name of the provided crud route
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @param {string} suffix
  * @returns {string}
  */
@@ -43,7 +43,7 @@ export function crudInformationGetName(crud, suffix) {
 /**
  * Get the resolved path of the provided crud route
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @param {string} suffix
  * @returns {string}
  */
@@ -76,7 +76,7 @@ export function crudInformationGetPath(crud, suffix) {
 /**
  * Get the param name for the provided crud object
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  */
 export function crudInformationGetParamName(crud) {
   const model = crudInformationGetModel(crud);
@@ -90,8 +90,8 @@ export function crudInformationGetParamName(crud) {
 /**
  * Save the used model, so we don't have to resolve that each and every time.
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  */
 export function crudInformationSetModel(crud, model) {
   const obj = crudCache.get(crud) ?? {};
@@ -103,8 +103,8 @@ export function crudInformationSetModel(crud, model) {
 }
 
 /**
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
- * @returns {import("../generated/common/types.js").ExperimentalObjectDefinition}
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
+ * @returns {import("../generated/common/types.js").StructureObjectDefinition}
  */
 export function crudInformationGetModel(crud) {
   // @ts-expect-error
@@ -114,10 +114,10 @@ export function crudInformationGetModel(crud) {
 /**
  * Save the used relation and parent
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} parent
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} parent
  * @param {import("../generated/common/types.js").
- * ExperimentalRelationDefinition} relation
+ * StructureRelationDefinition} relation
  */
 export function crudInformationSetRelationAndParent(crud, parent, relation) {
   const obj = crudCache.get(crud) ?? {};
@@ -132,8 +132,8 @@ export function crudInformationSetRelationAndParent(crud, parent, relation) {
 }
 
 /**
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
- * @returns {import("../generated/common/types.js").ExperimentalRelationDefinition}
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
+ * @returns {import("../generated/common/types.js").StructureRelationDefinition}
  */
 export function crudInformationGetRelation(crud) {
   // @ts-expect-error
@@ -141,8 +141,8 @@ export function crudInformationGetRelation(crud) {
 }
 
 /**
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
- * @returns {import("../generated/common/types.js").ExperimentalCrudDefinition}
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
+ * @returns {import("../generated/common/types.js").StructureCrudDefinition}
  */
 export function crudInformationGetParent(crud) {
   // @ts-expect-error
@@ -152,7 +152,7 @@ export function crudInformationGetParent(crud) {
 /**
  * Save the created readable type, so it is easily resolvable later on.
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @param {{ group: string, name: string }} readable
  */
 export function crudInformationSetReadableType(crud, readable) {
@@ -165,7 +165,7 @@ export function crudInformationSetReadableType(crud, readable) {
 }
 
 /**
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @returns {{ group: string, name: string }}
  */
 export function crudInformationGetReadableType(crud) {
@@ -176,7 +176,7 @@ export function crudInformationGetReadableType(crud) {
 /**
  * Save the created writable type, so it is easily resolvable later on.
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @param {{ group: string, name: string }} writable
  */
 export function crudInformationSetWritableType(crud, writable) {
@@ -189,7 +189,7 @@ export function crudInformationSetWritableType(crud, writable) {
 }
 
 /**
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @returns {{ group: string, name: string }}
  */
 export function crudInformationGetWritableType(crud) {
@@ -200,7 +200,7 @@ export function crudInformationGetWritableType(crud) {
 /**
  * Cache when the provided CRUD has a custom readable type.
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @param {boolean} hasCustomReadableType
  */
 export function crudInformationSetHasCustomReadableType(
@@ -218,7 +218,7 @@ export function crudInformationSetHasCustomReadableType(
 /**
  * Check if the crud or parent has a custom readable type
  *
- * @param {import("../generated/common/types.js").ExperimentalCrudDefinition} crud
+ * @param {import("../generated/common/types.js").StructureCrudDefinition} crud
  * @returns {boolean}
  */
 export function crudInformationGetHasCustomReadableType(crud) {

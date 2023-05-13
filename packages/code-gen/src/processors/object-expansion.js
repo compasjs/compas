@@ -51,8 +51,8 @@ export function objectExpansionExecute(generateContext) {
  * The 'extend' type is then removed from the structure, as it doesn't serve a purpose
  * anymore.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} namedType
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} namedType
  */
 export function objectExpansionExtend(structure, namedType) {
   if (namedType.type === "extend") {
@@ -85,8 +85,8 @@ export function objectExpansionExtend(structure, namedType) {
  * This function alters the type in place, creating a shallow copy of the source objects
  * keys.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} namedType
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} namedType
  */
 export function objectExpansionOmit(structure, namedType) {
   // We keep a callstack with `beforeTraversal` and `afterTraversal` to improve the
@@ -113,7 +113,7 @@ export function objectExpansionOmit(structure, namedType) {
         const removedKeys = type.keys;
 
         /**
-         * @type {import("../generated/common/types.js").ExperimentalObjectDefinition}
+         * @type {import("../generated/common/types.js").StructureObjectDefinition}
          */
         // @ts-expect-error
         //
@@ -163,8 +163,8 @@ export function objectExpansionOmit(structure, namedType) {
  * This function alters the type in place, creating a shallow copy of the source objects
  * keys.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} namedType
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} namedType
  */
 export function objectExpansionPick(structure, namedType) {
   // We keep a callstack with `beforeTraversal` and `afterTraversal` to improve the
@@ -191,7 +191,7 @@ export function objectExpansionPick(structure, namedType) {
         const pickedKeys = type.keys;
 
         /**
-         * @type {import("../generated/common/types.js").ExperimentalObjectDefinition}
+         * @type {import("../generated/common/types.js").StructureObjectDefinition}
          */
         // @ts-expect-error
         //

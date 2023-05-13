@@ -52,10 +52,10 @@ export function routerGenerator(generateContext) {
   );
 
   const target = routerFormatTarget(generateContext);
-  /** @type {import("../generated/common/types.js").ExperimentalAnyDefinitionTarget[]} */
+  /** @type {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} */
   const typeTargets = ["js", "jsKoaReceive"];
 
-  /** @type Record<string, (import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>)[]>} */
+  /** @type Record<string, (import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>)[]>} */
   const routesPerGroup = {};
 
   for (const route of structureRoutes(generateContext)) {

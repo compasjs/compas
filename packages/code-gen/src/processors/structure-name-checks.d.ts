@@ -22,11 +22,11 @@ export function structureNameCheckForGroup(group: string): void;
  * Objects shouldn't use reserved keys, since that breaks the atomic database updates
  * that we support.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} type
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} type
  * @param {string[]} typeStack
  */
 export function structureNameChecksForObject(
-  type: import("../generated/common/types.js").ExperimentalObjectDefinition,
+  type: import("../generated/common/types.js").StructureObjectDefinition,
   typeStack: string[],
 ): void;
 //# sourceMappingURL=structure-name-checks.d.ts.map

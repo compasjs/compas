@@ -7,7 +7,7 @@ import { structureRoutes } from "./routes.js";
 
 /**
  * @typedef {object} RouteTrie
- * @property {import("../generated/common/types.js").ExperimentalRouteDefinition} [route]
+ * @property {import("../generated/common/types.js").StructureRouteDefinition} [route]
  * @property {keyof typeof RoutePrio} prio
  * @property {RouteTrie[]} children
  * @property {RouteTrie} [parent]

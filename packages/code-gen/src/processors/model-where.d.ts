@@ -1,10 +1,10 @@
 /**
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
  * @returns {ModelWhereInformation}
  */
 export function modelWhereGetInformation(
-  model: import("../generated/common/types.js").ExperimentalObjectDefinition,
+  model: import("../generated/common/types.js").StructureObjectDefinition,
 ): ModelWhereInformation;
 /**
  * Build the {@link ModelWhereInformation} object for each model. This way further

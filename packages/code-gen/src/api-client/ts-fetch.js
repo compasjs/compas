@@ -133,7 +133,7 @@ export function fetchCatchErrorAndWrapWithAppError(originalFetch: FetchFn): Fetc
  * Get a specific api client file.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition} route
+ * @param {import("../generated/common/types.js").StructureRouteDefinition} route
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function tsFetchGetApiClientFile(generateContext, route) {
@@ -172,7 +172,7 @@ export function tsFetchGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function tsFetchGenerateFunction(
@@ -237,7 +237,7 @@ export function tsFetchGenerateFunction(
 
     fileBlockStart(file, `if (!(${parameter} instanceof FormData))`);
 
-    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
     // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,
@@ -270,7 +270,7 @@ export function tsFetchGenerateFunction(
   }
 
   if (route.query) {
-    /** @type {import("../generated/common/types.d.ts").ExperimentalObjectDefinition} */
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
     // @ts-expect-error
     const type = structureResolveReference(
       generateContext.structure,

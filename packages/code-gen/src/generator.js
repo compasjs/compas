@@ -11,7 +11,7 @@ import {
 } from "@compas/stdlib";
 import { buildOrInfer } from "./builders/index.js";
 import { generateExecute } from "./generate.js";
-import { validateExperimentalGenerateOptions } from "./generated/experimental/validators.js";
+import { validateStructureGenerateOptions } from "./generated/structure/validators.js";
 import {
   structureAddType,
   structureExtractGroups,
@@ -48,7 +48,7 @@ export class Generator {
     this.logger = logger ?? newLogger();
 
     /**
-     * @type {import("./generated/common/types.js").ExperimentalStructure}
+     * @type {import("./generated/common/types.js").StructureStructure}
      */
     this.internalStructure = {};
   }
@@ -86,7 +86,7 @@ export class Generator {
    * If a string is provided, it is expected to be a path to a 'structure.json' or to an
    * 'outputDirectory' of a generate call that included 'structure: {}'.
    *
-   * @param {import("./generated/common/types.js").ExperimentalStructure|string} structureOrDirectory
+   * @param {import("./generated/common/types.js").StructureStructure|string} structureOrDirectory
    * @returns {Generator}
    */
   addStructure(structureOrDirectory) {
@@ -176,12 +176,11 @@ export class Generator {
   /**
    * Generate based on the structure that is known to this generator
    *
-   * @param {import("./generated/common/types.js").ExperimentalGenerateOptionsInput} options
+   * @param {import("./generated/common/types.js").StructureGenerateOptionsInput} options
    * @returns {import("./generate.js").OutputFile[]}
    */
   generate(options) {
-    const validationResultOptions =
-      validateExperimentalGenerateOptions(options);
+    const validationResultOptions = validateStructureGenerateOptions(options);
     if (validationResultOptions.error) {
       throw AppError.serverError({
         message: "Static validation failed for the provided options.",

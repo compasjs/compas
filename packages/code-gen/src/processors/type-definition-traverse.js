@@ -9,7 +9,7 @@ import { AppError, isNil } from "@compas/stdlib";
  * object are all typeDefiniton.
  *
  * @type {Record<
- *   import("../generated/common/types.js").ExperimentalTypeDefinition["type"],
+ *   import("../generated/common/types.js").StructureTypeDefinition["type"],
  *   {
  *     key: string,
  *     amount: "single" | "many"
@@ -150,21 +150,21 @@ export const typeDefinitionTraversePaths = {
  *
  * This function is tested indirectly by all its users.
  *
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition|undefined} typeToTraverse
+ * @param {import("../generated/common/types.js").StructureTypeDefinition|undefined} typeToTraverse
  * @param {(
- *   type: import("../generated/common/types").ExperimentalTypeDefinition,
+ *   type: import("../generated/common/types").StructureTypeDefinition,
  *   callback: (
- *   type: import("../generated/common/types").ExperimentalTypeDefinition,
- * ) => import("../generated/common/types").ExperimentalTypeDefinition|void,
- * ) => import("../generated/common/types.js").ExperimentalTypeDefinition|void} callback
+ *   type: import("../generated/common/types").StructureTypeDefinition,
+ * ) => import("../generated/common/types").StructureTypeDefinition|void,
+ * ) => import("../generated/common/types.js").StructureTypeDefinition|void} callback
  * @param {{
  *   isInitialType: boolean,
  *   assignResult?: boolean,
  *   beforeTraversal?: (
- *   type: import("../generated/common/types.js").ExperimentalTypeDefinition,
+ *   type: import("../generated/common/types.js").StructureTypeDefinition,
  *   ) => void,
  *   afterTraversal?: (
- *   type: import("../generated/common/types").ExperimentalTypeDefinition,
+ *   type: import("../generated/common/types").StructureTypeDefinition,
  *   ) => void,
  * }} options
  */

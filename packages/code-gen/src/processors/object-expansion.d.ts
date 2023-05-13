@@ -15,12 +15,12 @@ export function objectExpansionExecute(
  * The 'extend' type is then removed from the structure, as it doesn't serve a purpose
  * anymore.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} namedType
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} namedType
  */
 export function objectExpansionExtend(
-  structure: import("../generated/common/types.js").ExperimentalStructure,
-  namedType: import("../generated/common/types.js").ExperimentalTypeDefinition,
+  structure: import("../generated/common/types.js").StructureStructure,
+  namedType: import("../generated/common/types.js").StructureTypeDefinition,
 ): void;
 /**
  * Replace 'omit' types with an object definition without the omitted keys.
@@ -28,12 +28,12 @@ export function objectExpansionExtend(
  * This function alters the type in place, creating a shallow copy of the source objects
  * keys.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} namedType
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} namedType
  */
 export function objectExpansionOmit(
-  structure: import("../generated/common/types.js").ExperimentalStructure,
-  namedType: import("../generated/common/types.js").ExperimentalTypeDefinition,
+  structure: import("../generated/common/types.js").StructureStructure,
+  namedType: import("../generated/common/types.js").StructureTypeDefinition,
 ): void;
 /**
  * Replace 'pick' types with an object definition only including the picked keys
@@ -41,11 +41,11 @@ export function objectExpansionOmit(
  * This function alters the type in place, creating a shallow copy of the source objects
  * keys.
  *
- * @param {import("../generated/common/types.js").ExperimentalStructure} structure
- * @param {import("../generated/common/types.js").ExperimentalTypeDefinition} namedType
+ * @param {import("../generated/common/types.js").StructureStructure} structure
+ * @param {import("../generated/common/types.js").StructureTypeDefinition} namedType
  */
 export function objectExpansionPick(
-  structure: import("../generated/common/types.js").ExperimentalStructure,
-  namedType: import("../generated/common/types.js").ExperimentalTypeDefinition,
+  structure: import("../generated/common/types.js").StructureStructure,
+  namedType: import("../generated/common/types.js").StructureTypeDefinition,
 ): void;
 //# sourceMappingURL=object-expansion.d.ts.map

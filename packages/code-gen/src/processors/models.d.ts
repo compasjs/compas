@@ -2,12 +2,12 @@
  * Get a list of query enabled objects in the structure.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>)[]}
+ * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>)[]}
  */
 export function structureModels(
   generateContext: import("../generate.js").GenerateContext,
 ): import("../../types/advanced-types").NamedType<
-  import("../generated/common/types").ExperimentalObjectDefinition
+  import("../generated/common/types").StructureObjectDefinition
 >[];
 /**
  * Return a new generic any type for custom query parts

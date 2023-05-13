@@ -60,7 +60,7 @@ The order of this output is alphabetically sorted, dependencies between tables a
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} model
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
  */
 function databasePostgresWriteModelDDL(generateContext, file, model) {
   if (model.queryOptions?.isView) {
@@ -125,7 +125,7 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
 
     if (isPrimary) {
       switch (
-        /** @type {import("../generated/common/types.js").ExperimentalTypeSystemDefinition["type"]} */ type
+        /** @type {import("../generated/common/types.js").StructureTypeSystemDefinition["type"]} */ type
       ) {
         case "number":
           fileWriteInline(file, ` BIGSERIAL PRIMARY KEY`);
@@ -147,7 +147,7 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
       }
     } else {
       switch (
-        /** @type {import("../generated/common/types.js").ExperimentalTypeSystemDefinition["type"]} */ type
+        /** @type {import("../generated/common/types.js").StructureTypeSystemDefinition["type"]} */ type
       ) {
         case "any":
           fileWriteInline(file, ` jsonb`);

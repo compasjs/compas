@@ -6,7 +6,7 @@ import { TypeCreator } from "@compas/code-gen";
  * @param {import("@compas/code-gen").Generator} generator
  */
 export function extendWithCodeGen(generator) {
-  const T = new TypeCreator("experimental");
+  const T = new TypeCreator("structure");
 
   const namePart = T.string("namePart")
     .min(1)
@@ -45,7 +45,7 @@ export function extendWithCodeGen(generator) {
       .values(
         T.generic()
           .keys(namePart)
-          .values(T.reference("experimental", "namedTypeDefinition")),
+          .values(T.reference("structure", "namedTypeDefinition")),
       ),
 
     T.object("generateOptions")
@@ -137,7 +137,7 @@ export function extendWithCodeGen(generator) {
               includeBaseTypes: T.bool()
                 .default(false)
                 .docs(
-                  "Always generate validators for all named types even if no other generator needs it. This implies {@link ExperimentalGenerateOptions.generators.types.includeBaseTypes}.",
+                  "Always generate validators for all named types even if no other generator needs it. This implies {@link StructureGenerateOptions.generators.types.includeBaseTypes}.",
                 ),
             })
             .optional()
@@ -243,32 +243,32 @@ export function extendWithCodeGen(generator) {
         "This contains all types that can be added top level to the structure.",
       )
       .values(
-        T.reference("experimental", "anyDefinition"),
-        T.reference("experimental", "anyOfDefinition"),
-        T.reference("experimental", "arrayDefinition"),
-        T.reference("experimental", "booleanDefinition"),
-        T.reference("experimental", "crudDefinition"),
-        T.reference("experimental", "dateDefinition"),
-        T.reference("experimental", "extendDefinition"),
-        T.reference("experimental", "fileDefinition"),
-        T.reference("experimental", "genericDefinition"),
-        T.reference("experimental", "numberDefinition"),
-        T.reference("experimental", "objectDefinition"),
-        T.reference("experimental", "omitDefinition"),
-        T.reference("experimental", "pickDefinition"),
-        T.reference("experimental", "routeDefinition"),
-        T.reference("experimental", "stringDefinition"),
-        T.reference("experimental", "uuidDefinition"),
+        T.reference("structure", "anyDefinition"),
+        T.reference("structure", "anyOfDefinition"),
+        T.reference("structure", "arrayDefinition"),
+        T.reference("structure", "booleanDefinition"),
+        T.reference("structure", "crudDefinition"),
+        T.reference("structure", "dateDefinition"),
+        T.reference("structure", "extendDefinition"),
+        T.reference("structure", "fileDefinition"),
+        T.reference("structure", "genericDefinition"),
+        T.reference("structure", "numberDefinition"),
+        T.reference("structure", "objectDefinition"),
+        T.reference("structure", "omitDefinition"),
+        T.reference("structure", "pickDefinition"),
+        T.reference("structure", "routeDefinition"),
+        T.reference("structure", "stringDefinition"),
+        T.reference("structure", "uuidDefinition"),
       )
       .discriminant("type"),
 
     T.anyOf("typeDefinition")
       .docs("This contains all known type definitions.")
       .values(
-        T.reference("experimental", "namedTypeDefinition"),
-        T.reference("experimental", "referenceDefinition"),
-        T.reference("experimental", "relationDefinition"),
-        T.reference("experimental", "routeInvalidationDefinition"),
+        T.reference("structure", "namedTypeDefinition"),
+        T.reference("structure", "referenceDefinition"),
+        T.reference("structure", "relationDefinition"),
+        T.reference("structure", "routeInvalidationDefinition"),
       ),
 
     T.anyOf("typeSystemDefinition")
@@ -276,22 +276,22 @@ export function extendWithCodeGen(generator) {
         "All type definitions that can be used inside other types, like object keys.",
       )
       .values(
-        T.reference("experimental", "anyDefinition"),
-        T.reference("experimental", "anyOfDefinition"),
-        T.reference("experimental", "arrayDefinition"),
-        T.reference("experimental", "booleanDefinition"),
-        T.reference("experimental", "crudDefinition"),
-        T.reference("experimental", "dateDefinition"),
-        T.reference("experimental", "extendDefinition"),
-        T.reference("experimental", "fileDefinition"),
-        T.reference("experimental", "genericDefinition"),
-        T.reference("experimental", "numberDefinition"),
-        T.reference("experimental", "objectDefinition"),
-        T.reference("experimental", "omitDefinition"),
-        T.reference("experimental", "pickDefinition"),
-        T.reference("experimental", "referenceDefinition"),
-        T.reference("experimental", "stringDefinition"),
-        T.reference("experimental", "uuidDefinition"),
+        T.reference("structure", "anyDefinition"),
+        T.reference("structure", "anyOfDefinition"),
+        T.reference("structure", "arrayDefinition"),
+        T.reference("structure", "booleanDefinition"),
+        T.reference("structure", "crudDefinition"),
+        T.reference("structure", "dateDefinition"),
+        T.reference("structure", "extendDefinition"),
+        T.reference("structure", "fileDefinition"),
+        T.reference("structure", "genericDefinition"),
+        T.reference("structure", "numberDefinition"),
+        T.reference("structure", "objectDefinition"),
+        T.reference("structure", "omitDefinition"),
+        T.reference("structure", "pickDefinition"),
+        T.reference("structure", "referenceDefinition"),
+        T.reference("structure", "stringDefinition"),
+        T.reference("structure", "uuidDefinition"),
       )
       .discriminant("type"),
 
@@ -372,7 +372,7 @@ export function extendWithCodeGen(generator) {
           .loose(),
         values: T.array()
           .min(1)
-          .values(T.reference("experimental", "typeSystemDefinition")),
+          .values(T.reference("structure", "typeSystemDefinition")),
       })
       .loose(),
 
@@ -380,7 +380,7 @@ export function extendWithCodeGen(generator) {
       .keys({
         type: "array",
         ...namedTypeDefinitionBase,
-        values: T.reference("experimental", "typeSystemDefinition"),
+        values: T.reference("structure", "typeSystemDefinition"),
         validator: T.object()
           .keys({
             convert: T.bool(),
@@ -410,7 +410,7 @@ export function extendWithCodeGen(generator) {
         type: "crud",
         ...namedTypeDefinitionBase,
         basePath: T.string().optional(),
-        entity: T.reference("experimental", "referenceDefinition").optional(),
+        entity: T.reference("structure", "referenceDefinition").optional(),
         fromParent: T.object()
           .keys({
             field: T.string(),
@@ -442,7 +442,7 @@ export function extendWithCodeGen(generator) {
               .loose()
               .optional(),
             readableType: T.reference(
-              "experimental",
+              "structure",
               "referenceDefinition",
             ).optional(),
             writable: T.object()
@@ -454,8 +454,8 @@ export function extendWithCodeGen(generator) {
               .optional(),
           })
           .loose(),
-        inlineRelations: [T.reference("experimental", "crudDefinition")],
-        nestedRelations: [T.reference("experimental", "crudDefinition")],
+        inlineRelations: [T.reference("structure", "crudDefinition")],
+        nestedRelations: [T.reference("structure", "crudDefinition")],
       })
       .loose(),
 
@@ -482,10 +482,10 @@ export function extendWithCodeGen(generator) {
         ...namedTypeDefinitionBase,
         keys: T.generic()
           .keys(T.string())
-          .values(T.reference("experimental", "typeSystemDefinition")),
-        reference: T.reference("experimental", "referenceDefinition"),
+          .values(T.reference("structure", "typeSystemDefinition")),
+        reference: T.reference("structure", "referenceDefinition"),
         relations: T.array().values(
-          T.reference("experimental", "relationDefinition"),
+          T.reference("structure", "relationDefinition"),
         ),
       })
       .loose(),
@@ -506,8 +506,8 @@ export function extendWithCodeGen(generator) {
       .keys({
         type: "generic",
         ...namedTypeDefinitionBase,
-        keys: T.reference("experimental", "typeSystemDefinition"),
-        values: T.reference("experimental", "typeSystemDefinition"),
+        keys: T.reference("structure", "typeSystemDefinition"),
+        values: T.reference("structure", "typeSystemDefinition"),
       })
       .loose(),
 
@@ -553,7 +553,7 @@ export function extendWithCodeGen(generator) {
           .loose(),
         keys: T.generic()
           .keys(T.string())
-          .values(T.reference("experimental", "typeSystemDefinition")),
+          .values(T.reference("structure", "typeSystemDefinition")),
         enableQueries: T.bool().optional(),
         queryOptions: T.object()
           .keys({
@@ -566,7 +566,7 @@ export function extendWithCodeGen(generator) {
           .optional()
           .loose(),
         relations: T.array().values(
-          T.reference("experimental", "relationDefinition"),
+          T.reference("structure", "relationDefinition"),
         ),
       })
       .loose(),
@@ -582,7 +582,7 @@ export function extendWithCodeGen(generator) {
           })
           .loose(),
         keys: [T.string()],
-        reference: T.reference("experimental", "typeSystemDefinition"),
+        reference: T.reference("structure", "typeSystemDefinition"),
       })
       .loose(),
 
@@ -597,7 +597,7 @@ export function extendWithCodeGen(generator) {
           })
           .loose(),
         keys: [T.string()],
-        reference: T.reference("experimental", "typeSystemDefinition"),
+        reference: T.reference("structure", "typeSystemDefinition"),
       })
       .loose(),
 
@@ -623,7 +623,7 @@ export function extendWithCodeGen(generator) {
           "oneToOne",
           "oneToOneReverse",
         ),
-        reference: T.reference("experimental", "referenceDefinition"),
+        reference: T.reference("structure", "referenceDefinition"),
         ownKey: T.string(),
         referencedKey: T.string().optional(),
         isOptional: T.bool(),
@@ -645,13 +645,13 @@ export function extendWithCodeGen(generator) {
         idempotent: T.bool(),
         path: T.string(),
         tags: [T.string()],
-        query: T.reference("experimental", "referenceDefinition").optional(),
-        params: T.reference("experimental", "referenceDefinition").optional(),
-        body: T.reference("experimental", "referenceDefinition").optional(),
-        files: T.reference("experimental", "referenceDefinition").optional(),
-        response: T.reference("experimental", "referenceDefinition").optional(),
+        query: T.reference("structure", "referenceDefinition").optional(),
+        params: T.reference("structure", "referenceDefinition").optional(),
+        body: T.reference("structure", "referenceDefinition").optional(),
+        files: T.reference("structure", "referenceDefinition").optional(),
+        response: T.reference("structure", "referenceDefinition").optional(),
         invalidations: [
-          T.reference("experimental", "routeInvalidationDefinition"),
+          T.reference("structure", "routeInvalidationDefinition"),
         ],
         metadata: T.object()
           .keys({

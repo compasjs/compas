@@ -18,7 +18,7 @@ export class RouteInvalidationType {
       });
     }
 
-    /** @type {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition} */
+    /** @type {import("../generated/common/types.js").StructureRouteInvalidationDefinition} */
     this.data = {
       type: "routeInvalidation",
       target: {

@@ -4,14 +4,14 @@
  * is not a reference.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @param {(string|number)[]} accessPath
  * @param {any} [defaultValue]
  * @returns {any}
  */
 export function referenceUtilsGetProperty(
   generateContext: import("../generate.js").GenerateContext,
-  type: import("../generated/common/types.js").ExperimentalTypeSystemDefinition,
+  type: import("../generated/common/types.js").StructureTypeSystemDefinition,
   accessPath: (string | number)[],
   defaultValue?: any,
 ): any;

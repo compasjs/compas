@@ -13,20 +13,20 @@ import { structureNamedTypes, structureResolveReference } from "./structure.js";
 /**
  * @typedef {{
  *   modelOwn:
- *   import("../generated/common/types.js").ExperimentalObjectDefinition,
+ *   import("../generated/common/types.js").StructureObjectDefinition,
  *   modelInverse:
- *   import("../generated/common/types").ExperimentalObjectDefinition,
+ *   import("../generated/common/types").StructureObjectDefinition,
  *   relationOwn:
- *   import("../generated/common/types").ExperimentalRelationDefinition,
+ *   import("../generated/common/types").StructureRelationDefinition,
  *   relationInverse:
- *   import("../generated/common/types").ExperimentalRelationDefinition,
+ *   import("../generated/common/types").StructureRelationDefinition,
  *   keyNameOwn: string,
  *   keyDefinitionOwn:
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition,
+ *   import("../generated/common/types").StructureTypeSystemDefinition,
  *   virtualKeyNameInverse: string,
  *   primaryKeyNameInverse: string,
  *   primaryKeyDefinitionInverse:
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition,
+ *   import("../generated/common/types").StructureTypeSystemDefinition,
  * }} ModelRelationInformation
  */
 
@@ -34,7 +34,7 @@ import { structureNamedTypes, structureResolveReference } from "./structure.js";
  * Cache to resolve various relations related types.
  *
  * @type {WeakMap<
- *   import("../generated/common/types.js").ExperimentalRelationDefinition,
+ *   import("../generated/common/types.js").StructureRelationDefinition,
  *   ModelRelationInformation
  * >}
  */
@@ -44,11 +44,11 @@ const relationCache = new WeakMap();
  * Get the owned relations of the provided model. The 'relation.ownKey' of these
  * relations is a field on the model that it belongs to.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
- * @returns {import("../generated/common/types.js").ExperimentalRelationDefinition[]}
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
+ * @returns {import("../generated/common/types.js").StructureRelationDefinition[]}
  */
 export function modelRelationGetOwn(model) {
-  /** @type {import("../generated/common/types.js").ExperimentalRelationDefinition[]} */
+  /** @type {import("../generated/common/types.js").StructureRelationDefinition[]} */
   const result = [];
 
   for (const relation of model.relations) {
@@ -64,11 +64,11 @@ export function modelRelationGetOwn(model) {
  * Get the inverse relations of the provided model. The 'relation.ownKey' is a virtual
  * key on this model, which is not populated by default.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
- * @returns {import("../generated/common/types.js").ExperimentalRelationDefinition[]}
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
+ * @returns {import("../generated/common/types.js").StructureRelationDefinition[]}
  */
 export function modelRelationGetInverse(model) {
-  /** @type {import("../generated/common/types.js").ExperimentalRelationDefinition[]} */
+  /** @type {import("../generated/common/types.js").StructureRelationDefinition[]} */
   const result = [];
 
   for (const relation of model.relations) {
@@ -91,7 +91,7 @@ export function modelRelationGetInverse(model) {
  * By returning both models and both relations, other code only needs to pass in a
  * relation to get the full picture.
  *
- * @param {import("../generated/common/types.js").ExperimentalRelationDefinition} relation
+ * @param {import("../generated/common/types.js").StructureRelationDefinition} relation
  * @returns {ModelRelationInformation}
  */
 export function modelRelationGetInformation(relation) {
@@ -163,7 +163,7 @@ export function modelRelationCheckAllRelations(generateContext) {
   // relation
   for (const model of structureModels(generateContext)) {
     for (const relation of modelRelationGetOwn(model)) {
-      /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
+      /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} */
       // @ts-expect-error
       const inverseModel = structureResolveReference(
         generateContext.structure,
@@ -331,7 +331,7 @@ export function modelRelationAddKeys(generateContext) {
       // We allow the user to define their own key for this relation, however it should
       // have the same type as the referenced primary key.
       if (model.keys[relation.ownKey]) {
-        /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalObjectDefinition>} */
+        /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} */
         // @ts-expect-error
         const modelInverse = structureResolveReference(
           generateContext.structure,
@@ -440,7 +440,7 @@ export function modelRelationAddKeys(generateContext) {
 export function modelRelationBuildRelationInformationCache(generateContext) {
   for (const model of structureModels(generateContext)) {
     for (const relation of modelRelationGetOwn(model)) {
-      /** @type { import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      /** @type { import("../generated/common/types.js").StructureObjectDefinition} */
       // @ts-expect-error
       const modelInverse = structureResolveReference(
         generateContext.structure,
@@ -474,7 +474,7 @@ export function modelRelationBuildRelationInformationCache(generateContext) {
 
   for (const model of structureModels(generateContext)) {
     for (const relation of modelRelationGetInverse(model)) {
-      /** @type { import("../generated/common/types.js").ExperimentalObjectDefinition} */
+      /** @type { import("../generated/common/types.js").StructureObjectDefinition} */
       // @ts-expect-error
       const modelOwn = structureResolveReference(
         generateContext.structure,

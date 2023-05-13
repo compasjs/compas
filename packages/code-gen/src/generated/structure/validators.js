@@ -10,10 +10,10 @@
  */
 
 /**
- * @param {import("../common/types").ExperimentalAnyDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalAnyDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureAnyDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureAnyDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalAnyDefinition(value) {
+export function validateStructureAnyDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -462,7 +462,7 @@ export function validateExperimentalAnyDefinition(value) {
               };
             } else {
               const refResult12 =
-                validateExperimentalAnyDefinitionTarget(genericKeyInput9);
+                validateStructureAnyDefinitionTarget(genericKeyInput9);
 
               if (refResult12.error) {
                 for (const errorKey of Object.keys(refResult12.error)) {
@@ -921,10 +921,10 @@ export function validateExperimentalAnyDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalAnyDefinitionTarget|any} value
- * @returns {Either<import("../common/types").ExperimentalAnyDefinitionTarget, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureAnyDefinitionTarget|any} value
+ * @returns {Either<import("../common/types").StructureAnyDefinitionTarget, ValidatorErrorMap>}
  */
-export function validateExperimentalAnyDefinitionTarget(value) {
+export function validateStructureAnyDefinitionTarget(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -997,10 +997,10 @@ export function validateExperimentalAnyDefinitionTarget(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalAnyOfDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalAnyOfDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureAnyOfDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureAnyOfDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalAnyOfDefinition(value) {
+export function validateStructureAnyOfDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -1454,7 +1454,7 @@ export function validateExperimentalAnyOfDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult10 = validateExperimentalTypeSystemDefinition(
+            const refResult10 = validateStructureTypeSystemDefinition(
               intermediateValue10[i10],
             );
 
@@ -1487,10 +1487,10 @@ export function validateExperimentalAnyOfDefinition(value) {
 /**
  * All type definitions that can be used inside other types, like object keys.
  *
- * @param {import("../common/types").ExperimentalTypeSystemDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalTypeSystemDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureTypeSystemDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureTypeSystemDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalTypeSystemDefinition(value) {
+export function validateStructureTypeSystemDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -1502,7 +1502,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
     };
   } else {
     if (value.type === "any") {
-      const refResult0 = validateExperimentalAnyDefinition(value);
+      const refResult0 = validateStructureAnyDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1511,7 +1511,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "anyOf") {
-      const refResult0 = validateExperimentalAnyOfDefinition(value);
+      const refResult0 = validateStructureAnyOfDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1520,7 +1520,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "array") {
-      const refResult0 = validateExperimentalArrayDefinition(value);
+      const refResult0 = validateStructureArrayDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1529,7 +1529,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "boolean") {
-      const refResult0 = validateExperimentalBooleanDefinition(value);
+      const refResult0 = validateStructureBooleanDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1538,7 +1538,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "crud") {
-      const refResult0 = validateExperimentalCrudDefinition(value);
+      const refResult0 = validateStructureCrudDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1547,7 +1547,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "date") {
-      const refResult0 = validateExperimentalDateDefinition(value);
+      const refResult0 = validateStructureDateDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1556,7 +1556,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "extend") {
-      const refResult0 = validateExperimentalExtendDefinition(value);
+      const refResult0 = validateStructureExtendDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1565,7 +1565,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "file") {
-      const refResult0 = validateExperimentalFileDefinition(value);
+      const refResult0 = validateStructureFileDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1574,7 +1574,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "generic") {
-      const refResult0 = validateExperimentalGenericDefinition(value);
+      const refResult0 = validateStructureGenericDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1583,7 +1583,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "number") {
-      const refResult0 = validateExperimentalNumberDefinition(value);
+      const refResult0 = validateStructureNumberDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1592,7 +1592,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "object") {
-      const refResult0 = validateExperimentalObjectDefinition(value);
+      const refResult0 = validateStructureObjectDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1601,7 +1601,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "omit") {
-      const refResult0 = validateExperimentalOmitDefinition(value);
+      const refResult0 = validateStructureOmitDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1610,7 +1610,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "pick") {
-      const refResult0 = validateExperimentalPickDefinition(value);
+      const refResult0 = validateStructurePickDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1619,7 +1619,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "reference") {
-      const refResult0 = validateExperimentalReferenceDefinition(value);
+      const refResult0 = validateStructureReferenceDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1628,7 +1628,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "string") {
-      const refResult0 = validateExperimentalStringDefinition(value);
+      const refResult0 = validateStructureStringDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1637,7 +1637,7 @@ export function validateExperimentalTypeSystemDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "uuid") {
-      const refResult0 = validateExperimentalUuidDefinition(value);
+      const refResult0 = validateStructureUuidDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -1678,10 +1678,10 @@ export function validateExperimentalTypeSystemDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalArrayDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalArrayDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureArrayDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureArrayDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalArrayDefinition(value) {
+export function validateStructureArrayDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2186,7 +2186,7 @@ export function validateExperimentalArrayDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult9 = validateExperimentalTypeSystemDefinition(
+        const refResult9 = validateStructureTypeSystemDefinition(
           value["values"],
         );
 
@@ -2207,10 +2207,10 @@ export function validateExperimentalArrayDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalBooleanDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalBooleanDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureBooleanDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureBooleanDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalBooleanDefinition(value) {
+export function validateStructureBooleanDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2696,10 +2696,10 @@ export function validateExperimentalBooleanDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalCrudDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalCrudDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureCrudDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureCrudDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalCrudDefinition(value) {
+export function validateStructureCrudDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -3120,7 +3120,7 @@ export function validateExperimentalCrudDefinition(value) {
       if (value["entity"] === null || value["entity"] === undefined) {
         result["entity"] = undefined;
       } else {
-        const refResult10 = validateExperimentalReferenceDefinition(
+        const refResult10 = validateStructureReferenceDefinition(
           value["entity"],
         );
 
@@ -3537,7 +3537,7 @@ export function validateExperimentalCrudDefinition(value) {
           ) {
             result["fieldOptions"]["readableType"] = undefined;
           } else {
-            const refResult15 = validateExperimentalReferenceDefinition(
+            const refResult15 = validateStructureReferenceDefinition(
               value["fieldOptions"]["readableType"],
             );
 
@@ -3712,7 +3712,7 @@ export function validateExperimentalCrudDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult15 = validateExperimentalCrudDefinition(
+            const refResult15 = validateStructureCrudDefinition(
               intermediateValue15[i15],
             );
 
@@ -3762,7 +3762,7 @@ export function validateExperimentalCrudDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult16 = validateExperimentalCrudDefinition(
+            const refResult16 = validateStructureCrudDefinition(
               intermediateValue16[i16],
             );
 
@@ -3793,10 +3793,10 @@ export function validateExperimentalCrudDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalReferenceDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalReferenceDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureReferenceDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureReferenceDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalReferenceDefinition(value) {
+export function validateStructureReferenceDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -4167,7 +4167,7 @@ export function validateExperimentalReferenceDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult8 = validateExperimentalNamePart(
+            const refResult8 = validateStructureNamePart(
               value["reference"]["group"],
             );
 
@@ -4187,7 +4187,7 @@ export function validateExperimentalReferenceDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult9 = validateExperimentalNamePart(
+            const refResult9 = validateStructureNamePart(
               value["reference"]["name"],
             );
 
@@ -4210,10 +4210,10 @@ export function validateExperimentalReferenceDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalNamePart|any} value
- * @returns {Either<import("../common/types").ExperimentalNamePart, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureNamePart|any} value
+ * @returns {Either<import("../common/types").StructureNamePart, ValidatorErrorMap>}
  */
-export function validateExperimentalNamePart(value) {
+export function validateStructureNamePart(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -4252,10 +4252,10 @@ export function validateExperimentalNamePart(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalDateDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalDateDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureDateDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureDateDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalDateDefinition(value) {
+export function validateStructureDateDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -4831,10 +4831,10 @@ export function validateExperimentalDateDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalExtendDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalExtendDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureExtendDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureExtendDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalExtendDefinition(value) {
+export function validateStructureExtendDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -5289,7 +5289,7 @@ export function validateExperimentalExtendDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
-                const refResult12 = validateExperimentalTypeSystemDefinition(
+                const refResult12 = validateStructureTypeSystemDefinition(
                   value["keys"][genericKeyResult10],
                 );
 
@@ -5311,7 +5311,7 @@ export function validateExperimentalExtendDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult10 = validateExperimentalReferenceDefinition(
+        const refResult10 = validateStructureReferenceDefinition(
           value["reference"],
         );
 
@@ -5348,7 +5348,7 @@ export function validateExperimentalExtendDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult12 = validateExperimentalRelationDefinition(
+            const refResult12 = validateStructureRelationDefinition(
               intermediateValue12[i12],
             );
 
@@ -5379,10 +5379,10 @@ export function validateExperimentalExtendDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalRelationDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalRelationDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureRelationDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureRelationDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalRelationDefinition(value) {
+export function validateStructureRelationDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -5473,7 +5473,7 @@ export function validateExperimentalRelationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult3 = validateExperimentalReferenceDefinition(
+        const refResult3 = validateStructureReferenceDefinition(
           value["reference"],
         );
 
@@ -5569,10 +5569,10 @@ export function validateExperimentalRelationDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalFileDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalFileDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureFileDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureFileDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalFileDefinition(value) {
+export function validateStructureFileDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -6031,10 +6031,10 @@ export function validateExperimentalFileDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalGenericDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalGenericDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureGenericDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureGenericDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalGenericDefinition(value) {
+export function validateStructureGenericDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -6433,9 +6433,7 @@ export function validateExperimentalGenericDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult9 = validateExperimentalTypeSystemDefinition(
-          value["keys"],
-        );
+        const refResult9 = validateStructureTypeSystemDefinition(value["keys"]);
 
         if (refResult9.error) {
           for (const errorKey of Object.keys(refResult9.error)) {
@@ -6450,7 +6448,7 @@ export function validateExperimentalGenericDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult10 = validateExperimentalTypeSystemDefinition(
+        const refResult10 = validateStructureTypeSystemDefinition(
           value["values"],
         );
 
@@ -6471,10 +6469,10 @@ export function validateExperimentalGenericDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalNumberDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalNumberDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureNumberDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureNumberDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalNumberDefinition(value) {
+export function validateStructureNumberDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7103,10 +7101,10 @@ export function validateExperimentalNumberDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalObjectDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalObjectDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureObjectDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureObjectDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalObjectDefinition(value) {
+export function validateStructureObjectDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7644,7 +7642,7 @@ export function validateExperimentalObjectDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
-                const refResult13 = validateExperimentalTypeSystemDefinition(
+                const refResult13 = validateStructureTypeSystemDefinition(
                   value["keys"][genericKeyResult11],
                 );
 
@@ -7870,7 +7868,7 @@ export function validateExperimentalObjectDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult14 = validateExperimentalRelationDefinition(
+            const refResult14 = validateStructureRelationDefinition(
               intermediateValue14[i14],
             );
 
@@ -7901,10 +7899,10 @@ export function validateExperimentalObjectDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalOmitDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalOmitDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureOmitDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureOmitDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalOmitDefinition(value) {
+export function validateStructureOmitDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -8414,7 +8412,7 @@ export function validateExperimentalOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult10 = validateExperimentalTypeSystemDefinition(
+        const refResult10 = validateStructureTypeSystemDefinition(
           value["reference"],
         );
 
@@ -8435,10 +8433,10 @@ export function validateExperimentalOmitDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalPickDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalPickDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructurePickDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructurePickDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalPickDefinition(value) {
+export function validateStructurePickDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -8948,7 +8946,7 @@ export function validateExperimentalPickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        const refResult10 = validateExperimentalTypeSystemDefinition(
+        const refResult10 = validateStructureTypeSystemDefinition(
           value["reference"],
         );
 
@@ -8969,10 +8967,10 @@ export function validateExperimentalPickDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalStringDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalStringDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureStringDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureStringDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalStringDefinition(value) {
+export function validateStructureStringDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -9733,10 +9731,10 @@ export function validateExperimentalStringDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalUuidDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalUuidDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureUuidDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureUuidDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalUuidDefinition(value) {
+export function validateStructureUuidDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -10171,10 +10169,10 @@ export function validateExperimentalUuidDefinition(value) {
 /**
  * Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
  *
- * @param {import("../common/types").ExperimentalGenerateOptionsInput|any} value
- * @returns {Either<import("../common/types").ExperimentalGenerateOptions, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureGenerateOptionsInput|any} value
+ * @returns {Either<import("../common/types").StructureGenerateOptions, ValidatorErrorMap>}
  */
-export function validateExperimentalGenerateOptions(value) {
+export function validateStructureGenerateOptions(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -11832,10 +11830,10 @@ export function validateExperimentalGenerateOptions(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalNamePartOptional|any} value
- * @returns {Either<import("../common/types").ExperimentalNamePartOptional, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureNamePartOptional|any} value
+ * @returns {Either<import("../common/types").StructureNamePartOptional, ValidatorErrorMap>}
  */
-export function validateExperimentalNamePartOptional(value) {
+export function validateStructureNamePartOptional(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -11878,10 +11876,10 @@ export function validateExperimentalNamePartOptional(value) {
 /**
  * This contains all types that can be added top level to the structure.
  *
- * @param {import("../common/types").ExperimentalNamedTypeDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalNamedTypeDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureNamedTypeDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureNamedTypeDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalNamedTypeDefinition(value) {
+export function validateStructureNamedTypeDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -11893,7 +11891,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
     };
   } else {
     if (value.type === "any") {
-      const refResult0 = validateExperimentalAnyDefinition(value);
+      const refResult0 = validateStructureAnyDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11902,7 +11900,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "anyOf") {
-      const refResult0 = validateExperimentalAnyOfDefinition(value);
+      const refResult0 = validateStructureAnyOfDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11911,7 +11909,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "array") {
-      const refResult0 = validateExperimentalArrayDefinition(value);
+      const refResult0 = validateStructureArrayDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11920,7 +11918,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "boolean") {
-      const refResult0 = validateExperimentalBooleanDefinition(value);
+      const refResult0 = validateStructureBooleanDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11929,7 +11927,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "crud") {
-      const refResult0 = validateExperimentalCrudDefinition(value);
+      const refResult0 = validateStructureCrudDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11938,7 +11936,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "date") {
-      const refResult0 = validateExperimentalDateDefinition(value);
+      const refResult0 = validateStructureDateDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11947,7 +11945,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "extend") {
-      const refResult0 = validateExperimentalExtendDefinition(value);
+      const refResult0 = validateStructureExtendDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11956,7 +11954,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "file") {
-      const refResult0 = validateExperimentalFileDefinition(value);
+      const refResult0 = validateStructureFileDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11965,7 +11963,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "generic") {
-      const refResult0 = validateExperimentalGenericDefinition(value);
+      const refResult0 = validateStructureGenericDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11974,7 +11972,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "number") {
-      const refResult0 = validateExperimentalNumberDefinition(value);
+      const refResult0 = validateStructureNumberDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11983,7 +11981,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "object") {
-      const refResult0 = validateExperimentalObjectDefinition(value);
+      const refResult0 = validateStructureObjectDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -11992,7 +11990,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "omit") {
-      const refResult0 = validateExperimentalOmitDefinition(value);
+      const refResult0 = validateStructureOmitDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -12001,7 +11999,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "pick") {
-      const refResult0 = validateExperimentalPickDefinition(value);
+      const refResult0 = validateStructurePickDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -12010,7 +12008,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "route") {
-      const refResult0 = validateExperimentalRouteDefinition(value);
+      const refResult0 = validateStructureRouteDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -12019,7 +12017,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "string") {
-      const refResult0 = validateExperimentalStringDefinition(value);
+      const refResult0 = validateStructureStringDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -12028,7 +12026,7 @@ export function validateExperimentalNamedTypeDefinition(value) {
       }
       result = refResult0.value;
     } else if (value.type === "uuid") {
-      const refResult0 = validateExperimentalUuidDefinition(value);
+      const refResult0 = validateStructureUuidDefinition(value);
 
       if (refResult0.error) {
         for (const errorKey of Object.keys(refResult0.error)) {
@@ -12069,10 +12067,10 @@ export function validateExperimentalNamedTypeDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalRouteDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalRouteDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureRouteDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureRouteDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalRouteDefinition(value) {
+export function validateStructureRouteDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -12604,7 +12602,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["query"] === null || value["query"] === undefined) {
         result["query"] = undefined;
       } else {
-        const refResult13 = validateExperimentalReferenceDefinition(
+        const refResult13 = validateStructureReferenceDefinition(
           value["query"],
         );
 
@@ -12619,7 +12617,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["params"] === null || value["params"] === undefined) {
         result["params"] = undefined;
       } else {
-        const refResult14 = validateExperimentalReferenceDefinition(
+        const refResult14 = validateStructureReferenceDefinition(
           value["params"],
         );
 
@@ -12634,9 +12632,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["body"] === null || value["body"] === undefined) {
         result["body"] = undefined;
       } else {
-        const refResult15 = validateExperimentalReferenceDefinition(
-          value["body"],
-        );
+        const refResult15 = validateStructureReferenceDefinition(value["body"]);
 
         if (refResult15.error) {
           for (const errorKey of Object.keys(refResult15.error)) {
@@ -12649,7 +12645,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["files"] === null || value["files"] === undefined) {
         result["files"] = undefined;
       } else {
-        const refResult16 = validateExperimentalReferenceDefinition(
+        const refResult16 = validateStructureReferenceDefinition(
           value["files"],
         );
 
@@ -12664,7 +12660,7 @@ export function validateExperimentalRouteDefinition(value) {
       if (value["response"] === null || value["response"] === undefined) {
         result["response"] = undefined;
       } else {
-        const refResult17 = validateExperimentalReferenceDefinition(
+        const refResult17 = validateStructureReferenceDefinition(
           value["response"],
         );
 
@@ -12704,7 +12700,7 @@ export function validateExperimentalRouteDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult19 = validateExperimentalRouteInvalidationDefinition(
+            const refResult19 = validateStructureRouteInvalidationDefinition(
               intermediateValue19[i19],
             );
 
@@ -12788,10 +12784,10 @@ export function validateExperimentalRouteDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalRouteInvalidationDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalRouteInvalidationDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureRouteInvalidationDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureRouteInvalidationDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalRouteInvalidationDefinition(value) {
+export function validateStructureRouteInvalidationDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -12864,7 +12860,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
               key: "validator.undefined",
             };
           } else {
-            const refResult3 = validateExperimentalNamePart(
+            const refResult3 = validateStructureNamePart(
               value["target"]["group"],
             );
 
@@ -12882,7 +12878,7 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
           ) {
             result["target"]["name"] = undefined;
           } else {
-            const refResult4 = validateExperimentalNamePartOptional(
+            const refResult4 = validateStructureNamePartOptional(
               value["target"]["name"],
             );
 
@@ -13300,10 +13296,10 @@ export function validateExperimentalRouteInvalidationDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").ExperimentalStructureInput|any} value
- * @returns {Either<import("../common/types").ExperimentalStructure, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureStructureInput|any} value
+ * @returns {Either<import("../common/types").StructureStructure, ValidatorErrorMap>}
  */
-export function validateExperimentalStructure(value) {
+export function validateStructureStructure(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -13330,7 +13326,7 @@ export function validateExperimentalStructure(value) {
             key: "validator.undefined",
           };
         } else {
-          const refResult3 = validateExperimentalNamePart(genericKeyInput0);
+          const refResult3 = validateStructureNamePart(genericKeyInput0);
 
           if (refResult3.error) {
             for (const errorKey of Object.keys(refResult3.error)) {
@@ -13386,7 +13382,7 @@ export function validateExperimentalStructure(value) {
                   };
                 } else {
                   const refResult6 =
-                    validateExperimentalNamePart(genericKeyInput3);
+                    validateStructureNamePart(genericKeyInput3);
 
                   if (refResult6.error) {
                     for (const errorKey of Object.keys(refResult6.error)) {
@@ -13419,7 +13415,7 @@ export function validateExperimentalStructure(value) {
                       key: "validator.undefined",
                     };
                   } else {
-                    const refResult6 = validateExperimentalNamedTypeDefinition(
+                    const refResult6 = validateStructureNamedTypeDefinition(
                       value[genericKeyResult1][genericKeyResult4],
                     );
 
@@ -13452,10 +13448,10 @@ export function validateExperimentalStructure(value) {
 /**
  * This contains all known type definitions.
  *
- * @param {import("../common/types").ExperimentalTypeDefinitionInput|any} value
- * @returns {Either<import("../common/types").ExperimentalTypeDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types").StructureTypeDefinitionInput|any} value
+ * @returns {Either<import("../common/types").StructureTypeDefinition, ValidatorErrorMap>}
  */
-export function validateExperimentalTypeDefinition(value) {
+export function validateStructureTypeDefinition(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -13485,7 +13481,7 @@ export function validateExperimentalTypeDefinition(value) {
         };
       } else {
         const refResult2 =
-          validateExperimentalNamedTypeDefinition(intermediateValue2);
+          validateStructureNamedTypeDefinition(intermediateValue2);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -13517,7 +13513,7 @@ export function validateExperimentalTypeDefinition(value) {
         };
       } else {
         const refResult2 =
-          validateExperimentalReferenceDefinition(intermediateValue2);
+          validateStructureReferenceDefinition(intermediateValue2);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -13549,7 +13545,7 @@ export function validateExperimentalTypeDefinition(value) {
         };
       } else {
         const refResult2 =
-          validateExperimentalRelationDefinition(intermediateValue2);
+          validateStructureRelationDefinition(intermediateValue2);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -13581,7 +13577,7 @@ export function validateExperimentalTypeDefinition(value) {
         };
       } else {
         const refResult2 =
-          validateExperimentalRouteInvalidationDefinition(intermediateValue2);
+          validateStructureRouteInvalidationDefinition(intermediateValue2);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {

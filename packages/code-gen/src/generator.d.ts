@@ -15,9 +15,9 @@ export class Generator {
    */
   logger: import("@compas/stdlib").Logger;
   /**
-   * @type {import("./generated/common/types.js").ExperimentalStructure}
+   * @type {import("./generated/common/types.js").StructureStructure}
    */
-  internalStructure: import("./generated/common/types.js").ExperimentalStructure;
+  internalStructure: import("./generated/common/types.js").StructureStructure;
   /**
    * Add new type definitions to this generator
    *
@@ -32,12 +32,12 @@ export class Generator {
    * If a string is provided, it is expected to be a path to a 'structure.json' or to an
    * 'outputDirectory' of a generate call that included 'structure: {}'.
    *
-   * @param {import("./generated/common/types.js").ExperimentalStructure|string} structureOrDirectory
+   * @param {import("./generated/common/types.js").StructureStructure|string} structureOrDirectory
    * @returns {Generator}
    */
   addStructure(
     structureOrDirectory:
-      | import("./generated/common/types.js").ExperimentalStructure
+      | import("./generated/common/types.js").StructureStructure
       | string,
   ): Generator;
   /**
@@ -64,11 +64,11 @@ export class Generator {
   /**
    * Generate based on the structure that is known to this generator
    *
-   * @param {import("./generated/common/types.js").ExperimentalGenerateOptionsInput} options
+   * @param {import("./generated/common/types.js").StructureGenerateOptionsInput} options
    * @returns {import("./generate.js").OutputFile[]}
    */
   generate(
-    options: import("./generated/common/types.js").ExperimentalGenerateOptionsInput,
+    options: import("./generated/common/types.js").StructureGenerateOptionsInput,
   ): import("./generate.js").OutputFile[];
 }
 //# sourceMappingURL=generator.d.ts.map

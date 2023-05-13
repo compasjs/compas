@@ -67,7 +67,7 @@ export function jsKoaGetControllerFile(generateContext, group) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition} route
+ * @param {import("../generated/common/types.js").StructureRouteDefinition} route
  * @param {Record<string, string>} contextNames
  */
 export function jsKoaPrepareContext(
@@ -171,7 +171,7 @@ export function jsKoaPrepareContext(
 /**
  * @param {import("../file/context.js").GenerateFile} file
  * @param {string} group
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition[]} routes
+ * @param {import("../generated/common/types.js").StructureRouteDefinition[]} routes
  * @param {Map<any, Record<string, string>>} contextNamesMap
  */
 export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
@@ -213,7 +213,7 @@ export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
 /**
  * @param {import("../file/context.js").GenerateFile} file
  * @param {string} group
- * @param {import("../generated/common/types.js").ExperimentalRouteDefinition[]} routes
+ * @param {import("../generated/common/types.js").StructureRouteDefinition[]} routes
  */
 export function jsKoaWriteTags(file, group, routes) {
   fileWrite(file, `export const ${group}Tags = {`);
@@ -229,7 +229,7 @@ export function jsKoaWriteTags(file, group, routes) {
 
 /**
  * @param {import("../file/context.js").GenerateFile} file
- * @param {Record<string, import("../generated/common/types.js").ExperimentalRouteDefinition[]>} routesPerGroup
+ * @param {Record<string, import("../generated/common/types.js").StructureRouteDefinition[]>} routesPerGroup
  * @param {Map<any, Record<string, string>>} contextNamesMap
  */
 export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {

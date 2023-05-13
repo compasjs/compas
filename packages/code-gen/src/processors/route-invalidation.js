@@ -35,8 +35,8 @@ export function routeInvalidationsCheck(generateContext) {
 /**
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalRouteDefinition>} route
- * @param {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition} invalidation
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../generated/common/types.js").StructureRouteInvalidationDefinition} invalidation
  */
 function routeInvalidationProcess(generateContext, route, invalidation) {
   const targetGroup = generateContext.structure[invalidation.target.group];
@@ -57,7 +57,7 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
     return;
   }
 
-  /** @type {import("../generated/common/types.js").ExperimentalRouteDefinition} */
+  /** @type {import("../generated/common/types.js").StructureRouteDefinition} */
   // @ts-expect-error
   const targetRoute = targetGroup?.[invalidation.target.name];
 
@@ -223,7 +223,7 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
 
 /**
  *
- * @param {import("../generated/common/types.js").ExperimentalRouteInvalidationDefinition["target"]} target
+ * @param {import("../generated/common/types.js").StructureRouteInvalidationDefinition["target"]} target
  */
 function formatTarget(target) {
   return `(targetGroup: '${target.group}'${

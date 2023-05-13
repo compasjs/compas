@@ -1,5 +1,5 @@
 {
-  "experimental": {
+  "structure": {
     "anyDefinition": {
       "docString": "",
       "isOptional": false,
@@ -9,7 +9,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "anyDefinition",
       "relations": [],
       "keys": {
@@ -208,7 +208,7 @@
             "sql": {},
             "validator": {},
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "anyDefinitionTarget"
             }
           },
@@ -407,7 +407,7 @@
       },
       "sql": {},
       "type": "string",
-      "group": "experimental",
+      "group": "structure",
       "name": "anyDefinitionTarget",
       "oneOf": [
         "js",
@@ -436,7 +436,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "anyOfDefinition",
       "relations": [],
       "keys": {
@@ -643,9 +643,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "typeSystemDefinition",
-              "uniqueName": "ExperimentalTypeSystemDefinition"
+              "uniqueName": "StructureTypeSystemDefinition"
             }
           }
         }
@@ -660,7 +660,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "arrayDefinition",
       "relations": [],
       "keys": {
@@ -879,9 +879,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "typeSystemDefinition",
-            "uniqueName": "ExperimentalTypeSystemDefinition"
+            "uniqueName": "StructureTypeSystemDefinition"
           }
         }
       }
@@ -895,7 +895,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "booleanDefinition",
       "relations": [],
       "keys": {
@@ -1113,7 +1113,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "crudDefinition",
       "relations": [],
       "keys": {
@@ -1310,9 +1310,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "fromParent": {
@@ -1509,9 +1509,9 @@
               "sql": {},
               "type": "reference",
               "reference": {
-                "group": "experimental",
+                "group": "structure",
                 "name": "referenceDefinition",
-                "uniqueName": "ExperimentalReferenceDefinition"
+                "uniqueName": "StructureReferenceDefinition"
               }
             },
             "writable": {
@@ -1590,9 +1590,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "crudDefinition",
-              "uniqueName": "ExperimentalCrudDefinition"
+              "uniqueName": "StructureCrudDefinition"
             }
           }
         },
@@ -1611,9 +1611,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "crudDefinition",
-              "uniqueName": "ExperimentalCrudDefinition"
+              "uniqueName": "StructureCrudDefinition"
             }
           }
         }
@@ -1628,7 +1628,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "dateDefinition",
       "relations": [],
       "keys": {
@@ -1879,7 +1879,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "extendDefinition",
       "relations": [],
       "keys": {
@@ -2082,9 +2082,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "typeSystemDefinition",
-              "uniqueName": "ExperimentalTypeSystemDefinition"
+              "uniqueName": "StructureTypeSystemDefinition"
             }
           }
         },
@@ -2095,9 +2095,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "relations": {
@@ -2115,9 +2115,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "relationDefinition",
-              "uniqueName": "ExperimentalRelationDefinition"
+              "uniqueName": "StructureRelationDefinition"
             }
           }
         }
@@ -2132,7 +2132,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "fileDefinition",
       "relations": [],
       "keys": {
@@ -2342,7 +2342,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "generateOptions",
       "relations": [],
       "keys": {
@@ -2645,7 +2645,7 @@
               "relations": [],
               "keys": {
                 "includeBaseTypes": {
-                  "docString": "Always generate validators for all named types even if no other generator needs it. This implies {@link ExperimentalGenerateOptions.generators.types.includeBaseTypes}.",
+                  "docString": "Always generate validators for all named types even if no other generator needs it. This implies {@link StructureGenerateOptions.generators.types.includeBaseTypes}.",
                   "isOptional": true,
                   "validator": {
                     "convert": false,
@@ -2889,7 +2889,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "genericDefinition",
       "relations": [],
       "keys": {
@@ -3072,9 +3072,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "typeSystemDefinition",
-            "uniqueName": "ExperimentalTypeSystemDefinition"
+            "uniqueName": "StructureTypeSystemDefinition"
           }
         },
         "values": {
@@ -3084,9 +3084,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "typeSystemDefinition",
-            "uniqueName": "ExperimentalTypeSystemDefinition"
+            "uniqueName": "StructureTypeSystemDefinition"
           }
         }
       }
@@ -3105,7 +3105,7 @@
       },
       "sql": {},
       "type": "string",
-      "group": "experimental",
+      "group": "structure",
       "name": "namePart"
     },
     "namePartOptional": {
@@ -3122,7 +3122,7 @@
       },
       "sql": {},
       "type": "string",
-      "group": "experimental",
+      "group": "structure",
       "name": "namePartOptional"
     },
     "namedTypeDefinition": {
@@ -3133,7 +3133,7 @@
       },
       "sql": {},
       "type": "anyOf",
-      "group": "experimental",
+      "group": "structure",
       "name": "namedTypeDefinition",
       "values": [
         {
@@ -3143,9 +3143,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "anyDefinition",
-            "uniqueName": "ExperimentalAnyDefinition"
+            "uniqueName": "StructureAnyDefinition"
           }
         },
         {
@@ -3155,9 +3155,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "anyOfDefinition",
-            "uniqueName": "ExperimentalAnyOfDefinition"
+            "uniqueName": "StructureAnyOfDefinition"
           }
         },
         {
@@ -3167,9 +3167,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "arrayDefinition",
-            "uniqueName": "ExperimentalArrayDefinition"
+            "uniqueName": "StructureArrayDefinition"
           }
         },
         {
@@ -3179,9 +3179,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "booleanDefinition",
-            "uniqueName": "ExperimentalBooleanDefinition"
+            "uniqueName": "StructureBooleanDefinition"
           }
         },
         {
@@ -3191,9 +3191,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "crudDefinition",
-            "uniqueName": "ExperimentalCrudDefinition"
+            "uniqueName": "StructureCrudDefinition"
           }
         },
         {
@@ -3203,9 +3203,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "dateDefinition",
-            "uniqueName": "ExperimentalDateDefinition"
+            "uniqueName": "StructureDateDefinition"
           }
         },
         {
@@ -3215,9 +3215,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "extendDefinition",
-            "uniqueName": "ExperimentalExtendDefinition"
+            "uniqueName": "StructureExtendDefinition"
           }
         },
         {
@@ -3227,9 +3227,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "fileDefinition",
-            "uniqueName": "ExperimentalFileDefinition"
+            "uniqueName": "StructureFileDefinition"
           }
         },
         {
@@ -3239,9 +3239,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "genericDefinition",
-            "uniqueName": "ExperimentalGenericDefinition"
+            "uniqueName": "StructureGenericDefinition"
           }
         },
         {
@@ -3251,9 +3251,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "numberDefinition",
-            "uniqueName": "ExperimentalNumberDefinition"
+            "uniqueName": "StructureNumberDefinition"
           }
         },
         {
@@ -3263,9 +3263,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "objectDefinition",
-            "uniqueName": "ExperimentalObjectDefinition"
+            "uniqueName": "StructureObjectDefinition"
           }
         },
         {
@@ -3275,9 +3275,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "omitDefinition",
-            "uniqueName": "ExperimentalOmitDefinition"
+            "uniqueName": "StructureOmitDefinition"
           }
         },
         {
@@ -3287,9 +3287,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "pickDefinition",
-            "uniqueName": "ExperimentalPickDefinition"
+            "uniqueName": "StructurePickDefinition"
           }
         },
         {
@@ -3299,9 +3299,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "routeDefinition",
-            "uniqueName": "ExperimentalRouteDefinition"
+            "uniqueName": "StructureRouteDefinition"
           }
         },
         {
@@ -3311,9 +3311,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "stringDefinition",
-            "uniqueName": "ExperimentalStringDefinition"
+            "uniqueName": "StructureStringDefinition"
           }
         },
         {
@@ -3323,9 +3323,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "uuidDefinition",
-            "uniqueName": "ExperimentalUuidDefinition"
+            "uniqueName": "StructureUuidDefinition"
           }
         }
       ]
@@ -3339,7 +3339,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "numberDefinition",
       "relations": [],
       "keys": {
@@ -3605,7 +3605,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "objectDefinition",
       "relations": [],
       "keys": {
@@ -3843,9 +3843,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "typeSystemDefinition",
-              "uniqueName": "ExperimentalTypeSystemDefinition"
+              "uniqueName": "StructureTypeSystemDefinition"
             }
           }
         },
@@ -3941,9 +3941,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "relationDefinition",
-              "uniqueName": "ExperimentalRelationDefinition"
+              "uniqueName": "StructureRelationDefinition"
             }
           }
         }
@@ -3958,7 +3958,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "omitDefinition",
       "relations": [],
       "keys": {
@@ -4185,9 +4185,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "typeSystemDefinition",
-            "uniqueName": "ExperimentalTypeSystemDefinition"
+            "uniqueName": "StructureTypeSystemDefinition"
           }
         }
       }
@@ -4201,7 +4201,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "pickDefinition",
       "relations": [],
       "keys": {
@@ -4428,9 +4428,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "typeSystemDefinition",
-            "uniqueName": "ExperimentalTypeSystemDefinition"
+            "uniqueName": "StructureTypeSystemDefinition"
           }
         }
       }
@@ -4444,7 +4444,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "referenceDefinition",
       "relations": [],
       "keys": {
@@ -4610,7 +4610,7 @@
               "sql": {},
               "validator": {},
               "reference": {
-                "group": "experimental",
+                "group": "structure",
                 "name": "namePart"
               }
             },
@@ -4621,7 +4621,7 @@
               "sql": {},
               "validator": {},
               "reference": {
-                "group": "experimental",
+                "group": "structure",
                 "name": "namePart"
               }
             }
@@ -4638,7 +4638,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "relationDefinition",
       "relations": [],
       "keys": {
@@ -4679,9 +4679,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "ownKey": {
@@ -4733,7 +4733,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "routeDefinition",
       "relations": [],
       "keys": {
@@ -4978,9 +4978,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "params": {
@@ -4990,9 +4990,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "body": {
@@ -5002,9 +5002,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "files": {
@@ -5014,9 +5014,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "response": {
@@ -5026,9 +5026,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         "invalidations": {
@@ -5046,9 +5046,9 @@
             "sql": {},
             "type": "reference",
             "reference": {
-              "group": "experimental",
+              "group": "structure",
               "name": "routeInvalidationDefinition",
-              "uniqueName": "ExperimentalRouteInvalidationDefinition"
+              "uniqueName": "StructureRouteInvalidationDefinition"
             }
           }
         },
@@ -5091,7 +5091,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "routeInvalidationDefinition",
       "relations": [],
       "keys": {
@@ -5128,7 +5128,7 @@
               "sql": {},
               "validator": {},
               "reference": {
-                "group": "experimental",
+                "group": "structure",
                 "name": "namePart"
               }
             },
@@ -5139,7 +5139,7 @@
               "sql": {},
               "validator": {},
               "reference": {
-                "group": "experimental",
+                "group": "structure",
                 "name": "namePartOptional"
               }
             }
@@ -5290,7 +5290,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "stringDefinition",
       "relations": [],
       "keys": {
@@ -5613,7 +5613,7 @@
       "validator": {},
       "sql": {},
       "type": "generic",
-      "group": "experimental",
+      "group": "structure",
       "name": "structure",
       "keys": {
         "type": "reference",
@@ -5622,7 +5622,7 @@
         "sql": {},
         "validator": {},
         "reference": {
-          "group": "experimental",
+          "group": "structure",
           "name": "namePart"
         }
       },
@@ -5639,7 +5639,7 @@
           "sql": {},
           "validator": {},
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "namePart"
           }
         },
@@ -5650,9 +5650,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "namedTypeDefinition",
-            "uniqueName": "ExperimentalNamedTypeDefinition"
+            "uniqueName": "StructureNamedTypeDefinition"
           }
         }
       }
@@ -5663,7 +5663,7 @@
       "validator": {},
       "sql": {},
       "type": "anyOf",
-      "group": "experimental",
+      "group": "structure",
       "name": "typeDefinition",
       "values": [
         {
@@ -5673,9 +5673,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "namedTypeDefinition",
-            "uniqueName": "ExperimentalNamedTypeDefinition"
+            "uniqueName": "StructureNamedTypeDefinition"
           }
         },
         {
@@ -5685,9 +5685,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         {
@@ -5697,9 +5697,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "relationDefinition",
-            "uniqueName": "ExperimentalRelationDefinition"
+            "uniqueName": "StructureRelationDefinition"
           }
         },
         {
@@ -5709,9 +5709,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "routeInvalidationDefinition",
-            "uniqueName": "ExperimentalRouteInvalidationDefinition"
+            "uniqueName": "StructureRouteInvalidationDefinition"
           }
         }
       ]
@@ -5724,7 +5724,7 @@
       },
       "sql": {},
       "type": "anyOf",
-      "group": "experimental",
+      "group": "structure",
       "name": "typeSystemDefinition",
       "values": [
         {
@@ -5734,9 +5734,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "anyDefinition",
-            "uniqueName": "ExperimentalAnyDefinition"
+            "uniqueName": "StructureAnyDefinition"
           }
         },
         {
@@ -5746,9 +5746,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "anyOfDefinition",
-            "uniqueName": "ExperimentalAnyOfDefinition"
+            "uniqueName": "StructureAnyOfDefinition"
           }
         },
         {
@@ -5758,9 +5758,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "arrayDefinition",
-            "uniqueName": "ExperimentalArrayDefinition"
+            "uniqueName": "StructureArrayDefinition"
           }
         },
         {
@@ -5770,9 +5770,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "booleanDefinition",
-            "uniqueName": "ExperimentalBooleanDefinition"
+            "uniqueName": "StructureBooleanDefinition"
           }
         },
         {
@@ -5782,9 +5782,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "crudDefinition",
-            "uniqueName": "ExperimentalCrudDefinition"
+            "uniqueName": "StructureCrudDefinition"
           }
         },
         {
@@ -5794,9 +5794,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "dateDefinition",
-            "uniqueName": "ExperimentalDateDefinition"
+            "uniqueName": "StructureDateDefinition"
           }
         },
         {
@@ -5806,9 +5806,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "extendDefinition",
-            "uniqueName": "ExperimentalExtendDefinition"
+            "uniqueName": "StructureExtendDefinition"
           }
         },
         {
@@ -5818,9 +5818,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "fileDefinition",
-            "uniqueName": "ExperimentalFileDefinition"
+            "uniqueName": "StructureFileDefinition"
           }
         },
         {
@@ -5830,9 +5830,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "genericDefinition",
-            "uniqueName": "ExperimentalGenericDefinition"
+            "uniqueName": "StructureGenericDefinition"
           }
         },
         {
@@ -5842,9 +5842,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "numberDefinition",
-            "uniqueName": "ExperimentalNumberDefinition"
+            "uniqueName": "StructureNumberDefinition"
           }
         },
         {
@@ -5854,9 +5854,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "objectDefinition",
-            "uniqueName": "ExperimentalObjectDefinition"
+            "uniqueName": "StructureObjectDefinition"
           }
         },
         {
@@ -5866,9 +5866,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "omitDefinition",
-            "uniqueName": "ExperimentalOmitDefinition"
+            "uniqueName": "StructureOmitDefinition"
           }
         },
         {
@@ -5878,9 +5878,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "pickDefinition",
-            "uniqueName": "ExperimentalPickDefinition"
+            "uniqueName": "StructurePickDefinition"
           }
         },
         {
@@ -5890,9 +5890,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "referenceDefinition",
-            "uniqueName": "ExperimentalReferenceDefinition"
+            "uniqueName": "StructureReferenceDefinition"
           }
         },
         {
@@ -5902,9 +5902,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "stringDefinition",
-            "uniqueName": "ExperimentalStringDefinition"
+            "uniqueName": "StructureStringDefinition"
           }
         },
         {
@@ -5914,9 +5914,9 @@
           "sql": {},
           "type": "reference",
           "reference": {
-            "group": "experimental",
+            "group": "structure",
             "name": "uuidDefinition",
-            "uniqueName": "ExperimentalUuidDefinition"
+            "uniqueName": "StructureUuidDefinition"
           }
         }
       ]
@@ -5930,7 +5930,7 @@
       },
       "sql": {},
       "type": "object",
-      "group": "experimental",
+      "group": "structure",
       "name": "uuidDefinition",
       "relations": [],
       "keys": {

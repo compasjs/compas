@@ -6,7 +6,7 @@ import { structureResolveReference } from "./structure.js";
  * is not a reference.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../generated/common/types.js").ExperimentalTypeSystemDefinition} type
+ * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
  * @param {(string|number)[]} accessPath
  * @param {any} [defaultValue]
  * @returns {any}

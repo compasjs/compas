@@ -5,7 +5,7 @@
  *   input: string,
  *   output: string,
  * }} nameSuffixes
- * @property {(import("../generated/common/types.d.ts").ExperimentalAnyDefinitionTarget
+ * @property {(import("../generated/common/types.d.ts").StructureAnyDefinitionTarget
  *  )[]} targets
  */
 /**
@@ -40,14 +40,14 @@ export function typesGeneratorFinalize(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").ExperimentalTypeSystemDefinition
+ *   import("../generated/common/types").StructureTypeSystemDefinition
  * >} type
  * @param {GenerateTypeOptions} options
  */
 export function typesGeneratorGenerateNamedType(
   generateContext: import("../generate.js").GenerateContext,
   type: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalTypeSystemDefinition
+    import("../generated/common/types").StructureTypeSystemDefinition
   >,
   options: GenerateTypeOptions,
 ): void;
@@ -70,6 +70,6 @@ export type GenerateTypeOptions = {
     input: string;
     output: string;
   };
-  targets: import("../generated/common/types.d.ts").ExperimentalAnyDefinitionTarget[];
+  targets: import("../generated/common/types.d.ts").StructureAnyDefinitionTarget[];
 };
 //# sourceMappingURL=generator.d.ts.map

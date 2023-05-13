@@ -1,5 +1,5 @@
 /**
- * @type {NonNullable<import("../generated/common/types.d.ts").ExperimentalAnyDefinition["targets"]>}
+ * @type {NonNullable<import("../generated/common/types.d.ts").StructureAnyDefinition["targets"]>}
  */
 export const fileImplementations = {
   jsKoaReceive: {

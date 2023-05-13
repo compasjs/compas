@@ -2,22 +2,22 @@
  * Get the owned relations of the provided model. The 'relation.ownKey' of these
  * relations is a field on the model that it belongs to.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
- * @returns {import("../generated/common/types.js").ExperimentalRelationDefinition[]}
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
+ * @returns {import("../generated/common/types.js").StructureRelationDefinition[]}
  */
 export function modelRelationGetOwn(
-  model: import("../generated/common/types.js").ExperimentalObjectDefinition,
-): import("../generated/common/types.js").ExperimentalRelationDefinition[];
+  model: import("../generated/common/types.js").StructureObjectDefinition,
+): import("../generated/common/types.js").StructureRelationDefinition[];
 /**
  * Get the inverse relations of the provided model. The 'relation.ownKey' is a virtual
  * key on this model, which is not populated by default.
  *
- * @param {import("../generated/common/types.js").ExperimentalObjectDefinition} model
- * @returns {import("../generated/common/types.js").ExperimentalRelationDefinition[]}
+ * @param {import("../generated/common/types.js").StructureObjectDefinition} model
+ * @returns {import("../generated/common/types.js").StructureRelationDefinition[]}
  */
 export function modelRelationGetInverse(
-  model: import("../generated/common/types.js").ExperimentalObjectDefinition,
-): import("../generated/common/types.js").ExperimentalRelationDefinition[];
+  model: import("../generated/common/types.js").StructureObjectDefinition,
+): import("../generated/common/types.js").StructureRelationDefinition[];
 /**
  * Get the related information for the provided relation.
  * This object is always built through the eyes of the owning model. So when an inverse
@@ -26,11 +26,11 @@ export function modelRelationGetInverse(
  * By returning both models and both relations, other code only needs to pass in a
  * relation to get the full picture.
  *
- * @param {import("../generated/common/types.js").ExperimentalRelationDefinition} relation
+ * @param {import("../generated/common/types.js").StructureRelationDefinition} relation
  * @returns {ModelRelationInformation}
  */
 export function modelRelationGetInformation(
-  relation: import("../generated/common/types.js").ExperimentalRelationDefinition,
+  relation: import("../generated/common/types.js").StructureRelationDefinition,
 ): ModelRelationInformation;
 /**
  * Follow all relations of each model;
@@ -69,14 +69,14 @@ export function modelRelationBuildRelationInformationCache(
   generateContext: import("../generate.js").GenerateContext,
 ): void;
 export type ModelRelationInformation = {
-  modelOwn: import("../generated/common/types.js").ExperimentalObjectDefinition;
-  modelInverse: import("../generated/common/types").ExperimentalObjectDefinition;
-  relationOwn: import("../generated/common/types").ExperimentalRelationDefinition;
-  relationInverse: import("../generated/common/types").ExperimentalRelationDefinition;
+  modelOwn: import("../generated/common/types.js").StructureObjectDefinition;
+  modelInverse: import("../generated/common/types").StructureObjectDefinition;
+  relationOwn: import("../generated/common/types").StructureRelationDefinition;
+  relationInverse: import("../generated/common/types").StructureRelationDefinition;
   keyNameOwn: string;
-  keyDefinitionOwn: import("../generated/common/types").ExperimentalTypeSystemDefinition;
+  keyDefinitionOwn: import("../generated/common/types").StructureTypeSystemDefinition;
   virtualKeyNameInverse: string;
   primaryKeyNameInverse: string;
-  primaryKeyDefinitionInverse: import("../generated/common/types").ExperimentalTypeSystemDefinition;
+  primaryKeyDefinitionInverse: import("../generated/common/types").StructureTypeSystemDefinition;
 };
 //# sourceMappingURL=model-relation.d.ts.map

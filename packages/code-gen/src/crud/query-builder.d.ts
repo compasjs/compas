@@ -1,7 +1,7 @@
 /**
  * Get the query builder to use for the provided crud and options
  *
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").ExperimentalCrudDefinition>} crud
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
  * @param {{
  *   includeOwnParam: boolean,
  *   includeJoins: boolean,
@@ -12,7 +12,7 @@
  */
 export function crudQueryBuilderGet(
   crud: import("../../types/advanced-types").NamedType<
-    import("../generated/common/types").ExperimentalCrudDefinition
+    import("../generated/common/types").StructureCrudDefinition
   >,
   options: {
     includeOwnParam: boolean;
