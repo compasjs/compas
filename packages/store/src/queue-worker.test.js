@@ -162,7 +162,7 @@ test("store/queue-worker", (t) => {
     });
   });
 
-  t.test("queueWorker - behavior", (t) => {
+  t.test("queueWorker - update - behavior", (t) => {
     const cleanQueue = () => {
       t.test("setup", async (t) => {
         await queries.jobDelete(sql, {
@@ -341,6 +341,198 @@ test("store/queue-worker", (t) => {
       t.equal(jobComplete.isComplete, true);
       t.equal(jobNotComplete.isComplete, false);
 
+      t.equal(jobNotComplete.scheduledAt.getTime(), nextScheduledAt.getTime());
+    });
+
+    cleanQueue();
+  });
+
+  t.test("queueWorker - delete - behavior", (t) => {
+    const cleanQueue = () => {
+      t.test("setup", async (t) => {
+        await queries.jobDelete(sql, {});
+
+        t.pass();
+      });
+    };
+
+    cleanQueue();
+
+    t.test("success behavior", async (t) => {
+      let calledTimes = 0;
+      const qw = queueWorkerCreate(sql, {
+        deleteJobOnCompletion: true,
+        handler: {
+          test: () => {
+            calledTimes += 1;
+          },
+        },
+      });
+
+      await queueWorkerAddJob(sql, {
+        name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
+      });
+
+      qw.start();
+      await setImmediate();
+      await qw.stop();
+
+      const [job] = await queryJob({
+        where: { name: "test" },
+      }).exec(sql);
+
+      t.equal(calledTimes, 1);
+      t.ok(isNil(job));
+    });
+
+    cleanQueue();
+
+    t.test("no handler behavior", async (t) => {
+      const qw = queueWorkerCreate(sql, {
+        deleteJobOnCompletion: true,
+        handler: {},
+      });
+
+      await queueWorkerAddJob(sql, {
+        name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
+      });
+
+      qw.start();
+      await setImmediate();
+      await qw.stop();
+
+      const [job] = await queryJob({
+        where: { name: "test" },
+      }).exec(sql);
+
+      t.ok(isNil(job));
+    });
+
+    cleanQueue();
+
+    t.test("no job behavior", async (t) => {
+      const qw = queueWorkerCreate(sql, {
+        deleteJobOnCompletion: true,
+        handler: {},
+      });
+
+      qw.start();
+      await setImmediate();
+      await qw.stop();
+
+      t.pass();
+    });
+
+    cleanQueue();
+
+    t.test("retry behavior", async (t) => {
+      const qw = queueWorkerCreate(sql, {
+        deleteJobOnCompletion: true,
+        handler: {
+          test: () => {
+            throw AppError.serverError({});
+          },
+        },
+      });
+
+      await queueWorkerAddJob(sql, {
+        name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
+      });
+
+      qw.start();
+      await setImmediate();
+      await qw.stop();
+
+      const [job] = await queryJob({
+        where: { name: "test" },
+      }).exec(sql);
+
+      t.equal(job.isComplete, false);
+      t.equal(job.retryCount, 1);
+    });
+
+    cleanQueue();
+
+    t.test("max retry behavior", async (t) => {
+      const qw = queueWorkerCreate(sql, {
+        deleteJobOnCompletion: true,
+        maxRetryCount: 1,
+        handler: {
+          test: () => {
+            throw AppError.serverError({});
+          },
+        },
+      });
+
+      await queueWorkerAddJob(sql, {
+        name: "test",
+        scheduledAt: new Date(new Date().getTime() - sql.systemTimeOffset),
+      });
+
+      qw.start();
+      await setImmediate();
+      await qw.stop();
+
+      const [job] = await queryJob({
+        where: { name: "test" },
+      }).exec(sql);
+
+      t.ok(isNil(job));
+    });
+
+    cleanQueue();
+
+    t.test("cron behavior", async (t) => {
+      const qw = queueWorkerCreate(sql, {
+        deleteJobOnCompletion: true,
+        handler: {
+          test: (event, sql, job) => {
+            t.ok(job.data.cronExpression);
+            t.ok(job.data.cronLastCompletedAt);
+          },
+        },
+      });
+
+      await queueWorkerRegisterCronJobs(newTestEvent(t), sql, {
+        jobs: [
+          {
+            name: "test",
+            cronExpression: "* * * * *",
+          },
+        ],
+      });
+
+      await queries.jobUpdate(sql, {
+        update: {
+          scheduledAt: new Date(0),
+        },
+        where: {
+          name: "test",
+        },
+      });
+
+      const nextScheduledAt = new Date();
+      nextScheduledAt.setMinutes(nextScheduledAt.getMinutes() + 1, 0, 0);
+
+      qw.start();
+      await setImmediate();
+      await qw.stop();
+
+      const [jobComplete] = await queryJob({
+        where: { name: "test", isComplete: true },
+      }).exec(sql);
+      const [jobNotComplete] = await queryJob({
+        where: {
+          name: "test",
+          isComplete: false,
+        },
+      }).exec(sql);
+
+      t.ok(isNil(jobComplete));
+      t.equal(jobNotComplete.isComplete, false);
       t.equal(jobNotComplete.scheduledAt.getTime(), nextScheduledAt.getTime());
     });
 

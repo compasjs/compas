@@ -56,10 +56,23 @@ docs on these functions for more information and their accepted arguments.
 
 This function constructs a worker, applies the default options if no value is
 provided and returns a `{ start, stop }` synchronously. `start` needs to be
-called before any jobs are picked up. If you need to shutdown gracefully you can
-use `await stop()`. This will finish all running jobs and prevent picking up new
-jobs. See the `QueueWorkerOptions` as the second argument of this function for
-all available options and their defaults.
+called before any jobs are picked up. If you need to shut down gracefully you
+can use `await stop()`. This will finish all running jobs and prevent picking up
+new jobs. See the `QueueWorkerOptions` as the second argument of this function
+for all available options and their defaults.
+
+Some specific options include:
+
+- `includeNames` / `excludeNames`: let this queue worker only pick up specific
+  jobs. This allows you to scale queue workers independently.
+- `deleteJobOnCompletion`: by default, the queue keeps history of the processed
+  jobs. For high-volume queues, it is generally considered more efficient to
+  delete jobs on completion. If you want to keep a history of jobs for a few
+  days, you can use `false` and instead use
+  [`jobQueueCleanup`](#jobqueuecleanup).
+- `unsafeIngoreSorting`: Ignore priority and scheduled based sorting. This is
+  useful in combination with `includeNames` to create a higher throughput queue,
+  with no guarantees of the order in which jobs are picked up.
 
 ### queueWorkerAddJob
 

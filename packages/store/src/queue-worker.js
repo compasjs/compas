@@ -8,7 +8,8 @@ import {
   newLogger,
 } from "@compas/stdlib";
 import cron from "cron-parser";
-import { jobWhere, queryJob } from "./generated/database/job.js";
+import { jobWhere } from "./generated/database/job.js";
+import { validateStoreJob } from "./generated/store/validators.js";
 import { queries } from "./generated.js";
 import { query } from "./query.js";
 
@@ -53,6 +54,9 @@ import { query } from "./query.js";
  *   a lot of jobs are in the queue. This still only picks up jobs that are eligible to
  *   be picked up. However, it doesn't guarantee any order. This property is also not
  *   bound to any SemVer versioning of this package.
+ * @property {boolean} [deleteJobOnCompletion] The default queue behavior is to keep jobs
+ *   that have been processed and marking them complete. On high-volume queues it may be
+ *   more efficient to automatically remove jobs after completion.
  */
 
 /**
@@ -79,7 +83,7 @@ const queryParts = {
    * @param {import("../types/advanced-types").QueryPart<unknown>} [orderBy]
    * @returns {import("../types/advanced-types").QueryPart<any>}
    */
-  getJobToDo(where, orderBy) {
+  getJobAndUpdate(where, orderBy) {
     return query`
       UPDATE "job"
       SET
@@ -90,7 +94,7 @@ const queryParts = {
           SELECT "id"
           FROM "job" j
           WHERE
-            ${jobWhere(where, { skipValidator: true, shortName: "j." })}
+              ${jobWhere(where, { skipValidator: true, shortName: "j." })}
           AND NOT "isComplete"
           AND "scheduledAt" < now() ${
             orderBy
@@ -100,7 +104,35 @@ const queryParts = {
           } FOR UPDATE SKIP LOCKED
           LIMIT 1
         )
-      RETURNING id
+      RETURNING *
+    `;
+  },
+
+  /**
+   * @param {import("./generated/common/types").StoreJobWhere} where
+   * @param {import("../types/advanced-types").QueryPart<unknown>} [orderBy]
+   * @returns {import("../types/advanced-types").QueryPart<any>}
+   */
+  getJobAndDelete(where, orderBy) {
+    return query`
+      DELETE
+      FROM "job"
+      WHERE
+          id = (
+          SELECT "id"
+          FROM "job" j
+          WHERE
+              ${jobWhere(where, { skipValidator: true, shortName: "j." })}
+          AND NOT "isComplete"
+          AND "scheduledAt" < now() ${
+            orderBy
+              ? query`ORDER BY
+          ${orderBy}`
+              : query``
+          } FOR UPDATE SKIP LOCKED
+          LIMIT 1
+        )
+      RETURNING *
     `;
   },
 };
@@ -248,6 +280,7 @@ export function queueWorkerCreate(sql, options) {
   opts.maxRetryCount = options.maxRetryCount ?? 2;
   opts.handlerTimeout = options.handlerTimeout ?? 30 * 1000;
   opts.unsafeIgnoreSorting = options.unsafeIgnoreSorting ?? false;
+  opts.deleteJobOnCompletion = options.deleteJobOnCompletion ?? false;
 
   const logger = newLogger({
     ctx: {
@@ -265,6 +298,9 @@ export function queueWorkerCreate(sql, options) {
   const orderBy = opts.unsafeIgnoreSorting
     ? undefined
     : query`"priority", "scheduledAt"`;
+  const jobTodoQuery = opts.deleteJobOnCompletion
+    ? queryParts.getJobAndDelete
+    : queryParts.getJobAndUpdate;
 
   const workers = Array.from({ length: opts.parallelCount }).map(() => ({
     currentPromise: Promise.resolve(),
@@ -281,7 +317,7 @@ export function queueWorkerCreate(sql, options) {
       opts.isQueueEnabled = true;
 
       workers.map((it) =>
-        queueWorkerRun(logger, sql, opts, where, orderBy, it),
+        queueWorkerRun(logger, sql, opts, jobTodoQuery, where, orderBy, it),
       );
     },
     async stop() {
@@ -368,11 +404,22 @@ async function queueWorkerUpsertCronJob(sql, job) {
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
+ * @param {(where: import("./generated/common/types").StoreJobWhere, orderBy:
+ *   import("../types/advanced-types").QueryPart|undefined) =>
+ *   import("../types/advanced-types").QueryPart} jobTodoQuery
  * @param {import("./generated/common/types").StoreJobWhere} where
  * @param {import("../types/advanced-types").QueryPart|undefined} orderBy
  * @param {{currentPromise: Promise<void>}} worker
  */
-function queueWorkerRun(logger, sql, options, where, orderBy, worker) {
+function queueWorkerRun(
+  logger,
+  sql,
+  options,
+  jobTodoQuery,
+  where,
+  orderBy,
+  worker,
+) {
   if (!options.isQueueEnabled) {
     return;
   }
@@ -380,23 +427,24 @@ function queueWorkerRun(logger, sql, options, where, orderBy, worker) {
   Promise.resolve(worker.currentPromise).then(() => {
     worker.currentPromise = sql
       .begin(async (sql) => {
-        const [partialJob] = await queryParts
-          .getJobToDo(where, orderBy)
-          .exec(sql);
+        const [job] = await jobTodoQuery(where, orderBy).exec(sql);
 
-        if (!partialJob?.id) {
+        if (!job?.id) {
           return {
             didHandleJob: false,
           };
         }
 
-        const [job] = await queryJob({
-          where: {
-            id: partialJob.id,
-          },
-        }).exec(sql);
+        const { value, error } = validateStoreJob(job);
+        if (error) {
+          throw AppError.serverError({
+            message: "Job is invalid",
+            job,
+            error,
+          });
+        }
 
-        await queueWorkerExecuteJob(logger, sql, options, job);
+        await queueWorkerExecuteJob(logger, sql, options, value);
 
         return {
           didHandleJob: true,
@@ -407,7 +455,15 @@ function queueWorkerRun(logger, sql, options, where, orderBy, worker) {
           worker.currentPromise = setTimeout(options.pollInterval);
         }
 
-        return queueWorkerRun(logger, sql, options, where, orderBy, worker);
+        return queueWorkerRun(
+          logger,
+          sql,
+          options,
+          jobTodoQuery,
+          where,
+          orderBy,
+          worker,
+        );
       });
   });
 }
@@ -450,12 +506,14 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
       ctx: {
         type: "queue_handler",
         id: job.id,
-        name: job.name,
-        priority: job.priority,
       },
     }),
     AbortSignal.timeout(timeout),
   );
+
+  event.log.info({
+    job,
+  });
 
   try {
     // @ts-expect-error
@@ -467,6 +525,7 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
   } catch (e) {
     event.log.error({
       type: "job_error",
+      name: job.name,
       scheduledAt: job.scheduledAt,
       retryCount: job.retryCount,
       error: AppError.format(e),
@@ -474,15 +533,24 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
 
     isJobComplete = job.retryCount + 1 >= options.maxRetryCount;
 
-    await queries.jobUpdate(sql, {
-      update: {
-        isComplete: isJobComplete,
+    if (options.deleteJobOnCompletion && !isJobComplete) {
+      // Re insert the job, since this transaction did remove the job.
+      await queries.jobInsert(sql, {
+        ...job,
+        isComplete: false,
         retryCount: job.retryCount + 1,
-      },
-      where: {
-        id: job.id,
-      },
-    });
+      });
+    } else {
+      await queries.jobUpdate(sql, {
+        update: {
+          isComplete: isJobComplete,
+          retryCount: job.retryCount + 1,
+        },
+        where: {
+          id: job.id,
+        },
+      });
+    }
   }
 
   if (isCronJob && isJobComplete) {

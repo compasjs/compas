@@ -161,6 +161,12 @@ export type QueueWorkerOptions = {
    * bound to any SemVer versioning of this package.
    */
   unsafeIgnoreSorting?: boolean | undefined;
+  /**
+   * The default queue behavior is to keep jobs
+   * that have been processed and marking them complete. On high-volume queues it may be
+   * more efficient to automatically remove jobs after completion.
+   */
+  deleteJobOnCompletion?: boolean | undefined;
 };
 export type QueueWorkerInternalOptions = Required<QueueWorkerOptions> & {
   isQueueEnabled: boolean;
