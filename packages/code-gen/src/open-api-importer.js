@@ -123,17 +123,12 @@ function extractRoute(context, path, method) {
   compasStruct.metadata = {
     requestBodyType: "json",
   };
-  compasStruct.internalSettings = {
-    requestBodyType: "json",
-    stripTrailingSlash: !path.endsWith("/"),
-  };
 
   if (
     isNil(item.requestBody?.content?.["application/json"]) &&
     !isNil(item.requestBody?.content?.["multipart/form-data"])
   ) {
     contentKey = "multipart/form-data";
-    compasStruct.internalSettings.requestBodyType = "form-data";
     compasStruct.metadata.requestBodyType = "form-data";
   }
 

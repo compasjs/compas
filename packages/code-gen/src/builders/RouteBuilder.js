@@ -132,9 +132,6 @@ export class RouteBuilder extends TypeBuilder {
     this.data.metadata ??= {};
     this.data.metadata.requestBodyType = "form-data";
 
-    this.data.internalSettings ??= {};
-    this.data.internalSettings.requestBodyType = "form-data";
-
     return this;
   }
 
