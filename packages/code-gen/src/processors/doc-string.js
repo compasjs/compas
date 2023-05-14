@@ -20,6 +20,19 @@ export function docStringCleanup(generateContext) {
 
           type.docString = normalizeIndentationAndTrim(src);
 
+          if (type.docString.trim().length === 0) {
+            // Add default patterns to the doc string.
+            if (type.type === "date") {
+              if (type.specifier === "dateOnly") {
+                type.docString = `Expected pattern: yyyy-MM-dd`;
+              } else if (type.specifier === "timeOnly") {
+                type.docString = `Expected pattern: HH:mm(:ss(.SSS))`;
+              }
+            } else if (type.type === "uuid") {
+              type.docString += `Expected pattern: UUID (v4)`;
+            }
+          }
+
           callback(type);
         }
       },
