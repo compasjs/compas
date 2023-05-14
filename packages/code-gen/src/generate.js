@@ -43,6 +43,7 @@ import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { routeInvalidationsCheck } from "./processors/route-invalidation.js";
 import { routeStructureCreate } from "./processors/route-structure.js";
 import { routeTrieBuild } from "./processors/route-trie.js";
+import { routeValidation } from "./processors/route-validation.js";
 import { structureNameChecks } from "./processors/structure-name-checks.js";
 import {
   structureCopyAndSort,
@@ -141,6 +142,7 @@ export function generateExecute(generator, options) {
   crudValidation(generateContext);
   crudTypesCreate(generateContext);
 
+  routeValidation(generateContext);
   routeInvalidationsCheck(generateContext);
   routeStructureCreate(generateContext);
   routeTrieBuild(generateContext);
