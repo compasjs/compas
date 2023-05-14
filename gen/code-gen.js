@@ -383,7 +383,6 @@ export function extendWithCodeGen(generator) {
         oneOf: T.bool().optional(),
         validator: T.object()
           .keys({
-            convert: T.bool(),
             allowNull: T.bool().default(false),
           })
           .loose(),
@@ -509,7 +508,6 @@ export function extendWithCodeGen(generator) {
           .optional(),
         validator: T.object()
           .keys({
-            convert: T.bool(),
             floatingPoint: T.bool(),
             min: T.number()
               .min(Number.MIN_SAFE_INTEGER)
@@ -679,7 +677,6 @@ export function extendWithCodeGen(generator) {
         oneOf: T.array().values(T.string()).optional(),
         validator: T.object()
           .keys({
-            convert: T.bool(),
             trim: T.bool(),
             lowerCase: T.bool(),
             upperCase: T.bool(),

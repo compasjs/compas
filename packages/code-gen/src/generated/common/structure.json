@@ -17,7 +17,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -32,7 +31,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -46,7 +44,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -60,7 +57,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -75,7 +71,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -93,7 +88,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -107,7 +101,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -117,7 +110,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -144,7 +136,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -154,7 +145,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -164,7 +154,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -187,7 +176,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -227,7 +215,6 @@
                 "docString": "",
                 "isOptional": false,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -241,7 +228,6 @@
                 "docString": "",
                 "isOptional": false,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -255,7 +241,6 @@
                 "docString": "Expression that synchronously resolves to a boolean. Should be 'true' if the input is valid, and 'false' otherwise. Interpolates '$value$' with the current property that is being validated",
                 "isOptional": true,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -269,7 +254,6 @@
                 "docString": "A raw import that is added to the files where the provided validator expression is used.",
                 "isOptional": true,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -288,7 +272,6 @@
       "docString": "",
       "isOptional": false,
       "validator": {
-        "convert": false,
         "allowNull": false,
         "trim": false,
         "lowerCase": false,
@@ -334,7 +317,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -349,7 +331,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -363,7 +344,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -377,7 +357,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -392,7 +371,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -410,7 +388,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -424,7 +401,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -434,7 +410,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -461,7 +436,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -471,7 +445,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -481,7 +454,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -505,7 +477,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -558,7 +529,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -573,7 +543,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -587,7 +556,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -601,7 +569,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -616,7 +583,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -634,7 +600,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -648,7 +613,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -658,7 +622,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -685,7 +648,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -695,7 +657,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -705,7 +666,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -728,7 +688,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -738,7 +697,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": 0,
@@ -751,7 +709,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": 0,
@@ -793,7 +750,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -808,7 +764,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -822,7 +777,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -836,7 +790,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -851,7 +804,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -869,7 +821,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -883,7 +834,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -893,7 +843,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -920,7 +869,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -930,7 +878,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -940,7 +887,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -959,21 +905,10 @@
           "type": "object",
           "relations": [],
           "keys": {
-            "convert": {
-              "docString": "",
-              "isOptional": false,
-              "validator": {
-                "convert": false,
-                "allowNull": false
-              },
-              "sql": {},
-              "type": "boolean"
-            },
             "allowNull": {
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -986,7 +921,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -1011,7 +945,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1026,7 +959,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1040,7 +972,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1054,7 +985,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1069,7 +999,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -1087,7 +1016,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -1101,7 +1029,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1111,7 +1038,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -1138,7 +1064,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1148,7 +1073,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1158,7 +1082,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1183,7 +1106,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1220,7 +1142,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -1245,7 +1166,6 @@
                   "docString": "",
                   "isOptional": true,
                   "validator": {
-                    "convert": false,
                     "allowNull": false,
                     "trim": false,
                     "lowerCase": false,
@@ -1274,7 +1194,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1284,7 +1203,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1294,7 +1212,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1304,7 +1221,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1314,7 +1230,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1356,7 +1271,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -1379,7 +1293,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -1427,7 +1340,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -1450,7 +1362,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -1526,7 +1437,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1541,7 +1451,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1555,7 +1464,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1569,7 +1477,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1584,7 +1491,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -1602,7 +1508,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -1616,7 +1521,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1626,7 +1530,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -1653,7 +1556,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1663,7 +1565,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1673,7 +1574,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1696,7 +1596,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1725,7 +1624,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1735,7 +1633,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1747,7 +1644,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1777,7 +1673,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1792,7 +1687,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1806,7 +1700,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1820,7 +1713,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -1835,7 +1727,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -1853,7 +1744,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -1867,7 +1757,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1877,7 +1766,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -1904,7 +1792,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1914,7 +1801,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1924,7 +1810,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -1955,7 +1840,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "trim": false,
               "lowerCase": false,
@@ -2030,7 +1914,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2045,7 +1928,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2059,7 +1941,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2073,7 +1954,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2088,7 +1968,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -2106,7 +1985,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -2120,7 +1998,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2130,7 +2007,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -2157,7 +2033,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2167,7 +2042,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2177,7 +2051,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2208,7 +2081,6 @@
                 "docString": "",
                 "isOptional": false,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -2240,7 +2112,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2255,7 +2126,6 @@
           "docString": "Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2315,7 +2185,6 @@
                       "docString": "",
                       "isOptional": true,
                       "validator": {
-                        "convert": false,
                         "allowNull": false,
                         "trim": false,
                         "lowerCase": false,
@@ -2329,7 +2198,6 @@
                       "docString": "",
                       "isOptional": true,
                       "validator": {
-                        "convert": false,
                         "allowNull": false,
                         "trim": false,
                         "lowerCase": false,
@@ -2343,7 +2211,6 @@
                       "docString": "",
                       "isOptional": true,
                       "validator": {
-                        "convert": false,
                         "allowNull": false,
                         "trim": false,
                         "lowerCase": false,
@@ -2366,7 +2233,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -2421,7 +2287,6 @@
                           "docString": "",
                           "isOptional": false,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2440,7 +2305,6 @@
                   "docString": "Adds a Compas '_compas/structure.json' route to the generated router that includes all available routes.",
                   "isOptional": true,
                   "validator": {
-                    "convert": false,
                     "allowNull": false
                   },
                   "sql": {},
@@ -2482,7 +2346,6 @@
                           "docString": "",
                           "isOptional": false,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2497,7 +2360,6 @@
                           "docString": "Write out 'common/structure.sql' with a naive DDL approach.",
                           "isOptional": true,
                           "validator": {
-                            "convert": false,
                             "allowNull": false
                           },
                           "sql": {},
@@ -2512,7 +2374,6 @@
                   "docString": "Create a markdown file containing the ERD in a 'mermaid' block.",
                   "isOptional": true,
                   "validator": {
-                    "convert": false,
                     "allowNull": false
                   },
                   "sql": {},
@@ -2536,7 +2397,6 @@
                   "docString": "Always generate validators for all named types even if no other generator needs it. This implies {@link StructureGenerateOptions.generators.types.includeBaseTypes}.",
                   "isOptional": true,
                   "validator": {
-                    "convert": false,
                     "allowNull": false
                   },
                   "sql": {},
@@ -2578,7 +2438,6 @@
                           "docString": "",
                           "isOptional": false,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2593,7 +2452,6 @@
                           "docString": "",
                           "isOptional": false,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2608,7 +2466,6 @@
                           "docString": "Include an API client wrapper to use the api easier with your user interface library.",
                           "isOptional": true,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2623,7 +2480,6 @@
                           "docString": "Use a global api client that will be used for all requests.",
                           "isOptional": true,
                           "validator": {
-                            "convert": false,
                             "allowNull": false
                           },
                           "sql": {},
@@ -2647,7 +2503,6 @@
                           "docString": "",
                           "isOptional": false,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2662,7 +2517,6 @@
                           "docString": "",
                           "isOptional": false,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2677,7 +2531,6 @@
                           "docString": "Include an API client wrapper to use the api easier with your user interface library.",
                           "isOptional": true,
                           "validator": {
-                            "convert": false,
                             "allowNull": false,
                             "trim": false,
                             "lowerCase": false,
@@ -2692,7 +2545,6 @@
                           "docString": "Use a global api client that will be used for all requests.",
                           "isOptional": true,
                           "validator": {
-                            "convert": false,
                             "allowNull": false
                           },
                           "sql": {},
@@ -2719,7 +2571,6 @@
                       "docString": "",
                       "isOptional": false,
                       "validator": {
-                        "convert": false,
                         "allowNull": false
                       },
                       "sql": {},
@@ -2744,7 +2595,6 @@
                   "docString": "Always generate types for all named types even if no other generator needs it.",
                   "isOptional": true,
                   "validator": {
-                    "convert": false,
                     "allowNull": false
                   },
                   "sql": {},
@@ -2755,7 +2605,6 @@
                   "docString": "Declare all types in the global namespace. Only applicable when using 'targetLanguage' when set to 'js' or 'ts'.",
                   "isOptional": true,
                   "validator": {
-                    "convert": false,
                     "allowNull": false
                   },
                   "sql": {},
@@ -2785,7 +2634,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2800,7 +2648,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2814,7 +2661,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2828,7 +2674,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -2843,7 +2688,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -2861,7 +2705,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -2875,7 +2718,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2885,7 +2727,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -2912,7 +2753,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2922,7 +2762,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2932,7 +2771,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -2983,7 +2821,6 @@
       "docString": "",
       "isOptional": false,
       "validator": {
-        "convert": false,
         "allowNull": false,
         "trim": false,
         "lowerCase": false,
@@ -3000,7 +2837,6 @@
       "docString": "",
       "isOptional": true,
       "validator": {
-        "convert": false,
         "allowNull": false,
         "trim": false,
         "lowerCase": false,
@@ -3235,7 +3071,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3250,7 +3085,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3264,7 +3098,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3278,7 +3111,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3293,7 +3125,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -3311,7 +3142,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -3325,7 +3155,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3335,7 +3164,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -3362,7 +3190,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3372,7 +3199,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3382,7 +3208,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3401,21 +3226,10 @@
           "type": "object",
           "relations": [],
           "keys": {
-            "convert": {
-              "docString": "",
-              "isOptional": false,
-              "validator": {
-                "convert": false,
-                "allowNull": false
-              },
-              "sql": {},
-              "type": "boolean"
-            },
             "floatingPoint": {
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3425,7 +3239,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -3438,7 +3251,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -3451,7 +3263,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3472,7 +3283,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "floatingPoint": false,
               "min": -9007199254740991,
@@ -3501,7 +3311,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3516,7 +3325,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3530,7 +3338,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3544,7 +3351,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3559,7 +3365,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -3577,7 +3382,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -3591,7 +3395,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3601,7 +3404,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -3628,7 +3430,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3638,7 +3439,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3648,7 +3448,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3671,7 +3470,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3682,7 +3480,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3694,7 +3491,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3714,7 +3510,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "trim": false,
               "lowerCase": false,
@@ -3741,7 +3536,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -3762,7 +3556,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3772,7 +3565,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3782,7 +3574,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3792,7 +3583,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3802,7 +3592,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -3854,7 +3643,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3869,7 +3657,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3883,7 +3670,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3897,7 +3683,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -3912,7 +3697,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -3930,7 +3714,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -3944,7 +3727,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3954,7 +3736,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -3981,7 +3762,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -3991,7 +3771,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4001,7 +3780,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4024,7 +3802,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4035,7 +3812,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4055,7 +3831,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "trim": false,
               "lowerCase": false,
@@ -4097,7 +3872,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4112,7 +3886,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4126,7 +3899,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4140,7 +3912,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4155,7 +3926,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -4173,7 +3943,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -4187,7 +3956,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4197,7 +3965,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -4224,7 +3991,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4234,7 +4000,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4244,7 +4009,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4267,7 +4031,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4278,7 +4041,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4298,7 +4060,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "trim": false,
               "lowerCase": false,
@@ -4340,7 +4101,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4355,7 +4115,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4370,7 +4129,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -4388,7 +4146,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -4402,7 +4159,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4412,7 +4168,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -4439,7 +4194,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4449,7 +4203,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4459,7 +4212,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4534,7 +4286,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4549,7 +4300,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4576,7 +4326,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4590,7 +4339,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4604,7 +4352,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -4629,7 +4376,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4644,7 +4390,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4658,7 +4403,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4672,7 +4416,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4687,7 +4430,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -4705,7 +4447,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -4719,7 +4460,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4729,7 +4469,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -4756,7 +4495,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4766,7 +4504,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4776,7 +4513,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -4801,7 +4537,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4816,7 +4551,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -4826,7 +4560,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -4848,7 +4581,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "trim": false,
               "lowerCase": false,
@@ -4955,7 +4687,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -4987,7 +4718,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5048,7 +4778,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5058,7 +4787,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5085,7 +4813,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -5107,7 +4834,6 @@
                       "docString": "",
                       "isOptional": false,
                       "validator": {
-                        "convert": false,
                         "allowNull": false,
                         "trim": false,
                         "lowerCase": false,
@@ -5129,7 +4855,6 @@
                     "docString": "",
                     "isOptional": false,
                     "validator": {
-                      "convert": false,
                       "allowNull": false,
                       "trim": false,
                       "lowerCase": false,
@@ -5151,7 +4876,6 @@
                       "docString": "",
                       "isOptional": false,
                       "validator": {
-                        "convert": false,
                         "allowNull": false,
                         "trim": false,
                         "lowerCase": false,
@@ -5186,7 +4910,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5201,7 +4924,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5215,7 +4937,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5229,7 +4950,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5244,7 +4964,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -5262,7 +4981,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -5276,7 +4994,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5286,7 +5003,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -5313,7 +5029,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5323,7 +5038,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5333,7 +5047,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5352,21 +5065,10 @@
           "type": "object",
           "relations": [],
           "keys": {
-            "convert": {
-              "docString": "",
-              "isOptional": false,
-              "validator": {
-                "convert": false,
-                "allowNull": false
-              },
-              "sql": {},
-              "type": "boolean"
-            },
             "trim": {
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5376,7 +5078,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5386,7 +5087,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5396,7 +5096,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": 0,
@@ -5410,7 +5109,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": 0,
@@ -5423,7 +5121,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -5437,7 +5134,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5456,7 +5152,6 @@
                 "docString": "",
                 "isOptional": false,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -5482,7 +5177,6 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false,
               "allowNull": false,
               "trim": false,
               "lowerCase": false,
@@ -5826,7 +5520,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5841,7 +5534,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5855,7 +5547,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5869,7 +5560,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -5884,7 +5574,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {},
@@ -5902,7 +5591,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -5916,7 +5604,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5926,7 +5613,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "floatingPoint": false,
                 "min": -9007199254740991,
@@ -5953,7 +5639,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5963,7 +5648,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5973,7 +5657,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -5996,7 +5679,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},

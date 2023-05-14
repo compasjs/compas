@@ -17,7 +17,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -32,7 +31,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -47,7 +45,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -73,7 +70,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -84,7 +80,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -95,7 +90,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -175,7 +169,6 @@
                 "docString": "",
                 "isOptional": false,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -199,7 +192,6 @@
                 "docString": "",
                 "isOptional": false,
                 "validator": {
-                  "convert": false,
                   "allowNull": false,
                   "trim": false,
                   "lowerCase": false,
@@ -298,7 +290,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -326,7 +317,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -354,7 +344,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -369,7 +358,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -383,7 +371,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -410,7 +397,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -425,7 +411,6 @@
               "docString": "",
               "isOptional": false,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -440,7 +425,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,
@@ -471,7 +455,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -485,7 +468,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": true,
@@ -500,7 +482,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -527,7 +508,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -538,7 +518,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -549,7 +528,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false
               },
               "sql": {},
@@ -574,7 +552,6 @@
               "docString": "",
               "isOptional": true,
               "validator": {
-                "convert": false,
                 "allowNull": false,
                 "trim": false,
                 "lowerCase": false,

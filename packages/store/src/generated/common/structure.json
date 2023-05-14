@@ -22,7 +22,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -38,7 +37,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "floatingPoint": false,
             "min": -2147483647,
@@ -51,7 +49,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -65,7 +62,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -115,7 +111,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -129,7 +124,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -143,7 +137,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -181,7 +174,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -195,7 +187,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -209,7 +200,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -223,7 +213,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -237,7 +226,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -266,7 +254,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": true,
             "allowNull": false,
             "floatingPoint": false,
             "min": 1,
@@ -280,7 +267,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": true,
             "allowNull": false,
             "floatingPoint": false,
             "min": 1,
@@ -313,7 +299,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "floatingPoint": false,
             "min": -2147483647,
@@ -329,7 +314,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false
           },
           "sql": {
@@ -342,7 +326,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "floatingPoint": false,
             "min": 0
@@ -367,7 +350,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -393,7 +375,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "floatingPoint": false,
             "min": -2147483647,
@@ -407,7 +388,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "floatingPoint": false,
             "min": 0
@@ -434,7 +414,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,
@@ -448,7 +427,6 @@
           "docString": "",
           "isOptional": true,
           "validator": {
-            "convert": true,
             "allowNull": false,
             "floatingPoint": false,
             "min": 1,
@@ -462,7 +440,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": true,
             "allowNull": false,
             "floatingPoint": false,
             "min": 1,
@@ -524,7 +501,6 @@
           "docString": "",
           "isOptional": false,
           "validator": {
-            "convert": false,
             "allowNull": false,
             "trim": false,
             "lowerCase": false,

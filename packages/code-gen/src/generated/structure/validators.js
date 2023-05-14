@@ -2401,35 +2401,6 @@ export function validateStructureBooleanDefinition(value) {
           result["validator"] = Object.create(null);
 
           if (
-            value["validator"]["convert"] === null ||
-            value["validator"]["convert"] === undefined
-          ) {
-            errorMap[`$.validator.convert`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              value["validator"]["convert"] === true ||
-              value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1 ||
-              value["validator"]["convert"] === "1"
-            ) {
-              result["validator"]["convert"] = true;
-            } else if (
-              value["validator"]["convert"] === false ||
-              value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0 ||
-              value["validator"]["convert"] === "0"
-            ) {
-              result["validator"]["convert"] = false;
-            } else {
-              errorMap[`$.validator.convert`] = {
-                key: "validator.type",
-                expectedType: "boolean",
-              };
-            }
-          }
-          if (
             value["validator"]["allowNull"] === null ||
             value["validator"]["allowNull"] === undefined
           ) {
@@ -6663,35 +6634,6 @@ export function validateStructureNumberDefinition(value) {
           result["validator"] = Object.create(null);
 
           if (
-            value["validator"]["convert"] === null ||
-            value["validator"]["convert"] === undefined
-          ) {
-            errorMap[`$.validator.convert`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              value["validator"]["convert"] === true ||
-              value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1 ||
-              value["validator"]["convert"] === "1"
-            ) {
-              result["validator"]["convert"] = true;
-            } else if (
-              value["validator"]["convert"] === false ||
-              value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0 ||
-              value["validator"]["convert"] === "0"
-            ) {
-              result["validator"]["convert"] = false;
-            } else {
-              errorMap[`$.validator.convert`] = {
-                key: "validator.type",
-                expectedType: "boolean",
-              };
-            }
-          }
-          if (
             value["validator"]["floatingPoint"] === null ||
             value["validator"]["floatingPoint"] === undefined
           ) {
@@ -6726,7 +6668,44 @@ export function validateStructureNumberDefinition(value) {
           ) {
             result["validator"]["min"] = undefined;
           } else {
-            let convertedNumber11 = value["validator"]["min"];
+            let convertedNumber10 = value["validator"]["min"];
+            if (
+              typeof convertedNumber10 !== "number" &&
+              typeof convertedNumber10 === "string"
+            ) {
+              convertedNumber10 = Number(convertedNumber10);
+            }
+            if (
+              typeof convertedNumber10 !== "number" ||
+              isNaN(convertedNumber10) ||
+              !isFinite(convertedNumber10) ||
+              !Number.isInteger(convertedNumber10)
+            ) {
+              errorMap[`$.validator.min`] = {
+                key: "validator.number",
+                subType: "int",
+              };
+            } else if (convertedNumber10 < -9007199254740991) {
+              errorMap[`$.validator.min`] = {
+                key: "validator.range",
+                minValue: -9007199254740991,
+              };
+            } else if (convertedNumber10 > 9007199254740991) {
+              errorMap[`$.validator.min`] = {
+                key: "validator.range",
+                maxValue: 9007199254740991,
+              };
+            } else {
+              result["validator"]["min"] = convertedNumber10;
+            }
+          }
+          if (
+            value["validator"]["max"] === null ||
+            value["validator"]["max"] === undefined
+          ) {
+            result["validator"]["max"] = undefined;
+          } else {
+            let convertedNumber11 = value["validator"]["max"];
             if (
               typeof convertedNumber11 !== "number" &&
               typeof convertedNumber11 === "string"
@@ -6739,59 +6718,22 @@ export function validateStructureNumberDefinition(value) {
               !isFinite(convertedNumber11) ||
               !Number.isInteger(convertedNumber11)
             ) {
-              errorMap[`$.validator.min`] = {
+              errorMap[`$.validator.max`] = {
                 key: "validator.number",
                 subType: "int",
               };
             } else if (convertedNumber11 < -9007199254740991) {
-              errorMap[`$.validator.min`] = {
+              errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 minValue: -9007199254740991,
               };
             } else if (convertedNumber11 > 9007199254740991) {
-              errorMap[`$.validator.min`] = {
-                key: "validator.range",
-                maxValue: 9007199254740991,
-              };
-            } else {
-              result["validator"]["min"] = convertedNumber11;
-            }
-          }
-          if (
-            value["validator"]["max"] === null ||
-            value["validator"]["max"] === undefined
-          ) {
-            result["validator"]["max"] = undefined;
-          } else {
-            let convertedNumber12 = value["validator"]["max"];
-            if (
-              typeof convertedNumber12 !== "number" &&
-              typeof convertedNumber12 === "string"
-            ) {
-              convertedNumber12 = Number(convertedNumber12);
-            }
-            if (
-              typeof convertedNumber12 !== "number" ||
-              isNaN(convertedNumber12) ||
-              !isFinite(convertedNumber12) ||
-              !Number.isInteger(convertedNumber12)
-            ) {
-              errorMap[`$.validator.max`] = {
-                key: "validator.number",
-                subType: "int",
-              };
-            } else if (convertedNumber12 < -9007199254740991) {
-              errorMap[`$.validator.max`] = {
-                key: "validator.range",
-                minValue: -9007199254740991,
-              };
-            } else if (convertedNumber12 > 9007199254740991) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 maxValue: 9007199254740991,
               };
             } else {
-              result["validator"]["max"] = convertedNumber12;
+              result["validator"]["max"] = convertedNumber11;
             }
           }
           if (
@@ -9161,35 +9103,6 @@ export function validateStructureStringDefinition(value) {
           result["validator"] = Object.create(null);
 
           if (
-            value["validator"]["convert"] === null ||
-            value["validator"]["convert"] === undefined
-          ) {
-            errorMap[`$.validator.convert`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            if (
-              value["validator"]["convert"] === true ||
-              value["validator"]["convert"] === "true" ||
-              value["validator"]["convert"] === 1 ||
-              value["validator"]["convert"] === "1"
-            ) {
-              result["validator"]["convert"] = true;
-            } else if (
-              value["validator"]["convert"] === false ||
-              value["validator"]["convert"] === "false" ||
-              value["validator"]["convert"] === 0 ||
-              value["validator"]["convert"] === "0"
-            ) {
-              result["validator"]["convert"] = false;
-            } else {
-              errorMap[`$.validator.convert`] = {
-                key: "validator.type",
-                expectedType: "boolean",
-              };
-            }
-          }
-          if (
             value["validator"]["trim"] === null ||
             value["validator"]["trim"] === undefined
           ) {
@@ -9282,7 +9195,44 @@ export function validateStructureStringDefinition(value) {
           ) {
             result["validator"]["min"] = 1;
           } else {
-            let convertedNumber13 = value["validator"]["min"];
+            let convertedNumber12 = value["validator"]["min"];
+            if (
+              typeof convertedNumber12 !== "number" &&
+              typeof convertedNumber12 === "string"
+            ) {
+              convertedNumber12 = Number(convertedNumber12);
+            }
+            if (
+              typeof convertedNumber12 !== "number" ||
+              isNaN(convertedNumber12) ||
+              !isFinite(convertedNumber12) ||
+              !Number.isInteger(convertedNumber12)
+            ) {
+              errorMap[`$.validator.min`] = {
+                key: "validator.number",
+                subType: "int",
+              };
+            } else if (convertedNumber12 < 0) {
+              errorMap[`$.validator.min`] = {
+                key: "validator.range",
+                minValue: 0,
+              };
+            } else if (convertedNumber12 > 9007199254740991) {
+              errorMap[`$.validator.min`] = {
+                key: "validator.range",
+                maxValue: 9007199254740991,
+              };
+            } else {
+              result["validator"]["min"] = convertedNumber12;
+            }
+          }
+          if (
+            value["validator"]["max"] === null ||
+            value["validator"]["max"] === undefined
+          ) {
+            result["validator"]["max"] = undefined;
+          } else {
+            let convertedNumber13 = value["validator"]["max"];
             if (
               typeof convertedNumber13 !== "number" &&
               typeof convertedNumber13 === "string"
@@ -9295,59 +9245,22 @@ export function validateStructureStringDefinition(value) {
               !isFinite(convertedNumber13) ||
               !Number.isInteger(convertedNumber13)
             ) {
-              errorMap[`$.validator.min`] = {
+              errorMap[`$.validator.max`] = {
                 key: "validator.number",
                 subType: "int",
               };
             } else if (convertedNumber13 < 0) {
-              errorMap[`$.validator.min`] = {
+              errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 minValue: 0,
               };
             } else if (convertedNumber13 > 9007199254740991) {
-              errorMap[`$.validator.min`] = {
-                key: "validator.range",
-                maxValue: 9007199254740991,
-              };
-            } else {
-              result["validator"]["min"] = convertedNumber13;
-            }
-          }
-          if (
-            value["validator"]["max"] === null ||
-            value["validator"]["max"] === undefined
-          ) {
-            result["validator"]["max"] = undefined;
-          } else {
-            let convertedNumber14 = value["validator"]["max"];
-            if (
-              typeof convertedNumber14 !== "number" &&
-              typeof convertedNumber14 === "string"
-            ) {
-              convertedNumber14 = Number(convertedNumber14);
-            }
-            if (
-              typeof convertedNumber14 !== "number" ||
-              isNaN(convertedNumber14) ||
-              !isFinite(convertedNumber14) ||
-              !Number.isInteger(convertedNumber14)
-            ) {
-              errorMap[`$.validator.max`] = {
-                key: "validator.number",
-                subType: "int",
-              };
-            } else if (convertedNumber14 < 0) {
-              errorMap[`$.validator.max`] = {
-                key: "validator.range",
-                minValue: 0,
-              };
-            } else if (convertedNumber14 > 9007199254740991) {
               errorMap[`$.validator.max`] = {
                 key: "validator.range",
                 maxValue: 9007199254740991,
               };
             } else {
-              result["validator"]["max"] = convertedNumber14;
+              result["validator"]["max"] = convertedNumber13;
             }
           }
           if (
@@ -9357,22 +9270,22 @@ export function validateStructureStringDefinition(value) {
             result["validator"]["pattern"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString15 = value["validator"]["pattern"];
-            if (typeof convertedString15 !== "string") {
+            let convertedString14 = value["validator"]["pattern"];
+            if (typeof convertedString14 !== "string") {
               errorMap[`$.validator.pattern`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString15.length === 0) {
+              if (convertedString14.length === 0) {
                 result["validator"]["pattern"] = undefined;
               } else {
-                if (convertedString15.length < 1) {
+                if (convertedString14.length < 1) {
                   errorMap[`$.validator.pattern`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else {
-                  result["validator"]["pattern"] = convertedString15;
+                  result["validator"]["pattern"] = convertedString14;
                 }
               }
             }
@@ -9411,58 +9324,58 @@ export function validateStructureStringDefinition(value) {
             result["validator"]["disallowedCharacters"] = undefined;
           } else {
             /** @type {ValidatorErrorMap} */
-            const intermediateErrorMap18 = {};
+            const intermediateErrorMap17 = {};
             /** @type {any[]} */
-            let intermediateResult18 = [];
+            let intermediateResult17 = [];
             /** @type {any|any[]} */
-            let intermediateValue18 =
+            let intermediateValue17 =
               value["validator"]["disallowedCharacters"];
 
-            if (!Array.isArray(intermediateValue18)) {
-              intermediateValue18 = [intermediateValue18];
+            if (!Array.isArray(intermediateValue17)) {
+              intermediateValue17 = [intermediateValue17];
             }
             result["validator"]["disallowedCharacters"] = [];
-            for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
+            for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
               if (
-                intermediateValue18[i18] === null ||
-                intermediateValue18[i18] === undefined
+                intermediateValue17[i17] === null ||
+                intermediateValue17[i17] === undefined
               ) {
-                intermediateErrorMap18[`$.${i18}`] = {
+                intermediateErrorMap17[`$.${i17}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 /** @type {string} */
-                let convertedString18 = intermediateValue18[i18];
-                if (typeof convertedString18 !== "string") {
-                  intermediateErrorMap18[`$.${i18}`] = {
+                let convertedString17 = intermediateValue17[i17];
+                if (typeof convertedString17 !== "string") {
+                  intermediateErrorMap17[`$.${i17}`] = {
                     key: "validator.string",
                   };
                 } else {
-                  if (convertedString18.length < 1) {
-                    intermediateErrorMap18[`$.${i18}`] = {
+                  if (convertedString17.length < 1) {
+                    intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.length",
                       minLength: 1,
                     };
-                  } else if (convertedString18.length > 2) {
-                    intermediateErrorMap18[`$.${i18}`] = {
+                  } else if (convertedString17.length > 2) {
+                    intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.length",
                       maxLength: 2,
                     };
                   } else {
-                    intermediateResult18[i18] = convertedString18;
+                    intermediateResult17[i17] = convertedString17;
                   }
                 }
               }
             }
-            if (Object.keys(intermediateErrorMap18).length) {
-              for (const errorKey of Object.keys(intermediateErrorMap18)) {
+            if (Object.keys(intermediateErrorMap17).length) {
+              for (const errorKey of Object.keys(intermediateErrorMap17)) {
                 errorMap[
                   `$.validator.disallowedCharacters${errorKey.substring(1)}`
-                ] = intermediateErrorMap18[errorKey];
+                ] = intermediateErrorMap17[errorKey];
               }
             } else {
               result["validator"]["disallowedCharacters"] =
-                intermediateResult18;
+                intermediateResult17;
             }
           }
         }

@@ -12,8 +12,8 @@ export function applyStoreStructure(generator) {
         `Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.`,
       )
       .keys({
-        q: T.number().min(1).max(100).convert().default(75),
-        w: T.number().min(1).max(99999).convert(),
+        q: T.number().min(1).max(100).default(75),
+        w: T.number().min(1).max(99999),
       })
       .loose(),
 
@@ -23,8 +23,8 @@ export function applyStoreStructure(generator) {
       )
       .keys({
         accessToken: T.string(),
-        q: T.number().min(1).max(100).convert().default(75),
-        w: T.number().min(1).max(99999).convert(),
+        q: T.number().min(1).max(100).default(75),
+        w: T.number().min(1).max(99999),
       })
       .loose(),
 

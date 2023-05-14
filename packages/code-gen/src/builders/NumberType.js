@@ -5,7 +5,6 @@ export class NumberType extends TypeBuilder {
   static baseData = {
     oneOf: undefined,
     validator: {
-      convert: false,
       allowNull: false,
       floatingPoint: false,
       min: undefined,
@@ -50,15 +49,6 @@ export class NumberType extends TypeBuilder {
     }
 
     this.data.oneOf = values;
-
-    return this;
-  }
-
-  /**
-   * @returns {NumberType}
-   */
-  convert() {
-    this.data.validator.convert = true;
 
     return this;
   }

@@ -5,7 +5,6 @@ export class StringType extends TypeBuilder {
   static baseData = {
     oneOf: undefined,
     validator: {
-      convert: false,
       allowNull: false,
       trim: false,
       lowerCase: false,
@@ -62,15 +61,6 @@ export class StringType extends TypeBuilder {
         });
       }
     }
-
-    return this;
-  }
-
-  /**
-   * @returns {StringType}
-   */
-  convert() {
-    this.data.validator.convert = true;
 
     return this;
   }

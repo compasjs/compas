@@ -136,7 +136,6 @@ export type StructureBooleanDefinition = {
     hasDefaultValue?: boolean | undefined;
   };
   validator: {
-    convert: boolean;
     allowNull: boolean;
   };
   oneOf?: boolean | undefined;
@@ -308,7 +307,6 @@ export type StructureNumberDefinition = {
     hasDefaultValue?: boolean | undefined;
   };
   validator: {
-    convert: boolean;
     floatingPoint: boolean;
     min?: number | undefined;
     max?: number | undefined;
@@ -401,7 +399,6 @@ export type StructureStringDefinition = {
     hasDefaultValue?: boolean | undefined;
   };
   validator: {
-    convert: boolean;
     trim: boolean;
     lowerCase: boolean;
     upperCase: boolean;
@@ -507,7 +504,6 @@ export type StructureBooleanDefinitionInput = {
       }
     | undefined;
   validator: {
-    convert: boolean | "true" | "false";
     allowNull?: boolean | "true" | "false" | undefined;
   };
   oneOf?: boolean | "true" | "false" | undefined;
@@ -697,7 +693,6 @@ export type StructureNumberDefinitionInput = {
       }
     | undefined;
   validator: {
-    convert: boolean | "true" | "false";
     floatingPoint: boolean | "true" | "false";
     min?: number | undefined;
     max?: number | undefined;
@@ -800,7 +795,6 @@ export type StructureStringDefinitionInput = {
       }
     | undefined;
   validator: {
-    convert: boolean | "true" | "false";
     trim: boolean | "true" | "false";
     lowerCase: boolean | "true" | "false";
     upperCase: boolean | "true" | "false";

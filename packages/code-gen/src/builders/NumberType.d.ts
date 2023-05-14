@@ -2,7 +2,6 @@ export class NumberType extends TypeBuilder {
   static baseData: {
     oneOf: undefined;
     validator: {
-      convert: boolean;
       allowNull: boolean;
       floatingPoint: boolean;
       min: undefined;
@@ -15,10 +14,6 @@ export class NumberType extends TypeBuilder {
    * @returns {NumberType}
    */
   oneOf(...values: number[]): NumberType;
-  /**
-   * @returns {NumberType}
-   */
-  convert(): NumberType;
   /**
    * @returns {NumberType}
    */

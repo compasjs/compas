@@ -2,7 +2,6 @@ export class StringType extends TypeBuilder {
   static baseData: {
     oneOf: undefined;
     validator: {
-      convert: boolean;
       allowNull: boolean;
       trim: boolean;
       lowerCase: boolean;
@@ -19,10 +18,6 @@ export class StringType extends TypeBuilder {
    * @returns {StringType}
    */
   oneOf(...values: string[]): StringType;
-  /**
-   * @returns {StringType}
-   */
-  convert(): StringType;
   /**
    * @returns {StringType}
    */

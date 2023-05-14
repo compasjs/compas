@@ -5,7 +5,6 @@ export class BooleanType extends TypeBuilder {
   static baseData = {
     oneOf: undefined,
     validator: {
-      convert: false,
       allowNull: false,
     },
   };
@@ -31,15 +30,6 @@ export class BooleanType extends TypeBuilder {
     }
 
     this.data.oneOf = value;
-
-    return this;
-  }
-
-  /**
-   * @returns {BooleanType}
-   */
-  convert() {
-    this.data.validator.convert = true;
 
     return this;
   }

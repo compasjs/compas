@@ -306,8 +306,8 @@ function crudTypesListRoute(generateContext, crud) {
 
   const queryType = new ObjectType(crud.group, `${routeName}Query`)
     .keys({
-      offset: new NumberType().default(0).convert(),
-      limit: new NumberType().default(50).max(5000).convert(),
+      offset: new NumberType().default(0),
+      limit: new NumberType().default(50).max(5000),
     })
     .build();
 
