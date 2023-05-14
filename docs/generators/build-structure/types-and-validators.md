@@ -292,12 +292,18 @@ T.date().inThePast(); // Accept dates that represent a datetime in the past.
 ```ts
 T.array().values(T.bool());
 // -> Typescript type: boolean[]
-// -> Valid validator inputs: true, [false]
+// -> Valid validator inputs: [true], [false]
 // -> Validator outputs: [true], [false]
-// Note the auto conversion to array for the first input.
 
 T.array().min(1); // Enforce a minimum number of items
 T.array().max(5); // Enforce a maximum number of items
+
+T.array().values(T.bool()).convert(); // Convert non-array values to an array
+// -> Typescript input type: boolean|boolean[]
+// -> Typescript output type: boolean[]
+// -> Valid validator inputs: true, [false]
+// -> Validator outputs: [true], [false]
+// Note the auto conversion to array for the first input.
 ```
 
 ## Object
