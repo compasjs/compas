@@ -4,6 +4,39 @@ editLink: false
 
 # Changelog
 
+### [v0.3.2](https://github.com/compasjs/compas/releases/tag/v0.3.2)
+
+#### Features
+
+- feat(store): add `deleteJobOnCompletion` to the queue worker
+  [`c82034`](https://github.com/compasjs/compas/commit/c82034d95916bea066d176fa4127a1a455fff76a)
+
+#### Other
+
+- chore(docs): generate sitemap
+  [`aab7d8`](https://github.com/compasjs/compas/commit/aab7d81b128326a1d57fb491febf89171ee9b78c)
+- chore(code-gen): rename internal code-gen group
+  [`4bf684`](https://github.com/compasjs/compas/commit/4bf6848de218a33acd817c2ccaaacc0f18a8311e)
+- chore(code-gen): cleanup RouteBuilder `internalSettings`
+  [`1cd8f6`](https://github.com/compasjs/compas/commit/1cd8f625ba1cb8d0bf10548273e27bd348d4df61)
+- chore(changelog): correct minor bumps in `0.x.y` ranges
+  [`684e02`](https://github.com/compasjs/compas/commit/684e02babe45738bdd940edbcdd13a72db38c6c3)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 44.0.1 to 44.2.3
+  ([#2580](https://github.com/compasjs/compas/pull/2580))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @types/formidable from 2.0.5 to 2.0.6
+  ([#2574](https://github.com/compasjs/compas/pull/2574))
+  - [Release notes](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.328.0 to 3.332.0
+  ([#2583](https://github.com/compasjs/compas/pull/2583))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.328.0 to 3.332.0
+  ([#2582](https://github.com/compasjs/compas/pull/2582))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.3.1](https://github.com/compasjs/compas/releases/tag/v0.3.1)
 
 #### Bug fixes
