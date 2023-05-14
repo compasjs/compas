@@ -124,10 +124,13 @@
               },
               "sql": {},
               "type": "any",
-              "rawValueImport": {},
-              "rawValidatorImport": {},
-              "rawValue": "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
-              "rawValidator": "((v) => typeof v === \"function\")"
+              "targets": {
+                "js": {
+                  "validatorExpression": "typeof $value$ === \"function\"",
+                  "validatorInputType": "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+                  "validatorOutputType": "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)"
+                }
+              }
             },
             "completions": {
               "docString": "",
@@ -137,10 +140,13 @@
               },
               "sql": {},
               "type": "any",
-              "rawValueImport": {},
-              "rawValidatorImport": {},
-              "rawValue": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
-              "rawValidator": "((v) => typeof v === \"function\")"
+              "targets": {
+                "js": {
+                  "validatorExpression": "typeof $value$ === \"function\"",
+                  "validatorInputType": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+                  "validatorOutputType": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })"
+                }
+              }
             }
           }
         },
@@ -258,10 +264,13 @@
           },
           "sql": {},
           "type": "any",
-          "rawValueImport": {},
-          "rawValidatorImport": {},
-          "rawValue": "((logger: import(\"@compas/stdlib\").Logger, state: import(\"../../cli/types\").CliExecutorState) => (Promise<import(\"../../cli/types\").CliResult>|CliResult))",
-          "rawValidator": "((v) => typeof v === \"function\")"
+          "targets": {
+            "js": {
+              "validatorExpression": "typeof $value$ === \"function\"",
+              "validatorInputType": "((logger: import(\"@compas/stdlib\").Logger, state: import(\"../../cli/types\").CliExecutorState) => (Promise<import(\"../../cli/types\").CliResult>|CliResult))",
+              "validatorOutputType": "((logger: import(\"@compas/stdlib\").Logger, state: import(\"../../cli/types\").CliExecutorState) => (Promise<import(\"../../cli/types\").CliResult>|CliResult))"
+            }
+          }
         }
       }
     },
@@ -585,10 +594,13 @@
               },
               "sql": {},
               "type": "any",
-              "rawValueImport": {},
-              "rawValidatorImport": {},
-              "rawValue": "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
-              "rawValidator": "((v) => typeof v === \"function\")"
+              "targets": {
+                "js": {
+                  "validatorExpression": "typeof $value$ === \"function\"",
+                  "validatorInputType": "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+                  "validatorOutputType": "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)"
+                }
+              }
             },
             "completions": {
               "docString": "",
@@ -598,10 +610,13 @@
               },
               "sql": {},
               "type": "any",
-              "rawValueImport": {},
-              "rawValidatorImport": {},
-              "rawValue": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
-              "rawValidator": "((v) => typeof v === \"function\")"
+              "targets": {
+                "js": {
+                  "validatorExpression": "typeof $value$ === \"function\"",
+                  "validatorInputType": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+                  "validatorOutputType": "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })"
+                }
+              }
             }
           }
         }

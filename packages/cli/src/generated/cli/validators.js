@@ -315,8 +315,16 @@ export function validateCliCommandDefinition(value) {
           ) {
             result["dynamicValue"]["validator"] = undefined;
           } else {
-            result["dynamicValue"]["validator"] =
-              value["dynamicValue"]["validator"];
+            if (typeof value["dynamicValue"]["validator"] === "function") {
+              result["dynamicValue"]["validator"] =
+                value["dynamicValue"]["validator"];
+            } else {
+              errorMap[`$.dynamicValue.validator`] = {
+                key: "validator.any",
+                message:
+                  "Custom validator error. See the input type for more information.",
+              };
+            }
           }
           if (
             value["dynamicValue"]["completions"] === null ||
@@ -324,8 +332,16 @@ export function validateCliCommandDefinition(value) {
           ) {
             result["dynamicValue"]["completions"] = undefined;
           } else {
-            result["dynamicValue"]["completions"] =
-              value["dynamicValue"]["completions"];
+            if (typeof value["dynamicValue"]["completions"] === "function") {
+              result["dynamicValue"]["completions"] =
+                value["dynamicValue"]["completions"];
+            } else {
+              errorMap[`$.dynamicValue.completions`] = {
+                key: "validator.any",
+                message:
+                  "Custom validator error. See the input type for more information.",
+              };
+            }
           }
         }
       }
@@ -576,7 +592,15 @@ export function validateCliCommandDefinition(value) {
       if (value["executor"] === null || value["executor"] === undefined) {
         result["executor"] = undefined;
       } else {
-        result["executor"] = value["executor"];
+        if (typeof value["executor"] === "function") {
+          result["executor"] = value["executor"];
+        } else {
+          errorMap[`$.executor`] = {
+            key: "validator.any",
+            message:
+              "Custom validator error. See the input type for more information.",
+          };
+        }
       }
     }
   }
@@ -927,7 +951,15 @@ export function validateCliFlagDefinition(value) {
           ) {
             result["value"]["validator"] = undefined;
           } else {
-            result["value"]["validator"] = value["value"]["validator"];
+            if (typeof value["value"]["validator"] === "function") {
+              result["value"]["validator"] = value["value"]["validator"];
+            } else {
+              errorMap[`$.value.validator`] = {
+                key: "validator.any",
+                message:
+                  "Custom validator error. See the input type for more information.",
+              };
+            }
           }
           if (
             value["value"]["completions"] === null ||
@@ -935,7 +967,15 @@ export function validateCliFlagDefinition(value) {
           ) {
             result["value"]["completions"] = undefined;
           } else {
-            result["value"]["completions"] = value["value"]["completions"];
+            if (typeof value["value"]["completions"] === "function") {
+              result["value"]["completions"] = value["value"]["completions"];
+            } else {
+              errorMap[`$.value.completions`] = {
+                key: "validator.any",
+                message:
+                  "Custom validator error. See the input type for more information.",
+              };
+            }
           }
         }
       }

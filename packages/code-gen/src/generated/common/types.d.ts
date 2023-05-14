@@ -57,16 +57,6 @@ export type StructureAnyDefinition = {
         >
       >
     | undefined;
-  rawValue?: string | undefined;
-  rawValueImport: {
-    javaScript?: string | undefined;
-    typeScript?: string | undefined;
-  };
-  rawValidator?: string | undefined;
-  rawValidatorImport: {
-    javaScript?: string | undefined;
-    typeScript?: string | undefined;
-  };
 };
 
 export type StructureAnyDefinitionInput = {
@@ -111,16 +101,6 @@ export type StructureAnyDefinitionInput = {
         >
       >
     | undefined;
-  rawValue?: string | undefined;
-  rawValueImport: {
-    javaScript?: string | undefined;
-    typeScript?: string | undefined;
-  };
-  rawValidator?: string | undefined;
-  rawValidatorImport: {
-    javaScript?: string | undefined;
-    typeScript?: string | undefined;
-  };
 };
 
 export type StructureArrayDefinition = {

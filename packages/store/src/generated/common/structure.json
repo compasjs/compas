@@ -109,9 +109,7 @@
             "allowNull": false
           },
           "sql": {},
-          "type": "any",
-          "rawValueImport": {},
-          "rawValidatorImport": {}
+          "type": "any"
         },
         "transformedFromOriginal": {
           "docString": "",
@@ -389,8 +387,6 @@
           },
           "sql": {},
           "type": "any",
-          "rawValueImport": {},
-          "rawValidatorImport": {},
           "defaultValue": "{}"
         },
         "retryCount": {
@@ -522,8 +518,6 @@
           },
           "sql": {},
           "type": "any",
-          "rawValueImport": {},
-          "rawValidatorImport": {},
           "defaultValue": "{}"
         },
         "checksum": {

@@ -238,8 +238,6 @@ export function typesTypescriptFormatType(
       if (!didWrite) {
         fileWriteInline(file, `any`);
       }
-    } else if (type.rawValue) {
-      fileWriteInline(file, type.rawValue);
     } else {
       fileWriteInline(file, `any`);
     }

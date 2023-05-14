@@ -57,16 +57,26 @@ export function applyCliStructure(generator) {
             .oneOf("boolean", "number", "string", "booleanOrString")
             .default(`"boolean"`),
           validator: T.any()
-            .raw(
-              "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
-            )
-            .validator(`((v) => typeof v === "function")`)
+            .implementations({
+              js: {
+                validatorExpression: `typeof $value$ === "function"`,
+                validatorInputType:
+                  "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+                validatorOutputType:
+                  "((value: any) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+              },
+            })
             .optional(),
           completions: T.any()
-            .raw(
-              "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
-            )
-            .validator(`((v) => typeof v === "function")`)
+            .implementations({
+              js: {
+                validatorExpression: `typeof $value$ === "function"`,
+                validatorInputType:
+                  "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+                validatorOutputType:
+                  "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+              },
+            })
             .optional(),
         })
         .default(
@@ -96,16 +106,27 @@ export function applyCliStructure(generator) {
       dynamicValue: T.object()
         .keys({
           validator: T.any()
-            .raw(
-              "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
-            )
-            .validator(`((v) => typeof v === "function")`)
+            .implementations({
+              js: {
+                validatorExpression: `typeof $value$ === "function"`,
+                validatorInputType:
+                  "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+                validatorOutputType:
+                  "((value: string) => { isValid: boolean, error?: { message: string }}|Promise<{ isValid: boolean, error?: { message: string }}>)",
+              },
+            })
             .optional(),
           completions: T.any()
-            .raw(
-              "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
-            )
-            .validator(`((v) => typeof v === "function")`)
+            .implementations({
+              js: {
+                validatorExpression: `typeof $value$ === "function"`,
+                validatorInputType:
+                  "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+                validatorOutputType:
+                  "(() => Promise<{ completions: CliCompletion[] }>|{ completions: CliCompletion[] })",
+              },
+            })
+
             .optional(),
         })
         .default("{}"),
@@ -129,10 +150,13 @@ export function applyCliStructure(generator) {
         .values(T.reference("cli", "flagDefinition"))
         .default("[]"),
       executor: T.any()
-        .raw(
-          `((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult))`,
-        )
-        .validator(`((v) => typeof v === "function")`)
+        .implementations({
+          js: {
+            validatorExpression: `typeof $value$ === "function"`,
+            validatorInputType: `((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult))`,
+            validatorOutputType: `((logger: import("@compas/stdlib").Logger, state: import("../../cli/types").CliExecutorState) => (Promise<import("../../cli/types").CliResult>|CliResult))`,
+          },
+        })
         .optional(),
     }),
   );

@@ -281,116 +281,6 @@
               }
             }
           }
-        },
-        "rawValue": {
-          "docString": "",
-          "isOptional": true,
-          "validator": {
-            "convert": false,
-            "allowNull": false,
-            "trim": false,
-            "lowerCase": false,
-            "upperCase": false,
-            "min": 1
-          },
-          "sql": {},
-          "type": "string"
-        },
-        "rawValueImport": {
-          "docString": "",
-          "isOptional": false,
-          "validator": {
-            "allowNull": false,
-            "strict": false
-          },
-          "sql": {},
-          "type": "object",
-          "relations": [],
-          "keys": {
-            "javaScript": {
-              "docString": "",
-              "isOptional": true,
-              "validator": {
-                "convert": false,
-                "allowNull": false,
-                "trim": false,
-                "lowerCase": false,
-                "upperCase": false,
-                "min": 1
-              },
-              "sql": {},
-              "type": "string"
-            },
-            "typeScript": {
-              "docString": "",
-              "isOptional": true,
-              "validator": {
-                "convert": false,
-                "allowNull": false,
-                "trim": false,
-                "lowerCase": false,
-                "upperCase": false,
-                "min": 1
-              },
-              "sql": {},
-              "type": "string"
-            }
-          }
-        },
-        "rawValidator": {
-          "docString": "",
-          "isOptional": true,
-          "validator": {
-            "convert": false,
-            "allowNull": false,
-            "trim": false,
-            "lowerCase": false,
-            "upperCase": false,
-            "min": 1
-          },
-          "sql": {},
-          "type": "string"
-        },
-        "rawValidatorImport": {
-          "docString": "",
-          "isOptional": false,
-          "validator": {
-            "allowNull": false,
-            "strict": false
-          },
-          "sql": {},
-          "type": "object",
-          "relations": [],
-          "keys": {
-            "javaScript": {
-              "docString": "",
-              "isOptional": true,
-              "validator": {
-                "convert": false,
-                "allowNull": false,
-                "trim": false,
-                "lowerCase": false,
-                "upperCase": false,
-                "min": 1
-              },
-              "sql": {},
-              "type": "string"
-            },
-            "typeScript": {
-              "docString": "",
-              "isOptional": true,
-              "validator": {
-                "convert": false,
-                "allowNull": false,
-                "trim": false,
-                "lowerCase": false,
-                "upperCase": false,
-                "min": 1
-              },
-              "sql": {},
-              "type": "string"
-            }
-          }
         }
       }
     },
@@ -2493,9 +2383,7 @@
                       "allowNull": false
                     },
                     "sql": {},
-                    "type": "any",
-                    "rawValueImport": {},
-                    "rawValidatorImport": {}
+                    "type": "any"
                   }
                 }
               }

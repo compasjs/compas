@@ -342,21 +342,6 @@ export function extendWithCodeGen(generator) {
             allowNull: T.bool(),
           })
           .loose(),
-
-        rawValue: T.string().optional(),
-        rawValueImport: T.object()
-          .keys({
-            javaScript: T.string().optional(),
-            typeScript: T.string().optional(),
-          })
-          .loose(),
-        rawValidator: T.string().optional(),
-        rawValidatorImport: T.object()
-          .keys({
-            javaScript: T.string().optional(),
-            typeScript: T.string().optional(),
-          })
-          .loose(),
       })
       .loose(),
 
