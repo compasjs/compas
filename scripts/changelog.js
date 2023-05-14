@@ -438,7 +438,7 @@ function proposeVersionBump(version, commits) {
   if (type === "patch") {
     patch += 1;
   } else if (type === "minor") {
-    if (major === 0 && minor === 0) {
+    if (major === 0) {
       patch += 1;
     } else {
       minor += 1;
