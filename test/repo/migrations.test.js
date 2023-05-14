@@ -1,9 +1,10 @@
 import { mainTestFn, test } from "@compas/cli";
+import { pathJoin } from "@compas/stdlib";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
-  getMigrationsToBeApplied,
-  newMigrateContext,
+  migrationsGetInfo,
+  migrationsInitContext,
 } from "@compas/store";
 
 mainTestFn(import.meta);
@@ -22,9 +23,12 @@ test("repo/migrations", (t) => {
   });
 
   t.test("migrations should have been applied", async (t) => {
-    const mc = await newMigrateContext(sql);
+    const mc = await migrationsInitContext(sql, {
+      migrationsDirectory: pathJoin(process.cwd(), "migrations"),
+      uniqueLockNumber: -12345,
+    });
 
-    const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
+    const { migrationQueue, hashChanges } = await migrationsGetInfo(mc);
 
     const message = `Tests are not running with the latest migrations, please run 'compas docker clean --project && compas migrate'.`;
     t.equal(migrationQueue.length, 0, message);

@@ -179,20 +179,11 @@ A custom Postgres connection object can be provided by exporting a
 'postgresConnectionSettings' object from the files specified via the
 '--connection-settings' flag.
 
-This command can keep running if for example your deploy system does not support
-one of tasks. You can use '--keep-alive' for that. It keeps a single Postgres
-connection alive to ensure that the process doesn't exit. The migration runner
-uses an advisory lock to ensure only a single migration process runs at the same
-time. To disable this behaviour when the command enters watch mode,
-'--without-lock' can be passed.
-
-| Option                | Description                                                                                                              |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
-| --keep-alive          | Keep the service running, by maintaining a single idle SQL connection. (boolean)                                         |
-| --without-lock        | Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well (boolean) |
-| --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean)         |
-| -h, --help            | Display information about the current command. (boolean)                                                                 |
+| Option                | Description                                                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                          |
+| --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean) |
+| -h, --help            | Display information about the current command. (boolean)                                                         |
 
 ### `compas migrate info`
 
@@ -203,13 +194,11 @@ of migrations that are not applied yet, and migrations that have 'hashChanges',
 basically saying that the file on disk is out of sync with the migration that
 was applied in the past.
 
-| Option                | Description                                                                                                              |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
-| --keep-alive          | Keep the service running, by maintaining a single idle SQL connection. (boolean)                                         |
-| --without-lock        | Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well (boolean) |
-| --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean)         |
-| -h, --help            | Display information about the current command. (boolean)                                                                 |
+| Option                | Description                                                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                          |
+| --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean) |
+| -h, --help            | Display information about the current command. (boolean)                                                         |
 
 ### `compas migrate rebuild`
 
@@ -221,13 +210,11 @@ files, but do not affect the schema in any way. Note that Compas can't enforce
 any consistency between the migration files and the current schema state. So use
 with caution.
 
-| Option                | Description                                                                                                              |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                                  |
-| --keep-alive          | Keep the service running, by maintaining a single idle SQL connection. (boolean)                                         |
-| --without-lock        | Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well (boolean) |
-| --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean)         |
-| -h, --help            | Display information about the current command. (boolean)                                                                 |
+| Option                | Description                                                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| --connection-settings | Specify a path that contains the PostgreSQL connection object. (string)                                          |
+| --watch               | Run the command, restarting it when file changes happen. See 'compas help watch' for more information. (boolean) |
+| -h, --help            | Display information about the current command. (boolean)                                                         |
 
 ## `compas run`
 

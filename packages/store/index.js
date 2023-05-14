@@ -77,9 +77,10 @@ export {
 } from "./src/testing.js";
 
 export {
-  newMigrateContext,
-  getMigrationsToBeApplied,
-  runMigrations,
+  migrationsInitContext,
+  migrationsGetInfo,
+  migrationsRun,
+  migrationsRebuildState,
 } from "./src/migrations.js";
 
 export {

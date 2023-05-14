@@ -1,4 +1,11 @@
 /**
+ * @typedef {object} MigrateOptions
+ * @property {string} migrationsDirectory The directory from which to read migration
+ *   files
+ * @property {number} uniqueLockNumber Unique migration lock value, preventing
+ *   race-conditions while running the migrations
+ */
+/**
  * @typedef {object} MigrationFile
  * @property {number} number
  * @property {boolean} repeatable
@@ -10,6 +17,7 @@
  */
 /**
  * @typedef {object} MigrateContext
+ * @property {MigrateOptions} options
  * @property {MigrationFile[]} files
  * @property {import("postgres").Sql<{}>} sql
  * @property {any|undefined} [rebuild]
@@ -19,18 +27,17 @@
  * @property {boolean} [missingMigrationTable]
  */
 /**
- * Create a new  migration context, resolves all migrations and collects the current
- * migration state.
+ * Create a new  migration context, resolves all migration files
  *
  * @since 0.1.0
  *
  * @param {import("postgres").Sql<{}>} sql
- * @param {string} migrationDirectory
+ * @param {Partial<MigrateOptions>} [migrateOptions]
  * @returns {Promise<MigrateContext>}
  */
-export function newMigrateContext(
+export function migrationsInitContext(
   sql: import("postgres").Sql<{}>,
-  migrationDirectory?: string,
+  migrateOptions?: Partial<MigrateOptions> | undefined,
 ): Promise<MigrateContext>;
 /**
  * Get the migrations to be applied from the provided migration context.
@@ -40,7 +47,7 @@ export function newMigrateContext(
  * @since 0.1.0
  *
  * @param {MigrateContext} mc
- * @returns {{
+ * @returns {Promise<{
  *   migrationQueue: {
  *     name: string,
  *     number: number,
@@ -50,9 +57,9 @@ export function newMigrateContext(
  *     name: string,
  *     number: number,
  *   }[]
- * }}
+ * }>}
  */
-export function getMigrationsToBeApplied(mc: MigrateContext): {
+export function migrationsGetInfo(mc: MigrateContext): Promise<{
   migrationQueue: {
     name: string;
     number: number;
@@ -62,7 +69,7 @@ export function getMigrationsToBeApplied(mc: MigrateContext): {
     name: string;
     number: number;
   }[];
-};
+}>;
 /**
  * Run the migrations currently pending in the migration context.
  *
@@ -71,7 +78,7 @@ export function getMigrationsToBeApplied(mc: MigrateContext): {
  * @param {MigrateContext} mc
  * @returns {Promise<void>}
  */
-export function runMigrations(mc: MigrateContext): Promise<void>;
+export function migrationsRun(mc: MigrateContext): Promise<void>;
 /**
  * Rebuild migration table state based on the known migration files
  *
@@ -80,7 +87,19 @@ export function runMigrations(mc: MigrateContext): Promise<void>;
  * @param {MigrateContext} mc
  * @returns {Promise<void>}
  */
-export function rebuildMigrations(mc: MigrateContext): Promise<void>;
+export function migrationsRebuildState(mc: MigrateContext): Promise<void>;
+export type MigrateOptions = {
+  /**
+   * The directory from which to read migration
+   * files
+   */
+  migrationsDirectory: string;
+  /**
+   * Unique migration lock value, preventing
+   * race-conditions while running the migrations
+   */
+  uniqueLockNumber: number;
+};
 export type MigrationFile = {
   number: number;
   repeatable: boolean;
@@ -91,6 +110,7 @@ export type MigrationFile = {
   hash: string;
 };
 export type MigrateContext = {
+  options: MigrateOptions;
   files: MigrationFile[];
   sql: import("postgres").Sql<{}>;
   rebuild?: any | undefined;

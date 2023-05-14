@@ -38,7 +38,7 @@ bench("query - append empty where clause and exec", async (b) => {
 
   for (let i = 0; i < b.N; ++i) {
     const q = query``.append(query`foo
-    ${sessionStoreWhere({}, "ss.", { skipValidator: true })}`);
+    ${sessionStoreWhere({}, { shortName: "ss.", skipValidator: true })}`);
 
     q.exec({
       // eslint-disable-next-line no-unused-vars
@@ -65,8 +65,8 @@ bench("query - append where clause and exec", async (b) => {
       {
         idIn: [uuid1, uuid2],
       },
-      "ss.",
-      { skipValidator: true },
+
+      { shortName: "ss.", skipValidator: true },
     )}`);
 
     q.exec({

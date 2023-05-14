@@ -3,6 +3,15 @@ import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
 import { pathToFileURL } from "url";
 import { AppError, environment, pathJoin } from "@compas/stdlib";
+import { query } from "./query.js";
+
+/**
+ * @typedef {object} MigrateOptions
+ * @property {string} migrationsDirectory The directory from which to read migration
+ *   files
+ * @property {number} uniqueLockNumber Unique migration lock value, preventing
+ *   race-conditions while running the migrations
+ */
 
 /**
  * @typedef {object} MigrationFile
@@ -17,6 +26,7 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
 
 /**
  * @typedef {object} MigrateContext
+ * @property {MigrateOptions} options
  * @property {MigrationFile[]} files
  * @property {import("postgres").Sql<{}>} sql
  * @property {any|undefined} [rebuild]
@@ -27,46 +37,48 @@ import { AppError, environment, pathJoin } from "@compas/stdlib";
  */
 
 /**
- * Create a new  migration context, resolves all migrations and collects the current
- * migration state.
+ * Create a new  migration context, resolves all migration files
  *
  * @since 0.1.0
  *
  * @param {import("postgres").Sql<{}>} sql
- * @param {string} migrationDirectory
+ * @param {Partial<MigrateOptions>} [migrateOptions]
  * @returns {Promise<MigrateContext>}
  */
-export async function newMigrateContext(
-  sql,
-  migrationDirectory = `${process.cwd()}/migrations`,
-) {
-  try {
-    const migrations = await readMigrationsDir(migrationDirectory);
+export async function migrationsInitContext(sql, migrateOptions) {
+  migrateOptions ??= {};
+  migrateOptions.uniqueLockNumber ??= -9876453452;
+  migrateOptions.migrationsDirectory ??= pathJoin(process.cwd(), "migrations");
 
-    const mc = {
+  if (typeof migrateOptions?.uniqueLockNumber !== "number") {
+    throw AppError.serverError({
+      message: "'uniqueLockNumber' should be a number",
+    });
+  }
+
+  if (
+    !migrateOptions?.migrationsDirectory ||
+    !existsSync(migrateOptions.migrationsDirectory)
+  ) {
+    throw AppError.serverError({
+      message: "'migrationsDirectory' is not provided or does not exist.",
+    });
+  }
+
+  try {
+    const migrations = await readMigrationsDir(
+      migrateOptions.migrationsDirectory,
+    );
+
+    return {
+      // @ts-expect-error
+      options: migrateOptions,
       files: migrations.sort((a, b) => {
         return a.number - b.number;
       }),
       sql,
       storedHashes: {},
     };
-
-    await Promise.race([
-      acquireLock(sql),
-      new Promise((_, reject) => {
-        setTimeout(
-          () => reject(new Error("Could not acquire advisory lock")),
-          2500,
-        );
-      }),
-    ]);
-    await syncWithSchemaState(mc);
-
-    mc.rebuild = () => rebuildMigrations(mc);
-    mc.info = () => getMigrationsToBeApplied(mc);
-    mc.do = () => runMigrations(mc);
-
-    return mc;
   } catch (/** @type {any} */ error) {
     // Help user by dropping the sql connection so the application will exit
     await sql?.end();
@@ -93,7 +105,7 @@ export async function newMigrateContext(
  * @since 0.1.0
  *
  * @param {MigrateContext} mc
- * @returns {{
+ * @returns {Promise<{
  *   migrationQueue: {
  *     name: string,
  *     number: number,
@@ -103,9 +115,12 @@ export async function newMigrateContext(
  *     name: string,
  *     number: number,
  *   }[]
- * }}
+ * }>}
  */
-export function getMigrationsToBeApplied(mc) {
+export async function migrationsGetInfo(mc) {
+  await acquireLock(mc.sql, mc.options.uniqueLockNumber);
+  await syncWithSchemaState(mc);
+
   const migrationQueue = filterMigrationsToBeApplied(mc).map((it) => ({
     name: it.name,
     number: it.number,
@@ -122,6 +137,8 @@ export function getMigrationsToBeApplied(mc) {
     }
   }
 
+  await releaseLock(mc.sql, mc.options.uniqueLockNumber);
+
   return {
     migrationQueue,
     hashChanges,
@@ -136,7 +153,10 @@ export function getMigrationsToBeApplied(mc) {
  * @param {MigrateContext} mc
  * @returns {Promise<void>}
  */
-export async function runMigrations(mc) {
+export async function migrationsRun(mc) {
+  await acquireLock(mc.sql, mc.options.uniqueLockNumber);
+  await syncWithSchemaState(mc);
+
   let current;
   try {
     const migrationFiles = filterMigrationsToBeApplied(mc);
@@ -149,17 +169,17 @@ export async function runMigrations(mc) {
       ) {
         // Automatically create the migration table
         await mc.sql.unsafe(`
-        CREATE TABLE IF NOT EXISTS migration
-        (
-          "namespace" varchar NOT NULL,
-          "number"    int,
-          "name"      varchar NOT NULL,
-          "createdAt" timestamptz DEFAULT now(),
-          "hash"      varchar
-        );
+          CREATE TABLE IF NOT EXISTS migration
+          (
+            "namespace" varchar NOT NULL,
+            "number"    int,
+            "name"      varchar NOT NULL,
+            "createdAt" timestamptz DEFAULT now(),
+            "hash"      varchar
+          );
 
-        CREATE INDEX IF NOT EXISTS migration_namespace_number_idx ON "migration" ("namespace", "number");
-      `);
+          CREATE INDEX IF NOT EXISTS migration_namespace_number_idx ON "migration" ("namespace", "number");
+        `);
       }
     }
 
@@ -168,6 +188,8 @@ export async function runMigrations(mc) {
       await runMigration(mc.sql, migration);
     }
   } catch (/** @type {any} */ error) {
+    await releaseLock(mc.sql, mc.options.uniqueLockNumber);
+
     // Help user by dropping the sql connection so the application will exit
     await mc?.sql?.end();
     if (AppError.instanceOf(error)) {
@@ -185,6 +207,8 @@ export async function runMigrations(mc) {
       );
     }
   }
+
+  await releaseLock(mc.sql, mc.options.uniqueLockNumber);
 }
 
 /**
@@ -195,7 +219,10 @@ export async function runMigrations(mc) {
  * @param {MigrateContext} mc
  * @returns {Promise<void>}
  */
-export async function rebuildMigrations(mc) {
+export async function migrationsRebuildState(mc) {
+  await acquireLock(mc.sql, mc.options.uniqueLockNumber);
+  await syncWithSchemaState(mc);
+
   try {
     await mc.sql.begin(async (sql) => {
       await sql`DELETE
@@ -208,6 +235,7 @@ export async function rebuildMigrations(mc) {
       }
     });
   } catch (/** @type {any} */ e) {
+    await releaseLock(mc.sql, mc.options.uniqueLockNumber);
     if ((e.message ?? "").indexOf(`"migration" does not exist`) === -1) {
       throw new AppError(
         "migrate.rebuild.error",
@@ -221,6 +249,8 @@ export async function rebuildMigrations(mc) {
       throw e;
     }
   }
+
+  await releaseLock(mc.sql, mc.options.uniqueLockNumber);
 }
 
 /**
@@ -292,9 +322,9 @@ async function runMigration(sql, migration) {
  * @param {MigrationFile} migration
  */
 function runInsert(sql, migration) {
-  return sql`INSERT INTO "migration" (namespace, number, name, hash) VALUES (${
-    environment.APP_NAME ?? "compas"
-  }, ${migration.number}, ${migration.name}, ${migration.hash});`;
+  return sql`INSERT INTO "migration" (namespace, number, name, hash)
+             VALUES (${environment.APP_NAME ?? "compas"}, ${migration.number},
+                     ${migration.name}, ${migration.hash});`;
 }
 
 /**
@@ -341,17 +371,22 @@ async function syncWithSchemaState(mc) {
 
 /**
  * @param {import("postgres").Sql<{}>} sql
+ * @param {number} lockValue
  */
-async function acquireLock(sql) {
+async function acquireLock(sql, lockValue) {
   // Should be automatically released by Postgres once this connection ends.
   // We expect that the user runs this process for migrations only
-  let locked = false;
-  while (!locked) {
-    const [result] = await sql`SELECT pg_try_advisory_lock(-9876453452)`;
-    if (result.pg_try_advisory_lock) {
-      locked = true;
-    }
-  }
+  await query`SELECT pg_advisory_lock(${lockValue})`.exec(sql);
+}
+
+/**
+ * @param {import("postgres").Sql<{}>} sql
+ * @param {number} lockValue
+ */
+async function releaseLock(sql, lockValue) {
+  // Should be automatically released by Postgres once this connection ends.
+  // We expect that the user runs this process for migrations only
+  await query`SELECT pg_advisory_unlock(${lockValue})`.exec(sql);
 }
 
 /**
@@ -393,7 +428,7 @@ async function readMigrationsDir(directory) {
 }
 
 /**
- * @param fileName
+ * @param {string} fileName
  */
 function parseFileName(fileName) {
   const filePattern = /(\d+)(-r)?-([a-zA-Z-]+).(js|sql)/g;

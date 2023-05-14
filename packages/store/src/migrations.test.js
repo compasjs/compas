@@ -1,8 +1,9 @@
 import { mainTestFn, test } from "@compas/cli";
+import { pathJoin } from "@compas/stdlib";
 import {
-  getMigrationsToBeApplied,
-  newMigrateContext,
-  runMigrations,
+  migrationsGetInfo,
+  migrationsInitContext,
+  migrationsRun,
 } from "./migrations.js";
 import {
   cleanupTestPostgresDatabase,
@@ -25,11 +26,14 @@ test("store/migrations", (t) => {
   });
 
   t.test("run full migration", async (t) => {
-    const mc = await newMigrateContext(sql, `./__fixtures__/store`);
+    const mc = await migrationsInitContext(sql, {
+      migrationsDirectory: pathJoin(process.cwd(), `./__fixtures__/store`),
+      uniqueLockNumber: -123456,
+    });
 
     t.equal(mc.files.length, 4);
 
-    const { migrationQueue: list } = getMigrationsToBeApplied(mc);
+    const { migrationQueue: list } = await migrationsGetInfo(mc);
     t.equal(list.length, 4);
 
     t.ok(list[1].repeatable === false);
@@ -41,7 +45,7 @@ test("store/migrations", (t) => {
     t.ok(list[3].repeatable === false);
     t.ok(list[3].number === 999);
 
-    await runMigrations(mc);
+    await migrationsRun(mc);
     const testResult = await sql`
       SELECT *
       FROM "testTable"
@@ -50,9 +54,12 @@ test("store/migrations", (t) => {
   });
 
   t.test("second run has no migrations to be applied", async (t) => {
-    const mc = await newMigrateContext(sql, `./__fixtures__/store`);
+    const mc = await migrationsInitContext(sql, {
+      migrationsDirectory: pathJoin(process.cwd(), `./__fixtures__/store`),
+      uniqueLockNumber: -123456,
+    });
 
-    const { migrationQueue, hashChanges } = getMigrationsToBeApplied(mc);
+    const { migrationQueue, hashChanges } = await migrationsGetInfo(mc);
     t.equal(migrationQueue.length, 0);
     t.equal(hashChanges.length, 0);
   });

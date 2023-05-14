@@ -1,7 +1,7 @@
 import { existsSync } from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
-import { isNil, isPlainObject } from "@compas/stdlib";
+import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
 
 /**
  * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
@@ -13,9 +13,6 @@ export const cliDefinition = {
   longDescription: `The migrations are managed via the @compas/store provided system. And are forward only.
 
 A custom Postgres connection object can be provided by exporting a 'postgresConnectionSettings' object from the files specified via the '--connection-settings' flag.
-
-This command can keep running if for example your deploy system does not support one of tasks. You can use '--keep-alive' for that. It keeps a single Postgres connection alive to ensure that the process doesn't exit.
-The migration runner uses an advisory lock to ensure only a single migration process runs at the same time. To disable this behaviour when the command enters watch mode, '--without-lock' can be passed.
 `,
   modifiers: {
     isWatchable: true,
@@ -81,18 +78,6 @@ with caution.
         },
       },
     },
-    {
-      name: "keepAlive",
-      rawName: "--keep-alive",
-      description:
-        "Keep the service running, by maintaining a single idle SQL connection.",
-    },
-    {
-      name: "withoutLock",
-      rawName: "--without-lock",
-      description:
-        "Drop the migration lock, before entering the keep-alive state. Only used when `--keep-alive` is passed as well",
-    },
   ],
   executor: cliExecutor,
 };
@@ -112,9 +97,13 @@ export async function cliExecutor(logger, state) {
   }
 
   // @ts-ignore
-  const { newPostgresConnection, newMigrateContext } = await import(
-    "@compas/store"
-  );
+  const {
+    newPostgresConnection,
+    migrationsInitContext,
+    migrationsGetInfo,
+    migrationsRun,
+    migrationsRebuildState,
+  } = await import("@compas/store");
 
   const sqlOptions = await loadConnectionSettings(
     typeof state.flags.connectionSettings === "string"
@@ -129,11 +118,14 @@ export async function cliExecutor(logger, state) {
     };
   }
 
-  let sql = await newPostgresConnection(sqlOptions.value);
-  const mc = await newMigrateContext(sql);
+  const sql = await newPostgresConnection(sqlOptions.value);
+  const mc = await migrationsInitContext(sql, {
+    migrationsDirectory: pathJoin(process.cwd(), "migrations"),
+    uniqueLockNumber: -9876453452,
+  });
 
   // Always print current state;
-  const mcInfo = mc.info();
+  const mcInfo = await migrationsGetInfo(mc);
 
   let infoString = "";
   if (mcInfo.migrationQueue.length > 0) {
@@ -157,7 +149,7 @@ ${mcInfo.hashChanges.map((it) => `- ${it.number}-${it.name}`).join("\n")}`;
 
   if (state.command.includes("rebuild")) {
     logger.info("Rebuilding migration state.");
-    await mc.rebuild();
+    await migrationsRebuildState(mc);
 
     return {
       exitStatus: "passed",
@@ -172,33 +164,11 @@ ${mcInfo.hashChanges.map((it) => `- ${it.number}-${it.name}`).join("\n")}`;
   }
 
   logger.info("Start migrating.");
-  await mc.do();
+  await migrationsRun(mc);
   logger.info("Done migrating.");
 
-  if (!state.flags.keepAlive) {
-    await sql.end();
-    return { exitStatus: "passed" };
-  }
-
-  if (state.flags.withoutLock) {
-    // Drop the existing connection to release the advisory lock
-    await sql.end();
-
-    sql = await newPostgresConnection(sqlOptions.value);
-
-    // Execute a query to keep the event loop alive.
-    await sql`SELECT 1 + 1 AS "sum"`;
-  }
-
-  // Leak postgres connection, with a single connection, to keep the event loop spinning
-  logger.info(
-    `Migrate command keep-alive ${
-      state.flags.withoutLock ? "without" : "with"
-    } lock`,
-  );
-
   return {
-    exitStatus: "keepAlive",
+    exitStatus: "passed",
   };
 }
 
