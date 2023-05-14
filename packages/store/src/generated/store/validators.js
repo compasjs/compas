@@ -508,29 +508,33 @@ export function validateStoreFileWhereValidated(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreFileWhereValidated(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreFileWhereValidated(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -629,42 +633,46 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof intermediateValue8[i8] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue8[i8],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue8[i8].length === 32) {
-                  intermediateResult8[i8] =
-                    intermediateValue8[i8].slice(0, 8) +
-                    "-" +
-                    intermediateValue8[i8].slice(8, 12) +
-                    "-" +
-                    intermediateValue8[i8].slice(12, 16) +
-                    "-" +
-                    intermediateValue8[i8].slice(16, 20) +
-                    "-" +
-                    intermediateValue8[i8].slice(20);
                 } else {
-                  intermediateResult8[i8] = intermediateValue8[i8];
+                  if (
+                    typeof intermediateValue8[i8] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue8[i8],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue8[i8].length === 32) {
+                    intermediateResult8[i8] =
+                      intermediateValue8[i8].slice(0, 8) +
+                      "-" +
+                      intermediateValue8[i8].slice(8, 12) +
+                      "-" +
+                      intermediateValue8[i8].slice(12, 16) +
+                      "-" +
+                      intermediateValue8[i8].slice(16, 20) +
+                      "-" +
+                      intermediateValue8[i8].slice(20);
+                  } else {
+                    intermediateResult8[i8] = intermediateValue8[i8];
+                  }
                 }
               }
             }
@@ -746,42 +754,46 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof intermediateValue9[i9] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue9[i9],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue9[i9].length === 32) {
-                  intermediateResult9[i9] =
-                    intermediateValue9[i9].slice(0, 8) +
-                    "-" +
-                    intermediateValue9[i9].slice(8, 12) +
-                    "-" +
-                    intermediateValue9[i9].slice(12, 16) +
-                    "-" +
-                    intermediateValue9[i9].slice(16, 20) +
-                    "-" +
-                    intermediateValue9[i9].slice(20);
                 } else {
-                  intermediateResult9[i9] = intermediateValue9[i9];
+                  if (
+                    typeof intermediateValue9[i9] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue9[i9],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue9[i9].length === 32) {
+                    intermediateResult9[i9] =
+                      intermediateValue9[i9].slice(0, 8) +
+                      "-" +
+                      intermediateValue9[i9].slice(8, 12) +
+                      "-" +
+                      intermediateValue9[i9].slice(12, 16) +
+                      "-" +
+                      intermediateValue9[i9].slice(16, 20) +
+                      "-" +
+                      intermediateValue9[i9].slice(20);
+                  } else {
+                    intermediateResult9[i9] = intermediateValue9[i9];
+                  }
                 }
               }
             }
@@ -920,32 +932,36 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
-              intermediateValue12 = [intermediateValue12];
-            }
-            intermediateResult11 = [];
-            for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-              if (
-                intermediateValue12[i12] === null ||
-                intermediateValue12[i12] === undefined
-              ) {
-                intermediateErrorMap12[`$.${i12}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString12 = intermediateValue12[i12];
-                if (typeof convertedString12 !== "string") {
+              intermediateErrorMap11[`$`] = {
+                key: "validator.array",
+                value: intermediateValue12,
+              };
+            } else {
+              intermediateResult11 = [];
+              for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
+                if (
+                  intermediateValue12[i12] === null ||
+                  intermediateValue12[i12] === undefined
+                ) {
                   intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString12.length < 1) {
+                  /** @type {string} */
+                  let convertedString12 = intermediateValue12[i12];
+                  if (typeof convertedString12 !== "string") {
                     intermediateErrorMap12[`$.${i12}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult12[i12] = convertedString12;
+                    if (convertedString12.length < 1) {
+                      intermediateErrorMap12[`$.${i12}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult12[i12] = convertedString12;
+                    }
                   }
                 }
               }
@@ -1037,32 +1053,36 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
-              intermediateValue13 = [intermediateValue13];
-            }
-            intermediateResult12 = [];
-            for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-              if (
-                intermediateValue13[i13] === null ||
-                intermediateValue13[i13] === undefined
-              ) {
-                intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString13 = intermediateValue13[i13];
-                if (typeof convertedString13 !== "string") {
+              intermediateErrorMap12[`$`] = {
+                key: "validator.array",
+                value: intermediateValue13,
+              };
+            } else {
+              intermediateResult12 = [];
+              for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
+                if (
+                  intermediateValue13[i13] === null ||
+                  intermediateValue13[i13] === undefined
+                ) {
                   intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString13.length < 1) {
+                  /** @type {string} */
+                  let convertedString13 = intermediateValue13[i13];
+                  if (typeof convertedString13 !== "string") {
                     intermediateErrorMap13[`$.${i13}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult13[i13] = convertedString13;
+                    if (convertedString13.length < 1) {
+                      intermediateErrorMap13[`$.${i13}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult13[i13] = convertedString13;
+                    }
                   }
                 }
               }
@@ -1284,40 +1304,46 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
-              intermediateValue19 = [intermediateValue19];
-            }
-            intermediateResult18 = [];
-            for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
-              if (
-                intermediateValue19[i19] === null ||
-                intermediateValue19[i19] === undefined
-              ) {
-                intermediateErrorMap19[`$.${i19}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap18[`$`] = {
+                key: "validator.array",
+                value: intermediateValue19,
+              };
+            } else {
+              intermediateResult18 = [];
+              for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
                 if (
-                  typeof intermediateValue19[i19] === "string" ||
-                  typeof intermediateValue19[i19] === "number"
+                  intermediateValue19[i19] === null ||
+                  intermediateValue19[i19] === undefined
                 ) {
-                  intermediateResult19[i19] = new Date(
-                    intermediateValue19[i19],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue19[i19]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult19[i19] = intermediateValue19[i19];
+                  intermediateErrorMap19[`$.${i19}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult19[i19]?.getTime() ?? undefined)) {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue19[i19] === "string" ||
+                    typeof intermediateValue19[i19] === "number"
+                  ) {
+                    intermediateResult19[i19] = new Date(
+                      intermediateValue19[i19],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue19[i19]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult19[i19] = intermediateValue19[i19];
+                  } else {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult19[i19]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -1408,40 +1434,46 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue20 = intermediateValue19;
 
             if (!Array.isArray(intermediateValue20)) {
-              intermediateValue20 = [intermediateValue20];
-            }
-            intermediateResult19 = [];
-            for (let i20 = 0; i20 < intermediateValue20.length; ++i20) {
-              if (
-                intermediateValue20[i20] === null ||
-                intermediateValue20[i20] === undefined
-              ) {
-                intermediateErrorMap20[`$.${i20}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap19[`$`] = {
+                key: "validator.array",
+                value: intermediateValue20,
+              };
+            } else {
+              intermediateResult19 = [];
+              for (let i20 = 0; i20 < intermediateValue20.length; ++i20) {
                 if (
-                  typeof intermediateValue20[i20] === "string" ||
-                  typeof intermediateValue20[i20] === "number"
+                  intermediateValue20[i20] === null ||
+                  intermediateValue20[i20] === undefined
                 ) {
-                  intermediateResult20[i20] = new Date(
-                    intermediateValue20[i20],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue20[i20]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult20[i20] = intermediateValue20[i20];
+                  intermediateErrorMap20[`$.${i20}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap20[`$.${i20}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult20[i20]?.getTime() ?? undefined)) {
-                  intermediateErrorMap20[`$.${i20}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue20[i20] === "string" ||
+                    typeof intermediateValue20[i20] === "number"
+                  ) {
+                    intermediateResult20[i20] = new Date(
+                      intermediateValue20[i20],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue20[i20]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult20[i20] = intermediateValue20[i20];
+                  } else {
+                    intermediateErrorMap20[`$.${i20}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult20[i20]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap20[`$.${i20}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -1639,40 +1671,46 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
-              intermediateValue25 = [intermediateValue25];
-            }
-            intermediateResult24 = [];
-            for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
-              if (
-                intermediateValue25[i25] === null ||
-                intermediateValue25[i25] === undefined
-              ) {
-                intermediateErrorMap25[`$.${i25}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap24[`$`] = {
+                key: "validator.array",
+                value: intermediateValue25,
+              };
+            } else {
+              intermediateResult24 = [];
+              for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
                 if (
-                  typeof intermediateValue25[i25] === "string" ||
-                  typeof intermediateValue25[i25] === "number"
+                  intermediateValue25[i25] === null ||
+                  intermediateValue25[i25] === undefined
                 ) {
-                  intermediateResult25[i25] = new Date(
-                    intermediateValue25[i25],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue25[i25]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult25[i25] = intermediateValue25[i25];
+                  intermediateErrorMap25[`$.${i25}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult25[i25]?.getTime() ?? undefined)) {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue25[i25] === "string" ||
+                    typeof intermediateValue25[i25] === "number"
+                  ) {
+                    intermediateResult25[i25] = new Date(
+                      intermediateValue25[i25],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue25[i25]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult25[i25] = intermediateValue25[i25];
+                  } else {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult25[i25]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -1763,40 +1801,46 @@ export function validateStoreFileWhereValidated(value) {
             let intermediateValue26 = intermediateValue25;
 
             if (!Array.isArray(intermediateValue26)) {
-              intermediateValue26 = [intermediateValue26];
-            }
-            intermediateResult25 = [];
-            for (let i26 = 0; i26 < intermediateValue26.length; ++i26) {
-              if (
-                intermediateValue26[i26] === null ||
-                intermediateValue26[i26] === undefined
-              ) {
-                intermediateErrorMap26[`$.${i26}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap25[`$`] = {
+                key: "validator.array",
+                value: intermediateValue26,
+              };
+            } else {
+              intermediateResult25 = [];
+              for (let i26 = 0; i26 < intermediateValue26.length; ++i26) {
                 if (
-                  typeof intermediateValue26[i26] === "string" ||
-                  typeof intermediateValue26[i26] === "number"
+                  intermediateValue26[i26] === null ||
+                  intermediateValue26[i26] === undefined
                 ) {
-                  intermediateResult26[i26] = new Date(
-                    intermediateValue26[i26],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue26[i26]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult26[i26] = intermediateValue26[i26];
+                  intermediateErrorMap26[`$.${i26}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap26[`$.${i26}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult26[i26]?.getTime() ?? undefined)) {
-                  intermediateErrorMap26[`$.${i26}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue26[i26] === "string" ||
+                    typeof intermediateValue26[i26] === "number"
+                  ) {
+                    intermediateResult26[i26] = new Date(
+                      intermediateValue26[i26],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue26[i26]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult26[i26] = intermediateValue26[i26];
+                  } else {
+                    intermediateErrorMap26[`$.${i26}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult26[i26]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap26[`$.${i26}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -1920,9 +1964,9 @@ export function validateStoreFileWhereValidated(value) {
 
 /**
  * @param {import("../common/types").StoreFileOrderBy|any} value
- * @returns {Either<import("../common/types").StoreFileOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreFileOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreFileOrderByValidated(value) {
+export function validateStoreFileOrderBy(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -1990,43 +2034,52 @@ export function validateStoreFileOrderByValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "bucketName" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: ["id", "bucketName", "createdAt", "updatedAt"],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "bucketName" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "bucketName",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -2311,7 +2364,7 @@ export function validateStoreFileQueryBuilderValidated(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreFileOrderByValidated(value["orderBy"]);
+        const refResult2 = validateStoreFileOrderBy(value["orderBy"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -2404,7 +2457,7 @@ export function validateStoreFileQueryBuilderValidated(value) {
           "updatedAt",
         ];
       } else {
-        const refResult6 = validateStoreFileReturningValidated(value["select"]);
+        const refResult6 = validateStoreFileReturning(value["select"]);
 
         if (refResult6.error) {
           for (const errorKey of Object.keys(refResult6.error)) {
@@ -2424,9 +2477,9 @@ export function validateStoreFileQueryBuilderValidated(value) {
 
 /**
  * @param {import("../common/types").StoreFileReturning|any} value
- * @returns {Either<import("../common/types").StoreFileReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreFileReturning, ValidatorErrorMap>}
  */
-export function validateStoreFileReturningValidated(value) {
+export function validateStoreFileReturning(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -2505,56 +2558,60 @@ export function validateStoreFileReturningValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "contentLength" &&
-                convertedString3 !== "bucketName" &&
-                convertedString3 !== "contentType" &&
-                convertedString3 !== "name" &&
-                convertedString3 !== "meta" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "contentLength",
-                    "bucketName",
-                    "contentType",
-                    "name",
-                    "meta",
-                    "createdAt",
-                    "updatedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "contentLength" &&
+                  convertedString3 !== "bucketName" &&
+                  convertedString3 !== "contentType" &&
+                  convertedString3 !== "name" &&
+                  convertedString3 !== "meta" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "contentLength",
+                      "bucketName",
+                      "contentType",
+                      "name",
+                      "meta",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -2691,9 +2748,7 @@ export function validateStoreFileInsertValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult2 = validateStoreFileReturningValidated(
-          value["returning"],
-        );
+        const refResult2 = validateStoreFileReturning(value["returning"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -3046,9 +3101,7 @@ export function validateStoreFileUpdateValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreFileReturningValidated(
-          value["returning"],
-        );
+        const refResult3 = validateStoreFileReturning(value["returning"]);
 
         if (refResult3.error) {
           for (const errorKey of Object.keys(refResult3.error)) {
@@ -4071,121 +4124,133 @@ export function validateStoreFileUpdatePartialValidated(value) {
                       intermediateValue7["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue10)) {
-                      intermediateValue10 = [intermediateValue10];
-                    }
-                    intermediateResult7["$set"]["path"] = [];
-                    for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-                      if (
-                        intermediateValue10[i10] === null ||
-                        intermediateValue10[i10] === undefined
+                      intermediateErrorMap7[`$.$set.path`] = {
+                        key: "validator.array",
+                        value: intermediateValue10,
+                      };
+                    } else {
+                      intermediateResult7["$set"]["path"] = [];
+                      for (
+                        let i10 = 0;
+                        i10 < intermediateValue10.length;
+                        ++i10
                       ) {
-                        intermediateErrorMap10[`$.${i10}`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        let hasAnyOfMatch10 = false;
-                        intermediateErrorMap10[`$.${i10}`] = {
-                          key: "validator.anyOf",
-                          errors: [],
-                        };
-                        if (!hasAnyOfMatch10) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap12 = {};
-                          /** @type {any} */
-                          let intermediateResult12 = undefined;
-                          /** @type {any} */
-                          let intermediateValue12 = intermediateValue10[i10];
+                        if (
+                          intermediateValue10[i10] === null ||
+                          intermediateValue10[i10] === undefined
+                        ) {
+                          intermediateErrorMap10[`$.${i10}`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          let hasAnyOfMatch10 = false;
+                          intermediateErrorMap10[`$.${i10}`] = {
+                            key: "validator.anyOf",
+                            errors: [],
+                          };
+                          if (!hasAnyOfMatch10) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap12 = {};
+                            /** @type {any} */
+                            let intermediateResult12 = undefined;
+                            /** @type {any} */
+                            let intermediateValue12 = intermediateValue10[i10];
 
-                          if (
-                            intermediateValue12 === null ||
-                            intermediateValue12 === undefined
-                          ) {
-                            intermediateErrorMap12[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            let convertedNumber12 = intermediateValue12;
                             if (
-                              typeof convertedNumber12 !== "number" &&
-                              typeof convertedNumber12 === "string"
-                            ) {
-                              convertedNumber12 = Number(convertedNumber12);
-                            }
-                            if (
-                              typeof convertedNumber12 !== "number" ||
-                              isNaN(convertedNumber12) ||
-                              !isFinite(convertedNumber12) ||
-                              !Number.isInteger(convertedNumber12)
+                              intermediateValue12 === null ||
+                              intermediateValue12 === undefined
                             ) {
                               intermediateErrorMap12[`$`] = {
-                                key: "validator.number",
-                                subType: "int",
-                              };
-                            } else if (convertedNumber12 < -2147483647) {
-                              intermediateErrorMap12[`$`] = {
-                                key: "validator.range",
-                                minValue: -2147483647,
-                              };
-                            } else if (convertedNumber12 > 2147483647) {
-                              intermediateErrorMap12[`$`] = {
-                                key: "validator.range",
-                                maxValue: 2147483647,
+                                key: "validator.undefined",
                               };
                             } else {
-                              intermediateResult12 = convertedNumber12;
-                            }
-                          }
-                          if (Object.keys(intermediateErrorMap12).length > 0) {
-                            intermediateErrorMap10[`$.${i10}`].errors.push(
-                              intermediateErrorMap12,
-                            );
-                          } else {
-                            hasAnyOfMatch10 = true;
-                            delete intermediateErrorMap10[`$.${i10}`];
-                            intermediateResult10[i10] = intermediateResult12;
-                          }
-                        }
-                        if (!hasAnyOfMatch10) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap12 = {};
-                          /** @type {any} */
-                          let intermediateResult12 = undefined;
-                          /** @type {any} */
-                          let intermediateValue12 = intermediateValue10[i10];
-
-                          if (
-                            intermediateValue12 === null ||
-                            intermediateValue12 === undefined
-                          ) {
-                            intermediateErrorMap12[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString12 = intermediateValue12;
-                            if (typeof convertedString12 !== "string") {
-                              intermediateErrorMap12[`$`] = {
-                                key: "validator.string",
-                              };
-                            } else {
-                              if (convertedString12.length < 1) {
+                              let convertedNumber12 = intermediateValue12;
+                              if (
+                                typeof convertedNumber12 !== "number" &&
+                                typeof convertedNumber12 === "string"
+                              ) {
+                                convertedNumber12 = Number(convertedNumber12);
+                              }
+                              if (
+                                typeof convertedNumber12 !== "number" ||
+                                isNaN(convertedNumber12) ||
+                                !isFinite(convertedNumber12) ||
+                                !Number.isInteger(convertedNumber12)
+                              ) {
                                 intermediateErrorMap12[`$`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.number",
+                                  subType: "int",
+                                };
+                              } else if (convertedNumber12 < -2147483647) {
+                                intermediateErrorMap12[`$`] = {
+                                  key: "validator.range",
+                                  minValue: -2147483647,
+                                };
+                              } else if (convertedNumber12 > 2147483647) {
+                                intermediateErrorMap12[`$`] = {
+                                  key: "validator.range",
+                                  maxValue: 2147483647,
                                 };
                               } else {
-                                intermediateResult12 = convertedString12;
+                                intermediateResult12 = convertedNumber12;
                               }
                             }
+                            if (
+                              Object.keys(intermediateErrorMap12).length > 0
+                            ) {
+                              intermediateErrorMap10[`$.${i10}`].errors.push(
+                                intermediateErrorMap12,
+                              );
+                            } else {
+                              hasAnyOfMatch10 = true;
+                              delete intermediateErrorMap10[`$.${i10}`];
+                              intermediateResult10[i10] = intermediateResult12;
+                            }
                           }
-                          if (Object.keys(intermediateErrorMap12).length > 0) {
-                            intermediateErrorMap10[`$.${i10}`].errors.push(
-                              intermediateErrorMap12,
-                            );
-                          } else {
-                            hasAnyOfMatch10 = true;
-                            delete intermediateErrorMap10[`$.${i10}`];
-                            intermediateResult10[i10] = intermediateResult12;
+                          if (!hasAnyOfMatch10) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap12 = {};
+                            /** @type {any} */
+                            let intermediateResult12 = undefined;
+                            /** @type {any} */
+                            let intermediateValue12 = intermediateValue10[i10];
+
+                            if (
+                              intermediateValue12 === null ||
+                              intermediateValue12 === undefined
+                            ) {
+                              intermediateErrorMap12[`$`] = {
+                                key: "validator.undefined",
+                              };
+                            } else {
+                              /** @type {string} */
+                              let convertedString12 = intermediateValue12;
+                              if (typeof convertedString12 !== "string") {
+                                intermediateErrorMap12[`$`] = {
+                                  key: "validator.string",
+                                };
+                              } else {
+                                if (convertedString12.length < 1) {
+                                  intermediateErrorMap12[`$`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult12 = convertedString12;
+                                }
+                              }
+                            }
+                            if (
+                              Object.keys(intermediateErrorMap12).length > 0
+                            ) {
+                              intermediateErrorMap10[`$.${i10}`].errors.push(
+                                intermediateErrorMap12,
+                              );
+                            } else {
+                              hasAnyOfMatch10 = true;
+                              delete intermediateErrorMap10[`$.${i10}`];
+                              intermediateResult10[i10] = intermediateResult12;
+                            }
                           }
                         }
                       }
@@ -4336,121 +4401,133 @@ export function validateStoreFileUpdatePartialValidated(value) {
                       intermediateValue7["$remove"]["path"];
 
                     if (!Array.isArray(intermediateValue10)) {
-                      intermediateValue10 = [intermediateValue10];
-                    }
-                    intermediateResult7["$remove"]["path"] = [];
-                    for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-                      if (
-                        intermediateValue10[i10] === null ||
-                        intermediateValue10[i10] === undefined
+                      intermediateErrorMap7[`$.$remove.path`] = {
+                        key: "validator.array",
+                        value: intermediateValue10,
+                      };
+                    } else {
+                      intermediateResult7["$remove"]["path"] = [];
+                      for (
+                        let i10 = 0;
+                        i10 < intermediateValue10.length;
+                        ++i10
                       ) {
-                        intermediateErrorMap10[`$.${i10}`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        let hasAnyOfMatch10 = false;
-                        intermediateErrorMap10[`$.${i10}`] = {
-                          key: "validator.anyOf",
-                          errors: [],
-                        };
-                        if (!hasAnyOfMatch10) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap12 = {};
-                          /** @type {any} */
-                          let intermediateResult12 = undefined;
-                          /** @type {any} */
-                          let intermediateValue12 = intermediateValue10[i10];
+                        if (
+                          intermediateValue10[i10] === null ||
+                          intermediateValue10[i10] === undefined
+                        ) {
+                          intermediateErrorMap10[`$.${i10}`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          let hasAnyOfMatch10 = false;
+                          intermediateErrorMap10[`$.${i10}`] = {
+                            key: "validator.anyOf",
+                            errors: [],
+                          };
+                          if (!hasAnyOfMatch10) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap12 = {};
+                            /** @type {any} */
+                            let intermediateResult12 = undefined;
+                            /** @type {any} */
+                            let intermediateValue12 = intermediateValue10[i10];
 
-                          if (
-                            intermediateValue12 === null ||
-                            intermediateValue12 === undefined
-                          ) {
-                            intermediateErrorMap12[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            let convertedNumber12 = intermediateValue12;
                             if (
-                              typeof convertedNumber12 !== "number" &&
-                              typeof convertedNumber12 === "string"
-                            ) {
-                              convertedNumber12 = Number(convertedNumber12);
-                            }
-                            if (
-                              typeof convertedNumber12 !== "number" ||
-                              isNaN(convertedNumber12) ||
-                              !isFinite(convertedNumber12) ||
-                              !Number.isInteger(convertedNumber12)
+                              intermediateValue12 === null ||
+                              intermediateValue12 === undefined
                             ) {
                               intermediateErrorMap12[`$`] = {
-                                key: "validator.number",
-                                subType: "int",
-                              };
-                            } else if (convertedNumber12 < -2147483647) {
-                              intermediateErrorMap12[`$`] = {
-                                key: "validator.range",
-                                minValue: -2147483647,
-                              };
-                            } else if (convertedNumber12 > 2147483647) {
-                              intermediateErrorMap12[`$`] = {
-                                key: "validator.range",
-                                maxValue: 2147483647,
+                                key: "validator.undefined",
                               };
                             } else {
-                              intermediateResult12 = convertedNumber12;
-                            }
-                          }
-                          if (Object.keys(intermediateErrorMap12).length > 0) {
-                            intermediateErrorMap10[`$.${i10}`].errors.push(
-                              intermediateErrorMap12,
-                            );
-                          } else {
-                            hasAnyOfMatch10 = true;
-                            delete intermediateErrorMap10[`$.${i10}`];
-                            intermediateResult10[i10] = intermediateResult12;
-                          }
-                        }
-                        if (!hasAnyOfMatch10) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap12 = {};
-                          /** @type {any} */
-                          let intermediateResult12 = undefined;
-                          /** @type {any} */
-                          let intermediateValue12 = intermediateValue10[i10];
-
-                          if (
-                            intermediateValue12 === null ||
-                            intermediateValue12 === undefined
-                          ) {
-                            intermediateErrorMap12[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString12 = intermediateValue12;
-                            if (typeof convertedString12 !== "string") {
-                              intermediateErrorMap12[`$`] = {
-                                key: "validator.string",
-                              };
-                            } else {
-                              if (convertedString12.length < 1) {
+                              let convertedNumber12 = intermediateValue12;
+                              if (
+                                typeof convertedNumber12 !== "number" &&
+                                typeof convertedNumber12 === "string"
+                              ) {
+                                convertedNumber12 = Number(convertedNumber12);
+                              }
+                              if (
+                                typeof convertedNumber12 !== "number" ||
+                                isNaN(convertedNumber12) ||
+                                !isFinite(convertedNumber12) ||
+                                !Number.isInteger(convertedNumber12)
+                              ) {
                                 intermediateErrorMap12[`$`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.number",
+                                  subType: "int",
+                                };
+                              } else if (convertedNumber12 < -2147483647) {
+                                intermediateErrorMap12[`$`] = {
+                                  key: "validator.range",
+                                  minValue: -2147483647,
+                                };
+                              } else if (convertedNumber12 > 2147483647) {
+                                intermediateErrorMap12[`$`] = {
+                                  key: "validator.range",
+                                  maxValue: 2147483647,
                                 };
                               } else {
-                                intermediateResult12 = convertedString12;
+                                intermediateResult12 = convertedNumber12;
                               }
                             }
+                            if (
+                              Object.keys(intermediateErrorMap12).length > 0
+                            ) {
+                              intermediateErrorMap10[`$.${i10}`].errors.push(
+                                intermediateErrorMap12,
+                              );
+                            } else {
+                              hasAnyOfMatch10 = true;
+                              delete intermediateErrorMap10[`$.${i10}`];
+                              intermediateResult10[i10] = intermediateResult12;
+                            }
                           }
-                          if (Object.keys(intermediateErrorMap12).length > 0) {
-                            intermediateErrorMap10[`$.${i10}`].errors.push(
-                              intermediateErrorMap12,
-                            );
-                          } else {
-                            hasAnyOfMatch10 = true;
-                            delete intermediateErrorMap10[`$.${i10}`];
-                            intermediateResult10[i10] = intermediateResult12;
+                          if (!hasAnyOfMatch10) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap12 = {};
+                            /** @type {any} */
+                            let intermediateResult12 = undefined;
+                            /** @type {any} */
+                            let intermediateValue12 = intermediateValue10[i10];
+
+                            if (
+                              intermediateValue12 === null ||
+                              intermediateValue12 === undefined
+                            ) {
+                              intermediateErrorMap12[`$`] = {
+                                key: "validator.undefined",
+                              };
+                            } else {
+                              /** @type {string} */
+                              let convertedString12 = intermediateValue12;
+                              if (typeof convertedString12 !== "string") {
+                                intermediateErrorMap12[`$`] = {
+                                  key: "validator.string",
+                                };
+                              } else {
+                                if (convertedString12.length < 1) {
+                                  intermediateErrorMap12[`$`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult12 = convertedString12;
+                                }
+                              }
+                            }
+                            if (
+                              Object.keys(intermediateErrorMap12).length > 0
+                            ) {
+                              intermediateErrorMap10[`$.${i10}`].errors.push(
+                                intermediateErrorMap12,
+                              );
+                            } else {
+                              hasAnyOfMatch10 = true;
+                              delete intermediateErrorMap10[`$.${i10}`];
+                              intermediateResult10[i10] = intermediateResult12;
+                            }
                           }
                         }
                       }
@@ -5379,29 +5456,33 @@ export function validateStoreJobWhereValidated(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreJobWhereValidated(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreJobWhereValidated(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -5510,47 +5591,51 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber8 = intermediateValue8[i8];
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof convertedNumber8 !== "number" &&
-                  typeof convertedNumber8 === "string"
-                ) {
-                  convertedNumber8 = Number(convertedNumber8);
-                }
-                if (
-                  typeof convertedNumber8 !== "number" ||
-                  isNaN(convertedNumber8) ||
-                  !isFinite(convertedNumber8) ||
-                  !Number.isInteger(convertedNumber8)
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber8 < -2147483647) {
-                  intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber8 > 2147483647) {
-                  intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
+                    key: "validator.undefined",
                   };
                 } else {
-                  intermediateResult8[i8] = convertedNumber8;
+                  let convertedNumber8 = intermediateValue8[i8];
+                  if (
+                    typeof convertedNumber8 !== "number" &&
+                    typeof convertedNumber8 === "string"
+                  ) {
+                    convertedNumber8 = Number(convertedNumber8);
+                  }
+                  if (
+                    typeof convertedNumber8 !== "number" ||
+                    isNaN(convertedNumber8) ||
+                    !isFinite(convertedNumber8) ||
+                    !Number.isInteger(convertedNumber8)
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.number",
+                      subType: "int",
+                    };
+                  } else if (convertedNumber8 < -2147483647) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.range",
+                      minValue: -2147483647,
+                    };
+                  } else if (convertedNumber8 > 2147483647) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.range",
+                      maxValue: 2147483647,
+                    };
+                  } else {
+                    intermediateResult8[i8] = convertedNumber8;
+                  }
                 }
               }
             }
@@ -5632,47 +5717,51 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber9 = intermediateValue9[i9];
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof convertedNumber9 !== "number" &&
-                  typeof convertedNumber9 === "string"
-                ) {
-                  convertedNumber9 = Number(convertedNumber9);
-                }
-                if (
-                  typeof convertedNumber9 !== "number" ||
-                  isNaN(convertedNumber9) ||
-                  !isFinite(convertedNumber9) ||
-                  !Number.isInteger(convertedNumber9)
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber9 < -2147483647) {
-                  intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber9 > 2147483647) {
-                  intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
+                    key: "validator.undefined",
                   };
                 } else {
-                  intermediateResult9[i9] = convertedNumber9;
+                  let convertedNumber9 = intermediateValue9[i9];
+                  if (
+                    typeof convertedNumber9 !== "number" &&
+                    typeof convertedNumber9 === "string"
+                  ) {
+                    convertedNumber9 = Number(convertedNumber9);
+                  }
+                  if (
+                    typeof convertedNumber9 !== "number" ||
+                    isNaN(convertedNumber9) ||
+                    !isFinite(convertedNumber9) ||
+                    !Number.isInteger(convertedNumber9)
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.number",
+                      subType: "int",
+                    };
+                  } else if (convertedNumber9 < -2147483647) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.range",
+                      minValue: -2147483647,
+                    };
+                  } else if (convertedNumber9 > 2147483647) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.range",
+                      maxValue: 2147483647,
+                    };
+                  } else {
+                    intermediateResult9[i9] = convertedNumber9;
+                  }
                 }
               }
             }
@@ -5957,32 +6046,36 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
-              intermediateValue17 = [intermediateValue17];
-            }
-            intermediateResult16 = [];
-            for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-              if (
-                intermediateValue17[i17] === null ||
-                intermediateValue17[i17] === undefined
-              ) {
-                intermediateErrorMap17[`$.${i17}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString17 = intermediateValue17[i17];
-                if (typeof convertedString17 !== "string") {
+              intermediateErrorMap16[`$`] = {
+                key: "validator.array",
+                value: intermediateValue17,
+              };
+            } else {
+              intermediateResult16 = [];
+              for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
+                if (
+                  intermediateValue17[i17] === null ||
+                  intermediateValue17[i17] === undefined
+                ) {
                   intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString17.length < 1) {
+                  /** @type {string} */
+                  let convertedString17 = intermediateValue17[i17];
+                  if (typeof convertedString17 !== "string") {
                     intermediateErrorMap17[`$.${i17}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult17[i17] = convertedString17;
+                    if (convertedString17.length < 1) {
+                      intermediateErrorMap17[`$.${i17}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult17[i17] = convertedString17;
+                    }
                   }
                 }
               }
@@ -6071,32 +6164,36 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
-              intermediateValue18 = [intermediateValue18];
-            }
-            intermediateResult17 = [];
-            for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
-              if (
-                intermediateValue18[i18] === null ||
-                intermediateValue18[i18] === undefined
-              ) {
-                intermediateErrorMap18[`$.${i18}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString18 = intermediateValue18[i18];
-                if (typeof convertedString18 !== "string") {
+              intermediateErrorMap17[`$`] = {
+                key: "validator.array",
+                value: intermediateValue18,
+              };
+            } else {
+              intermediateResult17 = [];
+              for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
+                if (
+                  intermediateValue18[i18] === null ||
+                  intermediateValue18[i18] === undefined
+                ) {
                   intermediateErrorMap18[`$.${i18}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString18.length < 1) {
+                  /** @type {string} */
+                  let convertedString18 = intermediateValue18[i18];
+                  if (typeof convertedString18 !== "string") {
                     intermediateErrorMap18[`$.${i18}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult18[i18] = convertedString18;
+                    if (convertedString18.length < 1) {
+                      intermediateErrorMap18[`$.${i18}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult18[i18] = convertedString18;
+                    }
                   }
                 }
               }
@@ -6315,40 +6412,46 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue24 = intermediateValue23;
 
             if (!Array.isArray(intermediateValue24)) {
-              intermediateValue24 = [intermediateValue24];
-            }
-            intermediateResult23 = [];
-            for (let i24 = 0; i24 < intermediateValue24.length; ++i24) {
-              if (
-                intermediateValue24[i24] === null ||
-                intermediateValue24[i24] === undefined
-              ) {
-                intermediateErrorMap24[`$.${i24}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap23[`$`] = {
+                key: "validator.array",
+                value: intermediateValue24,
+              };
+            } else {
+              intermediateResult23 = [];
+              for (let i24 = 0; i24 < intermediateValue24.length; ++i24) {
                 if (
-                  typeof intermediateValue24[i24] === "string" ||
-                  typeof intermediateValue24[i24] === "number"
+                  intermediateValue24[i24] === null ||
+                  intermediateValue24[i24] === undefined
                 ) {
-                  intermediateResult24[i24] = new Date(
-                    intermediateValue24[i24],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue24[i24]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult24[i24] = intermediateValue24[i24];
+                  intermediateErrorMap24[`$.${i24}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap24[`$.${i24}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult24[i24]?.getTime() ?? undefined)) {
-                  intermediateErrorMap24[`$.${i24}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue24[i24] === "string" ||
+                    typeof intermediateValue24[i24] === "number"
+                  ) {
+                    intermediateResult24[i24] = new Date(
+                      intermediateValue24[i24],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue24[i24]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult24[i24] = intermediateValue24[i24];
+                  } else {
+                    intermediateErrorMap24[`$.${i24}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult24[i24]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap24[`$.${i24}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -6439,40 +6542,46 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
-              intermediateValue25 = [intermediateValue25];
-            }
-            intermediateResult24 = [];
-            for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
-              if (
-                intermediateValue25[i25] === null ||
-                intermediateValue25[i25] === undefined
-              ) {
-                intermediateErrorMap25[`$.${i25}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap24[`$`] = {
+                key: "validator.array",
+                value: intermediateValue25,
+              };
+            } else {
+              intermediateResult24 = [];
+              for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
                 if (
-                  typeof intermediateValue25[i25] === "string" ||
-                  typeof intermediateValue25[i25] === "number"
+                  intermediateValue25[i25] === null ||
+                  intermediateValue25[i25] === undefined
                 ) {
-                  intermediateResult25[i25] = new Date(
-                    intermediateValue25[i25],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue25[i25]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult25[i25] = intermediateValue25[i25];
+                  intermediateErrorMap25[`$.${i25}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult25[i25]?.getTime() ?? undefined)) {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue25[i25] === "string" ||
+                    typeof intermediateValue25[i25] === "number"
+                  ) {
+                    intermediateResult25[i25] = new Date(
+                      intermediateValue25[i25],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue25[i25]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult25[i25] = intermediateValue25[i25];
+                  } else {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult25[i25]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -6726,40 +6835,46 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue32 = intermediateValue31;
 
             if (!Array.isArray(intermediateValue32)) {
-              intermediateValue32 = [intermediateValue32];
-            }
-            intermediateResult31 = [];
-            for (let i32 = 0; i32 < intermediateValue32.length; ++i32) {
-              if (
-                intermediateValue32[i32] === null ||
-                intermediateValue32[i32] === undefined
-              ) {
-                intermediateErrorMap32[`$.${i32}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap31[`$`] = {
+                key: "validator.array",
+                value: intermediateValue32,
+              };
+            } else {
+              intermediateResult31 = [];
+              for (let i32 = 0; i32 < intermediateValue32.length; ++i32) {
                 if (
-                  typeof intermediateValue32[i32] === "string" ||
-                  typeof intermediateValue32[i32] === "number"
+                  intermediateValue32[i32] === null ||
+                  intermediateValue32[i32] === undefined
                 ) {
-                  intermediateResult32[i32] = new Date(
-                    intermediateValue32[i32],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue32[i32]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult32[i32] = intermediateValue32[i32];
+                  intermediateErrorMap32[`$.${i32}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap32[`$.${i32}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult32[i32]?.getTime() ?? undefined)) {
-                  intermediateErrorMap32[`$.${i32}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue32[i32] === "string" ||
+                    typeof intermediateValue32[i32] === "number"
+                  ) {
+                    intermediateResult32[i32] = new Date(
+                      intermediateValue32[i32],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue32[i32]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult32[i32] = intermediateValue32[i32];
+                  } else {
+                    intermediateErrorMap32[`$.${i32}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult32[i32]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap32[`$.${i32}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -6850,40 +6965,46 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue33 = intermediateValue32;
 
             if (!Array.isArray(intermediateValue33)) {
-              intermediateValue33 = [intermediateValue33];
-            }
-            intermediateResult32 = [];
-            for (let i33 = 0; i33 < intermediateValue33.length; ++i33) {
-              if (
-                intermediateValue33[i33] === null ||
-                intermediateValue33[i33] === undefined
-              ) {
-                intermediateErrorMap33[`$.${i33}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap32[`$`] = {
+                key: "validator.array",
+                value: intermediateValue33,
+              };
+            } else {
+              intermediateResult32 = [];
+              for (let i33 = 0; i33 < intermediateValue33.length; ++i33) {
                 if (
-                  typeof intermediateValue33[i33] === "string" ||
-                  typeof intermediateValue33[i33] === "number"
+                  intermediateValue33[i33] === null ||
+                  intermediateValue33[i33] === undefined
                 ) {
-                  intermediateResult33[i33] = new Date(
-                    intermediateValue33[i33],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue33[i33]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult33[i33] = intermediateValue33[i33];
+                  intermediateErrorMap33[`$.${i33}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap33[`$.${i33}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult33[i33]?.getTime() ?? undefined)) {
-                  intermediateErrorMap33[`$.${i33}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue33[i33] === "string" ||
+                    typeof intermediateValue33[i33] === "number"
+                  ) {
+                    intermediateResult33[i33] = new Date(
+                      intermediateValue33[i33],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue33[i33]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult33[i33] = intermediateValue33[i33];
+                  } else {
+                    intermediateErrorMap33[`$.${i33}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult33[i33]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap33[`$.${i33}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -7081,40 +7202,46 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue38 = intermediateValue37;
 
             if (!Array.isArray(intermediateValue38)) {
-              intermediateValue38 = [intermediateValue38];
-            }
-            intermediateResult37 = [];
-            for (let i38 = 0; i38 < intermediateValue38.length; ++i38) {
-              if (
-                intermediateValue38[i38] === null ||
-                intermediateValue38[i38] === undefined
-              ) {
-                intermediateErrorMap38[`$.${i38}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap37[`$`] = {
+                key: "validator.array",
+                value: intermediateValue38,
+              };
+            } else {
+              intermediateResult37 = [];
+              for (let i38 = 0; i38 < intermediateValue38.length; ++i38) {
                 if (
-                  typeof intermediateValue38[i38] === "string" ||
-                  typeof intermediateValue38[i38] === "number"
+                  intermediateValue38[i38] === null ||
+                  intermediateValue38[i38] === undefined
                 ) {
-                  intermediateResult38[i38] = new Date(
-                    intermediateValue38[i38],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue38[i38]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult38[i38] = intermediateValue38[i38];
+                  intermediateErrorMap38[`$.${i38}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap38[`$.${i38}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult38[i38]?.getTime() ?? undefined)) {
-                  intermediateErrorMap38[`$.${i38}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue38[i38] === "string" ||
+                    typeof intermediateValue38[i38] === "number"
+                  ) {
+                    intermediateResult38[i38] = new Date(
+                      intermediateValue38[i38],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue38[i38]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult38[i38] = intermediateValue38[i38];
+                  } else {
+                    intermediateErrorMap38[`$.${i38}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult38[i38]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap38[`$.${i38}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -7205,40 +7332,46 @@ export function validateStoreJobWhereValidated(value) {
             let intermediateValue39 = intermediateValue38;
 
             if (!Array.isArray(intermediateValue39)) {
-              intermediateValue39 = [intermediateValue39];
-            }
-            intermediateResult38 = [];
-            for (let i39 = 0; i39 < intermediateValue39.length; ++i39) {
-              if (
-                intermediateValue39[i39] === null ||
-                intermediateValue39[i39] === undefined
-              ) {
-                intermediateErrorMap39[`$.${i39}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap38[`$`] = {
+                key: "validator.array",
+                value: intermediateValue39,
+              };
+            } else {
+              intermediateResult38 = [];
+              for (let i39 = 0; i39 < intermediateValue39.length; ++i39) {
                 if (
-                  typeof intermediateValue39[i39] === "string" ||
-                  typeof intermediateValue39[i39] === "number"
+                  intermediateValue39[i39] === null ||
+                  intermediateValue39[i39] === undefined
                 ) {
-                  intermediateResult39[i39] = new Date(
-                    intermediateValue39[i39],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue39[i39]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult39[i39] = intermediateValue39[i39];
+                  intermediateErrorMap39[`$.${i39}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap39[`$.${i39}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult39[i39]?.getTime() ?? undefined)) {
-                  intermediateErrorMap39[`$.${i39}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue39[i39] === "string" ||
+                    typeof intermediateValue39[i39] === "number"
+                  ) {
+                    intermediateResult39[i39] = new Date(
+                      intermediateValue39[i39],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue39[i39]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult39[i39] = intermediateValue39[i39];
+                  } else {
+                    intermediateErrorMap39[`$.${i39}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult39[i39]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap39[`$.${i39}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -7362,9 +7495,9 @@ export function validateStoreJobWhereValidated(value) {
 
 /**
  * @param {import("../common/types").StoreJobOrderBy|any} value
- * @returns {Either<import("../common/types").StoreJobOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreJobOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreJobOrderByValidated(value) {
+export function validateStoreJobOrderBy(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -7432,52 +7565,56 @@ export function validateStoreJobOrderByValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "isComplete" &&
-                convertedString3 !== "name" &&
-                convertedString3 !== "scheduledAt" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "isComplete",
-                    "name",
-                    "scheduledAt",
-                    "createdAt",
-                    "updatedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "isComplete" &&
+                  convertedString3 !== "name" &&
+                  convertedString3 !== "scheduledAt" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "isComplete",
+                      "name",
+                      "scheduledAt",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -7844,7 +7981,7 @@ export function validateStoreJobQueryBuilderValidated(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreJobOrderByValidated(value["orderBy"]);
+        const refResult2 = validateStoreJobOrderBy(value["orderBy"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -7939,7 +8076,7 @@ export function validateStoreJobQueryBuilderValidated(value) {
           "updatedAt",
         ];
       } else {
-        const refResult6 = validateStoreJobReturningValidated(value["select"]);
+        const refResult6 = validateStoreJobReturning(value["select"]);
 
         if (refResult6.error) {
           for (const errorKey of Object.keys(refResult6.error)) {
@@ -7959,9 +8096,9 @@ export function validateStoreJobQueryBuilderValidated(value) {
 
 /**
  * @param {import("../common/types").StoreJobReturning|any} value
- * @returns {Either<import("../common/types").StoreJobReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreJobReturning, ValidatorErrorMap>}
  */
-export function validateStoreJobReturningValidated(value) {
+export function validateStoreJobReturning(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -8040,60 +8177,64 @@ export function validateStoreJobReturningValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "isComplete" &&
-                convertedString3 !== "handlerTimeout" &&
-                convertedString3 !== "priority" &&
-                convertedString3 !== "retryCount" &&
-                convertedString3 !== "name" &&
-                convertedString3 !== "scheduledAt" &&
-                convertedString3 !== "data" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "isComplete",
-                    "handlerTimeout",
-                    "priority",
-                    "retryCount",
-                    "name",
-                    "scheduledAt",
-                    "data",
-                    "createdAt",
-                    "updatedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "isComplete" &&
+                  convertedString3 !== "handlerTimeout" &&
+                  convertedString3 !== "priority" &&
+                  convertedString3 !== "retryCount" &&
+                  convertedString3 !== "name" &&
+                  convertedString3 !== "scheduledAt" &&
+                  convertedString3 !== "data" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "isComplete",
+                      "handlerTimeout",
+                      "priority",
+                      "retryCount",
+                      "name",
+                      "scheduledAt",
+                      "data",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -8230,9 +8371,7 @@ export function validateStoreJobInsertValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult2 = validateStoreJobReturningValidated(
-          value["returning"],
-        );
+        const refResult2 = validateStoreJobReturning(value["returning"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -8645,9 +8784,7 @@ export function validateStoreJobUpdateValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreJobReturningValidated(
-          value["returning"],
-        );
+        const refResult3 = validateStoreJobReturning(value["returning"]);
 
         if (refResult3.error) {
           for (const errorKey of Object.keys(refResult3.error)) {
@@ -10635,121 +10772,133 @@ export function validateStoreJobUpdatePartialValidated(value) {
                       intermediateValue9["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue12)) {
-                      intermediateValue12 = [intermediateValue12];
-                    }
-                    intermediateResult9["$set"]["path"] = [];
-                    for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-                      if (
-                        intermediateValue12[i12] === null ||
-                        intermediateValue12[i12] === undefined
+                      intermediateErrorMap9[`$.$set.path`] = {
+                        key: "validator.array",
+                        value: intermediateValue12,
+                      };
+                    } else {
+                      intermediateResult9["$set"]["path"] = [];
+                      for (
+                        let i12 = 0;
+                        i12 < intermediateValue12.length;
+                        ++i12
                       ) {
-                        intermediateErrorMap12[`$.${i12}`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        let hasAnyOfMatch12 = false;
-                        intermediateErrorMap12[`$.${i12}`] = {
-                          key: "validator.anyOf",
-                          errors: [],
-                        };
-                        if (!hasAnyOfMatch12) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap14 = {};
-                          /** @type {any} */
-                          let intermediateResult14 = undefined;
-                          /** @type {any} */
-                          let intermediateValue14 = intermediateValue12[i12];
+                        if (
+                          intermediateValue12[i12] === null ||
+                          intermediateValue12[i12] === undefined
+                        ) {
+                          intermediateErrorMap12[`$.${i12}`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          let hasAnyOfMatch12 = false;
+                          intermediateErrorMap12[`$.${i12}`] = {
+                            key: "validator.anyOf",
+                            errors: [],
+                          };
+                          if (!hasAnyOfMatch12) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap14 = {};
+                            /** @type {any} */
+                            let intermediateResult14 = undefined;
+                            /** @type {any} */
+                            let intermediateValue14 = intermediateValue12[i12];
 
-                          if (
-                            intermediateValue14 === null ||
-                            intermediateValue14 === undefined
-                          ) {
-                            intermediateErrorMap14[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            let convertedNumber14 = intermediateValue14;
                             if (
-                              typeof convertedNumber14 !== "number" &&
-                              typeof convertedNumber14 === "string"
-                            ) {
-                              convertedNumber14 = Number(convertedNumber14);
-                            }
-                            if (
-                              typeof convertedNumber14 !== "number" ||
-                              isNaN(convertedNumber14) ||
-                              !isFinite(convertedNumber14) ||
-                              !Number.isInteger(convertedNumber14)
+                              intermediateValue14 === null ||
+                              intermediateValue14 === undefined
                             ) {
                               intermediateErrorMap14[`$`] = {
-                                key: "validator.number",
-                                subType: "int",
-                              };
-                            } else if (convertedNumber14 < -2147483647) {
-                              intermediateErrorMap14[`$`] = {
-                                key: "validator.range",
-                                minValue: -2147483647,
-                              };
-                            } else if (convertedNumber14 > 2147483647) {
-                              intermediateErrorMap14[`$`] = {
-                                key: "validator.range",
-                                maxValue: 2147483647,
+                                key: "validator.undefined",
                               };
                             } else {
-                              intermediateResult14 = convertedNumber14;
-                            }
-                          }
-                          if (Object.keys(intermediateErrorMap14).length > 0) {
-                            intermediateErrorMap12[`$.${i12}`].errors.push(
-                              intermediateErrorMap14,
-                            );
-                          } else {
-                            hasAnyOfMatch12 = true;
-                            delete intermediateErrorMap12[`$.${i12}`];
-                            intermediateResult12[i12] = intermediateResult14;
-                          }
-                        }
-                        if (!hasAnyOfMatch12) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap14 = {};
-                          /** @type {any} */
-                          let intermediateResult14 = undefined;
-                          /** @type {any} */
-                          let intermediateValue14 = intermediateValue12[i12];
-
-                          if (
-                            intermediateValue14 === null ||
-                            intermediateValue14 === undefined
-                          ) {
-                            intermediateErrorMap14[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString14 = intermediateValue14;
-                            if (typeof convertedString14 !== "string") {
-                              intermediateErrorMap14[`$`] = {
-                                key: "validator.string",
-                              };
-                            } else {
-                              if (convertedString14.length < 1) {
+                              let convertedNumber14 = intermediateValue14;
+                              if (
+                                typeof convertedNumber14 !== "number" &&
+                                typeof convertedNumber14 === "string"
+                              ) {
+                                convertedNumber14 = Number(convertedNumber14);
+                              }
+                              if (
+                                typeof convertedNumber14 !== "number" ||
+                                isNaN(convertedNumber14) ||
+                                !isFinite(convertedNumber14) ||
+                                !Number.isInteger(convertedNumber14)
+                              ) {
                                 intermediateErrorMap14[`$`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.number",
+                                  subType: "int",
+                                };
+                              } else if (convertedNumber14 < -2147483647) {
+                                intermediateErrorMap14[`$`] = {
+                                  key: "validator.range",
+                                  minValue: -2147483647,
+                                };
+                              } else if (convertedNumber14 > 2147483647) {
+                                intermediateErrorMap14[`$`] = {
+                                  key: "validator.range",
+                                  maxValue: 2147483647,
                                 };
                               } else {
-                                intermediateResult14 = convertedString14;
+                                intermediateResult14 = convertedNumber14;
                               }
                             }
+                            if (
+                              Object.keys(intermediateErrorMap14).length > 0
+                            ) {
+                              intermediateErrorMap12[`$.${i12}`].errors.push(
+                                intermediateErrorMap14,
+                              );
+                            } else {
+                              hasAnyOfMatch12 = true;
+                              delete intermediateErrorMap12[`$.${i12}`];
+                              intermediateResult12[i12] = intermediateResult14;
+                            }
                           }
-                          if (Object.keys(intermediateErrorMap14).length > 0) {
-                            intermediateErrorMap12[`$.${i12}`].errors.push(
-                              intermediateErrorMap14,
-                            );
-                          } else {
-                            hasAnyOfMatch12 = true;
-                            delete intermediateErrorMap12[`$.${i12}`];
-                            intermediateResult12[i12] = intermediateResult14;
+                          if (!hasAnyOfMatch12) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap14 = {};
+                            /** @type {any} */
+                            let intermediateResult14 = undefined;
+                            /** @type {any} */
+                            let intermediateValue14 = intermediateValue12[i12];
+
+                            if (
+                              intermediateValue14 === null ||
+                              intermediateValue14 === undefined
+                            ) {
+                              intermediateErrorMap14[`$`] = {
+                                key: "validator.undefined",
+                              };
+                            } else {
+                              /** @type {string} */
+                              let convertedString14 = intermediateValue14;
+                              if (typeof convertedString14 !== "string") {
+                                intermediateErrorMap14[`$`] = {
+                                  key: "validator.string",
+                                };
+                              } else {
+                                if (convertedString14.length < 1) {
+                                  intermediateErrorMap14[`$`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult14 = convertedString14;
+                                }
+                              }
+                            }
+                            if (
+                              Object.keys(intermediateErrorMap14).length > 0
+                            ) {
+                              intermediateErrorMap12[`$.${i12}`].errors.push(
+                                intermediateErrorMap14,
+                              );
+                            } else {
+                              hasAnyOfMatch12 = true;
+                              delete intermediateErrorMap12[`$.${i12}`];
+                              intermediateResult12[i12] = intermediateResult14;
+                            }
                           }
                         }
                       }
@@ -10900,121 +11049,133 @@ export function validateStoreJobUpdatePartialValidated(value) {
                       intermediateValue9["$remove"]["path"];
 
                     if (!Array.isArray(intermediateValue12)) {
-                      intermediateValue12 = [intermediateValue12];
-                    }
-                    intermediateResult9["$remove"]["path"] = [];
-                    for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-                      if (
-                        intermediateValue12[i12] === null ||
-                        intermediateValue12[i12] === undefined
+                      intermediateErrorMap9[`$.$remove.path`] = {
+                        key: "validator.array",
+                        value: intermediateValue12,
+                      };
+                    } else {
+                      intermediateResult9["$remove"]["path"] = [];
+                      for (
+                        let i12 = 0;
+                        i12 < intermediateValue12.length;
+                        ++i12
                       ) {
-                        intermediateErrorMap12[`$.${i12}`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        let hasAnyOfMatch12 = false;
-                        intermediateErrorMap12[`$.${i12}`] = {
-                          key: "validator.anyOf",
-                          errors: [],
-                        };
-                        if (!hasAnyOfMatch12) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap14 = {};
-                          /** @type {any} */
-                          let intermediateResult14 = undefined;
-                          /** @type {any} */
-                          let intermediateValue14 = intermediateValue12[i12];
+                        if (
+                          intermediateValue12[i12] === null ||
+                          intermediateValue12[i12] === undefined
+                        ) {
+                          intermediateErrorMap12[`$.${i12}`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          let hasAnyOfMatch12 = false;
+                          intermediateErrorMap12[`$.${i12}`] = {
+                            key: "validator.anyOf",
+                            errors: [],
+                          };
+                          if (!hasAnyOfMatch12) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap14 = {};
+                            /** @type {any} */
+                            let intermediateResult14 = undefined;
+                            /** @type {any} */
+                            let intermediateValue14 = intermediateValue12[i12];
 
-                          if (
-                            intermediateValue14 === null ||
-                            intermediateValue14 === undefined
-                          ) {
-                            intermediateErrorMap14[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            let convertedNumber14 = intermediateValue14;
                             if (
-                              typeof convertedNumber14 !== "number" &&
-                              typeof convertedNumber14 === "string"
-                            ) {
-                              convertedNumber14 = Number(convertedNumber14);
-                            }
-                            if (
-                              typeof convertedNumber14 !== "number" ||
-                              isNaN(convertedNumber14) ||
-                              !isFinite(convertedNumber14) ||
-                              !Number.isInteger(convertedNumber14)
+                              intermediateValue14 === null ||
+                              intermediateValue14 === undefined
                             ) {
                               intermediateErrorMap14[`$`] = {
-                                key: "validator.number",
-                                subType: "int",
-                              };
-                            } else if (convertedNumber14 < -2147483647) {
-                              intermediateErrorMap14[`$`] = {
-                                key: "validator.range",
-                                minValue: -2147483647,
-                              };
-                            } else if (convertedNumber14 > 2147483647) {
-                              intermediateErrorMap14[`$`] = {
-                                key: "validator.range",
-                                maxValue: 2147483647,
+                                key: "validator.undefined",
                               };
                             } else {
-                              intermediateResult14 = convertedNumber14;
-                            }
-                          }
-                          if (Object.keys(intermediateErrorMap14).length > 0) {
-                            intermediateErrorMap12[`$.${i12}`].errors.push(
-                              intermediateErrorMap14,
-                            );
-                          } else {
-                            hasAnyOfMatch12 = true;
-                            delete intermediateErrorMap12[`$.${i12}`];
-                            intermediateResult12[i12] = intermediateResult14;
-                          }
-                        }
-                        if (!hasAnyOfMatch12) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap14 = {};
-                          /** @type {any} */
-                          let intermediateResult14 = undefined;
-                          /** @type {any} */
-                          let intermediateValue14 = intermediateValue12[i12];
-
-                          if (
-                            intermediateValue14 === null ||
-                            intermediateValue14 === undefined
-                          ) {
-                            intermediateErrorMap14[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString14 = intermediateValue14;
-                            if (typeof convertedString14 !== "string") {
-                              intermediateErrorMap14[`$`] = {
-                                key: "validator.string",
-                              };
-                            } else {
-                              if (convertedString14.length < 1) {
+                              let convertedNumber14 = intermediateValue14;
+                              if (
+                                typeof convertedNumber14 !== "number" &&
+                                typeof convertedNumber14 === "string"
+                              ) {
+                                convertedNumber14 = Number(convertedNumber14);
+                              }
+                              if (
+                                typeof convertedNumber14 !== "number" ||
+                                isNaN(convertedNumber14) ||
+                                !isFinite(convertedNumber14) ||
+                                !Number.isInteger(convertedNumber14)
+                              ) {
                                 intermediateErrorMap14[`$`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.number",
+                                  subType: "int",
+                                };
+                              } else if (convertedNumber14 < -2147483647) {
+                                intermediateErrorMap14[`$`] = {
+                                  key: "validator.range",
+                                  minValue: -2147483647,
+                                };
+                              } else if (convertedNumber14 > 2147483647) {
+                                intermediateErrorMap14[`$`] = {
+                                  key: "validator.range",
+                                  maxValue: 2147483647,
                                 };
                               } else {
-                                intermediateResult14 = convertedString14;
+                                intermediateResult14 = convertedNumber14;
                               }
                             }
+                            if (
+                              Object.keys(intermediateErrorMap14).length > 0
+                            ) {
+                              intermediateErrorMap12[`$.${i12}`].errors.push(
+                                intermediateErrorMap14,
+                              );
+                            } else {
+                              hasAnyOfMatch12 = true;
+                              delete intermediateErrorMap12[`$.${i12}`];
+                              intermediateResult12[i12] = intermediateResult14;
+                            }
                           }
-                          if (Object.keys(intermediateErrorMap14).length > 0) {
-                            intermediateErrorMap12[`$.${i12}`].errors.push(
-                              intermediateErrorMap14,
-                            );
-                          } else {
-                            hasAnyOfMatch12 = true;
-                            delete intermediateErrorMap12[`$.${i12}`];
-                            intermediateResult12[i12] = intermediateResult14;
+                          if (!hasAnyOfMatch12) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap14 = {};
+                            /** @type {any} */
+                            let intermediateResult14 = undefined;
+                            /** @type {any} */
+                            let intermediateValue14 = intermediateValue12[i12];
+
+                            if (
+                              intermediateValue14 === null ||
+                              intermediateValue14 === undefined
+                            ) {
+                              intermediateErrorMap14[`$`] = {
+                                key: "validator.undefined",
+                              };
+                            } else {
+                              /** @type {string} */
+                              let convertedString14 = intermediateValue14;
+                              if (typeof convertedString14 !== "string") {
+                                intermediateErrorMap14[`$`] = {
+                                  key: "validator.string",
+                                };
+                              } else {
+                                if (convertedString14.length < 1) {
+                                  intermediateErrorMap14[`$`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult14 = convertedString14;
+                                }
+                              }
+                            }
+                            if (
+                              Object.keys(intermediateErrorMap14).length > 0
+                            ) {
+                              intermediateErrorMap12[`$.${i12}`].errors.push(
+                                intermediateErrorMap14,
+                              );
+                            } else {
+                              hasAnyOfMatch12 = true;
+                              delete intermediateErrorMap12[`$.${i12}`];
+                              intermediateResult12[i12] = intermediateResult14;
+                            }
                           }
                         }
                       }
@@ -11804,29 +11965,33 @@ export function validateStoreSessionStoreWhereValidated(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreSessionStoreWhereValidated(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreSessionStoreWhereValidated(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -11925,42 +12090,46 @@ export function validateStoreSessionStoreWhereValidated(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof intermediateValue8[i8] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue8[i8],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue8[i8].length === 32) {
-                  intermediateResult8[i8] =
-                    intermediateValue8[i8].slice(0, 8) +
-                    "-" +
-                    intermediateValue8[i8].slice(8, 12) +
-                    "-" +
-                    intermediateValue8[i8].slice(12, 16) +
-                    "-" +
-                    intermediateValue8[i8].slice(16, 20) +
-                    "-" +
-                    intermediateValue8[i8].slice(20);
                 } else {
-                  intermediateResult8[i8] = intermediateValue8[i8];
+                  if (
+                    typeof intermediateValue8[i8] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue8[i8],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue8[i8].length === 32) {
+                    intermediateResult8[i8] =
+                      intermediateValue8[i8].slice(0, 8) +
+                      "-" +
+                      intermediateValue8[i8].slice(8, 12) +
+                      "-" +
+                      intermediateValue8[i8].slice(12, 16) +
+                      "-" +
+                      intermediateValue8[i8].slice(16, 20) +
+                      "-" +
+                      intermediateValue8[i8].slice(20);
+                  } else {
+                    intermediateResult8[i8] = intermediateValue8[i8];
+                  }
                 }
               }
             }
@@ -12042,42 +12211,46 @@ export function validateStoreSessionStoreWhereValidated(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof intermediateValue9[i9] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue9[i9],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue9[i9].length === 32) {
-                  intermediateResult9[i9] =
-                    intermediateValue9[i9].slice(0, 8) +
-                    "-" +
-                    intermediateValue9[i9].slice(8, 12) +
-                    "-" +
-                    intermediateValue9[i9].slice(12, 16) +
-                    "-" +
-                    intermediateValue9[i9].slice(16, 20) +
-                    "-" +
-                    intermediateValue9[i9].slice(20);
                 } else {
-                  intermediateResult9[i9] = intermediateValue9[i9];
+                  if (
+                    typeof intermediateValue9[i9] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue9[i9],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue9[i9].length === 32) {
+                    intermediateResult9[i9] =
+                      intermediateValue9[i9].slice(0, 8) +
+                      "-" +
+                      intermediateValue9[i9].slice(8, 12) +
+                      "-" +
+                      intermediateValue9[i9].slice(12, 16) +
+                      "-" +
+                      intermediateValue9[i9].slice(16, 20) +
+                      "-" +
+                      intermediateValue9[i9].slice(20);
+                  } else {
+                    intermediateResult9[i9] = intermediateValue9[i9];
+                  }
                 }
               }
             }
@@ -12214,40 +12387,46 @@ export function validateStoreSessionStoreWhereValidated(value) {
             let intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
-              intermediateValue12 = [intermediateValue12];
-            }
-            intermediateResult11 = [];
-            for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-              if (
-                intermediateValue12[i12] === null ||
-                intermediateValue12[i12] === undefined
-              ) {
-                intermediateErrorMap12[`$.${i12}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap11[`$`] = {
+                key: "validator.array",
+                value: intermediateValue12,
+              };
+            } else {
+              intermediateResult11 = [];
+              for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
                 if (
-                  typeof intermediateValue12[i12] === "string" ||
-                  typeof intermediateValue12[i12] === "number"
+                  intermediateValue12[i12] === null ||
+                  intermediateValue12[i12] === undefined
                 ) {
-                  intermediateResult12[i12] = new Date(
-                    intermediateValue12[i12],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue12[i12]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult12[i12] = intermediateValue12[i12];
+                  intermediateErrorMap12[`$.${i12}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult12[i12]?.getTime() ?? undefined)) {
-                  intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue12[i12] === "string" ||
+                    typeof intermediateValue12[i12] === "number"
+                  ) {
+                    intermediateResult12[i12] = new Date(
+                      intermediateValue12[i12],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue12[i12]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult12[i12] = intermediateValue12[i12];
+                  } else {
+                    intermediateErrorMap12[`$.${i12}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult12[i12]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap12[`$.${i12}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -12338,40 +12517,46 @@ export function validateStoreSessionStoreWhereValidated(value) {
             let intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
-              intermediateValue13 = [intermediateValue13];
-            }
-            intermediateResult12 = [];
-            for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-              if (
-                intermediateValue13[i13] === null ||
-                intermediateValue13[i13] === undefined
-              ) {
-                intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap12[`$`] = {
+                key: "validator.array",
+                value: intermediateValue13,
+              };
+            } else {
+              intermediateResult12 = [];
+              for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
                 if (
-                  typeof intermediateValue13[i13] === "string" ||
-                  typeof intermediateValue13[i13] === "number"
+                  intermediateValue13[i13] === null ||
+                  intermediateValue13[i13] === undefined
                 ) {
-                  intermediateResult13[i13] = new Date(
-                    intermediateValue13[i13],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue13[i13]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult13[i13] = intermediateValue13[i13];
+                  intermediateErrorMap13[`$.${i13}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult13[i13]?.getTime() ?? undefined)) {
-                  intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue13[i13] === "string" ||
+                    typeof intermediateValue13[i13] === "number"
+                  ) {
+                    intermediateResult13[i13] = new Date(
+                      intermediateValue13[i13],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue13[i13]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult13[i13] = intermediateValue13[i13];
+                  } else {
+                    intermediateErrorMap13[`$.${i13}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult13[i13]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap13[`$.${i13}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -12569,40 +12754,46 @@ export function validateStoreSessionStoreWhereValidated(value) {
             let intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
-              intermediateValue18 = [intermediateValue18];
-            }
-            intermediateResult17 = [];
-            for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
-              if (
-                intermediateValue18[i18] === null ||
-                intermediateValue18[i18] === undefined
-              ) {
-                intermediateErrorMap18[`$.${i18}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap17[`$`] = {
+                key: "validator.array",
+                value: intermediateValue18,
+              };
+            } else {
+              intermediateResult17 = [];
+              for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
                 if (
-                  typeof intermediateValue18[i18] === "string" ||
-                  typeof intermediateValue18[i18] === "number"
+                  intermediateValue18[i18] === null ||
+                  intermediateValue18[i18] === undefined
                 ) {
-                  intermediateResult18[i18] = new Date(
-                    intermediateValue18[i18],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue18[i18]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult18[i18] = intermediateValue18[i18];
+                  intermediateErrorMap18[`$.${i18}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap18[`$.${i18}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult18[i18]?.getTime() ?? undefined)) {
-                  intermediateErrorMap18[`$.${i18}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue18[i18] === "string" ||
+                    typeof intermediateValue18[i18] === "number"
+                  ) {
+                    intermediateResult18[i18] = new Date(
+                      intermediateValue18[i18],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue18[i18]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult18[i18] = intermediateValue18[i18];
+                  } else {
+                    intermediateErrorMap18[`$.${i18}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult18[i18]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap18[`$.${i18}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -12693,40 +12884,46 @@ export function validateStoreSessionStoreWhereValidated(value) {
             let intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
-              intermediateValue19 = [intermediateValue19];
-            }
-            intermediateResult18 = [];
-            for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
-              if (
-                intermediateValue19[i19] === null ||
-                intermediateValue19[i19] === undefined
-              ) {
-                intermediateErrorMap19[`$.${i19}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap18[`$`] = {
+                key: "validator.array",
+                value: intermediateValue19,
+              };
+            } else {
+              intermediateResult18 = [];
+              for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
                 if (
-                  typeof intermediateValue19[i19] === "string" ||
-                  typeof intermediateValue19[i19] === "number"
+                  intermediateValue19[i19] === null ||
+                  intermediateValue19[i19] === undefined
                 ) {
-                  intermediateResult19[i19] = new Date(
-                    intermediateValue19[i19],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue19[i19]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult19[i19] = intermediateValue19[i19];
+                  intermediateErrorMap19[`$.${i19}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult19[i19]?.getTime() ?? undefined)) {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue19[i19] === "string" ||
+                    typeof intermediateValue19[i19] === "number"
+                  ) {
+                    intermediateResult19[i19] = new Date(
+                      intermediateValue19[i19],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue19[i19]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult19[i19] = intermediateValue19[i19];
+                  } else {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult19[i19]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -13093,29 +13290,33 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreSessionStoreTokenWhereValidated(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreSessionStoreTokenWhereValidated(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -13214,42 +13415,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof intermediateValue8[i8] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue8[i8],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue8[i8].length === 32) {
-                  intermediateResult8[i8] =
-                    intermediateValue8[i8].slice(0, 8) +
-                    "-" +
-                    intermediateValue8[i8].slice(8, 12) +
-                    "-" +
-                    intermediateValue8[i8].slice(12, 16) +
-                    "-" +
-                    intermediateValue8[i8].slice(16, 20) +
-                    "-" +
-                    intermediateValue8[i8].slice(20);
                 } else {
-                  intermediateResult8[i8] = intermediateValue8[i8];
+                  if (
+                    typeof intermediateValue8[i8] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue8[i8],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue8[i8].length === 32) {
+                    intermediateResult8[i8] =
+                      intermediateValue8[i8].slice(0, 8) +
+                      "-" +
+                      intermediateValue8[i8].slice(8, 12) +
+                      "-" +
+                      intermediateValue8[i8].slice(12, 16) +
+                      "-" +
+                      intermediateValue8[i8].slice(16, 20) +
+                      "-" +
+                      intermediateValue8[i8].slice(20);
+                  } else {
+                    intermediateResult8[i8] = intermediateValue8[i8];
+                  }
                 }
               }
             }
@@ -13331,42 +13536,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof intermediateValue9[i9] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue9[i9],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue9[i9].length === 32) {
-                  intermediateResult9[i9] =
-                    intermediateValue9[i9].slice(0, 8) +
-                    "-" +
-                    intermediateValue9[i9].slice(8, 12) +
-                    "-" +
-                    intermediateValue9[i9].slice(12, 16) +
-                    "-" +
-                    intermediateValue9[i9].slice(16, 20) +
-                    "-" +
-                    intermediateValue9[i9].slice(20);
                 } else {
-                  intermediateResult9[i9] = intermediateValue9[i9];
+                  if (
+                    typeof intermediateValue9[i9] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue9[i9],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue9[i9].length === 32) {
+                    intermediateResult9[i9] =
+                      intermediateValue9[i9].slice(0, 8) +
+                      "-" +
+                      intermediateValue9[i9].slice(8, 12) +
+                      "-" +
+                      intermediateValue9[i9].slice(12, 16) +
+                      "-" +
+                      intermediateValue9[i9].slice(16, 20) +
+                      "-" +
+                      intermediateValue9[i9].slice(20);
+                  } else {
+                    intermediateResult9[i9] = intermediateValue9[i9];
+                  }
                 }
               }
             }
@@ -13512,42 +13721,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
-              intermediateValue12 = [intermediateValue12];
-            }
-            intermediateResult11 = [];
-            for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-              if (
-                intermediateValue12[i12] === null ||
-                intermediateValue12[i12] === undefined
-              ) {
-                intermediateErrorMap12[`$.${i12}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap11[`$`] = {
+                key: "validator.array",
+                value: intermediateValue12,
+              };
+            } else {
+              intermediateResult11 = [];
+              for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
                 if (
-                  typeof intermediateValue12[i12] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue12[i12],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue12[i12]))
+                  intermediateValue12[i12] === null ||
+                  intermediateValue12[i12] === undefined
                 ) {
                   intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue12[i12].length === 32) {
-                  intermediateResult12[i12] =
-                    intermediateValue12[i12].slice(0, 8) +
-                    "-" +
-                    intermediateValue12[i12].slice(8, 12) +
-                    "-" +
-                    intermediateValue12[i12].slice(12, 16) +
-                    "-" +
-                    intermediateValue12[i12].slice(16, 20) +
-                    "-" +
-                    intermediateValue12[i12].slice(20);
                 } else {
-                  intermediateResult12[i12] = intermediateValue12[i12];
+                  if (
+                    typeof intermediateValue12[i12] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue12[i12],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue12[i12]))
+                  ) {
+                    intermediateErrorMap12[`$.${i12}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue12[i12].length === 32) {
+                    intermediateResult12[i12] =
+                      intermediateValue12[i12].slice(0, 8) +
+                      "-" +
+                      intermediateValue12[i12].slice(8, 12) +
+                      "-" +
+                      intermediateValue12[i12].slice(12, 16) +
+                      "-" +
+                      intermediateValue12[i12].slice(16, 20) +
+                      "-" +
+                      intermediateValue12[i12].slice(20);
+                  } else {
+                    intermediateResult12[i12] = intermediateValue12[i12];
+                  }
                 }
               }
             }
@@ -13638,42 +13851,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
-              intermediateValue13 = [intermediateValue13];
-            }
-            intermediateResult12 = [];
-            for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-              if (
-                intermediateValue13[i13] === null ||
-                intermediateValue13[i13] === undefined
-              ) {
-                intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap12[`$`] = {
+                key: "validator.array",
+                value: intermediateValue13,
+              };
+            } else {
+              intermediateResult12 = [];
+              for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
                 if (
-                  typeof intermediateValue13[i13] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue13[i13],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue13[i13]))
+                  intermediateValue13[i13] === null ||
+                  intermediateValue13[i13] === undefined
                 ) {
                   intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue13[i13].length === 32) {
-                  intermediateResult13[i13] =
-                    intermediateValue13[i13].slice(0, 8) +
-                    "-" +
-                    intermediateValue13[i13].slice(8, 12) +
-                    "-" +
-                    intermediateValue13[i13].slice(12, 16) +
-                    "-" +
-                    intermediateValue13[i13].slice(16, 20) +
-                    "-" +
-                    intermediateValue13[i13].slice(20);
                 } else {
-                  intermediateResult13[i13] = intermediateValue13[i13];
+                  if (
+                    typeof intermediateValue13[i13] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue13[i13],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue13[i13]))
+                  ) {
+                    intermediateErrorMap13[`$.${i13}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue13[i13].length === 32) {
+                    intermediateResult13[i13] =
+                      intermediateValue13[i13].slice(0, 8) +
+                      "-" +
+                      intermediateValue13[i13].slice(8, 12) +
+                      "-" +
+                      intermediateValue13[i13].slice(12, 16) +
+                      "-" +
+                      intermediateValue13[i13].slice(16, 20) +
+                      "-" +
+                      intermediateValue13[i13].slice(20);
+                  } else {
+                    intermediateResult13[i13] = intermediateValue13[i13];
+                  }
                 }
               }
             }
@@ -13813,40 +14030,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue16 = intermediateValue15;
 
             if (!Array.isArray(intermediateValue16)) {
-              intermediateValue16 = [intermediateValue16];
-            }
-            intermediateResult15 = [];
-            for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
-              if (
-                intermediateValue16[i16] === null ||
-                intermediateValue16[i16] === undefined
-              ) {
-                intermediateErrorMap16[`$.${i16}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap15[`$`] = {
+                key: "validator.array",
+                value: intermediateValue16,
+              };
+            } else {
+              intermediateResult15 = [];
+              for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
                 if (
-                  typeof intermediateValue16[i16] === "string" ||
-                  typeof intermediateValue16[i16] === "number"
+                  intermediateValue16[i16] === null ||
+                  intermediateValue16[i16] === undefined
                 ) {
-                  intermediateResult16[i16] = new Date(
-                    intermediateValue16[i16],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue16[i16]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult16[i16] = intermediateValue16[i16];
+                  intermediateErrorMap16[`$.${i16}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap16[`$.${i16}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult16[i16]?.getTime() ?? undefined)) {
-                  intermediateErrorMap16[`$.${i16}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue16[i16] === "string" ||
+                    typeof intermediateValue16[i16] === "number"
+                  ) {
+                    intermediateResult16[i16] = new Date(
+                      intermediateValue16[i16],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue16[i16]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult16[i16] = intermediateValue16[i16];
+                  } else {
+                    intermediateErrorMap16[`$.${i16}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult16[i16]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap16[`$.${i16}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -13937,40 +14160,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
-              intermediateValue17 = [intermediateValue17];
-            }
-            intermediateResult16 = [];
-            for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-              if (
-                intermediateValue17[i17] === null ||
-                intermediateValue17[i17] === undefined
-              ) {
-                intermediateErrorMap17[`$.${i17}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap16[`$`] = {
+                key: "validator.array",
+                value: intermediateValue17,
+              };
+            } else {
+              intermediateResult16 = [];
+              for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
                 if (
-                  typeof intermediateValue17[i17] === "string" ||
-                  typeof intermediateValue17[i17] === "number"
+                  intermediateValue17[i17] === null ||
+                  intermediateValue17[i17] === undefined
                 ) {
-                  intermediateResult17[i17] = new Date(
-                    intermediateValue17[i17],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue17[i17]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult17[i17] = intermediateValue17[i17];
+                  intermediateErrorMap17[`$.${i17}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult17[i17]?.getTime() ?? undefined)) {
-                  intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue17[i17] === "string" ||
+                    typeof intermediateValue17[i17] === "number"
+                  ) {
+                    intermediateResult17[i17] = new Date(
+                      intermediateValue17[i17],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue17[i17]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult17[i17] = intermediateValue17[i17];
+                  } else {
+                    intermediateErrorMap17[`$.${i17}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult17[i17]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap17[`$.${i17}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -14183,42 +14412,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue22 = intermediateValue21;
 
             if (!Array.isArray(intermediateValue22)) {
-              intermediateValue22 = [intermediateValue22];
-            }
-            intermediateResult21 = [];
-            for (let i22 = 0; i22 < intermediateValue22.length; ++i22) {
-              if (
-                intermediateValue22[i22] === null ||
-                intermediateValue22[i22] === undefined
-              ) {
-                intermediateErrorMap22[`$.${i22}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap21[`$`] = {
+                key: "validator.array",
+                value: intermediateValue22,
+              };
+            } else {
+              intermediateResult21 = [];
+              for (let i22 = 0; i22 < intermediateValue22.length; ++i22) {
                 if (
-                  typeof intermediateValue22[i22] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue22[i22],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue22[i22]))
+                  intermediateValue22[i22] === null ||
+                  intermediateValue22[i22] === undefined
                 ) {
                   intermediateErrorMap22[`$.${i22}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue22[i22].length === 32) {
-                  intermediateResult22[i22] =
-                    intermediateValue22[i22].slice(0, 8) +
-                    "-" +
-                    intermediateValue22[i22].slice(8, 12) +
-                    "-" +
-                    intermediateValue22[i22].slice(12, 16) +
-                    "-" +
-                    intermediateValue22[i22].slice(16, 20) +
-                    "-" +
-                    intermediateValue22[i22].slice(20);
                 } else {
-                  intermediateResult22[i22] = intermediateValue22[i22];
+                  if (
+                    typeof intermediateValue22[i22] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue22[i22],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue22[i22]))
+                  ) {
+                    intermediateErrorMap22[`$.${i22}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue22[i22].length === 32) {
+                    intermediateResult22[i22] =
+                      intermediateValue22[i22].slice(0, 8) +
+                      "-" +
+                      intermediateValue22[i22].slice(8, 12) +
+                      "-" +
+                      intermediateValue22[i22].slice(12, 16) +
+                      "-" +
+                      intermediateValue22[i22].slice(16, 20) +
+                      "-" +
+                      intermediateValue22[i22].slice(20);
+                  } else {
+                    intermediateResult22[i22] = intermediateValue22[i22];
+                  }
                 }
               }
             }
@@ -14309,42 +14542,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue23 = intermediateValue22;
 
             if (!Array.isArray(intermediateValue23)) {
-              intermediateValue23 = [intermediateValue23];
-            }
-            intermediateResult22 = [];
-            for (let i23 = 0; i23 < intermediateValue23.length; ++i23) {
-              if (
-                intermediateValue23[i23] === null ||
-                intermediateValue23[i23] === undefined
-              ) {
-                intermediateErrorMap23[`$.${i23}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap22[`$`] = {
+                key: "validator.array",
+                value: intermediateValue23,
+              };
+            } else {
+              intermediateResult22 = [];
+              for (let i23 = 0; i23 < intermediateValue23.length; ++i23) {
                 if (
-                  typeof intermediateValue23[i23] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue23[i23],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue23[i23]))
+                  intermediateValue23[i23] === null ||
+                  intermediateValue23[i23] === undefined
                 ) {
                   intermediateErrorMap23[`$.${i23}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue23[i23].length === 32) {
-                  intermediateResult23[i23] =
-                    intermediateValue23[i23].slice(0, 8) +
-                    "-" +
-                    intermediateValue23[i23].slice(8, 12) +
-                    "-" +
-                    intermediateValue23[i23].slice(12, 16) +
-                    "-" +
-                    intermediateValue23[i23].slice(16, 20) +
-                    "-" +
-                    intermediateValue23[i23].slice(20);
                 } else {
-                  intermediateResult23[i23] = intermediateValue23[i23];
+                  if (
+                    typeof intermediateValue23[i23] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue23[i23],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue23[i23]))
+                  ) {
+                    intermediateErrorMap23[`$.${i23}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue23[i23].length === 32) {
+                    intermediateResult23[i23] =
+                      intermediateValue23[i23].slice(0, 8) +
+                      "-" +
+                      intermediateValue23[i23].slice(8, 12) +
+                      "-" +
+                      intermediateValue23[i23].slice(12, 16) +
+                      "-" +
+                      intermediateValue23[i23].slice(16, 20) +
+                      "-" +
+                      intermediateValue23[i23].slice(20);
+                  } else {
+                    intermediateResult23[i23] = intermediateValue23[i23];
+                  }
                 }
               }
             }
@@ -14538,40 +14775,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue28 = intermediateValue27;
 
             if (!Array.isArray(intermediateValue28)) {
-              intermediateValue28 = [intermediateValue28];
-            }
-            intermediateResult27 = [];
-            for (let i28 = 0; i28 < intermediateValue28.length; ++i28) {
-              if (
-                intermediateValue28[i28] === null ||
-                intermediateValue28[i28] === undefined
-              ) {
-                intermediateErrorMap28[`$.${i28}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap27[`$`] = {
+                key: "validator.array",
+                value: intermediateValue28,
+              };
+            } else {
+              intermediateResult27 = [];
+              for (let i28 = 0; i28 < intermediateValue28.length; ++i28) {
                 if (
-                  typeof intermediateValue28[i28] === "string" ||
-                  typeof intermediateValue28[i28] === "number"
+                  intermediateValue28[i28] === null ||
+                  intermediateValue28[i28] === undefined
                 ) {
-                  intermediateResult28[i28] = new Date(
-                    intermediateValue28[i28],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue28[i28]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult28[i28] = intermediateValue28[i28];
+                  intermediateErrorMap28[`$.${i28}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap28[`$.${i28}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult28[i28]?.getTime() ?? undefined)) {
-                  intermediateErrorMap28[`$.${i28}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue28[i28] === "string" ||
+                    typeof intermediateValue28[i28] === "number"
+                  ) {
+                    intermediateResult28[i28] = new Date(
+                      intermediateValue28[i28],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue28[i28]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult28[i28] = intermediateValue28[i28];
+                  } else {
+                    intermediateErrorMap28[`$.${i28}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult28[i28]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap28[`$.${i28}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -14662,40 +14905,46 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             let intermediateValue29 = intermediateValue28;
 
             if (!Array.isArray(intermediateValue29)) {
-              intermediateValue29 = [intermediateValue29];
-            }
-            intermediateResult28 = [];
-            for (let i29 = 0; i29 < intermediateValue29.length; ++i29) {
-              if (
-                intermediateValue29[i29] === null ||
-                intermediateValue29[i29] === undefined
-              ) {
-                intermediateErrorMap29[`$.${i29}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap28[`$`] = {
+                key: "validator.array",
+                value: intermediateValue29,
+              };
+            } else {
+              intermediateResult28 = [];
+              for (let i29 = 0; i29 < intermediateValue29.length; ++i29) {
                 if (
-                  typeof intermediateValue29[i29] === "string" ||
-                  typeof intermediateValue29[i29] === "number"
+                  intermediateValue29[i29] === null ||
+                  intermediateValue29[i29] === undefined
                 ) {
-                  intermediateResult29[i29] = new Date(
-                    intermediateValue29[i29],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue29[i29]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult29[i29] = intermediateValue29[i29];
+                  intermediateErrorMap29[`$.${i29}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap29[`$.${i29}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult29[i29]?.getTime() ?? undefined)) {
-                  intermediateErrorMap29[`$.${i29}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue29[i29] === "string" ||
+                    typeof intermediateValue29[i29] === "number"
+                  ) {
+                    intermediateResult29[i29] = new Date(
+                      intermediateValue29[i29],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue29[i29]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult29[i29] = intermediateValue29[i29];
+                  } else {
+                    intermediateErrorMap29[`$.${i29}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult29[i29]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap29[`$.${i29}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -15260,9 +15509,9 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
 
 /**
  * @param {import("../common/types").StoreSessionStoreOrderBy|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreOrderByValidated(value) {
+export function validateStoreSessionStoreOrderBy(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15330,42 +15579,46 @@ export function validateStoreSessionStoreOrderByValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: ["id", "createdAt", "updatedAt"],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: ["id", "createdAt", "updatedAt"],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -15615,9 +15868,7 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreSessionStoreOrderByValidated(
-          value["orderBy"],
-        );
+        const refResult2 = validateStoreSessionStoreOrderBy(value["orderBy"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -15710,9 +15961,7 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
           "updatedAt",
         ];
       } else {
-        const refResult6 = validateStoreSessionStoreReturningValidated(
-          value["select"],
-        );
+        const refResult6 = validateStoreSessionStoreReturning(value["select"]);
 
         if (refResult6.error) {
           for (const errorKey of Object.keys(refResult6.error)) {
@@ -15750,9 +15999,9 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
 
 /**
  * @param {import("../common/types").StoreSessionStoreReturning|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreReturning, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreReturningValidated(value) {
+export function validateStoreSessionStoreReturning(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -15831,52 +16080,56 @@ export function validateStoreSessionStoreReturningValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "checksum" &&
-                convertedString3 !== "revokedAt" &&
-                convertedString3 !== "data" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "checksum",
-                    "revokedAt",
-                    "data",
-                    "createdAt",
-                    "updatedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "checksum" &&
+                  convertedString3 !== "revokedAt" &&
+                  convertedString3 !== "data" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "checksum",
+                      "revokedAt",
+                      "data",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -15977,7 +16230,7 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreSessionStoreTokenOrderByValidated(
+        const refResult2 = validateStoreSessionStoreTokenOrderBy(
           value["orderBy"],
         );
 
@@ -16072,7 +16325,7 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
           "createdAt",
         ];
       } else {
-        const refResult6 = validateStoreSessionStoreTokenReturningValidated(
+        const refResult6 = validateStoreSessionStoreTokenReturning(
           value["select"],
         );
 
@@ -16142,9 +16395,9 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
 
 /**
  * @param {import("../common/types").StoreSessionStoreTokenOrderBy|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenOrderByValidated(value) {
+export function validateStoreSessionStoreTokenOrderBy(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -16212,50 +16465,54 @@ export function validateStoreSessionStoreTokenOrderByValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "session" &&
-                convertedString3 !== "expiresAt" &&
-                convertedString3 !== "refreshToken" &&
-                convertedString3 !== "revokedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "session",
-                    "expiresAt",
-                    "refreshToken",
-                    "revokedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "session" &&
+                  convertedString3 !== "expiresAt" &&
+                  convertedString3 !== "refreshToken" &&
+                  convertedString3 !== "revokedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "session",
+                      "expiresAt",
+                      "refreshToken",
+                      "revokedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -16526,9 +16783,9 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
 
 /**
  * @param {import("../common/types").StoreSessionStoreTokenReturning|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenReturning, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenReturningValidated(value) {
+export function validateStoreSessionStoreTokenReturning(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -16607,52 +16864,56 @@ export function validateStoreSessionStoreTokenReturningValidated(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "session" &&
-                convertedString3 !== "expiresAt" &&
-                convertedString3 !== "refreshToken" &&
-                convertedString3 !== "revokedAt" &&
-                convertedString3 !== "createdAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "session",
-                    "expiresAt",
-                    "refreshToken",
-                    "revokedAt",
-                    "createdAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "session" &&
+                  convertedString3 !== "expiresAt" &&
+                  convertedString3 !== "refreshToken" &&
+                  convertedString3 !== "revokedAt" &&
+                  convertedString3 !== "createdAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "session",
+                      "expiresAt",
+                      "refreshToken",
+                      "revokedAt",
+                      "createdAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -16789,7 +17050,7 @@ export function validateStoreSessionStoreInsertValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult2 = validateStoreSessionStoreReturningValidated(
+        const refResult2 = validateStoreSessionStoreReturning(
           value["returning"],
         );
 
@@ -17077,7 +17338,7 @@ export function validateStoreSessionStoreUpdateValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreSessionStoreReturningValidated(
+        const refResult3 = validateStoreSessionStoreReturning(
           value["returning"],
         );
 
@@ -17605,121 +17866,129 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                     let intermediateValue8 = intermediateValue5["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue8)) {
-                      intermediateValue8 = [intermediateValue8];
-                    }
-                    intermediateResult5["$set"]["path"] = [];
-                    for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-                      if (
-                        intermediateValue8[i8] === null ||
-                        intermediateValue8[i8] === undefined
-                      ) {
-                        intermediateErrorMap8[`$.${i8}`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        let hasAnyOfMatch8 = false;
-                        intermediateErrorMap8[`$.${i8}`] = {
-                          key: "validator.anyOf",
-                          errors: [],
-                        };
-                        if (!hasAnyOfMatch8) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap10 = {};
-                          /** @type {any} */
-                          let intermediateResult10 = undefined;
-                          /** @type {any} */
-                          let intermediateValue10 = intermediateValue8[i8];
+                      intermediateErrorMap5[`$.$set.path`] = {
+                        key: "validator.array",
+                        value: intermediateValue8,
+                      };
+                    } else {
+                      intermediateResult5["$set"]["path"] = [];
+                      for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
+                        if (
+                          intermediateValue8[i8] === null ||
+                          intermediateValue8[i8] === undefined
+                        ) {
+                          intermediateErrorMap8[`$.${i8}`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          let hasAnyOfMatch8 = false;
+                          intermediateErrorMap8[`$.${i8}`] = {
+                            key: "validator.anyOf",
+                            errors: [],
+                          };
+                          if (!hasAnyOfMatch8) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap10 = {};
+                            /** @type {any} */
+                            let intermediateResult10 = undefined;
+                            /** @type {any} */
+                            let intermediateValue10 = intermediateValue8[i8];
 
-                          if (
-                            intermediateValue10 === null ||
-                            intermediateValue10 === undefined
-                          ) {
-                            intermediateErrorMap10[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            let convertedNumber10 = intermediateValue10;
                             if (
-                              typeof convertedNumber10 !== "number" &&
-                              typeof convertedNumber10 === "string"
-                            ) {
-                              convertedNumber10 = Number(convertedNumber10);
-                            }
-                            if (
-                              typeof convertedNumber10 !== "number" ||
-                              isNaN(convertedNumber10) ||
-                              !isFinite(convertedNumber10) ||
-                              !Number.isInteger(convertedNumber10)
+                              intermediateValue10 === null ||
+                              intermediateValue10 === undefined
                             ) {
                               intermediateErrorMap10[`$`] = {
-                                key: "validator.number",
-                                subType: "int",
-                              };
-                            } else if (convertedNumber10 < -2147483647) {
-                              intermediateErrorMap10[`$`] = {
-                                key: "validator.range",
-                                minValue: -2147483647,
-                              };
-                            } else if (convertedNumber10 > 2147483647) {
-                              intermediateErrorMap10[`$`] = {
-                                key: "validator.range",
-                                maxValue: 2147483647,
+                                key: "validator.undefined",
                               };
                             } else {
-                              intermediateResult10 = convertedNumber10;
-                            }
-                          }
-                          if (Object.keys(intermediateErrorMap10).length > 0) {
-                            intermediateErrorMap8[`$.${i8}`].errors.push(
-                              intermediateErrorMap10,
-                            );
-                          } else {
-                            hasAnyOfMatch8 = true;
-                            delete intermediateErrorMap8[`$.${i8}`];
-                            intermediateResult8[i8] = intermediateResult10;
-                          }
-                        }
-                        if (!hasAnyOfMatch8) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap10 = {};
-                          /** @type {any} */
-                          let intermediateResult10 = undefined;
-                          /** @type {any} */
-                          let intermediateValue10 = intermediateValue8[i8];
-
-                          if (
-                            intermediateValue10 === null ||
-                            intermediateValue10 === undefined
-                          ) {
-                            intermediateErrorMap10[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString10 = intermediateValue10;
-                            if (typeof convertedString10 !== "string") {
-                              intermediateErrorMap10[`$`] = {
-                                key: "validator.string",
-                              };
-                            } else {
-                              if (convertedString10.length < 1) {
+                              let convertedNumber10 = intermediateValue10;
+                              if (
+                                typeof convertedNumber10 !== "number" &&
+                                typeof convertedNumber10 === "string"
+                              ) {
+                                convertedNumber10 = Number(convertedNumber10);
+                              }
+                              if (
+                                typeof convertedNumber10 !== "number" ||
+                                isNaN(convertedNumber10) ||
+                                !isFinite(convertedNumber10) ||
+                                !Number.isInteger(convertedNumber10)
+                              ) {
                                 intermediateErrorMap10[`$`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.number",
+                                  subType: "int",
+                                };
+                              } else if (convertedNumber10 < -2147483647) {
+                                intermediateErrorMap10[`$`] = {
+                                  key: "validator.range",
+                                  minValue: -2147483647,
+                                };
+                              } else if (convertedNumber10 > 2147483647) {
+                                intermediateErrorMap10[`$`] = {
+                                  key: "validator.range",
+                                  maxValue: 2147483647,
                                 };
                               } else {
-                                intermediateResult10 = convertedString10;
+                                intermediateResult10 = convertedNumber10;
                               }
                             }
+                            if (
+                              Object.keys(intermediateErrorMap10).length > 0
+                            ) {
+                              intermediateErrorMap8[`$.${i8}`].errors.push(
+                                intermediateErrorMap10,
+                              );
+                            } else {
+                              hasAnyOfMatch8 = true;
+                              delete intermediateErrorMap8[`$.${i8}`];
+                              intermediateResult8[i8] = intermediateResult10;
+                            }
                           }
-                          if (Object.keys(intermediateErrorMap10).length > 0) {
-                            intermediateErrorMap8[`$.${i8}`].errors.push(
-                              intermediateErrorMap10,
-                            );
-                          } else {
-                            hasAnyOfMatch8 = true;
-                            delete intermediateErrorMap8[`$.${i8}`];
-                            intermediateResult8[i8] = intermediateResult10;
+                          if (!hasAnyOfMatch8) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap10 = {};
+                            /** @type {any} */
+                            let intermediateResult10 = undefined;
+                            /** @type {any} */
+                            let intermediateValue10 = intermediateValue8[i8];
+
+                            if (
+                              intermediateValue10 === null ||
+                              intermediateValue10 === undefined
+                            ) {
+                              intermediateErrorMap10[`$`] = {
+                                key: "validator.undefined",
+                              };
+                            } else {
+                              /** @type {string} */
+                              let convertedString10 = intermediateValue10;
+                              if (typeof convertedString10 !== "string") {
+                                intermediateErrorMap10[`$`] = {
+                                  key: "validator.string",
+                                };
+                              } else {
+                                if (convertedString10.length < 1) {
+                                  intermediateErrorMap10[`$`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult10 = convertedString10;
+                                }
+                              }
+                            }
+                            if (
+                              Object.keys(intermediateErrorMap10).length > 0
+                            ) {
+                              intermediateErrorMap8[`$.${i8}`].errors.push(
+                                intermediateErrorMap10,
+                              );
+                            } else {
+                              hasAnyOfMatch8 = true;
+                              delete intermediateErrorMap8[`$.${i8}`];
+                              intermediateResult8[i8] = intermediateResult10;
+                            }
                           }
                         }
                       }
@@ -17869,121 +18138,129 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                       intermediateValue5["$remove"]["path"];
 
                     if (!Array.isArray(intermediateValue8)) {
-                      intermediateValue8 = [intermediateValue8];
-                    }
-                    intermediateResult5["$remove"]["path"] = [];
-                    for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-                      if (
-                        intermediateValue8[i8] === null ||
-                        intermediateValue8[i8] === undefined
-                      ) {
-                        intermediateErrorMap8[`$.${i8}`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        let hasAnyOfMatch8 = false;
-                        intermediateErrorMap8[`$.${i8}`] = {
-                          key: "validator.anyOf",
-                          errors: [],
-                        };
-                        if (!hasAnyOfMatch8) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap10 = {};
-                          /** @type {any} */
-                          let intermediateResult10 = undefined;
-                          /** @type {any} */
-                          let intermediateValue10 = intermediateValue8[i8];
+                      intermediateErrorMap5[`$.$remove.path`] = {
+                        key: "validator.array",
+                        value: intermediateValue8,
+                      };
+                    } else {
+                      intermediateResult5["$remove"]["path"] = [];
+                      for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
+                        if (
+                          intermediateValue8[i8] === null ||
+                          intermediateValue8[i8] === undefined
+                        ) {
+                          intermediateErrorMap8[`$.${i8}`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          let hasAnyOfMatch8 = false;
+                          intermediateErrorMap8[`$.${i8}`] = {
+                            key: "validator.anyOf",
+                            errors: [],
+                          };
+                          if (!hasAnyOfMatch8) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap10 = {};
+                            /** @type {any} */
+                            let intermediateResult10 = undefined;
+                            /** @type {any} */
+                            let intermediateValue10 = intermediateValue8[i8];
 
-                          if (
-                            intermediateValue10 === null ||
-                            intermediateValue10 === undefined
-                          ) {
-                            intermediateErrorMap10[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            let convertedNumber10 = intermediateValue10;
                             if (
-                              typeof convertedNumber10 !== "number" &&
-                              typeof convertedNumber10 === "string"
-                            ) {
-                              convertedNumber10 = Number(convertedNumber10);
-                            }
-                            if (
-                              typeof convertedNumber10 !== "number" ||
-                              isNaN(convertedNumber10) ||
-                              !isFinite(convertedNumber10) ||
-                              !Number.isInteger(convertedNumber10)
+                              intermediateValue10 === null ||
+                              intermediateValue10 === undefined
                             ) {
                               intermediateErrorMap10[`$`] = {
-                                key: "validator.number",
-                                subType: "int",
-                              };
-                            } else if (convertedNumber10 < -2147483647) {
-                              intermediateErrorMap10[`$`] = {
-                                key: "validator.range",
-                                minValue: -2147483647,
-                              };
-                            } else if (convertedNumber10 > 2147483647) {
-                              intermediateErrorMap10[`$`] = {
-                                key: "validator.range",
-                                maxValue: 2147483647,
+                                key: "validator.undefined",
                               };
                             } else {
-                              intermediateResult10 = convertedNumber10;
-                            }
-                          }
-                          if (Object.keys(intermediateErrorMap10).length > 0) {
-                            intermediateErrorMap8[`$.${i8}`].errors.push(
-                              intermediateErrorMap10,
-                            );
-                          } else {
-                            hasAnyOfMatch8 = true;
-                            delete intermediateErrorMap8[`$.${i8}`];
-                            intermediateResult8[i8] = intermediateResult10;
-                          }
-                        }
-                        if (!hasAnyOfMatch8) {
-                          /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap10 = {};
-                          /** @type {any} */
-                          let intermediateResult10 = undefined;
-                          /** @type {any} */
-                          let intermediateValue10 = intermediateValue8[i8];
-
-                          if (
-                            intermediateValue10 === null ||
-                            intermediateValue10 === undefined
-                          ) {
-                            intermediateErrorMap10[`$`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString10 = intermediateValue10;
-                            if (typeof convertedString10 !== "string") {
-                              intermediateErrorMap10[`$`] = {
-                                key: "validator.string",
-                              };
-                            } else {
-                              if (convertedString10.length < 1) {
+                              let convertedNumber10 = intermediateValue10;
+                              if (
+                                typeof convertedNumber10 !== "number" &&
+                                typeof convertedNumber10 === "string"
+                              ) {
+                                convertedNumber10 = Number(convertedNumber10);
+                              }
+                              if (
+                                typeof convertedNumber10 !== "number" ||
+                                isNaN(convertedNumber10) ||
+                                !isFinite(convertedNumber10) ||
+                                !Number.isInteger(convertedNumber10)
+                              ) {
                                 intermediateErrorMap10[`$`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.number",
+                                  subType: "int",
+                                };
+                              } else if (convertedNumber10 < -2147483647) {
+                                intermediateErrorMap10[`$`] = {
+                                  key: "validator.range",
+                                  minValue: -2147483647,
+                                };
+                              } else if (convertedNumber10 > 2147483647) {
+                                intermediateErrorMap10[`$`] = {
+                                  key: "validator.range",
+                                  maxValue: 2147483647,
                                 };
                               } else {
-                                intermediateResult10 = convertedString10;
+                                intermediateResult10 = convertedNumber10;
                               }
                             }
+                            if (
+                              Object.keys(intermediateErrorMap10).length > 0
+                            ) {
+                              intermediateErrorMap8[`$.${i8}`].errors.push(
+                                intermediateErrorMap10,
+                              );
+                            } else {
+                              hasAnyOfMatch8 = true;
+                              delete intermediateErrorMap8[`$.${i8}`];
+                              intermediateResult8[i8] = intermediateResult10;
+                            }
                           }
-                          if (Object.keys(intermediateErrorMap10).length > 0) {
-                            intermediateErrorMap8[`$.${i8}`].errors.push(
-                              intermediateErrorMap10,
-                            );
-                          } else {
-                            hasAnyOfMatch8 = true;
-                            delete intermediateErrorMap8[`$.${i8}`];
-                            intermediateResult8[i8] = intermediateResult10;
+                          if (!hasAnyOfMatch8) {
+                            /** @type {ValidatorErrorMap} */
+                            const intermediateErrorMap10 = {};
+                            /** @type {any} */
+                            let intermediateResult10 = undefined;
+                            /** @type {any} */
+                            let intermediateValue10 = intermediateValue8[i8];
+
+                            if (
+                              intermediateValue10 === null ||
+                              intermediateValue10 === undefined
+                            ) {
+                              intermediateErrorMap10[`$`] = {
+                                key: "validator.undefined",
+                              };
+                            } else {
+                              /** @type {string} */
+                              let convertedString10 = intermediateValue10;
+                              if (typeof convertedString10 !== "string") {
+                                intermediateErrorMap10[`$`] = {
+                                  key: "validator.string",
+                                };
+                              } else {
+                                if (convertedString10.length < 1) {
+                                  intermediateErrorMap10[`$`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult10 = convertedString10;
+                                }
+                              }
+                            }
+                            if (
+                              Object.keys(intermediateErrorMap10).length > 0
+                            ) {
+                              intermediateErrorMap8[`$.${i8}`].errors.push(
+                                intermediateErrorMap10,
+                              );
+                            } else {
+                              hasAnyOfMatch8 = true;
+                              delete intermediateErrorMap8[`$.${i8}`];
+                              intermediateResult8[i8] = intermediateResult10;
+                            }
                           }
                         }
                       }
@@ -18811,7 +19088,7 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult2 = validateStoreSessionStoreTokenReturningValidated(
+        const refResult2 = validateStoreSessionStoreTokenReturning(
           value["returning"],
         );
 
@@ -19139,7 +19416,7 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreSessionStoreTokenReturningValidated(
+        const refResult3 = validateStoreSessionStoreTokenReturning(
           value["returning"],
         );
 
@@ -20493,29 +20770,33 @@ export function validateStoreFileWhereValidated_1(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreFileWhereValidated_1(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreFileWhereValidated_1(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -20614,42 +20895,46 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof intermediateValue8[i8] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue8[i8],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue8[i8].length === 32) {
-                  intermediateResult8[i8] =
-                    intermediateValue8[i8].slice(0, 8) +
-                    "-" +
-                    intermediateValue8[i8].slice(8, 12) +
-                    "-" +
-                    intermediateValue8[i8].slice(12, 16) +
-                    "-" +
-                    intermediateValue8[i8].slice(16, 20) +
-                    "-" +
-                    intermediateValue8[i8].slice(20);
                 } else {
-                  intermediateResult8[i8] = intermediateValue8[i8];
+                  if (
+                    typeof intermediateValue8[i8] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue8[i8],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue8[i8].length === 32) {
+                    intermediateResult8[i8] =
+                      intermediateValue8[i8].slice(0, 8) +
+                      "-" +
+                      intermediateValue8[i8].slice(8, 12) +
+                      "-" +
+                      intermediateValue8[i8].slice(12, 16) +
+                      "-" +
+                      intermediateValue8[i8].slice(16, 20) +
+                      "-" +
+                      intermediateValue8[i8].slice(20);
+                  } else {
+                    intermediateResult8[i8] = intermediateValue8[i8];
+                  }
                 }
               }
             }
@@ -20723,42 +21008,46 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof intermediateValue9[i9] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue9[i9],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue9[i9].length === 32) {
-                  intermediateResult9[i9] =
-                    intermediateValue9[i9].slice(0, 8) +
-                    "-" +
-                    intermediateValue9[i9].slice(8, 12) +
-                    "-" +
-                    intermediateValue9[i9].slice(12, 16) +
-                    "-" +
-                    intermediateValue9[i9].slice(16, 20) +
-                    "-" +
-                    intermediateValue9[i9].slice(20);
                 } else {
-                  intermediateResult9[i9] = intermediateValue9[i9];
+                  if (
+                    typeof intermediateValue9[i9] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue9[i9],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue9[i9].length === 32) {
+                    intermediateResult9[i9] =
+                      intermediateValue9[i9].slice(0, 8) +
+                      "-" +
+                      intermediateValue9[i9].slice(8, 12) +
+                      "-" +
+                      intermediateValue9[i9].slice(12, 16) +
+                      "-" +
+                      intermediateValue9[i9].slice(16, 20) +
+                      "-" +
+                      intermediateValue9[i9].slice(20);
+                  } else {
+                    intermediateResult9[i9] = intermediateValue9[i9];
+                  }
                 }
               }
             }
@@ -20889,32 +21178,36 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
-              intermediateValue12 = [intermediateValue12];
-            }
-            intermediateResult11 = [];
-            for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-              if (
-                intermediateValue12[i12] === null ||
-                intermediateValue12[i12] === undefined
-              ) {
-                intermediateErrorMap12[`$.${i12}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString12 = intermediateValue12[i12];
-                if (typeof convertedString12 !== "string") {
+              intermediateErrorMap11[`$`] = {
+                key: "validator.array",
+                value: intermediateValue12,
+              };
+            } else {
+              intermediateResult11 = [];
+              for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
+                if (
+                  intermediateValue12[i12] === null ||
+                  intermediateValue12[i12] === undefined
+                ) {
                   intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString12.length < 1) {
+                  /** @type {string} */
+                  let convertedString12 = intermediateValue12[i12];
+                  if (typeof convertedString12 !== "string") {
                     intermediateErrorMap12[`$.${i12}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult12[i12] = convertedString12;
+                    if (convertedString12.length < 1) {
+                      intermediateErrorMap12[`$.${i12}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult12[i12] = convertedString12;
+                    }
                   }
                 }
               }
@@ -20998,32 +21291,36 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
-              intermediateValue13 = [intermediateValue13];
-            }
-            intermediateResult12 = [];
-            for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-              if (
-                intermediateValue13[i13] === null ||
-                intermediateValue13[i13] === undefined
-              ) {
-                intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString13 = intermediateValue13[i13];
-                if (typeof convertedString13 !== "string") {
+              intermediateErrorMap12[`$`] = {
+                key: "validator.array",
+                value: intermediateValue13,
+              };
+            } else {
+              intermediateResult12 = [];
+              for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
+                if (
+                  intermediateValue13[i13] === null ||
+                  intermediateValue13[i13] === undefined
+                ) {
                   intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString13.length < 1) {
+                  /** @type {string} */
+                  let convertedString13 = intermediateValue13[i13];
+                  if (typeof convertedString13 !== "string") {
                     intermediateErrorMap13[`$.${i13}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult13[i13] = convertedString13;
+                    if (convertedString13.length < 1) {
+                      intermediateErrorMap13[`$.${i13}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult13[i13] = convertedString13;
+                    }
                   }
                 }
               }
@@ -21237,40 +21534,46 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
-              intermediateValue19 = [intermediateValue19];
-            }
-            intermediateResult18 = [];
-            for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
-              if (
-                intermediateValue19[i19] === null ||
-                intermediateValue19[i19] === undefined
-              ) {
-                intermediateErrorMap19[`$.${i19}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap18[`$`] = {
+                key: "validator.array",
+                value: intermediateValue19,
+              };
+            } else {
+              intermediateResult18 = [];
+              for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
                 if (
-                  typeof intermediateValue19[i19] === "string" ||
-                  typeof intermediateValue19[i19] === "number"
+                  intermediateValue19[i19] === null ||
+                  intermediateValue19[i19] === undefined
                 ) {
-                  intermediateResult19[i19] = new Date(
-                    intermediateValue19[i19],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue19[i19]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult19[i19] = intermediateValue19[i19];
+                  intermediateErrorMap19[`$.${i19}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult19[i19]?.getTime() ?? undefined)) {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue19[i19] === "string" ||
+                    typeof intermediateValue19[i19] === "number"
+                  ) {
+                    intermediateResult19[i19] = new Date(
+                      intermediateValue19[i19],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue19[i19]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult19[i19] = intermediateValue19[i19];
+                  } else {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult19[i19]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -21353,40 +21656,46 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue20 = intermediateValue19;
 
             if (!Array.isArray(intermediateValue20)) {
-              intermediateValue20 = [intermediateValue20];
-            }
-            intermediateResult19 = [];
-            for (let i20 = 0; i20 < intermediateValue20.length; ++i20) {
-              if (
-                intermediateValue20[i20] === null ||
-                intermediateValue20[i20] === undefined
-              ) {
-                intermediateErrorMap20[`$.${i20}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap19[`$`] = {
+                key: "validator.array",
+                value: intermediateValue20,
+              };
+            } else {
+              intermediateResult19 = [];
+              for (let i20 = 0; i20 < intermediateValue20.length; ++i20) {
                 if (
-                  typeof intermediateValue20[i20] === "string" ||
-                  typeof intermediateValue20[i20] === "number"
+                  intermediateValue20[i20] === null ||
+                  intermediateValue20[i20] === undefined
                 ) {
-                  intermediateResult20[i20] = new Date(
-                    intermediateValue20[i20],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue20[i20]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult20[i20] = intermediateValue20[i20];
+                  intermediateErrorMap20[`$.${i20}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap20[`$.${i20}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult20[i20]?.getTime() ?? undefined)) {
-                  intermediateErrorMap20[`$.${i20}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue20[i20] === "string" ||
+                    typeof intermediateValue20[i20] === "number"
+                  ) {
+                    intermediateResult20[i20] = new Date(
+                      intermediateValue20[i20],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue20[i20]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult20[i20] = intermediateValue20[i20];
+                  } else {
+                    intermediateErrorMap20[`$.${i20}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult20[i20]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap20[`$.${i20}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -21576,40 +21885,46 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
-              intermediateValue25 = [intermediateValue25];
-            }
-            intermediateResult24 = [];
-            for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
-              if (
-                intermediateValue25[i25] === null ||
-                intermediateValue25[i25] === undefined
-              ) {
-                intermediateErrorMap25[`$.${i25}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap24[`$`] = {
+                key: "validator.array",
+                value: intermediateValue25,
+              };
+            } else {
+              intermediateResult24 = [];
+              for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
                 if (
-                  typeof intermediateValue25[i25] === "string" ||
-                  typeof intermediateValue25[i25] === "number"
+                  intermediateValue25[i25] === null ||
+                  intermediateValue25[i25] === undefined
                 ) {
-                  intermediateResult25[i25] = new Date(
-                    intermediateValue25[i25],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue25[i25]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult25[i25] = intermediateValue25[i25];
+                  intermediateErrorMap25[`$.${i25}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult25[i25]?.getTime() ?? undefined)) {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue25[i25] === "string" ||
+                    typeof intermediateValue25[i25] === "number"
+                  ) {
+                    intermediateResult25[i25] = new Date(
+                      intermediateValue25[i25],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue25[i25]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult25[i25] = intermediateValue25[i25];
+                  } else {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult25[i25]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -21692,40 +22007,46 @@ export function validateStoreFileWhereValidated_1(value) {
             let intermediateValue26 = intermediateValue25;
 
             if (!Array.isArray(intermediateValue26)) {
-              intermediateValue26 = [intermediateValue26];
-            }
-            intermediateResult25 = [];
-            for (let i26 = 0; i26 < intermediateValue26.length; ++i26) {
-              if (
-                intermediateValue26[i26] === null ||
-                intermediateValue26[i26] === undefined
-              ) {
-                intermediateErrorMap26[`$.${i26}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap25[`$`] = {
+                key: "validator.array",
+                value: intermediateValue26,
+              };
+            } else {
+              intermediateResult25 = [];
+              for (let i26 = 0; i26 < intermediateValue26.length; ++i26) {
                 if (
-                  typeof intermediateValue26[i26] === "string" ||
-                  typeof intermediateValue26[i26] === "number"
+                  intermediateValue26[i26] === null ||
+                  intermediateValue26[i26] === undefined
                 ) {
-                  intermediateResult26[i26] = new Date(
-                    intermediateValue26[i26],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue26[i26]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult26[i26] = intermediateValue26[i26];
+                  intermediateErrorMap26[`$.${i26}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap26[`$.${i26}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult26[i26]?.getTime() ?? undefined)) {
-                  intermediateErrorMap26[`$.${i26}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue26[i26] === "string" ||
+                    typeof intermediateValue26[i26] === "number"
+                  ) {
+                    intermediateResult26[i26] = new Date(
+                      intermediateValue26[i26],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue26[i26]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult26[i26] = intermediateValue26[i26];
+                  } else {
+                    intermediateErrorMap26[`$.${i26}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult26[i26]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap26[`$.${i26}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -21938,29 +22259,33 @@ export function validateStoreJobWhereValidated_1(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreJobWhereValidated_1(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreJobWhereValidated_1(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -22069,47 +22394,51 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber8 = intermediateValue8[i8];
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof convertedNumber8 !== "number" &&
-                  typeof convertedNumber8 === "string"
-                ) {
-                  convertedNumber8 = Number(convertedNumber8);
-                }
-                if (
-                  typeof convertedNumber8 !== "number" ||
-                  isNaN(convertedNumber8) ||
-                  !isFinite(convertedNumber8) ||
-                  !Number.isInteger(convertedNumber8)
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber8 < -2147483647) {
-                  intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber8 > 2147483647) {
-                  intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
+                    key: "validator.undefined",
                   };
                 } else {
-                  intermediateResult8[i8] = convertedNumber8;
+                  let convertedNumber8 = intermediateValue8[i8];
+                  if (
+                    typeof convertedNumber8 !== "number" &&
+                    typeof convertedNumber8 === "string"
+                  ) {
+                    convertedNumber8 = Number(convertedNumber8);
+                  }
+                  if (
+                    typeof convertedNumber8 !== "number" ||
+                    isNaN(convertedNumber8) ||
+                    !isFinite(convertedNumber8) ||
+                    !Number.isInteger(convertedNumber8)
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.number",
+                      subType: "int",
+                    };
+                  } else if (convertedNumber8 < -2147483647) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.range",
+                      minValue: -2147483647,
+                    };
+                  } else if (convertedNumber8 > 2147483647) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.range",
+                      maxValue: 2147483647,
+                    };
+                  } else {
+                    intermediateResult8[i8] = convertedNumber8;
+                  }
                 }
               }
             }
@@ -22183,47 +22512,51 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                let convertedNumber9 = intermediateValue9[i9];
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof convertedNumber9 !== "number" &&
-                  typeof convertedNumber9 === "string"
-                ) {
-                  convertedNumber9 = Number(convertedNumber9);
-                }
-                if (
-                  typeof convertedNumber9 !== "number" ||
-                  isNaN(convertedNumber9) ||
-                  !isFinite(convertedNumber9) ||
-                  !Number.isInteger(convertedNumber9)
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.number",
-                    subType: "int",
-                  };
-                } else if (convertedNumber9 < -2147483647) {
-                  intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.range",
-                    minValue: -2147483647,
-                  };
-                } else if (convertedNumber9 > 2147483647) {
-                  intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.range",
-                    maxValue: 2147483647,
+                    key: "validator.undefined",
                   };
                 } else {
-                  intermediateResult9[i9] = convertedNumber9;
+                  let convertedNumber9 = intermediateValue9[i9];
+                  if (
+                    typeof convertedNumber9 !== "number" &&
+                    typeof convertedNumber9 === "string"
+                  ) {
+                    convertedNumber9 = Number(convertedNumber9);
+                  }
+                  if (
+                    typeof convertedNumber9 !== "number" ||
+                    isNaN(convertedNumber9) ||
+                    !isFinite(convertedNumber9) ||
+                    !Number.isInteger(convertedNumber9)
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.number",
+                      subType: "int",
+                    };
+                  } else if (convertedNumber9 < -2147483647) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.range",
+                      minValue: -2147483647,
+                    };
+                  } else if (convertedNumber9 > 2147483647) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.range",
+                      maxValue: 2147483647,
+                    };
+                  } else {
+                    intermediateResult9[i9] = convertedNumber9;
+                  }
                 }
               }
             }
@@ -22500,32 +22833,36 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
-              intermediateValue17 = [intermediateValue17];
-            }
-            intermediateResult16 = [];
-            for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-              if (
-                intermediateValue17[i17] === null ||
-                intermediateValue17[i17] === undefined
-              ) {
-                intermediateErrorMap17[`$.${i17}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString17 = intermediateValue17[i17];
-                if (typeof convertedString17 !== "string") {
+              intermediateErrorMap16[`$`] = {
+                key: "validator.array",
+                value: intermediateValue17,
+              };
+            } else {
+              intermediateResult16 = [];
+              for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
+                if (
+                  intermediateValue17[i17] === null ||
+                  intermediateValue17[i17] === undefined
+                ) {
                   intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString17.length < 1) {
+                  /** @type {string} */
+                  let convertedString17 = intermediateValue17[i17];
+                  if (typeof convertedString17 !== "string") {
                     intermediateErrorMap17[`$.${i17}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult17[i17] = convertedString17;
+                    if (convertedString17.length < 1) {
+                      intermediateErrorMap17[`$.${i17}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult17[i17] = convertedString17;
+                    }
                   }
                 }
               }
@@ -22606,32 +22943,36 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
-              intermediateValue18 = [intermediateValue18];
-            }
-            intermediateResult17 = [];
-            for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
-              if (
-                intermediateValue18[i18] === null ||
-                intermediateValue18[i18] === undefined
-              ) {
-                intermediateErrorMap18[`$.${i18}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString18 = intermediateValue18[i18];
-                if (typeof convertedString18 !== "string") {
+              intermediateErrorMap17[`$`] = {
+                key: "validator.array",
+                value: intermediateValue18,
+              };
+            } else {
+              intermediateResult17 = [];
+              for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
+                if (
+                  intermediateValue18[i18] === null ||
+                  intermediateValue18[i18] === undefined
+                ) {
                   intermediateErrorMap18[`$.${i18}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString18.length < 1) {
+                  /** @type {string} */
+                  let convertedString18 = intermediateValue18[i18];
+                  if (typeof convertedString18 !== "string") {
                     intermediateErrorMap18[`$.${i18}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult18[i18] = convertedString18;
+                    if (convertedString18.length < 1) {
+                      intermediateErrorMap18[`$.${i18}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult18[i18] = convertedString18;
+                    }
                   }
                 }
               }
@@ -22842,40 +23183,46 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue24 = intermediateValue23;
 
             if (!Array.isArray(intermediateValue24)) {
-              intermediateValue24 = [intermediateValue24];
-            }
-            intermediateResult23 = [];
-            for (let i24 = 0; i24 < intermediateValue24.length; ++i24) {
-              if (
-                intermediateValue24[i24] === null ||
-                intermediateValue24[i24] === undefined
-              ) {
-                intermediateErrorMap24[`$.${i24}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap23[`$`] = {
+                key: "validator.array",
+                value: intermediateValue24,
+              };
+            } else {
+              intermediateResult23 = [];
+              for (let i24 = 0; i24 < intermediateValue24.length; ++i24) {
                 if (
-                  typeof intermediateValue24[i24] === "string" ||
-                  typeof intermediateValue24[i24] === "number"
+                  intermediateValue24[i24] === null ||
+                  intermediateValue24[i24] === undefined
                 ) {
-                  intermediateResult24[i24] = new Date(
-                    intermediateValue24[i24],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue24[i24]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult24[i24] = intermediateValue24[i24];
+                  intermediateErrorMap24[`$.${i24}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap24[`$.${i24}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult24[i24]?.getTime() ?? undefined)) {
-                  intermediateErrorMap24[`$.${i24}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue24[i24] === "string" ||
+                    typeof intermediateValue24[i24] === "number"
+                  ) {
+                    intermediateResult24[i24] = new Date(
+                      intermediateValue24[i24],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue24[i24]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult24[i24] = intermediateValue24[i24];
+                  } else {
+                    intermediateErrorMap24[`$.${i24}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult24[i24]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap24[`$.${i24}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -22958,40 +23305,46 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
-              intermediateValue25 = [intermediateValue25];
-            }
-            intermediateResult24 = [];
-            for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
-              if (
-                intermediateValue25[i25] === null ||
-                intermediateValue25[i25] === undefined
-              ) {
-                intermediateErrorMap25[`$.${i25}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap24[`$`] = {
+                key: "validator.array",
+                value: intermediateValue25,
+              };
+            } else {
+              intermediateResult24 = [];
+              for (let i25 = 0; i25 < intermediateValue25.length; ++i25) {
                 if (
-                  typeof intermediateValue25[i25] === "string" ||
-                  typeof intermediateValue25[i25] === "number"
+                  intermediateValue25[i25] === null ||
+                  intermediateValue25[i25] === undefined
                 ) {
-                  intermediateResult25[i25] = new Date(
-                    intermediateValue25[i25],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue25[i25]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult25[i25] = intermediateValue25[i25];
+                  intermediateErrorMap25[`$.${i25}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult25[i25]?.getTime() ?? undefined)) {
-                  intermediateErrorMap25[`$.${i25}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue25[i25] === "string" ||
+                    typeof intermediateValue25[i25] === "number"
+                  ) {
+                    intermediateResult25[i25] = new Date(
+                      intermediateValue25[i25],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue25[i25]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult25[i25] = intermediateValue25[i25];
+                  } else {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult25[i25]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap25[`$.${i25}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -23237,40 +23590,46 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue32 = intermediateValue31;
 
             if (!Array.isArray(intermediateValue32)) {
-              intermediateValue32 = [intermediateValue32];
-            }
-            intermediateResult31 = [];
-            for (let i32 = 0; i32 < intermediateValue32.length; ++i32) {
-              if (
-                intermediateValue32[i32] === null ||
-                intermediateValue32[i32] === undefined
-              ) {
-                intermediateErrorMap32[`$.${i32}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap31[`$`] = {
+                key: "validator.array",
+                value: intermediateValue32,
+              };
+            } else {
+              intermediateResult31 = [];
+              for (let i32 = 0; i32 < intermediateValue32.length; ++i32) {
                 if (
-                  typeof intermediateValue32[i32] === "string" ||
-                  typeof intermediateValue32[i32] === "number"
+                  intermediateValue32[i32] === null ||
+                  intermediateValue32[i32] === undefined
                 ) {
-                  intermediateResult32[i32] = new Date(
-                    intermediateValue32[i32],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue32[i32]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult32[i32] = intermediateValue32[i32];
+                  intermediateErrorMap32[`$.${i32}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap32[`$.${i32}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult32[i32]?.getTime() ?? undefined)) {
-                  intermediateErrorMap32[`$.${i32}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue32[i32] === "string" ||
+                    typeof intermediateValue32[i32] === "number"
+                  ) {
+                    intermediateResult32[i32] = new Date(
+                      intermediateValue32[i32],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue32[i32]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult32[i32] = intermediateValue32[i32];
+                  } else {
+                    intermediateErrorMap32[`$.${i32}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult32[i32]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap32[`$.${i32}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -23353,40 +23712,46 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue33 = intermediateValue32;
 
             if (!Array.isArray(intermediateValue33)) {
-              intermediateValue33 = [intermediateValue33];
-            }
-            intermediateResult32 = [];
-            for (let i33 = 0; i33 < intermediateValue33.length; ++i33) {
-              if (
-                intermediateValue33[i33] === null ||
-                intermediateValue33[i33] === undefined
-              ) {
-                intermediateErrorMap33[`$.${i33}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap32[`$`] = {
+                key: "validator.array",
+                value: intermediateValue33,
+              };
+            } else {
+              intermediateResult32 = [];
+              for (let i33 = 0; i33 < intermediateValue33.length; ++i33) {
                 if (
-                  typeof intermediateValue33[i33] === "string" ||
-                  typeof intermediateValue33[i33] === "number"
+                  intermediateValue33[i33] === null ||
+                  intermediateValue33[i33] === undefined
                 ) {
-                  intermediateResult33[i33] = new Date(
-                    intermediateValue33[i33],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue33[i33]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult33[i33] = intermediateValue33[i33];
+                  intermediateErrorMap33[`$.${i33}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap33[`$.${i33}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult33[i33]?.getTime() ?? undefined)) {
-                  intermediateErrorMap33[`$.${i33}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue33[i33] === "string" ||
+                    typeof intermediateValue33[i33] === "number"
+                  ) {
+                    intermediateResult33[i33] = new Date(
+                      intermediateValue33[i33],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue33[i33]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult33[i33] = intermediateValue33[i33];
+                  } else {
+                    intermediateErrorMap33[`$.${i33}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult33[i33]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap33[`$.${i33}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -23576,40 +23941,46 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue38 = intermediateValue37;
 
             if (!Array.isArray(intermediateValue38)) {
-              intermediateValue38 = [intermediateValue38];
-            }
-            intermediateResult37 = [];
-            for (let i38 = 0; i38 < intermediateValue38.length; ++i38) {
-              if (
-                intermediateValue38[i38] === null ||
-                intermediateValue38[i38] === undefined
-              ) {
-                intermediateErrorMap38[`$.${i38}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap37[`$`] = {
+                key: "validator.array",
+                value: intermediateValue38,
+              };
+            } else {
+              intermediateResult37 = [];
+              for (let i38 = 0; i38 < intermediateValue38.length; ++i38) {
                 if (
-                  typeof intermediateValue38[i38] === "string" ||
-                  typeof intermediateValue38[i38] === "number"
+                  intermediateValue38[i38] === null ||
+                  intermediateValue38[i38] === undefined
                 ) {
-                  intermediateResult38[i38] = new Date(
-                    intermediateValue38[i38],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue38[i38]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult38[i38] = intermediateValue38[i38];
+                  intermediateErrorMap38[`$.${i38}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap38[`$.${i38}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult38[i38]?.getTime() ?? undefined)) {
-                  intermediateErrorMap38[`$.${i38}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue38[i38] === "string" ||
+                    typeof intermediateValue38[i38] === "number"
+                  ) {
+                    intermediateResult38[i38] = new Date(
+                      intermediateValue38[i38],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue38[i38]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult38[i38] = intermediateValue38[i38];
+                  } else {
+                    intermediateErrorMap38[`$.${i38}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult38[i38]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap38[`$.${i38}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -23692,40 +24063,46 @@ export function validateStoreJobWhereValidated_1(value) {
             let intermediateValue39 = intermediateValue38;
 
             if (!Array.isArray(intermediateValue39)) {
-              intermediateValue39 = [intermediateValue39];
-            }
-            intermediateResult38 = [];
-            for (let i39 = 0; i39 < intermediateValue39.length; ++i39) {
-              if (
-                intermediateValue39[i39] === null ||
-                intermediateValue39[i39] === undefined
-              ) {
-                intermediateErrorMap39[`$.${i39}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap38[`$`] = {
+                key: "validator.array",
+                value: intermediateValue39,
+              };
+            } else {
+              intermediateResult38 = [];
+              for (let i39 = 0; i39 < intermediateValue39.length; ++i39) {
                 if (
-                  typeof intermediateValue39[i39] === "string" ||
-                  typeof intermediateValue39[i39] === "number"
+                  intermediateValue39[i39] === null ||
+                  intermediateValue39[i39] === undefined
                 ) {
-                  intermediateResult39[i39] = new Date(
-                    intermediateValue39[i39],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue39[i39]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult39[i39] = intermediateValue39[i39];
+                  intermediateErrorMap39[`$.${i39}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap39[`$.${i39}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult39[i39]?.getTime() ?? undefined)) {
-                  intermediateErrorMap39[`$.${i39}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue39[i39] === "string" ||
+                    typeof intermediateValue39[i39] === "number"
+                  ) {
+                    intermediateResult39[i39] = new Date(
+                      intermediateValue39[i39],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue39[i39]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult39[i39] = intermediateValue39[i39];
+                  } else {
+                    intermediateErrorMap39[`$.${i39}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult39[i39]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap39[`$.${i39}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -23920,29 +24297,33 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreSessionStoreWhereValidated_1(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreSessionStoreWhereValidated_1(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -24041,42 +24422,46 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof intermediateValue8[i8] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue8[i8],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue8[i8].length === 32) {
-                  intermediateResult8[i8] =
-                    intermediateValue8[i8].slice(0, 8) +
-                    "-" +
-                    intermediateValue8[i8].slice(8, 12) +
-                    "-" +
-                    intermediateValue8[i8].slice(12, 16) +
-                    "-" +
-                    intermediateValue8[i8].slice(16, 20) +
-                    "-" +
-                    intermediateValue8[i8].slice(20);
                 } else {
-                  intermediateResult8[i8] = intermediateValue8[i8];
+                  if (
+                    typeof intermediateValue8[i8] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue8[i8],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue8[i8].length === 32) {
+                    intermediateResult8[i8] =
+                      intermediateValue8[i8].slice(0, 8) +
+                      "-" +
+                      intermediateValue8[i8].slice(8, 12) +
+                      "-" +
+                      intermediateValue8[i8].slice(12, 16) +
+                      "-" +
+                      intermediateValue8[i8].slice(16, 20) +
+                      "-" +
+                      intermediateValue8[i8].slice(20);
+                  } else {
+                    intermediateResult8[i8] = intermediateValue8[i8];
+                  }
                 }
               }
             }
@@ -24150,42 +24535,46 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof intermediateValue9[i9] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue9[i9],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue9[i9].length === 32) {
-                  intermediateResult9[i9] =
-                    intermediateValue9[i9].slice(0, 8) +
-                    "-" +
-                    intermediateValue9[i9].slice(8, 12) +
-                    "-" +
-                    intermediateValue9[i9].slice(12, 16) +
-                    "-" +
-                    intermediateValue9[i9].slice(16, 20) +
-                    "-" +
-                    intermediateValue9[i9].slice(20);
                 } else {
-                  intermediateResult9[i9] = intermediateValue9[i9];
+                  if (
+                    typeof intermediateValue9[i9] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue9[i9],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue9[i9].length === 32) {
+                    intermediateResult9[i9] =
+                      intermediateValue9[i9].slice(0, 8) +
+                      "-" +
+                      intermediateValue9[i9].slice(8, 12) +
+                      "-" +
+                      intermediateValue9[i9].slice(12, 16) +
+                      "-" +
+                      intermediateValue9[i9].slice(16, 20) +
+                      "-" +
+                      intermediateValue9[i9].slice(20);
+                  } else {
+                    intermediateResult9[i9] = intermediateValue9[i9];
+                  }
                 }
               }
             }
@@ -24314,40 +24703,46 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             let intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
-              intermediateValue12 = [intermediateValue12];
-            }
-            intermediateResult11 = [];
-            for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-              if (
-                intermediateValue12[i12] === null ||
-                intermediateValue12[i12] === undefined
-              ) {
-                intermediateErrorMap12[`$.${i12}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap11[`$`] = {
+                key: "validator.array",
+                value: intermediateValue12,
+              };
+            } else {
+              intermediateResult11 = [];
+              for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
                 if (
-                  typeof intermediateValue12[i12] === "string" ||
-                  typeof intermediateValue12[i12] === "number"
+                  intermediateValue12[i12] === null ||
+                  intermediateValue12[i12] === undefined
                 ) {
-                  intermediateResult12[i12] = new Date(
-                    intermediateValue12[i12],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue12[i12]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult12[i12] = intermediateValue12[i12];
+                  intermediateErrorMap12[`$.${i12}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult12[i12]?.getTime() ?? undefined)) {
-                  intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue12[i12] === "string" ||
+                    typeof intermediateValue12[i12] === "number"
+                  ) {
+                    intermediateResult12[i12] = new Date(
+                      intermediateValue12[i12],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue12[i12]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult12[i12] = intermediateValue12[i12];
+                  } else {
+                    intermediateErrorMap12[`$.${i12}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult12[i12]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap12[`$.${i12}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -24430,40 +24825,46 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             let intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
-              intermediateValue13 = [intermediateValue13];
-            }
-            intermediateResult12 = [];
-            for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-              if (
-                intermediateValue13[i13] === null ||
-                intermediateValue13[i13] === undefined
-              ) {
-                intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap12[`$`] = {
+                key: "validator.array",
+                value: intermediateValue13,
+              };
+            } else {
+              intermediateResult12 = [];
+              for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
                 if (
-                  typeof intermediateValue13[i13] === "string" ||
-                  typeof intermediateValue13[i13] === "number"
+                  intermediateValue13[i13] === null ||
+                  intermediateValue13[i13] === undefined
                 ) {
-                  intermediateResult13[i13] = new Date(
-                    intermediateValue13[i13],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue13[i13]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult13[i13] = intermediateValue13[i13];
+                  intermediateErrorMap13[`$.${i13}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult13[i13]?.getTime() ?? undefined)) {
-                  intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue13[i13] === "string" ||
+                    typeof intermediateValue13[i13] === "number"
+                  ) {
+                    intermediateResult13[i13] = new Date(
+                      intermediateValue13[i13],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue13[i13]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult13[i13] = intermediateValue13[i13];
+                  } else {
+                    intermediateErrorMap13[`$.${i13}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult13[i13]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap13[`$.${i13}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -24653,40 +25054,46 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             let intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
-              intermediateValue18 = [intermediateValue18];
-            }
-            intermediateResult17 = [];
-            for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
-              if (
-                intermediateValue18[i18] === null ||
-                intermediateValue18[i18] === undefined
-              ) {
-                intermediateErrorMap18[`$.${i18}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap17[`$`] = {
+                key: "validator.array",
+                value: intermediateValue18,
+              };
+            } else {
+              intermediateResult17 = [];
+              for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
                 if (
-                  typeof intermediateValue18[i18] === "string" ||
-                  typeof intermediateValue18[i18] === "number"
+                  intermediateValue18[i18] === null ||
+                  intermediateValue18[i18] === undefined
                 ) {
-                  intermediateResult18[i18] = new Date(
-                    intermediateValue18[i18],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue18[i18]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult18[i18] = intermediateValue18[i18];
+                  intermediateErrorMap18[`$.${i18}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap18[`$.${i18}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult18[i18]?.getTime() ?? undefined)) {
-                  intermediateErrorMap18[`$.${i18}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue18[i18] === "string" ||
+                    typeof intermediateValue18[i18] === "number"
+                  ) {
+                    intermediateResult18[i18] = new Date(
+                      intermediateValue18[i18],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue18[i18]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult18[i18] = intermediateValue18[i18];
+                  } else {
+                    intermediateErrorMap18[`$.${i18}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult18[i18]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap18[`$.${i18}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -24769,40 +25176,46 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             let intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
-              intermediateValue19 = [intermediateValue19];
-            }
-            intermediateResult18 = [];
-            for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
-              if (
-                intermediateValue19[i19] === null ||
-                intermediateValue19[i19] === undefined
-              ) {
-                intermediateErrorMap19[`$.${i19}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap18[`$`] = {
+                key: "validator.array",
+                value: intermediateValue19,
+              };
+            } else {
+              intermediateResult18 = [];
+              for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
                 if (
-                  typeof intermediateValue19[i19] === "string" ||
-                  typeof intermediateValue19[i19] === "number"
+                  intermediateValue19[i19] === null ||
+                  intermediateValue19[i19] === undefined
                 ) {
-                  intermediateResult19[i19] = new Date(
-                    intermediateValue19[i19],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue19[i19]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult19[i19] = intermediateValue19[i19];
+                  intermediateErrorMap19[`$.${i19}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult19[i19]?.getTime() ?? undefined)) {
-                  intermediateErrorMap19[`$.${i19}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue19[i19] === "string" ||
+                    typeof intermediateValue19[i19] === "number"
+                  ) {
+                    intermediateResult19[i19] = new Date(
+                      intermediateValue19[i19],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue19[i19]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult19[i19] = intermediateValue19[i19];
+                  } else {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult19[i19]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap19[`$.${i19}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -25153,29 +25566,33 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
         let intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        result["$or"] = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult3 = validateStoreSessionStoreTokenWhereValidated_1(
-              intermediateValue3[i3],
-            );
+          errorMap[`$.$or`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          result["$or"] = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
+              intermediateErrorMap3[`$.${i3}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult3 = validateStoreSessionStoreTokenWhereValidated_1(
+                intermediateValue3[i3],
+              );
 
-            if (refResult3.error) {
-              for (const errorKey of Object.keys(refResult3.error)) {
-                intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
-                  refResult3.error[errorKey];
+              if (refResult3.error) {
+                for (const errorKey of Object.keys(refResult3.error)) {
+                  intermediateErrorMap3[`$.${i3}${errorKey.substring(1)}`] =
+                    refResult3.error[errorKey];
+                }
               }
+              intermediateResult3[i3] = refResult3.value;
             }
-            intermediateResult3[i3] = refResult3.value;
           }
         }
         if (Object.keys(intermediateErrorMap3).length) {
@@ -25274,42 +25691,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            intermediateResult7 = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap7[`$`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              intermediateResult7 = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
                 if (
-                  typeof intermediateValue8[i8] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue8[i8],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
                 ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue8[i8].length === 32) {
-                  intermediateResult8[i8] =
-                    intermediateValue8[i8].slice(0, 8) +
-                    "-" +
-                    intermediateValue8[i8].slice(8, 12) +
-                    "-" +
-                    intermediateValue8[i8].slice(12, 16) +
-                    "-" +
-                    intermediateValue8[i8].slice(16, 20) +
-                    "-" +
-                    intermediateValue8[i8].slice(20);
                 } else {
-                  intermediateResult8[i8] = intermediateValue8[i8];
+                  if (
+                    typeof intermediateValue8[i8] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue8[i8],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue8[i8]))
+                  ) {
+                    intermediateErrorMap8[`$.${i8}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue8[i8].length === 32) {
+                    intermediateResult8[i8] =
+                      intermediateValue8[i8].slice(0, 8) +
+                      "-" +
+                      intermediateValue8[i8].slice(8, 12) +
+                      "-" +
+                      intermediateValue8[i8].slice(12, 16) +
+                      "-" +
+                      intermediateValue8[i8].slice(16, 20) +
+                      "-" +
+                      intermediateValue8[i8].slice(20);
+                  } else {
+                    intermediateResult8[i8] = intermediateValue8[i8];
+                  }
                 }
               }
             }
@@ -25383,42 +25804,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            intermediateResult8 = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap8[`$`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              intermediateResult8 = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
                 if (
-                  typeof intermediateValue9[i9] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue9[i9],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
                 ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue9[i9].length === 32) {
-                  intermediateResult9[i9] =
-                    intermediateValue9[i9].slice(0, 8) +
-                    "-" +
-                    intermediateValue9[i9].slice(8, 12) +
-                    "-" +
-                    intermediateValue9[i9].slice(12, 16) +
-                    "-" +
-                    intermediateValue9[i9].slice(16, 20) +
-                    "-" +
-                    intermediateValue9[i9].slice(20);
                 } else {
-                  intermediateResult9[i9] = intermediateValue9[i9];
+                  if (
+                    typeof intermediateValue9[i9] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue9[i9],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue9[i9]))
+                  ) {
+                    intermediateErrorMap9[`$.${i9}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue9[i9].length === 32) {
+                    intermediateResult9[i9] =
+                      intermediateValue9[i9].slice(0, 8) +
+                      "-" +
+                      intermediateValue9[i9].slice(8, 12) +
+                      "-" +
+                      intermediateValue9[i9].slice(12, 16) +
+                      "-" +
+                      intermediateValue9[i9].slice(16, 20) +
+                      "-" +
+                      intermediateValue9[i9].slice(20);
+                  } else {
+                    intermediateResult9[i9] = intermediateValue9[i9];
+                  }
                 }
               }
             }
@@ -25556,42 +25981,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
-              intermediateValue12 = [intermediateValue12];
-            }
-            intermediateResult11 = [];
-            for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-              if (
-                intermediateValue12[i12] === null ||
-                intermediateValue12[i12] === undefined
-              ) {
-                intermediateErrorMap12[`$.${i12}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap11[`$`] = {
+                key: "validator.array",
+                value: intermediateValue12,
+              };
+            } else {
+              intermediateResult11 = [];
+              for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
                 if (
-                  typeof intermediateValue12[i12] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue12[i12],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue12[i12]))
+                  intermediateValue12[i12] === null ||
+                  intermediateValue12[i12] === undefined
                 ) {
                   intermediateErrorMap12[`$.${i12}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue12[i12].length === 32) {
-                  intermediateResult12[i12] =
-                    intermediateValue12[i12].slice(0, 8) +
-                    "-" +
-                    intermediateValue12[i12].slice(8, 12) +
-                    "-" +
-                    intermediateValue12[i12].slice(12, 16) +
-                    "-" +
-                    intermediateValue12[i12].slice(16, 20) +
-                    "-" +
-                    intermediateValue12[i12].slice(20);
                 } else {
-                  intermediateResult12[i12] = intermediateValue12[i12];
+                  if (
+                    typeof intermediateValue12[i12] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue12[i12],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue12[i12]))
+                  ) {
+                    intermediateErrorMap12[`$.${i12}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue12[i12].length === 32) {
+                    intermediateResult12[i12] =
+                      intermediateValue12[i12].slice(0, 8) +
+                      "-" +
+                      intermediateValue12[i12].slice(8, 12) +
+                      "-" +
+                      intermediateValue12[i12].slice(12, 16) +
+                      "-" +
+                      intermediateValue12[i12].slice(16, 20) +
+                      "-" +
+                      intermediateValue12[i12].slice(20);
+                  } else {
+                    intermediateResult12[i12] = intermediateValue12[i12];
+                  }
                 }
               }
             }
@@ -25674,42 +26103,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
-              intermediateValue13 = [intermediateValue13];
-            }
-            intermediateResult12 = [];
-            for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-              if (
-                intermediateValue13[i13] === null ||
-                intermediateValue13[i13] === undefined
-              ) {
-                intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap12[`$`] = {
+                key: "validator.array",
+                value: intermediateValue13,
+              };
+            } else {
+              intermediateResult12 = [];
+              for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
                 if (
-                  typeof intermediateValue13[i13] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue13[i13],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue13[i13]))
+                  intermediateValue13[i13] === null ||
+                  intermediateValue13[i13] === undefined
                 ) {
                   intermediateErrorMap13[`$.${i13}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue13[i13].length === 32) {
-                  intermediateResult13[i13] =
-                    intermediateValue13[i13].slice(0, 8) +
-                    "-" +
-                    intermediateValue13[i13].slice(8, 12) +
-                    "-" +
-                    intermediateValue13[i13].slice(12, 16) +
-                    "-" +
-                    intermediateValue13[i13].slice(16, 20) +
-                    "-" +
-                    intermediateValue13[i13].slice(20);
                 } else {
-                  intermediateResult13[i13] = intermediateValue13[i13];
+                  if (
+                    typeof intermediateValue13[i13] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue13[i13],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue13[i13]))
+                  ) {
+                    intermediateErrorMap13[`$.${i13}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue13[i13].length === 32) {
+                    intermediateResult13[i13] =
+                      intermediateValue13[i13].slice(0, 8) +
+                      "-" +
+                      intermediateValue13[i13].slice(8, 12) +
+                      "-" +
+                      intermediateValue13[i13].slice(12, 16) +
+                      "-" +
+                      intermediateValue13[i13].slice(16, 20) +
+                      "-" +
+                      intermediateValue13[i13].slice(20);
+                  } else {
+                    intermediateResult13[i13] = intermediateValue13[i13];
+                  }
                 }
               }
             }
@@ -25841,40 +26274,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue16 = intermediateValue15;
 
             if (!Array.isArray(intermediateValue16)) {
-              intermediateValue16 = [intermediateValue16];
-            }
-            intermediateResult15 = [];
-            for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
-              if (
-                intermediateValue16[i16] === null ||
-                intermediateValue16[i16] === undefined
-              ) {
-                intermediateErrorMap16[`$.${i16}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap15[`$`] = {
+                key: "validator.array",
+                value: intermediateValue16,
+              };
+            } else {
+              intermediateResult15 = [];
+              for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
                 if (
-                  typeof intermediateValue16[i16] === "string" ||
-                  typeof intermediateValue16[i16] === "number"
+                  intermediateValue16[i16] === null ||
+                  intermediateValue16[i16] === undefined
                 ) {
-                  intermediateResult16[i16] = new Date(
-                    intermediateValue16[i16],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue16[i16]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult16[i16] = intermediateValue16[i16];
+                  intermediateErrorMap16[`$.${i16}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap16[`$.${i16}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult16[i16]?.getTime() ?? undefined)) {
-                  intermediateErrorMap16[`$.${i16}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue16[i16] === "string" ||
+                    typeof intermediateValue16[i16] === "number"
+                  ) {
+                    intermediateResult16[i16] = new Date(
+                      intermediateValue16[i16],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue16[i16]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult16[i16] = intermediateValue16[i16];
+                  } else {
+                    intermediateErrorMap16[`$.${i16}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult16[i16]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap16[`$.${i16}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -25957,40 +26396,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
-              intermediateValue17 = [intermediateValue17];
-            }
-            intermediateResult16 = [];
-            for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-              if (
-                intermediateValue17[i17] === null ||
-                intermediateValue17[i17] === undefined
-              ) {
-                intermediateErrorMap17[`$.${i17}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap16[`$`] = {
+                key: "validator.array",
+                value: intermediateValue17,
+              };
+            } else {
+              intermediateResult16 = [];
+              for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
                 if (
-                  typeof intermediateValue17[i17] === "string" ||
-                  typeof intermediateValue17[i17] === "number"
+                  intermediateValue17[i17] === null ||
+                  intermediateValue17[i17] === undefined
                 ) {
-                  intermediateResult17[i17] = new Date(
-                    intermediateValue17[i17],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue17[i17]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult17[i17] = intermediateValue17[i17];
+                  intermediateErrorMap17[`$.${i17}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult17[i17]?.getTime() ?? undefined)) {
-                  intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue17[i17] === "string" ||
+                    typeof intermediateValue17[i17] === "number"
+                  ) {
+                    intermediateResult17[i17] = new Date(
+                      intermediateValue17[i17],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue17[i17]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult17[i17] = intermediateValue17[i17];
+                  } else {
+                    intermediateErrorMap17[`$.${i17}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult17[i17]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap17[`$.${i17}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -26195,42 +26640,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue22 = intermediateValue21;
 
             if (!Array.isArray(intermediateValue22)) {
-              intermediateValue22 = [intermediateValue22];
-            }
-            intermediateResult21 = [];
-            for (let i22 = 0; i22 < intermediateValue22.length; ++i22) {
-              if (
-                intermediateValue22[i22] === null ||
-                intermediateValue22[i22] === undefined
-              ) {
-                intermediateErrorMap22[`$.${i22}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap21[`$`] = {
+                key: "validator.array",
+                value: intermediateValue22,
+              };
+            } else {
+              intermediateResult21 = [];
+              for (let i22 = 0; i22 < intermediateValue22.length; ++i22) {
                 if (
-                  typeof intermediateValue22[i22] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue22[i22],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue22[i22]))
+                  intermediateValue22[i22] === null ||
+                  intermediateValue22[i22] === undefined
                 ) {
                   intermediateErrorMap22[`$.${i22}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue22[i22].length === 32) {
-                  intermediateResult22[i22] =
-                    intermediateValue22[i22].slice(0, 8) +
-                    "-" +
-                    intermediateValue22[i22].slice(8, 12) +
-                    "-" +
-                    intermediateValue22[i22].slice(12, 16) +
-                    "-" +
-                    intermediateValue22[i22].slice(16, 20) +
-                    "-" +
-                    intermediateValue22[i22].slice(20);
                 } else {
-                  intermediateResult22[i22] = intermediateValue22[i22];
+                  if (
+                    typeof intermediateValue22[i22] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue22[i22],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue22[i22]))
+                  ) {
+                    intermediateErrorMap22[`$.${i22}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue22[i22].length === 32) {
+                    intermediateResult22[i22] =
+                      intermediateValue22[i22].slice(0, 8) +
+                      "-" +
+                      intermediateValue22[i22].slice(8, 12) +
+                      "-" +
+                      intermediateValue22[i22].slice(12, 16) +
+                      "-" +
+                      intermediateValue22[i22].slice(16, 20) +
+                      "-" +
+                      intermediateValue22[i22].slice(20);
+                  } else {
+                    intermediateResult22[i22] = intermediateValue22[i22];
+                  }
                 }
               }
             }
@@ -26313,42 +26762,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue23 = intermediateValue22;
 
             if (!Array.isArray(intermediateValue23)) {
-              intermediateValue23 = [intermediateValue23];
-            }
-            intermediateResult22 = [];
-            for (let i23 = 0; i23 < intermediateValue23.length; ++i23) {
-              if (
-                intermediateValue23[i23] === null ||
-                intermediateValue23[i23] === undefined
-              ) {
-                intermediateErrorMap23[`$.${i23}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap22[`$`] = {
+                key: "validator.array",
+                value: intermediateValue23,
+              };
+            } else {
+              intermediateResult22 = [];
+              for (let i23 = 0; i23 < intermediateValue23.length; ++i23) {
                 if (
-                  typeof intermediateValue23[i23] !== "string" ||
-                  (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
-                    intermediateValue23[i23],
-                  ) &&
-                    !/^[a-f0-9]{32}$/gi.test(intermediateValue23[i23]))
+                  intermediateValue23[i23] === null ||
+                  intermediateValue23[i23] === undefined
                 ) {
                   intermediateErrorMap23[`$.${i23}`] = {
-                    key: "validator.pattern",
-                    patternExplanation: "UUID",
+                    key: "validator.undefined",
                   };
-                } else if (intermediateValue23[i23].length === 32) {
-                  intermediateResult23[i23] =
-                    intermediateValue23[i23].slice(0, 8) +
-                    "-" +
-                    intermediateValue23[i23].slice(8, 12) +
-                    "-" +
-                    intermediateValue23[i23].slice(12, 16) +
-                    "-" +
-                    intermediateValue23[i23].slice(16, 20) +
-                    "-" +
-                    intermediateValue23[i23].slice(20);
                 } else {
-                  intermediateResult23[i23] = intermediateValue23[i23];
+                  if (
+                    typeof intermediateValue23[i23] !== "string" ||
+                    (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/gi.test(
+                      intermediateValue23[i23],
+                    ) &&
+                      !/^[a-f0-9]{32}$/gi.test(intermediateValue23[i23]))
+                  ) {
+                    intermediateErrorMap23[`$.${i23}`] = {
+                      key: "validator.pattern",
+                      patternExplanation: "UUID",
+                    };
+                  } else if (intermediateValue23[i23].length === 32) {
+                    intermediateResult23[i23] =
+                      intermediateValue23[i23].slice(0, 8) +
+                      "-" +
+                      intermediateValue23[i23].slice(8, 12) +
+                      "-" +
+                      intermediateValue23[i23].slice(12, 16) +
+                      "-" +
+                      intermediateValue23[i23].slice(16, 20) +
+                      "-" +
+                      intermediateValue23[i23].slice(20);
+                  } else {
+                    intermediateResult23[i23] = intermediateValue23[i23];
+                  }
                 }
               }
             }
@@ -26534,40 +26987,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue28 = intermediateValue27;
 
             if (!Array.isArray(intermediateValue28)) {
-              intermediateValue28 = [intermediateValue28];
-            }
-            intermediateResult27 = [];
-            for (let i28 = 0; i28 < intermediateValue28.length; ++i28) {
-              if (
-                intermediateValue28[i28] === null ||
-                intermediateValue28[i28] === undefined
-              ) {
-                intermediateErrorMap28[`$.${i28}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap27[`$`] = {
+                key: "validator.array",
+                value: intermediateValue28,
+              };
+            } else {
+              intermediateResult27 = [];
+              for (let i28 = 0; i28 < intermediateValue28.length; ++i28) {
                 if (
-                  typeof intermediateValue28[i28] === "string" ||
-                  typeof intermediateValue28[i28] === "number"
+                  intermediateValue28[i28] === null ||
+                  intermediateValue28[i28] === undefined
                 ) {
-                  intermediateResult28[i28] = new Date(
-                    intermediateValue28[i28],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue28[i28]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult28[i28] = intermediateValue28[i28];
+                  intermediateErrorMap28[`$.${i28}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap28[`$.${i28}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult28[i28]?.getTime() ?? undefined)) {
-                  intermediateErrorMap28[`$.${i28}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue28[i28] === "string" ||
+                    typeof intermediateValue28[i28] === "number"
+                  ) {
+                    intermediateResult28[i28] = new Date(
+                      intermediateValue28[i28],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue28[i28]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult28[i28] = intermediateValue28[i28];
+                  } else {
+                    intermediateErrorMap28[`$.${i28}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult28[i28]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap28[`$.${i28}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -26650,40 +27109,46 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             let intermediateValue29 = intermediateValue28;
 
             if (!Array.isArray(intermediateValue29)) {
-              intermediateValue29 = [intermediateValue29];
-            }
-            intermediateResult28 = [];
-            for (let i29 = 0; i29 < intermediateValue29.length; ++i29) {
-              if (
-                intermediateValue29[i29] === null ||
-                intermediateValue29[i29] === undefined
-              ) {
-                intermediateErrorMap29[`$.${i29}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
+              intermediateErrorMap28[`$`] = {
+                key: "validator.array",
+                value: intermediateValue29,
+              };
+            } else {
+              intermediateResult28 = [];
+              for (let i29 = 0; i29 < intermediateValue29.length; ++i29) {
                 if (
-                  typeof intermediateValue29[i29] === "string" ||
-                  typeof intermediateValue29[i29] === "number"
+                  intermediateValue29[i29] === null ||
+                  intermediateValue29[i29] === undefined
                 ) {
-                  intermediateResult29[i29] = new Date(
-                    intermediateValue29[i29],
-                  );
-                } else if (
-                  Object.prototype.toString.call(intermediateValue29[i29]) ===
-                  "[object Date]"
-                ) {
-                  intermediateResult29[i29] = intermediateValue29[i29];
+                  intermediateErrorMap29[`$.${i29}`] = {
+                    key: "validator.undefined",
+                  };
                 } else {
-                  intermediateErrorMap29[`$.${i29}`] = {
-                    key: "validator.type",
-                    expectedType: "Date|string",
-                  };
-                }
-                if (isNaN(intermediateResult29[i29]?.getTime() ?? undefined)) {
-                  intermediateErrorMap29[`$.${i29}`] = {
-                    key: "validator.date.invalid",
-                  };
+                  if (
+                    typeof intermediateValue29[i29] === "string" ||
+                    typeof intermediateValue29[i29] === "number"
+                  ) {
+                    intermediateResult29[i29] = new Date(
+                      intermediateValue29[i29],
+                    );
+                  } else if (
+                    Object.prototype.toString.call(intermediateValue29[i29]) ===
+                    "[object Date]"
+                  ) {
+                    intermediateResult29[i29] = intermediateValue29[i29];
+                  } else {
+                    intermediateErrorMap29[`$.${i29}`] = {
+                      key: "validator.type",
+                      expectedType: "Date|string",
+                    };
+                  }
+                  if (
+                    isNaN(intermediateResult29[i29]?.getTime() ?? undefined)
+                  ) {
+                    intermediateErrorMap29[`$.${i29}`] = {
+                      key: "validator.date.invalid",
+                    };
+                  }
                 }
               }
             }
@@ -27317,9 +27782,7 @@ export function validateStoreFileUpdateValidated_1(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreFileReturningValidated(
-          value["returning"],
-        );
+        const refResult3 = validateStoreFileReturning(value["returning"]);
 
         if (refResult3.error) {
           for (const errorKey of Object.keys(refResult3.error)) {
@@ -27416,9 +27879,7 @@ export function validateStoreJobUpdateValidated_1(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreJobReturningValidated(
-          value["returning"],
-        );
+        const refResult3 = validateStoreJobReturning(value["returning"]);
 
         if (refResult3.error) {
           for (const errorKey of Object.keys(refResult3.error)) {
@@ -27517,7 +27978,7 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreSessionStoreReturningValidated(
+        const refResult3 = validateStoreSessionStoreReturning(
           value["returning"],
         );
 
@@ -27618,7 +28079,7 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
       if (value["returning"] === null || value["returning"] === undefined) {
         result["returning"] = undefined;
       } else {
-        const refResult3 = validateStoreSessionStoreTokenReturningValidated(
+        const refResult3 = validateStoreSessionStoreTokenReturning(
           value["returning"],
         );
 
@@ -27639,10 +28100,10 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreFileOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreFileOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileOrderByValidated_1(value) {
+export function validateStoreFileOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -27702,43 +28163,52 @@ export function validateStoreFileOrderByValidated_1(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "bucketName" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: ["id", "bucketName", "createdAt", "updatedAt"],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "bucketName" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "bucketName",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -27768,10 +28238,10 @@ export function validateStoreFileOrderByValidated_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreJobOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreJobOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreJobOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobOrderByValidated_1(value) {
+export function validateStoreJobOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -27831,52 +28301,56 @@ export function validateStoreJobOrderByValidated_1(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "isComplete" &&
-                convertedString3 !== "name" &&
-                convertedString3 !== "scheduledAt" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "isComplete",
-                    "name",
-                    "scheduledAt",
-                    "createdAt",
-                    "updatedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "isComplete" &&
+                  convertedString3 !== "name" &&
+                  convertedString3 !== "scheduledAt" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "isComplete",
+                      "name",
+                      "scheduledAt",
+                      "createdAt",
+                      "updatedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -27906,10 +28380,10 @@ export function validateStoreJobOrderByValidated_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreOrderByValidated_1(value) {
+export function validateStoreSessionStoreOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -27969,42 +28443,46 @@ export function validateStoreSessionStoreOrderByValidated_1(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "createdAt" &&
-                convertedString3 !== "updatedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: ["id", "createdAt", "updatedAt"],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "createdAt" &&
+                  convertedString3 !== "updatedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: ["id", "createdAt", "updatedAt"],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -28034,10 +28512,10 @@ export function validateStoreSessionStoreOrderByValidated_1(value) {
 }
 
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenOrderByValidated_1(value) {
+export function validateStoreSessionStoreTokenOrderByValidated(value) {
   /** @type {ValidatorErrorMap} */
   const errorMap = {};
   /** @type {any} */
@@ -28097,50 +28575,54 @@ export function validateStoreSessionStoreTokenOrderByValidated_1(value) {
         let intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
-          intermediateValue3 = [intermediateValue3];
-        }
-        intermediateResult2 = [];
-        for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
-          if (
-            intermediateValue3[i3] === null ||
-            intermediateValue3[i3] === undefined
-          ) {
-            intermediateErrorMap3[`$.${i3}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString3 = intermediateValue3[i3];
-            if (typeof convertedString3 !== "string") {
+          intermediateErrorMap2[`$`] = {
+            key: "validator.array",
+            value: intermediateValue3,
+          };
+        } else {
+          intermediateResult2 = [];
+          for (let i3 = 0; i3 < intermediateValue3.length; ++i3) {
+            if (
+              intermediateValue3[i3] === null ||
+              intermediateValue3[i3] === undefined
+            ) {
               intermediateErrorMap3[`$.${i3}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString3.length < 1) {
+              /** @type {string} */
+              let convertedString3 = intermediateValue3[i3];
+              if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.length",
-                  minLength: 1,
-                };
-              } else if (
-                convertedString3 !== "id" &&
-                convertedString3 !== "session" &&
-                convertedString3 !== "expiresAt" &&
-                convertedString3 !== "refreshToken" &&
-                convertedString3 !== "revokedAt"
-              ) {
-                intermediateErrorMap3[`$.${i3}`] = {
-                  key: "validator.oneOf",
-                  allowedValues: [
-                    "id",
-                    "session",
-                    "expiresAt",
-                    "refreshToken",
-                    "revokedAt",
-                  ],
-                  foundValue: convertedString3,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult3[i3] = convertedString3;
+                if (convertedString3.length < 1) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (
+                  convertedString3 !== "id" &&
+                  convertedString3 !== "session" &&
+                  convertedString3 !== "expiresAt" &&
+                  convertedString3 !== "refreshToken" &&
+                  convertedString3 !== "revokedAt"
+                ) {
+                  intermediateErrorMap3[`$.${i3}`] = {
+                    key: "validator.oneOf",
+                    allowedValues: [
+                      "id",
+                      "session",
+                      "expiresAt",
+                      "refreshToken",
+                      "revokedAt",
+                    ],
+                    foundValue: convertedString3,
+                  };
+                } else {
+                  intermediateResult3[i3] = convertedString3;
+                }
               }
             }
           }
@@ -28236,9 +28718,7 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreFileOrderByValidated_1(
-          value["orderBy"],
-        );
+        const refResult2 = validateStoreFileOrderByValidated(value["orderBy"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -28331,7 +28811,7 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
           "updatedAt",
         ];
       } else {
-        const refResult6 = validateStoreFileReturningValidated(value["select"]);
+        const refResult6 = validateStoreFileReturning(value["select"]);
 
         if (refResult6.error) {
           for (const errorKey of Object.keys(refResult6.error)) {
@@ -28416,7 +28896,7 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreJobOrderByValidated_1(value["orderBy"]);
+        const refResult2 = validateStoreJobOrderByValidated(value["orderBy"]);
 
         if (refResult2.error) {
           for (const errorKey of Object.keys(refResult2.error)) {
@@ -28511,7 +28991,7 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
           "updatedAt",
         ];
       } else {
-        const refResult6 = validateStoreJobReturningValidated(value["select"]);
+        const refResult6 = validateStoreJobReturning(value["select"]);
 
         if (refResult6.error) {
           for (const errorKey of Object.keys(refResult6.error)) {
@@ -28599,7 +29079,7 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreSessionStoreOrderByValidated_1(
+        const refResult2 = validateStoreSessionStoreOrderByValidated(
           value["orderBy"],
         );
 
@@ -28694,9 +29174,7 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
           "updatedAt",
         ];
       } else {
-        const refResult6 = validateStoreSessionStoreReturningValidated(
-          value["select"],
-        );
+        const refResult6 = validateStoreSessionStoreReturning(value["select"]);
 
         if (refResult6.error) {
           for (const errorKey of Object.keys(refResult6.error)) {
@@ -28805,7 +29283,7 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
       if (value["orderBy"] === null || value["orderBy"] === undefined) {
         result["orderBy"] = undefined;
       } else {
-        const refResult2 = validateStoreSessionStoreTokenOrderByValidated_1(
+        const refResult2 = validateStoreSessionStoreTokenOrderByValidated(
           value["orderBy"],
         );
 
@@ -28900,7 +29378,7 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
           "createdAt",
         ];
       } else {
-        const refResult6 = validateStoreSessionStoreTokenReturningValidated(
+        const refResult6 = validateStoreSessionStoreTokenReturning(
           value["select"],
         );
 

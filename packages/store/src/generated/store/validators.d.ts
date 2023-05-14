@@ -32,14 +32,11 @@ export function validateStoreFileWhereValidated(
 ): Either<import("../common/types").StoreFileWhereValidated, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").StoreFileOrderBy|any} value
- * @returns {Either<import("../common/types").StoreFileOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreFileOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreFileOrderByValidated(
+export function validateStoreFileOrderBy(
   value: import("../common/types").StoreFileOrderBy | any,
-): Either<
-  import("../common/types").StoreFileOrderByValidated,
-  ValidatorErrorMap
->;
+): Either<import("../common/types").StoreFileOrderBy, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").StoreFileOrderBySpec|any} value
  * @returns {Either<import("../common/types").StoreFileOrderBySpec, ValidatorErrorMap>}
@@ -59,14 +56,11 @@ export function validateStoreFileQueryBuilderValidated(
 >;
 /**
  * @param {import("../common/types").StoreFileReturning|any} value
- * @returns {Either<import("../common/types").StoreFileReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreFileReturning, ValidatorErrorMap>}
  */
-export function validateStoreFileReturningValidated(
+export function validateStoreFileReturning(
   value: import("../common/types").StoreFileReturning | any,
-): Either<
-  import("../common/types").StoreFileReturningValidated,
-  ValidatorErrorMap
->;
+): Either<import("../common/types").StoreFileReturning, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").StoreFileInsert|any} value
  * @returns {Either<import("../common/types").StoreFileInsertValidated, ValidatorErrorMap>}
@@ -127,14 +121,11 @@ export function validateStoreJobWhereValidated(
 ): Either<import("../common/types").StoreJobWhereValidated, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").StoreJobOrderBy|any} value
- * @returns {Either<import("../common/types").StoreJobOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreJobOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreJobOrderByValidated(
+export function validateStoreJobOrderBy(
   value: import("../common/types").StoreJobOrderBy | any,
-): Either<
-  import("../common/types").StoreJobOrderByValidated,
-  ValidatorErrorMap
->;
+): Either<import("../common/types").StoreJobOrderBy, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").StoreJobOrderBySpec|any} value
  * @returns {Either<import("../common/types").StoreJobOrderBySpec, ValidatorErrorMap>}
@@ -154,14 +145,11 @@ export function validateStoreJobQueryBuilderValidated(
 >;
 /**
  * @param {import("../common/types").StoreJobReturning|any} value
- * @returns {Either<import("../common/types").StoreJobReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreJobReturning, ValidatorErrorMap>}
  */
-export function validateStoreJobReturningValidated(
+export function validateStoreJobReturning(
   value: import("../common/types").StoreJobReturning | any,
-): Either<
-  import("../common/types").StoreJobReturningValidated,
-  ValidatorErrorMap
->;
+): Either<import("../common/types").StoreJobReturning, ValidatorErrorMap>;
 /**
  * @param {import("../common/types").StoreJobInsert|any} value
  * @returns {Either<import("../common/types").StoreJobInsertValidated, ValidatorErrorMap>}
@@ -227,12 +215,12 @@ export function validateStoreSessionStoreTokenWhereValidated(
 >;
 /**
  * @param {import("../common/types").StoreSessionStoreOrderBy|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreOrderByValidated(
+export function validateStoreSessionStoreOrderBy(
   value: import("../common/types").StoreSessionStoreOrderBy | any,
 ): Either<
-  import("../common/types").StoreSessionStoreOrderByValidated,
+  import("../common/types").StoreSessionStoreOrderBy,
   ValidatorErrorMap
 >;
 /**
@@ -257,12 +245,12 @@ export function validateStoreSessionStoreQueryBuilderValidated(
 >;
 /**
  * @param {import("../common/types").StoreSessionStoreReturning|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreReturning, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreReturningValidated(
+export function validateStoreSessionStoreReturning(
   value: import("../common/types").StoreSessionStoreReturning | any,
 ): Either<
-  import("../common/types").StoreSessionStoreReturningValidated,
+  import("../common/types").StoreSessionStoreReturning,
   ValidatorErrorMap
 >;
 /**
@@ -277,12 +265,12 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(
 >;
 /**
  * @param {import("../common/types").StoreSessionStoreTokenOrderBy|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderBy, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenOrderByValidated(
+export function validateStoreSessionStoreTokenOrderBy(
   value: import("../common/types").StoreSessionStoreTokenOrderBy | any,
 ): Either<
-  import("../common/types").StoreSessionStoreTokenOrderByValidated,
+  import("../common/types").StoreSessionStoreTokenOrderBy,
   ValidatorErrorMap
 >;
 /**
@@ -297,12 +285,12 @@ export function validateStoreSessionStoreTokenOrderBySpec(
 >;
 /**
  * @param {import("../common/types").StoreSessionStoreTokenReturning|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenReturningValidated, ValidatorErrorMap>}
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenReturning, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenReturningValidated(
+export function validateStoreSessionStoreTokenReturning(
   value: import("../common/types").StoreSessionStoreTokenReturning | any,
 ): Either<
-  import("../common/types").StoreSessionStoreTokenReturningValidated,
+  import("../common/types").StoreSessionStoreTokenReturning,
   ValidatorErrorMap
 >;
 /**
@@ -506,43 +494,43 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").StoreFileOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreFileOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreFileOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreFileOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreFileOrderByValidated_1(
-  value: import("../common/types").StoreFileOrderByInput | any,
+export function validateStoreFileOrderByValidated(
+  value: import("../common/types").StoreFileOrderByValidated | any,
 ): Either<
-  import("../common/types").StoreFileOrderByValidated_1,
+  import("../common/types").StoreFileOrderByValidated,
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").StoreJobOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreJobOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreJobOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreJobOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreJobOrderByValidated_1(
-  value: import("../common/types").StoreJobOrderByInput | any,
+export function validateStoreJobOrderByValidated(
+  value: import("../common/types").StoreJobOrderByValidated | any,
 ): Either<
-  import("../common/types").StoreJobOrderByValidated_1,
+  import("../common/types").StoreJobOrderByValidated,
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").StoreSessionStoreOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreOrderByValidated_1(
-  value: import("../common/types").StoreSessionStoreOrderByInput | any,
+export function validateStoreSessionStoreOrderByValidated(
+  value: import("../common/types").StoreSessionStoreOrderByValidated | any,
 ): Either<
-  import("../common/types").StoreSessionStoreOrderByValidated_1,
+  import("../common/types").StoreSessionStoreOrderByValidated,
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").StoreSessionStoreTokenOrderByInput|any} value
- * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated_1, ValidatorErrorMap>}
+ * @param {import("../common/types").StoreSessionStoreTokenOrderByValidated|any} value
+ * @returns {Either<import("../common/types").StoreSessionStoreTokenOrderByValidated, ValidatorErrorMap>}
  */
-export function validateStoreSessionStoreTokenOrderByValidated_1(
-  value: import("../common/types").StoreSessionStoreTokenOrderByInput | any,
+export function validateStoreSessionStoreTokenOrderByValidated(
+  value: import("../common/types").StoreSessionStoreTokenOrderByValidated | any,
 ): Either<
-  import("../common/types").StoreSessionStoreTokenOrderByValidated_1,
+  import("../common/types").StoreSessionStoreTokenOrderByValidated,
   ValidatorErrorMap
 >;
 /**

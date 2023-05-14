@@ -400,32 +400,36 @@ export function validateCliCommandDefinition(value) {
             let intermediateValue8 = value["watchSettings"]["extensions"];
 
             if (!Array.isArray(intermediateValue8)) {
-              intermediateValue8 = [intermediateValue8];
-            }
-            result["watchSettings"]["extensions"] = [];
-            for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-              if (
-                intermediateValue8[i8] === null ||
-                intermediateValue8[i8] === undefined
-              ) {
-                intermediateErrorMap8[`$.${i8}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString8 = intermediateValue8[i8];
-                if (typeof convertedString8 !== "string") {
+              errorMap[`$.watchSettings.extensions`] = {
+                key: "validator.array",
+                value: intermediateValue8,
+              };
+            } else {
+              result["watchSettings"]["extensions"] = [];
+              for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
+                if (
+                  intermediateValue8[i8] === null ||
+                  intermediateValue8[i8] === undefined
+                ) {
                   intermediateErrorMap8[`$.${i8}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString8.length < 1) {
+                  /** @type {string} */
+                  let convertedString8 = intermediateValue8[i8];
+                  if (typeof convertedString8 !== "string") {
                     intermediateErrorMap8[`$.${i8}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult8[i8] = convertedString8;
+                    if (convertedString8.length < 1) {
+                      intermediateErrorMap8[`$.${i8}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult8[i8] = convertedString8;
+                    }
                   }
                 }
               }
@@ -457,32 +461,36 @@ export function validateCliCommandDefinition(value) {
             let intermediateValue9 = value["watchSettings"]["ignorePatterns"];
 
             if (!Array.isArray(intermediateValue9)) {
-              intermediateValue9 = [intermediateValue9];
-            }
-            result["watchSettings"]["ignorePatterns"] = [];
-            for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-              if (
-                intermediateValue9[i9] === null ||
-                intermediateValue9[i9] === undefined
-              ) {
-                intermediateErrorMap9[`$.${i9}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString9 = intermediateValue9[i9];
-                if (typeof convertedString9 !== "string") {
+              errorMap[`$.watchSettings.ignorePatterns`] = {
+                key: "validator.array",
+                value: intermediateValue9,
+              };
+            } else {
+              result["watchSettings"]["ignorePatterns"] = [];
+              for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
+                if (
+                  intermediateValue9[i9] === null ||
+                  intermediateValue9[i9] === undefined
+                ) {
                   intermediateErrorMap9[`$.${i9}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString9.length < 1) {
+                  /** @type {string} */
+                  let convertedString9 = intermediateValue9[i9];
+                  if (typeof convertedString9 !== "string") {
                     intermediateErrorMap9[`$.${i9}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult9[i9] = convertedString9;
+                    if (convertedString9.length < 1) {
+                      intermediateErrorMap9[`$.${i9}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult9[i9] = convertedString9;
+                    }
                   }
                 }
               }
@@ -510,29 +518,33 @@ export function validateCliCommandDefinition(value) {
         let intermediateValue8 = value["subCommands"];
 
         if (!Array.isArray(intermediateValue8)) {
-          intermediateValue8 = [intermediateValue8];
-        }
-        result["subCommands"] = [];
-        for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-          if (
-            intermediateValue8[i8] === null ||
-            intermediateValue8[i8] === undefined
-          ) {
-            intermediateErrorMap8[`$.${i8}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult8 = validateCliCommandDefinition(
-              intermediateValue8[i8],
-            );
+          errorMap[`$.subCommands`] = {
+            key: "validator.array",
+            value: intermediateValue8,
+          };
+        } else {
+          result["subCommands"] = [];
+          for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
+            if (
+              intermediateValue8[i8] === null ||
+              intermediateValue8[i8] === undefined
+            ) {
+              intermediateErrorMap8[`$.${i8}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult8 = validateCliCommandDefinition(
+                intermediateValue8[i8],
+              );
 
-            if (refResult8.error) {
-              for (const errorKey of Object.keys(refResult8.error)) {
-                intermediateErrorMap8[`$.${i8}${errorKey.substring(1)}`] =
-                  refResult8.error[errorKey];
+              if (refResult8.error) {
+                for (const errorKey of Object.keys(refResult8.error)) {
+                  intermediateErrorMap8[`$.${i8}${errorKey.substring(1)}`] =
+                    refResult8.error[errorKey];
+                }
               }
+              intermediateResult8[i8] = refResult8.value;
             }
-            intermediateResult8[i8] = refResult8.value;
           }
         }
         if (Object.keys(intermediateErrorMap8).length) {
@@ -555,29 +567,33 @@ export function validateCliCommandDefinition(value) {
         let intermediateValue9 = value["flags"];
 
         if (!Array.isArray(intermediateValue9)) {
-          intermediateValue9 = [intermediateValue9];
-        }
-        result["flags"] = [];
-        for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
-          if (
-            intermediateValue9[i9] === null ||
-            intermediateValue9[i9] === undefined
-          ) {
-            intermediateErrorMap9[`$.${i9}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult9 = validateCliFlagDefinition(
-              intermediateValue9[i9],
-            );
+          errorMap[`$.flags`] = {
+            key: "validator.array",
+            value: intermediateValue9,
+          };
+        } else {
+          result["flags"] = [];
+          for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
+            if (
+              intermediateValue9[i9] === null ||
+              intermediateValue9[i9] === undefined
+            ) {
+              intermediateErrorMap9[`$.${i9}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult9 = validateCliFlagDefinition(
+                intermediateValue9[i9],
+              );
 
-            if (refResult9.error) {
-              for (const errorKey of Object.keys(refResult9.error)) {
-                intermediateErrorMap9[`$.${i9}${errorKey.substring(1)}`] =
-                  refResult9.error[errorKey];
+              if (refResult9.error) {
+                for (const errorKey of Object.keys(refResult9.error)) {
+                  intermediateErrorMap9[`$.${i9}${errorKey.substring(1)}`] =
+                    refResult9.error[errorKey];
+                }
               }
+              intermediateResult9[i9] = refResult9.value;
             }
-            intermediateResult9[i9] = refResult9.value;
           }
         }
         if (Object.keys(intermediateErrorMap9).length) {

@@ -5,8 +5,8 @@ import { validateQueryResultStoreSessionStore } from "../queryResult/validators.
 import {
   validateStoreSessionStore,
   validateStoreSessionStoreInsertValidated,
+  validateStoreSessionStoreOrderBy,
   validateStoreSessionStoreOrderBySpec,
-  validateStoreSessionStoreOrderByValidated,
   validateStoreSessionStoreQueryBuilderValidated,
   validateStoreSessionStoreUpdateValidated,
   validateStoreSessionStoreWhereValidated,
@@ -191,7 +191,7 @@ export function sessionStoreOrderBy(orderBy, orderBySpec, options = {}) {
   orderBy ??= ["createdAt", "updatedAt", "id"];
   orderBySpec ??= {};
   if (!options.skipValidator) {
-    const validatedOrderBy = validateStoreSessionStoreOrderByValidated(orderBy);
+    const validatedOrderBy = validateStoreSessionStoreOrderBy(orderBy);
     if (validatedOrderBy.error) {
       throw AppError.serverError({
         message: "Invalid orderBy array",

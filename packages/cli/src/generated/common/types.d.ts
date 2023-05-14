@@ -127,15 +127,12 @@ export type CliCommandDefinitionInput = {
     | undefined;
   watchSettings?:
     | {
-        extensions?: string[] | string | undefined;
-        ignorePatterns?: string[] | string | undefined;
+        extensions?: string[] | undefined;
+        ignorePatterns?: string[] | undefined;
       }
     | undefined;
-  subCommands?:
-    | CliCommandDefinitionInput[]
-    | CliCommandDefinitionInput
-    | undefined;
-  flags?: CliFlagDefinitionInput[] | CliFlagDefinitionInput | undefined;
+  subCommands?: CliCommandDefinitionInput[] | undefined;
+  flags?: CliFlagDefinitionInput[] | undefined;
   executor?:
     | ((
         logger: import("@compas/stdlib").Logger,

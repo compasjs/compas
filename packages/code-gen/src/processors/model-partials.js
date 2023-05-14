@@ -60,6 +60,7 @@ export function modelPartialInsertTypes(generateContext) {
       .keys({
         insert: new ArrayType()
           .values(new ReferenceType(model.group, `${model.name}InsertPartial`))
+          .convert()
           .min(1)
           .max(50000),
         returning: new ReferenceType(model.group, `${model.name}Returning`),

@@ -73,7 +73,11 @@ function specificationExtendWithValidators(generator) {
     ),
 
     T.array("array").values(true),
+    T.array("arrayConvert").values(true).convert(),
     T.array("arrayNested").values([true]),
+    T.array("arrayNestedConvert")
+      .values(T.array().values(true).convert())
+      .convert(),
 
     T.object("object").keys({
       foo: true,

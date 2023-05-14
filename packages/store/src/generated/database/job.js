@@ -5,8 +5,8 @@ import { validateQueryResultStoreJob } from "../queryResult/validators.js";
 import {
   validateStoreJob,
   validateStoreJobInsertValidated,
+  validateStoreJobOrderBy,
   validateStoreJobOrderBySpec,
-  validateStoreJobOrderByValidated,
   validateStoreJobQueryBuilderValidated,
   validateStoreJobUpdateValidated,
   validateStoreJobWhereValidated,
@@ -256,7 +256,7 @@ export function jobOrderBy(orderBy, orderBySpec, options = {}) {
   orderBy ??= ["createdAt", "updatedAt", "id"];
   orderBySpec ??= {};
   if (!options.skipValidator) {
-    const validatedOrderBy = validateStoreJobOrderByValidated(orderBy);
+    const validatedOrderBy = validateStoreJobOrderBy(orderBy);
     if (validatedOrderBy.error) {
       throw AppError.serverError({
         message: "Invalid orderBy array",

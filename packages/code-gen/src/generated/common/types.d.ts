@@ -565,24 +565,20 @@ export type StructureCrudDefinitionInput = {
   fieldOptions: {
     readable?:
       | {
-          $omit?: string[] | string | undefined;
-          $pick?: string[] | string | undefined;
+          $omit?: string[] | undefined;
+          $pick?: string[] | undefined;
         }
       | undefined;
     readableType?: StructureReferenceDefinitionInput | undefined;
     writable?:
       | {
-          $omit?: string[] | string | undefined;
-          $pick?: string[] | string | undefined;
+          $omit?: string[] | undefined;
+          $pick?: string[] | undefined;
         }
       | undefined;
   };
-  inlineRelations:
-    | StructureCrudDefinitionInput[]
-    | StructureCrudDefinitionInput;
-  nestedRelations:
-    | StructureCrudDefinitionInput[]
-    | StructureCrudDefinitionInput;
+  inlineRelations: StructureCrudDefinitionInput[];
+  nestedRelations: StructureCrudDefinitionInput[];
 };
 
 export type StructureDateDefinitionInput = {
@@ -635,9 +631,7 @@ export type StructureExtendDefinitionInput = {
   validator?: {} | undefined;
   keys: { [key: string]: StructureTypeSystemDefinitionInput };
   reference: StructureReferenceDefinitionInput;
-  relations:
-    | StructureRelationDefinitionInput[]
-    | StructureRelationDefinitionInput;
+  relations: StructureRelationDefinitionInput[];
 };
 
 export type StructureFileDefinitionInput = {
@@ -655,7 +649,7 @@ export type StructureFileDefinitionInput = {
       }
     | undefined;
   validator: {
-    mimeTypes?: string[] | string | undefined;
+    mimeTypes?: string[] | undefined;
   };
 };
 
@@ -698,7 +692,7 @@ export type StructureNumberDefinitionInput = {
     max?: number | undefined;
     allowNull?: boolean | "true" | "false" | undefined;
   };
-  oneOf?: number[] | number | undefined;
+  oneOf?: number[] | undefined;
 };
 
 export type StructureObjectDefinitionInput = {
@@ -731,9 +725,7 @@ export type StructureObjectDefinitionInput = {
         schema?: string | undefined;
       }
     | undefined;
-  relations:
-    | StructureRelationDefinitionInput[]
-    | StructureRelationDefinitionInput;
+  relations: StructureRelationDefinitionInput[];
 };
 
 export type StructureOmitDefinitionInput = {
@@ -754,7 +746,7 @@ export type StructureOmitDefinitionInput = {
     allowNull?: boolean | "true" | "false" | undefined;
     strict: boolean | "true" | "false";
   };
-  keys: string[] | string;
+  keys: string[];
   reference: StructureTypeSystemDefinitionInput;
 };
 
@@ -776,7 +768,7 @@ export type StructurePickDefinitionInput = {
     allowNull?: boolean | "true" | "false" | undefined;
     strict: boolean | "true" | "false";
   };
-  keys: string[] | string;
+  keys: string[];
   reference: StructureTypeSystemDefinitionInput;
 };
 
@@ -802,9 +794,9 @@ export type StructureStringDefinitionInput = {
     max?: number | undefined;
     pattern?: string | undefined;
     allowNull?: boolean | "true" | "false" | undefined;
-    disallowedCharacters?: string[] | string | undefined;
+    disallowedCharacters?: string[] | undefined;
   };
-  oneOf?: string[] | string | undefined;
+  oneOf?: string[] | undefined;
 };
 
 export type StructureUuidDefinitionInput = {
@@ -866,9 +858,7 @@ export type StructureAnyOfDefinitionInput = {
         discriminant?: string | undefined;
       }
     | undefined;
-  values:
-    | StructureTypeSystemDefinitionInput[]
-    | StructureTypeSystemDefinitionInput;
+  values: StructureTypeSystemDefinitionInput[];
 };
 
 /**
@@ -1273,8 +1263,8 @@ export type StructureRouteInvalidationDefinitionInput = {
     useSharedQuery?: boolean | "true" | "false" | undefined;
     specification?:
       | {
-          params: { [key: string]: string[] | string };
-          query: { [key: string]: string[] | string };
+          params: { [key: string]: string[] };
+          query: { [key: string]: string[] };
         }
       | undefined;
   };
@@ -1298,15 +1288,13 @@ export type StructureRouteDefinitionInput = {
   method: "GET" | "POST" | "PUT" | "DELETE" | "HEAD" | "PATCH";
   idempotent: boolean | "true" | "false";
   path: string;
-  tags: string[] | string;
+  tags: string[];
   query?: StructureReferenceDefinitionInput | undefined;
   params?: StructureReferenceDefinitionInput | undefined;
   body?: StructureReferenceDefinitionInput | undefined;
   files?: StructureReferenceDefinitionInput | undefined;
   response?: StructureReferenceDefinitionInput | undefined;
-  invalidations:
-    | StructureRouteInvalidationDefinitionInput[]
-    | StructureRouteInvalidationDefinitionInput;
+  invalidations: StructureRouteInvalidationDefinitionInput[];
   metadata?:
     | {
         requestBodyType?: "json" | "form-data" | undefined;

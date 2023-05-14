@@ -5,8 +5,8 @@ import { validateQueryResultStoreFile } from "../queryResult/validators.js";
 import {
   validateStoreFile,
   validateStoreFileInsertValidated,
+  validateStoreFileOrderBy,
   validateStoreFileOrderBySpec,
-  validateStoreFileOrderByValidated,
   validateStoreFileQueryBuilderValidated,
   validateStoreFileUpdateValidated,
   validateStoreFileWhereValidated,
@@ -192,7 +192,7 @@ export function fileOrderBy(orderBy, orderBySpec, options = {}) {
   orderBy ??= ["createdAt", "updatedAt", "id"];
   orderBySpec ??= {};
   if (!options.skipValidator) {
-    const validatedOrderBy = validateStoreFileOrderByValidated(orderBy);
+    const validatedOrderBy = validateStoreFileOrderBy(orderBy);
     if (validatedOrderBy.error) {
       throw AppError.serverError({
         message: "Invalid orderBy array",

@@ -563,9 +563,24 @@ export function validatorJavascriptArray(file, type, validatorState) {
   const currentValuePath = formatValuePath(validatorStateCopy);
   const currentResultPath = formatResultPath(validatorStateCopy);
 
-  fileBlockStart(file, `if (!Array.isArray(${currentValuePath}))`);
-  fileWrite(file, `${currentValuePath} = [${currentValuePath}];`);
-  fileBlockEnd(file);
+  if (type.validator.convert) {
+    fileBlockStart(file, `if (!Array.isArray(${currentValuePath}))`);
+    fileWrite(file, `${currentValuePath} = [${currentValuePath}];`);
+    fileBlockEnd(file);
+  }
+
+  if (!type.validator.convert) {
+    fileBlockStart(file, `if (!Array.isArray(${currentValuePath}))`);
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.array",
+  value: ${currentValuePath},
+};`,
+    );
+    fileBlockEnd(file);
+    fileBlockStart(file, `else`);
+  }
 
   if (!isNil(type.validator.min)) {
     fileBlockStart(
@@ -630,6 +645,10 @@ export function validatorJavascriptArray(file, type, validatorState) {
   );
 
   fileBlockEnd(file);
+
+  if (!type.validator.convert) {
+    fileBlockEnd(file);
+  }
 
   fileBlockStart(
     file,

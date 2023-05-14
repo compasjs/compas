@@ -1230,36 +1230,40 @@ export function validateStructureAnyOfDefinition(value) {
         let intermediateValue10 = value["values"];
 
         if (!Array.isArray(intermediateValue10)) {
-          intermediateValue10 = [intermediateValue10];
-        }
-        if (intermediateValue10.length < 1) {
           errorMap[`$.values`] = {
-            key: "validator.length",
-            minLength: 1,
-            foundLength: intermediateValue10.length,
+            key: "validator.array",
+            value: intermediateValue10,
           };
-        }
-        result["values"] = [];
-        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-          if (
-            intermediateValue10[i10] === null ||
-            intermediateValue10[i10] === undefined
-          ) {
-            intermediateErrorMap10[`$.${i10}`] = {
-              key: "validator.undefined",
+        } else {
+          if (intermediateValue10.length < 1) {
+            errorMap[`$.values`] = {
+              key: "validator.length",
+              minLength: 1,
+              foundLength: intermediateValue10.length,
             };
-          } else {
-            const refResult10 = validateStructureTypeSystemDefinition(
-              intermediateValue10[i10],
-            );
+          }
+          result["values"] = [];
+          for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
+            if (
+              intermediateValue10[i10] === null ||
+              intermediateValue10[i10] === undefined
+            ) {
+              intermediateErrorMap10[`$.${i10}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult10 = validateStructureTypeSystemDefinition(
+                intermediateValue10[i10],
+              );
 
-            if (refResult10.error) {
-              for (const errorKey of Object.keys(refResult10.error)) {
-                intermediateErrorMap10[`$.${i10}${errorKey.substring(1)}`] =
-                  refResult10.error[errorKey];
+              if (refResult10.error) {
+                for (const errorKey of Object.keys(refResult10.error)) {
+                  intermediateErrorMap10[`$.${i10}${errorKey.substring(1)}`] =
+                    refResult10.error[errorKey];
+                }
               }
+              intermediateResult10[i10] = refResult10.value;
             }
-            intermediateResult10[i10] = refResult10.value;
           }
         }
         if (Object.keys(intermediateErrorMap10).length) {
@@ -3198,32 +3202,36 @@ export function validateStructureCrudDefinition(value) {
                   value["fieldOptions"]["readable"]["$omit"];
 
                 if (!Array.isArray(intermediateValue16)) {
-                  intermediateValue16 = [intermediateValue16];
-                }
-                result["fieldOptions"]["readable"]["$omit"] = [];
-                for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
-                  if (
-                    intermediateValue16[i16] === null ||
-                    intermediateValue16[i16] === undefined
-                  ) {
-                    intermediateErrorMap16[`$.${i16}`] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString16 = intermediateValue16[i16];
-                    if (typeof convertedString16 !== "string") {
+                  errorMap[`$.fieldOptions.readable.$omit`] = {
+                    key: "validator.array",
+                    value: intermediateValue16,
+                  };
+                } else {
+                  result["fieldOptions"]["readable"]["$omit"] = [];
+                  for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
+                    if (
+                      intermediateValue16[i16] === null ||
+                      intermediateValue16[i16] === undefined
+                    ) {
                       intermediateErrorMap16[`$.${i16}`] = {
-                        key: "validator.string",
+                        key: "validator.undefined",
                       };
                     } else {
-                      if (convertedString16.length < 1) {
+                      /** @type {string} */
+                      let convertedString16 = intermediateValue16[i16];
+                      if (typeof convertedString16 !== "string") {
                         intermediateErrorMap16[`$.${i16}`] = {
-                          key: "validator.length",
-                          minLength: 1,
+                          key: "validator.string",
                         };
                       } else {
-                        intermediateResult16[i16] = convertedString16;
+                        if (convertedString16.length < 1) {
+                          intermediateErrorMap16[`$.${i16}`] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          intermediateResult16[i16] = convertedString16;
+                        }
                       }
                     }
                   }
@@ -3254,32 +3262,36 @@ export function validateStructureCrudDefinition(value) {
                   value["fieldOptions"]["readable"]["$pick"];
 
                 if (!Array.isArray(intermediateValue17)) {
-                  intermediateValue17 = [intermediateValue17];
-                }
-                result["fieldOptions"]["readable"]["$pick"] = [];
-                for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-                  if (
-                    intermediateValue17[i17] === null ||
-                    intermediateValue17[i17] === undefined
-                  ) {
-                    intermediateErrorMap17[`$.${i17}`] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString17 = intermediateValue17[i17];
-                    if (typeof convertedString17 !== "string") {
+                  errorMap[`$.fieldOptions.readable.$pick`] = {
+                    key: "validator.array",
+                    value: intermediateValue17,
+                  };
+                } else {
+                  result["fieldOptions"]["readable"]["$pick"] = [];
+                  for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
+                    if (
+                      intermediateValue17[i17] === null ||
+                      intermediateValue17[i17] === undefined
+                    ) {
                       intermediateErrorMap17[`$.${i17}`] = {
-                        key: "validator.string",
+                        key: "validator.undefined",
                       };
                     } else {
-                      if (convertedString17.length < 1) {
+                      /** @type {string} */
+                      let convertedString17 = intermediateValue17[i17];
+                      if (typeof convertedString17 !== "string") {
                         intermediateErrorMap17[`$.${i17}`] = {
-                          key: "validator.length",
-                          minLength: 1,
+                          key: "validator.string",
                         };
                       } else {
-                        intermediateResult17[i17] = convertedString17;
+                        if (convertedString17.length < 1) {
+                          intermediateErrorMap17[`$.${i17}`] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          intermediateResult17[i17] = convertedString17;
+                        }
                       }
                     }
                   }
@@ -3349,32 +3361,36 @@ export function validateStructureCrudDefinition(value) {
                   value["fieldOptions"]["writable"]["$omit"];
 
                 if (!Array.isArray(intermediateValue18)) {
-                  intermediateValue18 = [intermediateValue18];
-                }
-                result["fieldOptions"]["writable"]["$omit"] = [];
-                for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
-                  if (
-                    intermediateValue18[i18] === null ||
-                    intermediateValue18[i18] === undefined
-                  ) {
-                    intermediateErrorMap18[`$.${i18}`] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString18 = intermediateValue18[i18];
-                    if (typeof convertedString18 !== "string") {
+                  errorMap[`$.fieldOptions.writable.$omit`] = {
+                    key: "validator.array",
+                    value: intermediateValue18,
+                  };
+                } else {
+                  result["fieldOptions"]["writable"]["$omit"] = [];
+                  for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
+                    if (
+                      intermediateValue18[i18] === null ||
+                      intermediateValue18[i18] === undefined
+                    ) {
                       intermediateErrorMap18[`$.${i18}`] = {
-                        key: "validator.string",
+                        key: "validator.undefined",
                       };
                     } else {
-                      if (convertedString18.length < 1) {
+                      /** @type {string} */
+                      let convertedString18 = intermediateValue18[i18];
+                      if (typeof convertedString18 !== "string") {
                         intermediateErrorMap18[`$.${i18}`] = {
-                          key: "validator.length",
-                          minLength: 1,
+                          key: "validator.string",
                         };
                       } else {
-                        intermediateResult18[i18] = convertedString18;
+                        if (convertedString18.length < 1) {
+                          intermediateErrorMap18[`$.${i18}`] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          intermediateResult18[i18] = convertedString18;
+                        }
                       }
                     }
                   }
@@ -3405,32 +3421,36 @@ export function validateStructureCrudDefinition(value) {
                   value["fieldOptions"]["writable"]["$pick"];
 
                 if (!Array.isArray(intermediateValue19)) {
-                  intermediateValue19 = [intermediateValue19];
-                }
-                result["fieldOptions"]["writable"]["$pick"] = [];
-                for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
-                  if (
-                    intermediateValue19[i19] === null ||
-                    intermediateValue19[i19] === undefined
-                  ) {
-                    intermediateErrorMap19[`$.${i19}`] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString19 = intermediateValue19[i19];
-                    if (typeof convertedString19 !== "string") {
+                  errorMap[`$.fieldOptions.writable.$pick`] = {
+                    key: "validator.array",
+                    value: intermediateValue19,
+                  };
+                } else {
+                  result["fieldOptions"]["writable"]["$pick"] = [];
+                  for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
+                    if (
+                      intermediateValue19[i19] === null ||
+                      intermediateValue19[i19] === undefined
+                    ) {
                       intermediateErrorMap19[`$.${i19}`] = {
-                        key: "validator.string",
+                        key: "validator.undefined",
                       };
                     } else {
-                      if (convertedString19.length < 1) {
+                      /** @type {string} */
+                      let convertedString19 = intermediateValue19[i19];
+                      if (typeof convertedString19 !== "string") {
                         intermediateErrorMap19[`$.${i19}`] = {
-                          key: "validator.length",
-                          minLength: 1,
+                          key: "validator.string",
                         };
                       } else {
-                        intermediateResult19[i19] = convertedString19;
+                        if (convertedString19.length < 1) {
+                          intermediateErrorMap19[`$.${i19}`] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          intermediateResult19[i19] = convertedString19;
+                        }
                       }
                     }
                   }
@@ -3466,29 +3486,33 @@ export function validateStructureCrudDefinition(value) {
         let intermediateValue15 = value["inlineRelations"];
 
         if (!Array.isArray(intermediateValue15)) {
-          intermediateValue15 = [intermediateValue15];
-        }
-        result["inlineRelations"] = [];
-        for (let i15 = 0; i15 < intermediateValue15.length; ++i15) {
-          if (
-            intermediateValue15[i15] === null ||
-            intermediateValue15[i15] === undefined
-          ) {
-            intermediateErrorMap15[`$.${i15}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult15 = validateStructureCrudDefinition(
-              intermediateValue15[i15],
-            );
+          errorMap[`$.inlineRelations`] = {
+            key: "validator.array",
+            value: intermediateValue15,
+          };
+        } else {
+          result["inlineRelations"] = [];
+          for (let i15 = 0; i15 < intermediateValue15.length; ++i15) {
+            if (
+              intermediateValue15[i15] === null ||
+              intermediateValue15[i15] === undefined
+            ) {
+              intermediateErrorMap15[`$.${i15}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult15 = validateStructureCrudDefinition(
+                intermediateValue15[i15],
+              );
 
-            if (refResult15.error) {
-              for (const errorKey of Object.keys(refResult15.error)) {
-                intermediateErrorMap15[`$.${i15}${errorKey.substring(1)}`] =
-                  refResult15.error[errorKey];
+              if (refResult15.error) {
+                for (const errorKey of Object.keys(refResult15.error)) {
+                  intermediateErrorMap15[`$.${i15}${errorKey.substring(1)}`] =
+                    refResult15.error[errorKey];
+                }
               }
+              intermediateResult15[i15] = refResult15.value;
             }
-            intermediateResult15[i15] = refResult15.value;
           }
         }
         if (Object.keys(intermediateErrorMap15).length) {
@@ -3516,29 +3540,33 @@ export function validateStructureCrudDefinition(value) {
         let intermediateValue16 = value["nestedRelations"];
 
         if (!Array.isArray(intermediateValue16)) {
-          intermediateValue16 = [intermediateValue16];
-        }
-        result["nestedRelations"] = [];
-        for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
-          if (
-            intermediateValue16[i16] === null ||
-            intermediateValue16[i16] === undefined
-          ) {
-            intermediateErrorMap16[`$.${i16}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult16 = validateStructureCrudDefinition(
-              intermediateValue16[i16],
-            );
+          errorMap[`$.nestedRelations`] = {
+            key: "validator.array",
+            value: intermediateValue16,
+          };
+        } else {
+          result["nestedRelations"] = [];
+          for (let i16 = 0; i16 < intermediateValue16.length; ++i16) {
+            if (
+              intermediateValue16[i16] === null ||
+              intermediateValue16[i16] === undefined
+            ) {
+              intermediateErrorMap16[`$.${i16}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult16 = validateStructureCrudDefinition(
+                intermediateValue16[i16],
+              );
 
-            if (refResult16.error) {
-              for (const errorKey of Object.keys(refResult16.error)) {
-                intermediateErrorMap16[`$.${i16}${errorKey.substring(1)}`] =
-                  refResult16.error[errorKey];
+              if (refResult16.error) {
+                for (const errorKey of Object.keys(refResult16.error)) {
+                  intermediateErrorMap16[`$.${i16}${errorKey.substring(1)}`] =
+                    refResult16.error[errorKey];
+                }
               }
+              intermediateResult16[i16] = refResult16.value;
             }
-            intermediateResult16[i16] = refResult16.value;
           }
         }
         if (Object.keys(intermediateErrorMap16).length) {
@@ -5102,29 +5130,33 @@ export function validateStructureExtendDefinition(value) {
         let intermediateValue12 = value["relations"];
 
         if (!Array.isArray(intermediateValue12)) {
-          intermediateValue12 = [intermediateValue12];
-        }
-        result["relations"] = [];
-        for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
-          if (
-            intermediateValue12[i12] === null ||
-            intermediateValue12[i12] === undefined
-          ) {
-            intermediateErrorMap12[`$.${i12}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult12 = validateStructureRelationDefinition(
-              intermediateValue12[i12],
-            );
+          errorMap[`$.relations`] = {
+            key: "validator.array",
+            value: intermediateValue12,
+          };
+        } else {
+          result["relations"] = [];
+          for (let i12 = 0; i12 < intermediateValue12.length; ++i12) {
+            if (
+              intermediateValue12[i12] === null ||
+              intermediateValue12[i12] === undefined
+            ) {
+              intermediateErrorMap12[`$.${i12}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult12 = validateStructureRelationDefinition(
+                intermediateValue12[i12],
+              );
 
-            if (refResult12.error) {
-              for (const errorKey of Object.keys(refResult12.error)) {
-                intermediateErrorMap12[`$.${i12}${errorKey.substring(1)}`] =
-                  refResult12.error[errorKey];
+              if (refResult12.error) {
+                for (const errorKey of Object.keys(refResult12.error)) {
+                  intermediateErrorMap12[`$.${i12}${errorKey.substring(1)}`] =
+                    refResult12.error[errorKey];
+                }
               }
+              intermediateResult12[i12] = refResult12.value;
             }
-            intermediateResult12[i12] = refResult12.value;
           }
         }
         if (Object.keys(intermediateErrorMap12).length) {
@@ -5747,32 +5779,36 @@ export function validateStructureFileDefinition(value) {
             let intermediateValue10 = value["validator"]["mimeTypes"];
 
             if (!Array.isArray(intermediateValue10)) {
-              intermediateValue10 = [intermediateValue10];
-            }
-            result["validator"]["mimeTypes"] = [];
-            for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-              if (
-                intermediateValue10[i10] === null ||
-                intermediateValue10[i10] === undefined
-              ) {
-                intermediateErrorMap10[`$.${i10}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString10 = intermediateValue10[i10];
-                if (typeof convertedString10 !== "string") {
+              errorMap[`$.validator.mimeTypes`] = {
+                key: "validator.array",
+                value: intermediateValue10,
+              };
+            } else {
+              result["validator"]["mimeTypes"] = [];
+              for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
+                if (
+                  intermediateValue10[i10] === null ||
+                  intermediateValue10[i10] === undefined
+                ) {
                   intermediateErrorMap10[`$.${i10}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString10.length < 1) {
+                  /** @type {string} */
+                  let convertedString10 = intermediateValue10[i10];
+                  if (typeof convertedString10 !== "string") {
                     intermediateErrorMap10[`$.${i10}`] = {
-                      key: "validator.length",
-                      minLength: 1,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult10[i10] = convertedString10;
+                    if (convertedString10.length < 1) {
+                      intermediateErrorMap10[`$.${i10}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult10[i10] = convertedString10;
+                    }
                   }
                 }
               }
@@ -6776,47 +6812,51 @@ export function validateStructureNumberDefinition(value) {
         let intermediateValue10 = value["oneOf"];
 
         if (!Array.isArray(intermediateValue10)) {
-          intermediateValue10 = [intermediateValue10];
-        }
-        result["oneOf"] = [];
-        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-          if (
-            intermediateValue10[i10] === null ||
-            intermediateValue10[i10] === undefined
-          ) {
-            intermediateErrorMap10[`$.${i10}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            let convertedNumber10 = intermediateValue10[i10];
+          errorMap[`$.oneOf`] = {
+            key: "validator.array",
+            value: intermediateValue10,
+          };
+        } else {
+          result["oneOf"] = [];
+          for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
             if (
-              typeof convertedNumber10 !== "number" &&
-              typeof convertedNumber10 === "string"
-            ) {
-              convertedNumber10 = Number(convertedNumber10);
-            }
-            if (
-              typeof convertedNumber10 !== "number" ||
-              isNaN(convertedNumber10) ||
-              !isFinite(convertedNumber10) ||
-              !Number.isInteger(convertedNumber10)
+              intermediateValue10[i10] === null ||
+              intermediateValue10[i10] === undefined
             ) {
               intermediateErrorMap10[`$.${i10}`] = {
-                key: "validator.number",
-                subType: "int",
-              };
-            } else if (convertedNumber10 < -9007199254740991) {
-              intermediateErrorMap10[`$.${i10}`] = {
-                key: "validator.range",
-                minValue: -9007199254740991,
-              };
-            } else if (convertedNumber10 > 9007199254740991) {
-              intermediateErrorMap10[`$.${i10}`] = {
-                key: "validator.range",
-                maxValue: 9007199254740991,
+                key: "validator.undefined",
               };
             } else {
-              intermediateResult10[i10] = convertedNumber10;
+              let convertedNumber10 = intermediateValue10[i10];
+              if (
+                typeof convertedNumber10 !== "number" &&
+                typeof convertedNumber10 === "string"
+              ) {
+                convertedNumber10 = Number(convertedNumber10);
+              }
+              if (
+                typeof convertedNumber10 !== "number" ||
+                isNaN(convertedNumber10) ||
+                !isFinite(convertedNumber10) ||
+                !Number.isInteger(convertedNumber10)
+              ) {
+                intermediateErrorMap10[`$.${i10}`] = {
+                  key: "validator.number",
+                  subType: "int",
+                };
+              } else if (convertedNumber10 < -9007199254740991) {
+                intermediateErrorMap10[`$.${i10}`] = {
+                  key: "validator.range",
+                  minValue: -9007199254740991,
+                };
+              } else if (convertedNumber10 > 9007199254740991) {
+                intermediateErrorMap10[`$.${i10}`] = {
+                  key: "validator.range",
+                  maxValue: 9007199254740991,
+                };
+              } else {
+                intermediateResult10[i10] = convertedNumber10;
+              }
             }
           }
         }
@@ -7593,29 +7633,33 @@ export function validateStructureObjectDefinition(value) {
         let intermediateValue14 = value["relations"];
 
         if (!Array.isArray(intermediateValue14)) {
-          intermediateValue14 = [intermediateValue14];
-        }
-        result["relations"] = [];
-        for (let i14 = 0; i14 < intermediateValue14.length; ++i14) {
-          if (
-            intermediateValue14[i14] === null ||
-            intermediateValue14[i14] === undefined
-          ) {
-            intermediateErrorMap14[`$.${i14}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult14 = validateStructureRelationDefinition(
-              intermediateValue14[i14],
-            );
+          errorMap[`$.relations`] = {
+            key: "validator.array",
+            value: intermediateValue14,
+          };
+        } else {
+          result["relations"] = [];
+          for (let i14 = 0; i14 < intermediateValue14.length; ++i14) {
+            if (
+              intermediateValue14[i14] === null ||
+              intermediateValue14[i14] === undefined
+            ) {
+              intermediateErrorMap14[`$.${i14}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult14 = validateStructureRelationDefinition(
+                intermediateValue14[i14],
+              );
 
-            if (refResult14.error) {
-              for (const errorKey of Object.keys(refResult14.error)) {
-                intermediateErrorMap14[`$.${i14}${errorKey.substring(1)}`] =
-                  refResult14.error[errorKey];
+              if (refResult14.error) {
+                for (const errorKey of Object.keys(refResult14.error)) {
+                  intermediateErrorMap14[`$.${i14}${errorKey.substring(1)}`] =
+                    refResult14.error[errorKey];
+                }
               }
+              intermediateResult14[i14] = refResult14.value;
             }
-            intermediateResult14[i14] = refResult14.value;
           }
         }
         if (Object.keys(intermediateErrorMap14).length) {
@@ -8105,32 +8149,36 @@ export function validateStructureOmitDefinition(value) {
         let intermediateValue10 = value["keys"];
 
         if (!Array.isArray(intermediateValue10)) {
-          intermediateValue10 = [intermediateValue10];
-        }
-        result["keys"] = [];
-        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-          if (
-            intermediateValue10[i10] === null ||
-            intermediateValue10[i10] === undefined
-          ) {
-            intermediateErrorMap10[`$.${i10}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString10 = intermediateValue10[i10];
-            if (typeof convertedString10 !== "string") {
+          errorMap[`$.keys`] = {
+            key: "validator.array",
+            value: intermediateValue10,
+          };
+        } else {
+          result["keys"] = [];
+          for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
+            if (
+              intermediateValue10[i10] === null ||
+              intermediateValue10[i10] === undefined
+            ) {
               intermediateErrorMap10[`$.${i10}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString10.length < 1) {
+              /** @type {string} */
+              let convertedString10 = intermediateValue10[i10];
+              if (typeof convertedString10 !== "string") {
                 intermediateErrorMap10[`$.${i10}`] = {
-                  key: "validator.length",
-                  minLength: 1,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult10[i10] = convertedString10;
+                if (convertedString10.length < 1) {
+                  intermediateErrorMap10[`$.${i10}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult10[i10] = convertedString10;
+                }
               }
             }
           }
@@ -8639,32 +8687,36 @@ export function validateStructurePickDefinition(value) {
         let intermediateValue10 = value["keys"];
 
         if (!Array.isArray(intermediateValue10)) {
-          intermediateValue10 = [intermediateValue10];
-        }
-        result["keys"] = [];
-        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-          if (
-            intermediateValue10[i10] === null ||
-            intermediateValue10[i10] === undefined
-          ) {
-            intermediateErrorMap10[`$.${i10}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString10 = intermediateValue10[i10];
-            if (typeof convertedString10 !== "string") {
+          errorMap[`$.keys`] = {
+            key: "validator.array",
+            value: intermediateValue10,
+          };
+        } else {
+          result["keys"] = [];
+          for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
+            if (
+              intermediateValue10[i10] === null ||
+              intermediateValue10[i10] === undefined
+            ) {
               intermediateErrorMap10[`$.${i10}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString10.length < 1) {
+              /** @type {string} */
+              let convertedString10 = intermediateValue10[i10];
+              if (typeof convertedString10 !== "string") {
                 intermediateErrorMap10[`$.${i10}`] = {
-                  key: "validator.length",
-                  minLength: 1,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult10[i10] = convertedString10;
+                if (convertedString10.length < 1) {
+                  intermediateErrorMap10[`$.${i10}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult10[i10] = convertedString10;
+                }
               }
             }
           }
@@ -9332,37 +9384,41 @@ export function validateStructureStringDefinition(value) {
               value["validator"]["disallowedCharacters"];
 
             if (!Array.isArray(intermediateValue17)) {
-              intermediateValue17 = [intermediateValue17];
-            }
-            result["validator"]["disallowedCharacters"] = [];
-            for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
-              if (
-                intermediateValue17[i17] === null ||
-                intermediateValue17[i17] === undefined
-              ) {
-                intermediateErrorMap17[`$.${i17}`] = {
-                  key: "validator.undefined",
-                };
-              } else {
-                /** @type {string} */
-                let convertedString17 = intermediateValue17[i17];
-                if (typeof convertedString17 !== "string") {
+              errorMap[`$.validator.disallowedCharacters`] = {
+                key: "validator.array",
+                value: intermediateValue17,
+              };
+            } else {
+              result["validator"]["disallowedCharacters"] = [];
+              for (let i17 = 0; i17 < intermediateValue17.length; ++i17) {
+                if (
+                  intermediateValue17[i17] === null ||
+                  intermediateValue17[i17] === undefined
+                ) {
                   intermediateErrorMap17[`$.${i17}`] = {
-                    key: "validator.string",
+                    key: "validator.undefined",
                   };
                 } else {
-                  if (convertedString17.length < 1) {
+                  /** @type {string} */
+                  let convertedString17 = intermediateValue17[i17];
+                  if (typeof convertedString17 !== "string") {
                     intermediateErrorMap17[`$.${i17}`] = {
-                      key: "validator.length",
-                      minLength: 1,
-                    };
-                  } else if (convertedString17.length > 2) {
-                    intermediateErrorMap17[`$.${i17}`] = {
-                      key: "validator.length",
-                      maxLength: 2,
+                      key: "validator.string",
                     };
                   } else {
-                    intermediateResult17[i17] = convertedString17;
+                    if (convertedString17.length < 1) {
+                      intermediateErrorMap17[`$.${i17}`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else if (convertedString17.length > 2) {
+                      intermediateErrorMap17[`$.${i17}`] = {
+                        key: "validator.length",
+                        maxLength: 2,
+                      };
+                    } else {
+                      intermediateResult17[i17] = convertedString17;
+                    }
                   }
                 }
               }
@@ -9391,32 +9447,36 @@ export function validateStructureStringDefinition(value) {
         let intermediateValue10 = value["oneOf"];
 
         if (!Array.isArray(intermediateValue10)) {
-          intermediateValue10 = [intermediateValue10];
-        }
-        result["oneOf"] = [];
-        for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
-          if (
-            intermediateValue10[i10] === null ||
-            intermediateValue10[i10] === undefined
-          ) {
-            intermediateErrorMap10[`$.${i10}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString10 = intermediateValue10[i10];
-            if (typeof convertedString10 !== "string") {
+          errorMap[`$.oneOf`] = {
+            key: "validator.array",
+            value: intermediateValue10,
+          };
+        } else {
+          result["oneOf"] = [];
+          for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
+            if (
+              intermediateValue10[i10] === null ||
+              intermediateValue10[i10] === undefined
+            ) {
               intermediateErrorMap10[`$.${i10}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString10.length < 1) {
+              /** @type {string} */
+              let convertedString10 = intermediateValue10[i10];
+              if (typeof convertedString10 !== "string") {
                 intermediateErrorMap10[`$.${i10}`] = {
-                  key: "validator.length",
-                  minLength: 1,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult10[i10] = convertedString10;
+                if (convertedString10.length < 1) {
+                  intermediateErrorMap10[`$.${i10}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult10[i10] = convertedString10;
+                }
               }
             }
           }
@@ -12268,32 +12328,36 @@ export function validateStructureRouteDefinition(value) {
         let intermediateValue13 = value["tags"];
 
         if (!Array.isArray(intermediateValue13)) {
-          intermediateValue13 = [intermediateValue13];
-        }
-        result["tags"] = [];
-        for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
-          if (
-            intermediateValue13[i13] === null ||
-            intermediateValue13[i13] === undefined
-          ) {
-            intermediateErrorMap13[`$.${i13}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            /** @type {string} */
-            let convertedString13 = intermediateValue13[i13];
-            if (typeof convertedString13 !== "string") {
+          errorMap[`$.tags`] = {
+            key: "validator.array",
+            value: intermediateValue13,
+          };
+        } else {
+          result["tags"] = [];
+          for (let i13 = 0; i13 < intermediateValue13.length; ++i13) {
+            if (
+              intermediateValue13[i13] === null ||
+              intermediateValue13[i13] === undefined
+            ) {
               intermediateErrorMap13[`$.${i13}`] = {
-                key: "validator.string",
+                key: "validator.undefined",
               };
             } else {
-              if (convertedString13.length < 1) {
+              /** @type {string} */
+              let convertedString13 = intermediateValue13[i13];
+              if (typeof convertedString13 !== "string") {
                 intermediateErrorMap13[`$.${i13}`] = {
-                  key: "validator.length",
-                  minLength: 1,
+                  key: "validator.string",
                 };
               } else {
-                intermediateResult13[i13] = convertedString13;
+                if (convertedString13.length < 1) {
+                  intermediateErrorMap13[`$.${i13}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult13[i13] = convertedString13;
+                }
               }
             }
           }
@@ -12396,29 +12460,33 @@ export function validateStructureRouteDefinition(value) {
         let intermediateValue19 = value["invalidations"];
 
         if (!Array.isArray(intermediateValue19)) {
-          intermediateValue19 = [intermediateValue19];
-        }
-        result["invalidations"] = [];
-        for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
-          if (
-            intermediateValue19[i19] === null ||
-            intermediateValue19[i19] === undefined
-          ) {
-            intermediateErrorMap19[`$.${i19}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult19 = validateStructureRouteInvalidationDefinition(
-              intermediateValue19[i19],
-            );
+          errorMap[`$.invalidations`] = {
+            key: "validator.array",
+            value: intermediateValue19,
+          };
+        } else {
+          result["invalidations"] = [];
+          for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
+            if (
+              intermediateValue19[i19] === null ||
+              intermediateValue19[i19] === undefined
+            ) {
+              intermediateErrorMap19[`$.${i19}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult19 = validateStructureRouteInvalidationDefinition(
+                intermediateValue19[i19],
+              );
 
-            if (refResult19.error) {
-              for (const errorKey of Object.keys(refResult19.error)) {
-                intermediateErrorMap19[`$.${i19}${errorKey.substring(1)}`] =
-                  refResult19.error[errorKey];
+              if (refResult19.error) {
+                for (const errorKey of Object.keys(refResult19.error)) {
+                  intermediateErrorMap19[`$.${i19}${errorKey.substring(1)}`] =
+                    refResult19.error[errorKey];
+                }
               }
+              intermediateResult19[i19] = refResult19.value;
             }
-            intermediateResult19[i19] = refResult19.value;
           }
         }
         if (Object.keys(intermediateErrorMap19).length) {
@@ -12784,38 +12852,44 @@ export function validateStructureRouteInvalidationDefinition(value) {
                           ];
 
                         if (!Array.isArray(intermediateValue11)) {
-                          intermediateValue11 = [intermediateValue11];
-                        }
-                        result["properties"]["specification"]["params"][
-                          genericKeyResult8
-                        ] = [];
-                        for (
-                          let i11 = 0;
-                          i11 < intermediateValue11.length;
-                          ++i11
-                        ) {
-                          if (
-                            intermediateValue11[i11] === null ||
-                            intermediateValue11[i11] === undefined
+                          errorMap[
+                            `$.properties.specification.params.${genericKeyResult8}`
+                          ] = {
+                            key: "validator.array",
+                            value: intermediateValue11,
+                          };
+                        } else {
+                          result["properties"]["specification"]["params"][
+                            genericKeyResult8
+                          ] = [];
+                          for (
+                            let i11 = 0;
+                            i11 < intermediateValue11.length;
+                            ++i11
                           ) {
-                            intermediateErrorMap11[`$.${i11}`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString11 = intermediateValue11[i11];
-                            if (typeof convertedString11 !== "string") {
+                            if (
+                              intermediateValue11[i11] === null ||
+                              intermediateValue11[i11] === undefined
+                            ) {
                               intermediateErrorMap11[`$.${i11}`] = {
-                                key: "validator.string",
+                                key: "validator.undefined",
                               };
                             } else {
-                              if (convertedString11.length < 1) {
+                              /** @type {string} */
+                              let convertedString11 = intermediateValue11[i11];
+                              if (typeof convertedString11 !== "string") {
                                 intermediateErrorMap11[`$.${i11}`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.string",
                                 };
                               } else {
-                                intermediateResult11[i11] = convertedString11;
+                                if (convertedString11.length < 1) {
+                                  intermediateErrorMap11[`$.${i11}`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult11[i11] = convertedString11;
+                                }
                               }
                             }
                           }
@@ -12935,38 +13009,44 @@ export function validateStructureRouteInvalidationDefinition(value) {
                           ];
 
                         if (!Array.isArray(intermediateValue12)) {
-                          intermediateValue12 = [intermediateValue12];
-                        }
-                        result["properties"]["specification"]["query"][
-                          genericKeyResult9
-                        ] = [];
-                        for (
-                          let i12 = 0;
-                          i12 < intermediateValue12.length;
-                          ++i12
-                        ) {
-                          if (
-                            intermediateValue12[i12] === null ||
-                            intermediateValue12[i12] === undefined
+                          errorMap[
+                            `$.properties.specification.query.${genericKeyResult9}`
+                          ] = {
+                            key: "validator.array",
+                            value: intermediateValue12,
+                          };
+                        } else {
+                          result["properties"]["specification"]["query"][
+                            genericKeyResult9
+                          ] = [];
+                          for (
+                            let i12 = 0;
+                            i12 < intermediateValue12.length;
+                            ++i12
                           ) {
-                            intermediateErrorMap12[`$.${i12}`] = {
-                              key: "validator.undefined",
-                            };
-                          } else {
-                            /** @type {string} */
-                            let convertedString12 = intermediateValue12[i12];
-                            if (typeof convertedString12 !== "string") {
+                            if (
+                              intermediateValue12[i12] === null ||
+                              intermediateValue12[i12] === undefined
+                            ) {
                               intermediateErrorMap12[`$.${i12}`] = {
-                                key: "validator.string",
+                                key: "validator.undefined",
                               };
                             } else {
-                              if (convertedString12.length < 1) {
+                              /** @type {string} */
+                              let convertedString12 = intermediateValue12[i12];
+                              if (typeof convertedString12 !== "string") {
                                 intermediateErrorMap12[`$.${i12}`] = {
-                                  key: "validator.length",
-                                  minLength: 1,
+                                  key: "validator.string",
                                 };
                               } else {
-                                intermediateResult12[i12] = convertedString12;
+                                if (convertedString12.length < 1) {
+                                  intermediateErrorMap12[`$.${i12}`] = {
+                                    key: "validator.length",
+                                    minLength: 1,
+                                  };
+                                } else {
+                                  intermediateResult12[i12] = convertedString12;
+                                }
                               }
                             }
                           }

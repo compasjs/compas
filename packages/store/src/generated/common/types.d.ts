@@ -74,29 +74,22 @@ export type StoreFileInput = {
 
 export type StoreFileWhere = {
   $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
-  $or?: StoreFileWhere[] | StoreFileWhere | undefined;
+  $or?: StoreFileWhere[] | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?:
-    | string[]
-    | string
-    | (any | import("@compas/store").QueryPart<any>)
-    | undefined;
+  idIn?: string[] | (any | import("@compas/store").QueryPart<any>) | undefined;
   idNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   bucketName?: string | undefined;
   bucketNameNotEqual?: string | undefined;
   bucketNameIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   bucketNameNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   bucketNameLike?: string | undefined;
@@ -106,16 +99,10 @@ export type StoreFileWhere = {
   createdAtNotEqual?: Date | string | number | undefined;
   createdAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
@@ -124,16 +111,10 @@ export type StoreFileWhere = {
   updatedAtNotEqual?: Date | string | number | undefined;
   updatedAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
@@ -173,14 +154,6 @@ export type StoreFileWhereValidated = {
 
 export type StoreFileOrderBy =
   | (any | import("@compas/store").QueryPart<any>)
-  | ("id" | "bucketName" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "bucketName"
-  | "createdAt"
-  | "updatedAt";
-
-export type StoreFileOrderByValidated =
-  | import("@compas/store").QueryPart<any>
   | ("id" | "bucketName" | "createdAt" | "updatedAt")[];
 
 export type StoreFileOrderBySpec = {
@@ -202,14 +175,6 @@ export type StoreFileReturning =
       | "createdAt"
       | "updatedAt"
     )[]
-  | "id"
-  | "contentLength"
-  | "bucketName"
-  | "contentType"
-  | "name"
-  | "meta"
-  | "createdAt"
-  | "updatedAt"
   | undefined;
 
 export type StoreFileQueryBuilder = {
@@ -221,27 +186,13 @@ export type StoreFileQueryBuilder = {
   select?: StoreFileReturning | undefined;
 };
 
-export type StoreFileReturningValidated =
-  | "*"
-  | (
-      | "id"
-      | "contentLength"
-      | "bucketName"
-      | "contentType"
-      | "name"
-      | "meta"
-      | "createdAt"
-      | "updatedAt"
-    )[]
-  | undefined;
-
 export type StoreFileQueryBuilderValidated = {
   where?: StoreFileWhereValidated | undefined;
-  orderBy?: StoreFileOrderByValidated | undefined;
+  orderBy?: StoreFileOrderBy | undefined;
   orderBySpec?: StoreFileOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreFileReturningValidated;
+  select: StoreFileReturning;
 };
 
 export type QueryResultStoreFile = {
@@ -339,7 +290,7 @@ export type StoreFileInsertPartialValidated = {
 
 export type StoreFileInsertValidated = {
   insert: StoreFileInsertPartialValidated[];
-  returning?: StoreFileReturningValidated | undefined;
+  returning?: StoreFileReturning | undefined;
 };
 
 export type StoreFileUpdatePartial = {
@@ -379,13 +330,13 @@ export type StoreFileUpdatePartial = {
   meta?:
     | {
         $set: {
-          path: (number | string)[] | number | string;
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (number | string)[] | number | string;
+          path: (number | string)[];
         };
       }
     | StoreFileMetaInput
@@ -491,7 +442,7 @@ export type StoreFileUpdatePartialValidated = {
 export type StoreFileUpdateValidated = {
   update: StoreFileUpdatePartialValidated;
   where: StoreFileWhereValidated;
-  returning?: StoreFileReturningValidated | undefined;
+  returning?: StoreFileReturning | undefined;
 };
 
 /**
@@ -548,17 +499,12 @@ export type StoreJobInput = {
 
 export type StoreJobWhere = {
   $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
-  $or?: StoreJobWhere[] | StoreJobWhere | undefined;
+  $or?: StoreJobWhere[] | undefined;
   id?: number | undefined;
   idNotEqual?: number | undefined;
-  idIn?:
-    | number[]
-    | number
-    | (any | import("@compas/store").QueryPart<any>)
-    | undefined;
+  idIn?: number[] | (any | import("@compas/store").QueryPart<any>) | undefined;
   idNotIn?:
     | number[]
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   idGreaterThan?: number | undefined;
@@ -570,12 +516,10 @@ export type StoreJobWhere = {
   nameNotEqual?: string | undefined;
   nameIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   nameNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   nameLike?: string | undefined;
@@ -585,16 +529,10 @@ export type StoreJobWhere = {
   scheduledAtNotEqual?: Date | string | number | undefined;
   scheduledAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   scheduledAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   scheduledAtGreaterThan?: Date | string | number | undefined;
@@ -605,16 +543,10 @@ export type StoreJobWhere = {
   createdAtNotEqual?: Date | string | number | undefined;
   createdAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
@@ -623,16 +555,10 @@ export type StoreJobWhere = {
   updatedAtNotEqual?: Date | string | number | undefined;
   updatedAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
@@ -685,16 +611,6 @@ export type StoreJobWhereValidated = {
 
 export type StoreJobOrderBy =
   | (any | import("@compas/store").QueryPart<any>)
-  | ("id" | "isComplete" | "name" | "scheduledAt" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "isComplete"
-  | "name"
-  | "scheduledAt"
-  | "createdAt"
-  | "updatedAt";
-
-export type StoreJobOrderByValidated =
-  | import("@compas/store").QueryPart<any>
   | (
       | "id"
       | "isComplete"
@@ -737,16 +653,6 @@ export type StoreJobReturning =
       | "createdAt"
       | "updatedAt"
     )[]
-  | "id"
-  | "isComplete"
-  | "handlerTimeout"
-  | "priority"
-  | "retryCount"
-  | "name"
-  | "scheduledAt"
-  | "data"
-  | "createdAt"
-  | "updatedAt"
   | undefined;
 
 export type StoreJobQueryBuilder = {
@@ -758,29 +664,13 @@ export type StoreJobQueryBuilder = {
   select?: StoreJobReturning | undefined;
 };
 
-export type StoreJobReturningValidated =
-  | "*"
-  | (
-      | "id"
-      | "isComplete"
-      | "handlerTimeout"
-      | "priority"
-      | "retryCount"
-      | "name"
-      | "scheduledAt"
-      | "data"
-      | "createdAt"
-      | "updatedAt"
-    )[]
-  | undefined;
-
 export type StoreJobQueryBuilderValidated = {
   where?: StoreJobWhereValidated | undefined;
-  orderBy?: StoreJobOrderByValidated | undefined;
+  orderBy?: StoreJobOrderBy | undefined;
   orderBySpec?: StoreJobOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreJobReturningValidated;
+  select: StoreJobReturning;
 };
 
 export type QueryResultStoreJob = {
@@ -874,7 +764,7 @@ export type StoreJobInsertPartialValidated = {
 
 export type StoreJobInsertValidated = {
   insert: StoreJobInsertPartialValidated[];
-  returning?: StoreJobReturningValidated | undefined;
+  returning?: StoreJobReturning | undefined;
 };
 
 export type StoreJobUpdatePartial = {
@@ -956,13 +846,13 @@ export type StoreJobUpdatePartial = {
   data?:
     | {
         $set: {
-          path: (number | string)[] | number | string;
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (number | string)[] | number | string;
+          path: (number | string)[];
         };
       }
     | any
@@ -1098,7 +988,7 @@ export type StoreJobUpdatePartialValidated = {
 export type StoreJobUpdateValidated = {
   update: StoreJobUpdatePartialValidated;
   where: StoreJobWhereValidated;
-  returning?: StoreJobReturningValidated | undefined;
+  returning?: StoreJobReturning | undefined;
 };
 
 /**
@@ -1195,45 +1085,32 @@ export type StoreSessionStoreInput = {
 
 export type StoreSessionStoreTokenWhere = {
   $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
-  $or?: StoreSessionStoreTokenWhere[] | StoreSessionStoreTokenWhere | undefined;
+  $or?: StoreSessionStoreTokenWhere[] | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?:
-    | string[]
-    | string
-    | (any | import("@compas/store").QueryPart<any>)
-    | undefined;
+  idIn?: string[] | (any | import("@compas/store").QueryPart<any>) | undefined;
   idNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   session?: string | undefined;
   sessionNotEqual?: string | undefined;
   sessionIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   sessionNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   expiresAt?: Date | string | number | undefined;
   expiresAtNotEqual?: Date | string | number | undefined;
   expiresAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   expiresAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   expiresAtGreaterThan?: Date | string | number | undefined;
@@ -1242,12 +1119,10 @@ export type StoreSessionStoreTokenWhere = {
   refreshTokenNotEqual?: string | undefined;
   refreshTokenIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   refreshTokenNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   refreshTokenIsNull?: boolean | "true" | "false" | undefined;
@@ -1256,16 +1131,10 @@ export type StoreSessionStoreTokenWhere = {
   revokedAtNotEqual?: Date | string | number | undefined;
   revokedAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   revokedAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   revokedAtGreaterThan?: Date | string | number | undefined;
@@ -1298,33 +1167,22 @@ export type StoreSessionStoreTokenWhere = {
 
 export type StoreSessionStoreWhere = {
   $raw?: (any | import("@compas/store").QueryPart<any>) | undefined;
-  $or?: StoreSessionStoreWhere[] | StoreSessionStoreWhere | undefined;
+  $or?: StoreSessionStoreWhere[] | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?:
-    | string[]
-    | string
-    | (any | import("@compas/store").QueryPart<any>)
-    | undefined;
+  idIn?: string[] | (any | import("@compas/store").QueryPart<any>) | undefined;
   idNotIn?:
     | string[]
-    | string
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAt?: Date | string | number | undefined;
   createdAtNotEqual?: Date | string | number | undefined;
   createdAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
@@ -1333,16 +1191,10 @@ export type StoreSessionStoreWhere = {
   updatedAtNotEqual?: Date | string | number | undefined;
   updatedAtIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtNotIn?:
     | (Date | string | number)[]
-    | Date
-    | string
-    | number
     | (any | import("@compas/store").QueryPart<any>)
     | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
@@ -1449,13 +1301,6 @@ export type StoreSessionStoreWhereValidated = {
 
 export type StoreSessionStoreOrderBy =
   | (any | import("@compas/store").QueryPart<any>)
-  | ("id" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "createdAt"
-  | "updatedAt";
-
-export type StoreSessionStoreOrderByValidated =
-  | import("@compas/store").QueryPart<any>
   | ("id" | "createdAt" | "updatedAt")[];
 
 export type StoreSessionStoreOrderBySpec = {
@@ -1467,22 +1312,11 @@ export type StoreSessionStoreOrderBySpec = {
 export type StoreSessionStoreReturning =
   | "*"
   | ("id" | "checksum" | "revokedAt" | "data" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "checksum"
-  | "revokedAt"
-  | "data"
-  | "createdAt"
-  | "updatedAt"
   | undefined;
 
 export type StoreSessionStoreTokenOrderBy =
   | (any | import("@compas/store").QueryPart<any>)
-  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[]
-  | "id"
-  | "session"
-  | "expiresAt"
-  | "refreshToken"
-  | "revokedAt";
+  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
 
 export type StoreSessionStoreTokenOrderBySpec = {
   id?: "ASC" | "DESC" | undefined;
@@ -1512,12 +1346,6 @@ export type StoreSessionStoreTokenReturning =
       | "revokedAt"
       | "createdAt"
     )[]
-  | "id"
-  | "session"
-  | "expiresAt"
-  | "refreshToken"
-  | "revokedAt"
-  | "createdAt"
   | undefined;
 
 export type StoreSessionStoreTokenQueryBuilder = {
@@ -1542,34 +1370,13 @@ export type StoreSessionStoreQueryBuilder = {
   accessTokens?: StoreSessionStoreTokenQueryBuilder | undefined;
 };
 
-export type StoreSessionStoreReturningValidated =
-  | "*"
-  | ("id" | "checksum" | "revokedAt" | "data" | "createdAt" | "updatedAt")[]
-  | undefined;
-
-export type StoreSessionStoreTokenOrderByValidated =
-  | import("@compas/store").QueryPart<any>
-  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
-
-export type StoreSessionStoreTokenReturningValidated =
-  | "*"
-  | (
-      | "id"
-      | "session"
-      | "expiresAt"
-      | "refreshToken"
-      | "revokedAt"
-      | "createdAt"
-    )[]
-  | undefined;
-
 export type StoreSessionStoreTokenQueryBuilderValidated = {
   where?: StoreSessionStoreTokenWhereValidated | undefined;
-  orderBy?: StoreSessionStoreTokenOrderByValidated | undefined;
+  orderBy?: StoreSessionStoreTokenOrderBy | undefined;
   orderBySpec?: StoreSessionStoreTokenOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreSessionStoreTokenReturningValidated;
+  select: StoreSessionStoreTokenReturning;
   refreshToken?: StoreSessionStoreTokenQueryBuilderValidated | undefined;
   session?: StoreSessionStoreQueryBuilderValidated | undefined;
   accessToken?: StoreSessionStoreTokenQueryBuilderValidated | undefined;
@@ -1577,11 +1384,11 @@ export type StoreSessionStoreTokenQueryBuilderValidated = {
 
 export type StoreSessionStoreQueryBuilderValidated = {
   where?: StoreSessionStoreWhereValidated | undefined;
-  orderBy?: StoreSessionStoreOrderByValidated | undefined;
+  orderBy?: StoreSessionStoreOrderBy | undefined;
   orderBySpec?: StoreSessionStoreOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreSessionStoreReturningValidated;
+  select: StoreSessionStoreReturning;
   accessTokens?: StoreSessionStoreTokenQueryBuilderValidated | undefined;
 };
 
@@ -1650,10 +1457,7 @@ export type QueryResultStoreSessionStoreInput = {
    * Automatically generated 'updatedAt', containing an ISO timestamp.
    */
   updatedAt: Date | string | number;
-  accessTokens?:
-    | QueryResultStoreSessionStoreTokenInput[]
-    | QueryResultStoreSessionStoreTokenInput
-    | undefined;
+  accessTokens?: QueryResultStoreSessionStoreTokenInput[] | undefined;
 };
 
 export type StoreSessionStoreInsertPartial = {
@@ -1703,7 +1507,7 @@ export type StoreSessionStoreInsertPartialValidated = {
 
 export type StoreSessionStoreInsertValidated = {
   insert: StoreSessionStoreInsertPartialValidated[];
-  returning?: StoreSessionStoreReturningValidated | undefined;
+  returning?: StoreSessionStoreReturning | undefined;
 };
 
 export type StoreSessionStoreUpdatePartial = {
@@ -1728,13 +1532,13 @@ export type StoreSessionStoreUpdatePartial = {
   data?:
     | {
         $set: {
-          path: (number | string)[] | number | string;
+          path: (number | string)[];
           value: any;
         };
       }
     | {
         $remove: {
-          path: (number | string)[] | number | string;
+          path: (number | string)[];
         };
       }
     | any
@@ -1823,7 +1627,7 @@ export type StoreSessionStoreUpdatePartialValidated = {
 export type StoreSessionStoreUpdateValidated = {
   update: StoreSessionStoreUpdatePartialValidated;
   where: StoreSessionStoreWhereValidated;
-  returning?: StoreSessionStoreReturningValidated | undefined;
+  returning?: StoreSessionStoreReturning | undefined;
 };
 
 export type StoreSessionStoreTokenInsertPartial = {
@@ -1875,7 +1679,7 @@ export type StoreSessionStoreTokenInsertPartialValidated = {
 
 export type StoreSessionStoreTokenInsertValidated = {
   insert: StoreSessionStoreTokenInsertPartialValidated[];
-  returning?: StoreSessionStoreTokenReturningValidated | undefined;
+  returning?: StoreSessionStoreTokenReturning | undefined;
 };
 
 export type StoreSessionStoreTokenUpdatePartial = {
@@ -1959,7 +1763,7 @@ export type StoreSessionStoreTokenUpdatePartialValidated = {
 export type StoreSessionStoreTokenUpdateValidated = {
   update: StoreSessionStoreTokenUpdatePartialValidated;
   where: StoreSessionStoreTokenWhereValidated;
-  returning?: StoreSessionStoreTokenReturningValidated | undefined;
+  returning?: StoreSessionStoreTokenReturning | undefined;
 };
 
 export type StoreFileResponse = {
@@ -2035,52 +1839,28 @@ export type StoreFileWhereValidated_1 = {
 
 export type StoreFileWhereInput = {
   $raw?: any | undefined;
-  $or?: StoreFileWhereInput[] | StoreFileWhereInput | undefined;
+  $or?: StoreFileWhereInput[] | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?: string[] | string | any | undefined;
-  idNotIn?: string[] | string | any | undefined;
+  idIn?: string[] | any | undefined;
+  idNotIn?: string[] | any | undefined;
   bucketName?: string | undefined;
   bucketNameNotEqual?: string | undefined;
-  bucketNameIn?: string[] | string | any | undefined;
-  bucketNameNotIn?: string[] | string | any | undefined;
+  bucketNameIn?: string[] | any | undefined;
+  bucketNameNotIn?: string[] | any | undefined;
   bucketNameLike?: string | undefined;
   bucketNameILike?: string | undefined;
   bucketNameNotLike?: string | undefined;
   createdAt?: Date | string | number | undefined;
   createdAtNotEqual?: Date | string | number | undefined;
-  createdAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  createdAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  createdAtIn?: (Date | string | number)[] | any | undefined;
+  createdAtNotIn?: (Date | string | number)[] | any | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
   createdAtLowerThan?: Date | string | number | undefined;
   updatedAt?: Date | string | number | undefined;
   updatedAtNotEqual?: Date | string | number | undefined;
-  updatedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  updatedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  updatedAtIn?: (Date | string | number)[] | any | undefined;
+  updatedAtNotIn?: (Date | string | number)[] | any | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
   updatedAtLowerThan?: Date | string | number | undefined;
 };
@@ -2128,11 +1908,11 @@ export type StoreJobWhereValidated_1 = {
 
 export type StoreJobWhereInput = {
   $raw?: any | undefined;
-  $or?: StoreJobWhereInput[] | StoreJobWhereInput | undefined;
+  $or?: StoreJobWhereInput[] | undefined;
   id?: number | undefined;
   idNotEqual?: number | undefined;
-  idIn?: number[] | number | any | undefined;
-  idNotIn?: number[] | number | any | undefined;
+  idIn?: number[] | any | undefined;
+  idNotIn?: number[] | any | undefined;
   idGreaterThan?: number | undefined;
   idLowerThan?: number | undefined;
   isComplete?: boolean | "true" | "false" | undefined;
@@ -2140,65 +1920,29 @@ export type StoreJobWhereInput = {
   isCompleteIsNotNull?: boolean | "true" | "false" | undefined;
   name?: string | undefined;
   nameNotEqual?: string | undefined;
-  nameIn?: string[] | string | any | undefined;
-  nameNotIn?: string[] | string | any | undefined;
+  nameIn?: string[] | any | undefined;
+  nameNotIn?: string[] | any | undefined;
   nameLike?: string | undefined;
   nameILike?: string | undefined;
   nameNotLike?: string | undefined;
   scheduledAt?: Date | string | number | undefined;
   scheduledAtNotEqual?: Date | string | number | undefined;
-  scheduledAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  scheduledAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  scheduledAtIn?: (Date | string | number)[] | any | undefined;
+  scheduledAtNotIn?: (Date | string | number)[] | any | undefined;
   scheduledAtGreaterThan?: Date | string | number | undefined;
   scheduledAtLowerThan?: Date | string | number | undefined;
   scheduledAtIsNull?: boolean | "true" | "false" | undefined;
   scheduledAtIsNotNull?: boolean | "true" | "false" | undefined;
   createdAt?: Date | string | number | undefined;
   createdAtNotEqual?: Date | string | number | undefined;
-  createdAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  createdAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  createdAtIn?: (Date | string | number)[] | any | undefined;
+  createdAtNotIn?: (Date | string | number)[] | any | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
   createdAtLowerThan?: Date | string | number | undefined;
   updatedAt?: Date | string | number | undefined;
   updatedAtNotEqual?: Date | string | number | undefined;
-  updatedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  updatedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  updatedAtIn?: (Date | string | number)[] | any | undefined;
+  updatedAtNotIn?: (Date | string | number)[] | any | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
   updatedAtLowerThan?: Date | string | number | undefined;
 };
@@ -2289,58 +2033,31 @@ export type StoreSessionStoreWhereValidated_1 = {
 
 export type StoreSessionStoreTokenWhereInput = {
   $raw?: any | undefined;
-  $or?:
-    | StoreSessionStoreTokenWhereInput[]
-    | StoreSessionStoreTokenWhereInput
-    | undefined;
+  $or?: StoreSessionStoreTokenWhereInput[] | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?: string[] | string | any | undefined;
-  idNotIn?: string[] | string | any | undefined;
+  idIn?: string[] | any | undefined;
+  idNotIn?: string[] | any | undefined;
   session?: string | undefined;
   sessionNotEqual?: string | undefined;
-  sessionIn?: string[] | string | any | undefined;
-  sessionNotIn?: string[] | string | any | undefined;
+  sessionIn?: string[] | any | undefined;
+  sessionNotIn?: string[] | any | undefined;
   expiresAt?: Date | string | number | undefined;
   expiresAtNotEqual?: Date | string | number | undefined;
-  expiresAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  expiresAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  expiresAtIn?: (Date | string | number)[] | any | undefined;
+  expiresAtNotIn?: (Date | string | number)[] | any | undefined;
   expiresAtGreaterThan?: Date | string | number | undefined;
   expiresAtLowerThan?: Date | string | number | undefined;
   refreshToken?: string | undefined;
   refreshTokenNotEqual?: string | undefined;
-  refreshTokenIn?: string[] | string | any | undefined;
-  refreshTokenNotIn?: string[] | string | any | undefined;
+  refreshTokenIn?: string[] | any | undefined;
+  refreshTokenNotIn?: string[] | any | undefined;
   refreshTokenIsNull?: boolean | "true" | "false" | undefined;
   refreshTokenIsNotNull?: boolean | "true" | "false" | undefined;
   revokedAt?: Date | string | number | undefined;
   revokedAtNotEqual?: Date | string | number | undefined;
-  revokedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  revokedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  revokedAtIn?: (Date | string | number)[] | any | undefined;
+  revokedAtNotIn?: (Date | string | number)[] | any | undefined;
   revokedAtGreaterThan?: Date | string | number | undefined;
   revokedAtLowerThan?: Date | string | number | undefined;
   revokedAtIsNull?: boolean | "true" | "false" | undefined;
@@ -2371,45 +2088,21 @@ export type StoreSessionStoreTokenWhereInput = {
 
 export type StoreSessionStoreWhereInput = {
   $raw?: any | undefined;
-  $or?: StoreSessionStoreWhereInput[] | StoreSessionStoreWhereInput | undefined;
+  $or?: StoreSessionStoreWhereInput[] | undefined;
   id?: string | undefined;
   idNotEqual?: string | undefined;
-  idIn?: string[] | string | any | undefined;
-  idNotIn?: string[] | string | any | undefined;
+  idIn?: string[] | any | undefined;
+  idNotIn?: string[] | any | undefined;
   createdAt?: Date | string | number | undefined;
   createdAtNotEqual?: Date | string | number | undefined;
-  createdAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  createdAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  createdAtIn?: (Date | string | number)[] | any | undefined;
+  createdAtNotIn?: (Date | string | number)[] | any | undefined;
   createdAtGreaterThan?: Date | string | number | undefined;
   createdAtLowerThan?: Date | string | number | undefined;
   updatedAt?: Date | string | number | undefined;
   updatedAtNotEqual?: Date | string | number | undefined;
-  updatedAtIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
-  updatedAtNotIn?:
-    | (Date | string | number)[]
-    | Date
-    | string
-    | number
-    | any
-    | undefined;
+  updatedAtIn?: (Date | string | number)[] | any | undefined;
+  updatedAtNotIn?: (Date | string | number)[] | any | undefined;
   updatedAtGreaterThan?: Date | string | number | undefined;
   updatedAtLowerThan?: Date | string | number | undefined;
   viaAccessTokens?:
@@ -2425,7 +2118,7 @@ export type StoreSessionStoreWhereInput = {
 export type StoreFileUpdateValidated_1 = {
   update: StoreFileUpdatePartialValidated;
   where: StoreFileWhereValidated_1;
-  returning?: StoreFileReturningValidated | undefined;
+  returning?: StoreFileReturning | undefined;
 };
 
 export type StoreFileUpdateInput = {
@@ -2437,7 +2130,7 @@ export type StoreFileUpdateInput = {
 export type StoreJobUpdateValidated_1 = {
   update: StoreJobUpdatePartialValidated;
   where: StoreJobWhereValidated_1;
-  returning?: StoreJobReturningValidated | undefined;
+  returning?: StoreJobReturning | undefined;
 };
 
 export type StoreJobUpdateInput = {
@@ -2449,7 +2142,7 @@ export type StoreJobUpdateInput = {
 export type StoreSessionStoreUpdateValidated_1 = {
   update: StoreSessionStoreUpdatePartialValidated;
   where: StoreSessionStoreWhereValidated_1;
-  returning?: StoreSessionStoreReturningValidated | undefined;
+  returning?: StoreSessionStoreReturning | undefined;
 };
 
 export type StoreSessionStoreUpdateInput = {
@@ -2461,7 +2154,7 @@ export type StoreSessionStoreUpdateInput = {
 export type StoreSessionStoreTokenUpdateValidated_1 = {
   update: StoreSessionStoreTokenUpdatePartialValidated;
   where: StoreSessionStoreTokenWhereValidated_1;
-  returning?: StoreSessionStoreTokenReturningValidated | undefined;
+  returning?: StoreSessionStoreTokenReturning | undefined;
 };
 
 export type StoreSessionStoreTokenUpdateInput = {
@@ -2470,19 +2163,11 @@ export type StoreSessionStoreTokenUpdateInput = {
   returning?: StoreSessionStoreTokenReturning | undefined;
 };
 
-export type StoreFileOrderByValidated_1 =
+export type StoreFileOrderByValidated =
   | any
   | ("id" | "bucketName" | "createdAt" | "updatedAt")[];
 
-export type StoreFileOrderByInput =
-  | any
-  | ("id" | "bucketName" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "bucketName"
-  | "createdAt"
-  | "updatedAt";
-
-export type StoreJobOrderByValidated_1 =
+export type StoreJobOrderByValidated =
   | any
   | (
       | "id"
@@ -2493,52 +2178,26 @@ export type StoreJobOrderByValidated_1 =
       | "updatedAt"
     )[];
 
-export type StoreJobOrderByInput =
-  | any
-  | ("id" | "isComplete" | "name" | "scheduledAt" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "isComplete"
-  | "name"
-  | "scheduledAt"
-  | "createdAt"
-  | "updatedAt";
-
-export type StoreSessionStoreOrderByValidated_1 =
+export type StoreSessionStoreOrderByValidated =
   | any
   | ("id" | "createdAt" | "updatedAt")[];
 
-export type StoreSessionStoreOrderByInput =
-  | any
-  | ("id" | "createdAt" | "updatedAt")[]
-  | "id"
-  | "createdAt"
-  | "updatedAt";
-
-export type StoreSessionStoreTokenOrderByValidated_1 =
+export type StoreSessionStoreTokenOrderByValidated =
   | any
   | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[];
 
-export type StoreSessionStoreTokenOrderByInput =
-  | any
-  | ("id" | "session" | "expiresAt" | "refreshToken" | "revokedAt")[]
-  | "id"
-  | "session"
-  | "expiresAt"
-  | "refreshToken"
-  | "revokedAt";
-
 export type StoreFileQueryBuilderValidated_1 = {
   where?: StoreFileWhereValidated_1 | undefined;
-  orderBy?: StoreFileOrderByValidated_1 | undefined;
+  orderBy?: StoreFileOrderByValidated | undefined;
   orderBySpec?: StoreFileOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreFileReturningValidated;
+  select: StoreFileReturning;
 };
 
 export type StoreFileQueryBuilderInput = {
   where?: StoreFileWhereInput | undefined;
-  orderBy?: StoreFileOrderByInput | undefined;
+  orderBy?: StoreFileOrderByValidated | undefined;
   orderBySpec?: StoreFileOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
@@ -2547,16 +2206,16 @@ export type StoreFileQueryBuilderInput = {
 
 export type StoreJobQueryBuilderValidated_1 = {
   where?: StoreJobWhereValidated_1 | undefined;
-  orderBy?: StoreJobOrderByValidated_1 | undefined;
+  orderBy?: StoreJobOrderByValidated | undefined;
   orderBySpec?: StoreJobOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreJobReturningValidated;
+  select: StoreJobReturning;
 };
 
 export type StoreJobQueryBuilderInput = {
   where?: StoreJobWhereInput | undefined;
-  orderBy?: StoreJobOrderByInput | undefined;
+  orderBy?: StoreJobOrderByValidated | undefined;
   orderBySpec?: StoreJobOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
@@ -2565,11 +2224,11 @@ export type StoreJobQueryBuilderInput = {
 
 export type StoreSessionStoreTokenQueryBuilderValidated_1 = {
   where?: StoreSessionStoreTokenWhereValidated_1 | undefined;
-  orderBy?: StoreSessionStoreTokenOrderByValidated_1 | undefined;
+  orderBy?: StoreSessionStoreTokenOrderByValidated | undefined;
   orderBySpec?: StoreSessionStoreTokenOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreSessionStoreTokenReturningValidated;
+  select: StoreSessionStoreTokenReturning;
   refreshToken?: StoreSessionStoreTokenQueryBuilderValidated_1 | undefined;
   session?: StoreSessionStoreQueryBuilderValidated_1 | undefined;
   accessToken?: StoreSessionStoreTokenQueryBuilderValidated_1 | undefined;
@@ -2577,17 +2236,17 @@ export type StoreSessionStoreTokenQueryBuilderValidated_1 = {
 
 export type StoreSessionStoreQueryBuilderValidated_1 = {
   where?: StoreSessionStoreWhereValidated_1 | undefined;
-  orderBy?: StoreSessionStoreOrderByValidated_1 | undefined;
+  orderBy?: StoreSessionStoreOrderByValidated | undefined;
   orderBySpec?: StoreSessionStoreOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  select: StoreSessionStoreReturningValidated;
+  select: StoreSessionStoreReturning;
   accessTokens?: StoreSessionStoreTokenQueryBuilderValidated_1 | undefined;
 };
 
 export type StoreSessionStoreTokenQueryBuilderInput = {
   where?: StoreSessionStoreTokenWhereInput | undefined;
-  orderBy?: StoreSessionStoreTokenOrderByInput | undefined;
+  orderBy?: StoreSessionStoreTokenOrderByValidated | undefined;
   orderBySpec?: StoreSessionStoreTokenOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
@@ -2599,7 +2258,7 @@ export type StoreSessionStoreTokenQueryBuilderInput = {
 
 export type StoreSessionStoreQueryBuilderInput = {
   where?: StoreSessionStoreWhereInput | undefined;
-  orderBy?: StoreSessionStoreOrderByInput | undefined;
+  orderBy?: StoreSessionStoreOrderByValidated | undefined;
   orderBySpec?: StoreSessionStoreOrderBySpec | undefined;
   limit?: number | undefined;
   offset?: number | undefined;

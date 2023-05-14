@@ -794,29 +794,33 @@ export function validateQueryResultStoreSessionStore(value) {
         let intermediateValue8 = value["accessTokens"];
 
         if (!Array.isArray(intermediateValue8)) {
-          intermediateValue8 = [intermediateValue8];
-        }
-        result["accessTokens"] = [];
-        for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
-          if (
-            intermediateValue8[i8] === null ||
-            intermediateValue8[i8] === undefined
-          ) {
-            intermediateErrorMap8[`$.${i8}`] = {
-              key: "validator.undefined",
-            };
-          } else {
-            const refResult8 = validateQueryResultStoreSessionStoreToken(
-              intermediateValue8[i8],
-            );
+          errorMap[`$.accessTokens`] = {
+            key: "validator.array",
+            value: intermediateValue8,
+          };
+        } else {
+          result["accessTokens"] = [];
+          for (let i8 = 0; i8 < intermediateValue8.length; ++i8) {
+            if (
+              intermediateValue8[i8] === null ||
+              intermediateValue8[i8] === undefined
+            ) {
+              intermediateErrorMap8[`$.${i8}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              const refResult8 = validateQueryResultStoreSessionStoreToken(
+                intermediateValue8[i8],
+              );
 
-            if (refResult8.error) {
-              for (const errorKey of Object.keys(refResult8.error)) {
-                intermediateErrorMap8[`$.${i8}${errorKey.substring(1)}`] =
-                  refResult8.error[errorKey];
+              if (refResult8.error) {
+                for (const errorKey of Object.keys(refResult8.error)) {
+                  intermediateErrorMap8[`$.${i8}${errorKey.substring(1)}`] =
+                    refResult8.error[errorKey];
+                }
               }
+              intermediateResult8[i8] = refResult8.value;
             }
-            intermediateResult8[i8] = refResult8.value;
           }
         }
         if (Object.keys(intermediateErrorMap8).length) {

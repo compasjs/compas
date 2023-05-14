@@ -347,6 +347,10 @@ export const codeGenSpecification = {
                 name: "array",
               },
               input: JSON.stringify(true),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.array",
+              },
             },
             {
               type: "validator",
@@ -380,9 +384,41 @@ export const codeGenSpecification = {
               type: "validator",
               generatedType: {
                 group: "validator",
+                name: "arrayConvert",
+              },
+              input: JSON.stringify(true),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayConvert",
+              },
+              input: JSON.stringify([true]),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayConvert",
+              },
+              input: JSON.stringify([true, false]),
+              assertValidatorError: {
+                key: "$.1",
+                errorKey: "validator.oneOf",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
                 name: "arrayNested",
               },
               input: JSON.stringify(true),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.array",
+              },
             },
             {
               type: "validator",
@@ -391,6 +427,10 @@ export const codeGenSpecification = {
                 name: "arrayNested",
               },
               input: JSON.stringify([true]),
+              assertValidatorError: {
+                key: "$.0",
+                errorKey: "validator.array",
+              },
             },
             {
               type: "validator",
@@ -417,6 +457,54 @@ export const codeGenSpecification = {
               generatedType: {
                 group: "validator",
                 name: "arrayNested",
+              },
+              input: JSON.stringify([[true], [false, true, false]]),
+              assertValidatorError: {
+                key: "$.1.2",
+                errorKey: "validator.oneOf",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayNestedConvert",
+              },
+              input: JSON.stringify(true),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayNestedConvert",
+              },
+              input: JSON.stringify([true]),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayNestedConvert",
+              },
+              input: JSON.stringify([[true], [true, true]]),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayNestedConvert",
+              },
+              input: JSON.stringify([true, [false, true, false]]),
+              assertValidatorError: {
+                key: "$.1.0",
+                errorKey: "validator.oneOf",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "arrayNestedConvert",
               },
               input: JSON.stringify([[true], [false, true, false]]),
               assertValidatorError: {
