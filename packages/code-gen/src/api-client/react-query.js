@@ -269,7 +269,11 @@ export function reactQueryGenerateFunction(
   }
 
   // Helper variables for reusable patterns
-  const joinedArgumentType = ({ withRequestConfig, withQueryOptions }) => {
+  const joinedArgumentType = ({
+    withRequestConfig,
+    withQueryOptions,
+    requireAllParams,
+  }) => {
     const list = [
       contextNames.paramsTypeName,
       contextNames.queryTypeName,
@@ -299,7 +303,17 @@ export function reactQueryGenerateFunction(
       list.push(`{}`);
     }
 
-    return list.join(` & `);
+    const result = list.join(` & `);
+
+    const requiredKeys = reactQueryGetRequiredFields(generateContext, route);
+
+    if (requiredKeys.length > 0 && !requireAllParams) {
+      // We can just wrap it in an Partial which makes all required keys optional instead of writing them all out
+
+      return `Partial<${result}>`;
+    }
+
+    return result;
   };
 
   const parameterListWithExtraction = ({
@@ -458,6 +472,7 @@ export function reactQueryGenerateFunction(
       joinedArgumentType({
         withRequestConfig: true,
         withQueryOptions: true,
+        requireAllParams: false,
       }),
     );
 
@@ -487,20 +502,22 @@ export function reactQueryGenerateFunction(
         routeHasMandatoryInputs ? "opts" : ""
       }),`,
     );
-    fileWriteInline(
+    fileWrite(
       file,
       `({ signal }) => {
-  opts.requestConfig ??= {};
-  opts.requestConfig.signal = signal;
-    
-  return ${apiName}(${apiInstanceParameter}
+${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+
+opts.requestConfig ??= {};
+opts.requestConfig.signal = signal;
+
+return ${apiName}(${apiInstanceParameter}
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: true,
     defaultToNull: false,
   })}
   );
-  }, options);`,
+}, options);`,
     );
 
     fileBlockEnd(file);
@@ -521,6 +538,7 @@ ${hookName}.queryKey = (
       ? `opts: ${joinedArgumentType({
           withQueryOptions: false,
           withRequestConfig: false,
+          requireAllParams: false,
         })},`
       : ""
   }
@@ -542,18 +560,21 @@ ${hookName}.queryKey = (
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
         withQueryOptions: false,
         withRequestConfig: true,
+        requireAllParams: false,
       })}
  ) => {
   return queryClient.fetchQuery(
     ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
-    () => ${apiName}(
+    () => {
+    ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+  return ${apiName}(
    ${apiInstanceParameter}
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: true,
     defaultToNull: false,
   })}
-  ));
+  ); });
 }
 
 /**
@@ -565,18 +586,23 @@ ${hookName}.queryKey = (
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
         withQueryOptions: false,
         withRequestConfig: true,
+        requireAllParams: false,
       })},
  ) => {
   return queryClient.prefetchQuery(
     ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
-    () => ${apiName}(
+    () => {
+  ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+
+  return ${apiName}(
      ${apiInstanceParameter}
      ${parameterListWithExtraction({
        prefix: "opts",
        withRequestConfig: true,
        defaultToNull: false,
      })}
-  ));
+  );
+});
 }
 
 /**
@@ -589,6 +615,7 @@ ${hookName}.invalidate = (
       ? `opts: ${joinedArgumentType({
           withQueryOptions: false,
           withRequestConfig: false,
+          requireAllParams: false,
         })},`
       : ""
   }
@@ -607,14 +634,18 @@ ${hookName}.setQueryData = (
       ? `opts: ${joinedArgumentType({
           withQueryOptions: false,
           withRequestConfig: false,
+          requireAllParams: false,
         })},`
       : ""
   }
   data: ${contextNames.responseTypeName ?? "unknown"},
-) => queryClient.setQueryData(${hookName}.queryKey(${
+) => {
+  ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+
+  return queryClient.setQueryData(${hookName}.queryKey(${
         routeHasMandatoryInputs ? "opts" : ""
       }), data);
-`,
+}`,
     );
   } else {
     // Write the props type
@@ -623,6 +654,7 @@ ${hookName}.setQueryData = (
       `type ${upperCaseFirst(hookName)}Props = ${joinedArgumentType({
         withRequestConfig: true,
         withQueryOptions: false,
+        requireAllParams: true,
       })}`,
     );
 
@@ -690,37 +722,17 @@ ${hookName}.setQueryData = (
 }
 
 /**
- * Generate the api client hooks
+ * Write out the dependencies for this query to be enabled
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  */
 function reactQueryWriteIsEnabled(generateContext, file, route) {
-  const keysAffectingEnabled = [];
-
-  for (const key of ["params", "query", "body"]) {
-    if (!route[key]) {
-      continue;
-    }
-
-    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
-    // @ts-expect-error
-    const type = structureResolveReference(
-      generateContext.structure,
-      route[key],
-    );
-
-    for (const [subKey, field] of Object.entries(type.keys)) {
-      const isOptional = typesOptionalityIsOptional(generateContext, field, {
-        validatorState: "input",
-      });
-
-      if (!isOptional) {
-        keysAffectingEnabled.push(`opts.${subKey}`);
-      }
-    }
-  }
+  const keysAffectingEnabled = reactQueryGetRequiredFields(
+    generateContext,
+    route,
+  );
 
   if (keysAffectingEnabled.length > 0) {
     fileWrite(file, `options.enabled = (`);
@@ -740,6 +752,64 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
     fileContextSetIndent(file, -1);
     fileWrite(file, `));`);
   }
+}
+
+/**
+ * Write out the dependencies for this query to be enabled
+ *
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @returns {string}
+ */
+function reactQueryCheckIfRequiredVariablesArePresent(generateContext, route) {
+  const requiredFields = reactQueryGetRequiredFields(generateContext, route);
+
+  if (requiredFields.length > 0) {
+    return `if (${requiredFields
+      .map((it) => `${it} === undefined || ${it} === null`)
+      .join("||\n")}) {
+      throw new Error("Not all required variables where provided. This happens when you manually set 'queryOptions.enabled' or when you use 'refetch'. Both skip the generated 'queryOptions.enabled'. Make sure that all necessary arguments are set.");
+}
+`;
+  }
+
+  return "";
+}
+
+/**
+ * Get the list of required fields.
+ *
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @returns {string[]}
+ */
+function reactQueryGetRequiredFields(generateContext, route) {
+  const keysAffectingEnabled = [];
+
+  for (const key of ["params", "query", "body", "files"]) {
+    if (!route[key]) {
+      continue;
+    }
+
+    /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
+    // @ts-expect-error
+    const type = structureResolveReference(
+      generateContext.structure,
+      route[key],
+    );
+
+    for (const [subKey, field] of Object.entries(type.keys)) {
+      const isOptional = typesOptionalityIsOptional(generateContext, field, {
+        validatorState: "input",
+      });
+
+      if (!isOptional) {
+        keysAffectingEnabled.push(`opts["${subKey}"]`);
+      }
+    }
+  }
+
+  return keysAffectingEnabled;
 }
 
 /**
