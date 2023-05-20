@@ -27,7 +27,7 @@ test("code-gen/processors/route-validation", (t) => {
       t,
       {
         partialError:
-          "Found an invalid type 'array' used in the params or query of ('app', 'get')",
+          "Found an invalid type 'array' used in the params of ('app', 'get')",
       },
       (T) => {
         const R = T.router("/");
@@ -59,6 +59,68 @@ test("code-gen/processors/route-validation", (t) => {
     );
   });
 
+  t.test("body validation - fail on nested file use", (t) => {
+    testGeneratorError(
+      t,
+      {
+        partialError: "used in the body of",
+      },
+      (T) => {
+        const R = T.router("/");
+        return [
+          R.post("/").body({
+            nested: {
+              file: T.file(),
+            },
+          }),
+        ];
+      },
+    );
+  });
+
+  t.test("body validation - fail on object with file use", (t) => {
+    testGeneratorError(
+      t,
+      {
+        partialError: "used in the body of",
+      },
+      (T) => {
+        const R = T.router("/");
+        return [
+          R.post("/").body({
+            nested: {
+              bool: T.bool(),
+            },
+            file: T.file(),
+          }),
+        ];
+      },
+    );
+  });
+
+  t.test(
+    "body validation - fail on object with file use through reference",
+    (t) => {
+      testGeneratorError(
+        t,
+        {
+          partialError: "used in the body of",
+        },
+        (T) => {
+          const R = T.router("/");
+          return [
+            R.post("/").body({
+              nested: {
+                bool: T.bool(),
+              },
+              file: T.file("file"),
+            }),
+          ];
+        },
+      );
+    },
+  );
+
   t.test("route validation - success", (t) => {
     testGeneratorStaticFiles(t, {}, (T) => {
       const R = T.router("/");
@@ -87,6 +149,13 @@ test("code-gen/processors/route-validation", (t) => {
           foo: T.bool("namedBool"),
           date: T.date(),
           str: T.string(),
+        }),
+
+        R.post("/body-no-files", "bodyNoFiles").body({
+          foo: {
+            bar: "baz",
+          },
+          bool: T.bool(),
         }),
       ];
     });

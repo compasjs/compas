@@ -105,8 +105,8 @@ export function mainFn(meta, cb) {
     }),
   );
 
-  process.on("uncaughtExceptionMonitor", (error, origin) =>
-    logger.error({
+  process.on("uncaughtException", (error, origin) =>
+    unhandled({
       type: "uncaughtException",
       error: AppError.format(error),
       origin,

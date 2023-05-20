@@ -258,6 +258,16 @@ export function jsFetchGenerateFunction(
         type.keys[key].type === "reference"
           ? structureResolveReference(generateContext.structure, type.keys[key])
           : type.keys[key];
+      const isOptional = referenceUtilsGetProperty(
+        generateContext,
+        type.keys[key],
+        ["isOptional"],
+        false,
+      );
+
+      if (isOptional) {
+        fileBlockStart(file, `if (${parameter}["${key}"] !== undefined)`);
+      }
 
       if (fieldType.type === "file") {
         fileWrite(
@@ -266,6 +276,10 @@ export function jsFetchGenerateFunction(
         );
       } else {
         fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
+      }
+
+      if (isOptional) {
+        fileBlockEnd(file);
       }
     }
 
