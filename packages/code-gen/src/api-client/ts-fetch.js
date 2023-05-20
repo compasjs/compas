@@ -252,6 +252,17 @@ export function tsFetchGenerateFunction(
           ? structureResolveReference(generateContext.structure, type.keys[key])
           : type.keys[key];
 
+      const isOptional = referenceUtilsGetProperty(
+        generateContext,
+        type.keys[key],
+        ["isOptional"],
+        false,
+      );
+
+      if (isOptional) {
+        fileBlockStart(file, `if (${parameter}["${key}"] !== undefined)`);
+      }
+
       if (fieldType.type === "file") {
         if (distilledTargetInfo.isReactNative) {
           fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
@@ -263,6 +274,10 @@ export function tsFetchGenerateFunction(
         }
       } else {
         fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
+      }
+
+      if (isOptional) {
+        fileBlockEnd(file);
       }
     }
 

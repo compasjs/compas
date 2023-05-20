@@ -7,6 +7,7 @@ import {
   fileContextSetIndent,
 } from "../file/context.js";
 import { fileWrite } from "../file/write.js";
+import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { upperCaseFirst } from "../utils.js";
@@ -191,6 +192,17 @@ export function tsAxiosGenerateFunction(
           ? structureResolveReference(generateContext.structure, type.keys[key])
           : type.keys[key];
 
+      const isOptional = referenceUtilsGetProperty(
+        generateContext,
+        type.keys[key],
+        ["isOptional"],
+        false,
+      );
+
+      if (isOptional) {
+        fileBlockStart(file, `if (${parameter}["${key}"] !== undefined)`);
+      }
+
       if (fieldType.type === "file") {
         if (distilledTargetInfo.isReactNative) {
           fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
@@ -202,6 +214,10 @@ export function tsAxiosGenerateFunction(
         }
       } else {
         fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
+      }
+
+      if (isOptional) {
+        fileBlockEnd(file);
       }
     }
 

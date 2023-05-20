@@ -4,9 +4,9 @@
 export const fileImplementations = {
   jsKoaReceive: {
     validatorInputType: "any",
-    validatorOutputType: `import("formidable").PersistentFile`,
+    validatorOutputType: `import("formidable").File`,
     validatorImport: `import formidable from "formidable";`,
-    validatorExpression: `$value$ instanceof formidable.PersistentFile`,
+    validatorExpression: `$value$ instanceof formidable.File`,
   },
   jsKoaSend: {
     validatorInputType: `Buffer|import("stream").Readable`,
