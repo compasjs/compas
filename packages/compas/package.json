@@ -1,6 +1,6 @@
 {
   "name": "compas",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Unified backend tooling",
   "exports": {
     "./package.json": "./package.json"
@@ -17,12 +17,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/cli": "0.3.2",
-    "@compas/code-gen": "0.3.2",
-    "@compas/eslint-plugin": "0.3.2",
-    "@compas/server": "0.3.2",
-    "@compas/stdlib": "0.3.2",
-    "@compas/store": "0.3.2"
+    "@compas/cli": "0.4.0",
+    "@compas/code-gen": "0.4.0",
+    "@compas/eslint-plugin": "0.4.0",
+    "@compas/server": "0.4.0",
+    "@compas/stdlib": "0.4.0",
+    "@compas/store": "0.4.0"
   },
   "author": {
     "name": "Dirk de Visser",
