@@ -163,8 +163,9 @@ function specificationExtendWithRouteMatchers(generator) {
       .response(T.file()),
 
     R.post("/types/input/file", "typesInputFile")
-      .files({
+      .body({
         image: T.file(),
+        optionalImage: T.file().optional(),
       })
       .response({}),
   );

@@ -233,7 +233,7 @@ function openApiTransformParams(generateContext, openApiSpec, route) {
  * @param { import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  */
 function openApiTransformBody(generateContext, openApiSpec, route) {
-  const field = route.body ?? route.files;
+  const field = route.body;
 
   if (!field) {
     return {};
@@ -250,7 +250,9 @@ function openApiTransformBody(generateContext, openApiSpec, route) {
         "docString",
       ]),
       content: {
-        [route.files ? "multipart/form-data" : "application/json"]: content,
+        [route.metadata?.requestBodyType === "form-data"
+          ? "multipart/form-data"
+          : "application/json"]: content,
       },
       required: true,
     },

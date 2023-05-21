@@ -1221,7 +1221,6 @@ export type StructureRouteDefinition = {
   query?: StructureReferenceDefinition | undefined;
   params?: StructureReferenceDefinition | undefined;
   body?: StructureReferenceDefinition | undefined;
-  files?: StructureReferenceDefinition | undefined;
   response?: StructureReferenceDefinition | undefined;
   invalidations: StructureRouteInvalidationDefinition[];
   metadata?:
@@ -1292,7 +1291,6 @@ export type StructureRouteDefinitionInput = {
   query?: StructureReferenceDefinitionInput | undefined;
   params?: StructureReferenceDefinitionInput | undefined;
   body?: StructureReferenceDefinitionInput | undefined;
-  files?: StructureReferenceDefinitionInput | undefined;
   response?: StructureReferenceDefinitionInput | undefined;
   invalidations: StructureRouteInvalidationDefinitionInput[];
   metadata?:

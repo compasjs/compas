@@ -208,9 +208,6 @@ export function tsFetchGenerateFunction(
       }`,
     );
   }
-  if (route.files) {
-    args.push(`files: ${contextNames.filesTypeName}`);
-  }
 
   // Allow overwriting any request config
   args.push(`requestConfig?: RequestInit`);
@@ -227,8 +224,8 @@ export function tsFetchGenerateFunction(
     }>`,
   );
 
-  if (route.files || route.metadata?.requestBodyType === "form-data") {
-    const parameter = route.body ? "body" : "files";
+  if (route.metadata?.requestBodyType === "form-data") {
+    const parameter = "body";
 
     fileWrite(
       file,
@@ -243,7 +240,7 @@ export function tsFetchGenerateFunction(
       generateContext.structure,
 
       // @ts-expect-error
-      route.body ?? route.files,
+      route.body,
     );
 
     for (const key of Object.keys(type.keys)) {
@@ -337,7 +334,7 @@ export function tsFetchGenerateFunction(
 
   fileWrite(file, `method: "${route.method}",`);
 
-  if (route.files || route.metadata?.requestBodyType === "form-data") {
+  if (route.metadata?.requestBodyType === "form-data") {
     fileWrite(file, `body: data,`);
 
     if (distilledTargetInfo.isReactNative) {

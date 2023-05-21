@@ -118,10 +118,6 @@ export const typeDefinitionTraversePaths = {
       amount: "single",
     },
     {
-      key: "files",
-      amount: "single",
-    },
-    {
       key: "response",
       amount: "single",
     },

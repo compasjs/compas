@@ -205,10 +205,6 @@ export function jsFetchGenerateFunction(
       }} body`,
     );
   }
-  if (route.files) {
-    args.push("files");
-    fileWrite(file, `@param {${contextNames.filesTypeName}} files`);
-  }
 
   // Allow overwriting any request config
   args.push("requestConfig");
@@ -235,8 +231,8 @@ export function jsFetchGenerateFunction(
     )}(${args.join(", ")})`,
   );
 
-  if (route.files || route.metadata?.requestBodyType === "form-data") {
-    const parameter = route.body ? "body" : "files";
+  if (route.metadata?.requestBodyType === "form-data") {
+    const parameter = "body";
     fileWrite(
       file,
       `const data = ${parameter} instanceof FormData ? ${parameter} : new FormData();`,
@@ -250,7 +246,7 @@ export function jsFetchGenerateFunction(
       generateContext.structure,
 
       // @ts-expect-error
-      route.body ?? route.files,
+      route.body,
     );
 
     for (const key of Object.keys(type.keys)) {
@@ -339,7 +335,7 @@ export function jsFetchGenerateFunction(
 
   fileWrite(file, `method: "${route.method}",`);
 
-  if (route.files || route.metadata?.requestBodyType === "form-data") {
+  if (route.metadata?.requestBodyType === "form-data") {
     fileWrite(file, `body: data,`);
   }
 

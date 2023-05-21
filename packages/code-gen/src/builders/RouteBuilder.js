@@ -24,7 +24,6 @@ export class RouteBuilder extends TypeBuilder {
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
     this.bodyBuilder = undefined;
-    this.filesBuilder = undefined;
     this.responseBuilder = undefined;
   }
 
@@ -91,20 +90,6 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
-   * @returns {RouteBuilder}
-   */
-  files(builder) {
-    if (["POST", "PUT", "PATCH"].indexOf(this.data.method) === -1) {
-      throw new Error("Can only use files on POST, PUT or PATCH routes");
-    }
-
-    this.filesBuilder = builder;
-
-    return this;
-  }
-
-  /**
    * Specify routes that can be invalidated when this route is called.
    *
    * @param {...import("./RouteInvalidationType.js").RouteInvalidationType} invalidates
@@ -148,12 +133,6 @@ export class RouteBuilder extends TypeBuilder {
   build() {
     const result = super.build();
 
-    if (this.bodyBuilder && this.filesBuilder) {
-      throw new Error(
-        `Route ${result.group} - ${result.name} can't have both body and files.`,
-      );
-    }
-
     result.invalidations = [];
     for (const invalidation of this.invalidates) {
       result.invalidations.push(invalidation.build());
@@ -174,15 +153,6 @@ export class RouteBuilder extends TypeBuilder {
       if (isNil(result.body.name) && result.body.type !== "reference") {
         result.body.group = result.group;
         result.body.name = `${result.name}Body`;
-      }
-    }
-
-    if (this.filesBuilder) {
-      result.files = buildOrInfer(this.filesBuilder);
-
-      if (isNil(result.files.name) && result.files.type !== "reference") {
-        result.files.group = result.group;
-        result.files.name = `${result.name}Files`;
       }
     }
 
@@ -301,7 +271,6 @@ export class RouteCreator {
     this.queryBuilder = undefined;
     this.paramsBuilder = undefined;
     this.bodyBuilder = undefined;
-    this.filesBuilder = undefined;
     this.responseBuilder = undefined;
   }
 
@@ -341,16 +310,6 @@ export class RouteCreator {
    */
   body(builder) {
     this.bodyBuilder = builder;
-
-    return this;
-  }
-
-  /**
-   * @param {import("../../index").TypeBuilderLike} builder
-   * @returns {RouteCreator}
-   */
-  files(builder) {
-    this.filesBuilder = builder;
 
     return this;
   }
@@ -500,13 +459,6 @@ export class RouteCreator {
       ["POST", "PUT", "PATCH"].indexOf(method) !== -1
     ) {
       b.body(this.bodyBuilder);
-    }
-
-    if (
-      !isNil(this.filesBuilder) &&
-      ["POST", "PUT", "PATCH"].indexOf(method) !== -1
-    ) {
-      b.files(this.filesBuilder);
     }
 
     if (!isNil(this.responseBuilder)) {

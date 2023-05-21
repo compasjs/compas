@@ -15,9 +15,6 @@ export class RouteBuilder extends TypeBuilder {
   bodyBuilder:
     | import("../../types/advanced-types.js").TypeBuilderLike
     | undefined;
-  filesBuilder:
-    | import("../../types/advanced-types.js").TypeBuilderLike
-    | undefined;
   responseBuilder:
     | import("../../types/advanced-types.js").TypeBuilderLike
     | undefined;
@@ -49,11 +46,6 @@ export class RouteBuilder extends TypeBuilder {
    * @returns {RouteBuilder}
    */
   body(builder: import("../../index").TypeBuilderLike): RouteBuilder;
-  /**
-   * @param {import("../../index").TypeBuilderLike} builder
-   * @returns {RouteBuilder}
-   */
-  files(builder: import("../../index").TypeBuilderLike): RouteBuilder;
   /**
    * Specify routes that can be invalidated when this route is called.
    *
@@ -93,9 +85,6 @@ export class RouteCreator {
   bodyBuilder:
     | import("../../types/advanced-types.js").TypeBuilderLike
     | undefined;
-  filesBuilder:
-    | import("../../types/advanced-types.js").TypeBuilderLike
-    | undefined;
   responseBuilder:
     | import("../../types/advanced-types.js").TypeBuilderLike
     | undefined;
@@ -119,11 +108,6 @@ export class RouteCreator {
    * @returns {RouteCreator}
    */
   body(builder: import("../../index").TypeBuilderLike): RouteCreator;
-  /**
-   * @param {import("../../index").TypeBuilderLike} builder
-   * @returns {RouteCreator}
-   */
-  files(builder: import("../../index").TypeBuilderLike): RouteCreator;
   /**
    * @param {import("../../index").TypeBuilderLike} builder
    * @returns {RouteCreator}

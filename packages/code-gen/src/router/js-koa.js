@@ -83,9 +83,6 @@ export function jsKoaPrepareContext(
   partial += contextNames.queryType
     ? `  validatedQuery: ${contextNames.queryTypeName},\n`
     : "";
-  partial += contextNames.filesType
-    ? `  validatedFiles: ${contextNames.filesTypeName},\n`
-    : "";
   partial += contextNames.bodyType
     ? `  validatedBody: ${contextNames.bodyTypeName},\n`
     : "";
@@ -280,9 +277,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
 
       fileWrite(file, `ctx.request.params = params;`);
 
-      if (route.files) {
-        fileWrite(file, `await bodyParser(ctx);`);
-      } else if (route.body || route.query) {
+      if (route.body || route.query) {
         fileWrite(file, `await bodyParser(ctx);`);
       }
 
@@ -323,26 +318,6 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
 
         fileBlockStart(file, `else`);
         fileWrite(file, `ctx.validatedQuery = validatedQuery.value;`);
-        fileBlockEnd(file);
-      }
-
-      if (route.files) {
-        fileWrite(
-          file,
-          `const validatedFiles = ${
-            contextNames[`filesValidator`]
-          }(ctx.request.files);`,
-        );
-
-        fileBlockStart(file, `if (validatedFiles.error)`);
-        fileWrite(
-          file,
-          `throw AppError.validationError("validator.error", validatedFiles.error);`,
-        );
-        fileBlockEnd(file);
-
-        fileBlockStart(file, `else`);
-        fileWrite(file, `ctx.validatedFiles = validatedFiles.value;`);
         fileBlockEnd(file);
       }
 

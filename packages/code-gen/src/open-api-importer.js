@@ -147,7 +147,7 @@ function extractRoute(context, path, method) {
     compasStruct,
   );
 
-  for (const key of ["params", "query", "body", "files", "response"]) {
+  for (const key of ["params", "query", "body", "response"]) {
     const type = compasStruct[key];
 
     if (!type) {

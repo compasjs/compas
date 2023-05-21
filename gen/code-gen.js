@@ -631,7 +631,6 @@ export function extendWithCodeGen(generator) {
         query: T.reference("structure", "referenceDefinition").optional(),
         params: T.reference("structure", "referenceDefinition").optional(),
         body: T.reference("structure", "referenceDefinition").optional(),
-        files: T.reference("structure", "referenceDefinition").optional(),
         response: T.reference("structure", "referenceDefinition").optional(),
         invalidations: [
           T.reference("structure", "routeInvalidationDefinition"),

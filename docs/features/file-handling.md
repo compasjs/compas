@@ -1,7 +1,8 @@
 # File handling
 
 Compas also comes with various utilities across the stack to handle files in a
-consistent way.
+consistent way. See the [file-handling](/examples/file-handling.html) example
+for a project implementing this.
 
 ## Generated router & validators
 
@@ -13,7 +14,7 @@ const T = new TypeCreator();
 const R = T.router("/");
 
 R.post("/upload")
-  .files({
+  .body({
     myFile: T.file(),
   })
   .response({ success: true });
@@ -21,12 +22,21 @@ R.post("/upload")
 R.get("/download").response(T.file());
 ```
 
-Files are handled separately by the generator and validators, and are put on
-`ctx.validatedFiles` with help from
-[formidable](https://www.npmjs.com/package/formidable). In the generated api
-clients we generate the correct type (`ReadableStream` or `Blob`) depending on
-the context. And allow for setting custom file parsing options
-`createBodyParser` provided by `@compas/server`
+Files are handled like any other 'POST'-body in Compas, but have some
+restrictions. When a `T.file()` is used, we automatically switch the request
+encoding to use `multipart/form-data` instead of `application/json`. We also add
+restrictions on what other fields we can accept in the same request body. This
+is limited to only use 'simple' types like `T.uuid()`, `T.string()`,
+`T.number()`, `T.bool()`.
+
+The generated api clients automatically determine which type it should generated
+for the target library and runtime. For Fetch clients we use `Blob`, but for an
+Axios & Node.js target, we generate a `ReadableStream` based type.
+
+The default body parser created via `createBodyParser`, from `@compas/server`,
+doesn't parse `multipart/form-data` by default. You can enable this via the
+`multipart: true` option, and customize limitations via the `multipartOptions`
+option.
 
 ## Saving files
 

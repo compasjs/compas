@@ -121,7 +121,6 @@ export function apiClientGenerator(generateContext) {
     const types = {
       params: route.params,
       query: route.query,
-      files: route.files,
       body: route.body,
       response: route.response,
     };

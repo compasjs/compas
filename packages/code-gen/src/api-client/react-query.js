@@ -229,25 +229,6 @@ export function reactQueryGenerateFunction(
     }
   }
 
-  if (route.files) {
-    const files = structureResolveReference(
-      generateContext.structure,
-      route.files,
-    );
-    if (files.type !== "object") {
-      fileWrite(file, "\n\n");
-      fileWrite(
-        file,
-        fileFormatInlineComment(
-          file,
-          `Skipped generation of '${hookName}' since a custom files type is used.`,
-        ),
-      );
-      fileWrite(file, "\n\n");
-      return;
-    }
-  }
-
   // Import the corresponding api client function.
   const importCollector = JavascriptImportCollector.getImportCollector(file);
   importCollector.destructure("./apiClient", `${apiName}`);
@@ -278,7 +259,6 @@ export function reactQueryGenerateFunction(
       contextNames.paramsTypeName,
       contextNames.queryTypeName,
       contextNames.bodyTypeName,
-      contextNames.filesTypeName,
       withRequestConfig
         ? `{ requestConfig?: ${
             distilledTargetInfo.isAxios
@@ -404,33 +384,6 @@ export function reactQueryGenerateFunction(
         .join(", ")} }, `;
     }
 
-    if (route.files) {
-      /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
-      // @ts-expect-error
-      const files = structureResolveReference(
-        generateContext.structure,
-        route.files,
-      );
-
-      result += `{ ${Object.keys(files.keys)
-        .map((it) => {
-          if (
-            defaultToNull &&
-            referenceUtilsGetProperty(
-              generateContext,
-              files.keys[it],
-              ["isOptional"],
-              false,
-            )
-          ) {
-            return `"${it}": ${prefix}["${it}"] ?? null`;
-          }
-
-          return `"${it}": ${prefix}["${it}"]`;
-        })
-        .join(", ")} }, `;
-    }
-
     if (withRequestConfig) {
       result += `${prefix}?.requestConfig`;
     }
@@ -463,8 +416,7 @@ export function reactQueryGenerateFunction(
     );
 
     // When no arguments are required, the whole opts object is optional
-    const routeHasMandatoryInputs =
-      route.params || route.query || route.body || route.files;
+    const routeHasMandatoryInputs = route.params || route.query || route.body;
 
     fileWrite(file, `opts: `);
     fileWrite(
@@ -786,7 +738,7 @@ function reactQueryCheckIfRequiredVariablesArePresent(generateContext, route) {
 function reactQueryGetRequiredFields(generateContext, route) {
   const keysAffectingEnabled = [];
 
-  for (const key of ["params", "query", "body", "files"]) {
+  for (const key of ["params", "query", "body"]) {
     if (!route[key]) {
       continue;
     }

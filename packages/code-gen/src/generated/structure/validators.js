@@ -12414,35 +12414,20 @@ export function validateStructureRouteDefinition(value) {
         }
         result["body"] = refResult15.value;
       }
-      if (value["files"] === null || value["files"] === undefined) {
-        result["files"] = undefined;
+      if (value["response"] === null || value["response"] === undefined) {
+        result["response"] = undefined;
       } else {
         const refResult16 = validateStructureReferenceDefinition(
-          value["files"],
+          value["response"],
         );
 
         if (refResult16.error) {
           for (const errorKey of Object.keys(refResult16.error)) {
-            errorMap[`$.files${errorKey.substring(1)}`] =
+            errorMap[`$.response${errorKey.substring(1)}`] =
               refResult16.error[errorKey];
           }
         }
-        result["files"] = refResult16.value;
-      }
-      if (value["response"] === null || value["response"] === undefined) {
-        result["response"] = undefined;
-      } else {
-        const refResult17 = validateStructureReferenceDefinition(
-          value["response"],
-        );
-
-        if (refResult17.error) {
-          for (const errorKey of Object.keys(refResult17.error)) {
-            errorMap[`$.response${errorKey.substring(1)}`] =
-              refResult17.error[errorKey];
-          }
-        }
-        result["response"] = refResult17.value;
+        result["response"] = refResult16.value;
       }
       if (
         value["invalidations"] === null ||
@@ -12453,49 +12438,49 @@ export function validateStructureRouteDefinition(value) {
         };
       } else {
         /** @type {ValidatorErrorMap} */
-        const intermediateErrorMap19 = {};
+        const intermediateErrorMap18 = {};
         /** @type {any[]} */
-        let intermediateResult19 = [];
+        let intermediateResult18 = [];
         /** @type {any|any[]} */
-        let intermediateValue19 = value["invalidations"];
+        let intermediateValue18 = value["invalidations"];
 
-        if (!Array.isArray(intermediateValue19)) {
+        if (!Array.isArray(intermediateValue18)) {
           errorMap[`$.invalidations`] = {
             key: "validator.array",
-            value: intermediateValue19,
+            value: intermediateValue18,
           };
         } else {
           result["invalidations"] = [];
-          for (let i19 = 0; i19 < intermediateValue19.length; ++i19) {
+          for (let i18 = 0; i18 < intermediateValue18.length; ++i18) {
             if (
-              intermediateValue19[i19] === null ||
-              intermediateValue19[i19] === undefined
+              intermediateValue18[i18] === null ||
+              intermediateValue18[i18] === undefined
             ) {
-              intermediateErrorMap19[`$.${i19}`] = {
+              intermediateErrorMap18[`$.${i18}`] = {
                 key: "validator.undefined",
               };
             } else {
-              const refResult19 = validateStructureRouteInvalidationDefinition(
-                intermediateValue19[i19],
+              const refResult18 = validateStructureRouteInvalidationDefinition(
+                intermediateValue18[i18],
               );
 
-              if (refResult19.error) {
-                for (const errorKey of Object.keys(refResult19.error)) {
-                  intermediateErrorMap19[`$.${i19}${errorKey.substring(1)}`] =
-                    refResult19.error[errorKey];
+              if (refResult18.error) {
+                for (const errorKey of Object.keys(refResult18.error)) {
+                  intermediateErrorMap18[`$.${i18}${errorKey.substring(1)}`] =
+                    refResult18.error[errorKey];
                 }
               }
-              intermediateResult19[i19] = refResult19.value;
+              intermediateResult18[i18] = refResult18.value;
             }
           }
         }
-        if (Object.keys(intermediateErrorMap19).length) {
-          for (const errorKey of Object.keys(intermediateErrorMap19)) {
+        if (Object.keys(intermediateErrorMap18).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap18)) {
             errorMap[`$.invalidations${errorKey.substring(1)}`] =
-              intermediateErrorMap19[errorKey];
+              intermediateErrorMap18[errorKey];
           }
         } else {
-          result["invalidations"] = intermediateResult19;
+          result["invalidations"] = intermediateResult18;
         }
       }
       if (value["metadata"] === null || value["metadata"] === undefined) {
@@ -12520,31 +12505,31 @@ export function validateStructureRouteDefinition(value) {
             result["metadata"]["requestBodyType"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString20 = value["metadata"]["requestBodyType"];
-            if (typeof convertedString20 !== "string") {
+            let convertedString19 = value["metadata"]["requestBodyType"];
+            if (typeof convertedString19 !== "string") {
               errorMap[`$.metadata.requestBodyType`] = {
                 key: "validator.string",
               };
             } else {
-              if (convertedString20.length === 0) {
+              if (convertedString19.length === 0) {
                 result["metadata"]["requestBodyType"] = undefined;
               } else {
-                if (convertedString20.length < 1) {
+                if (convertedString19.length < 1) {
                   errorMap[`$.metadata.requestBodyType`] = {
                     key: "validator.length",
                     minLength: 1,
                   };
                 } else if (
-                  convertedString20 !== "json" &&
-                  convertedString20 !== "form-data"
+                  convertedString19 !== "json" &&
+                  convertedString19 !== "form-data"
                 ) {
                   errorMap[`$.metadata.requestBodyType`] = {
                     key: "validator.oneOf",
                     allowedValues: ["json", "form-data"],
-                    foundValue: convertedString20,
+                    foundValue: convertedString19,
                   };
                 } else {
-                  result["metadata"]["requestBodyType"] = convertedString20;
+                  result["metadata"]["requestBodyType"] = convertedString19;
                 }
               }
             }

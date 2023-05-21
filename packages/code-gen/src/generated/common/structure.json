@@ -4627,18 +4627,6 @@
             "uniqueName": "StructureReferenceDefinition"
           }
         },
-        "files": {
-          "docString": "",
-          "isOptional": true,
-          "validator": {},
-          "sql": {},
-          "type": "reference",
-          "reference": {
-            "group": "structure",
-            "name": "referenceDefinition",
-            "uniqueName": "StructureReferenceDefinition"
-          }
-        },
         "response": {
           "docString": "",
           "isOptional": true,
