@@ -4,6 +4,94 @@ editLink: false
 
 # Changelog
 
+### [v0.4.0](https://github.com/compasjs/compas/releases/tag/v0.4.0)
+
+#### Breaking changes
+
+There are a few structure breaking changes to clean up compatibility with old
+code-gen. Make sure that the API is updated before any consumer is.
+
+- feat(cli,store): align migration related functions
+  [`bacfe3`](https://github.com/compasjs/compas/commit/bacfe34674e2426ae83de9214055e725e2d1c957)
+  - Renamed `newMigrateContext` to `migrationsInitContext`. It also accepts an
+    object with `migrationsDirectory` instead of a 'string' as the second
+    argument. As before, if you don't provide a `migrationsDirectory` it
+    defaults to `$cwd/migrations`.
+  - Renamed `getMigrationsToBeApplied` to `migrationsGetInfo`. The result is
+    wrapped in a promise.
+  - Renamed `runMigrations` to `migrationsRun`.
+  - All individual functions now acquire and release a Postgres lock instead of
+    keeping the lock alive for the whole connection. This allows you to use
+    these functions more easily in application code.
+  - Dropped `--keep-alive` and `--without-lock` from `compas migrate`. If you
+    need this functionality, you are better off calling the migration functions
+    on application startup.
+- feat(code-gen): drop `T.any().raw()` and `T.any().validator()`
+  [`9d4f7a`](https://github.com/compasjs/compas/commit/9d4f7a7d16d2d0677dccdf8127ae6ece5b969fb2)
+  - `T.any().raw()` and `T.any().validator()` were not implemented in the new
+    code-gen. Use `T.any().implementations()` instead.
+- feat(code-gen): drop `T.bool().convert()`, `T.number().convert()` and
+  `T.string().convert()`
+  [`d704a6`](https://github.com/compasjs/compas/commit/d704a6710949e6858fb79d4943ae818072301666)
+  - The new code-gen automatically converts booleans, numbers and dates from
+    their string representation.
+- feat(code-gen): re-instantiate `T.array().convert()`
+  [`d3aabb`](https://github.com/compasjs/compas/commit/d3aabbd874bc218bc9dceb8ccf9bbe4d63b751ca)
+  - JS validators don't automatically convert single values to arrays anymore.
+    Adding this as the default caused performance problems with the Typescript
+    compiler and complex recursive types. It also caused a bad DX, where setting
+    an empty array and trying to push later would result in a type error. Also
+    not every planned target language has support to type this correctly anyway,
+    so it should be used sparingly.
+- feat(code-gen): drop `R.files()`
+  [`569b2b`](https://github.com/compasjs/compas/commit/569b2b3e75b88ab04ebdddae6f6519937518de70)
+  - Use `R.body()` instead of `R.files()`
+  - When using the Koa router, change usages of `ctx.validatedFiles` with
+    `ctx.validatedBody`
+  - Auto-generated type names for files inputs like `PostSetHeaderImageFiles`
+    will be renamed to `PostSetHeaderImageBody`.
+  - Executing this change on the server doesn't require immediate regeneration
+    of api clients. The way they currently send files is compatible.
+
+#### Features
+
+- feat(code-gen): add expected patterns to docs if no docs exist on `T.uuid()`,
+  `T.date().{timeOnly,dateOnly}()`
+  [`41e3e3`](https://github.com/compasjs/compas/commit/41e3e3fcfc1ff3103548acb2095cefc8d18232c2)
+- feat(code-gen): add stricter validation on `R.params()` and `R.query()`
+  [`21c9b7`](https://github.com/compasjs/compas/commit/21c9b711506c84da854443a981766cecf7a008ec)
+- feat(code-gen): improve react-query DX by accepting a partial object on
+  `useQuery` hooks
+  [`430449`](https://github.com/compasjs/compas/commit/430449b52d77839849773eb71996590c065ef980)
+- feat(code-gen): define behavior for `T.file()` in `R.body()`
+  ([#2597](https://github.com/compasjs/compas/pull/2597))
+  [`80429b`](https://github.com/compasjs/compas/commit/80429b09708adcb8dce7d6b683df70b8d8d5b461)
+
+#### Bug fixes
+
+- fix(code-gen): don't throw a 404 on no match in the router
+  [`077da8`](https://github.com/compasjs/compas/commit/077da8a5f245163f9c214ea03eff8ccbf94c10fa)
+
+#### Other
+
+- chore(docs): add `T.array().convert()` to the docs
+  [`9744e6`](https://github.com/compasjs/compas/commit/9744e6c54d3374e13078fa9c27397c7bee765a8a)
+- chore: add a quick citgm command for testing unreleased Compas versions on
+  local projects
+  [`4b7ba7`](https://github.com/compasjs/compas/commit/4b7ba7cdb59da9aac8f9d7f497a88fdd37e7761d)
+
+#### Dependency updates
+
+- build(deps): bump recast from 0.22.0 to 0.23.2
+  ([#2585](https://github.com/compasjs/compas/pull/2585))
+  - Major version bump
+- build(deps): bump tar from 6.1.14 to 6.1.15
+  ([#2591](https://github.com/compasjs/compas/pull/2591))
+  - [Release notes](https://github.com/isaacs/node-tar/releases)
+- build(deps): bump eslint-plugin-jsdoc from 44.2.3 to 44.2.4
+  ([#2588](https://github.com/compasjs/compas/pull/2588))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.3.2](https://github.com/compasjs/compas/releases/tag/v0.3.2)
 
 #### Features

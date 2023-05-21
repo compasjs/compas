@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { cp } from "fs/promises";
 import { existsSync, statSync, writeFileSync } from "node:fs";
+import { rm } from "node:fs/promises";
 import { AppError, exec, pathJoin, spawn } from "@compas/stdlib";
 
 /**
@@ -9,7 +10,7 @@ import { AppError, exec, pathJoin, spawn } from "@compas/stdlib";
 export const cliDefinition = {
   name: "citgm",
   shortDescription:
-    "Create a new branch on a local project, and prepare it to use either the latest Compas main on GitHub or use the local checked out version.",
+    "Poor man's canary in the goldmine. Manually check local projects using the latest 'main' or this local Compas checkout.",
   modifiers: {
     isWatchable: false,
     isCosmetic: true,
@@ -146,6 +147,28 @@ async function executor(logger, state) {
 
       logger.info("Installing from remote...");
       await runPackageManager(targetDirectory, packageManager);
+
+      // The online versions depend on the latest released Compas version, which results
+      // in package local node_modules of other Compas packages. Remove these, so they
+      // import the project installed versions (ie our latest version on GitHub).
+      await Promise.all(
+        ["cli", "code-gen", "eslint-plugin", "server", "stdlib", "store"].map(
+          (it) =>
+            rm(
+              pathJoin(
+                targetDirectory,
+                "node_modules",
+                "@compas",
+                it,
+                "node_modules",
+              ),
+              {
+                force: true,
+                recursive: true,
+              },
+            ),
+        ),
+      );
     } else {
       logger.info("Installing dependencies...");
       await runPackageManager(targetDirectory, packageManager);
