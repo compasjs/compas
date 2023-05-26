@@ -16,7 +16,7 @@ test("cli/testing/events", (t) => {
     eventStart(event, "test");
     eventStop(event);
 
-    t.ok(!isNil(event.callStack?.[0]?.duration));
-    t.equal(event.callStack?.length, 2);
+    t.ok(!isNil(event.span?.duration));
+    t.equal(event.span.children?.length, 0);
   });
 });

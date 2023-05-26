@@ -27,54 +27,6 @@ export interface UuidFunc {
 }
 
 /**
- * Basic timing and call information
- */
-export type InsightEventCall =
-  | {
-      type: "stop" | "aborted";
-      name?: string;
-
-      /**
-       * Time in milliseconds since some kind of epoch, this may be unix epoch or process start
-       */
-      time: number;
-    }
-  | {
-      type: "start";
-      name?: string;
-
-      /**
-       * Duration in milliseconds between (end|aborted) and start time. This is filled when an
-       * event is aborted or stopped via `eventStop`.
-       */
-      duration?: number;
-
-      /**
-       * Time in milliseconds since some kind of epoch, this may be unix epoch or process start
-       */
-      time: number;
-    }
-  | InsightEventCall[];
-
-/**
- * Encapsulate the base information needed to dispatch events
- */
-export interface InsightEvent {
-  log: Logger;
-
-  signal?: AbortSignal;
-
-  /**
-   * If event is first event dispatched in chain
-   */
-  parent?: InsightEvent;
-
-  name?: string;
-
-  callStack: InsightEventCall[];
-}
-
-/**
  * Options for processDirectoryRecursive and processDirectoryRecursiveSync
  */
 export interface ProcessDirectoryOptions {

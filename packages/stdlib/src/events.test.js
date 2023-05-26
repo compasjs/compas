@@ -15,50 +15,45 @@ test("stdlib/events", (t) => {
 
   t.test("create root event", (t) => {
     const event = newEvent(log);
-    t.ok(isNil(event.root));
-    t.equal(event.callStack.length, 0);
+
+    t.ok(isNil(event.rootEvent));
+    t.ok(isNil(event.name));
+    t.ok(isNil(event.span.name));
+    t.equal(event.log, log);
+    t.equal(event.span.children.length, 0);
   });
 
   t.test("create event from event", (t) => {
     const event = newEvent(log);
     const child = newEventFromEvent(event);
 
-    t.ok(child.root);
-    t.equal(child.callStack.length, 0);
-    t.equal(event.callStack.length, 1);
-    t.equal(event.callStack[0], child.callStack);
+    t.ok(child.rootEvent);
+    t.equal(child.span.children.length, 0);
+    t.equal(child.span, event.span.children[0]);
   });
 
   t.test("event start adds name", (t) => {
     const event = newEvent(t.log);
+
     eventStart(event, "test");
+
     t.equal(event.name, "test");
+    t.equal(event.span.name, "test");
+    t.ok(event.span.startTime);
   });
 
-  t.test("event start adds callStack item", (t) => {
+  t.test("event stop calculates duration", (t) => {
     const event = newEvent(t.log);
-    t.equal(event.callStack.length, 0);
-    eventStart(event, "test");
-    t.equal(event.callStack.length, 1);
-    t.equal(event.callStack[0].type, "start");
-  });
 
-  t.test("event stop adds callStack item", (t) => {
-    const event = newEvent(t.log);
-    t.equal(event.callStack.length, 0);
-    eventStop(event);
-    t.equal(event.callStack.length, 1);
-    t.equal(event.callStack[0].type, "stop");
-  });
-
-  t.test("event stop adds duration", (t) => {
-    const event = newEvent(t.log);
     eventStart(event, "foo");
     eventStop(event);
-    t.ok(!isNil(event.callStack[0].duration));
+
+    t.ok(event.span.startTime);
+    t.ok(event.span.stopTime);
+    t.equal(event.span.duration, 0);
   });
 
-  t.test("event abort adds duration", (t) => {
+  t.test("event abort ", (t) => {
     const abortController = new AbortController();
 
     const event = newEvent(t.log, abortController.signal);
@@ -71,23 +66,23 @@ test("stdlib/events", (t) => {
     } catch (e) {
       t.equal(e.key, "error.server.internal");
       t.equal(e.status, 500);
-      // reference equality of `getRootEvent`
-      t.equal(e.info.event.type, "event_callstack");
-      t.equal(e.info.event.aborted, true);
-      t.equal(e.info.event.callStack.length, 2);
-      t.equal(e.info.event.callStack[1].type, "aborted");
-      t.ok(!isNil(event.callStack[0].duration));
+
+      t.ok(event.span.abortedTime);
+      t.ok(isNil(event.span.duration));
+      t.equal(e.info.span.name, event.name);
     }
   });
 
   t.test("rename an event", (t) => {
     const event = newEvent(t.log);
     eventStart(event, "foo");
+
     t.equal(event.name, "foo");
-    t.equal(event.callStack[0].name, "foo");
+    t.equal(event.span.name, "foo");
+
     eventRename(event, "bar");
 
     t.equal(event.name, "bar");
-    t.equal(event.callStack[0].name, "bar");
+    t.equal(event.span.name, "bar");
   });
 });

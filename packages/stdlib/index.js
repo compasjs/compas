@@ -23,7 +23,7 @@
  */
 
 /**
- * @typedef {import("./types/advanced-types").InsightEvent} InsightEvent
+ * @typedef {import("./src/events").InsightEvent} InsightEvent
  */
 
 /**

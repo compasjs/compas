@@ -1,61 +1,84 @@
-import { inspect } from "util";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
+
+/**
+ * @typedef {object} InsightEventSpan
+ * @property {string} name
+ * @property {number} [duration]
+ * @property {number} startTime
+ * @property {number} [stopTime]
+ * @property {number} [abortedTime]
+ * @property {InsightEventSpan[]} children
+ */
+
+/**
+ * Manually track (async) function duration.
+ *
+ * By passing the event down through (async) functions, it facilitates a unified way to
+ * have access to a task / request specific logger and insights in the duration of your
+ * functions.
+ *
+ * @example
+ *   async function userList(event) {
+ *     eventStart(event, "user.list");
+ *
+ *     const totol = await userCount(newEventFromEvent(event));
+ *     const users = await queryUser({}).exec(sql);
+ *
+ *     eventStop(event);
+ *
+ *     return { total, users };
+ *   }
+ *
+ *   // Logs something like:
+ *   // {
+ *   //   name: "user.list",
+ *   //   duration: 25,
+ *   //   startTime: 1685000000000
+ *   //   stopTime: 1685000000025
+ *   //   children: [
+ *   //     {
+ *   //       name: "user.count",
+ *   //       duration: 5,
+ *   //       startTime: 1685000000010
+ *   //       stopTime: 1685000000015
+ *   //     }
+ *   //   ]
+ *   // }
+ * @typedef {object} InsightEvent
+ * @property {import("@compas/stdlib").Logger} log
+ * @property {AbortSignal} [signal]
+ * @property {InsightEvent} [rootEvent]
+ * @property {string} [name]
+ * @property {InsightEventSpan} span
+ */
 
 /**
  *
  * @param {import("./logger.js").Logger} logger
  * @param {AbortSignal|undefined} [signal]
- * @returns {InsightEventConstructor}
+ * @returns {InsightEvent}
  */
 function InsightEventConstructor(logger, signal) {
-  if (!(this instanceof InsightEventConstructor)) {
-    return new InsightEventConstructor(logger, signal);
-  }
+  return {
+    log: logger,
+    signal,
+    root: undefined,
+    name: undefined,
+    span: {
+      // @ts-expect-error
+      name: undefined,
 
-  const _this = this;
+      duration: undefined,
 
-  /**  @type {import("./logger.js").Logger} */
-  this.log = logger;
-  /**  @type {AbortSignal|undefined} */
-  this.signal = signal;
-  /**  @type {InsightEventConstructor|undefined} */
-  this.parent = undefined;
-  /**  @type {string|undefined} */
-  this.name = undefined;
-  /**  @type {import("../types/advanced-types.js").InsightEventCall[]} */
-  this.callStack = [];
+      // @ts-expect-error
+      startTime: undefined,
 
-  this.calculateDuration = calculateDuration.bind(this);
-  this[inspect.custom] = print.bind(this);
-  this.toJSON = print.bind(this);
-
-  function calculateDuration() {
-    // @ts-ignore
-    if (_this.callStack[0]?.type !== "start") {
-      return;
-    }
-
-    const lastIdx = _this.callStack.length - 1;
-    // @ts-ignore
-    const lastType = _this.callStack[lastIdx]?.type;
-
-    if (lastType === "stop" || lastType === "aborted") {
-      // @ts-ignore
-      _this.callStack[0].duration = // @ts-ignore
-        _this.callStack[lastIdx].time - _this.callStack[0].time;
-    }
-  }
-
-  function print() {
-    return {
-      type: "event_callstack",
-      aborted: !!_this.signal?.aborted,
-      callStack: _this.callStack,
-    };
-  }
-
-  return this;
+      stopTime: undefined,
+      abortedTime: undefined,
+      children: [],
+    },
+  };
 }
 
 /**
@@ -66,42 +89,37 @@ function InsightEventConstructor(logger, signal) {
  * @param {import("./logger.js").Logger} logger Logger should have a
  *   context, like the default `ctx.log`
  * @param {AbortSignal|undefined} [signal]
- * @returns {import("../types/advanced-types.js").InsightEvent}
+ * @returns {InsightEvent}
  */
 export function newEvent(logger, signal) {
-  return new InsightEventConstructor(logger, signal);
+  return InsightEventConstructor(logger, signal);
 }
 
 /**
- * Create a 'child' event, reuses the logger, adds callstack to the passed event
+ * Create a 'child' event, reuses the logger, adds it als a child to the passed event
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").InsightEvent} event
- * @returns {import("../types/advanced-types.js").InsightEvent}
+ * @param {InsightEvent} event
+ * @returns {InsightEvent}
  */
 export function newEventFromEvent(event) {
   if (event.signal?.aborted) {
-    event.callStack.push({
-      type: "aborted",
-      name: event.name,
-      time: Date.now(),
-    });
-    // @ts-ignore
-    event.calculateDuration();
+    event.span.abortedTime = Date.now();
+
     throw AppError.serverError({
-      message: "Operation aborted", // @ts-ignore
-      event: getEventRoot(event).toJSON(),
+      message: "Operation aborted",
+      span: getEventRoot(event).span,
     });
   }
 
-  const callStack = [];
-  event.callStack.push(callStack);
+  const newEvent = InsightEventConstructor(event.log, event.signal);
 
-  const newEvent = new InsightEventConstructor(event.log, event.signal);
-  newEvent.callStack = callStack;
-  // @ts-ignore
-  newEvent.root = event;
+  // Add ot parent
+  event.span.children.push(newEvent.span);
+
+  // Set root
+  newEvent.rootEvent = event.rootEvent ?? event;
 
   return newEvent;
 }
@@ -111,63 +129,44 @@ export function newEventFromEvent(event) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").InsightEvent} event
+ * @param {InsightEvent} event
  * @param {string} name
  * @returns {void}
  */
 export function eventStart(event, name) {
   event.name = name;
+  event.span.name = name;
+  event.span.startTime = Date.now();
 
   if (event.signal?.aborted) {
-    event.callStack.push({
-      type: "aborted",
-      name: event.name,
-      time: Date.now(),
-    });
+    event.span.abortedTime = Date.now();
+
     throw AppError.serverError({
-      message: "Operation aborted", // @ts-ignore
-      event: getEventRoot(event).toJSON(),
+      message: "Operation aborted",
+      span: getEventRoot(event).span,
     });
   }
-
-  event.callStack.push({
-    type: "start",
-    name,
-    time: Date.now(),
-  });
 }
 
 /**
- * Rename an event, and all callStack items
+ * Rename an event
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").InsightEvent} event
+ * @param {InsightEvent} event
  * @param {string} name
  * @returns {void}
  */
 export function eventRename(event, name) {
   event.name = name;
-
-  for (const item of event.callStack) {
-    // @ts-ignore
-    if (typeof item.name === "string") {
-      // @ts-ignore
-      item.name = name;
-    }
-  }
+  event.span.name = name;
 
   if (event.signal?.aborted) {
-    event.callStack.push({
-      type: "aborted",
-      name: event.name,
-      time: Date.now(),
-    });
-    // @ts-ignore
-    event.calculateDuration();
+    event.span.abortedTime = Date.now();
+
     throw AppError.serverError({
-      message: "Operation aborted", // @ts-ignore
-      event: getEventRoot(event).toJSON(),
+      message: "Operation aborted",
+      span: getEventRoot(event).span,
     });
   }
 }
@@ -177,31 +176,31 @@ export function eventRename(event, name) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types.js").InsightEvent} event
+ * @param {InsightEvent} event
  * @returns {void}
  */
 export function eventStop(event) {
-  event.callStack.push({
-    type: "stop",
-    name: event.name,
-    time: Date.now(),
-  });
+  event.span.stopTime = Date.now();
 
-  // @ts-ignore
-  event.calculateDuration();
+  if (event.span.startTime && event.span.stopTime) {
+    event.span.duration = event.span.stopTime - event.span.startTime;
+  }
 
-  // @ts-ignore
-  if (isNil(event.root)) {
-    event.log.info(event);
+  if (isNil(event.rootEvent)) {
+    event.log.info({
+      type: "event_span",
+      aborted: !!event.signal?.aborted,
+      span: event.span,
+    });
   }
 }
 
 /**
  * Get the root event from the provided event
  *
- * @param {import("../types/advanced-types.js").InsightEvent} event
- * @returns {import("../types/advanced-types.js").InsightEvent}
+ * @param {InsightEvent} event
+ * @returns {InsightEvent}
  */
 function getEventRoot(event) {
-  return isNil(event.parent) ? event : getEventRoot(event.parent);
+  return isNil(event.rootEvent) ? event : event.rootEvent;
 }
