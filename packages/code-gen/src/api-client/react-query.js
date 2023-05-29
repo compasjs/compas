@@ -44,6 +44,8 @@ export function reactQueryGenerateCommonFile(generateContext) {
   importCollector.destructure("react", "PropsWithChildren");
   importCollector.destructure("react", "useContext");
 
+  fileWrite(file, `export type Pretty<T> = { [K in keyof T]: T[K] } & {};`);
+
   if (distilledTargetInfo.isAxios) {
     importCollector.destructure("axios", "AxiosInstance");
 
@@ -125,6 +127,8 @@ export function reactQueryGetApiClientFile(generateContext, route) {
 
   const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
   const importCollector = JavascriptImportCollector.getImportCollector(file);
+
+  importCollector.destructure("../common/api-client-wrapper", "Pretty");
 
   if (distilledTargetInfo.useGlobalClients) {
     // Import the global clients, this has affect on a bunch of the generated api's where we don't have to accept these arguments
@@ -290,10 +294,10 @@ export function reactQueryGenerateFunction(
     if (requiredKeys.length > 0 && !requireAllParams) {
       // We can just wrap it in an Partial which makes all required keys optional instead of writing them all out
 
-      return `Partial<${result}>`;
+      return `Pretty<Partial<${result}>>`;
     }
 
-    return result;
+    return `Pretty<${result}>`;
   };
 
   const parameterListWithExtraction = ({
