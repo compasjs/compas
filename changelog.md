@@ -4,6 +4,49 @@ editLink: false
 
 # Changelog
 
+### [v0.5.0](https://github.com/compasjs/compas/releases/tag/v0.5.0)
+
+#### Breaking changes
+
+- feat(stdlib): condense logs for events
+  [`4e6983`](https://github.com/compasjs/compas/commit/4e698351c820a3acc4c9b944e6c2d2e9f5e6fd2c)
+  - Changed the internal memory structure of events. `callStack` is now `span`.
+    `parent` is removed and replaced by a `rootEvent`. Nested properties are
+    affected as well. Usages like `event.name` still work as expected.
+  - Changed the logs produced by the events. The `type` is now `event_span`
+    instead of `event_callstack`. In these logs `callStack` is also replaced by
+    span. Nested properties are affected as well to improve parsing and
+    visualizing them. Please check the new logs and feel free to open an issue
+    if you have trouble with migrating.
+
+#### Features
+
+- feat(code-gen): pretty react-query hook types
+  [`7c644d`](https://github.com/compasjs/compas/commit/7c644dc9faca665a69981ea99f21bb6a64e46406)
+
+#### Dependency updates
+
+- build(deps): bump eslint from 8.40.0 to 8.41.0
+  ([#2599](https://github.com/compasjs/compas/pull/2599))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-plugin-jsdoc from 44.2.4 to 45.0.0
+  ([#2603](https://github.com/compasjs/compas/pull/2603),
+  [#2612](https://github.com/compasjs/compas/pull/2612))
+  - Major version bump
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @babel/core from 7.21.8 to 7.22.1
+  ([#2611](https://github.com/compasjs/compas/pull/2611))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.332.0 to 3.341.0
+  ([#2610](https://github.com/compasjs/compas/pull/2610))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump c8 from 7.13.0 to 7.14.0
+  ([#2614](https://github.com/compasjs/compas/pull/2614))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.332.0 to 3.341.0
+  ([#2613](https://github.com/compasjs/compas/pull/2613))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.4.0](https://github.com/compasjs/compas/releases/tag/v0.4.0)
 
 #### Breaking changes
