@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.5.1](https://github.com/compasjs/compas/releases/tag/v0.5.1)
+
+#### Other
+
+- perf(code-gen): init js validator objects with known keys
+  [`47259f`](https://github.com/compasjs/compas/commit/47259fb88a1e639abeae498ee2b624956a5d2b41)
+
 ### [v0.5.0](https://github.com/compasjs/compas/releases/tag/v0.5.0)
 
 #### Breaking changes
