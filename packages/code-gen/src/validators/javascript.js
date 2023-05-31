@@ -1306,7 +1306,12 @@ export function validatorJavascriptObject(file, type, validatorState) {
     validatorState.reusedVariableIndex--;
   }
 
-  fileWrite(file, `${resultPath} = Object.create(null);\n`);
+  fileWrite(
+    file,
+    `${resultPath} = { ${Object.keys(type.keys)
+      .map((it) => `"${it}": undefined,`)
+      .join(" ")}};\n`,
+  );
 
   let variableIndex = 0;
 

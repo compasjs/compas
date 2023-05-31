@@ -61,7 +61,16 @@ export function validateQueryResultStoreFile(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        contentLength: undefined,
+        bucketName: undefined,
+        contentType: undefined,
+        name: undefined,
+        meta: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -325,7 +334,18 @@ export function validateQueryResultStoreJob(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        isComplete: undefined,
+        handlerTimeout: undefined,
+        priority: undefined,
+        retryCount: undefined,
+        name: undefined,
+        scheduledAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -644,7 +664,15 @@ export function validateQueryResultStoreSessionStore(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        checksum: undefined,
+        revokedAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+        accessTokens: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -890,7 +918,15 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        session: undefined,
+        expiresAt: undefined,
+        refreshToken: undefined,
+        revokedAt: undefined,
+        createdAt: undefined,
+        accessToken: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {

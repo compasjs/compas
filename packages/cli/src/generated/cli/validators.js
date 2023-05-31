@@ -61,7 +61,17 @@ export function validateCliCommandDefinition(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        name: undefined,
+        shortDescription: undefined,
+        longDescription: undefined,
+        modifiers: undefined,
+        dynamicValue: undefined,
+        watchSettings: undefined,
+        subCommands: undefined,
+        flags: undefined,
+        executor: undefined,
+      };
 
       if (value["name"] === null || value["name"] === undefined) {
         errorMap[`$.name`] = {
@@ -186,7 +196,11 @@ export function validateCliCommandDefinition(value) {
               break;
             }
           }
-          result["modifiers"] = Object.create(null);
+          result["modifiers"] = {
+            isDynamic: undefined,
+            isCosmetic: undefined,
+            isWatchable: undefined,
+          };
 
           if (
             value["modifiers"]["isDynamic"] === null ||
@@ -307,7 +321,10 @@ export function validateCliCommandDefinition(value) {
               break;
             }
           }
-          result["dynamicValue"] = Object.create(null);
+          result["dynamicValue"] = {
+            validator: undefined,
+            completions: undefined,
+          };
 
           if (
             value["dynamicValue"]["validator"] === null ||
@@ -384,7 +401,10 @@ export function validateCliCommandDefinition(value) {
               break;
             }
           }
-          result["watchSettings"] = Object.create(null);
+          result["watchSettings"] = {
+            extensions: undefined,
+            ignorePatterns: undefined,
+          };
 
           if (
             value["watchSettings"]["extensions"] === null ||
@@ -674,7 +694,13 @@ export function validateCliFlagDefinition(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        name: undefined,
+        rawName: undefined,
+        description: undefined,
+        modifiers: undefined,
+        value: undefined,
+      };
 
       if (value["name"] === null || value["name"] === undefined) {
         errorMap[`$.name`] = {
@@ -794,7 +820,11 @@ export function validateCliFlagDefinition(value) {
               break;
             }
           }
-          result["modifiers"] = Object.create(null);
+          result["modifiers"] = {
+            isRepeatable: undefined,
+            isRequired: undefined,
+            isInternal: undefined,
+          };
 
           if (
             value["modifiers"]["isRepeatable"] === null ||
@@ -916,7 +946,11 @@ export function validateCliFlagDefinition(value) {
               break;
             }
           }
-          result["value"] = Object.create(null);
+          result["value"] = {
+            specification: undefined,
+            validator: undefined,
+            completions: undefined,
+          };
 
           if (
             value["value"]["specification"] === null ||
@@ -1066,7 +1100,7 @@ export function validateCliCompletion(value) {
               break;
             }
           }
-          intermediateResult2 = Object.create(null);
+          intermediateResult2 = { type: undefined };
 
           if (
             intermediateValue2["type"] === null ||
@@ -1152,7 +1186,7 @@ export function validateCliCompletion(value) {
               break;
             }
           }
-          intermediateResult2 = Object.create(null);
+          intermediateResult2 = { type: undefined };
 
           if (
             intermediateValue2["type"] === null ||
@@ -1238,7 +1272,11 @@ export function validateCliCompletion(value) {
               break;
             }
           }
-          intermediateResult2 = Object.create(null);
+          intermediateResult2 = {
+            type: undefined,
+            name: undefined,
+            description: undefined,
+          };
 
           if (
             intermediateValue2["type"] === null ||
@@ -1376,7 +1414,11 @@ export function validateCliCompletion(value) {
               break;
             }
           }
-          intermediateResult2 = Object.create(null);
+          intermediateResult2 = {
+            type: undefined,
+            specification: undefined,
+            description: undefined,
+          };
 
           if (
             intermediateValue2["type"] === null ||

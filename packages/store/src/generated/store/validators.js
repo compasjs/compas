@@ -63,7 +63,16 @@ export function validateStoreFile(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        contentLength: undefined,
+        bucketName: undefined,
+        contentType: undefined,
+        name: undefined,
+        meta: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -321,7 +330,12 @@ export function validateStoreFileMeta(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        transforms: undefined,
+        transformedFromOriginal: undefined,
+        placeholderImage: undefined,
+        altText: undefined,
+      };
 
       if (value["transforms"] === null || value["transforms"] === undefined) {
         result["transforms"] = undefined;
@@ -482,7 +496,33 @@ export function validateStoreFileWhereValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        bucketName: undefined,
+        bucketNameNotEqual: undefined,
+        bucketNameIn: undefined,
+        bucketNameNotIn: undefined,
+        bucketNameLike: undefined,
+        bucketNameILike: undefined,
+        bucketNameNotLike: undefined,
+        createdAt: undefined,
+        createdAtNotEqual: undefined,
+        createdAtIn: undefined,
+        createdAtNotIn: undefined,
+        createdAtGreaterThan: undefined,
+        createdAtLowerThan: undefined,
+        updatedAt: undefined,
+        updatedAtNotEqual: undefined,
+        updatedAtIn: undefined,
+        updatedAtNotIn: undefined,
+        updatedAtGreaterThan: undefined,
+        updatedAtLowerThan: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -2155,7 +2195,12 @@ export function validateStoreFileOrderBySpec(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        bucketName: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -2346,7 +2391,14 @@ export function validateStoreFileQueryBuilderValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -2682,7 +2734,7 @@ export function validateStoreFileInsertValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { insert: undefined, returning: undefined };
 
       if (value["insert"] === null || value["insert"] === undefined) {
         errorMap[`$.insert`] = {
@@ -2817,7 +2869,16 @@ export function validateStoreFileInsertPartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        contentLength: undefined,
+        bucketName: undefined,
+        contentType: undefined,
+        name: undefined,
+        meta: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -3064,7 +3125,7 @@ export function validateStoreFileUpdateValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -3169,7 +3230,15 @@ export function validateStoreFileUpdatePartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        contentLength: undefined,
+        bucketName: undefined,
+        contentType: undefined,
+        name: undefined,
+        meta: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (
         value["contentLength"] === null ||
@@ -3227,7 +3296,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult3 = Object.create(null);
+              intermediateResult3 = { $divide: undefined };
 
               if (
                 intermediateValue3["$divide"] === null ||
@@ -3323,7 +3392,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult3 = Object.create(null);
+              intermediateResult3 = { $multiply: undefined };
 
               if (
                 intermediateValue3["$multiply"] === null ||
@@ -3419,7 +3488,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult3 = Object.create(null);
+              intermediateResult3 = { $subtract: undefined };
 
               if (
                 intermediateValue3["$subtract"] === null ||
@@ -3515,7 +3584,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult3 = Object.create(null);
+              intermediateResult3 = { $add: undefined };
 
               if (
                 intermediateValue3["$add"] === null ||
@@ -3670,7 +3739,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $append: undefined };
 
               if (
                 intermediateValue4["$append"] === null ||
@@ -3801,7 +3870,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $append: undefined };
 
               if (
                 intermediateValue5["$append"] === null ||
@@ -3932,7 +4001,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $append: undefined };
 
               if (
                 intermediateValue6["$append"] === null ||
@@ -4063,7 +4132,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $set: undefined };
 
               if (
                 intermediateValue7["$set"] === null ||
@@ -4105,7 +4174,10 @@ export function validateStoreFileUpdatePartialValidated(value) {
                       break;
                     }
                   }
-                  intermediateResult7["$set"] = Object.create(null);
+                  intermediateResult7["$set"] = {
+                    path: undefined,
+                    value: undefined,
+                  };
 
                   if (
                     intermediateValue7["$set"]["path"] === null ||
@@ -4336,7 +4408,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $remove: undefined };
 
               if (
                 intermediateValue7["$remove"] === null ||
@@ -4382,7 +4454,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                       break;
                     }
                   }
-                  intermediateResult7["$remove"] = Object.create(null);
+                  intermediateResult7["$remove"] = { path: undefined };
 
                   if (
                     intermediateValue7["$remove"]["path"] === null ||
@@ -4640,7 +4712,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult8 = Object.create(null);
+              intermediateResult8 = { $subtract: undefined };
 
               if (
                 intermediateValue8["$subtract"] === null ||
@@ -4722,7 +4794,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult8 = Object.create(null);
+              intermediateResult8 = { $add: undefined };
 
               if (
                 intermediateValue8["$add"] === null ||
@@ -4854,7 +4926,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult9 = Object.create(null);
+              intermediateResult9 = { $subtract: undefined };
 
               if (
                 intermediateValue9["$subtract"] === null ||
@@ -4936,7 +5008,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult9 = Object.create(null);
+              intermediateResult9 = { $add: undefined };
 
               if (
                 intermediateValue9["$add"] === null ||
@@ -5080,7 +5152,18 @@ export function validateStoreJob(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        isComplete: undefined,
+        handlerTimeout: undefined,
+        priority: undefined,
+        retryCount: undefined,
+        name: undefined,
+        scheduledAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -5430,7 +5513,46 @@ export function validateStoreJobWhereValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        idGreaterThan: undefined,
+        idLowerThan: undefined,
+        isComplete: undefined,
+        isCompleteIsNull: undefined,
+        isCompleteIsNotNull: undefined,
+        name: undefined,
+        nameNotEqual: undefined,
+        nameIn: undefined,
+        nameNotIn: undefined,
+        nameLike: undefined,
+        nameILike: undefined,
+        nameNotLike: undefined,
+        scheduledAt: undefined,
+        scheduledAtNotEqual: undefined,
+        scheduledAtIn: undefined,
+        scheduledAtNotIn: undefined,
+        scheduledAtGreaterThan: undefined,
+        scheduledAtLowerThan: undefined,
+        scheduledAtIsNull: undefined,
+        scheduledAtIsNotNull: undefined,
+        createdAt: undefined,
+        createdAtNotEqual: undefined,
+        createdAtIn: undefined,
+        createdAtNotIn: undefined,
+        createdAtGreaterThan: undefined,
+        createdAtLowerThan: undefined,
+        updatedAt: undefined,
+        updatedAtNotEqual: undefined,
+        updatedAtIn: undefined,
+        updatedAtNotIn: undefined,
+        updatedAtGreaterThan: undefined,
+        updatedAtLowerThan: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -7692,7 +7814,14 @@ export function validateStoreJobOrderBySpec(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        isComplete: undefined,
+        name: undefined,
+        scheduledAt: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -7963,7 +8092,14 @@ export function validateStoreJobQueryBuilderValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -8305,7 +8441,7 @@ export function validateStoreJobInsertValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { insert: undefined, returning: undefined };
 
       if (value["insert"] === null || value["insert"] === undefined) {
         errorMap[`$.insert`] = {
@@ -8442,7 +8578,18 @@ export function validateStoreJobInsertPartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        isComplete: undefined,
+        handlerTimeout: undefined,
+        priority: undefined,
+        retryCount: undefined,
+        name: undefined,
+        scheduledAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -8747,7 +8894,7 @@ export function validateStoreJobUpdateValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -8854,7 +9001,17 @@ export function validateStoreJobUpdatePartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        isComplete: undefined,
+        handlerTimeout: undefined,
+        priority: undefined,
+        retryCount: undefined,
+        name: undefined,
+        scheduledAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["isComplete"] === null || value["isComplete"] === undefined) {
         result["isComplete"] = value["isComplete"];
@@ -8909,7 +9066,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult3 = Object.create(null);
+              intermediateResult3 = { $negate: undefined };
 
               if (
                 intermediateValue3["$negate"] === null ||
@@ -9047,7 +9204,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $divide: undefined };
 
               if (
                 intermediateValue4["$divide"] === null ||
@@ -9143,7 +9300,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $multiply: undefined };
 
               if (
                 intermediateValue4["$multiply"] === null ||
@@ -9239,7 +9396,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $subtract: undefined };
 
               if (
                 intermediateValue4["$subtract"] === null ||
@@ -9335,7 +9492,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $add: undefined };
 
               if (
                 intermediateValue4["$add"] === null ||
@@ -9485,7 +9642,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $divide: undefined };
 
               if (
                 intermediateValue5["$divide"] === null ||
@@ -9581,7 +9738,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $multiply: undefined };
 
               if (
                 intermediateValue5["$multiply"] === null ||
@@ -9677,7 +9834,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $subtract: undefined };
 
               if (
                 intermediateValue5["$subtract"] === null ||
@@ -9773,7 +9930,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $add: undefined };
 
               if (
                 intermediateValue5["$add"] === null ||
@@ -9923,7 +10080,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $divide: undefined };
 
               if (
                 intermediateValue6["$divide"] === null ||
@@ -10019,7 +10176,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $multiply: undefined };
 
               if (
                 intermediateValue6["$multiply"] === null ||
@@ -10115,7 +10272,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $subtract: undefined };
 
               if (
                 intermediateValue6["$subtract"] === null ||
@@ -10211,7 +10368,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $add: undefined };
 
               if (
                 intermediateValue6["$add"] === null ||
@@ -10366,7 +10523,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $append: undefined };
 
               if (
                 intermediateValue7["$append"] === null ||
@@ -10497,7 +10654,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult8 = Object.create(null);
+              intermediateResult8 = { $subtract: undefined };
 
               if (
                 intermediateValue8["$subtract"] === null ||
@@ -10579,7 +10736,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult8 = Object.create(null);
+              intermediateResult8 = { $add: undefined };
 
               if (
                 intermediateValue8["$add"] === null ||
@@ -10711,7 +10868,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult9 = Object.create(null);
+              intermediateResult9 = { $set: undefined };
 
               if (
                 intermediateValue9["$set"] === null ||
@@ -10753,7 +10910,10 @@ export function validateStoreJobUpdatePartialValidated(value) {
                       break;
                     }
                   }
-                  intermediateResult9["$set"] = Object.create(null);
+                  intermediateResult9["$set"] = {
+                    path: undefined,
+                    value: undefined,
+                  };
 
                   if (
                     intermediateValue9["$set"]["path"] === null ||
@@ -10984,7 +11144,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult9 = Object.create(null);
+              intermediateResult9 = { $remove: undefined };
 
               if (
                 intermediateValue9["$remove"] === null ||
@@ -11030,7 +11190,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                       break;
                     }
                   }
-                  intermediateResult9["$remove"] = Object.create(null);
+                  intermediateResult9["$remove"] = { path: undefined };
 
                   if (
                     intermediateValue9["$remove"]["path"] === null ||
@@ -11283,7 +11443,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult10 = Object.create(null);
+              intermediateResult10 = { $subtract: undefined };
 
               if (
                 intermediateValue10["$subtract"] === null ||
@@ -11368,7 +11528,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult10 = Object.create(null);
+              intermediateResult10 = { $add: undefined };
 
               if (
                 intermediateValue10["$add"] === null ||
@@ -11506,7 +11666,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult11 = Object.create(null);
+              intermediateResult11 = { $subtract: undefined };
 
               if (
                 intermediateValue11["$subtract"] === null ||
@@ -11591,7 +11751,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult11 = Object.create(null);
+              intermediateResult11 = { $add: undefined };
 
               if (
                 intermediateValue11["$add"] === null ||
@@ -11732,7 +11892,14 @@ export function validateStoreSessionStore(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        checksum: undefined,
+        revokedAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -11939,7 +12106,28 @@ export function validateStoreSessionStoreWhereValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        createdAt: undefined,
+        createdAtNotEqual: undefined,
+        createdAtIn: undefined,
+        createdAtNotIn: undefined,
+        createdAtGreaterThan: undefined,
+        createdAtLowerThan: undefined,
+        updatedAt: undefined,
+        updatedAtNotEqual: undefined,
+        updatedAtIn: undefined,
+        updatedAtNotIn: undefined,
+        updatedAtGreaterThan: undefined,
+        updatedAtLowerThan: undefined,
+        viaAccessTokens: undefined,
+        accessTokensNotExists: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -13075,7 +13263,11 @@ export function validateStoreSessionStoreWhereValidated(value) {
               break;
             }
           }
-          result["viaAccessTokens"] = Object.create(null);
+          result["viaAccessTokens"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaAccessTokens"]["where"] === null ||
@@ -13264,7 +13456,42 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        session: undefined,
+        sessionNotEqual: undefined,
+        sessionIn: undefined,
+        sessionNotIn: undefined,
+        expiresAt: undefined,
+        expiresAtNotEqual: undefined,
+        expiresAtIn: undefined,
+        expiresAtNotIn: undefined,
+        expiresAtGreaterThan: undefined,
+        expiresAtLowerThan: undefined,
+        refreshToken: undefined,
+        refreshTokenNotEqual: undefined,
+        refreshTokenIn: undefined,
+        refreshTokenNotIn: undefined,
+        refreshTokenIsNull: undefined,
+        refreshTokenIsNotNull: undefined,
+        revokedAt: undefined,
+        revokedAtNotEqual: undefined,
+        revokedAtIn: undefined,
+        revokedAtNotIn: undefined,
+        revokedAtGreaterThan: undefined,
+        revokedAtLowerThan: undefined,
+        revokedAtIsNull: undefined,
+        revokedAtIsNotNull: undefined,
+        viaRefreshToken: undefined,
+        viaSession: undefined,
+        viaAccessToken: undefined,
+        accessTokenNotExists: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -15150,7 +15377,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
               break;
             }
           }
-          result["viaRefreshToken"] = Object.create(null);
+          result["viaRefreshToken"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaRefreshToken"]["where"] === null ||
@@ -15271,7 +15502,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
               break;
             }
           }
-          result["viaSession"] = Object.create(null);
+          result["viaSession"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaSession"]["where"] === null ||
@@ -15395,7 +15630,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
               break;
             }
           }
-          result["viaAccessToken"] = Object.create(null);
+          result["viaAccessToken"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaAccessToken"]["where"] === null ||
@@ -15689,7 +15928,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { id: undefined, createdAt: undefined, updatedAt: undefined };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -15848,7 +16087,15 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+        accessTokens: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -16210,7 +16457,17 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+        refreshToken: undefined,
+        session: undefined,
+        accessToken: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -16589,7 +16846,13 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        session: undefined,
+        expiresAt: undefined,
+        refreshToken: undefined,
+        revokedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -16984,7 +17247,7 @@ export function validateStoreSessionStoreInsertValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { insert: undefined, returning: undefined };
 
       if (value["insert"] === null || value["insert"] === undefined) {
         errorMap[`$.insert`] = {
@@ -17119,7 +17382,14 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        checksum: undefined,
+        revokedAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -17299,7 +17569,7 @@ export function validateStoreSessionStoreUpdateValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -17406,7 +17676,13 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        checksum: undefined,
+        revokedAt: undefined,
+        data: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
 
       if (value["checksum"] === null || value["checksum"] === undefined) {
         result["checksum"] = undefined;
@@ -17461,7 +17737,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult3 = Object.create(null);
+              intermediateResult3 = { $append: undefined };
 
               if (
                 intermediateValue3["$append"] === null ||
@@ -17592,7 +17868,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $subtract: undefined };
 
               if (
                 intermediateValue4["$subtract"] === null ||
@@ -17674,7 +17950,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $add: undefined };
 
               if (
                 intermediateValue4["$add"] === null ||
@@ -17806,7 +18082,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $set: undefined };
 
               if (
                 intermediateValue5["$set"] === null ||
@@ -17848,7 +18124,10 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                       break;
                     }
                   }
-                  intermediateResult5["$set"] = Object.create(null);
+                  intermediateResult5["$set"] = {
+                    path: undefined,
+                    value: undefined,
+                  };
 
                   if (
                     intermediateValue5["$set"]["path"] === null ||
@@ -18073,7 +18352,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult5 = Object.create(null);
+              intermediateResult5 = { $remove: undefined };
 
               if (
                 intermediateValue5["$remove"] === null ||
@@ -18119,7 +18398,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                       break;
                     }
                   }
-                  intermediateResult5["$remove"] = Object.create(null);
+                  intermediateResult5["$remove"] = { path: undefined };
 
                   if (
                     intermediateValue5["$remove"]["path"] === null ||
@@ -18365,7 +18644,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $subtract: undefined };
 
               if (
                 intermediateValue6["$subtract"] === null ||
@@ -18447,7 +18726,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $add: undefined };
 
               if (
                 intermediateValue6["$add"] === null ||
@@ -18579,7 +18858,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $subtract: undefined };
 
               if (
                 intermediateValue7["$subtract"] === null ||
@@ -18661,7 +18940,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $add: undefined };
 
               if (
                 intermediateValue7["$add"] === null ||
@@ -18799,7 +19078,14 @@ export function validateStoreSessionStoreToken(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        session: undefined,
+        expiresAt: undefined,
+        refreshToken: undefined,
+        revokedAt: undefined,
+        createdAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -19021,7 +19307,7 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { insert: undefined, returning: undefined };
 
       if (value["insert"] === null || value["insert"] === undefined) {
         errorMap[`$.insert`] = {
@@ -19157,7 +19443,14 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        session: undefined,
+        expiresAt: undefined,
+        refreshToken: undefined,
+        revokedAt: undefined,
+        createdAt: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         result["id"] = undefined;
@@ -19377,7 +19670,7 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -19484,7 +19777,13 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        session: undefined,
+        expiresAt: undefined,
+        refreshToken: undefined,
+        revokedAt: undefined,
+        createdAt: undefined,
+      };
 
       if (value["session"] === null || value["session"] === undefined) {
         result["session"] = undefined;
@@ -19593,7 +19892,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $subtract: undefined };
 
               if (
                 intermediateValue4["$subtract"] === null ||
@@ -19675,7 +19974,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult4 = Object.create(null);
+              intermediateResult4 = { $add: undefined };
 
               if (
                 intermediateValue4["$add"] === null ||
@@ -19864,7 +20163,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $subtract: undefined };
 
               if (
                 intermediateValue6["$subtract"] === null ||
@@ -19946,7 +20245,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult6 = Object.create(null);
+              intermediateResult6 = { $add: undefined };
 
               if (
                 intermediateValue6["$add"] === null ||
@@ -20078,7 +20377,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $subtract: undefined };
 
               if (
                 intermediateValue7["$subtract"] === null ||
@@ -20160,7 +20459,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                   break;
                 }
               }
-              intermediateResult7 = Object.create(null);
+              intermediateResult7 = { $add: undefined };
 
               if (
                 intermediateValue7["$add"] === null ||
@@ -20296,7 +20595,14 @@ export function validateStoreFileResponse(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        id: undefined,
+        name: undefined,
+        contentType: undefined,
+        url: undefined,
+        placeholderImage: undefined,
+        altText: undefined,
+      };
 
       if (value["id"] === null || value["id"] === undefined) {
         errorMap[`$.id`] = {
@@ -20478,7 +20784,7 @@ export function validateStoreImageTransformOptions(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = { q: undefined, w: undefined };
 
       if (value["q"] === null || value["q"] === undefined) {
         result["q"] = 75;
@@ -20582,7 +20888,7 @@ export function validateStoreSecureImageTransformOptions(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = { accessToken: undefined, q: undefined, w: undefined };
 
       if (value["accessToken"] === null || value["accessToken"] === undefined) {
         errorMap[`$.accessToken`] = {
@@ -20752,7 +21058,33 @@ export function validateStoreFileWhereValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        bucketName: undefined,
+        bucketNameNotEqual: undefined,
+        bucketNameIn: undefined,
+        bucketNameNotIn: undefined,
+        bucketNameLike: undefined,
+        bucketNameILike: undefined,
+        bucketNameNotLike: undefined,
+        createdAt: undefined,
+        createdAtNotEqual: undefined,
+        createdAtIn: undefined,
+        createdAtNotIn: undefined,
+        createdAtGreaterThan: undefined,
+        createdAtLowerThan: undefined,
+        updatedAt: undefined,
+        updatedAtNotEqual: undefined,
+        updatedAtIn: undefined,
+        updatedAtNotIn: undefined,
+        updatedAtGreaterThan: undefined,
+        updatedAtLowerThan: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -22241,7 +22573,46 @@ export function validateStoreJobWhereValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        idGreaterThan: undefined,
+        idLowerThan: undefined,
+        isComplete: undefined,
+        isCompleteIsNull: undefined,
+        isCompleteIsNotNull: undefined,
+        name: undefined,
+        nameNotEqual: undefined,
+        nameIn: undefined,
+        nameNotIn: undefined,
+        nameLike: undefined,
+        nameILike: undefined,
+        nameNotLike: undefined,
+        scheduledAt: undefined,
+        scheduledAtNotEqual: undefined,
+        scheduledAtIn: undefined,
+        scheduledAtNotIn: undefined,
+        scheduledAtGreaterThan: undefined,
+        scheduledAtLowerThan: undefined,
+        scheduledAtIsNull: undefined,
+        scheduledAtIsNotNull: undefined,
+        createdAt: undefined,
+        createdAtNotEqual: undefined,
+        createdAtIn: undefined,
+        createdAtNotIn: undefined,
+        createdAtGreaterThan: undefined,
+        createdAtLowerThan: undefined,
+        updatedAt: undefined,
+        updatedAtNotEqual: undefined,
+        updatedAtIn: undefined,
+        updatedAtNotIn: undefined,
+        updatedAtGreaterThan: undefined,
+        updatedAtLowerThan: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -24279,7 +24650,28 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        createdAt: undefined,
+        createdAtNotEqual: undefined,
+        createdAtIn: undefined,
+        createdAtNotIn: undefined,
+        createdAtGreaterThan: undefined,
+        createdAtLowerThan: undefined,
+        updatedAt: undefined,
+        updatedAtNotEqual: undefined,
+        updatedAtIn: undefined,
+        updatedAtNotIn: undefined,
+        updatedAtGreaterThan: undefined,
+        updatedAtLowerThan: undefined,
+        viaAccessTokens: undefined,
+        accessTokensNotExists: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -25359,7 +25751,11 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
               break;
             }
           }
-          result["viaAccessTokens"] = Object.create(null);
+          result["viaAccessTokens"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaAccessTokens"]["where"] === null ||
@@ -25548,7 +25944,42 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        $raw: undefined,
+        $or: undefined,
+        id: undefined,
+        idNotEqual: undefined,
+        idIn: undefined,
+        idNotIn: undefined,
+        session: undefined,
+        sessionNotEqual: undefined,
+        sessionIn: undefined,
+        sessionNotIn: undefined,
+        expiresAt: undefined,
+        expiresAtNotEqual: undefined,
+        expiresAtIn: undefined,
+        expiresAtNotIn: undefined,
+        expiresAtGreaterThan: undefined,
+        expiresAtLowerThan: undefined,
+        refreshToken: undefined,
+        refreshTokenNotEqual: undefined,
+        refreshTokenIn: undefined,
+        refreshTokenNotIn: undefined,
+        refreshTokenIsNull: undefined,
+        refreshTokenIsNotNull: undefined,
+        revokedAt: undefined,
+        revokedAtNotEqual: undefined,
+        revokedAtIn: undefined,
+        revokedAtNotIn: undefined,
+        revokedAtGreaterThan: undefined,
+        revokedAtLowerThan: undefined,
+        revokedAtIsNull: undefined,
+        revokedAtIsNotNull: undefined,
+        viaRefreshToken: undefined,
+        viaSession: undefined,
+        viaAccessToken: undefined,
+        accessTokenNotExists: undefined,
+      };
 
       if (value["$raw"] === null || value["$raw"] === undefined) {
         result["$raw"] = undefined;
@@ -27346,7 +27777,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
               break;
             }
           }
-          result["viaRefreshToken"] = Object.create(null);
+          result["viaRefreshToken"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaRefreshToken"]["where"] === null ||
@@ -27467,7 +27902,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
               break;
             }
           }
-          result["viaSession"] = Object.create(null);
+          result["viaSession"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaSession"]["where"] === null ||
@@ -27591,7 +28030,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
               break;
             }
           }
-          result["viaAccessToken"] = Object.create(null);
+          result["viaAccessToken"] = {
+            where: undefined,
+            limit: undefined,
+            offset: undefined,
+          };
 
           if (
             value["viaAccessToken"]["where"] === null ||
@@ -27745,7 +28188,7 @@ export function validateStoreFileUpdateValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -27842,7 +28285,7 @@ export function validateStoreJobUpdateValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -27939,7 +28382,7 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -28040,7 +28483,7 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = { update: undefined, where: undefined, returning: undefined };
 
       if (value["update"] === null || value["update"] === undefined) {
         errorMap[`$.update`] = {
@@ -28700,7 +29143,14 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -28878,7 +29328,14 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -29059,7 +29516,15 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+        accessTokens: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;
@@ -29263,7 +29728,17 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
           break;
         }
       }
-      result = Object.create(null);
+      result = {
+        where: undefined,
+        orderBy: undefined,
+        orderBySpec: undefined,
+        limit: undefined,
+        offset: undefined,
+        select: undefined,
+        refreshToken: undefined,
+        session: undefined,
+        accessToken: undefined,
+      };
 
       if (value["where"] === null || value["where"] === undefined) {
         result["where"] = undefined;

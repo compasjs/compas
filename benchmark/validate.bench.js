@@ -10,7 +10,7 @@ async function main(logger) {
   const baseDir = pathJoin(testTemporaryDirectory, `./bench-validate/`);
 
   const generator = new Generator(logger);
-  generator.addStructure("./packages/code-gen/src/experimental/generated");
+  generator.addStructure("./packages/code-gen/src/generated");
 
   generator.generate({
     targetLanguage: "js",
@@ -22,8 +22,8 @@ async function main(logger) {
     outputDirectory: baseDir,
   });
 
-  const { validateExperimentalStructure } = await import(
-    pathJoin(process.cwd(), baseDir, "./experimental/validators.js")
+  const { validateStructureStructure } = await import(
+    pathJoin(process.cwd(), baseDir, "./structure/validators.js")
   );
 
   const structures = [
@@ -35,7 +35,7 @@ async function main(logger) {
     ),
     JSON.parse(
       readFileSync(
-        "./packages/code-gen/src/experimental/generated/common/structure.json",
+        "./packages/code-gen/src/generated/common/structure.json",
         "utf-8",
       ),
     ),
@@ -45,7 +45,7 @@ async function main(logger) {
 
   for (let i = 0; i < 100; ++i) {
     for (const str of structures) {
-      const { error } = validateExperimentalStructure(str);
+      const { error } = validateStructureStructure(str);
       if (error) {
         throw AppError.validationError("validator.error", error);
       }
@@ -56,13 +56,13 @@ async function main(logger) {
 
   bench("store structure", (b) => {
     for (let i = 0; i < b.N; ++i) {
-      validateExperimentalStructure(structures[0]);
+      validateStructureStructure(structures[0]);
     }
   });
 
   bench("code-gen experimental structure", (b) => {
     for (let i = 0; i < b.N; ++i) {
-      validateExperimentalStructure(structures[1]);
+      validateStructureStructure(structures[1]);
     }
   });
 

@@ -31,7 +31,17 @@ export function validateStructureAnyDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        targets: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -306,7 +316,11 @@ export function validateStructureAnyDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -406,7 +420,7 @@ export function validateStructureAnyDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { allowNull: undefined };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -536,7 +550,12 @@ export function validateStructureAnyDefinition(value) {
                       break;
                     }
                   }
-                  result["targets"][genericKeyResult10] = Object.create(null);
+                  result["targets"][genericKeyResult10] = {
+                    validatorInputType: undefined,
+                    validatorOutputType: undefined,
+                    validatorExpression: undefined,
+                    validatorImport: undefined,
+                  };
 
                   if (
                     value["targets"][genericKeyResult10][
@@ -813,7 +832,17 @@ export function validateStructureAnyOfDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        values: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -1088,7 +1117,11 @@ export function validateStructureAnyOfDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -1186,7 +1219,7 @@ export function validateStructureAnyOfDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { discriminant: undefined };
 
           if (
             value["validator"]["discriminant"] === null ||
@@ -1498,7 +1531,17 @@ export function validateStructureArrayDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        values: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -1773,7 +1816,11 @@ export function validateStructureArrayDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -1873,7 +1920,11 @@ export function validateStructureArrayDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {
+            convert: undefined,
+            min: undefined,
+            max: undefined,
+          };
 
           if (
             value["validator"]["convert"] === null ||
@@ -2027,7 +2078,17 @@ export function validateStructureBooleanDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        oneOf: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -2302,7 +2363,11 @@ export function validateStructureBooleanDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -2402,7 +2467,7 @@ export function validateStructureBooleanDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { allowNull: undefined };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -2487,7 +2552,23 @@ export function validateStructureCrudDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        basePath: undefined,
+        entity: undefined,
+        fromParent: undefined,
+        routeOptions: undefined,
+        fieldOptions: undefined,
+        inlineRelations: undefined,
+        nestedRelations: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -2762,7 +2843,11 @@ export function validateStructureCrudDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -2860,7 +2945,7 @@ export function validateStructureCrudDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {};
         }
       }
       if (value["basePath"] === null || value["basePath"] === undefined) {
@@ -2915,7 +3000,7 @@ export function validateStructureCrudDefinition(value) {
             foundType: typeof value["fromParent"],
           };
         } else {
-          result["fromParent"] = Object.create(null);
+          result["fromParent"] = { field: undefined, options: undefined };
 
           if (
             value["fromParent"]["field"] === null ||
@@ -2958,7 +3043,7 @@ export function validateStructureCrudDefinition(value) {
                 foundType: typeof value["fromParent"]["options"],
               };
             } else {
-              result["fromParent"]["options"] = Object.create(null);
+              result["fromParent"]["options"] = { name: undefined };
 
               if (
                 value["fromParent"]["options"]["name"] === null ||
@@ -3010,7 +3095,13 @@ export function validateStructureCrudDefinition(value) {
             foundType: typeof value["routeOptions"],
           };
         } else {
-          result["routeOptions"] = Object.create(null);
+          result["routeOptions"] = {
+            listRoute: undefined,
+            singleRoute: undefined,
+            createRoute: undefined,
+            updateRoute: undefined,
+            deleteRoute: undefined,
+          };
 
           if (
             value["routeOptions"]["listRoute"] === null ||
@@ -3167,7 +3258,11 @@ export function validateStructureCrudDefinition(value) {
             foundType: typeof value["fieldOptions"],
           };
         } else {
-          result["fieldOptions"] = Object.create(null);
+          result["fieldOptions"] = {
+            readable: undefined,
+            readableType: undefined,
+            writable: undefined,
+          };
 
           if (
             value["fieldOptions"]["readable"] === null ||
@@ -3185,7 +3280,10 @@ export function validateStructureCrudDefinition(value) {
                 foundType: typeof value["fieldOptions"]["readable"],
               };
             } else {
-              result["fieldOptions"]["readable"] = Object.create(null);
+              result["fieldOptions"]["readable"] = {
+                $omit: undefined,
+                $pick: undefined,
+              };
 
               if (
                 value["fieldOptions"]["readable"]["$omit"] === null ||
@@ -3344,7 +3442,10 @@ export function validateStructureCrudDefinition(value) {
                 foundType: typeof value["fieldOptions"]["writable"],
               };
             } else {
-              result["fieldOptions"]["writable"] = Object.create(null);
+              result["fieldOptions"]["writable"] = {
+                $omit: undefined,
+                $pick: undefined,
+              };
 
               if (
                 value["fieldOptions"]["writable"]["$omit"] === null ||
@@ -3608,7 +3709,15 @@ export function validateStructureReferenceDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        reference: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -3835,7 +3944,11 @@ export function validateStructureReferenceDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -3933,7 +4046,7 @@ export function validateStructureReferenceDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {};
         }
       }
       if (value["reference"] === null || value["reference"] === undefined) {
@@ -3951,7 +4064,7 @@ export function validateStructureReferenceDefinition(value) {
             foundType: typeof value["reference"],
           };
         } else {
-          result["reference"] = Object.create(null);
+          result["reference"] = { group: undefined, name: undefined };
 
           if (
             value["reference"]["group"] === null ||
@@ -4067,7 +4180,17 @@ export function validateStructureDateDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        specifier: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -4342,7 +4465,11 @@ export function validateStructureDateDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -4442,7 +4569,13 @@ export function validateStructureDateDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {
+            allowNull: undefined,
+            min: undefined,
+            max: undefined,
+            inFuture: undefined,
+            inPast: undefined,
+          };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -4646,7 +4779,19 @@ export function validateStructureExtendDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        keys: undefined,
+        reference: undefined,
+        relations: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -4921,7 +5066,11 @@ export function validateStructureExtendDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -5019,7 +5168,7 @@ export function validateStructureExtendDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {};
         }
       }
       if (value["keys"] === null || value["keys"] === undefined) {
@@ -5198,7 +5347,14 @@ export function validateStructureRelationDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        subType: undefined,
+        reference: undefined,
+        ownKey: undefined,
+        referencedKey: undefined,
+        isOptional: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -5388,7 +5544,16 @@ export function validateStructureFileDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -5663,7 +5828,11 @@ export function validateStructureFileDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -5763,7 +5932,7 @@ export function validateStructureFileDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { mimeTypes: undefined };
 
           if (
             value["validator"]["mimeTypes"] === null ||
@@ -5854,7 +6023,18 @@ export function validateStructureGenericDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        keys: undefined,
+        values: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -6129,7 +6309,11 @@ export function validateStructureGenericDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -6227,7 +6411,7 @@ export function validateStructureGenericDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {};
         }
       }
       if (value["keys"] === null || value["keys"] === undefined) {
@@ -6292,7 +6476,17 @@ export function validateStructureNumberDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        oneOf: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -6567,7 +6761,11 @@ export function validateStructureNumberDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -6667,7 +6865,12 @@ export function validateStructureNumberDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {
+            floatingPoint: undefined,
+            min: undefined,
+            max: undefined,
+            allowNull: undefined,
+          };
 
           if (
             value["validator"]["floatingPoint"] === null ||
@@ -6899,7 +7102,21 @@ export function validateStructureObjectDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        shortName: undefined,
+        keys: undefined,
+        enableQueries: undefined,
+        queryOptions: undefined,
+        relations: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -7174,7 +7391,11 @@ export function validateStructureObjectDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -7274,7 +7495,7 @@ export function validateStructureObjectDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { allowNull: undefined, strict: undefined };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -7479,7 +7700,13 @@ export function validateStructureObjectDefinition(value) {
             foundType: typeof value["queryOptions"],
           };
         } else {
-          result["queryOptions"] = Object.create(null);
+          result["queryOptions"] = {
+            withSoftDeletes: undefined,
+            withDates: undefined,
+            withPrimaryKey: undefined,
+            isView: undefined,
+            schema: undefined,
+          };
 
           if (
             value["queryOptions"]["withSoftDeletes"] === null ||
@@ -7701,7 +7928,18 @@ export function validateStructureOmitDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        keys: undefined,
+        reference: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -7976,7 +8214,11 @@ export function validateStructureOmitDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -8076,7 +8318,7 @@ export function validateStructureOmitDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { allowNull: undefined, strict: undefined };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -8239,7 +8481,18 @@ export function validateStructurePickDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        keys: undefined,
+        reference: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -8514,7 +8767,11 @@ export function validateStructurePickDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -8614,7 +8871,7 @@ export function validateStructurePickDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { allowNull: undefined, strict: undefined };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -8777,7 +9034,17 @@ export function validateStructureStringDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        oneOf: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -9052,7 +9319,11 @@ export function validateStructureStringDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -9152,7 +9423,16 @@ export function validateStructureStringDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {
+            trim: undefined,
+            lowerCase: undefined,
+            upperCase: undefined,
+            min: undefined,
+            max: undefined,
+            pattern: undefined,
+            allowNull: undefined,
+            disallowedCharacters: undefined,
+          };
 
           if (
             value["validator"]["trim"] === null ||
@@ -9520,7 +9800,16 @@ export function validateStructureUuidDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -9795,7 +10084,11 @@ export function validateStructureUuidDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -9895,7 +10188,7 @@ export function validateStructureUuidDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = { allowNull: undefined };
 
           if (
             value["validator"]["allowNull"] === null ||
@@ -9958,7 +10251,11 @@ export function validateStructureGenerateOptions(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        targetLanguage: undefined,
+        outputDirectory: undefined,
+        generators: undefined,
+      };
 
       if (
         value["targetLanguage"] === null ||
@@ -10061,7 +10358,15 @@ export function validateStructureGenerateOptions(value) {
               break;
             }
           }
-          result["generators"] = Object.create(null);
+          result["generators"] = {
+            structure: undefined,
+            openApi: undefined,
+            router: undefined,
+            database: undefined,
+            validators: undefined,
+            apiClient: undefined,
+            types: undefined,
+          };
 
           if (
             value["generators"]["structure"] === null ||
@@ -10103,7 +10408,7 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["structure"] = Object.create(null);
+              result["generators"]["structure"] = {};
             }
           }
           if (
@@ -10147,7 +10452,10 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["openApi"] = Object.create(null);
+              result["generators"]["openApi"] = {
+                openApiExtensions: undefined,
+                openApiRouteExtensions: undefined,
+              };
 
               if (
                 value["generators"]["openApi"]["openApiExtensions"] === null ||
@@ -10206,8 +10514,11 @@ export function validateStructureGenerateOptions(value) {
                       break;
                     }
                   }
-                  result["generators"]["openApi"]["openApiExtensions"] =
-                    Object.create(null);
+                  result["generators"]["openApi"]["openApiExtensions"] = {
+                    version: undefined,
+                    title: undefined,
+                    description: undefined,
+                  };
 
                   if (
                     value["generators"]["openApi"]["openApiExtensions"][
@@ -10485,7 +10796,10 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["router"] = Object.create(null);
+              result["generators"]["router"] = {
+                target: undefined,
+                exposeApiStructure: undefined,
+              };
 
               if (
                 value["generators"]["router"]["target"] === null ||
@@ -10549,7 +10863,7 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult9 = Object.create(null);
+                      intermediateResult9 = { library: undefined };
 
                       if (
                         intermediateValue9["library"] === null ||
@@ -10670,7 +10984,10 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["database"] = Object.create(null);
+              result["generators"]["database"] = {
+                target: undefined,
+                includeEntityDiagram: undefined,
+              };
 
               if (
                 value["generators"]["database"]["target"] === null ||
@@ -10734,7 +11051,10 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult10 = Object.create(null);
+                      intermediateResult10 = {
+                        dialect: undefined,
+                        includeDDL: undefined,
+                      };
 
                       if (
                         intermediateValue10["dialect"] === null ||
@@ -10892,7 +11212,9 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["validators"] = Object.create(null);
+              result["generators"]["validators"] = {
+                includeBaseTypes: undefined,
+              };
 
               if (
                 value["generators"]["validators"]["includeBaseTypes"] ===
@@ -10970,7 +11292,10 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["apiClient"] = Object.create(null);
+              result["generators"]["apiClient"] = {
+                target: undefined,
+                responseValidation: undefined,
+              };
 
               if (
                 value["generators"]["apiClient"]["target"] === null ||
@@ -11039,7 +11364,12 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult12 = Object.create(null);
+                      intermediateResult12 = {
+                        library: undefined,
+                        targetRuntime: undefined,
+                        includeWrapper: undefined,
+                        globalClient: undefined,
+                      };
 
                       if (
                         intermediateValue12["library"] === null ||
@@ -11242,7 +11572,12 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult12 = Object.create(null);
+                      intermediateResult12 = {
+                        library: undefined,
+                        targetRuntime: undefined,
+                        includeWrapper: undefined,
+                        globalClient: undefined,
+                      };
 
                       if (
                         intermediateValue12["library"] === null ||
@@ -11420,8 +11755,9 @@ export function validateStructureGenerateOptions(value) {
                       ],
                   };
                 } else {
-                  result["generators"]["apiClient"]["responseValidation"] =
-                    Object.create(null);
+                  result["generators"]["apiClient"]["responseValidation"] = {
+                    looseObjectValidation: undefined,
+                  };
 
                   if (
                     value["generators"]["apiClient"]["responseValidation"][
@@ -11525,7 +11861,10 @@ export function validateStructureGenerateOptions(value) {
                   break;
                 }
               }
-              result["generators"]["types"] = Object.create(null);
+              result["generators"]["types"] = {
+                includeBaseTypes: undefined,
+                declareGlobalTypes: undefined,
+              };
 
               if (
                 value["generators"]["types"]["includeBaseTypes"] === null ||
@@ -11856,7 +12195,26 @@ export function validateStructureRouteDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = {
+        type: undefined,
+        group: undefined,
+        name: undefined,
+        docString: undefined,
+        isOptional: undefined,
+        defaultValue: undefined,
+        sql: undefined,
+        validator: undefined,
+        method: undefined,
+        idempotent: undefined,
+        path: undefined,
+        tags: undefined,
+        query: undefined,
+        params: undefined,
+        body: undefined,
+        response: undefined,
+        invalidations: undefined,
+        metadata: undefined,
+      };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -12131,7 +12489,11 @@ export function validateStructureRouteDefinition(value) {
             foundType: typeof value["sql"],
           };
         } else {
-          result["sql"] = Object.create(null);
+          result["sql"] = {
+            primary: undefined,
+            searchable: undefined,
+            hasDefaultValue: undefined,
+          };
 
           if (
             value["sql"]["primary"] === null ||
@@ -12229,7 +12591,7 @@ export function validateStructureRouteDefinition(value) {
             foundType: typeof value["validator"],
           };
         } else {
-          result["validator"] = Object.create(null);
+          result["validator"] = {};
         }
       }
       if (value["method"] === null || value["method"] === undefined) {
@@ -12496,7 +12858,7 @@ export function validateStructureRouteDefinition(value) {
             foundType: typeof value["metadata"],
           };
         } else {
-          result["metadata"] = Object.create(null);
+          result["metadata"] = { requestBodyType: undefined };
 
           if (
             value["metadata"]["requestBodyType"] === null ||
@@ -12566,7 +12928,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
         foundType: typeof value,
       };
     } else {
-      result = Object.create(null);
+      result = { type: undefined, target: undefined, properties: undefined };
 
       if (value["type"] === null || value["type"] === undefined) {
         errorMap[`$.type`] = {
@@ -12611,7 +12973,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
             foundType: typeof value["target"],
           };
         } else {
-          result["target"] = Object.create(null);
+          result["target"] = { group: undefined, name: undefined };
 
           if (
             value["target"]["group"] === null ||
@@ -12668,7 +13030,11 @@ export function validateStructureRouteInvalidationDefinition(value) {
             foundType: typeof value["properties"],
           };
         } else {
-          result["properties"] = Object.create(null);
+          result["properties"] = {
+            useSharedParams: undefined,
+            useSharedQuery: undefined,
+            specification: undefined,
+          };
 
           if (
             value["properties"]["useSharedParams"] === null ||
@@ -12740,7 +13106,10 @@ export function validateStructureRouteInvalidationDefinition(value) {
                 foundType: typeof value["properties"]["specification"],
               };
             } else {
-              result["properties"]["specification"] = Object.create(null);
+              result["properties"]["specification"] = {
+                params: undefined,
+                query: undefined,
+              };
 
               if (
                 value["properties"]["specification"]["params"] === null ||
