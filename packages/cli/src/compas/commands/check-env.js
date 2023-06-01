@@ -48,6 +48,7 @@ Versions:
     await Promise.all([
       areOtherCompasVersionsInstalled(compasVersion),
       isEnvLocalNotIgnored(),
+      isDotCacheNotIgnored(),
       isDockerInstalled(),
       isGraphvizInstalled(),
     ])
@@ -91,6 +92,30 @@ async function isEnvLocalNotIgnored() {
     failed: true,
     message:
       "X '.env.local' found but not git ignored. Please add it to your '.gitignore'.",
+  };
+}
+
+/**
+ * Checks if the `.cache` folder is ignored.
+ *
+ * @returns {Promise<{ failed: boolean, message?: string }>}
+ */
+async function isDotCacheNotIgnored() {
+  const { exitCode } = await exec(`git check-ignore -q .cache`);
+
+  // 128 if no git repo exists in directory
+  const result = exitCode !== 0 && exitCode !== 128;
+
+  if (!result) {
+    return {
+      failed: false,
+    };
+  }
+
+  return {
+    failed: true,
+    message:
+      "X '.cache' is not git ignored. Please add it to your '.gitignore'. This directory is used to cache results for tools like Prettier and ESLint.",
   };
 }
 
