@@ -50,7 +50,6 @@ Versions:
       isEnvLocalNotIgnored(),
       isDotCacheNotIgnored(),
       isDockerInstalled(),
-      isGraphvizInstalled(),
     ])
   ).filter((it) => it.failed);
 
@@ -164,26 +163,6 @@ async function areOtherCompasVersionsInstalled(compasVersion) {
   return {
     failed: false,
   };
-}
-
-/**
- * Graphviz is necessary for `compas visualise
- *
- * @returns {Promise<{ failed: boolean, message?: string }>}
- */
-async function isGraphvizInstalled() {
-  try {
-    await exec("dot -V");
-    return {
-      failed: false,
-    };
-  } catch {
-    return {
-      failed: true,
-      message: `Could not locate a local 'dot' executable. This is necessary for the 'compas visualise' commands.
-  This can be installed via the 'graphviz' package via your systems package manager.`,
-    };
-  }
 }
 
 /**
