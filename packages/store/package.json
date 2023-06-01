@@ -26,7 +26,7 @@
     "is-animated": "2.0.2",
     "jws": "4.0.0",
     "mime-types": "2.1.35",
-    "postgres": "3.3.4",
+    "postgres": "3.3.5",
     "sharp": "0.32.1"
   },
   "author": {
