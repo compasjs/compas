@@ -1,0 +1,36 @@
+{
+  "name": "react-fetch",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "@compas/code-gen": "*",
+    "@compas/stdlib": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "@vitejs/plugin-react-swc": "*",
+    "eslint": "*",
+    "eslint-plugin-react-hooks": "*",
+    "eslint-plugin-react-refresh": "*",
+    "typescript": "*",
+    "vite": "*"
+  },
+  "exampleMetadata": {
+    "generating": "node ./scripts/generate.js",
+    "testing": [
+      "npm run build"
+    ]
+  }
+}
