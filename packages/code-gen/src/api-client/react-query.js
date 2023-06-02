@@ -23,10 +23,6 @@ import { apiClientDistilledTargetInfo } from "./generator.js";
 export function reactQueryGenerateCommonFile(generateContext) {
   const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
 
-  if (distilledTargetInfo.useGlobalClients) {
-    return;
-  }
-
   const file = fileContextCreateGeneric(
     generateContext,
     `common/api-client-wrapper.tsx`,
@@ -39,12 +35,16 @@ export function reactQueryGenerateCommonFile(generateContext) {
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
+  fileWrite(file, `export type Pretty<T> = { [K in keyof T]: T[K] } & {};`);
+
+  if (distilledTargetInfo.useGlobalClients) {
+    return;
+  }
+
   importCollector.raw(`import React from "react";`);
   importCollector.destructure("react", "createContext");
   importCollector.destructure("react", "PropsWithChildren");
   importCollector.destructure("react", "useContext");
-
-  fileWrite(file, `export type Pretty<T> = { [K in keyof T]: T[K] } & {};`);
 
   if (distilledTargetInfo.isAxios) {
     importCollector.destructure("axios", "AxiosInstance");
