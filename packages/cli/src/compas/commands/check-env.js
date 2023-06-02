@@ -16,9 +16,10 @@ export const cliDefinition = {
   shortDescription: "Various checks helping with a better Compas experience.",
   longDescription: `This command is able to check a few things in the current project, to see if it is optimally configured.
   
-- Checks if the '.env.local' is in the .gitignore if it exists
-- Checks if all Compas packages are the same version
-- Checks if graphviz is available
+- '.env.local' should be in the .gitignore
+- '.cache' should be in the .gitignore
+- Only a single Compas version should be installed
+- Docker should be available to use with \`compas docker\`
 `,
   executor: cliExecutor,
 };
@@ -90,7 +91,7 @@ async function isEnvLocalNotIgnored() {
   return {
     failed: true,
     message:
-      "X '.env.local' found but not git ignored. Please add it to your '.gitignore'.",
+      "- '.env.local' found but not git ignored. Please add it to your '.gitignore'.",
   };
 }
 
@@ -114,7 +115,7 @@ async function isDotCacheNotIgnored() {
   return {
     failed: true,
     message:
-      "X '.cache' is not git ignored. Please add it to your '.gitignore'. This directory is used to cache results for tools like Prettier and ESLint.",
+      "- '.cache' is not git ignored. Please add it to your '.gitignore'. This directory is used to cache results for tools like Prettier and ESLint.",
   };
 }
 
@@ -150,7 +151,7 @@ async function areOtherCompasVersionsInstalled(compasVersion) {
   );
 
   if (foundVersions.length > 0) {
-    let message = `X Multiple @compas/stdlib versions found, to to ensure a stable experience use the version that is commonly accepted by all your dependencies.`;
+    let message = `- Multiple @compas/stdlib versions found, to to ensure a stable experience use the version that is commonly accepted by all your dependencies.`;
     for (const { path, version } of foundVersions) {
       message += `\n  - v${version} - ${path}`;
     }
@@ -179,7 +180,7 @@ async function isDockerInstalled() {
   } catch {
     return {
       failed: true,
-      message: `Could not locate a local 'docker' executable. This is necessary for the 'compas docker' commands.`,
+      message: `- Could not locate a local 'docker' executable. This is necessary for the 'compas docker' commands.`,
     };
   }
 }

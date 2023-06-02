@@ -35,9 +35,10 @@ Various checks helping with a better Compas experience.
 This command is able to check a few things in the current project, to see if it
 is optimally configured.
 
-- Checks if the '.env.local' is in the .gitignore if it exists
-- Checks if all Compas packages are the same version
-- Checks if graphviz is available
+- '.env.local' should be in the .gitignore
+- '.cache' should be in the .gitignore
+- Only a single Compas version should be installed
+- Docker should be available to use with `compas docker`
 
 | Option     | Description                                              |
 | ---------- | -------------------------------------------------------- |
