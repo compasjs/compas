@@ -84,7 +84,8 @@ export function routerGenerator(generateContext) {
 
   const nameMap = new Map();
 
-  for (const [group, routes] of Object.entries(routesPerGroup)) {
+  for (const group of Object.keys(routesPerGroup)) {
+    const routes = routesPerGroup[group];
     const file = targetCustomSwitch(
       {
         jsKoa: jsKoaGetControllerFile,
@@ -111,10 +112,12 @@ export function routerGenerator(generateContext) {
       };
 
       const result = {};
-      for (const [prefix, type] of Object.entries(types)) {
-        if (!type) {
+      for (const prefix of Object.keys(types)) {
+        if (!types[prefix]) {
           continue;
         }
+
+        const type = types[prefix];
 
         const specificTargets =
           prefix === "response"

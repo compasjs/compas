@@ -668,7 +668,8 @@ export function jsPostgresGenerateInsert(
   fileWrite(file, `str.push("(");`);
   fileBlockEnd(file);
 
-  for (const [key, field] of Object.entries(model.keys)) {
+  for (const key of Object.keys(model.keys)) {
+    const field = model.keys[key];
     const hasSqlDefault = referenceUtilsGetProperty(generateContext, field, [
       "sql",
       "hasDefaultValue",

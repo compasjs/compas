@@ -55,7 +55,8 @@ function databaseERDWriteModel(generateContext, file, model) {
   const relations = modelRelationGetOwn(model);
   const relationKeys = relations.map((it) => it.ownKey);
 
-  for (const [key, field] of Object.entries(model.keys)) {
+  for (const key of Object.keys(model.keys)) {
+    const field = model.keys[key];
     const type =
       field.type === "reference"
         ? structureResolveReference(generateContext.structure, field).type

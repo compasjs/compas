@@ -97,7 +97,8 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
 
   let hasWrittenALine = false;
 
-  for (const [key, field] of Object.entries(model.keys)) {
+  for (const key of Object.keys(model.keys)) {
+    const field = model.keys[key];
     if (hasWrittenALine) {
       fileWrite(file, ",");
     } else {

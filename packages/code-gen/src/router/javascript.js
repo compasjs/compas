@@ -106,8 +106,8 @@ function routeMatcherChildren(file, trie, { matchPathIndex, paramsOnMatch }) {
           `if (matchPath.length === ${matchPathIndex + segments.length})`,
         );
 
-        for (const [key, index] of Object.entries(paramsOnMatch)) {
-          fileWrite(file, `params.${key} = matchPath[${index}];`);
+        for (const key of Object.keys(paramsOnMatch)) {
+          fileWrite(file, `params.${key} = matchPath[${paramsOnMatch[key]}];`);
         }
         fileWrite(
           file,
@@ -134,8 +134,8 @@ function routeMatcherChildren(file, trie, { matchPathIndex, paramsOnMatch }) {
 
         fileBlockStart(file, `(matchPath.length === ${matchPathIndex + 1})`);
 
-        for (const [key, index] of Object.entries(paramsOnMatch)) {
-          fileWrite(file, `params.${key} = matchPath[${index}];`);
+        for (const key of Object.keys(paramsOnMatch)) {
+          fileWrite(file, `params.${key} = matchPath[${paramsOnMatch[key]}];`);
         }
         fileWrite(
           file,
@@ -151,8 +151,8 @@ function routeMatcherChildren(file, trie, { matchPathIndex, paramsOnMatch }) {
 
       delete paramsOnMatch[child.paramName ?? ""];
     } else if (child.prio === "WILDCARD") {
-      for (const [key, index] of Object.entries(paramsOnMatch)) {
-        fileWrite(file, `params.${key} = matchPath[${index}];`);
+      for (const key of Object.keys(paramsOnMatch)) {
+        fileWrite(file, `params.${key} = matchPath[${paramsOnMatch[key]}];`);
       }
       fileWrite(
         file,

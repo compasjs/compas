@@ -258,10 +258,11 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
   fileWrite(file, `const routes = {`);
   fileContextSetIndent(file, 1);
 
-  for (const [group, routes] of Object.entries(routesPerGroup)) {
+  for (const group of Object.keys(routesPerGroup)) {
     fileWrite(file, `${group}: {`);
     fileContextSetIndent(file, 1);
 
+    const routes = routesPerGroup[group];
     for (const route of routes) {
       const contextNames = contextNamesMap.get(route) ?? {};
 
