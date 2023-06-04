@@ -287,11 +287,13 @@ export function generatedUpdateHelper(entity, input) {
     hasSet: false,
   };
 
-  for (const [key, updateSpec] of Object.entries(input.update)) {
+  for (const key of Object.keys(input.update)) {
     // Can't update 'undefined', needs to be 'null' if allowed
-    if (updateSpec === undefined) {
+    if (input.update[key] === undefined) {
       continue;
     }
+
+    const updateSpec = input.update[key];
 
     // isPlainObject equivalent, but handling Object.create(null)
     if (
