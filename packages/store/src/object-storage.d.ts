@@ -24,7 +24,7 @@ export function objectStorageCreateClient(
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
- *   locationConstraint: import("@aws-sdk/client-s3").BucketLocationConstraint,
+ *   locationConstraint?: import("@aws-sdk/client-s3").BucketLocationConstraint
  * }} options
  * @returns {Promise<void>}
  */
@@ -32,7 +32,7 @@ export function objectStorageEnsureBucket(
   s3Client: import("@aws-sdk/client-s3").S3Client,
   options: {
     bucketName: string;
-    locationConstraint: import("@aws-sdk/client-s3").BucketLocationConstraint;
+    locationConstraint?: import("@aws-sdk/client-s3").BucketLocationConstraint;
   },
 ): Promise<void>;
 /**

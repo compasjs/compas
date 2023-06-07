@@ -45,7 +45,7 @@ export function objectStorageCreateClient(config) {
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
- *   locationConstraint: import("@aws-sdk/client-s3").BucketLocationConstraint,
+ *   locationConstraint?: import("@aws-sdk/client-s3").BucketLocationConstraint
  * }} options
  * @returns {Promise<void>}
  */
@@ -53,6 +53,17 @@ export async function objectStorageEnsureBucket(s3Client, options) {
   if (isNil(options?.bucketName)) {
     throw AppError.serverError({
       message: "Parameter 'options.bucketName' is required.",
+    });
+  }
+
+  if (
+    isNil(s3Client.config.region) ||
+    (typeof s3Client.config.region === "function" &&
+      isNil(await s3Client.config.region()))
+  ) {
+    throw AppError.serverError({
+      message:
+        "The S3 client is created without a region, make sure to set a region in your environment, the config object or config/credentials files.",
     });
   }
 
