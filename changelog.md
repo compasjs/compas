@@ -4,6 +4,57 @@ editLink: false
 
 # Changelog
 
+### [v0.5.2](https://github.com/compasjs/compas/releases/tag/v0.5.2)
+
+#### Features
+
+- feat(cli): check if '.cache' is git ignored in `compas check-env`
+  [`70573d`](https://github.com/compasjs/compas/commit/70573d75de253359d6ca81db358e2081868cdd20)
+- feat(cli): remove 'graphviz' check from `compas check-env`
+  [`91cf87`](https://github.com/compasjs/compas/commit/91cf879e209daf5ce9fb4d76616a0cbb6a5649b3)
+
+#### Bug fixes
+
+- fix(code-gen): always generate the `Pretty` type even if global api clients is
+  on
+  [`550143`](https://github.com/compasjs/compas/commit/550143b679b754e9fb47777e08149fba5e58035a)
+- fix(store): verify that the s3Client has a region before attempting to resolve
+  the bucket
+  [`4d25a9`](https://github.com/compasjs/compas/commit/4d25a9402544854cc5c8365ac298a607a4c4ba9d)
+
+#### Other
+
+- chore(examples): add .gitignore to all examples
+  [`d8a5eb`](https://github.com/compasjs/compas/commit/d8a5ebb43a4281f27a7ea5f4cf813b116b4778c3)
+- chore(cli): update description of `compas check-env`
+  [`3b246f`](https://github.com/compasjs/compas/commit/3b246fa224f37aa8733c728903dd1829d556f0e1)
+- examples(react-fetch): init example
+  [`82ec52`](https://github.com/compasjs/compas/commit/82ec52e14ac87ac99c1f11b1377604815ef9abb1)
+- chore(store): prefer `Object.keys` over `Object.entries`
+  [`99d996`](https://github.com/compasjs/compas/commit/99d99684d1880a5fb3dce878730d0a18942e6ba5)
+- chore(code-gen): prefer `Object.keys` over `Object.entries`
+  [`63f71b`](https://github.com/compasjs/compas/commit/63f71b094a3f7178cb3ada149a34d9f019b16fc3)
+- chore: fix TS issues after bump to 5.1.3
+  [`55df94`](https://github.com/compasjs/compas/commit/55df944f3e78d801a808f855971497c69d9a7a3a)
+
+#### Dependency updates
+
+- build(deps): bump postgres from 3.3.4 to 3.3.5
+  ([#2621](https://github.com/compasjs/compas/pull/2621))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump file-type from 18.4.0 to 18.5.0
+  ([#2633](https://github.com/compasjs/compas/pull/2633))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.341.0 to 3.347.1
+  ([#2638](https://github.com/compasjs/compas/pull/2638))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump eslint from 8.41.0 to 8.42.0
+  ([#2629](https://github.com/compasjs/compas/pull/2629))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.341.0 to 3.347.1
+  ([#2639](https://github.com/compasjs/compas/pull/2639))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.5.1](https://github.com/compasjs/compas/releases/tag/v0.5.1)
 
 #### Other
