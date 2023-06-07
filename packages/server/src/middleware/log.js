@@ -162,8 +162,8 @@ class StreamLength extends Transform {
  */
 function bodyCloseOrFinish(ctx) {
   return new Promise((resolve) => {
-    const onFinish = done.bind(null, "finish");
-    const onClose = done.bind(null, "close");
+    const onFinish = done.bind(null);
+    const onClose = done.bind(null);
 
     ctx.body.once("finish", onFinish);
     ctx.body.once("close", onClose);

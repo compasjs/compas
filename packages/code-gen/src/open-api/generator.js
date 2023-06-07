@@ -204,6 +204,7 @@ function openApiTransformParams(generateContext, openApiSpec, route) {
         break;
 
       case "reference":
+        // @ts-expect-error
         schema = transformType(generateContext, openApiSpec, param);
 
         break;
