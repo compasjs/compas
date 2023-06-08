@@ -480,11 +480,19 @@ function convertSchema(context, schema, options = {}) {
     if (schema.format === "uuid") {
       result.type = "uuid";
       assignBaseData();
-    } else if (schema.format === "date" || schema.format === "date-time") {
+    } else if (
+      schema.format === "date" ||
+      schema.format === "date-time" ||
+      schema.format === "time"
+    ) {
       result.type = "date";
       assignBaseData();
+
       if (schema.format === "date") {
         result.specifier = "dateOnly";
+      } else if (schema.format === "time") {
+        // This is not an officially supported value. Format is free-form, so we are allowed to set it.
+        result.specifier = "timeOnly";
       }
     } else if (schema.format === "binary") {
       result.type = "file";

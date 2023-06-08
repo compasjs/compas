@@ -195,6 +195,13 @@ function openApiTransformParams(generateContext, openApiSpec, route) {
       case "date":
         schema.type = "string";
         schema.format = "date-time";
+
+        if (param.specifier === "dateOnly") {
+          schema.format = "date";
+        } else if (param.specifier === "timeOnly") {
+          // This is not an officially supported value. Format is free-form, so we are allowed to set it.
+          schema.format = "time";
+        }
         break;
 
       case "number":
@@ -378,6 +385,14 @@ function transformType(generateContext, openApiSpec, type) {
         type: "string",
         format: "date-time",
       });
+
+      if (type.specifier === "dateOnly") {
+        property.format = "date";
+      } else if (type.specifier === "timeOnly") {
+        // This is not an officially supported value. Format is free-form, so we are allowed to set it.
+        property.format = "time";
+      }
+
       break;
 
     case "boolean":
