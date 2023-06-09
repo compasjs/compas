@@ -6,6 +6,10 @@ import { runTestsRecursively } from "./runner.js";
 mainTestFn(import.meta);
 
 test("cli/testing/runner", (t) => {
+  t.test("my test name", (t) => {
+    t.equal(t.name, "my test name");
+  });
+
   t.test(
     "runTestsRecursively - catch assertion errors strictEqual",
     async (t) => {

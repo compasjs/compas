@@ -8,6 +8,11 @@ export interface TestRunner {
   log: import("@compas/stdlib").Logger;
 
   /**
+   * The test name as provided as the first argument to 'test' or 't.test'
+   */
+  name: string;
+
+  /**
    * Configurable timeout used for sub tests
    */
   timeout?: number;

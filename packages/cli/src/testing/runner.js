@@ -1,6 +1,6 @@
 import { AssertionError, deepStrictEqual } from "assert";
 import { url } from "inspector";
-import { isNil, newLogger } from "@compas/stdlib";
+import { AppError, isNil, newLogger } from "@compas/stdlib";
 import { markTestFailuresRecursively } from "./printer.js";
 import { setTestTimeout, state, testLogger, timeout } from "./state.js";
 
@@ -138,6 +138,7 @@ function createRunnerForState(testState, abortSignal) {
       },
     }),
     signal: abortSignal,
+    name: testState.name,
     ok: ok.bind(undefined, testState),
     notOk: notOk.bind(undefined, testState),
     equal: equal.bind(undefined, testState),
@@ -170,9 +171,10 @@ function mutateRunnerEnablingWarnings(runner) {
     const implementation = runner[method];
 
     runner[method] = (...args) => {
-      runner.log.error(
-        `warning: called 't.${method}' on parent 't'. Accept 't' as argument in the callback of 't.test(msg, callback)'.`,
-      );
+      runner.log.error({
+        message: `warning: called 't.${method}' on parent 't'. Accept 't' as argument in the callback of 't.test(msg, callback)'.`,
+        stackTrace: AppError.format(AppError.serverError({})),
+      });
 
       implementation(...args);
     };
