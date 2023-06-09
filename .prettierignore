@@ -5,7 +5,7 @@ coverage
 packages/code-gen/test-generated
 lerna.json
 reactQueries.tsx
-docs/.vitepress/dist
+dist
 test/tmp
 .cache/
 /docs/.vitepress/cache
