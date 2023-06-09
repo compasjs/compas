@@ -1,7 +1,7 @@
 import { setTimeout } from "timers/promises";
 import { pathToFileURL } from "url";
 import { isMainThread, parentPort, threadId } from "worker_threads";
-import { AppError, mainFn, newLogger } from "@compas/stdlib";
+import { AppError, environment, mainFn, newLogger } from "@compas/stdlib";
 import { loadTestConfig } from "./config.js";
 import {
   markTestFailuresRecursively,
@@ -26,12 +26,20 @@ async function main(logger) {
     process.exit(1);
   }
 
+  const totalThreads =
+    Number(environment.__COMPAS_TEST_PARALLEL_COUNT ?? "1") *
+    Number(environment.__COMPAS_TEST_RANDOMIZE_ROUNDS ?? "1");
+  const formattedThreadId = String(threadId).padStart(
+    String(totalThreads).length,
+    " ",
+  );
+
   // Make sure `mainTestFn` is disabled
   setAreTestRunning(true);
   setTestLogger(
     newLogger({
       ctx: {
-        type: `worker-thread(${threadId})`,
+        type: `worker-thread(${formattedThreadId})`,
       },
     }),
   );

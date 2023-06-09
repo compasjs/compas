@@ -143,6 +143,10 @@ export async function cliExecutor(logger, state) {
   state.flags.withLogs = state.flags.withLogs ?? false;
 
   process.env._COMPAS_TEST_WITH_LOGS = String(state.flags.withLogs);
+  process.env.__COMPAS_TEST_PARALLEL_COUNT = String(parallelCount);
+  process.env.__COMPAS_TEST_RANDOMIZE_ROUNDS = String(
+    state.flags.randomizeRounds,
+  );
   refreshEnvironmentCache();
 
   // Make sure to set tests running, so `mainTestFn` is 'disabled'.
