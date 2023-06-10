@@ -1,17 +1,12 @@
 import { url } from "inspector";
-import { cpus } from "os";
 import { isMainThread, Worker } from "worker_threads";
-import { isNil, refreshEnvironmentCache, spawn } from "@compas/stdlib";
-import { loadTestConfig } from "../../testing/config.js";
+import { isNil, spawn } from "@compas/stdlib";
+import { testingLoadConfig } from "../../testing/config.js";
 import { printTestResultsFromWorkers } from "../../testing/printer.js";
+import { testLogger } from "../../testing/state.js";
 import {
-  setAreTestRunning,
-  setTestLogger,
-  testLogger,
-} from "../../testing/state.js";
-import {
-  listTestFiles,
   runTestsInProcess,
+  testingListFiles,
   workerFile,
 } from "../../testing/worker-internal.js";
 
@@ -96,13 +91,6 @@ export async function cliExecutor(logger, state) {
     };
   }
 
-  if (state.flags.coverage && !isNil(state.flags.randomizeRounds)) {
-    logger.error("Can't run '--coverage' with '--randomize-rounds'.");
-    return {
-      exitStatus: "failed",
-    };
-  }
-
   if (state.flags.serial && !isNil(state.flags.parallelCount)) {
     logger.error("Can't specify both '--serial' and '--parallel-count'.");
     return {
@@ -117,20 +105,23 @@ export async function cliExecutor(logger, state) {
     };
   }
 
-  /** @type {number} */
-  // @ts-ignore
-  const parallelCount = state.flags.serial
-    ? 1
-    : state.flags.parallelCount ?? Math.min(4, cpus().length - 1);
+  // @ts-expect-error
+  const testConfig = await testingLoadConfig(logger, state.flags);
 
-  if (state.flags.coverage) {
+  if (testConfig.coverage) {
     const { exitCode } = await spawn(`npx`, [
       "c8",
       "node",
       process.argv[1],
       "test",
       "--parallel-count",
-      `${parallelCount}`,
+      String(testConfig.parallelCount),
+      "--randomize-rounds",
+      String(testConfig.randomizeRounds),
+      "--with-logs",
+      String(testConfig.withLogs),
+      "--bail",
+      String(testConfig.bail),
     ]);
 
     return {
@@ -138,40 +129,22 @@ export async function cliExecutor(logger, state) {
     };
   }
 
-  state.flags.randomizeRounds = state.flags.randomizeRounds ?? 1;
-
-  state.flags.withLogs = state.flags.withLogs ?? false;
-
-  process.env._COMPAS_TEST_WITH_LOGS = String(state.flags.withLogs);
-  process.env.__COMPAS_TEST_PARALLEL_COUNT = String(parallelCount);
-  process.env.__COMPAS_TEST_RANDOMIZE_ROUNDS = String(
-    state.flags.randomizeRounds,
-  );
-  refreshEnvironmentCache();
-
-  // Make sure to set tests running, so `mainTestFn` is 'disabled'.
-  setAreTestRunning(true);
-  setTestLogger(logger);
-
-  if (parallelCount === 1 && state.flags.randomizeRounds === 1) {
+  if (testConfig.parallelCount === 1 && testConfig.randomizeRounds === 1) {
     // Run serial tests in the same process
-    const exitCode = await runTestsInProcess({
-      bail: !!state.flags.bail,
-    });
+    const exitCode = await runTestsInProcess(testConfig);
 
     return {
       exitStatus: exitCode === 0 ? "passed" : "failed",
     };
   }
 
-  await loadTestConfig();
-  const files = await listTestFiles();
+  const files = await testingListFiles(testConfig);
 
   // Almost does the same things as `mainTestFn`, however since tests are run by workers
   // instead of directly. We dispatch them, and then print the results.
   const results = [];
 
-  for (let i = 0; i < Number(state.flags.randomizeRounds); ++i) {
+  for (let i = 0; i < Number(testConfig.randomizeRounds); ++i) {
     if (i !== 0) {
       // Shuffle files in place
       // From: https://stackoverflow.com/a/6274381
@@ -181,8 +154,8 @@ export async function cliExecutor(logger, state) {
       }
     }
 
-    const workers = initializeWorkers(parallelCount);
-    const testResult = await runTests(workers, files);
+    const workers = initializeWorkers(testConfig.parallelCount);
+    const testResult = await runTests(testConfig, workers, files);
 
     // Early exit on test failure
     const hasFailure = testResult.find((it) => it.isFailed);
@@ -213,11 +186,11 @@ export async function cliExecutor(logger, state) {
  * Run tests on a worker pull-basis.
  * Once all files are done or in process, we request results.
  *
+ * @param {import("../../testing/config.js").TestConfig} testConfig
  * @param {Worker[]} workers
  * @param {string[]} files
  */
-async function runTests(workers, files) {
-  const isDebugging = !!url();
+async function runTests(testConfig, workers, files) {
   let idx = 0;
   const results = [];
 
@@ -256,9 +229,6 @@ async function runTests(workers, files) {
           worker.postMessage({
             type: "provide_file",
             file,
-            options: {
-              isDebugging,
-            },
           });
         }
       } else if (message.type === "provide_result") {

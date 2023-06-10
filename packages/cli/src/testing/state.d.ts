@@ -11,20 +11,6 @@ export function setAreTestRunning(running: boolean): void;
  */
 export function setTestLogger(logger: Logger): void;
 /**
- * Set test timeout value in milliseconds
- *
- * @param value
- */
-export function setTestTimeout(value: any): void;
-/**
- * Only accepts the value if it is a function
- */
-export function setGlobalSetup(value: any): void;
-/**
- * Only accepts the value if it is a function
- */
-export function setGlobalTeardown(value: any): void;
-/**
  * @typedef {object} TestAssertion
  * @property {string} type
  * @property {boolean} passed
@@ -59,22 +45,6 @@ export let testLogger: Logger;
  * @type {boolean}
  */
 export let areTestsRunning: boolean;
-/**
- * @type {number}
- */
-export let timeout: number;
-/**
- * @type {string[]}
- */
-export const ignoreDirectories: string[];
-/**
- * @type {function(): (void|Promise<void>)}
- */
-export let globalSetup: () => void | Promise<void>;
-/**
- * @type {function(): (void|Promise<void>)}
- */
-export let globalTeardown: () => void | Promise<void>;
 /**
  * @type {TestState}
  */

@@ -3,19 +3,13 @@
  *
  * When the debugger is attached, we ignore any timeouts.
  *
+ * @param {import("./config").TestConfig} testConfig
  * @param {import("./state").TestState} testState
- * @param {{
- *   isDebugging?: boolean,
- *   bail?: boolean,
- * }} options
  * @returns {Promise<void>}
  */
 export function runTestsRecursively(
+  testConfig: import("./config").TestConfig,
   testState: import("./state").TestState,
-  options?: {
-    isDebugging?: boolean;
-    bail?: boolean;
-  },
 ): Promise<void>;
 /**
  * Register top-level tests. The main entry point of the test runner

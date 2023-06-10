@@ -1,5 +1,3 @@
-import { noop } from "@compas/stdlib";
-
 /**
  * @typedef {object} TestAssertion
  * @property {string} type
@@ -42,26 +40,6 @@ export let testLogger = undefined;
 export let areTestsRunning = false;
 
 /**
- * @type {number}
- */
-export let timeout = 2500;
-
-/**
- * @type {string[]}
- */
-export const ignoreDirectories = [];
-
-/**
- * @type {function(): (void|Promise<void>)}
- */
-export let globalSetup = noop;
-
-/**
- * @type {function(): (void|Promise<void>)}
- */
-export let globalTeardown = noop;
-
-/**
  * @type {TestState}
  */
 export const state = {
@@ -86,31 +64,4 @@ export function setAreTestRunning(running) {
  */
 export function setTestLogger(logger) {
   testLogger = logger;
-}
-
-/**
- * Set test timeout value in milliseconds
- *
- * @param value
- */
-export function setTestTimeout(value) {
-  timeout = value;
-}
-
-/**
- * Only accepts the value if it is a function
- */
-export function setGlobalSetup(value) {
-  if (typeof value === "function") {
-    globalSetup = value;
-  }
-}
-
-/**
- * Only accepts the value if it is a function
- */
-export function setGlobalTeardown(value) {
-  if (typeof value === "function") {
-    globalTeardown = value;
-  }
 }

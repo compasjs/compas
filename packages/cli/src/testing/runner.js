@@ -1,25 +1,18 @@
 import { AssertionError, deepStrictEqual } from "assert";
-import { url } from "inspector";
 import { AppError, isNil, newLogger } from "@compas/stdlib";
 import { markTestFailuresRecursively } from "./printer.js";
-import { setTestTimeout, state, testLogger, timeout } from "./state.js";
+import { state, testLogger } from "./state.js";
 
 /**
  * Run the tests recursively.
  *
  * When the debugger is attached, we ignore any timeouts.
  *
+ * @param {import("./config").TestConfig} testConfig
  * @param {import("./state").TestState} testState
- * @param {{
- *   isDebugging?: boolean,
- *   bail?: boolean,
- * }} options
  * @returns {Promise<void>}
  */
-export async function runTestsRecursively(testState, options = {}) {
-  options.isDebugging ??= !!url();
-  options.bail ??= false;
-
+export async function runTestsRecursively(testConfig, testState) {
   const abortController = new AbortController();
   const runner = createRunnerForState(testState, abortController.signal);
 
@@ -32,12 +25,12 @@ export async function runTestsRecursively(testState, options = {}) {
       const result = testState.callback(runner);
 
       if (typeof result?.then === "function") {
-        if (options.isDebugging) {
+        if (testConfig.isDebugging) {
           const timeoutReminder = setTimeout(() => {
             testLogger.info(
               `Ignoring timeout for '${testState.name}', detected an active inspector.`,
             );
-          }, timeout);
+          }, testConfig.timeout);
 
           await result;
           clearTimeout(timeoutReminder);
@@ -51,15 +44,15 @@ export async function runTestsRecursively(testState, options = {}) {
                 reject(
                   new Error(
                     `Exceeded test timeout of ${
-                      timeout / 1000
+                      testConfig.timeout / 1000
                     } seconds. You can increase the timeout by calling 't.timeout = ${
-                      timeout + 1000
+                      testConfig.timeout + 1000
                     };' on the parent test function. Or by setting 'export const timeout = ${
-                      timeout + 1000
+                      testConfig.timeout + 1000
                     };' in 'test/config.js'.`,
                   ),
                 );
-              }, timeout);
+              }, testConfig.timeout);
             }),
           ]);
         }
@@ -83,8 +76,8 @@ export async function runTestsRecursively(testState, options = {}) {
     }
   }
 
-  const originalTimeout = timeout;
-  setTestTimeout(runner.timeout ?? timeout);
+  const originalTimeout = testConfig.timeout;
+  testConfig.timeout = runner.timeout ?? originalTimeout;
   mutateRunnerEnablingWarnings(runner);
 
   if (
@@ -100,7 +93,7 @@ export async function runTestsRecursively(testState, options = {}) {
     delete testState.caughtException.stack;
   }
 
-  if (options.bail) {
+  if (testConfig.bail) {
     markTestFailuresRecursively(state);
     if (state.hasFailure) {
       return;
@@ -108,9 +101,9 @@ export async function runTestsRecursively(testState, options = {}) {
   }
 
   for (const child of testState.children) {
-    await runTestsRecursively(child, options);
+    await runTestsRecursively(testConfig, child);
 
-    if (options.bail) {
+    if (testConfig.bail) {
       markTestFailuresRecursively(state);
       if (state.hasFailure) {
         return;
@@ -118,7 +111,7 @@ export async function runTestsRecursively(testState, options = {}) {
     }
   }
 
-  setTestTimeout(originalTimeout);
+  testConfig.timeout = originalTimeout;
 }
 
 /**

@@ -3,16 +3,9 @@ import {
   pathJoin,
   processDirectoryRecursive,
 } from "@compas/stdlib";
-import { loadTestConfig } from "./config.js";
 import { printTestResults } from "./printer.js";
 import { runTestsRecursively } from "./runner.js";
-import {
-  globalSetup,
-  globalTeardown,
-  ignoreDirectories,
-  state,
-  testLogger,
-} from "./state.js";
+import { state, testLogger } from "./state.js";
 
 export const workerFile = new URL(
   `file://${pathJoin(dirnameForModule(import.meta), "./worker-thread.js")}`,
@@ -21,9 +14,10 @@ export const workerFile = new URL(
 /**
  * List available test files
  *
+ * @property {import("./config").TestConfig} testConfig
  * @returns {Promise<string[]>}
  */
-export async function listTestFiles() {
+export async function testingListFiles(testConfig) {
   const files = [];
   await processDirectoryRecursive(process.cwd(), (file) => {
     if (file === workerFile.pathname) {
@@ -34,7 +28,7 @@ export async function listTestFiles() {
       return;
     }
 
-    for (const dir of ignoreDirectories) {
+    for (const dir of testConfig.ignoreDirectories) {
       if (file.startsWith(dir)) {
         return;
       }
@@ -47,17 +41,15 @@ export async function listTestFiles() {
 }
 
 /**
- * @param {{
- *   singleFileMode?: boolean,
- *   bail?: boolean,
- * }} [options]
+ * @param {import("./config").TestConfig} testConfig
  * @returns {Promise<number>}
  */
-export async function runTestsInProcess(options) {
-  await loadTestConfig();
-  const files = await listTestFiles();
+export async function runTestsInProcess(testConfig) {
+  const files = testConfig.singleFileMode
+    ? []
+    : await testingListFiles(testConfig);
 
-  if (!options?.singleFileMode && Array.isArray(files)) {
+  if (!testConfig.singleFileMode && Array.isArray(files)) {
     for (const file of files) {
       await import(file);
     }
@@ -70,12 +62,10 @@ export async function runTestsInProcess(options) {
   }
 
   testLogger.info(`Running: setup`);
-  await globalSetup();
-  await runTestsRecursively(state, {
-    bail: options?.bail,
-  });
+  await testConfig.setup();
+  await runTestsRecursively(testConfig, state);
   testLogger.info(`Running: teardown`);
-  await globalTeardown();
+  await testConfig.teardown();
 
   return printTestResults();
 }

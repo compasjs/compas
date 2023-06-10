@@ -2,23 +2,16 @@
 /**
  * List available test files
  *
+ * @property {import("./config").TestConfig} testConfig
  * @returns {Promise<string[]>}
  */
-export function listTestFiles(): Promise<string[]>;
+export function testingListFiles(testConfig: any): Promise<string[]>;
 /**
- * @param {{
- *   singleFileMode?: boolean,
- *   bail?: boolean,
- * }} [options]
+ * @param {import("./config").TestConfig} testConfig
  * @returns {Promise<number>}
  */
 export function runTestsInProcess(
-  options?:
-    | {
-        singleFileMode?: boolean | undefined;
-        bail?: boolean | undefined;
-      }
-    | undefined,
+  testConfig: import("./config").TestConfig,
 ): Promise<number>;
 export const workerFile: import("url").URL;
 //# sourceMappingURL=worker-internal.d.ts.map

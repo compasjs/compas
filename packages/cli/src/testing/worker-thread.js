@@ -1,22 +1,15 @@
 import { setTimeout } from "timers/promises";
 import { pathToFileURL } from "url";
 import { isMainThread, parentPort, threadId } from "worker_threads";
-import { AppError, environment, mainFn, newLogger } from "@compas/stdlib";
-import { loadTestConfig } from "./config.js";
+import { AppError, mainFn } from "@compas/stdlib";
+import { testingLoadConfig } from "./config.js";
 import {
   markTestFailuresRecursively,
   printFailedResults,
   sumAssertions,
 } from "./printer.js";
 import { runTestsRecursively } from "./runner.js";
-import {
-  globalSetup,
-  globalTeardown,
-  setAreTestRunning,
-  setTestLogger,
-  state,
-  testLogger,
-} from "./state.js";
+import { state, testLogger } from "./state.js";
 
 mainFn(import.meta, main);
 
@@ -26,29 +19,11 @@ async function main(logger) {
     process.exit(1);
   }
 
-  const totalThreads =
-    Number(environment.__COMPAS_TEST_PARALLEL_COUNT ?? "1") *
-    Number(environment.__COMPAS_TEST_RANDOMIZE_ROUNDS ?? "1");
-  const formattedThreadId = String(threadId).padStart(
-    String(totalThreads).length,
-    " ",
-  );
-
-  // Make sure `mainTestFn` is disabled
-  setAreTestRunning(true);
-  setTestLogger(
-    newLogger({
-      ctx: {
-        type: `worker-thread(${formattedThreadId})`,
-      },
-    }),
-  );
-
-  await loadTestConfig();
+  const testConfig = await testingLoadConfig();
 
   try {
     testLogger.info(`Running: setup`);
-    await globalSetup();
+    await testConfig.setup();
   } catch (e) {
     logger.error({
       message: "Error when calling the 'setup' defined in 'test/config.js'.",
@@ -63,7 +38,7 @@ async function main(logger) {
   const teardown = async () => {
     try {
       testLogger.info(`Running: teardown`);
-      await globalTeardown();
+      await testConfig.teardown();
       await setTimeout(5);
       process.exit(0);
     } catch (e) {
@@ -79,7 +54,11 @@ async function main(logger) {
     }
   };
 
-  const messageDispatcher = createMessageDispatcher(logger, teardown);
+  const messageDispatcher = createMessageDispatcher(
+    logger,
+    testConfig,
+    teardown,
+  );
   // @ts-ignore
   parentPort.on("message", messageDispatcher);
   // Start requesting files as soon as possible
@@ -94,10 +73,11 @@ async function main(logger) {
  * results, it can safely exit.
  *
  * @param {Logger} logger
+ * @param {import("../testing/config.js").TestConfig} testConfig
  * @param {() => void} callback
  * @returns {(message: any) => void}
  */
-function createMessageDispatcher(logger, callback) {
+function createMessageDispatcher(logger, testConfig, callback) {
   return function (message) {
     if (message.type === "request_result") {
       markTestFailuresRecursively(state);
@@ -120,7 +100,7 @@ function createMessageDispatcher(logger, callback) {
         if (state.children[idx]) {
           // Handle multiple added suites for a single import
           for (let i = idx; i < state.children.length; ++i) {
-            await runTestsRecursively(state.children[i], message.options);
+            await runTestsRecursively(testConfig, state.children[i]);
           }
         }
         // @ts-ignore

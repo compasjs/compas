@@ -1,5 +1,6 @@
 import { mainFn } from "@compas/stdlib";
-import { areTestsRunning, setAreTestRunning, setTestLogger } from "./state.js";
+import { testingLoadConfig } from "./config.js";
+import { areTestsRunning } from "./state.js";
 import { runTestsInProcess } from "./worker-internal.js";
 
 /**
@@ -19,12 +20,10 @@ export function mainTestFn(meta) {
   }
 
   mainFn(meta, async (logger) => {
-    setTestLogger(logger);
-    setAreTestRunning(true);
+    const testConfig = await testingLoadConfig(logger);
+    testConfig.singleFileMode = true;
 
-    const exitCode = await runTestsInProcess({
-      singleFileMode: true,
-    });
+    const exitCode = await runTestsInProcess(testConfig);
 
     process.exit(exitCode);
   });

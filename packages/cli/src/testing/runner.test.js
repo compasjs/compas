@@ -23,10 +23,12 @@ test("cli/testing/runner", (t) => {
         assertions: [],
         children: [],
       };
-      await runTestsRecursively(state, {
-        bail: false,
-        isDebugging: false,
-      });
+      await runTestsRecursively(
+        {
+          timeout: 10,
+        },
+        state,
+      );
 
       t.equal(state.assertions.length, 1);
       t.equal(state.assertions[0].type, "strictEqual");
@@ -45,10 +47,12 @@ test("cli/testing/runner", (t) => {
       assertions: [],
       children: [],
     };
-    await runTestsRecursively(state, {
-      bail: false,
-      isDebugging: false,
-    });
+    await runTestsRecursively(
+      {
+        timeout: 10,
+      },
+      state,
+    );
 
     t.equal(state.assertions.length, 1);
     t.equal(state.assertions[0].type, "match");
@@ -64,10 +68,12 @@ test("cli/testing/runner", (t) => {
       assertions: [],
       children: [],
     };
-    await runTestsRecursively(state, {
-      bail: false,
-      isDebugging: false,
-    });
+    await runTestsRecursively(
+      {
+        timeout: 10,
+      },
+      state,
+    );
 
     t.ok(state.caughtException);
     t.ok(state.caughtException.message.includes("at least a single"));
@@ -86,10 +92,12 @@ test("cli/testing/runner", (t) => {
         assertions: [],
         children: [],
       };
-      await runTestsRecursively(state, {
-        bail: false,
-        isDebugging: false,
-      });
+      await runTestsRecursively(
+        {
+          timeout: 10,
+        },
+        state,
+      );
 
       t.ok(AppError.instanceOf(state.caughtException));
       t.equal(state.caughtException.key, "error.server.notImplemented");
