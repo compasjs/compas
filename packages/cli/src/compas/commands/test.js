@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { isMainThread, Worker } from "worker_threads";
 import { isNil, spawn } from "@compas/stdlib";
 import { testingLoadConfig } from "../../testing/config.js";

@@ -10,11 +10,18 @@ import { state, testLogger } from "./state.js";
  *
  * @param {import("./config").TestConfig} testConfig
  * @param {import("./state").TestState} testState
+ * @param {Partial<Pick<import("./config").TestConfig, "timeout">>} [configOverrides]
  * @returns {Promise<void>}
  */
-export async function runTestsRecursively(testConfig, testState) {
+export async function runTestsRecursively(
+  testConfig,
+  testState,
+  configOverrides,
+) {
   const abortController = new AbortController();
   const runner = createRunnerForState(testState, abortController.signal);
+
+  const resolvedTimeout = configOverrides?.timeout ?? testConfig.timeout;
 
   if (!isNil(testState.callback)) {
     if (testState.parent === state) {
@@ -30,7 +37,7 @@ export async function runTestsRecursively(testConfig, testState) {
             testLogger.info(
               `Ignoring timeout for '${testState.name}', detected an active inspector.`,
             );
-          }, testConfig.timeout);
+          }, resolvedTimeout);
 
           await result;
           clearTimeout(timeoutReminder);
@@ -44,15 +51,15 @@ export async function runTestsRecursively(testConfig, testState) {
                 reject(
                   new Error(
                     `Exceeded test timeout of ${
-                      testConfig.timeout / 1000
+                      resolvedTimeout / 1000
                     } seconds. You can increase the timeout by calling 't.timeout = ${
-                      testConfig.timeout + 1000
+                      resolvedTimeout + 1000
                     };' on the parent test function. Or by setting 'export const timeout = ${
-                      testConfig.timeout + 1000
+                      resolvedTimeout + 1000
                     };' in 'test/config.js'.`,
                   ),
                 );
-              }, testConfig.timeout);
+              }, resolvedTimeout);
             }),
           ]);
         }
@@ -76,8 +83,15 @@ export async function runTestsRecursively(testConfig, testState) {
     }
   }
 
-  const originalTimeout = testConfig.timeout;
-  testConfig.timeout = runner.timeout ?? originalTimeout;
+  const subTestOverrides = {
+    timeout: runner.timeout ?? configOverrides?.timeout,
+  };
+
+  if (typeof runner.jobs !== "number" || runner.jobs === 0) {
+    // Remove invalid jobs config
+    delete runner.jobs;
+  }
+
   mutateRunnerEnablingWarnings(runner);
 
   if (
@@ -100,18 +114,23 @@ export async function runTestsRecursively(testConfig, testState) {
     }
   }
 
-  for (const child of testState.children) {
-    await runTestsRecursively(testConfig, child);
+  const children = [...testState.children];
+  while (children.length) {
+    const partial = children.splice(0, runner.jobs ?? 1);
+
+    await Promise.all(
+      partial.map((it) =>
+        runTestsRecursively(testConfig, it, subTestOverrides),
+      ),
+    );
 
     if (testConfig.bail) {
-      markTestFailuresRecursively(state);
-      if (state.hasFailure) {
+      markTestFailuresRecursively(testState);
+      if (testState.hasFailure) {
         return;
       }
     }
   }
-
-  testConfig.timeout = originalTimeout;
 }
 
 /**

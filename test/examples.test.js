@@ -31,40 +31,40 @@ test("compas/examples", async (t) => {
     )
   ).filter((it) => !!it);
 
-  t.test("run examples", async (t) => {
-    await Promise.all(
-      configs.map(async (config) => {
+  t.test("run examples", (t) => {
+    t.jobs = configs.length;
+
+    for (const config of configs) {
+      t.test(config.exampleMetadata.path, (t) => {
         for (const cmd of config.exampleMetadata.testing) {
-          const parts = cmd.split(" ");
-          if (parts[0] === "compas") {
-            parts[0] = "../../node_modules/.bin/compas";
-          }
+          t.test(cmd, async (t) => {
+            const parts = cmd.split(" ");
+            if (parts[0] === "compas") {
+              parts[0] = "../../node_modules/.bin/compas";
+            }
 
-          const { exitCode, stdout, stderr } = await exec(parts.join(" "), {
-            cwd: config.exampleMetadata.path,
-            env: {
-              PATH: environment.PATH,
-              CI: environment.CI,
-              GITHUB_ACTIONS: environment.GITHUB_ACTIONS,
-            },
-          });
-
-          t.equal(
-            exitCode,
-            0,
-            `Path: ${config.exampleMetadata.path}, Command: ${cmd}, Exitcode: ${exitCode}`,
-          );
-
-          if (exitCode !== 0) {
-            t.log.error({
-              config,
-              cmd,
-              stdout,
-              stderr,
+            const { exitCode, stdout, stderr } = await exec(parts.join(" "), {
+              cwd: config.exampleMetadata.path,
+              env: {
+                PATH: environment.PATH,
+                CI: environment.CI,
+                GITHUB_ACTIONS: environment.GITHUB_ACTIONS,
+              },
             });
-          }
+
+            t.equal(exitCode, 0);
+
+            if (exitCode !== 0) {
+              t.log.error({
+                config,
+                cmd,
+                stdout,
+                stderr,
+              });
+            }
+          });
         }
-      }),
-    );
+      });
+    }
   });
 });

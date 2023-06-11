@@ -33,7 +33,8 @@ const configPath = pathJoin(process.cwd(), "test/config.js");
  * @property {string[]} ignoreDirectories Subdirectories to skip, when looking for all
  *   test files
  * @property {boolean} coverage Run the test while collecting coverage results.
- * @property {boolean} singleFileMode Should be set when only a single test should run via 'mainTestFn'
+ * @property {boolean} singleFileMode Should be set when only a single test should run
+ *   via 'mainTestFn'
  */
 
 /**
@@ -105,7 +106,8 @@ export async function testingLoadConfig(logger, flags) {
       resolvedConfig.randomizeRounds = flags.randomizeRounds;
     }
 
-    // Set env vars so they are read when a worker is starting up, at that point we don't have flags
+    // Set env vars so they are read when a worker is starting up, at that point we don't
+    // have flags
 
     environment.__COMPAS_TEST_BAIL = String(resolvedConfig.bail);
     process.env.__COMPAS_TEST_WITH_LOGS = String(resolvedConfig.withLogs);
@@ -151,6 +153,7 @@ export async function testingLoadConfig(logger, flags) {
   setAreTestRunning(true);
 
   if (!isMainThread && isNil(logger)) {
+    // Setup a logger with threadId, so logs of a single thread can be found.
     const formattedThreadId = String(threadId).padStart(
       String(resolvedConfig.parallelCount * resolvedConfig.randomizeRounds)
         .length,
@@ -169,6 +172,8 @@ export async function testingLoadConfig(logger, flags) {
   }
 
   if (!resolvedConfig.withLogs) {
+    // Filter out error logs of all created loggers both in dev & prod modes of running
+    // the tests.
     const destination = loggerGetGlobalDestination();
     loggerSetGlobalDestination({
       write(msg) {

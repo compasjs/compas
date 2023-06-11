@@ -13,9 +13,20 @@ export interface TestRunner {
   name: string;
 
   /**
-   * Configurable timeout used for sub tests
+   * Configurable timeout in milliseconds used for all subtests (and subtests of these etc.).
+   *
+   * This value defaults to 2500 milliseconds. The default can be overwritten globally in the
+   * `test/config.js` file by setting `export const timeout = 2500;`
    */
   timeout?: number;
+
+  /**
+   * Configure how many subtests run concurrent. Defaults to '1' guaranteeing all subtests to
+   * run in order that they are added.
+   *
+   * This only affects the immediate subtests.
+   */
+  jobs?: number;
 
   /**
    * Signal to abort when the tests time out

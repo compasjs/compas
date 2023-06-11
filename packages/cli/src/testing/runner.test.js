@@ -1,4 +1,5 @@
 import { match, strictEqual } from "assert";
+import { setTimeout } from "node:timers/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { AppError } from "@compas/stdlib";
 import { runTestsRecursively } from "./runner.js";
@@ -103,4 +104,27 @@ test("cli/testing/runner", (t) => {
       t.equal(state.caughtException.key, "error.server.notImplemented");
     },
   );
+
+  t.test("parallel", (t) => {
+    const start = new Date();
+
+    t.test("act", (t) => {
+      t.jobs = 5;
+
+      for (let i = 0; i < 10; ++i) {
+        t.test(`${i}`, async (t) => {
+          await setTimeout(i);
+          t.pass();
+        });
+      }
+    });
+
+    t.test("assert", (t) => {
+      const stop = new Date();
+
+      // total of 9...0 = 45, but should be shorter than that, even with a bit of test
+      // runner overhead. The minimum time is 13ms -> 4 + 9
+      t.ok(stop - start < 25, `Actual time: ${stop - start}ms`);
+    });
+  });
 });

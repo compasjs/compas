@@ -14,7 +14,8 @@
  * @property {string[]} ignoreDirectories Subdirectories to skip, when looking for all
  *   test files
  * @property {boolean} coverage Run the test while collecting coverage results.
- * @property {boolean} singleFileMode Should be set when only a single test should run via 'mainTestFn'
+ * @property {boolean} singleFileMode Should be set when only a single test should run
+ *   via 'mainTestFn'
  */
 /**
  * Load the test config & parse the flags
@@ -73,7 +74,8 @@ export type TestConfig = {
    */
   coverage: boolean;
   /**
-   * Should be set when only a single test should run via 'mainTestFn'
+   * Should be set when only a single test should run
+   * via 'mainTestFn'
    */
   singleFileMode: boolean;
 };
