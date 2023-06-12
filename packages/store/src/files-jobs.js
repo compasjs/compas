@@ -140,7 +140,7 @@ export function jobFileTransformImage(s3Client) {
     const { fileId, transformKey, options } = job.data;
 
     if (isNil(fileId) || isNil(transformKey) || !isPlainObject(options)) {
-      event.log.error({
+      event.log.info({
         message: "Invalid file transform options",
         data: job.data,
       });
@@ -156,8 +156,8 @@ export function jobFileTransformImage(s3Client) {
     }).execRaw(sql);
 
     if (isNil(file)) {
-      event.log.error({
-        message: "Invalid fileId",
+      event.log.info({
+        message: "Unknown fileId",
         data: job.data,
       });
 
