@@ -25,7 +25,11 @@ export function collectScripts() {
   const userDir = pathJoin(process.cwd(), "scripts");
   if (existsSync(userDir)) {
     for (const item of readdirSync(userDir)) {
-      if (!item.endsWith(".js")) {
+      if (
+        !item.endsWith(".js") &&
+        !item.endsWith(".mjs") &&
+        !item.endsWith(".cjs")
+      ) {
         continue;
       }
 
