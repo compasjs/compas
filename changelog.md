@@ -4,6 +4,63 @@ editLink: false
 
 # Changelog
 
+### [v0.5.3](https://github.com/compasjs/compas/releases/tag/v0.5.3)
+
+#### Features
+
+- feat(cli): expose the test name via `t.name` in the test runner
+  [`900de5`](https://github.com/compasjs/compas/commit/900de5c803fcdf2a9c9e5a61246f5808f19f36cc)
+- feat(cli): pad the 'threadId' in test runner logs to align when a high number
+  of workers / randomize rounds are used
+  [`024813`](https://github.com/compasjs/compas/commit/024813cb4936e8d9618e14ec5678fe862bde29b1)
+- feat(cli): add `t.jobs` to configure concurrent subtests
+  [`3d0b9e`](https://github.com/compasjs/compas/commit/3d0b9eb1c29a7115225d6b1502867bfee80cdd5b)
+- feat(cli): add support for `.mjs` and `.cjs` scripts in `compas run`
+  [`9632d8`](https://github.com/compasjs/compas/commit/9632d8025a2b4612a126f670f0131f4eea7e9a21)
+
+#### Bug fixes
+
+- fix(code-gen): correctly import & export dateOnly & timeOnly via OpenAPI
+  [`62f4d9`](https://github.com/compasjs/compas/commit/62f4d9099831d3460a51c83c81097128f874d5fe)
+- fix(store): change error log to info log when trying to transform an already
+  removed file
+  [`f8c6ff`](https://github.com/compasjs/compas/commit/f8c6ff6d523d984768803d6cd10ad63fc2276d08)
+
+#### Other
+
+- chore(prettier): ignore `dist` directories
+  [`d9967a`](https://github.com/compasjs/compas/commit/d9967a24bcdeedd94f2b21612234b68009dce93d)
+- chore(cli): refactor internal config of `compas test`
+  [`d937d1`](https://github.com/compasjs/compas/commit/d937d17b52719a32e81aff7af21068023f68eb27)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 45.0.0 to 46.2.6
+  ([#2643](https://github.com/compasjs/compas/pull/2643))
+  - Major version bump; enables the
+    [`jsdoc/no-defaults`](https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-defaults.md#readme)
+    rule by default.
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @babel/eslint-parser from 7.21.8 to 7.22.5
+  ([#2645](https://github.com/compasjs/compas/pull/2645))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/core from 7.22.1 to 7.22.5
+  ([#2646](https://github.com/compasjs/compas/pull/2646))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump c8 from 7.14.0 to 8.0.0
+  ([#2659](https://github.com/compasjs/compas/pull/2659))
+  - Major version bump
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump eslint from 8.42.0 to 8.43.0
+  ([#2664](https://github.com/compasjs/compas/pull/2664))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.347.1 to 3.354.0
+  ([#2665](https://github.com/compasjs/compas/pull/2665))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.347.1 to 3.354.0
+  ([#2669](https://github.com/compasjs/compas/pull/2669))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.5.2](https://github.com/compasjs/compas/releases/tag/v0.5.2)
 
 #### Features
