@@ -6,7 +6,8 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   lang: "en-US",
   title: "Compas",
-  description: "Unified backend tooling",
+  description:
+    "Unified backend tooling for Node.js & API client generators for JavaScript, TypeScript, etc.",
   head: [
     [
       "link",
