@@ -7,7 +7,7 @@ export default defineConfig({
   lang: "en-US",
   title: "Compas",
   description:
-    "Unified backend tooling for Node.js & API client generators for JavaScript, TypeScript, etc.",
+    "Unified backend tooling for Node.js & typed API client generators for JavaScript, TypeScript, etc.",
   head: [
     [
       "link",
