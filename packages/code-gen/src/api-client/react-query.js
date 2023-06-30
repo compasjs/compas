@@ -461,7 +461,11 @@ export function reactQueryGenerateFunction(
     fileWrite(
       file,
       `({ signal }) => {
-${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+${reactQueryCheckIfRequiredVariablesArePresent(
+  generateContext,
+  hookName,
+  route,
+)}
 
 opts.requestConfig ??= {};
 opts.requestConfig.signal = signal;
@@ -522,7 +526,11 @@ ${hookName}.queryKey = (
   return queryClient.fetchQuery(
     ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
     () => {
-    ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+    ${reactQueryCheckIfRequiredVariablesArePresent(
+      generateContext,
+      `${hookName}.fetchQuery`,
+      route,
+    )}
   return ${apiName}(
    ${apiInstanceParameter}
   ${parameterListWithExtraction({
@@ -548,7 +556,11 @@ ${hookName}.queryKey = (
   return queryClient.prefetchQuery(
     ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
     () => {
-  ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+  ${reactQueryCheckIfRequiredVariablesArePresent(
+    generateContext,
+    `${hookName}.prefetchQuery`,
+    route,
+  )}
 
   return ${apiName}(
      ${apiInstanceParameter}
@@ -596,7 +608,11 @@ ${hookName}.setQueryData = (
   }
   data: ${contextNames.responseTypeName ?? "unknown"},
 ) => {
-  ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, route)}
+  ${reactQueryCheckIfRequiredVariablesArePresent(
+    generateContext,
+    `${hookName}.setQueryData`,
+    route,
+  )}
 
   return queryClient.setQueryData(${hookName}.queryKey(${
         routeHasMandatoryInputs ? "opts" : ""
@@ -714,17 +730,22 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
  * Write out the dependencies for this query to be enabled
  *
  * @param {import("../generate.js").GenerateContext} generateContext
+ * @param {string} hookName
  * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
  * @returns {string}
  */
-function reactQueryCheckIfRequiredVariablesArePresent(generateContext, route) {
+function reactQueryCheckIfRequiredVariablesArePresent(
+  generateContext,
+  hookName,
+  route,
+) {
   const requiredFields = reactQueryGetRequiredFields(generateContext, route);
 
   if (requiredFields.length > 0) {
     return `if (${requiredFields
       .map((it) => `${it} === undefined || ${it} === null`)
       .join("||\n")}) {
-      throw new Error("Not all required variables where provided. This happens when you manually set 'queryOptions.enabled' or when you use 'refetch'. Both skip the generated 'queryOptions.enabled'. Make sure that all necessary arguments are set.");
+      throw new Error("Not all required variables where provided to '${hookName}'. This happens when you manually set 'queryOptions.enabled' or when you use 'refetch'. Both skip the generated 'queryOptions.enabled'. Make sure that all necessary arguments are set.");
 }
 `;
   }
