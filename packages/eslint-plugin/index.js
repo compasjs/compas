@@ -34,6 +34,7 @@ module.exports = {
       },
       parser: "@babel/eslint-parser",
       parserOptions: {
+        warnOnUnsupportedTypeScriptVersion: false,
         requireConfigFile: false,
         babelOptions: {
           plugins: ["@babel/plugin-syntax-class-properties"],
