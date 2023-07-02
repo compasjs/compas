@@ -4,6 +4,40 @@ editLink: false
 
 # Changelog
 
+### [v0.5.4](https://github.com/compasjs/compas/releases/tag/v0.5.4)
+
+#### Features
+
+- feat(code-gen): add hook name to required variables check in the react-query
+  generator
+  [`93c80e`](https://github.com/compasjs/compas/commit/93c80e0a99673c0003ff1fb95918f1c3bb2904fb)
+- feat(eslint-plugin): disable warning on unsupported TS versions
+  [`18f909`](https://github.com/compasjs/compas/commit/18f909fe07b6650c98b19211aae15fc348405346)
+
+#### Other
+
+- chore(docs): update site description
+  [`fc5966`](https://github.com/compasjs/compas/commit/fc5966257fd921317aad124dbcb1c75be5f84f1c),
+  [`589278`](https://github.com/compasjs/compas/commit/58927841d48db48765526b95ec4e0eb90427457e)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 46.2.6 to 46.4.3
+  ([#2685](https://github.com/compasjs/compas/pull/2685),
+  [#2691](https://github.com/compasjs/compas/pull/2691),
+  [#2697](https://github.com/compasjs/compas/pull/2697),
+  [#2701](https://github.com/compasjs/compas/pull/2701))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump eslint from 8.43.0 to 8.44.0
+  ([#2700](https://github.com/compasjs/compas/pull/2700))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.354.0 to 3.363.0
+  ([#2699](https://github.com/compasjs/compas/pull/2699))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.354.0 to 3.363.0
+  ([#2698](https://github.com/compasjs/compas/pull/2698))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.5.3](https://github.com/compasjs/compas/releases/tag/v0.5.3)
 
 #### Features
