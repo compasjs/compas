@@ -58,6 +58,7 @@ export {
 
 export {
   fileCreateOrUpdate,
+  fileTransformInPlace,
   fileFormatMetadata,
   fileVerifyAccessToken,
   fileSignAccessToken,

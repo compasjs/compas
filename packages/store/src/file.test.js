@@ -1,6 +1,6 @@
 import { createReadStream } from "fs";
 import { HeadObjectCommand } from "@aws-sdk/client-s3";
-import { mainTestFn, test } from "@compas/cli";
+import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import {
   AppError,
   filenameForModule,
@@ -12,6 +12,7 @@ import { s3Client, sql, testBucketName } from "../../../src/testing.js";
 import {
   fileCreateOrUpdate,
   fileFormatMetadata,
+  fileTransformInPlace,
   fileSignAccessToken,
   fileSyncDeletedWithObjectStorage,
   fileVerifyAccessToken,
@@ -235,6 +236,80 @@ test("store/file", (t) => {
       }).exec(sql);
 
       t.equal(job.name, "compas.file.generatePlaceholderImage");
+    });
+  });
+
+  t.test("fileTransformInPlace", (t) => {
+    t.test("rotate", async (t) => {
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+          allowedContentTypes: ["image/png"],
+          schedulePlaceholderImageJob: true,
+        },
+        {
+          name: "image.png",
+        },
+        imagePath,
+      );
+
+      const originalFile = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
+
+      await fileTransformInPlace(newTestEvent(t), sql, s3Client, file, {
+        rotate: 90,
+      });
+
+      const updatedFile = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
+
+      t.notEqual(originalFile.toString("hex"), updatedFile.toString("hex"));
+    });
+
+    t.test("stripMetadata", async (t) => {
+      const file = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          bucketName: testBucketName,
+          allowedContentTypes: ["image/png"],
+          schedulePlaceholderImageJob: true,
+        },
+        {
+          name: "image.png",
+        },
+        imagePath,
+      );
+
+      const originalFile = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
+
+      await fileTransformInPlace(newTestEvent(t), sql, s3Client, file, {
+        stripMetadata: true,
+      });
+
+      const updatedFile = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
+
+      t.notEqual(originalFile.toString("hex"), updatedFile.toString("hex"));
     });
   });
 

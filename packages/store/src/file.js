@@ -1,7 +1,14 @@
 import { createReadStream } from "fs";
 import { DeleteObjectsCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { AppError, isNil, uuid } from "@compas/stdlib";
+import {
+  AppError,
+  eventStart,
+  eventStop,
+  isNil,
+  streamToBuffer,
+  uuid,
+} from "@compas/stdlib";
 import {
   fileTypeFromBuffer,
   fileTypeFromFile,
@@ -9,9 +16,13 @@ import {
 } from "file-type";
 import { decode, sign, verify } from "jws";
 import mime from "mime-types";
+import sharp from "sharp";
 import { queryFile } from "./generated/database/file.js";
 import { queries } from "./generated.js";
-import { objectStorageListObjects } from "./object-storage.js";
+import {
+  objectStorageGetObjectStream,
+  objectStorageListObjects,
+} from "./object-storage.js";
 import { query } from "./query.js";
 import { queueWorkerAddJob } from "./queue-worker.js";
 
@@ -128,6 +139,83 @@ export async function fileCreateOrUpdate(
   }
 
   return result;
+}
+
+/**
+ * The various options supported by {@link fileTransformInPlace}.
+ * By default transforms SVG input in to PNG. This can't be disabled, skip calling this
+ * method on SVG inputs if that's not the wanted behavior.
+ *
+ * All operations use [Sharp](https://sharp.pixelplumbing.com/) under the hood.
+ *
+ * @typedef {object} FileTransformInPlaceOptions
+ * @property {boolean} [stripMetadata] Original image metadata is kept on the original
+ *   image, but removed in the transforms. If this option is set, all metadata will be
+ *   stripped on the original as well. You may want to do this for files that are
+ *   publicly accessible.
+ * @property {number} [rotate] The angle to rotate in degrees, using [Sharp]
+ */
+
+/**
+ * Edit the file in place, resetting the placeholder and transforms.
+ *
+ * Supports:
+ * - Rotating the image
+ *
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("postgres").Sql} sql
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
+ * @param {import("./generated/common/types").StoreFile} file
+ * @param {FileTransformInPlaceOptions} operations
+ * @returns {Promise<void>}
+ */
+export async function fileTransformInPlace(
+  event,
+  sql,
+  s3Client,
+  file,
+  operations,
+) {
+  eventStart(event, "file.transformInPlace");
+
+  const fileStream = await objectStorageGetObjectStream(s3Client, {
+    bucketName: file.bucketName,
+    objectKey: file.id,
+  });
+
+  const sharpInstance = sharp(await streamToBuffer(fileStream));
+
+  if (operations.stripMetadata !== true) {
+    sharpInstance.withMetadata({});
+  }
+
+  if (operations.rotate) {
+    sharpInstance.rotate(operations.rotate);
+  }
+
+  await fileCreateOrUpdate(
+    sql,
+    s3Client,
+    {
+      bucketName: file.bucketName,
+      schedulePlaceholderImageJob: true,
+    },
+    {
+      id: file.id,
+      name: file.name,
+      meta: {
+        ...file.meta,
+        transforms: undefined,
+        transformedFromOriginal: undefined,
+        originalHeight: undefined,
+        originalWidth: undefined,
+        placeholderImage: undefined,
+      },
+    },
+    await sharpInstance.toBuffer(),
+  );
+
+  eventStop(event);
 }
 
 /**
