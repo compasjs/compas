@@ -259,10 +259,16 @@ export function reactQueryGenerateFunction(
     withQueryOptions,
     requireAllParams,
   }) => {
-    const list = [
+    const inputs = [
       contextNames.paramsTypeName,
       contextNames.queryTypeName,
       contextNames.bodyTypeName,
+    ]
+      .filter((it) => !!it)
+      .join(` & `);
+
+    const list = [
+      inputs ? `Pretty<${inputs}>` : undefined,
       withRequestConfig
         ? `{ requestConfig?: ${
             distilledTargetInfo.isAxios
@@ -294,10 +300,10 @@ export function reactQueryGenerateFunction(
     if (requiredKeys.length > 0 && !requireAllParams) {
       // We can just wrap it in an Partial which makes all required keys optional instead of writing them all out
 
-      return `Pretty<Partial<${result}>>`;
+      return `Partial<${result}>`;
     }
 
-    return `Pretty<${result}>`;
+    return `${result}`;
   };
 
   const parameterListWithExtraction = ({
