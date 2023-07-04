@@ -4,6 +4,25 @@ editLink: false
 
 # Changelog
 
+### [v0.5.5](https://github.com/compasjs/compas/releases/tag/v0.5.5)
+
+#### Features
+
+- feat(store): add `w=original` support to `fileSendTransformedImage`, keep
+  track of original image width and height
+  [`88adad`](https://github.com/compasjs/compas/commit/88adad4abccd0b5c5723bfa8aed017ff107e0da2)
+- feat(store): add `fileTransformInPlace`
+  [`d61c3d`](https://github.com/compasjs/compas/commit/d61c3d91bd04c9030c0263e7828b0b079b6c4f13)
+- feat(store): support `fileTransformInPlaceOptions` in `fileCreateOrUpdate`
+  [`e461e2`](https://github.com/compasjs/compas/commit/e461e234ca9bb1198ec370cc2c86ab075723c745)
+- feat(store): export list of supported image content types
+  [`f6cc29`](https://github.com/compasjs/compas/commit/f6cc2961e280572c15b6af5143d15b38b979759a)
+
+#### Other
+
+- chore(dependabot): group aws-sdk dependency updates
+  [`da7b1e`](https://github.com/compasjs/compas/commit/da7b1edfebe97619fabe15fc7587b2bea4287edf)
+
 ### [v0.5.4](https://github.com/compasjs/compas/releases/tag/v0.5.4)
 
 #### Features
