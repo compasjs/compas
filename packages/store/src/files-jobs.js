@@ -10,7 +10,7 @@ import sharp from "sharp";
 import {
   fileCreateOrUpdate,
   fileSyncDeletedWithObjectStorage,
-  TRANSFORMED_CONTENT_TYPES,
+  STORE_FILE_IMAGE_TYPES,
 } from "./file.js";
 import { queryFile } from "./generated/database/file.js";
 import { objectStorageGetObjectStream } from "./object-storage.js";
@@ -70,7 +70,7 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
     }).execRaw(sql);
 
     // @ts-expect-error
-    if (!TRANSFORMED_CONTENT_TYPES.includes(file?.contentType)) {
+    if (!STORE_FILE_IMAGE_TYPES.includes(file?.contentType)) {
       // not supported
       eventStop(event);
       return;

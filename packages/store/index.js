@@ -57,6 +57,7 @@ export {
 } from "./src/object-storage.js";
 
 export {
+  STORE_FILE_IMAGE_TYPES,
   fileCreateOrUpdate,
   fileTransformInPlace,
   fileFormatMetadata,

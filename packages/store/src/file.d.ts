@@ -141,7 +141,7 @@ export function fileVerifyAccessToken(options: {
   signingKey: string;
   expectedFileId: string;
 }): void;
-export const TRANSFORMED_CONTENT_TYPES: string[];
+export const STORE_FILE_IMAGE_TYPES: string[];
 /**
  * The various options supported by {@link fileTransformInPlace }.
  * By default transforms SVG input in to PNG. This can't be disabled, skip calling this

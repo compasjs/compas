@@ -26,13 +26,14 @@ import {
 import { query } from "./query.js";
 import { queueWorkerAddJob } from "./queue-worker.js";
 
-export const TRANSFORMED_CONTENT_TYPES = [
+export const STORE_FILE_IMAGE_TYPES = [
   "image/png",
   "image/jpeg",
   "image/jpg",
   "image/webp",
   "image/avif",
   "image/gif",
+  "image/svg+xml",
 ];
 
 /**
@@ -108,7 +109,10 @@ export async function fileCreateOrUpdate(
     source = createReadStream(source);
   }
 
-  if (options.fileTransformInPlaceOptions) {
+  if (
+    options.fileTransformInPlaceOptions &&
+    STORE_FILE_IMAGE_TYPES.includes(props.contentType ?? "")
+  ) {
     const fileBuffer = Buffer.isBuffer(source)
       ? source
       : await streamToBuffer(source);
@@ -117,6 +121,12 @@ export async function fileCreateOrUpdate(
       fileBuffer,
       options.fileTransformInPlaceOptions,
     );
+
+    if (props.contentType === "image/svg+xml") {
+      // After the transform, svgs are converted as png's
+      // See Sharp's toBuffer docs for more information.
+      props.contentType = "image/png";
+    }
   }
 
   const upload = new Upload({
@@ -145,7 +155,7 @@ export async function fileCreateOrUpdate(
 
   if (
     options.schedulePlaceholderImageJob &&
-    TRANSFORMED_CONTENT_TYPES.includes(props.contentType ?? "")
+    STORE_FILE_IMAGE_TYPES.includes(props.contentType ?? "")
   ) {
     await queueWorkerAddJob(sql, {
       name: "compas.file.generatePlaceholderImage",
