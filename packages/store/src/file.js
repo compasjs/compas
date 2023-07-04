@@ -48,12 +48,18 @@ export const TRANSFORMED_CONTENT_TYPES = [
  * image/avif, image/gif` if you only want to accept files that can be sent by
  * {@link fileSendTransformedImageResponse}.
  *
+ * If 'fileTransformInPlaceOptions' is provided, this function will call
+ * {@link fileTransformInPlace}. Note that image processing is computational heavy, so
+ * in a high-throughput scenario you may want to schedule a job which calls
+ * {@link fileTransformInPlace} instead of passing this option directly.
+ *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
  *   allowedContentTypes?: string[],
  *   schedulePlaceholderImageJob?: boolean,
+ *   fileTransformInPlaceOptions?: FileTransformInPlaceOptions,
  * }} options
  * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
  *   "name">} props
@@ -100,6 +106,17 @@ export async function fileCreateOrUpdate(
 
   if (typeof source === "string") {
     source = createReadStream(source);
+  }
+
+  if (options.fileTransformInPlaceOptions) {
+    const fileBuffer = Buffer.isBuffer(source)
+      ? source
+      : await streamToBuffer(source);
+
+    source = await fileTransformInPlaceInternal(
+      fileBuffer,
+      options.fileTransformInPlaceOptions,
+    );
   }
 
   const upload = new Upload({
@@ -153,8 +170,34 @@ export async function fileCreateOrUpdate(
  *   image, but removed in the transforms. If this option is set, all metadata will be
  *   stripped on the original as well. You may want to do this for files that are
  *   publicly accessible.
- * @property {number} [rotate] The angle to rotate in degrees, using [Sharp]
+ * @property {number|false} [rotate] The angle to rotate to. If not provided, an auto *
+ *   rotation will be attempted based on the image metadata.
  */
+
+/**
+ * Internal operations on the buffer. Returns a new transformed buffer.
+ *
+ * @param {Buffer} fileBuffer
+ * @param {FileTransformInPlaceOptions} operations
+ * @returns {Promise<Buffer>}
+ */
+async function fileTransformInPlaceInternal(fileBuffer, operations) {
+  const sharpInstance = sharp(fileBuffer);
+
+  if (operations.stripMetadata !== true) {
+    sharpInstance.withMetadata({});
+  }
+
+  if (operations.rotate !== false) {
+    if (Number.isInteger(operations.rotate)) {
+      sharpInstance.rotate(operations.rotate);
+    } else {
+      sharpInstance.rotate();
+    }
+  }
+
+  return await sharpInstance.toBuffer();
+}
 
 /**
  * Edit the file in place, resetting the placeholder and transforms.
@@ -183,15 +226,11 @@ export async function fileTransformInPlace(
     objectKey: file.id,
   });
 
-  const sharpInstance = sharp(await streamToBuffer(fileStream));
-
-  if (operations.stripMetadata !== true) {
-    sharpInstance.withMetadata({});
-  }
-
-  if (operations.rotate) {
-    sharpInstance.rotate(operations.rotate);
-  }
+  const fileBuffer = await streamToBuffer(fileStream);
+  const transformedBuffer = await fileTransformInPlaceInternal(
+    fileBuffer,
+    operations,
+  );
 
   await fileCreateOrUpdate(
     sql,
@@ -212,7 +251,7 @@ export async function fileTransformInPlace(
         placeholderImage: undefined,
       },
     },
-    await sharpInstance.toBuffer(),
+    transformedBuffer,
   );
 
   eventStop(event);

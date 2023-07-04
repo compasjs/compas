@@ -11,12 +11,18 @@
  * image/avif, image/gif` if you only want to accept files that can be sent by
  * {@link fileSendTransformedImageResponse}.
  *
+ * If 'fileTransformInPlaceOptions' is provided, this function will call
+ * {@link fileTransformInPlace}. Note that image processing is computational heavy, so
+ * in a high-throughput scenario you may want to schedule a job which calls
+ * {@link fileTransformInPlace} instead of passing this option directly.
+ *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
  *   allowedContentTypes?: string[],
  *   schedulePlaceholderImageJob?: boolean,
+ *   fileTransformInPlaceOptions?: FileTransformInPlaceOptions,
  * }} options
  * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
  *   "name">} props
@@ -30,11 +36,32 @@ export function fileCreateOrUpdate(
     bucketName: string;
     allowedContentTypes?: string[];
     schedulePlaceholderImageJob?: boolean;
+    fileTransformInPlaceOptions?: FileTransformInPlaceOptions;
   },
   props: Partial<import("./generated/common/types").StoreFile> &
     Pick<import("./generated/common/types").StoreFile, "name">,
   source: NodeJS.ReadableStream | string | Buffer,
 ): Promise<import("./generated/common/types").StoreFile>;
+/**
+ * Edit the file in place, resetting the placeholder and transforms.
+ *
+ * Supports:
+ * - Rotating the image
+ *
+ * @param {import("@compas/stdlib").InsightEvent} event
+ * @param {import("postgres").Sql} sql
+ * @param {import("@aws-sdk/client-s3").S3Client} s3Client
+ * @param {import("./generated/common/types").StoreFile} file
+ * @param {FileTransformInPlaceOptions} operations
+ * @returns {Promise<void>}
+ */
+export function fileTransformInPlace(
+  event: import("@compas/stdlib").InsightEvent,
+  sql: import("postgres").Sql,
+  s3Client: import("@aws-sdk/client-s3").S3Client,
+  file: import("./generated/common/types").StoreFile,
+  operations: FileTransformInPlaceOptions,
+): Promise<void>;
 /**
  * File deletes should be done via `queries.storeFileDelete()`. By calling this
  * function, all files that don't exist in the database will be removed from the S3
@@ -115,4 +142,25 @@ export function fileVerifyAccessToken(options: {
   expectedFileId: string;
 }): void;
 export const TRANSFORMED_CONTENT_TYPES: string[];
+/**
+ * The various options supported by {@link fileTransformInPlace }.
+ * By default transforms SVG input in to PNG. This can't be disabled, skip calling this
+ * method on SVG inputs if that's not the wanted behavior.
+ *
+ * All operations use [Sharp](https://sharp.pixelplumbing.com/) under the hood.
+ */
+export type FileTransformInPlaceOptions = {
+  /**
+   * Original image metadata is kept on the original
+   * image, but removed in the transforms. If this option is set, all metadata will be
+   * stripped on the original as well. You may want to do this for files that are
+   * publicly accessible.
+   */
+  stripMetadata?: boolean | undefined;
+  /**
+   * The angle to rotate to. If not provided, an auto *
+   * rotation will be attempted based on the image metadata.
+   */
+  rotate?: number | false | undefined;
+};
 //# sourceMappingURL=file.d.ts.map

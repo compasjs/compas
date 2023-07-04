@@ -32,6 +32,7 @@ export {
 } from "./src/object-storage.js";
 export {
   fileCreateOrUpdate,
+  fileTransformInPlace,
   fileFormatMetadata,
   fileVerifyAccessToken,
   fileSignAccessToken,

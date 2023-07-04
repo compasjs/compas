@@ -4,10 +4,12 @@ import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import {
   AppError,
   filenameForModule,
+  isNil,
   streamToBuffer,
   uuid,
 } from "@compas/stdlib";
 import { decode } from "jws";
+import sharp from "sharp";
 import { s3Client, sql, testBucketName } from "../../../src/testing.js";
 import {
   fileCreateOrUpdate,
@@ -26,7 +28,8 @@ import { query } from "./query.js";
 mainTestFn(import.meta);
 
 test("store/file", (t) => {
-  const imagePath = "./docs/public/favicon/favicon-16x16.png";
+  // const imagePath = "./docs/public/favicon/favicon-16x16.png";
+  const imagePath = "./__fixtures__/store/10.jpg";
 
   t.test("fileCreateOrUpdateFile", (t) => {
     t.test("validator props.name", async (t) => {
@@ -182,7 +185,7 @@ test("store/file", (t) => {
             s3Client,
             {
               bucketName: testBucketName,
-              allowedContentTypes: ["image/jpeg"],
+              allowedContentTypes: ["image/png"],
             },
             {
               name: "image.jpg",
@@ -200,7 +203,10 @@ test("store/file", (t) => {
           s3Client,
           {
             bucketName: testBucketName,
-            allowedContentTypes: ["image/png"],
+            allowedContentTypes: ["image/jpeg"],
+            fileTransformInPlaceOptions: {
+              stripMetadata: true,
+            },
           },
           {
             name: "image.png",
@@ -208,7 +214,20 @@ test("store/file", (t) => {
           imagePath,
         );
 
-        t.equal(file.contentType, "image/png");
+        const buffer = await streamToBuffer(
+          await objectStorageGetObjectStream(s3Client, {
+            bucketName: file.bucketName,
+            objectKey: file.id,
+          }),
+        );
+
+        const sharpInstance = sharp(buffer);
+
+        t.ok(
+          isNil((await sharpInstance.metadata()).exif),
+          "metadata is stripped",
+        );
+        t.equal(file.contentType, "image/jpeg");
       });
     });
 
@@ -218,7 +237,6 @@ test("store/file", (t) => {
         s3Client,
         {
           bucketName: testBucketName,
-          allowedContentTypes: ["image/png"],
           schedulePlaceholderImageJob: true,
         },
         {
@@ -226,6 +244,15 @@ test("store/file", (t) => {
         },
         imagePath,
       );
+
+      const buffer = await streamToBuffer(
+        await objectStorageGetObjectStream(s3Client, {
+          bucketName: file.bucketName,
+          objectKey: file.id,
+        }),
+      );
+
+      const sharpInstance = sharp(buffer);
 
       const [job] = await queryJob({
         where: {
@@ -235,6 +262,10 @@ test("store/file", (t) => {
         },
       }).exec(sql);
 
+      t.ok(
+        !isNil((await sharpInstance.metadata()).exif),
+        "metadata should not be stripped",
+      );
       t.equal(job.name, "compas.file.generatePlaceholderImage");
     });
   });
@@ -246,7 +277,6 @@ test("store/file", (t) => {
         s3Client,
         {
           bucketName: testBucketName,
-          allowedContentTypes: ["image/png"],
           schedulePlaceholderImageJob: true,
         },
         {
@@ -282,7 +312,6 @@ test("store/file", (t) => {
         s3Client,
         {
           bucketName: testBucketName,
-          allowedContentTypes: ["image/png"],
           schedulePlaceholderImageJob: true,
         },
         {
