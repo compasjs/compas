@@ -45,8 +45,9 @@ export function jobFileCleanup(s3Client, bucketName) {
 }
 
 /**
- * Returns a {@link QueueWorkerHandler} that generates a `meta.placeholderImage` for the
- * provided `fileId`. The `compas.file.generatePlaceholderImage` job is inserted when
+ * Returns a {@link QueueWorkerHandler} that populates `meta.width` and `meta.height`,
+ * and also generates a `meta.placeholderImage` for the provided `fileId`. The
+ * `compas.file.generatePlaceholderImage` job is inserted when
  * `fileCreateOrUpdate` is provided with the `schedulePlaceholderImageJob` option.
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
@@ -91,27 +92,27 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
       return;
     }
 
-    const placeholderImageBuffer = await sharp(buffer)
-      .rotate()
+    const sharpInstance = sharp(buffer).rotate();
+    const metadata = await sharpInstance.metadata();
+
+    const placeholderImageBuffer = await sharpInstance
       .resize(10)
       .jpeg()
       .toBuffer();
 
-    await queries.fileUpdate(sql, {
-      update: {
-        meta: {
-          $set: {
-            path: ["placeholderImage"],
-            value: `data:image/jpeg;base64,${placeholderImageBuffer.toString(
-              "base64",
-            )}`,
-          },
-        },
-      },
-      where: {
-        id: file.id,
-      },
-    });
+    // Set placeholderImage, originalWidth and originalHeight atomically.
+    await query`UPDATE "file"
+                SET
+                  "meta" = jsonb_set(jsonb_set(
+                                       jsonb_set("meta", '{placeholderImage}', ${`"data:image/jpeg;base64,${placeholderImageBuffer.toString(
+                                         "base64",
+                                       )}"`}::jsonb), '{originalHeight}',
+                                       ${String(metadata.height)}::jsonb),
+                                     '{originalWidth}', ${String(
+                                       metadata.width,
+                                     )}::jsonb)
+                WHERE
+                  id = ${file.id}`.exec(sql);
 
     eventStop(event);
   };
@@ -119,7 +120,9 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
 
 /**
  * Returns a {@link QueueWorkerHandler} that generates a trasnformed image for the
- * provided `fileId` and other settings. This job is inserted by {@link fileSendTransformedImageResponse} when it encounters an not yet transformed option combination.
+ * provided `fileId` and other settings. This job is inserted by
+ * {@link fileSendTransformedImageResponse} when it encounters an not yet transformed
+ * option combination.
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @returns {import("./queue-worker.js").QueueWorkerHandler}
@@ -197,9 +200,14 @@ export function jobFileTransformImage(s3Client) {
     const sharpInstance = sharp(buffer);
     sharpInstance.rotate();
 
-    const { width: currentWidth } = await sharpInstance.metadata();
+    const metadataPromise = sharpInstance.metadata();
 
-    if (!isNil(currentWidth) && currentWidth > options.w) {
+    const originalWidth =
+      file.meta?.originalWidth ?? (await metadataPromise).width;
+    const originalHeight =
+      file.meta?.originalHeight ?? (await metadataPromise).height;
+
+    if (!isNil(originalWidth) && originalWidth > options.w) {
       // Only resize if width is greater than the needed with, so we don't upscale
       sharpInstance.resize(options.w);
     }
@@ -239,6 +247,22 @@ export function jobFileTransformImage(s3Client) {
     // @ts-expect-error
     await atomicSetTransformKey(sql, file.id, transformKey, image.id);
 
+    if (
+      (isNil(file.meta?.originalWidth) || isNil(file.meta?.originalHeight)) &&
+      !isNil(originalWidth) &&
+      !isNil(originalHeight)
+    ) {
+      // Update the original image to include the width and height.
+      await query`UPDATE "file"
+                  SET
+                    "meta" = jsonb_set(jsonb_set("meta", '{originalHeight}', ${String(
+                      originalHeight,
+                    )}::jsonb), '{originalWidth}',
+                                       ${String(originalWidth)}::jsonb)
+                  WHERE
+                    id = ${file.id}`.exec(sql);
+    }
+
     eventStop(event);
   };
 
@@ -257,10 +281,10 @@ export function jobFileTransformImage(s3Client) {
                   "meta" = jsonb_set(CASE
                                        WHEN coalesce("meta", '{}'::jsonb) ? 'transforms'
                                          THEN "meta"
-                                       ELSE jsonb_set(coalesce("meta", '{}'::jsonb), '{transforms}', '{}'::jsonb) END,
-                                     ${`{transforms,${transformKey}}`}, ${JSON.stringify(
-      newFileId,
-    )}),
+                                       ELSE jsonb_set(coalesce("meta", '{}'::jsonb),
+                                                      '{transforms}', '{}'::jsonb) END,
+                                     ${`{transforms,${transformKey}}`},
+                                     ${JSON.stringify(newFileId)}),
                   "updatedAt" = now()
                 WHERE
                   id = ${fileId}`.exec(sql);

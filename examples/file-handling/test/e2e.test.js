@@ -95,6 +95,26 @@ test("e2e", async (t) => {
     t.ok(blob.size > 5);
   });
 
+  t.test("retrieve original image", async (t) => {
+    const { posts } = await apiPostList(fetchFn);
+
+    const postWithImage = posts.find((it) => it.headerImage);
+
+    t.equal(postWithImage.headerImage.contentType, "image/jpeg");
+
+    const blob = await apiPostHeaderImage(
+      fetchFn,
+      {
+        id: postWithImage.id,
+      },
+      {
+        w: "original",
+      },
+    );
+
+    t.ok(blob.size > 5);
+  });
+
   t.test("teardown", async (t) => {
     server.close();
     await cleanupTestPostgresDatabase(sql);

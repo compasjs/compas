@@ -288,6 +288,8 @@ export function fileFormatMetadata(file, options) {
     id: file.id,
     name: file.name,
     contentType: file.contentType,
+    originalWidth: file.meta?.originalWidth,
+    originalHeight: file.meta?.originalHeight,
     altText: file.meta?.altText,
     placeholderImage: file.meta?.placeholderImage,
     url: options.url,

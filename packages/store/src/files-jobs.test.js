@@ -67,6 +67,8 @@ test("store/files-jobs", (t) => {
       },
     }).exec(sql);
 
+    t.ok(reloadedFile.meta.originalWidth);
+    t.ok(reloadedFile.meta.originalHeight);
     t.ok(reloadedFile.meta.placeholderImage);
     t.ok(
       reloadedFile.meta.placeholderImage.startsWith("data:image/jpeg;base64,"),

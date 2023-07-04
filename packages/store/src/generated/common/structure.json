@@ -120,6 +120,30 @@
           "sql": {},
           "type": "string"
         },
+        "originalWidth": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "floatingPoint": false,
+            "min": -2147483647,
+            "max": 2147483647
+          },
+          "sql": {},
+          "type": "number"
+        },
+        "originalHeight": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "floatingPoint": false,
+            "min": -2147483647,
+            "max": 2147483647
+          },
+          "sql": {},
+          "type": "number"
+        },
         "placeholderImage": {
           "docString": "",
           "isOptional": true,
@@ -196,6 +220,30 @@
           "sql": {},
           "type": "string"
         },
+        "originalWidth": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "floatingPoint": false,
+            "min": -2147483647,
+            "max": 2147483647
+          },
+          "sql": {},
+          "type": "number"
+        },
+        "originalHeight": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "floatingPoint": false,
+            "min": -2147483647,
+            "max": 2147483647
+          },
+          "sql": {},
+          "type": "number"
+        },
         "url": {
           "docString": "",
           "isOptional": false,
@@ -266,14 +314,37 @@
         "w": {
           "docString": "",
           "isOptional": false,
-          "validator": {
-            "allowNull": false,
-            "floatingPoint": false,
-            "min": 1,
-            "max": 99999
-          },
+          "validator": {},
           "sql": {},
-          "type": "number"
+          "type": "anyOf",
+          "values": [
+            {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "allowNull": false,
+                "floatingPoint": false,
+                "min": 1,
+                "max": 99999
+              },
+              "sql": {},
+              "type": "number"
+            },
+            {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["original"]
+            }
+          ]
         }
       }
     },
@@ -439,14 +510,37 @@
         "w": {
           "docString": "",
           "isOptional": false,
-          "validator": {
-            "allowNull": false,
-            "floatingPoint": false,
-            "min": 1,
-            "max": 99999
-          },
+          "validator": {},
           "sql": {},
-          "type": "number"
+          "type": "anyOf",
+          "values": [
+            {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "allowNull": false,
+                "floatingPoint": false,
+                "min": 1,
+                "max": 99999
+              },
+              "sql": {},
+              "type": "number"
+            },
+            {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string",
+              "oneOf": ["original"]
+            }
+          ]
         }
       }
     },

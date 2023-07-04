@@ -383,11 +383,11 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(
   ValidatorErrorMap
 >;
 /**
- * @param {import("../common/types").StoreFileResponse|any} value
+ * @param {import("../common/types").StoreFileResponseInput|any} value
  * @returns {Either<import("../common/types").StoreFileResponse, ValidatorErrorMap>}
  */
 export function validateStoreFileResponse(
-  value: import("../common/types").StoreFileResponse | any,
+  value: import("../common/types").StoreFileResponseInput | any,
 ): Either<import("../common/types").StoreFileResponse, ValidatorErrorMap>;
 /**
  * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.

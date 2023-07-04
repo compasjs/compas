@@ -14,8 +14,9 @@ export function jobFileCleanup(
   bucketName: string,
 ): import("./queue-worker.js").QueueWorkerHandler;
 /**
- * Returns a {@link QueueWorkerHandler} that generates a `meta.placeholderImage` for the
- * provided `fileId`. The `compas.file.generatePlaceholderImage` job is inserted when
+ * Returns a {@link QueueWorkerHandler} that populates `meta.width` and `meta.height`,
+ * and also generates a `meta.placeholderImage` for the provided `fileId`. The
+ * `compas.file.generatePlaceholderImage` job is inserted when
  * `fileCreateOrUpdate` is provided with the `schedulePlaceholderImageJob` option.
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
@@ -28,7 +29,9 @@ export function jobFileGeneratePlaceholderImage(
 ): import("./queue-worker.js").QueueWorkerHandler;
 /**
  * Returns a {@link QueueWorkerHandler} that generates a trasnformed image for the
- * provided `fileId` and other settings. This job is inserted by {@link fileSendTransformedImageResponse} when it encounters an not yet transformed option combination.
+ * provided `fileId` and other settings. This job is inserted by
+ * {@link fileSendTransformedImageResponse} when it encounters an not yet transformed
+ * option combination.
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @returns {import("./queue-worker.js").QueueWorkerHandler}

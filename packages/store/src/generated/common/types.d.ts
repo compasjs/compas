@@ -6,6 +6,8 @@
 export type StoreFileMeta = {
   transforms?: any | undefined;
   transformedFromOriginal?: string | undefined;
+  originalWidth?: number | undefined;
+  originalHeight?: number | undefined;
   placeholderImage?: string | undefined;
   altText?: string | undefined;
 };
@@ -42,6 +44,8 @@ export type StoreFileMetaInput =
   | {
       transforms?: any | undefined;
       transformedFromOriginal?: string | undefined;
+      originalWidth?: number | undefined;
+      originalHeight?: number | undefined;
       placeholderImage?: string | undefined;
       altText?: string | undefined;
     }
@@ -1770,6 +1774,19 @@ export type StoreFileResponse = {
   id: string;
   name: string;
   contentType: string;
+  originalWidth?: number | undefined;
+  originalHeight?: number | undefined;
+  url: string;
+  placeholderImage?: string | undefined;
+  altText?: string | undefined;
+};
+
+export type StoreFileResponseInput = {
+  id: string;
+  name: string;
+  contentType: string;
+  originalWidth?: number | undefined;
+  originalHeight?: number | undefined;
   url: string;
   placeholderImage?: string | undefined;
   altText?: string | undefined;
@@ -1780,7 +1797,7 @@ export type StoreFileResponse = {
  */
 export type StoreImageTransformOptions = {
   q: number;
-  w: number;
+  w: number | "original";
 };
 
 /**
@@ -1788,7 +1805,7 @@ export type StoreImageTransformOptions = {
  */
 export type StoreImageTransformOptionsInput = {
   q?: number | undefined;
-  w: number;
+  w: number | "original";
 };
 
 /**
@@ -1797,7 +1814,7 @@ export type StoreImageTransformOptionsInput = {
 export type StoreSecureImageTransformOptions = {
   accessToken: string;
   q: number;
-  w: number;
+  w: number | "original";
 };
 
 /**
@@ -1806,7 +1823,7 @@ export type StoreSecureImageTransformOptions = {
 export type StoreSecureImageTransformOptionsInput = {
   accessToken: string;
   q?: number | undefined;
-  w: number;
+  w: number | "original";
 };
 
 export type StoreFileWhereValidated_1 = {

@@ -160,6 +160,31 @@ test("store/file-send", async (t) => {
       }
     });
 
+    t.test("original", async (t) => {
+      await reloadFile();
+      const ctx = createKoaContext();
+
+      ctx.validatedQuery = {
+        w: "original",
+        q: 75,
+      };
+      ctx.req.headers["accept"] = "*/*";
+
+      await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
+      await execFileJobs();
+
+      t.equal(ctx.res.getHeader("Content-Type"), "image/png");
+      t.equal(
+        Object.keys(file.meta.transforms ?? {}).length,
+        0,
+        "No transform is added.",
+      );
+
+      // Refetch should use the original again.
+      await fileSendTransformedImageResponse(sql, s3Client, ctx, file);
+      t.equal(ctx.res.getHeader("Content-Type"), "image/png");
+    });
+
     t.test("accept webp", async (t) => {
       await reloadFile();
       const ctx = createKoaContext();
@@ -175,6 +200,8 @@ test("store/file-send", async (t) => {
 
       t.equal(ctx.res.getHeader("Content-Type"), "image/png");
       t.ok(file.meta.transforms["compas-image-transform-webp-w10-q75"]);
+      t.equal(file.meta.originalWidth, 16);
+      t.equal(file.meta.originalHeight, 16);
 
       // Refetch should use the newly transformed image
       await fileSendTransformedImageResponse(sql, s3Client, ctx, file);

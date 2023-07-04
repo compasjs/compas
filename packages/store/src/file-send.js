@@ -157,7 +157,8 @@ export async function fileSendTransformedImageResponse(
     acceptsWebp ? "webp" : acceptsAvif ? "avif" : "none"
   }-w${w}-q${q}`;
 
-  const loadedFile = file.meta?.transforms?.[transformKey];
+  const loadedFile =
+    w === "original" ? file.id : file.meta?.transforms?.[transformKey];
 
   if (!loadedFile) {
     await queueWorkerAddJob(sql, {

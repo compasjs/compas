@@ -309,6 +309,8 @@ export function validateStoreFileMeta(value) {
       const knownKeys0 = new Set([
         "transforms",
         "transformedFromOriginal",
+        "originalWidth",
+        "originalHeight",
         "placeholderImage",
         "altText",
       ]);
@@ -333,6 +335,8 @@ export function validateStoreFileMeta(value) {
       result = {
         transforms: undefined,
         transformedFromOriginal: undefined,
+        originalWidth: undefined,
+        originalHeight: undefined,
         placeholderImage: undefined,
         altText: undefined,
       };
@@ -370,28 +374,102 @@ export function validateStoreFileMeta(value) {
         }
       }
       if (
+        value["originalWidth"] === null ||
+        value["originalWidth"] === undefined
+      ) {
+        result["originalWidth"] = undefined;
+      } else {
+        let convertedNumber3 = value["originalWidth"];
+        if (
+          typeof convertedNumber3 !== "number" &&
+          typeof convertedNumber3 === "string"
+        ) {
+          convertedNumber3 = Number(convertedNumber3);
+        }
+        if (
+          typeof convertedNumber3 !== "number" ||
+          isNaN(convertedNumber3) ||
+          !isFinite(convertedNumber3) ||
+          !Number.isInteger(convertedNumber3)
+        ) {
+          errorMap[`$.originalWidth`] = {
+            key: "validator.number",
+            subType: "int",
+          };
+        } else if (convertedNumber3 < -2147483647) {
+          errorMap[`$.originalWidth`] = {
+            key: "validator.range",
+            minValue: -2147483647,
+          };
+        } else if (convertedNumber3 > 2147483647) {
+          errorMap[`$.originalWidth`] = {
+            key: "validator.range",
+            maxValue: 2147483647,
+          };
+        } else {
+          result["originalWidth"] = convertedNumber3;
+        }
+      }
+      if (
+        value["originalHeight"] === null ||
+        value["originalHeight"] === undefined
+      ) {
+        result["originalHeight"] = undefined;
+      } else {
+        let convertedNumber4 = value["originalHeight"];
+        if (
+          typeof convertedNumber4 !== "number" &&
+          typeof convertedNumber4 === "string"
+        ) {
+          convertedNumber4 = Number(convertedNumber4);
+        }
+        if (
+          typeof convertedNumber4 !== "number" ||
+          isNaN(convertedNumber4) ||
+          !isFinite(convertedNumber4) ||
+          !Number.isInteger(convertedNumber4)
+        ) {
+          errorMap[`$.originalHeight`] = {
+            key: "validator.number",
+            subType: "int",
+          };
+        } else if (convertedNumber4 < -2147483647) {
+          errorMap[`$.originalHeight`] = {
+            key: "validator.range",
+            minValue: -2147483647,
+          };
+        } else if (convertedNumber4 > 2147483647) {
+          errorMap[`$.originalHeight`] = {
+            key: "validator.range",
+            maxValue: 2147483647,
+          };
+        } else {
+          result["originalHeight"] = convertedNumber4;
+        }
+      }
+      if (
         value["placeholderImage"] === null ||
         value["placeholderImage"] === undefined
       ) {
         result["placeholderImage"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["placeholderImage"];
-        if (typeof convertedString3 !== "string") {
+        let convertedString5 = value["placeholderImage"];
+        if (typeof convertedString5 !== "string") {
           errorMap[`$.placeholderImage`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString3.length === 0) {
+          if (convertedString5.length === 0) {
             result["placeholderImage"] = undefined;
           } else {
-            if (convertedString3.length < 1) {
+            if (convertedString5.length < 1) {
               errorMap[`$.placeholderImage`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["placeholderImage"] = convertedString3;
+              result["placeholderImage"] = convertedString5;
             }
           }
         }
@@ -400,22 +478,22 @@ export function validateStoreFileMeta(value) {
         result["altText"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString4 = value["altText"];
-        if (typeof convertedString4 !== "string") {
+        let convertedString6 = value["altText"];
+        if (typeof convertedString6 !== "string") {
           errorMap[`$.altText`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString4.length === 0) {
+          if (convertedString6.length === 0) {
             result["altText"] = undefined;
           } else {
-            if (convertedString4.length < 1) {
+            if (convertedString6.length < 1) {
               errorMap[`$.altText`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["altText"] = convertedString4;
+              result["altText"] = convertedString6;
             }
           }
         }
@@ -20547,7 +20625,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
 }
 
 /**
- * @param {import("../common/types").StoreFileResponse|any} value
+ * @param {import("../common/types").StoreFileResponseInput|any} value
  * @returns {Either<import("../common/types").StoreFileResponse, ValidatorErrorMap>}
  */
 export function validateStoreFileResponse(value) {
@@ -20573,6 +20651,8 @@ export function validateStoreFileResponse(value) {
         "id",
         "name",
         "contentType",
+        "originalWidth",
+        "originalHeight",
         "url",
         "placeholderImage",
         "altText",
@@ -20599,6 +20679,8 @@ export function validateStoreFileResponse(value) {
         id: undefined,
         name: undefined,
         contentType: undefined,
+        originalWidth: undefined,
+        originalHeight: undefined,
         url: undefined,
         placeholderImage: undefined,
         altText: undefined,
@@ -20679,25 +20761,99 @@ export function validateStoreFileResponse(value) {
           }
         }
       }
+      if (
+        value["originalWidth"] === null ||
+        value["originalWidth"] === undefined
+      ) {
+        result["originalWidth"] = undefined;
+      } else {
+        let convertedNumber4 = value["originalWidth"];
+        if (
+          typeof convertedNumber4 !== "number" &&
+          typeof convertedNumber4 === "string"
+        ) {
+          convertedNumber4 = Number(convertedNumber4);
+        }
+        if (
+          typeof convertedNumber4 !== "number" ||
+          isNaN(convertedNumber4) ||
+          !isFinite(convertedNumber4) ||
+          !Number.isInteger(convertedNumber4)
+        ) {
+          errorMap[`$.originalWidth`] = {
+            key: "validator.number",
+            subType: "int",
+          };
+        } else if (convertedNumber4 < -2147483647) {
+          errorMap[`$.originalWidth`] = {
+            key: "validator.range",
+            minValue: -2147483647,
+          };
+        } else if (convertedNumber4 > 2147483647) {
+          errorMap[`$.originalWidth`] = {
+            key: "validator.range",
+            maxValue: 2147483647,
+          };
+        } else {
+          result["originalWidth"] = convertedNumber4;
+        }
+      }
+      if (
+        value["originalHeight"] === null ||
+        value["originalHeight"] === undefined
+      ) {
+        result["originalHeight"] = undefined;
+      } else {
+        let convertedNumber5 = value["originalHeight"];
+        if (
+          typeof convertedNumber5 !== "number" &&
+          typeof convertedNumber5 === "string"
+        ) {
+          convertedNumber5 = Number(convertedNumber5);
+        }
+        if (
+          typeof convertedNumber5 !== "number" ||
+          isNaN(convertedNumber5) ||
+          !isFinite(convertedNumber5) ||
+          !Number.isInteger(convertedNumber5)
+        ) {
+          errorMap[`$.originalHeight`] = {
+            key: "validator.number",
+            subType: "int",
+          };
+        } else if (convertedNumber5 < -2147483647) {
+          errorMap[`$.originalHeight`] = {
+            key: "validator.range",
+            minValue: -2147483647,
+          };
+        } else if (convertedNumber5 > 2147483647) {
+          errorMap[`$.originalHeight`] = {
+            key: "validator.range",
+            maxValue: 2147483647,
+          };
+        } else {
+          result["originalHeight"] = convertedNumber5;
+        }
+      }
       if (value["url"] === null || value["url"] === undefined) {
         errorMap[`$.url`] = {
           key: "validator.undefined",
         };
       } else {
         /** @type {string} */
-        let convertedString4 = value["url"];
-        if (typeof convertedString4 !== "string") {
+        let convertedString6 = value["url"];
+        if (typeof convertedString6 !== "string") {
           errorMap[`$.url`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString4.length < 1) {
+          if (convertedString6.length < 1) {
             errorMap[`$.url`] = {
               key: "validator.length",
               minLength: 1,
             };
           } else {
-            result["url"] = convertedString4;
+            result["url"] = convertedString6;
           }
         }
       }
@@ -20708,22 +20864,22 @@ export function validateStoreFileResponse(value) {
         result["placeholderImage"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString5 = value["placeholderImage"];
-        if (typeof convertedString5 !== "string") {
+        let convertedString7 = value["placeholderImage"];
+        if (typeof convertedString7 !== "string") {
           errorMap[`$.placeholderImage`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString5.length === 0) {
+          if (convertedString7.length === 0) {
             result["placeholderImage"] = undefined;
           } else {
-            if (convertedString5.length < 1) {
+            if (convertedString7.length < 1) {
               errorMap[`$.placeholderImage`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["placeholderImage"] = convertedString5;
+              result["placeholderImage"] = convertedString7;
             }
           }
         }
@@ -20732,22 +20888,22 @@ export function validateStoreFileResponse(value) {
         result["altText"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString6 = value["altText"];
-        if (typeof convertedString6 !== "string") {
+        let convertedString8 = value["altText"];
+        if (typeof convertedString8 !== "string") {
           errorMap[`$.altText`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString6.length === 0) {
+          if (convertedString8.length === 0) {
             result["altText"] = undefined;
           } else {
-            if (convertedString6.length < 1) {
+            if (convertedString8.length < 1) {
               errorMap[`$.altText`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["altText"] = convertedString6;
+              result["altText"] = convertedString8;
             }
           }
         }
@@ -20825,35 +20981,106 @@ export function validateStoreImageTransformOptions(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedNumber2 = value["w"];
-        if (
-          typeof convertedNumber2 !== "number" &&
-          typeof convertedNumber2 === "string"
-        ) {
-          convertedNumber2 = Number(convertedNumber2);
+        let hasAnyOfMatch2 = false;
+        errorMap[`$.w`] = {
+          key: "validator.anyOf",
+          errors: [],
+        };
+        if (!hasAnyOfMatch2) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap4 = {};
+          /** @type {any} */
+          let intermediateResult4 = undefined;
+          /** @type {any} */
+          let intermediateValue4 = value["w"];
+
+          if (intermediateValue4 === null || intermediateValue4 === undefined) {
+            intermediateErrorMap4[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            let convertedNumber4 = intermediateValue4;
+            if (
+              typeof convertedNumber4 !== "number" &&
+              typeof convertedNumber4 === "string"
+            ) {
+              convertedNumber4 = Number(convertedNumber4);
+            }
+            if (
+              typeof convertedNumber4 !== "number" ||
+              isNaN(convertedNumber4) ||
+              !isFinite(convertedNumber4) ||
+              !Number.isInteger(convertedNumber4)
+            ) {
+              intermediateErrorMap4[`$`] = {
+                key: "validator.number",
+                subType: "int",
+              };
+            } else if (convertedNumber4 < 1) {
+              intermediateErrorMap4[`$`] = {
+                key: "validator.range",
+                minValue: 1,
+              };
+            } else if (convertedNumber4 > 99999) {
+              intermediateErrorMap4[`$`] = {
+                key: "validator.range",
+                maxValue: 99999,
+              };
+            } else {
+              intermediateResult4 = convertedNumber4;
+            }
+          }
+          if (Object.keys(intermediateErrorMap4).length > 0) {
+            errorMap[`$.w`].errors.push(intermediateErrorMap4);
+          } else {
+            hasAnyOfMatch2 = true;
+            delete errorMap[`$.w`];
+            result["w"] = intermediateResult4;
+          }
         }
-        if (
-          typeof convertedNumber2 !== "number" ||
-          isNaN(convertedNumber2) ||
-          !isFinite(convertedNumber2) ||
-          !Number.isInteger(convertedNumber2)
-        ) {
-          errorMap[`$.w`] = {
-            key: "validator.number",
-            subType: "int",
-          };
-        } else if (convertedNumber2 < 1) {
-          errorMap[`$.w`] = {
-            key: "validator.range",
-            minValue: 1,
-          };
-        } else if (convertedNumber2 > 99999) {
-          errorMap[`$.w`] = {
-            key: "validator.range",
-            maxValue: 99999,
-          };
-        } else {
-          result["w"] = convertedNumber2;
+        if (!hasAnyOfMatch2) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap4 = {};
+          /** @type {any} */
+          let intermediateResult4 = undefined;
+          /** @type {any} */
+          let intermediateValue4 = value["w"];
+
+          if (intermediateValue4 === null || intermediateValue4 === undefined) {
+            intermediateErrorMap4[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            /** @type {string} */
+            let convertedString4 = intermediateValue4;
+            if (typeof convertedString4 !== "string") {
+              intermediateErrorMap4[`$`] = {
+                key: "validator.string",
+              };
+            } else {
+              if (convertedString4.length < 1) {
+                intermediateErrorMap4[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else if (convertedString4 !== "original") {
+                intermediateErrorMap4[`$`] = {
+                  key: "validator.oneOf",
+                  allowedValues: ["original"],
+                  foundValue: convertedString4,
+                };
+              } else {
+                intermediateResult4 = convertedString4;
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap4).length > 0) {
+            errorMap[`$.w`].errors.push(intermediateErrorMap4);
+          } else {
+            hasAnyOfMatch2 = true;
+            delete errorMap[`$.w`];
+            result["w"] = intermediateResult4;
+          }
         }
       }
     }
@@ -20951,35 +21178,106 @@ export function validateStoreSecureImageTransformOptions(value) {
           key: "validator.undefined",
         };
       } else {
-        let convertedNumber3 = value["w"];
-        if (
-          typeof convertedNumber3 !== "number" &&
-          typeof convertedNumber3 === "string"
-        ) {
-          convertedNumber3 = Number(convertedNumber3);
+        let hasAnyOfMatch3 = false;
+        errorMap[`$.w`] = {
+          key: "validator.anyOf",
+          errors: [],
+        };
+        if (!hasAnyOfMatch3) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap5 = {};
+          /** @type {any} */
+          let intermediateResult5 = undefined;
+          /** @type {any} */
+          let intermediateValue5 = value["w"];
+
+          if (intermediateValue5 === null || intermediateValue5 === undefined) {
+            intermediateErrorMap5[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            let convertedNumber5 = intermediateValue5;
+            if (
+              typeof convertedNumber5 !== "number" &&
+              typeof convertedNumber5 === "string"
+            ) {
+              convertedNumber5 = Number(convertedNumber5);
+            }
+            if (
+              typeof convertedNumber5 !== "number" ||
+              isNaN(convertedNumber5) ||
+              !isFinite(convertedNumber5) ||
+              !Number.isInteger(convertedNumber5)
+            ) {
+              intermediateErrorMap5[`$`] = {
+                key: "validator.number",
+                subType: "int",
+              };
+            } else if (convertedNumber5 < 1) {
+              intermediateErrorMap5[`$`] = {
+                key: "validator.range",
+                minValue: 1,
+              };
+            } else if (convertedNumber5 > 99999) {
+              intermediateErrorMap5[`$`] = {
+                key: "validator.range",
+                maxValue: 99999,
+              };
+            } else {
+              intermediateResult5 = convertedNumber5;
+            }
+          }
+          if (Object.keys(intermediateErrorMap5).length > 0) {
+            errorMap[`$.w`].errors.push(intermediateErrorMap5);
+          } else {
+            hasAnyOfMatch3 = true;
+            delete errorMap[`$.w`];
+            result["w"] = intermediateResult5;
+          }
         }
-        if (
-          typeof convertedNumber3 !== "number" ||
-          isNaN(convertedNumber3) ||
-          !isFinite(convertedNumber3) ||
-          !Number.isInteger(convertedNumber3)
-        ) {
-          errorMap[`$.w`] = {
-            key: "validator.number",
-            subType: "int",
-          };
-        } else if (convertedNumber3 < 1) {
-          errorMap[`$.w`] = {
-            key: "validator.range",
-            minValue: 1,
-          };
-        } else if (convertedNumber3 > 99999) {
-          errorMap[`$.w`] = {
-            key: "validator.range",
-            maxValue: 99999,
-          };
-        } else {
-          result["w"] = convertedNumber3;
+        if (!hasAnyOfMatch3) {
+          /** @type {ValidatorErrorMap} */
+          const intermediateErrorMap5 = {};
+          /** @type {any} */
+          let intermediateResult5 = undefined;
+          /** @type {any} */
+          let intermediateValue5 = value["w"];
+
+          if (intermediateValue5 === null || intermediateValue5 === undefined) {
+            intermediateErrorMap5[`$`] = {
+              key: "validator.undefined",
+            };
+          } else {
+            /** @type {string} */
+            let convertedString5 = intermediateValue5;
+            if (typeof convertedString5 !== "string") {
+              intermediateErrorMap5[`$`] = {
+                key: "validator.string",
+              };
+            } else {
+              if (convertedString5.length < 1) {
+                intermediateErrorMap5[`$`] = {
+                  key: "validator.length",
+                  minLength: 1,
+                };
+              } else if (convertedString5 !== "original") {
+                intermediateErrorMap5[`$`] = {
+                  key: "validator.oneOf",
+                  allowedValues: ["original"],
+                  foundValue: convertedString5,
+                };
+              } else {
+                intermediateResult5 = convertedString5;
+              }
+            }
+          }
+          if (Object.keys(intermediateErrorMap5).length > 0) {
+            errorMap[`$.w`].errors.push(intermediateErrorMap5);
+          } else {
+            hasAnyOfMatch3 = true;
+            delete errorMap[`$.w`];
+            result["w"] = intermediateResult5;
+          }
         }
       }
     }

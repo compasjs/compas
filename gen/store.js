@@ -13,7 +13,7 @@ export function applyStoreStructure(generator) {
       )
       .keys({
         q: T.number().min(1).max(100).default(75),
-        w: T.number().min(1).max(99999),
+        w: T.anyOf().values(T.number().min(1).max(99999), "original"),
       })
       .loose(),
 
@@ -24,7 +24,7 @@ export function applyStoreStructure(generator) {
       .keys({
         accessToken: T.string(),
         q: T.number().min(1).max(100).default(75),
-        w: T.number().min(1).max(99999),
+        w: T.anyOf().values(T.number().min(1).max(99999), "original"),
       })
       .loose(),
 
@@ -32,6 +32,8 @@ export function applyStoreStructure(generator) {
       id: T.uuid(),
       name: T.string(),
       contentType: T.string(),
+      originalWidth: T.number().optional(),
+      originalHeight: T.number().optional(),
       url: T.string(),
       placeholderImage: T.string().optional(),
       altText: T.string().optional(),
@@ -48,6 +50,8 @@ export function applyStoreStructure(generator) {
           .keys({
             transforms: T.any().optional(),
             transformedFromOriginal: T.string().optional(),
+            originalWidth: T.number().optional(),
+            originalHeight: T.number().optional(),
             placeholderImage: T.string().optional(),
             altText: T.string().optional(),
           })
