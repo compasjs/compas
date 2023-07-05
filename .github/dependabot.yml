@@ -13,10 +13,14 @@ updates:
           - "@aws-sdk/*"
       babel:
         patterns:
-          - "@babel/"
+          - "@babel/*"
       typescript-eslint:
         patterns:
           - "@typescript-eslint/*"
+      typescript-types:
+        patterns:
+          - "@types/node"
+          - "@types/react"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
