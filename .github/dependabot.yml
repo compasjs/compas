@@ -11,6 +11,12 @@ updates:
       aws-sdk:
         patterns:
           - "@aws-sdk/*"
+      babel:
+        patterns:
+          - "@babel/"
+      typescript-eslint:
+        patterns:
+          - "@typescript-eslint/*"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
