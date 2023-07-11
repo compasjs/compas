@@ -1,12 +1,2 @@
-node_modules
-.nyc_output
-.clinic
-coverage
-packages/code-gen/test-generated
-lerna.json
+
 reactQueries.tsx
-dist
-test/tmp
-.cache/
-/docs/.vitepress/cache
-/docs/.vitepress/dist

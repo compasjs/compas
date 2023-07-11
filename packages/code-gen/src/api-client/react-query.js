@@ -518,10 +518,10 @@ ${hookName}.queryKey = (
   ${queryClientArgument}
   ${apiInstanceArgument}
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
-        withQueryOptions: false,
-        withRequestConfig: true,
-        requireAllParams: false,
-      })}
+    withQueryOptions: false,
+    withRequestConfig: true,
+    requireAllParams: false,
+  })}
  ) => {
   return queryClient.fetchQuery(
     ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
@@ -548,10 +548,10 @@ ${hookName}.queryKey = (
   ${queryClientArgument}
   ${apiInstanceArgument}
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
-        withQueryOptions: false,
-        withRequestConfig: true,
-        requireAllParams: false,
-      })},
+    withQueryOptions: false,
+    withRequestConfig: true,
+    requireAllParams: false,
+  })},
  ) => {
   return queryClient.prefetchQuery(
     ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
@@ -615,8 +615,8 @@ ${hookName}.setQueryData = (
   )}
 
   return queryClient.setQueryData(${hookName}.queryKey(${
-        routeHasMandatoryInputs ? "opts" : ""
-      }), data);
+    routeHasMandatoryInputs ? "opts" : ""
+  }), data);
 }`,
     );
   } else {
