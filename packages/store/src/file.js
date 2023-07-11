@@ -231,6 +231,12 @@ export async function fileTransformInPlace(
 ) {
   eventStart(event, "file.transformInPlace");
 
+  if (!STORE_FILE_IMAGE_TYPES.includes(file.contentType)) {
+    // Don't even attempt it.
+    eventStop(event);
+    return;
+  }
+
   const fileStream = await objectStorageGetObjectStream(s3Client, {
     bucketName: file.bucketName,
     objectKey: file.id,
