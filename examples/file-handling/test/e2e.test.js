@@ -26,6 +26,8 @@ import {
 mainTestFn(import.meta);
 
 test("e2e", async (t) => {
+  t.timeout = 5000;
+
   const apiPort = 5504;
 
   await injectTestServices();
