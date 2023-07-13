@@ -1,7 +1,7 @@
-import { Blob } from "buffer";
 import { createReadStream } from "fs";
+import { blob } from "node:stream/consumers";
 import { mainTestFn, test } from "@compas/cli";
-import { dirnameForModule, pathJoin, streamToBuffer } from "@compas/stdlib";
+import { dirnameForModule, pathJoin } from "@compas/stdlib";
 import {
   cleanupTestPostgresDatabase,
   objectStorageRemoveBucket,
@@ -52,16 +52,9 @@ test("e2e", async (t) => {
   });
 
   t.test("create post with image", async (t) => {
-    const headerBlob = new Blob(
-      await streamToBuffer(
-        createReadStream(
-          pathJoin(
-            dirnameForModule(import.meta),
-            "..",
-            "__fixtures__",
-            "5.jpg",
-          ),
-        ),
+    const headerBlob = await blob(
+      createReadStream(
+        pathJoin(dirnameForModule(import.meta), "..", "__fixtures__", "5.jpg"),
       ),
     );
 
