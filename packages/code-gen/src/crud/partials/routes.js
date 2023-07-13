@@ -21,12 +21,12 @@ ${data.handlerName} = async (ctx) => {
   const listBuilder = ${data.listBuilder};
     
   ${data.crudName}ListPreModifier && await ${
-  data.crudName
-}ListPreModifier(newEventFromEvent(ctx.event), ctx, countBuilder, listBuilder);
+    data.crudName
+  }ListPreModifier(newEventFromEvent(ctx.event), ctx, countBuilder, listBuilder);
 
   const { total, ${data.primaryKey}In } = await ${
-  data.crudName
-}Count(newEventFromEvent(ctx.event), sql, countBuilder, ctx.validatedQuery);
+    data.crudName
+  }Count(newEventFromEvent(ctx.event), sql, countBuilder, ctx.validatedQuery);
   
   listBuilder.where.${data.primaryKey}In = ${data.primaryKey}In;
   
@@ -43,8 +43,8 @@ ${data.handlerName} = async (ctx) => {
   ctx.body = {
     total,
     list: result.map(it => ${data.crudName}Transform(it${
-  data.hasTransformContext ? ", transformContext" : ""
-})),
+      data.hasTransformContext ? ", transformContext" : ""
+    })),
   };
 };
 `;
@@ -63,8 +63,8 @@ ${data.handlerName} = async (ctx) => {
   const builder = ${data.builder};
   
   ${data.crudName}SinglePreModifier && await ${
-  data.crudName
-}SinglePreModifier(newEventFromEvent(ctx.event), ctx, builder);
+    data.crudName
+  }SinglePreModifier(newEventFromEvent(ctx.event), ctx, builder);
 
   
   const item = await ${
@@ -79,8 +79,8 @@ ${data.handlerName} = async (ctx) => {
   
   ctx.body = {
     item: ${data.crudName}Transform(item${
-  data.hasTransformContext ? ", transformContext" : ""
-}),
+      data.hasTransformContext ? ", transformContext" : ""
+    }),
   };
 };
 `;
@@ -110,10 +110,10 @@ ${data.handlerName} = async (ctx) => {
         : ``
     }
     ${data.crudName}CreatePreModifier && await ${
-  data.crudName
-}CreatePreModifier(newEventFromEvent(ctx.event), ctx, builder${
-  data.oneToOneChecks ? `, oneToOneBuilder` : ""
-});
+      data.crudName
+    }CreatePreModifier(newEventFromEvent(ctx.event), ctx, builder${
+      data.oneToOneChecks ? `, oneToOneBuilder` : ""
+    });
 
   ${
     data.applyParams
@@ -149,8 +149,8 @@ ${data.handlerName} = async (ctx) => {
 
   ctx.body = {
     item: ${data.crudName}Transform(item${
-  data.hasTransformContext ? ", transformContext" : ""
-}),
+      data.hasTransformContext ? ", transformContext" : ""
+    }),
   };
 };
 `;

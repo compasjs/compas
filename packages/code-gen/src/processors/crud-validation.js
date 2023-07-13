@@ -190,9 +190,8 @@ function crudValidateRelation(generateContext, crud, relation) {
         model,
       )} via '${relation.fromParent?.field}' could not be resolved in the '${
         crud.group
-      }' group. Make sure there is a relation with '${
-        relation.fromParent?.field
-      }' on ${stringFormatNameForError(model)}.`,
+      }' group. Make sure there is a relation with '${relation.fromParent
+        ?.field}' on ${stringFormatNameForError(model)}.`,
     });
   }
 

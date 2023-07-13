@@ -127,8 +127,8 @@ export async function createDatabaseIfNotExists(
     if (template) {
       await sql`
         CREATE DATABASE ${sql(databaseName)} WITH TEMPLATE ${sql(
-        template,
-      )} OWNER ${sql(sql.options.user)}
+          template,
+        )} OWNER ${sql(sql.options.user)}
       `;
     } else {
       await sql`
