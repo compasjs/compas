@@ -12,11 +12,21 @@ import { isNil } from "./lodash.js";
  */
 
 /**
- * Manually track (async) function duration.
+ * The Insight Event is a powerful tool for tracking the duration of (async) functions manually.
+ * By utilizing the Insight Event, you can easily gain access to a task or request-specific logger and
+ * obtain valuable insights into the execution time of your functions.
  *
- * By passing the event down through (async) functions, it facilitates a unified way to
- * have access to a task / request specific logger and insights in the duration of your
- * functions.
+ * How to Use the Insight Event:
+ *
+ * Initialize the Insight Event: Create an instance of the Insight Event class in your application.
+ * Ensure that the Insight Event is available throughout your codebase. Or use the logger option from {@link getApp}
+ * for example if you want to have a logger for all your routes.
+ *
+ * Passing the Event: Pass the event object down through your (async) functions as an argument.
+ * This allows the Insight Event to associate the event with the specific task or request.
+ *
+ * Logging the Duration: Within each (async) function, use the Insight Event to log the start and end times of the function execution.
+ * Calculating the duration by subtracting the start time from the end time.
  *
  * @example
  *   async function userList(event) {
