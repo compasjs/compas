@@ -21,8 +21,8 @@ export const crudPartialEventCount = (data) => `
  * @param {${data.entityUniqueName}QueryBuilder} builder
  * @param {${upperCaseFirst(data.crudName)}ListQuery} queryParams
  * @returns {Promise<{ total: number, ${data.primaryKey}In: ${
-  data.primaryKeyType
-}[] }>}
+   data.primaryKeyType
+ }[] }>}
  */
 export async function ${data.crudName}Count(event, sql, builder, queryParams) {
   eventStart(event, "${data.crudName}.count");
@@ -134,8 +134,8 @@ export const crudPartialEventCreate = (data) => `
  * @param {InsightEvent} event
  * @param {Postgres} sql
  * @param {${upperCaseFirst(data.writableType.group)}${upperCaseFirst(
-  data.writableType.name,
-)}} body
+   data.writableType.name,
+ )}} body
  * @param {${data.entityUniqueName}QueryBuilder} builder
  * @returns {Promise<QueryResult${data.entityUniqueName}>}
  */
@@ -195,8 +195,8 @@ export const crudPartialEventUpdate = (data) => `
  * @param {Postgres} sql
  * @param {QueryResult${data.entityUniqueName}} entity
  * @param {${upperCaseFirst(data.writableType.group)}${upperCaseFirst(
-  data.writableType.name,
-)}} body
+   data.writableType.name,
+ )}} body
  * @returns {Promise<void>}
  */
 export async function ${data.crudName}Update(event, sql, entity, body) {
@@ -310,8 +310,8 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
       }
       
       ${relation.name} = await queries.${relation.entityName}Insert(sql, ${
-          relation.name
-        });
+        relation.name
+      });
       
       ${crudPartialInlineRelationInserts(
         relation.inlineRelations,
@@ -367,8 +367,8 @@ export const crudPartialEventTransformer = (data) => `
  *
  * @param {QueryResult${data.entityUniqueName}} input
  * @returns {${upperCaseFirst(data.readableType.group)}${upperCaseFirst(
-  data.readableType.name,
-)}}
+   data.readableType.name,
+ )}}
  */
 export function ${data.crudName}Transform(input) {
   return {

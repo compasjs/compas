@@ -131,8 +131,8 @@ export function jsKoaPrepareContext(
       js: {
         validatorOutputType: `(
   ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(
-          route.name ?? "",
-        )}Ctx
+    route.name ?? "",
+  )}Ctx
 ) => void | Promise<void>`,
         validatorInputType: "any",
       },
