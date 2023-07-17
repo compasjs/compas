@@ -29,14 +29,18 @@ async function main(logger) {
     currentVersion,
   );
 
-  const commits = combineCommits(
-    commitsSinceLastVersion.filter((it) => {
-      return (
-        !it.title.includes("@types/node") &&
-        !it.title.includes("sync generated doc files")
-      );
-    }),
-  );
+  const relevantCommits = commitsSinceLastVersion.filter((it) => {
+    return (
+      !it.title.includes("build(deps-dev)") &&
+      !it.title.includes("@types/node") &&
+      !it.title.includes("typescript-types group") &&
+      !it.title.includes("sync generated doc files")
+    );
+  });
+
+  const splitCommits = splitGroupedDependencyBumps(relevantCommits);
+  const commits = combineCommits(splitCommits);
+
   decorateCommits(commits);
 
   const proposedVersion = proposeVersionBump(currentVersion, commits);
@@ -105,6 +109,75 @@ function getChangelogHeaderAndSource(changelog) {
 }
 
 /**
+ * Split grouped dependency updates.
+ *
+ * @param {ChangelogCommit[]} commits
+ * @returns {ChangelogCommit[]}
+ */
+function splitGroupedDependencyBumps(commits) {
+  const result = [];
+
+  // Updates `@aws-sdk/client-s3` from 3.369.0 to 3.370.0
+  // Updates `@babel/eslint-parser` from 7.22.7 to 7.22.9
+  const subDepStartMatch =
+    /Updates `([\w\-@/]+)` from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)$/g;
+
+  for (const commit of commits) {
+    if (
+      commit.title.includes("bump the") &&
+      commit.title.includes("group with")
+    ) {
+      // Grouped commit
+      const [, pr] = commit.title.match(/\(#(\d+)\)?/) ?? [];
+      const lines = commit.body.split("\n");
+
+      let dependency;
+      let fromVersion;
+      let toVersion;
+      let body = "";
+
+      const finishCommit = () => {
+        if (dependency && body) {
+          result.push({
+            title: `build(deps): bump ${dependency} from ${fromVersion} to ${toVersion} (#${pr})`,
+            hash: commit.hash,
+            body,
+            notes: [],
+          });
+        }
+
+        dependency = undefined;
+        fromVersion = undefined;
+        toVersion = undefined;
+        body = "";
+      };
+
+      for (const line of lines) {
+        subDepStartMatch.lastIndex = -1;
+        const [, dep, from, to] = subDepStartMatch.exec(line.trim()) ?? [];
+
+        if (dep) {
+          finishCommit();
+
+          dependency = dep;
+          fromVersion = from;
+          toVersion = to;
+        } else if (dependency) {
+          body += `${line}\n`;
+        }
+      }
+
+      finishCommit();
+    } else {
+      // Any other commit
+      result.push(commit);
+    }
+  }
+
+  return result;
+}
+
+/**
  * Tries to combine the dependency bump commits. This is useful for things like aws-sdk
  * which can have 10 bumps in a single Compas release.
  *
@@ -115,7 +188,7 @@ function combineCommits(commits) {
   // build(deps): bump @types/node from 14.6.2 to 14.6.3
   // build(deps-dev): bump react-query from 2.12.1 to 2.13.0 (#234)
   const depRegex =
-    /^build\((deps|deps-dev)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)(?:\s\(#(\d+)\))?$/g;
+    /^build\((deps)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)(?:\s\(#(\d+)\))?$/g;
 
   const combinable = {};
   const result = [];
@@ -155,11 +228,6 @@ function combineCommits(commits) {
 
   for (const pkg of Object.keys(combinable)) {
     const { buildType, prs, fromVersion, toVersion, body } = combinable[pkg];
-
-    if (buildType === "deps-dev") {
-      // We don't need development dependency updates in the changelog
-      continue;
-    }
 
     // Format PR numbers so the writer can create correct urls
     const finalPrs =
@@ -201,7 +269,7 @@ function decorateCommits(commits) {
     // build(deps): bump @types/node from 14.6.2 to 14.6.3
     // build(deps-dev): bump react-query from 2.12.1 to 2.13.0 (#234)
     const depsCommitMatch = commit.title.match(
-      /^build\((deps|deps-dev)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)/i,
+      /^build\((deps)\): bump ([\w\-@/]+) from (\d+\.\d+\.\d+) to (\d+\.\d+\.\d+)/i,
     );
 
     // depsCommitMatch[3] is the first mentioned version, if that one exists, we also
@@ -429,7 +497,11 @@ function formatHash(commit) {
  * @returns {string}
  */
 function proposeVersionBump(version, commits) {
-  const hasBreakingChanges = commits.find((it) => it.breakingChange);
+  const hasBreakingChanges = commits.find(
+    (it) =>
+      it.breakingChange ||
+      it.notes.find((note) => note === "- Major version bump"),
+  );
   const hasFeat = commits.find((it) => it.title.startsWith("feat"));
 
   const type = hasBreakingChanges ? "major" : hasFeat ? "minor" : "patch";
