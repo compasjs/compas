@@ -4,6 +4,69 @@ editLink: false
 
 # Changelog
 
+### [v0.6.0](https://github.com/compasjs/compas/releases/tag/v0.6.0)
+
+#### Features
+
+- feat(store): silently ignore file transforms on non-image files
+  [`08f097`](https://github.com/compasjs/compas/commit/08f097ecde79ca8bad613c16cec07b75124ffe0b)
+
+#### Other
+
+- chore(dependabot): group babel and typescript-eslint bumps
+  [`c59721`](https://github.com/compasjs/compas/commit/c5972158af5655bb7ab736bf39f0b44a1fc6f438)
+- chore(dependabot): group `@types/` bumps
+  [`5f257f`](https://github.com/compasjs/compas/commit/5f257f36867d2accfccdffd2ca2eaa22338d04fc)
+- chore(examples): increase test timeout for file-handling example
+  [`d6bfa3`](https://github.com/compasjs/compas/commit/d6bfa3356e413875e770a6105cd732b9d9c21a49)
+- examples(file-handling): fix blob creation from stream
+  [`7f4257`](https://github.com/compasjs/compas/commit/7f4257f791da92b11bfd8c1040f52e87f0b73802)
+- chore(changelog): handle grouped dependabot bumps
+  [`39ca1f`](https://github.com/compasjs/compas/commit/39ca1f153e2b224999c32991d5e2f9c7da232176)
+
+#### Dependency updates
+
+- build(deps): bump @babel/core from 7.22.5 to 7.22.9
+  ([#2715](https://github.com/compasjs/compas/pull/2715),
+  [#2730](https://github.com/compasjs/compas/pull/2730))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.22.5 to 7.22.9
+  ([#2715](https://github.com/compasjs/compas/pull/2715),
+  [#2730](https://github.com/compasjs/compas/pull/2730))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.363.0 to 3.370.0
+  ([#2716](https://github.com/compasjs/compas/pull/2716),
+  [#2724](https://github.com/compasjs/compas/pull/2724),
+  [#2731](https://github.com/compasjs/compas/pull/2731))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.363.0 to 3.370.0
+  ([#2716](https://github.com/compasjs/compas/pull/2716),
+  [#2724](https://github.com/compasjs/compas/pull/2724),
+  [#2731](https://github.com/compasjs/compas/pull/2731))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump actions/setup-node from 3.6.0 to 3.7.0
+  ([#2712](https://github.com/compasjs/compas/pull/2712))
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- build(deps): bump prettier from 2.8.8 to 3.0.0
+  ([#2714](https://github.com/compasjs/compas/pull/2714))
+  - Major version bump
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump sharp from 0.32.1 to 0.32.3
+  ([#2734](https://github.com/compasjs/compas/pull/2734))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.4.3 to 46.4.4
+  ([#2733](https://github.com/compasjs/compas/pull/2733))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump eslint from 8.44.0 to 8.45.0
+  ([#2732](https://github.com/compasjs/compas/pull/2732))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump semver from 6.3.0 to 6.3.1
+  ([#2723](https://github.com/compasjs/compas/pull/2723))
+  - [Release notes](https://github.com/npm/node-semver/releases)
+- build(deps): bump recast from 0.23.2 to 0.23.3
+  ([#2725](https://github.com/compasjs/compas/pull/2725))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+
 ### [v0.5.5](https://github.com/compasjs/compas/releases/tag/v0.5.5)
 
 #### Features
