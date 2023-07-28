@@ -20,7 +20,7 @@
     "@types/node": "20.4.5",
     "dotenv": "16.0.3",
     "lodash.merge": "4.6.2",
-    "pino": "8.14.1"
+    "pino": "8.14.2"
   },
   "author": {
     "name": "Dirk de Visser",
