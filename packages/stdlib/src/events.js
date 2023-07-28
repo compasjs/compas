@@ -12,21 +12,24 @@ import { isNil } from "./lodash.js";
  */
 
 /**
- * The Insight Event is a powerful tool for tracking the duration of (async) functions manually.
- * By utilizing the Insight Event, you can easily gain access to a task or request-specific logger and
- * obtain valuable insights into the execution time of your functions.
+ * The insight event is a tool for tracking the duration of (async) functions manually.
+ * By utilizing the insight event, you can gain access to a task or request-specific logger and
+ * obtain insights into the execution time of your functions.
  *
- * How to Use the Insight Event:
+ * How to use the Insight Event:
  *
- * Initialize the Insight Event: Create an instance of the Insight Event class in your application.
- * Ensure that the Insight Event is available throughout your codebase. Or use the logger option from {@link getApp}
- * for example if you want to have a logger for all your routes.
+ * Start by retrieving a root event. It can be created by calling {@link newEvent}
+ * and passing it a logger. When you use the {@link getApp} from @compas/store,
+ * it automatically adds a root event to `ctx.event`.
+ * In your tests you can use {@link newTestEvent}.
  *
- * Passing the Event: Pass the event object down through your (async) functions as an argument.
- * This allows the Insight Event to associate the event with the specific task or request.
+ * You could pass the event object down through your (async) functions as an argument.
+ * This allows the insight event to associate the event with the specific task or request.
  *
- * Logging the Duration: Within each (async) function, use the Insight Event to log the start and end times of the function execution.
- * Calculating the duration by subtracting the start time from the end time.
+ * Finally, you should stop the event for correct logging by calling {@link eventStop}.
+ * When the root event is stopped via {@link eventStop} it calculates the duration
+ * by subtracting the start time from the end time. the event can log the start
+ * and end times of the function execution if necessary.
  *
  * @example
  *   async function userList(event) {
