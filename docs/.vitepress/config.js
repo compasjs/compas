@@ -1,6 +1,4 @@
-import { processDirectoryRecursiveSync } from "@compas/stdlib";
-import { resolve } from "node:path";
-import { readdirSync, writeFileSync } from "node:fs";
+import { readdirSync } from "node:fs";
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
@@ -38,7 +36,7 @@ export default defineConfig({
     ["link", { rel: "shortcut icon", href: "/favicon/favicon.ico" }],
     ["meta", { name: "theme-color", content: "#3EAF7C" }],
   ],
-  lastUpdated: true,
+  lastUpdated: false,
 
   themeConfig: {
     logo: "/compas-icon.svg",
@@ -109,31 +107,8 @@ export default defineConfig({
     envDir: process.cwd() + "/docs",
   },
 
-  buildEnd: (config) => {
-    const outFile = resolve(config.outDir, "sitemap.xml");
-    const baseUrl = "https://compasjs.com/";
-
-    let sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">`;
-
-    processDirectoryRecursiveSync(config.outDir, (f) => {
-      if (!f.endsWith(".html")) {
-        return;
-      }
-
-      if (f.includes("404.html")) {
-        return;
-      }
-
-      const path = f.split("/dist/").pop();
-      sitemap += `<url>
-  <loc>${baseUrl}${path}</loc>
-  <lastmod>${new Date().toISOString()}</lastmod>
-  <changefreq>daily</changefreq>
-  <priority>0.7</priority>
-</url>`;
-    });
-    sitemap += `</urlset>`;
-    writeFileSync(outFile, sitemap);
+  sitemap: {
+    hostname: "https://compasjs.com",
   },
 });
 
