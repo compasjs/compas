@@ -1,5 +1,4 @@
-import { readFile } from "fs/promises";
-import { readdir } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { Generator } from "@compas/code-gen";
 import { AppError, exec, newLogger } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";

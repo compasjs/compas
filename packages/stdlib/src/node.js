@@ -1,8 +1,8 @@
-import { exec as cpExec, spawn as cpSpawn } from "child_process";
-import { lstatSync, readdirSync } from "fs";
-import { lstat, readdir } from "fs/promises";
-import { posix } from "path";
-import { promisify } from "util";
+import { exec as cpExec, spawn as cpSpawn } from "node:child_process";
+import { lstatSync, readdirSync } from "node:fs";
+import { lstat, readdir } from "node:fs/promises";
+import { posix } from "node:path";
+import { promisify } from "node:util";
 
 const internalExec = promisify(cpExec);
 

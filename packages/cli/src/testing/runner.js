@@ -1,4 +1,4 @@
-import { AssertionError, deepStrictEqual } from "assert";
+import { AssertionError, deepStrictEqual } from "node:assert";
 import { AppError, isNil, newLogger } from "@compas/stdlib";
 import { markTestFailuresRecursively } from "./printer.js";
 import { state, testLogger } from "./state.js";

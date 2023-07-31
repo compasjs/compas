@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 
 /**
  * This function also has an `uuid.isValid` function, which returns a boolean depending

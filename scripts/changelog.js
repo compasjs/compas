@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { exec, isNil, mainFn, pathJoin } from "@compas/stdlib";
 
 mainFn(import.meta, main);

@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from "fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { pathJoin } from "@compas/stdlib";
 
 /**

@@ -1,7 +1,5 @@
-import { readFileSync } from "fs";
-import { cp } from "fs/promises";
-import { existsSync, statSync, writeFileSync } from "node:fs";
-import { rm } from "node:fs/promises";
+import { readFileSync, existsSync, statSync, writeFileSync } from "node:fs";
+import { cp, rm } from "node:fs/promises";
 import { AppError, exec, pathJoin, spawn } from "@compas/stdlib";
 
 /**

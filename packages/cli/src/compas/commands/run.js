@@ -1,5 +1,5 @@
-import { existsSync, statSync } from "fs";
-import path from "path";
+import { existsSync, statSync } from "node:fs";
+import path from "node:path";
 import { isNil, spawn } from "@compas/stdlib";
 import { collectScripts } from "../../utils.js";
 

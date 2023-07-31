@@ -1,4 +1,4 @@
-import { match, strictEqual } from "assert";
+import { match, strictEqual } from "node:assert";
 import { setTimeout } from "node:timers/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { AppError } from "@compas/stdlib";

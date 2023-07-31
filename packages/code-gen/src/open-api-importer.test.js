@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 import { mainTestFn, test } from "@compas/cli";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 

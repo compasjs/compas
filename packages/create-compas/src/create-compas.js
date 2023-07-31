@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
-import { existsSync, readdirSync } from "fs";
-import { readFile } from "fs/promises";
+import { existsSync, readdirSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { dirnameForModule, mainFn, pathJoin } from "@compas/stdlib";
 import {
   argParserParse,

@@ -1,4 +1,4 @@
-import { mkdirSync, rmSync, writeFileSync } from "fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import { apiClientGenerator } from "./api-client/generator.js";
 import { crudEventsGenerate } from "./crud/events.js";

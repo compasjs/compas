@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
 
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */

@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 import { environment, isNil, merge, pathJoin } from "@compas/stdlib";
 import { fileContextCreateGeneric } from "../file/context.js";
 import { fileWrite } from "../file/write.js";

@@ -1,4 +1,4 @@
-import { readFile, rm, writeFile } from "fs/promises";
+import { readFile, rm, writeFile } from "node:fs/promises";
 
 /**
  * Convert all known usages from @compas/lint-config to eslint-plugin

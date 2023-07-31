@@ -1,4 +1,4 @@
-import { createReadStream } from "fs";
+import { createReadStream } from "node:fs";
 import { mainTestFn, test } from "@compas/cli";
 import axios from "axios";
 import FormData from "form-data";

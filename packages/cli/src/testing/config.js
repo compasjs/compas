@@ -1,8 +1,8 @@
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 import inspector from "node:inspector";
-import { cpus } from "os";
-import { pathToFileURL } from "url";
-import { isMainThread, threadId } from "worker_threads";
+import { cpus } from "node:os";
+import { pathToFileURL } from "node:url";
+import { isMainThread, threadId } from "node:worker_threads";
 import {
   environment,
   isNil,

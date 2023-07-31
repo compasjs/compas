@@ -1,4 +1,4 @@
-import { Duplex, Readable, Writable } from "stream";
+import { Duplex, Readable, Writable } from "node:stream";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import Koa from "koa";
 import { s3Client, sql, testBucketName } from "../../../src/testing.js";

@@ -44,6 +44,7 @@ module.exports = {
         // Plugin rules
         "@compas/enforce-event-stop": "error",
         "@compas/check-event-name": "error",
+        "@compas/node-builtin-module-url-import": "error",
 
         // ESLint base
         "default-case-last": "error",
@@ -137,5 +138,6 @@ module.exports = {
   rules: {
     "enforce-event-stop": require("./lint-rules/enforce-event-stop"),
     "check-event-name": require("./lint-rules/check-event-name"),
+    "node-builtin-module-url-import": require("./lint-rules/node-builtin-module-url-import"),
   },
 };

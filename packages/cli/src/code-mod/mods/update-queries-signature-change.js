@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { AppError, processDirectoryRecursive } from "@compas/stdlib";
 import { PARALLEL_COUNT } from "../constants.js";
 

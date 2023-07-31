@@ -1,6 +1,6 @@
-import { relative } from "path";
-import { fileURLToPath } from "url";
-import { inspect } from "util";
+import { relative } from "node:path";
+import { fileURLToPath } from "node:url";
+import { inspect } from "node:util";
 
 /**
  * @param {NodeJS.WritableStream} stream

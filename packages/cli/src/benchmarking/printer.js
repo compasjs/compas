@@ -1,4 +1,4 @@
-import { inspect } from "util";
+import { inspect } from "node:util";
 import { AppError, isNil } from "@compas/stdlib";
 import { benchLogger, state } from "./state.js";
 

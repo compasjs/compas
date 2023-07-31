@@ -1,4 +1,4 @@
-import { spawn as cpSpawn } from "child_process";
+import { spawn as cpSpawn } from "node:child_process";
 import { AppError } from "@compas/stdlib";
 import treeKill from "tree-kill";
 

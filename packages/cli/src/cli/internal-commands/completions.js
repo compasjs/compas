@@ -1,5 +1,5 @@
-import { appendFileSync } from "fs";
-import { writeFile } from "fs/promises";
+import { appendFileSync } from "node:fs";
+import { writeFile } from "node:fs/promises";
 import { AppError, environment, isNil } from "@compas/stdlib";
 import { cliParserGetKnownFlags, cliParserSplitArgs } from "../parser.js";
 

@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import { writeFile } from "node:fs/promises";
 import { newEvent } from "@compas/stdlib";
 import { cliParserGetKnownFlags } from "../packages/cli/src/cli/parser.js";
 import { compasGetCli } from "../packages/cli/src/compas/cli.js";

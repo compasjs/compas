@@ -1,4 +1,4 @@
-import { isMainThread, Worker } from "worker_threads";
+import { isMainThread, Worker } from "node:worker_threads";
 import { isNil, spawn } from "@compas/stdlib";
 import { testingLoadConfig } from "../../testing/config.js";
 import { printTestResultsFromWorkers } from "../../testing/printer.js";

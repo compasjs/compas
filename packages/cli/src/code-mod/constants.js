@@ -1,4 +1,4 @@
-import { cpus } from "os";
+import { cpus } from "node:os";
 import { executeApiClientToExperimentalCodeGen } from "./mods/api-client-to-experimental-code-gen.js";
 import { executeLintConfigToEslintPlugin } from "./mods/lint-config-to-eslint-plugin.js";
 import { executeUpdateQueriesSignatureChange } from "./mods/update-queries-signature-change.js";

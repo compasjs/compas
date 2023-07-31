@@ -1,6 +1,6 @@
-import { existsSync } from "fs";
-import path from "path";
-import { pathToFileURL } from "url";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { isNil, isPlainObject, pathJoin } from "@compas/stdlib";
 
 /**

@@ -1,8 +1,8 @@
-import { lstatSync, realpathSync } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { setFlagsFromString } from "v8";
-import { runInNewContext } from "vm";
+import { lstatSync, realpathSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { setFlagsFromString } from "node:v8";
+import { runInNewContext } from "node:vm";
 import dotenv from "dotenv";
 import { environment, isProduction, refreshEnvironmentCache } from "./env.js";
 import { AppError } from "./error.js";

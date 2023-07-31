@@ -1,4 +1,4 @@
-import { createReadStream } from "fs";
+import { createReadStream } from "node:fs";
 import { HeadObjectCommand } from "@aws-sdk/client-s3";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import {

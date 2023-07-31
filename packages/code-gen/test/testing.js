@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 import { AppError, isNil, pathJoin, uuid } from "@compas/stdlib";
 import { testTemporaryDirectory } from "../../../src/testing.js";
 import { TypeCreator } from "../src/builders/index.js";

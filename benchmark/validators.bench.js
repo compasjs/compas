@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 
-import { pathToFileURL } from "url";
+import { pathToFileURL } from "node:url";
 import { bench, mainBenchFn } from "@compas/cli";
 import { TypeCreator, Generator } from "@compas/code-gen";
 import { mainFn, pathJoin } from "@compas/stdlib";

@@ -1,4 +1,4 @@
-import { createReadStream } from "fs";
+import { createReadStream } from "node:fs";
 import { blob } from "node:stream/consumers";
 import { mainTestFn, test } from "@compas/cli";
 import { dirnameForModule, pathJoin } from "@compas/stdlib";

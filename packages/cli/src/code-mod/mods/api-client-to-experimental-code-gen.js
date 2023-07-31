@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { exec, processDirectoryRecursiveSync } from "@compas/stdlib";
 
 /**

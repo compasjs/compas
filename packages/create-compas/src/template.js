@@ -1,10 +1,10 @@
-import { createWriteStream } from "fs";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import https from "https";
-import os from "os";
-import { normalize } from "path";
-import { Readable } from "stream";
-import { pipeline } from "stream/promises";
+import { createWriteStream } from "node:fs";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import https from "node:https";
+import os from "node:os";
+import { normalize } from "node:path";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
 import {
   AppError,
   environment,

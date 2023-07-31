@@ -1,6 +1,6 @@
-import { setTimeout } from "timers/promises";
-import { pathToFileURL } from "url";
-import { isMainThread, parentPort, threadId } from "worker_threads";
+import { setTimeout } from "node:timers/promises";
+import { pathToFileURL } from "node:url";
+import { isMainThread, parentPort, threadId } from "node:worker_threads";
 import { AppError, mainFn } from "@compas/stdlib";
 import { testingLoadConfig } from "./config.js";
 import {

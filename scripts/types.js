@@ -1,4 +1,4 @@
-import { rmSync } from "fs";
+import { rmSync } from "node:fs";
 import { mainFn, processDirectoryRecursiveSync, spawn } from "@compas/stdlib";
 
 mainFn(import.meta, main);

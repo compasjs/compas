@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { inspect } from "util";
+import { inspect } from "node:util";
 import { isNil, isPlainObject } from "./lodash.js";
 
 /**

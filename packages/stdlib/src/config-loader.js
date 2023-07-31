@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import os from "node:os";
-import { pathToFileURL } from "url";
+import { pathToFileURL } from "node:url";
 import { environment } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
