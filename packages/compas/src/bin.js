@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { createReadStream } from "node:fs";
+import { configResolve } from "./config/resolve.js";
 import { debugEnable } from "./output/debug.js";
 import {
   tuiAttachStream,
@@ -22,6 +23,7 @@ let i = 0;
 
 // keep running;
 setInterval(() => {
+  configResolve("", true);
   tuiPrintInformation(`oops i did it again... ${i++}`);
 
   if (i === 3) {

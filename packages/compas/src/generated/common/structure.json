@@ -1,0 +1,274 @@
+{
+  "compas": {
+    "config": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {
+        "allowNull": false,
+        "strict": true
+      },
+      "sql": {},
+      "type": "object",
+      "group": "compas",
+      "name": "config",
+      "relations": [],
+      "keys": {
+        "cli": {
+          "docString": "Old @compas/cli config",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "relations": [],
+          "keys": {
+            "commandDirectories": {
+              "docString": "Array of directories relative to the project root. All JavaScript files will be imported by the CLI and checked if it exports a 'cliDefinition'.",
+              "isOptional": true,
+              "validator": {
+                "convert": false
+              },
+              "sql": {},
+              "type": "array",
+              "values": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            },
+            "globalWatchOptions": {
+              "docString": "Project level watch options, applied to all commands running in 'watch' mode via the Compas CLI.",
+              "isOptional": true,
+              "validator": {
+                "allowNull": false,
+                "strict": true
+              },
+              "sql": {},
+              "type": "object",
+              "relations": [],
+              "keys": {
+                "extensions": {
+                  "docString": "Add file extensions that should be watched",
+                  "isOptional": true,
+                  "validator": {
+                    "convert": false
+                  },
+                  "sql": {},
+                  "type": "array",
+                  "values": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "trim": false,
+                      "lowerCase": false,
+                      "upperCase": false,
+                      "min": 1
+                    },
+                    "sql": {},
+                    "type": "string"
+                  }
+                },
+                "ignorePatterns": {
+                  "docString": "Remove directories from being watched, this has precedence over the included extensions",
+                  "isOptional": true,
+                  "validator": {
+                    "convert": false
+                  },
+                  "sql": {},
+                  "type": "array",
+                  "values": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "trim": false,
+                      "lowerCase": false,
+                      "upperCase": false,
+                      "min": 1
+                    },
+                    "sql": {},
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "projects": {
+          "docString": "Relative paths to projects. Each project is expected to provide their own configuration.",
+          "isOptional": true,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          }
+        }
+      }
+    },
+    "resolvedConfig": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {
+        "allowNull": false,
+        "strict": true
+      },
+      "sql": {},
+      "type": "object",
+      "group": "compas",
+      "name": "resolvedConfig",
+      "relations": [],
+      "keys": {
+        "rootDirectory": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "cli": {
+          "docString": "Old @compas/cli config",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "relations": [],
+          "keys": {
+            "commandDirectories": {
+              "docString": "Array of directories relative to the project root. All JavaScript files will be imported by the CLI and checked if it exports a 'cliDefinition'.",
+              "isOptional": true,
+              "validator": {
+                "convert": false
+              },
+              "sql": {},
+              "type": "array",
+              "values": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            },
+            "globalWatchOptions": {
+              "docString": "Project level watch options, applied to all commands running in 'watch' mode via the Compas CLI.",
+              "isOptional": true,
+              "validator": {
+                "allowNull": false,
+                "strict": true
+              },
+              "sql": {},
+              "type": "object",
+              "relations": [],
+              "keys": {
+                "extensions": {
+                  "docString": "Add file extensions that should be watched",
+                  "isOptional": true,
+                  "validator": {
+                    "convert": false
+                  },
+                  "sql": {},
+                  "type": "array",
+                  "values": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "trim": false,
+                      "lowerCase": false,
+                      "upperCase": false,
+                      "min": 1
+                    },
+                    "sql": {},
+                    "type": "string"
+                  }
+                },
+                "ignorePatterns": {
+                  "docString": "Remove directories from being watched, this has precedence over the included extensions",
+                  "isOptional": true,
+                  "validator": {
+                    "convert": false
+                  },
+                  "sql": {},
+                  "type": "array",
+                  "values": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "trim": false,
+                      "lowerCase": false,
+                      "upperCase": false,
+                      "min": 1
+                    },
+                    "sql": {},
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "projects": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {},
+            "sql": {},
+            "type": "reference",
+            "reference": {
+              "group": "compas",
+              "name": "resolvedConfig",
+              "uniqueName": "CompasResolvedConfig"
+            }
+          }
+        }
+      }
+    }
+  }
+}

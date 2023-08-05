@@ -4,5 +4,6 @@
       "extensions": [],
       "ignorePatterns": ["__fixtures__", ".cache"]
     }
-  }
+  },
+  "projects": ["packages/compas"]
 }

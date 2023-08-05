@@ -11,6 +11,8 @@ This file is optional, but if exists should be located at
 
 All keys are optional
 
+If you use the `compas` CLI:
+
 - **cli** (object): root property for configuration for the CLI package
   - **commandDirectories** (string[]): Array of directories relative to the
     project root. All JavaScript files will be imported by the CLI and checked
@@ -28,7 +30,14 @@ All keys are optional
       directories and other temporary output created by the command, so it is
       not restarted because of it's own changes.
 
+If you use the experimental `zakmes` CLI:
+
+- **projects** (string[]): Add sub-projects which can have their own
+  configurations.
+
 ### Example
+
+Using a `.js` file for the `compas` CLI.
 
 ```js
 export function config() {
@@ -42,5 +51,13 @@ export function config() {
       },
     },
   };
+}
+```
+
+Using a `config/compas.json` file for the `zakmes` CLI.
+
+```json
+{
+  "projects": ["packages/frontend"]
 }
 ```

@@ -1,9 +1,28 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { Generator } from "@compas/code-gen";
-import { AppError, exec, newLogger } from "@compas/stdlib";
+import { AppError, exec } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
 import { extendWithCodeGen } from "../gen/code-gen.js";
+import { applyCompasStructure } from "../gen/compas.js";
 import { applyStoreStructure } from "../gen/store.js";
+
+export function generateCompas(logger) {
+  const generator = new Generator(logger);
+
+  applyCompasStructure(generator);
+
+  generator.generate({
+    targetLanguage: "js",
+    outputDirectory: "./packages/compas/src/generated",
+    generators: {
+      structure: {},
+      types: {},
+      validators: {
+        includeBaseTypes: true,
+      },
+    },
+  });
+}
 
 export function generateCli(logger) {
   const generator = new Generator(logger);
@@ -23,8 +42,8 @@ export function generateCli(logger) {
   });
 }
 
-export function generateCodeGen() {
-  const generator = new Generator(newLogger());
+export function generateCodeGen(logger) {
+  const generator = new Generator(logger);
 
   extendWithCodeGen(generator);
 
