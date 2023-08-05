@@ -98,5 +98,5 @@ export class AppError extends Error {
    */
   [inspect.custom](): Record<string, any>;
 }
-import { inspect } from "util";
+import { inspect } from "node:util";
 //# sourceMappingURL=error.d.ts.map

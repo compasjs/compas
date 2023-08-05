@@ -59,11 +59,14 @@ export type InsightEventSpan = {
   children: InsightEventSpan[];
 };
 /**
- * Manually track (async) function duration.
+ * The insight event is a tool for tracking the duration of (async) functions manually.
+ * By utilizing the insight event, you can gain access to a task or request-specific logger and
+ * obtain insights into the execution time of your functions.
  *
- * By passing the event down through (async) functions, it facilitates a unified way to
- * have access to a task / request specific logger and insights in the duration of your
- * functions.
+ * How to use the Insight Event:
+ *
+ * Start by retrieving a root event. It can be created by calling {@link newEvent }
+ * and passing it a logger. When you use the {@link getApp } from
  */
 export type InsightEvent = {
   log: import("@compas/stdlib").Logger;

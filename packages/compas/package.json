@@ -3,26 +3,26 @@
   "version": "0.6.0",
   "description": "Unified backend tooling",
   "exports": {
+    ".": "./src/index.js",
     "./package.json": "./package.json"
   },
-  "types": "./index.d.ts",
+  "types": "./src/index.d.ts",
   "type": "module",
+  "bin": {
+    "zakmes": "src/bin.js"
+  },
   "keywords": [
-    "compas",
-    "stdlib",
-    "cli",
-    "session",
-    "job",
-    "code-gen"
+    "compas"
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/cli": "0.6.0",
-    "@compas/code-gen": "0.6.0",
-    "@compas/eslint-plugin": "0.6.0",
-    "@compas/server": "0.6.0",
     "@compas/stdlib": "0.6.0",
-    "@compas/store": "0.6.0"
+    "@parcel/watcher": "2.2.0",
+    "ansi": "0.3.1",
+    "tree-kill": "1.2.2"
+  },
+  "devDependencies": {
+    "@types/ansi": "0.3.3"
   },
   "author": {
     "name": "Dirk de Visser",
