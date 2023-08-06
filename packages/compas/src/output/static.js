@@ -8,6 +8,9 @@ export const output = {
     environment: {
       creating: () => {
         debugPrint("No .env file found, writing .env file.");
+        tuiPrintInformation(
+          "No .env file was found. Creating a default .env file.",
+        );
       },
       loaded: (env) => {
         debugPrint("Loaded environment");

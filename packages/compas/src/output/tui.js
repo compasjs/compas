@@ -269,6 +269,7 @@ function tuiPaintLayout() {
   cursor.goto(1, cursorY++);
   cursor.bg
     .grey()
+    .fg.brightWhite()
     .write(tuiFormatHeaderText("Information", tuiState.appName))
     .reset();
 
@@ -286,6 +287,7 @@ function tuiPaintLayout() {
   cursor.goto(1, cursorY++);
   cursor.bg
     .grey()
+    .fg.brightWhite()
     .write(tuiFormatHeaderText("Available actions", tuiState.compasVersion))
     .reset();
 

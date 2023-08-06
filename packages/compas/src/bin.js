@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createReadStream } from "node:fs";
-import { isNil, newLogger } from "@compas/stdlib";
+import { dirnameForModule, isNil, newLogger, pathJoin } from "@compas/stdlib";
 import { configLoadEnvironment } from "./config/environment.js";
 import { configResolve } from "./config/resolve.js";
 import { debugEnable } from "./output/debug.js";
@@ -14,7 +14,7 @@ import {
   tuiStateSetMetadata,
 } from "./output/tui.js";
 
-const env = await configLoadEnvironment("", !isNil(process.env));
+const env = await configLoadEnvironment("", !isNil(process.env.NODE_ENV));
 
 if (env.isCI) {
   loggerEnable(newLogger());
@@ -50,6 +50,7 @@ if (env.isCI) {
 
   const config = await configResolve("", true);
 
+  tuiPrintInformation("Loading config...");
   tuiPrintInformation(JSON.stringify(config));
 
   let i = 0;
@@ -63,7 +64,11 @@ if (env.isCI) {
     }
 
     if (Math.random() > 0.5) {
-      tuiAttachStream(createReadStream("./packages/compas/package.json"));
+      tuiAttachStream(
+        createReadStream(
+          pathJoin(dirnameForModule(import.meta), "../package.json"),
+        ),
+      );
     }
-  }, 1500);
+  }, 3000);
 }
