@@ -11,14 +11,21 @@ const DEBUG_LOCATION = `.cache/compas-debug-${String(Date.now()).slice(
  *
  * @type {boolean|undefined}
  */
-let writeDebugOutputToFile = undefined;
+let shouldOutputDebugInfo = undefined;
 
 /**
  * Keep track of debug logs added before we know if the debug system is enabled.
  *
  * @type {string[]}
  */
-const tempBufferTillDebugIsSet = [];
+const inMemoryDebugOutput = [];
+
+/**
+ * Debug timers to keep track of performance with millisecond precision using Date.now().
+ *
+ * @type {Record<string, number>}
+ */
+const activeTimers = {};
 
 /**
  * Appends the provided contents with a timestamp to {@link DEBUG_LOCATION}.
@@ -32,7 +39,7 @@ const tempBufferTillDebugIsSet = [];
  * @param {*} contents
  */
 export function debugPrint(contents) {
-  if (writeDebugOutputToFile === false) {
+  if (shouldOutputDebugInfo === false) {
     // Debug logs are disabled
     return;
   }
@@ -46,11 +53,47 @@ export function debugPrint(contents) {
   // Add a date so we know what's up.
   const outputString = `${new Date().toISOString()} - ${contents}`;
 
-  if (writeDebugOutputToFile === true) {
+  if (shouldOutputDebugInfo === true) {
     appendFileSync(DEBUG_LOCATION, `${outputString}\n`, {});
   } else {
-    tempBufferTillDebugIsSet.push(outputString);
+    inMemoryDebugOutput.push(outputString);
   }
+}
+
+/**
+ * Start a time mark, which can be ended with {@link debugTimeEnd}. Overwrites any
+ * existing time mark with the same label.
+ *
+ * @param {string} label
+ */
+export function debugTimeStart(label) {
+  if (shouldOutputDebugInfo === false) {
+    // Debug logs are disabled
+    return;
+  }
+
+  activeTimers[label] = Date.now();
+}
+
+/**
+ * Log the milliseconds that elapsed since the time mark set by {@link
+ * debugTimeStart}. Labels can be ended multiple times, resulting in multiple debug logs.
+ *
+ * @param {string} label
+ */
+export function debugTimeEnd(label) {
+  if (shouldOutputDebugInfo === false) {
+    // Debug logs are disable
+
+    return;
+  }
+
+  if (!activeTimers[label]) {
+    // Ignore if start is not called.
+    return;
+  }
+
+  debugPrint(`${label}: ${Date.now() - activeTimers[label]}ms`);
 }
 
 /**
@@ -59,10 +102,10 @@ export function debugPrint(contents) {
 export function debugEnable() {
   // Write local cache
   mkdirSync(".cache", { recursive: true });
-  appendFileSync(DEBUG_LOCATION, `${tempBufferTillDebugIsSet.join("\n")}\n`);
+  appendFileSync(DEBUG_LOCATION, `${inMemoryDebugOutput.join("\n")}\n`);
 
-  writeDebugOutputToFile = true;
-  tempBufferTillDebugIsSet.splice(0, tempBufferTillDebugIsSet.length);
+  shouldOutputDebugInfo = true;
+  inMemoryDebugOutput.splice(0, inMemoryDebugOutput.length);
 }
 
 /**
@@ -72,6 +115,6 @@ export function debugEnable() {
  * debug logs in memory.
  */
 export function debugDisable() {
-  writeDebugOutputToFile = false;
-  tempBufferTillDebugIsSet.splice(0, tempBufferTillDebugIsSet.length);
+  shouldOutputDebugInfo = false;
+  inMemoryDebugOutput.splice(0, inMemoryDebugOutput.length);
 }

@@ -6,6 +6,7 @@ import { configLoadEnvironment } from "./config/environment.js";
 import { configResolve } from "./config/resolve.js";
 import { debugEnable } from "./output/debug.js";
 import { logger, loggerEnable } from "./output/log.js";
+import { output } from "./output/static.js";
 import {
   tuiAttachStream,
   tuiEnable,
@@ -17,6 +18,8 @@ const env = await configLoadEnvironment("", !isNil(process.env));
 
 if (env.isCI) {
   loggerEnable(newLogger());
+  output.config.environment.loaded(env);
+
   const config = await configResolve("", true);
 
   logger.info({
@@ -25,6 +28,7 @@ if (env.isCI) {
   });
 } else if (!env.isDevelopment) {
   loggerEnable(newLogger());
+  output.config.environment.loaded(env);
 
   const config = await configResolve("", true);
 
@@ -36,6 +40,8 @@ if (env.isCI) {
   logger.error("Booting in prod is not yet supported.");
   process.exit(1);
 } else {
+  output.config.environment.loaded(env);
+
   tuiEnable();
   tuiStateSetMetadata({
     appName: env.appName,

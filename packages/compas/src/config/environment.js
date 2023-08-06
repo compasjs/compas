@@ -9,9 +9,8 @@ import {
   refreshEnvironmentCache,
 } from "@compas/stdlib";
 import dotenv from "dotenv";
-import { debugPrint } from "../output/debug.js";
-import { logger } from "../output/log.js";
-import { tuiPrintInformation } from "../output/tui.js";
+import { debugTimeEnd, debugTimeStart } from "../output/debug.js";
+import { output } from "../output/static.js";
 
 /**
  * Load .env files, resolve Compas version and information to determine in which mode we
@@ -28,12 +27,14 @@ import { tuiPrintInformation } from "../output/tui.js";
  * }>}
  */
 export async function configLoadEnvironment(relativeDirectory, hasNodeEnvSet) {
+  debugTimeStart("config.environment");
+
   const defaultDotEnvFile = pathJoin(relativeDirectory, ".env");
 
   if (!hasNodeEnvSet && !existsSync(defaultDotEnvFile)) {
     // Write a default .env file, we only do this if a NODE_ENV is not explicitly set.
 
-    debugPrint("Writing .env file, no .env file found.");
+    output.config.environment.creating();
 
     const dirname = process.cwd().split(path.sep).pop();
     await writeFile(
@@ -67,16 +68,9 @@ APP_NAME=${dirname}
     nodeVersion: process.version,
   };
 
-  debugPrint("Loaded environment");
-  debugPrint(env);
-  logger.info({
-    message: `Starting up ${env.appName} with ${env.compasVersion}${
-      env.isCI ? " in CI" : env.isDevelopment ? " in production" : ""
-    }`,
-  });
-  tuiPrintInformation(
-    `Starting up ${env.appName} with ${env.compasVersion}...`,
-  );
+  // Doesn't log anything here, the caller should do that after enabling the appropriate
+  // systems.
+  debugTimeEnd("config.environment");
 
   return env;
 }
