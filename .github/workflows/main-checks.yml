@@ -37,6 +37,7 @@ jobs:
 
       - name: Run compas test
         run: |
+          npx zakmes
           npx compas test
 
   coverage:

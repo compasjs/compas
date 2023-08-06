@@ -1,4 +1,4 @@
-import { appendFileSync } from "node:fs";
+import { mkdirSync, appendFileSync } from "node:fs";
 
 const DEBUG_LOCATION = `.cache/compas-debug-${String(Date.now()).slice(
   0,
@@ -58,6 +58,7 @@ export function debugPrint(contents) {
  */
 export function debugEnable() {
   // Write local cache
+  mkdirSync(".cache", { recursive: true });
   appendFileSync(DEBUG_LOCATION, `${tempBufferTillDebugIsSet.join("\n")}\n`);
 
   writeDebugOutputToFile = true;
