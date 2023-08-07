@@ -46,7 +46,7 @@ export function databaseERDCreate(generateContext) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  */
 function databaseERDWriteModel(generateContext, file, model) {
   fileBlockStart(file, `${model.name}`);

@@ -2,18 +2,20 @@
   "compilerOptions": {
     "target": "esnext",
     "lib": ["esnext"],
-    "noEmit": true,
-    "module": "esnext",
+    "module": "NodeNext",
     "checkJs": true,
     "maxNodeModuleJsDepth": 0,
     "baseUrl": "./",
-    "moduleResolution": "node",
     "strict": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "extendedDiagnostics": true
   },
   "typeAcquisition": {
     "enable": true
   },
-  "include": ["**/*.js", "**/types/**/*.d.ts"],
-  "exclude": ["**/*.test.js", "**/*.bench.js"]
+  "include": ["packages/**/*"],
+  "exclude": ["packages/eslint-plugin/**/*", "**/*.test.js", "**/*.bench.js"]
 }

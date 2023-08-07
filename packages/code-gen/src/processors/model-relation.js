@@ -15,18 +15,18 @@ import { structureNamedTypes, structureResolveReference } from "./structure.js";
  *   modelOwn:
  *   import("../generated/common/types.js").StructureObjectDefinition,
  *   modelInverse:
- *   import("../generated/common/types").StructureObjectDefinition,
+ *   import("../generated/common/types.d.ts").StructureObjectDefinition,
  *   relationOwn:
- *   import("../generated/common/types").StructureRelationDefinition,
+ *   import("../generated/common/types.d.ts").StructureRelationDefinition,
  *   relationInverse:
- *   import("../generated/common/types").StructureRelationDefinition,
+ *   import("../generated/common/types.d.ts").StructureRelationDefinition,
  *   keyNameOwn: string,
  *   keyDefinitionOwn:
- *   import("../generated/common/types").StructureTypeSystemDefinition,
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition,
  *   virtualKeyNameInverse: string,
  *   primaryKeyNameInverse: string,
  *   primaryKeyDefinitionInverse:
- *   import("../generated/common/types").StructureTypeSystemDefinition,
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition,
  * }} ModelRelationInformation
  */
 
@@ -163,7 +163,7 @@ export function modelRelationCheckAllRelations(generateContext) {
   // relation
   for (const model of structureModels(generateContext)) {
     for (const relation of modelRelationGetOwn(model)) {
-      /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} */
+      /** @type {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} */
       // @ts-expect-error
       const inverseModel = structureResolveReference(
         generateContext.structure,
@@ -331,7 +331,7 @@ export function modelRelationAddKeys(generateContext) {
       // We allow the user to define their own key for this relation, however it should
       // have the same type as the referenced primary key.
       if (model.keys[relation.ownKey]) {
-        /** @type {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} */
+        /** @type {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} */
         // @ts-expect-error
         const modelInverse = structureResolveReference(
           generateContext.structure,

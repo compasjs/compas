@@ -1,13 +1,13 @@
 import { AppError, isProduction } from "@compas/stdlib";
 
 /**
- * @type {NonNullable<import("../app").ErrorHandlerOptions["onError"]>}
+ * @type {NonNullable<import("../app.js").ErrorHandlerOptions["onError"]>}
  * Default onError handler that doesn't handle anything
  */
 const defaultOnError = () => false;
 
 /**
- * @type {NonNullable<import("../app").ErrorHandlerOptions["onAppError"]>}
+ * @type {NonNullable<import("../app.js").ErrorHandlerOptions["onAppError"]>}
  * Default onAppError handler that builds a simple object with key, message and info.
  */
 const defaultOnAppError = () => ({});
@@ -15,7 +15,7 @@ const defaultOnAppError = () => ({});
 /**
  * Handle any upstream errors
  *
- * @param {import("../app").ErrorHandlerOptions} opts
+ * @param {import("../app.js").ErrorHandlerOptions} opts
  * @returns {import("koa").Middleware}
  */
 export function errorHandler(opts) {

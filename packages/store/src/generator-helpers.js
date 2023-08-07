@@ -48,11 +48,11 @@ import { isQueryPart, query } from "./query.js";
  *   orderBySpec?: *,
  *   shortName?: string,
  *   options?: { skipValidator?: boolean|undefined },
- *   ) => import("../types/advanced-types").QueryPart} [orderBy]
+ *   ) => import("../types/advanced-types.d.ts").QueryPart} [orderBy]
  * @property {( orderBy?: any[],
  *   orderBySpec?: *,
  *   options?: { shortName?: string;  skipValidator?: boolean|undefined },
- *   ) => import("../types/advanced-types").QueryPart} [orderByExperimental]
+ *   ) => import("../types/advanced-types.d.ts").QueryPart} [orderByExperimental]
  * @property {EntityWhere} where
  * @property {{
  *   builderKey: string,
@@ -69,7 +69,7 @@ import { isQueryPart, query } from "./query.js";
  * @param {EntityWhere|(()=>EntityWhere)} entityWhereInformation
  * @param {*} where
  * @param {string} shortName
- * @returns {import("../types/advanced-types").QueryPart}
+ * @returns {import("../types/advanced-types.d.ts").QueryPart}
  */
 export function generatedWhereBuilderHelper(
   entityWhereInformation,
@@ -77,7 +77,7 @@ export function generatedWhereBuilderHelper(
   shortName,
 ) {
   const strings = ["1 = 1"];
-  /** @type {import("../types/advanced-types").QueryPartArg[]} */
+  /** @type {import("../types/advanced-types.d.ts").QueryPartArg[]} */
   const values = [undefined];
 
   if (typeof entityWhereInformation === "function") {
@@ -261,7 +261,7 @@ export function generatedWhereBuilderHelper(
  *
  * @param {EntityUpdate} entity
  * @param {*} input
- * @returns {import("../types/advanced-types").QueryPart<any[]>}
+ * @returns {import("../types/advanced-types.d.ts").QueryPart<any[]>}
  */
 export function generatedUpdateHelper(entity, input) {
   if (Object.keys(input.where).length === 0) {
@@ -431,7 +431,7 @@ export function generatedUpdateHelper(entity, input) {
  *   wherePart?: string,
  *   nestedIndex?: number,
  * }} options
- * @returns {import("../types/advanced-types").QueryPart<any[]>}
+ * @returns {import("../types/advanced-types.d.ts").QueryPart<any[]>}
  */
 export function generatedQueryBuilderHelper(
   entity,

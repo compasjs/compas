@@ -5,7 +5,7 @@ import { typeDefinitionTraverse } from "../processors/type-definition-traverse.j
  * Cache to check if for the provided type we already have resolved the used targets.
  *
  * @type {WeakMap<import("../generated/common/types.js").StructureTypeSystemDefinition,
- *   import("../generated/common/types").StructureAnyDefinitionTarget[]>}
+ *   import("../generated/common/types.d.ts").StructureAnyDefinitionTarget[]>}
  */
 const typeTargetCache = new WeakMap();
 

@@ -31,7 +31,7 @@ test("store/session-transport", (t) => {
    *
    * @param {import("koa").Middleware} middleware
    * @returns {Promise<{axiosInstance: AxiosInstance, session:
-   *   import("./generated/common/types").QueryResultStoreSessionStore, tokens:
+   *   import("./generated/common/types.d.ts").QueryResultStoreSessionStore, tokens:
    *   {accessToken: string, refreshToken: string}, closeApp: (function():
    *   Promise<void>)}>}
    */

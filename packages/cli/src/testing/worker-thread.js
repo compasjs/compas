@@ -72,7 +72,7 @@ async function main(logger) {
  * does not have any files left, it will request a result. Once the worker provided the
  * results, it can safely exit.
  *
- * @param {Logger} logger
+ * @param {import("@compas/stdlib").Logger} logger
  * @param {import("../testing/config.js").TestConfig} testConfig
  * @param {() => void} callback
  * @returns {(message: any) => void}

@@ -150,9 +150,9 @@ export const sessionStoreWhereSpec = {
 /**
  * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreSessionStoreWhere} [where]
+ * @param {import("../common/types.js").StoreSessionStoreWhere} [where]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
- * @returns {QueryPart<any>}
+ * @returns {import("@compas/store").QueryPart<any>}
  */
 export function sessionStoreWhere(where, options = {}) {
   options.shortName ??= "ss.";
@@ -178,10 +178,10 @@ export function sessionStoreWhere(where, options = {}) {
 /**
  * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreSessionStoreOrderBy} [orderBy]
- * @param {import("../common/types").StoreSessionStoreOrderBySpec} [orderBySpec]
+ * @param {import("../common/types.js").StoreSessionStoreOrderBy} [orderBy]
+ * @param {import("../common/types.js").StoreSessionStoreOrderBySpec} [orderBySpec]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
- * @returns {QueryPart<any>}
+ * @returns {import("@compas/store").QueryPart<any>}
  */
 export function sessionStoreOrderBy(orderBy, orderBySpec, options = {}) {
   options.shortName ??= "ss.";
@@ -226,7 +226,7 @@ export function sessionStoreOrderBy(orderBy, orderBySpec, options = {}) {
  * Count the records in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreWhere} where
+ * @param {import("../common/types.js").StoreSessionStoreWhere} where
  * @returns {Promise<number>}
  */
 async function sessionStoreCount(sql, where) {
@@ -241,9 +241,9 @@ async function sessionStoreCount(sql, where) {
  * Insert a record in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreInsert["insert"]} insert
+ * @param {import("../common/types.js").StoreSessionStoreInsert["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<import("../common/types").StoreSessionStore[]>}
+ * @returns {Promise<import("../common/types.js").StoreSessionStore[]>}
  */
 function sessionStoreInsert(sql, insert, options = {}) {
   if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
@@ -255,8 +255,8 @@ function sessionStoreInsert(sql, insert, options = {}) {
 /**
  * Insert a record in the 'sessionStore' table
  *
- * @param {import("../common/types").StoreSessionStoreInsert} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStore>}
+ * @param {import("../common/types.js").StoreSessionStoreInsert} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreSessionStore>}
  */
 function sessionStoreInsertInternal(input) {
   const { error, value: validatedInput } =
@@ -339,8 +339,8 @@ function sessionStoreInsertInternal(input) {
  * Upsert a record in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreInsert["insert"]} insert
- * @returns {Promise<import("../common/types").StoreSessionStore[]>}
+ * @param {import("../common/types.js").StoreSessionStoreInsert["insert"]} insert
+ * @returns {Promise<import("../common/types.js").StoreSessionStore[]>}
  */
 function sessionStoreUpsertOnId(sql, insert) {
   return sessionStoreUpsertOnIdInternal({ insert, returning: "*" }).exec(sql);
@@ -349,8 +349,8 @@ function sessionStoreUpsertOnId(sql, insert) {
 /**
  * Upsert a record in the 'sessionStore' table based on the primary key.
  *
- * @param {import("../common/types").StoreSessionStoreInsert} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStore>}
+ * @param {import("../common/types.js").StoreSessionStoreInsert} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreSessionStore>}
  */
 function sessionStoreUpsertOnIdInternal(input) {
   const { error, value: validatedInput } =
@@ -427,8 +427,8 @@ const sessionStoreUpdateSpec = {
  * Insert a record in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreUpdate} update
- * @returns {Promise<import("../common/types").StoreSessionStore[]>}
+ * @param {import("../common/types.js").StoreSessionStoreUpdate} update
+ * @returns {Promise<import("../common/types.js").StoreSessionStore[]>}
  */
 function sessionStoreUpdate(sql, update) {
   if (update?.returning === "*" || !update?.returning) {
@@ -441,8 +441,8 @@ function sessionStoreUpdate(sql, update) {
 /**
  * Update records in the 'sessionStore' table
  *
- * @param {import("../common/types").StoreSessionStoreUpdate} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreSessionStore>}
+ * @param {import("../common/types.js").StoreSessionStoreUpdate} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreSessionStore>}
  */
 function sessionStoreUpdateInternal(input) {
   const { error, value: validatedInput } =
@@ -464,7 +464,7 @@ function sessionStoreUpdateInternal(input) {
  * Insert a record in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreSessionStoreWhere} [where]
+ * @param {import("../common/types.js").StoreSessionStoreWhere} [where]
  * @returns {Promise<void>}
  */
 function sessionStoreDelete(sql, where = {}) {
@@ -474,7 +474,7 @@ function sessionStoreDelete(sql, where = {}) {
 /**
  * Remove records from the 'sessionStore' table
  *
- * @param {import("../common/types").StoreSessionStoreWhere} [where]
+ * @param {import("../common/types.js").StoreSessionStoreWhere} [where]
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function sessionStoreDeleteInternal(where = {}) {
@@ -502,8 +502,8 @@ export const sessionStoreQueryBuilderSpec = {
 /**
  * Query records in the 'sessionStore' table, optionally joining related tables.
  *
- * @param {import("../common/types").StoreSessionStoreQueryBuilder} [input]
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreSessionStore>}
+ * @param {import("../common/types.js").StoreSessionStoreQueryBuilder} [input]
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").QueryResultStoreSessionStore>}
  */
 export function querySessionStore(input = {}) {
   const { error, value: validatedInput } =

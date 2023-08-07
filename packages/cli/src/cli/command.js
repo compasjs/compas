@@ -11,8 +11,8 @@ import { cliWatchShouldRun } from "./watch.js";
 /**
  * Get the CLI root, skips 'help'.
  *
- * @param {import("./types").CliResolved} command
- * @returns {import("./types").CliResolved}
+ * @param {import("./types.js").CliResolved} command
+ * @returns {import("./types.js").CliResolved}
  */
 export function cliCommandGetRoot(command) {
   if (command.parent) {
@@ -26,9 +26,9 @@ export function cliCommandGetRoot(command) {
  * Determine the command that we are working with.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("./types").CliResolved} cli
+ * @param {import("./types.js").CliResolved} cli
  * @param {string[]} input
- * @returns {Promise<import("@compas/stdlib").Either<import("./types").CliResolved, {
+ * @returns {Promise<import("@compas/stdlib").Either<import("./types.js").CliResolved, {
  *   message: string }>>}
  */
 export async function cliCommandDetermine(event, cli, input) {
@@ -74,11 +74,11 @@ export async function cliCommandDetermine(event, cli, input) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("./types").CliResolved} cli
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} cli
+ * @param {import("./types.js").CliResolved} command
  * @param {Record<string, any>} flags
  * @param {string[]} userInput
- * @returns {Promise<import("@compas/stdlib").Either<import("./types").CliResult, {
+ * @returns {Promise<import("@compas/stdlib").Either<import("./types.js").CliResult, {
  *   message: string }>>}
  */
 export async function cliCommandExec(

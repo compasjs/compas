@@ -128,7 +128,7 @@ ${structureModels(generateContext)
  * Create a file for the provided model
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function jsPostgresCreateFile(generateContext, model) {
@@ -178,7 +178,7 @@ export function jsPostgresCreateFile(generateContext, model) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateWhere(
@@ -352,7 +352,7 @@ export function jsPostgresGenerateWhere(
     file,
     ` @param {{ skipValidator?: boolean, shortName?: string }} [options]`,
   );
-  fileWrite(file, ` @returns {QueryPart<any>}`);
+  fileWrite(file, ` @returns {import("@compas/store").QueryPart<any>}`);
   fileWrite(file, `/`);
 
   fileContextRemoveLinePrefix(file, 2);
@@ -401,7 +401,7 @@ export function jsPostgresGenerateWhere(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateOrderBy(
@@ -431,7 +431,7 @@ export function jsPostgresGenerateOrderBy(
     file,
     ` @param {{ skipValidator?: boolean, shortName?: string }} [options]`,
   );
-  fileWrite(file, ` @returns {QueryPart<any>}`);
+  fileWrite(file, ` @returns {import("@compas/store").QueryPart<any>}`);
   fileWrite(file, `/`);
 
   fileContextRemoveLinePrefix(file, 2);
@@ -519,7 +519,7 @@ export function jsPostgresGenerateOrderBy(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateCount(
@@ -564,7 +564,7 @@ export function jsPostgresGenerateCount(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateInsert(
@@ -774,7 +774,7 @@ export function jsPostgresGenerateInsert(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateUpsertOnPrimaryKey(
@@ -945,7 +945,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateUpdate(
@@ -1085,7 +1085,7 @@ export function jsPostgresGenerateUpdate(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateDelete(
@@ -1149,7 +1149,7 @@ export function jsPostgresGenerateDelete(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureObjectDefinition>} model
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureObjectDefinition>} model
  * @param {import("./generator.js").DatabaseContextNames} contextNames
  */
 export function jsPostgresGenerateQueryBuilder(

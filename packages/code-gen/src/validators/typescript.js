@@ -12,8 +12,8 @@ import { typesGeneratorUseTypeName } from "../types/generator.js";
 /**
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").StructureTypeSystemDefinition
+ * @param {import("../../types/advanced-types.d.ts").NamedType<
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
  * >} type
  * @param {string} outputTypeName
  * @returns {string}
@@ -37,8 +37,8 @@ export function validatorTypescriptGetNameAndImport(
  * Get or create a Javascript validation file for the group that the type belongs to.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").StructureTypeSystemDefinition
+ * @param {import("../../types/advanced-types.d.ts").NamedType<
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
  * >} type
  * @returns {import("../file/context.js").GenerateFile}
  */
@@ -71,8 +71,8 @@ type ValidatorErrorMap = Record<string, any|undefined>;`,
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").StructureTypeSystemDefinition
+ * @param {import("../../types/advanced-types.d.ts").NamedType<
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").ValidatorState} validatorState
  */

@@ -5,7 +5,7 @@
 
 /**
  * @typedef {object} CliExecutorState
- * @property {import("../generated/common/types").CliCommandDefinition} cli The known cli
+ * @property {import("../generated/common/types.js").CliCommandDefinition} cli The known cli
  *   definition
  * @property {string[]} command The parsed command, can be used to figure out values of
  *   dynamic commands
@@ -14,13 +14,10 @@
  */
 
 /**
- * @typedef {Exclude<import("../generated/common/types").CliCommandDefinition, "subCommands"> & {
+ * @typedef {Exclude<import("../generated/common/types.js").CliCommandDefinition, "subCommands"> & {
  *   parent?: CliResolved,
  *   subCommands: CliResolved[],
  * }} CliResolved
  */
 
-/**
- * @type {boolean}
- */
-export const __types = false;
+export default {};

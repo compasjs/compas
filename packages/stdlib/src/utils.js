@@ -28,7 +28,7 @@ export function getSecondsSinceEpoch() {
  * A function that returns 'undefined'.
  *
  * @since 0.1.0
- * @type {import("../types/advanced-types").NoopFn}
+ * @type {import("../types/advanced-types.d.ts").NoopFn}
  */
 export function noop() {}
 

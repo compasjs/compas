@@ -62,7 +62,7 @@ async function specificationTestsRun(logger, options) {
 /**
  *
  * @param {SpecResult} result
- * @param {import("../spec/specification").CodeGenSpecification} spec
+ * @param {import("../spec/specification.js").CodeGenSpecification} spec
  */
 async function dispatchSpec(result, spec) {
   switch (spec.type) {
@@ -92,7 +92,7 @@ function formatSpecPath(result) {
  * Skip the current spec
  *
  * @param {SpecResult} result
- * @param {import("../spec/specification").CodeGenSpecification} spec
+ * @param {import("../spec/specification.js").CodeGenSpecification} spec
  */
 function runSkip(result, spec) {
   result.skipped++;
@@ -103,7 +103,7 @@ function runSkip(result, spec) {
  * Run all components of a suite recursively
  *
  * @param {SpecResult} result
- * @param {import("../spec/specification").CodeGenSpecificationSuite} spec
+ * @param {import("../spec/specification.js").CodeGenSpecificationSuite} spec
  */
 async function runSuite(result, spec) {
   const suite = {
@@ -124,7 +124,7 @@ async function runSuite(result, spec) {
  * Run generators with full options enabled.
  *
  * @param {SpecResult} result
- * @param {import("../spec/specification").CodeGenSpecificationGenerate} spec
+ * @param {import("../spec/specification.js").CodeGenSpecificationGenerate} spec
  */
 function runGenerate(result, spec) {
   try {
@@ -162,7 +162,7 @@ function runGenerate(result, spec) {
  * Run validator
  *
  * @param {SpecResult} result
- * @param {import("../spec/specification").CodeGenSpecificationValidator} spec
+ * @param {import("../spec/specification.js").CodeGenSpecificationValidator} spec
  */
 async function runValidator(result, spec) {
   try {
@@ -223,7 +223,7 @@ async function runValidator(result, spec) {
  * Run route matcher
  *
  * @param {SpecResult} result
- * @param {import("../spec/specification").CodeGenSpecificationRouteMatcher} spec
+ * @param {import("../spec/specification.js").CodeGenSpecificationRouteMatcher} spec
  */
 async function runRouteMatcher(result, spec) {
   try {

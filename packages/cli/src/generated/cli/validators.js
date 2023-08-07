@@ -10,8 +10,8 @@
  */
 
 /**
- * @param {import("../common/types").CliCommandDefinitionInput|any} value
- * @returns {Either<import("../common/types").CliCommandDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").CliCommandDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").CliCommandDefinition, ValidatorErrorMap>}
  */
 export function validateCliCommandDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -647,8 +647,8 @@ export function validateCliCommandDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").CliFlagDefinitionInput|any} value
- * @returns {Either<import("../common/types").CliFlagDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").CliFlagDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").CliFlagDefinition, ValidatorErrorMap>}
  */
 export function validateCliFlagDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -1038,8 +1038,8 @@ export function validateCliFlagDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").CliCompletion|any} value
- * @returns {Either<import("../common/types").CliCompletion, ValidatorErrorMap>}
+ * @param {import("../common/types.js").CliCompletion|any} value
+ * @returns {Either<import("../common/types.js").CliCompletion, ValidatorErrorMap>}
  */
 export function validateCliCompletion(value) {
   /** @type {ValidatorErrorMap} */

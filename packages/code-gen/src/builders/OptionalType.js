@@ -43,7 +43,7 @@ export class OptionalType extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
+   * @param {import("../../types/advanced-types.d.ts").TypeBuilderLike} builder
    * @returns {OptionalType}
    */
   value(builder) {

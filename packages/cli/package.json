@@ -2,12 +2,15 @@
   "name": "@compas/cli",
   "version": "0.6.0",
   "description": "CLI containing utilities and simple script runner",
-  "main": "./index.js",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    },
     "./package.json": "./package.json"
   },
-  "types": "./index.d.ts",
   "type": "module",
   "bin": {
     "compas": "src/compas/index.js"

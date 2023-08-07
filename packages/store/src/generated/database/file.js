@@ -153,9 +153,9 @@ export const fileWhereSpec = {
 /**
  * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreFileWhere} [where]
+ * @param {import("../common/types.js").StoreFileWhere} [where]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
- * @returns {QueryPart<any>}
+ * @returns {import("@compas/store").QueryPart<any>}
  */
 export function fileWhere(where, options = {}) {
   options.shortName ??= "f.";
@@ -179,10 +179,10 @@ export function fileWhere(where, options = {}) {
 /**
  * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreFileOrderBy} [orderBy]
- * @param {import("../common/types").StoreFileOrderBySpec} [orderBySpec]
+ * @param {import("../common/types.js").StoreFileOrderBy} [orderBy]
+ * @param {import("../common/types.js").StoreFileOrderBySpec} [orderBySpec]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
- * @returns {QueryPart<any>}
+ * @returns {import("@compas/store").QueryPart<any>}
  */
 export function fileOrderBy(orderBy, orderBySpec, options = {}) {
   options.shortName ??= "f.";
@@ -226,7 +226,7 @@ export function fileOrderBy(orderBy, orderBySpec, options = {}) {
  * Count the records in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileWhere} where
+ * @param {import("../common/types.js").StoreFileWhere} where
  * @returns {Promise<number>}
  */
 async function fileCount(sql, where) {
@@ -241,9 +241,9 @@ async function fileCount(sql, where) {
  * Insert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileInsert["insert"]} insert
+ * @param {import("../common/types.js").StoreFileInsert["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<import("../common/types").StoreFile[]>}
+ * @returns {Promise<import("../common/types.js").StoreFile[]>}
  */
 function fileInsert(sql, insert, options = {}) {
   if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
@@ -255,8 +255,8 @@ function fileInsert(sql, insert, options = {}) {
 /**
  * Insert a record in the 'file' table
  *
- * @param {import("../common/types").StoreFileInsert} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
+ * @param {import("../common/types.js").StoreFileInsert} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreFile>}
  */
 function fileInsertInternal(input) {
   const { error, value: validatedInput } =
@@ -343,8 +343,8 @@ function fileInsertInternal(input) {
  * Upsert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileInsert["insert"]} insert
- * @returns {Promise<import("../common/types").StoreFile[]>}
+ * @param {import("../common/types.js").StoreFileInsert["insert"]} insert
+ * @returns {Promise<import("../common/types.js").StoreFile[]>}
  */
 function fileUpsertOnId(sql, insert) {
   return fileUpsertOnIdInternal({ insert, returning: "*" }).exec(sql);
@@ -353,8 +353,8 @@ function fileUpsertOnId(sql, insert) {
 /**
  * Upsert a record in the 'file' table based on the primary key.
  *
- * @param {import("../common/types").StoreFileInsert} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
+ * @param {import("../common/types.js").StoreFileInsert} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreFile>}
  */
 function fileUpsertOnIdInternal(input) {
   const { error, value: validatedInput } =
@@ -450,8 +450,8 @@ const fileUpdateSpec = {
  * Insert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileUpdate} update
- * @returns {Promise<import("../common/types").StoreFile[]>}
+ * @param {import("../common/types.js").StoreFileUpdate} update
+ * @returns {Promise<import("../common/types.js").StoreFile[]>}
  */
 function fileUpdate(sql, update) {
   if (update?.returning === "*" || !update?.returning) {
@@ -464,8 +464,8 @@ function fileUpdate(sql, update) {
 /**
  * Update records in the 'file' table
  *
- * @param {import("../common/types").StoreFileUpdate} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreFile>}
+ * @param {import("../common/types.js").StoreFileUpdate} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreFile>}
  */
 function fileUpdateInternal(input) {
   const { error, value: validatedInput } =
@@ -487,7 +487,7 @@ function fileUpdateInternal(input) {
  * Insert a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreFileWhere} [where]
+ * @param {import("../common/types.js").StoreFileWhere} [where]
  * @returns {Promise<void>}
  */
 function fileDelete(sql, where = {}) {
@@ -497,7 +497,7 @@ function fileDelete(sql, where = {}) {
 /**
  * Remove records from the 'file' table
  *
- * @param {import("../common/types").StoreFileWhere} [where]
+ * @param {import("../common/types.js").StoreFileWhere} [where]
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function fileDeleteInternal(where = {}) {
@@ -526,8 +526,8 @@ export const fileQueryBuilderSpec = {
 /**
  * Query records in the 'file' table, optionally joining related tables.
  *
- * @param {import("../common/types").StoreFileQueryBuilder} [input]
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreFile>}
+ * @param {import("../common/types.js").StoreFileQueryBuilder} [input]
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").QueryResultStoreFile>}
  */
 export function queryFile(input = {}) {
   const { error, value: validatedInput } =

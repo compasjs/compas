@@ -3,10 +3,14 @@
   "version": "0.6.0",
   "description": "Unified backend tooling",
   "exports": {
-    ".": "./src/index.js",
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    },
     "./package.json": "./package.json"
   },
-  "types": "./src/index.d.ts",
   "type": "module",
   "bin": {
     "zakmes": "src/bin.js"

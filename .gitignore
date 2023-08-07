@@ -44,6 +44,9 @@ coverage
 
 # Types
 **.d.ts.map
+**.d.ts
+!advanced-types.d.ts
+!common/types.d.ts
 
 # Examples
 # Ignore any generated output of examples

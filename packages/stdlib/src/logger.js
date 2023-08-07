@@ -1,4 +1,4 @@
-import pino from "pino";
+import { pino } from "pino";
 import { environment, isProduction } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil, isPlainObject, merge } from "./lodash.js";

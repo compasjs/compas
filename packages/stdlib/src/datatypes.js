@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
  * @since 0.1.0
  * @summary Returns a new uuid v4
  *
- * @type {import("../types/advanced-types").UuidFunc}
+ * @type {import("../types/advanced-types.d.ts").UuidFunc}
  */
 export const uuid = randomUUID;
 

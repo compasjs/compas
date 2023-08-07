@@ -35,7 +35,7 @@ export function routeInvalidationsCheck(generateContext) {
 /**
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @param {import("../generated/common/types.js").StructureRouteInvalidationDefinition} invalidation
  */
 function routeInvalidationProcess(generateContext, route, invalidation) {

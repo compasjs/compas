@@ -8,9 +8,9 @@ import { state, testLogger } from "./state.js";
  *
  * When the debugger is attached, we ignore any timeouts.
  *
- * @param {import("./config").TestConfig} testConfig
- * @param {import("./state").TestState} testState
- * @param {Partial<Pick<import("./config").TestConfig, "timeout">>} [configOverrides]
+ * @param {import("./config.js").TestConfig} testConfig
+ * @param {import("./state.js").TestState} testState
+ * @param {Partial<Pick<import("./config.js").TestConfig, "timeout">>} [configOverrides]
  * @returns {Promise<void>}
  */
 export async function runTestsRecursively(
@@ -138,7 +138,7 @@ export async function runTestsRecursively(
  *
  * @since 0.1.0
  *
- * @type {(name: string, callback: import("./state").TestCallback) => void}
+ * @type {(name: string, callback: import("./state.js").TestCallback) => void}
  */
 export const test = subTest.bind(undefined, state);
 
@@ -194,7 +194,7 @@ function mutateRunnerEnablingWarnings(runner) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {*} value
  * @param {string} [message]
  */
@@ -213,7 +213,7 @@ function ok(state, value, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {*} value
  * @param {string} [message]
  */
@@ -232,7 +232,7 @@ function notOk(state, value, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {*} actual
  * @param {*} expected
  * @param {string} [message]
@@ -252,7 +252,7 @@ function equal(state, actual, expected, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {*} actual
  * @param {*} expected
  * @param {string} [message]
@@ -272,7 +272,7 @@ function notEqual(state, actual, expected, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {*} actual
  * @param {*} expected
  * @param {string} [message]
@@ -305,7 +305,7 @@ function deepEqual(state, actual, expected, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {string} [message]
  */
 function fail(state, message) {
@@ -320,7 +320,7 @@ function fail(state, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {string} [message]
  */
 function pass(state, message) {
@@ -335,9 +335,9 @@ function pass(state, message) {
 }
 
 /**
- * @param {import("./state").TestState} state
+ * @param {import("./state.js").TestState} state
  * @param {string} name
- * @param {import("./state").TestCallback} callback
+ * @param {import("./state.js").TestCallback} callback
  */
 function subTest(state, name, callback) {
   if (typeof name !== "string" || typeof callback !== "function") {

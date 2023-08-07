@@ -16,14 +16,14 @@ import { cliWatchInit } from "./watch.js";
 /**
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("../generated/common/types").CliCommandDefinitionInput} root
+ * @param {import("../generated/common/types.d.ts").CliCommandDefinitionInput} root
  * @param {{
  *   commandDirectories: {
  *     directory: string,
  *     validateOnLoad: boolean,
  *   }[],
  * }} options
- * @returns {Promise<import("./types").CliResolved>}
+ * @returns {Promise<import("./types.js").CliResolved>}
  */
 export async function cliInit(event, root, options) {
   eventStart(event, "cli.init");
@@ -43,7 +43,7 @@ export async function cliInit(event, root, options) {
     throw validateResult.error;
   }
 
-  /** @type {import("./types").CliResolved} */
+  /** @type {import("./types.js").CliResolved} */
   const cli = validateResult.value;
   cliInitValidateCommands(cli);
   cliInitValidateFlags(cli);
@@ -61,7 +61,7 @@ export async function cliInit(event, root, options) {
 /**
  * Recursively go through commands and do some normalizing and various checks
  *
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  * @param {boolean} hasParentWithExecutor
  */
 function cliInitValidateCommands(command, hasParentWithExecutor = false) {
@@ -128,7 +128,7 @@ function cliInitValidateCommands(command, hasParentWithExecutor = false) {
 
 /**
  *
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  * @param {string[]} existingFlags
  */
 function cliInitValidateFlags(command, existingFlags = []) {
@@ -166,7 +166,7 @@ function cliInitValidateFlags(command, existingFlags = []) {
  * Add completion functions to `command.dynamicValue.completions' and
  * 'flag.value.completions'
  *
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  */
 function cliInitAddDefaultCompletions(command) {
   if (command.modifiers.isDynamic && isNil(command.dynamicValue.completions)) {

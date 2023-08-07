@@ -98,8 +98,8 @@ export function typesTypescriptHasDeclaredTypes(file) {
  * earlier, since references need this to format their reference name.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").StructureTypeSystemDefinition
+ * @param {import("../../types/advanced-types.d.ts").NamedType<
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  */
@@ -472,8 +472,8 @@ export function typesTypescriptFormatType(
  * The used type is directly registered in the cache.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").StructureTypeSystemDefinition
+ * @param {import("../../types/advanced-types.d.ts").NamedType<
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
  * >} type
  * @param {import("./generator.js").GenerateTypeOptions} options
  * @returns {string}

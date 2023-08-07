@@ -62,10 +62,10 @@ export const STORE_FILE_IMAGE_TYPES = [
  *   schedulePlaceholderImageJob?: boolean,
  *   fileTransformInPlaceOptions?: FileTransformInPlaceOptions,
  * }} options
- * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
+ * @param {Partial<import("./generated/common/types.d.ts").StoreFile> & Pick<import("./generated/common/types.d.ts").StoreFile,
  *   "name">} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
- * @returns {Promise<import("./generated/common/types").StoreFile>}
+ * @returns {Promise<import("./generated/common/types.d.ts").StoreFile>}
  */
 export async function fileCreateOrUpdate(
   sql,
@@ -218,7 +218,7 @@ async function fileTransformInPlaceInternal(fileBuffer, operations) {
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
- * @param {import("./generated/common/types").StoreFile} file
+ * @param {import("./generated/common/types.d.ts").StoreFile} file
  * @param {FileTransformInPlaceOptions} operations
  * @returns {Promise<void>}
  */
@@ -282,7 +282,7 @@ export async function fileTransformInPlace(
  *   allowedContentTypes?: string[],
  *   schedulePlaceholderImageJob?: boolean,
  * }} options
- * @param {Partial<import("./generated/common/types").StoreFile> & Pick<import("./generated/common/types").StoreFile,
+ * @param {Partial<import("./generated/common/types.d.ts").StoreFile> & Pick<import("./generated/common/types.d.ts").StoreFile,
  *   "name">} props
  * @param {NodeJS.ReadableStream|string|Buffer} source
  * @returns {Promise<{
@@ -401,14 +401,14 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
 /**
  * Format a StoreFile, so it can be used in the response.
  *
- * @param {import("./generated/common/types").StoreFile} file
+ * @param {import("./generated/common/types.d.ts").StoreFile} file
  * @param {object} options
  * @param {string} options.url
  * @param {{
  *   signingKey: string,
  *   maxAgeInSeconds: number,
  * }} [options.signAccessToken]
- * @returns {import("./generated/common/types").StoreFileResponse}
+ * @returns {import("./generated/common/types.d.ts").StoreFileResponse}
  */
 export function fileFormatMetadata(file, options) {
   if (!options.url) {

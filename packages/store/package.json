@@ -2,12 +2,15 @@
   "name": "@compas/store",
   "version": "0.6.0",
   "description": "Postgres & S3-compatible wrappers for common things",
-  "main": "./index.js",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    },
     "./package.json": "./package.json"
   },
-  "types": "./index.d.ts",
   "type": "module",
   "keywords": [
     "compas",

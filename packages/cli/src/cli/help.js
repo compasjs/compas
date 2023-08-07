@@ -18,7 +18,7 @@ import {
  * Also registers both `-h` and `--help`. The `-h` is officially not allowed, but works
  * after the validators.
  *
- * @param {import("./types").CliResolved} cli
+ * @param {import("./types.js").CliResolved} cli
  */
 export function cliHelpInit(cli) {
   cliHelpCheckForReservedKeys(cli);
@@ -81,7 +81,7 @@ export function cliHelpInit(cli) {
  * Make sure other commands are not using flags and command names used by the 'help'
  * system.
  *
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  */
 export function cliHelpCheckForReservedKeys(command) {
   if (
@@ -123,7 +123,7 @@ export function cliHelpShouldRun(commandArgs, flagArgs) {
  * Print help message for the specified command
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("./types").CliResolved} cli
+ * @param {import("./types.js").CliResolved} cli
  * @param {string[]} userInput
  * @returns {Promise<import("@compas/stdlib").Either<string, { message: string }>>}
  */
@@ -156,7 +156,7 @@ export async function cliHelpGetMessage(event, cli, userInput) {
 
   const knownFlagsMap = cliParserGetKnownFlags(command.value);
 
-  /** @type {import("../generated/common/types").CliFlagDefinition[]} */
+  /** @type {import("../generated/common/types.d.ts").CliFlagDefinition[]} */
   // @ts-ignore
   const knownFlags = [
     ...knownFlagsMap.values(),

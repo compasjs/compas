@@ -30,7 +30,7 @@ export class ArrayType extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../types/advanced-types").TypeBuilderLike} [value]
+   * @param {import("../../types/advanced-types.d.ts").TypeBuilderLike} [value]
    * @returns {ArrayType}
    */
   values(value) {

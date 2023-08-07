@@ -56,7 +56,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   query(builder) {
@@ -66,7 +66,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   params(builder) {
@@ -76,7 +76,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   body(builder) {
@@ -121,7 +121,7 @@ export class RouteBuilder extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteBuilder}
    */
   response(builder) {
@@ -285,7 +285,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   query(builder) {
@@ -295,7 +295,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   params(builder) {
@@ -305,7 +305,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   body(builder) {
@@ -315,7 +315,7 @@ export class RouteCreator {
   }
 
   /**
-   * @param {import("../../index").TypeBuilderLike} builder
+   * @param {import("../../index.js").TypeBuilderLike} builder
    * @returns {RouteCreator}
    */
   response(builder) {
@@ -330,7 +330,7 @@ export class RouteCreator {
    *
    * @param {string} group
    * @param {string} [name]
-   * @param {import("../generated/common/types").StructureRouteInvalidationDefinition["properties"]} [properties]
+   * @param {import("../generated/common/types.d.ts").StructureRouteInvalidationDefinition["properties"]} [properties]
    * @returns {RouteInvalidationType}
    */
   invalidates(group, name, properties) {

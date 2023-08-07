@@ -22,7 +22,7 @@
  */
 
 /**
- * @type {Logger}
+ * @type {import("@compas/stdlib").Logger}
  */
 // @ts-ignore
 export let benchLogger = undefined;
@@ -49,7 +49,7 @@ export function setAreBenchRunning(running) {
 /**
  * Set the bench logger
  *
- * @param {Logger} logger
+ * @param {import("@compas/stdlib").Logger} logger
  */
 export function setBenchLogger(logger) {
   benchLogger = logger;

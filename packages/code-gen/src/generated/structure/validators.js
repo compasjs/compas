@@ -10,8 +10,8 @@
  */
 
 /**
- * @param {import("../common/types").StructureAnyDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureAnyDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureAnyDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureAnyDefinition, ValidatorErrorMap>}
  */
 export function validateStructureAnyDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -735,8 +735,8 @@ export function validateStructureAnyDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureAnyDefinitionTarget|any} value
- * @returns {Either<import("../common/types").StructureAnyDefinitionTarget, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureAnyDefinitionTarget|any} value
+ * @returns {Either<import("../common/types.js").StructureAnyDefinitionTarget, ValidatorErrorMap>}
  */
 export function validateStructureAnyDefinitionTarget(value) {
   /** @type {ValidatorErrorMap} */
@@ -811,8 +811,8 @@ export function validateStructureAnyDefinitionTarget(value) {
 }
 
 /**
- * @param {import("../common/types").StructureAnyOfDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureAnyOfDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureAnyOfDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureAnyOfDefinition, ValidatorErrorMap>}
  */
 export function validateStructureAnyOfDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -1319,8 +1319,8 @@ export function validateStructureAnyOfDefinition(value) {
 /**
  * All type definitions that can be used inside other types, like object keys.
  *
- * @param {import("../common/types").StructureTypeSystemDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureTypeSystemDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureTypeSystemDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureTypeSystemDefinition, ValidatorErrorMap>}
  */
 export function validateStructureTypeSystemDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -1510,8 +1510,8 @@ export function validateStructureTypeSystemDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureArrayDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureArrayDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureArrayDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureArrayDefinition, ValidatorErrorMap>}
  */
 export function validateStructureArrayDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -2057,8 +2057,8 @@ export function validateStructureArrayDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureBooleanDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureBooleanDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureBooleanDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureBooleanDefinition, ValidatorErrorMap>}
  */
 export function validateStructureBooleanDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -2531,8 +2531,8 @@ export function validateStructureBooleanDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureCrudDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureCrudDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureCrudDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureCrudDefinition, ValidatorErrorMap>}
  */
 export function validateStructureCrudDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -3688,8 +3688,8 @@ export function validateStructureCrudDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureReferenceDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureReferenceDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureReferenceDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureReferenceDefinition, ValidatorErrorMap>}
  */
 export function validateStructureReferenceDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -4117,8 +4117,8 @@ export function validateStructureReferenceDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureNamePart|any} value
- * @returns {Either<import("../common/types").StructureNamePart, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureNamePart|any} value
+ * @returns {Either<import("../common/types.js").StructureNamePart, ValidatorErrorMap>}
  */
 export function validateStructureNamePart(value) {
   /** @type {ValidatorErrorMap} */
@@ -4159,8 +4159,8 @@ export function validateStructureNamePart(value) {
 }
 
 /**
- * @param {import("../common/types").StructureDateDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureDateDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureDateDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureDateDefinition, ValidatorErrorMap>}
  */
 export function validateStructureDateDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -4758,8 +4758,8 @@ export function validateStructureDateDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureExtendDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureExtendDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureExtendDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureExtendDefinition, ValidatorErrorMap>}
  */
 export function validateStructureExtendDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -5326,8 +5326,8 @@ export function validateStructureExtendDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureRelationDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureRelationDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureRelationDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureRelationDefinition, ValidatorErrorMap>}
  */
 export function validateStructureRelationDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -5523,8 +5523,8 @@ export function validateStructureRelationDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureFileDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureFileDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureFileDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureFileDefinition, ValidatorErrorMap>}
  */
 export function validateStructureFileDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -6002,8 +6002,8 @@ export function validateStructureFileDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureGenericDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureGenericDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureGenericDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureGenericDefinition, ValidatorErrorMap>}
  */
 export function validateStructureGenericDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -6455,8 +6455,8 @@ export function validateStructureGenericDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureNumberDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureNumberDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureNumberDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureNumberDefinition, ValidatorErrorMap>}
  */
 export function validateStructureNumberDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -7081,8 +7081,8 @@ export function validateStructureNumberDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureObjectDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureObjectDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureObjectDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureObjectDefinition, ValidatorErrorMap>}
  */
 export function validateStructureObjectDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -7907,8 +7907,8 @@ export function validateStructureObjectDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureOmitDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureOmitDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureOmitDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureOmitDefinition, ValidatorErrorMap>}
  */
 export function validateStructureOmitDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -8460,8 +8460,8 @@ export function validateStructureOmitDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructurePickDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructurePickDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructurePickDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructurePickDefinition, ValidatorErrorMap>}
  */
 export function validateStructurePickDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -9013,8 +9013,8 @@ export function validateStructurePickDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureStringDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureStringDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureStringDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureStringDefinition, ValidatorErrorMap>}
  */
 export function validateStructureStringDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -9779,8 +9779,8 @@ export function validateStructureStringDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureUuidDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureUuidDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureUuidDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureUuidDefinition, ValidatorErrorMap>}
  */
 export function validateStructureUuidDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -10230,8 +10230,8 @@ export function validateStructureUuidDefinition(value) {
 /**
  * Select the targets and generators to be used when generating. See {@link https://compasjs.com/generators/targets.html} for more information.
  *
- * @param {import("../common/types").StructureGenerateOptionsInput|any} value
- * @returns {Either<import("../common/types").StructureGenerateOptions, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureGenerateOptionsInput|any} value
+ * @returns {Either<import("../common/types.js").StructureGenerateOptions, ValidatorErrorMap>}
  */
 export function validateStructureGenerateOptions(value) {
   /** @type {ValidatorErrorMap} */
@@ -11937,8 +11937,8 @@ export function validateStructureGenerateOptions(value) {
 }
 
 /**
- * @param {import("../common/types").StructureNamePartOptional|any} value
- * @returns {Either<import("../common/types").StructureNamePartOptional, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureNamePartOptional|any} value
+ * @returns {Either<import("../common/types.js").StructureNamePartOptional, ValidatorErrorMap>}
  */
 export function validateStructureNamePartOptional(value) {
   /** @type {ValidatorErrorMap} */
@@ -11983,8 +11983,8 @@ export function validateStructureNamePartOptional(value) {
 /**
  * This contains all types that can be added top level to the structure.
  *
- * @param {import("../common/types").StructureNamedTypeDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureNamedTypeDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureNamedTypeDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureNamedTypeDefinition, ValidatorErrorMap>}
  */
 export function validateStructureNamedTypeDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -12174,8 +12174,8 @@ export function validateStructureNamedTypeDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureRouteDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureRouteDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureRouteDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureRouteDefinition, ValidatorErrorMap>}
  */
 export function validateStructureRouteDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -12907,8 +12907,8 @@ export function validateStructureRouteDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureRouteInvalidationDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureRouteInvalidationDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureRouteInvalidationDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureRouteInvalidationDefinition, ValidatorErrorMap>}
  */
 export function validateStructureRouteInvalidationDefinition(value) {
   /** @type {ValidatorErrorMap} */
@@ -13438,8 +13438,8 @@ export function validateStructureRouteInvalidationDefinition(value) {
 }
 
 /**
- * @param {import("../common/types").StructureStructureInput|any} value
- * @returns {Either<import("../common/types").StructureStructure, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureStructureInput|any} value
+ * @returns {Either<import("../common/types.js").StructureStructure, ValidatorErrorMap>}
  */
 export function validateStructureStructure(value) {
   /** @type {ValidatorErrorMap} */
@@ -13590,8 +13590,8 @@ export function validateStructureStructure(value) {
 /**
  * This contains all known type definitions.
  *
- * @param {import("../common/types").StructureTypeDefinitionInput|any} value
- * @returns {Either<import("../common/types").StructureTypeDefinition, ValidatorErrorMap>}
+ * @param {import("../common/types.js").StructureTypeDefinitionInput|any} value
+ * @returns {Either<import("../common/types.js").StructureTypeDefinition, ValidatorErrorMap>}
  */
 export function validateStructureTypeDefinition(value) {
   /** @type {ValidatorErrorMap} */

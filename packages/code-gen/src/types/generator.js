@@ -154,8 +154,8 @@ function typesGeneratorGenerateBaseTypes(generateContext) {
  * This does not return a way to use a type, this will be added later.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<
- *   import("../generated/common/types").StructureTypeSystemDefinition
+ * @param {import("../../types/advanced-types.d.ts").NamedType<
+ *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
  * >} type
  * @param {GenerateTypeOptions} options
  */

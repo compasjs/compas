@@ -217,9 +217,9 @@ export const jobWhereSpec = {
 /**
  * Reusable where clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreJobWhere} [where]
+ * @param {import("../common/types.js").StoreJobWhere} [where]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
- * @returns {QueryPart<any>}
+ * @returns {import("@compas/store").QueryPart<any>}
  */
 export function jobWhere(where, options = {}) {
   options.shortName ??= "j.";
@@ -243,10 +243,10 @@ export function jobWhere(where, options = {}) {
 /**
  * Reusable ORDER BY clause generator. This is used by other generated queries, and can be used inline in custom queries.
  *
- * @param {import("../common/types").StoreJobOrderBy} [orderBy]
- * @param {import("../common/types").StoreJobOrderBySpec} [orderBySpec]
+ * @param {import("../common/types.js").StoreJobOrderBy} [orderBy]
+ * @param {import("../common/types.js").StoreJobOrderBySpec} [orderBySpec]
  * @param {{ skipValidator?: boolean, shortName?: string }} [options]
- * @returns {QueryPart<any>}
+ * @returns {import("@compas/store").QueryPart<any>}
  */
 export function jobOrderBy(orderBy, orderBySpec, options = {}) {
   options.shortName ??= "j.";
@@ -290,7 +290,7 @@ export function jobOrderBy(orderBy, orderBySpec, options = {}) {
  * Count the records in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobWhere} where
+ * @param {import("../common/types.js").StoreJobWhere} where
  * @returns {Promise<number>}
  */
 async function jobCount(sql, where) {
@@ -305,9 +305,9 @@ async function jobCount(sql, where) {
  * Insert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobInsert["insert"]} insert
+ * @param {import("../common/types.js").StoreJobInsert["insert"]} insert
  * @param {{ withPrimaryKey?: boolean }} [options={}]
- * @returns {Promise<import("../common/types").StoreJob[]>}
+ * @returns {Promise<import("../common/types.js").StoreJob[]>}
  */
 function jobInsert(sql, insert, options = {}) {
   if (insert === undefined || (Array.isArray(insert) && insert.length === 0)) {
@@ -319,8 +319,8 @@ function jobInsert(sql, insert, options = {}) {
 /**
  * Insert a record in the 'job' table
  *
- * @param {import("../common/types").StoreJobInsert} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
+ * @param {import("../common/types.js").StoreJobInsert} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreJob>}
  */
 function jobInsertInternal(input) {
   const { error, value: validatedInput } =
@@ -411,8 +411,8 @@ function jobInsertInternal(input) {
  * Upsert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobInsert["insert"]} insert
- * @returns {Promise<import("../common/types").StoreJob[]>}
+ * @param {import("../common/types.js").StoreJobInsert["insert"]} insert
+ * @returns {Promise<import("../common/types.js").StoreJob[]>}
  */
 function jobUpsertOnId(sql, insert) {
   return jobUpsertOnIdInternal({ insert, returning: "*" }).exec(sql);
@@ -421,8 +421,8 @@ function jobUpsertOnId(sql, insert) {
 /**
  * Upsert a record in the 'job' table based on the primary key.
  *
- * @param {import("../common/types").StoreJobInsert} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
+ * @param {import("../common/types.js").StoreJobInsert} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreJob>}
  */
 function jobUpsertOnIdInternal(input) {
   const { error, value: validatedInput } =
@@ -530,8 +530,8 @@ const jobUpdateSpec = {
  * Insert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobUpdate} update
- * @returns {Promise<import("../common/types").StoreJob[]>}
+ * @param {import("../common/types.js").StoreJobUpdate} update
+ * @returns {Promise<import("../common/types.js").StoreJob[]>}
  */
 function jobUpdate(sql, update) {
   if (update?.returning === "*" || !update?.returning) {
@@ -544,8 +544,8 @@ function jobUpdate(sql, update) {
 /**
  * Update records in the 'job' table
  *
- * @param {import("../common/types").StoreJobUpdate} input
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").StoreJob>}
+ * @param {import("../common/types.js").StoreJobUpdate} input
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreJob>}
  */
 function jobUpdateInternal(input) {
   const { error, value: validatedInput } =
@@ -567,7 +567,7 @@ function jobUpdateInternal(input) {
  * Insert a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
- * @param {import("../common/types").StoreJobWhere} [where]
+ * @param {import("../common/types.js").StoreJobWhere} [where]
  * @returns {Promise<void>}
  */
 function jobDelete(sql, where = {}) {
@@ -577,7 +577,7 @@ function jobDelete(sql, where = {}) {
 /**
  * Remove records from the 'job' table
  *
- * @param {import("../common/types").StoreJobWhere} [where]
+ * @param {import("../common/types.js").StoreJobWhere} [where]
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function jobDeleteInternal(where = {}) {
@@ -608,8 +608,8 @@ export const jobQueryBuilderSpec = {
 /**
  * Query records in the 'job' table, optionally joining related tables.
  *
- * @param {import("../common/types").StoreJobQueryBuilder} [input]
- * @returns {import("@compas/store").WrappedQueryPart<import("../common/types").QueryResultStoreJob>}
+ * @param {import("../common/types.js").StoreJobQueryBuilder} [input]
+ * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").QueryResultStoreJob>}
  */
 export function queryJob(input = {}) {
   const { error, value: validatedInput } =

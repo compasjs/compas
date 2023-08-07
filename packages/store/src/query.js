@@ -13,10 +13,10 @@ import { isNil } from "@compas/stdlib";
  * @template T
  *
  * @param {TemplateStringsArray | string[]} strings
- * @param {...(import("../types/advanced-types").QueryPartArg
- *   | import("../types/advanced-types").QueryPartArg[]
+ * @param {...(import("../types/advanced-types.d.ts").QueryPartArg
+ *   | import("../types/advanced-types.d.ts").QueryPartArg[]
  *   )} values
- * @returns {import("../types/advanced-types").QueryPart<T>}
+ * @returns {import("../types/advanced-types.d.ts").QueryPart<T>}
  */
 export function query(strings, ...values) {
   /** @type {string[]} */
@@ -98,7 +98,7 @@ export function query(strings, ...values) {
  * @since 0.1.0
  *
  * @param {any} query
- * @returns {query is import("../types/advanced-types").QueryPart<any>}
+ * @returns {query is import("../types/advanced-types.d.ts").QueryPart<any>}
  */
 export function isQueryPart(query) {
   return (
@@ -115,7 +115,7 @@ export function isQueryPart(query) {
  *
  * @since 0.1.0
  *
- * @param {import("../types/advanced-types").QueryPart<any>} queryPart
+ * @param {import("../types/advanced-types.d.ts").QueryPart<any>} queryPart
  * @param {{ interpolateParameters?: boolean }} options
  * @returns {string|{ sql?: string, params?: *[] }}
  */
@@ -170,7 +170,7 @@ export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
  * @since 0.1.0
  *
  * @param {import("postgres").Sql<{}>} sql
- * @param {import("../types/advanced-types").QueryPart<any>} queryItem
+ * @param {import("../types/advanced-types.d.ts").QueryPart<any>} queryItem
  * @param {{ jsonResult?: boolean }} [options={}]
  * @returns {Promise<string|object>}
  */

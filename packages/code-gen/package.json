@@ -2,12 +2,15 @@
   "name": "@compas/code-gen",
   "version": "0.6.0",
   "description": "Generate various boring parts of your server",
-  "main": "./index.js",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    },
     "./package.json": "./package.json"
   },
-  "types": "./index.d.ts",
   "type": "module",
   "keywords": [
     "compas",

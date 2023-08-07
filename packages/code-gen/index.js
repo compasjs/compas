@@ -1,9 +1,9 @@
 /**
- * @typedef {import("./src/builders/TypeBuilder").TypeBuilder} TypeBuilder
+ * @typedef {import("./src/builders/TypeBuilder.js").TypeBuilder} TypeBuilder
  */
 
 /**
- * @typedef {import("./types/advanced-types").TypeBuilderLike} TypeBuilderLike
+ * @typedef {import("./types/advanced-types.js").TypeBuilderLike} TypeBuilderLike
  */
 
 /**

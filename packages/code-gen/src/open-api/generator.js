@@ -93,7 +93,7 @@ function openApiBuildFile(generateContext) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {any} openApiSpec
- * @param { import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param { import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function openApiTransformRoute(generateContext, openApiSpec, route) {
   const method = route.method.toLowerCase();
@@ -136,7 +136,7 @@ function openApiTransformPath(path) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {any} openApiSpec
- * @param { import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param { import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function openApiTransformParams(generateContext, openApiSpec, route) {
   if (isNil(route.query) && isNil(route.params)) {
@@ -238,7 +238,7 @@ function openApiTransformParams(generateContext, openApiSpec, route) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {any} openApiSpec
- * @param { import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param { import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function openApiTransformBody(generateContext, openApiSpec, route) {
   const field = route.body;
@@ -270,7 +270,7 @@ function openApiTransformBody(generateContext, openApiSpec, route) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {any} openApiSpec
- * @param { import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param { import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function openApiTransformResponse(generateContext, openApiSpec, route) {
   const contentAppError = {
@@ -335,7 +335,7 @@ function openApiTransformResponse(generateContext, openApiSpec, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {any} openApiSpec
- * @param { import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureTypeSystemDefinition>} type
+ * @param { import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureTypeSystemDefinition>} type
  */
 function transformType(generateContext, openApiSpec, type) {
   const property = {};

@@ -29,7 +29,7 @@ export async function compasGetCli(event, options) {
   eventStart(event, "compas.getCli");
 
   /**
-   * @type {import("../generated/common/types").CliCommandDefinitionInput}
+   * @type {import("../generated/common/types.d.ts").CliCommandDefinitionInput}
    */
   const compas = {
     name: "compas",
@@ -84,11 +84,11 @@ References:
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("../cli/types").CliResolved} cli
+ * @param {import("../cli/types.js").CliResolved} cli
  * @param {string[]} userInput
  * @returns {Promise<{
  *   flags?: any,
- *   result: import("@compas/stdlib").Either<import("../cli/types").CliResult, { message:
+ *   result: import("@compas/stdlib").Either<import("../cli/types.js").CliResult, { message:
  *   string }>,
  * }>}
  */

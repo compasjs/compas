@@ -10,8 +10,8 @@
  */
 
 /**
- * @param {import("../common/types").CompasConfig|any} value
- * @returns {Either<import("../common/types").CompasConfig, ValidatorErrorMap>}
+ * @param {import("../common/types.js").CompasConfig|any} value
+ * @returns {Either<import("../common/types.js").CompasConfig, ValidatorErrorMap>}
  */
 export function validateCompasConfig(value) {
   /** @type {ValidatorErrorMap} */
@@ -388,8 +388,8 @@ export function validateCompasConfig(value) {
 }
 
 /**
- * @param {import("../common/types").CompasResolvedConfig|any} value
- * @returns {Either<import("../common/types").CompasResolvedConfig, ValidatorErrorMap>}
+ * @param {import("../common/types.js").CompasResolvedConfig|any} value
+ * @returns {Either<import("../common/types.js").CompasResolvedConfig, ValidatorErrorMap>}
  */
 export function validateCompasResolvedConfig(value) {
   /** @type {ValidatorErrorMap} */

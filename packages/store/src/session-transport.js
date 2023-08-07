@@ -13,7 +13,7 @@ import { sessionStoreGet } from "./session-store.js";
 
 /**
  * @typedef {object} SessionTransportSettings
- * @property {import("./session-store").SessionStoreSettings} sessionStoreSettings JWT
+ * @property {import("./session-store.js").SessionStoreSettings} sessionStoreSettings JWT
  *   generation settings
  * @property {boolean} [enableHeaderTransport] Defaults to true, can be used to disable
  *   reading the `Authorization` header
@@ -29,7 +29,7 @@ import { sessionStoreGet } from "./session-store.js";
  * @param {import("koa").Context} ctx
  * @param {SessionTransportSettings} settings
  * @returns {Promise<Either<{session:
- *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
+ *   import("./generated/common/types.d.ts").QueryResultStoreSessionStore}>>}
  */
 export async function sessionTransportLoadFromContext(
   event,

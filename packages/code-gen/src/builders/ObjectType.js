@@ -43,7 +43,7 @@ export class ObjectType extends TypeBuilder {
   }
 
   /**
-   * @param {Record<string, import("../../types/advanced-types").TypeBuilderLike>} obj
+   * @param {Record<string, import("../../types/advanced-types.d.ts").TypeBuilderLike>} obj
    * @returns {ObjectType}
    */
   keys(obj) {

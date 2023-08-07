@@ -26,8 +26,8 @@ export function cliParserSplitArgs(args) {
 
 /**
  *
- * @param {import("./types").CliResolved} command
- * @returns {Map<string, import("../generated/common/types").CliFlagDefinition>}
+ * @param {import("./types.js").CliResolved} command
+ * @returns {Map<string, import("../generated/common/types.d.ts").CliFlagDefinition>}
  */
 export function cliParserGetKnownFlags(command) {
   const result = new Map();
@@ -51,9 +51,9 @@ export function cliParserGetKnownFlags(command) {
  * Parse the command to use
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("./types").CliResolved} cli
+ * @param {import("./types.js").CliResolved} cli
  * @param {string[]} args
- * @returns {Promise<import("@compas/stdlib").Either<import("./types").CliResolved, {
+ * @returns {Promise<import("@compas/stdlib").Either<import("./types.js").CliResolved, {
  *     message: string,
  * }>>}
  */
@@ -132,7 +132,7 @@ export async function cliParserParseCommand(event, cli, args) {
 /**
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  * @param {string[]} userInput
  * @returns {Promise<import("@compas/stdlib").Either<any, { message: string }>>}
  */
@@ -249,7 +249,7 @@ export async function cliParserParseFlags(event, command, userInput) {
 /**
  * Statically validate & convert a flag, and call it's validator if available.
  *
- * @param {import("../generated/common/types").CliFlagDefinition} flag
+ * @param {import("../generated/common/types.d.ts").CliFlagDefinition} flag
  * @param {string|undefined} value
  * @param {string} genericErrorMessage
  * @returns {Promise<import("@compas/stdlib").Either<boolean|string|number, { message:

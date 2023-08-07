@@ -2,12 +2,12 @@
 
 /**
  * @template T, E
- * @typedef {import("./types/advanced-types").Either<T, E>} Either
+ * @typedef {import("./types/advanced-types.js").Either<T, E>} Either
  */
 
 /**
  * @template T,E
- * @typedef {import("./types/advanced-types").EitherN<T,E>} EitherN
+ * @typedef {import("./types/advanced-types.js").EitherN<T,E>} EitherN
  */
 
 /**
@@ -15,15 +15,15 @@
  */
 
 /**
- * @typedef {import("./src/config-loader").ConfigLoaderOptions} ConfigLoaderOptions
+ * @typedef {import("./src/config-loader.js").ConfigLoaderOptions} ConfigLoaderOptions
  */
 
 /**
- * @typedef {import("./src/config-loader").ConfigLoaderResult} ConfigLoaderResult
+ * @typedef {import("./src/config-loader.js").ConfigLoaderResult} ConfigLoaderResult
  */
 
 /**
- * @typedef {import("./src/events").InsightEvent} InsightEvent
+ * @typedef {import("./src/events.js").InsightEvent} InsightEvent
  */
 
 /**

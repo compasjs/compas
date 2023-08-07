@@ -177,7 +177,7 @@ export function reactQueryGetApiClientFile(generateContext, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @param {Record<string, string>} contextNames
  */
 export function reactQueryGenerateFunction(
@@ -698,7 +698,7 @@ ${hookName}.setQueryData = (
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function reactQueryWriteIsEnabled(generateContext, file, route) {
   const keysAffectingEnabled = reactQueryGetRequiredFields(
@@ -731,7 +731,7 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {string} hookName
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @returns {string}
  */
 function reactQueryCheckIfRequiredVariablesArePresent(
@@ -757,7 +757,7 @@ function reactQueryCheckIfRequiredVariablesArePresent(
  * Get the list of required fields.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @returns {string[]}
  */
 function reactQueryGetRequiredFields(generateContext, route) {
@@ -793,7 +793,7 @@ function reactQueryGetRequiredFields(generateContext, route) {
  * Write the invalidations in the mutation hook
  *
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function reactQueryWriteInvalidations(file, route) {
   fileWrite(file, `const originalOnSuccess = options.onSuccess;`);

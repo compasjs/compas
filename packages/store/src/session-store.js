@@ -87,7 +87,7 @@ export async function sessionStoreCreate(
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} [accessTokenString]
  * @returns {Promise<Either<{session:
- *   import("./generated/common/types").QueryResultStoreSessionStore}>>}
+ *   import("./generated/common/types.d.ts").QueryResultStoreSessionStore}>>}
  */
 export async function sessionStoreGet(
   event,
@@ -170,7 +170,7 @@ export async function sessionStoreGet(
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
- * @param {import("./generated/common/types").QueryResultStoreSessionStore} session
+ * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export async function sessionStoreUpdate(event, sql, session) {
@@ -215,7 +215,7 @@ export async function sessionStoreUpdate(event, sql, session) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
- * @param {import("./generated/common/types").QueryResultStoreSessionStore} session
+ * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
 export async function sessionStoreInvalidate(event, sql, session) {
@@ -489,7 +489,7 @@ export async function sessionStoreReportAndRevokeLeakedSession(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {SessionStoreSettings} sessionSettings
- * @param {import("./generated/common/types").QueryResultStoreSessionStore} session
+ * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
  *   accessToken: string,
  *   refreshToken: string

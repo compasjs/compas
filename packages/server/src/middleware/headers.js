@@ -1,7 +1,7 @@
 import { cors } from "./cors.js";
 
 /**
- * @param {import("../app").HeaderOptions} [opts]
+ * @param {import("../app.js").HeaderOptions} [opts]
  */
 export function defaultHeaders(opts = {}) {
   // Excerpt from default helmet headers

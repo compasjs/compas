@@ -41,7 +41,7 @@ export class SearchableType extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
+   * @param {import("../../types/advanced-types.d.ts").TypeBuilderLike} builder
    * @returns {SearchableType}
    */
   value(builder) {

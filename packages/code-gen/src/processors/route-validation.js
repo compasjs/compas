@@ -10,7 +10,7 @@ import { typeDefinitionTraverse } from "./type-definition-traverse.js";
 /**
  * Various route validation related things
  *
- * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function routeValidation(generateContext) {
   /** @type {import("@compas/stdlib").AppError[]} */
@@ -31,8 +31,8 @@ export function routeValidation(generateContext) {
 }
 
 /**
- * @param {import("../generate").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @param {"query"|"params"} subType
  */
 function routeValidationSimpleQueryAndParamTypes(
@@ -86,8 +86,8 @@ function routeValidationSimpleQueryAndParamTypes(
  * Check that when files are used with other fields, that they are simple types. We don't
  * define behavior for parsing complex types out of multipart/form-data.
  *
- * @param {import("../generate").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function routeValidationBodyWithFiles(generateContext, route) {
   if (isNil(route.body)) {
@@ -143,8 +143,8 @@ function routeValidationBodyWithFiles(generateContext, route) {
 /**
  * Recursively check if field only uses 'allowedTypes'.
  *
- * @param {import("../generate").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureRouteDefinition>} route
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} field
  * @param {string} partialError
  * @param {string[]} allowedTypes
@@ -202,7 +202,7 @@ function routeValidationConformAllowedTypes(
 /**
  * Recursively check if field is using a 'file' type.
  *
- * @param {import("../generate").GenerateContext} generateContext
+ * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} field
  * @param {Set<any>} handledRefs
  * @returns {boolean}

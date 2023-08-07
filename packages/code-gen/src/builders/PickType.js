@@ -37,7 +37,7 @@ export class PickType extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../types/advanced-types").TypeBuilderLike} builder
+   * @param {import("../../types/advanced-types.d.ts").TypeBuilderLike} builder
    * @returns {PickType}
    */
   object(builder) {

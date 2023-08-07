@@ -74,7 +74,7 @@ export function printBenchResults() {
 
 /**
  * @param {string[]} result
- * @param {import("./state").BenchState[]} state
+ * @param {import("./state.js").BenchState[]} state
  */
 function printSuccessResults(result, state) {
   if (state.length === 0) {
@@ -120,7 +120,7 @@ function printSuccessResults(result, state) {
 
 /**
  * @param {string[]} result
- * @param {import("./state").BenchState[]} state
+ * @param {import("./state.js").BenchState[]} state
  */
 function printErrorResults(result, state) {
   if (state.length === 0) {

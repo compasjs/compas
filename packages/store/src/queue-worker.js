@@ -17,7 +17,7 @@ import { query } from "./query.js";
  * @typedef {(
  *   event: import("@compas/stdlib").InsightEvent,
  *   sql: import("postgres").Sql<{}>,
- *   job: import("./generated/common/types").StoreJob,
+ *   job: import("./generated/common/types.d.ts").StoreJob,
  * ) => (void | Promise<void>)} QueueWorkerHandler
  */
 
@@ -79,9 +79,9 @@ import { query } from "./query.js";
 
 const queryParts = {
   /**
-   * @param {import("./generated/common/types").StoreJobWhere} where
-   * @param {import("../types/advanced-types").QueryPart<unknown>} [orderBy]
-   * @returns {import("../types/advanced-types").QueryPart<any>}
+   * @param {import("./generated/common/types.d.ts").StoreJobWhere} where
+   * @param {import("../types/advanced-types.d.ts").QueryPart<unknown>} [orderBy]
+   * @returns {import("../types/advanced-types.d.ts").QueryPart<any>}
    */
   getJobAndUpdate(where, orderBy) {
     return query`
@@ -109,9 +109,9 @@ const queryParts = {
   },
 
   /**
-   * @param {import("./generated/common/types").StoreJobWhere} where
-   * @param {import("../types/advanced-types").QueryPart<unknown>} [orderBy]
-   * @returns {import("../types/advanced-types").QueryPart<any>}
+   * @param {import("./generated/common/types.d.ts").StoreJobWhere} where
+   * @param {import("../types/advanced-types.d.ts").QueryPart<unknown>} [orderBy]
+   * @returns {import("../types/advanced-types.d.ts").QueryPart<any>}
    */
   getJobAndDelete(where, orderBy) {
     return query`
@@ -404,11 +404,11 @@ async function queueWorkerUpsertCronJob(sql, job) {
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
- * @param {(where: import("./generated/common/types").StoreJobWhere, orderBy:
- *   import("../types/advanced-types").QueryPart|undefined) =>
- *   import("../types/advanced-types").QueryPart} jobTodoQuery
- * @param {import("./generated/common/types").StoreJobWhere} where
- * @param {import("../types/advanced-types").QueryPart|undefined} orderBy
+ * @param {(where: import("./generated/common/types.d.ts").StoreJobWhere, orderBy:
+ *   import("../types/advanced-types.d.ts").QueryPart|undefined) =>
+ *   import("../types/advanced-types.d.ts").QueryPart} jobTodoQuery
+ * @param {import("./generated/common/types.d.ts").StoreJobWhere} where
+ * @param {import("../types/advanced-types.d.ts").QueryPart|undefined} orderBy
  * @param {{currentPromise: Promise<void>}} worker
  */
 function queueWorkerRun(
@@ -472,7 +472,7 @@ function queueWorkerRun(
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("postgres").Sql<{}>} sql
  * @param {QueueWorkerInternalOptions} options
- * @param {import("./generated/common/types").StoreJob} job
+ * @param {import("./generated/common/types.d.ts").StoreJob} job
  */
 async function queueWorkerExecuteJob(logger, sql, options, job) {
   const isCronJob = job.data?.jobType === JOB_TYPE_CRON;

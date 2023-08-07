@@ -26,7 +26,7 @@ export class GenericType extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../types/advanced-types").TypeBuilderLike} [key]
+   * @param {import("../../types/advanced-types.d.ts").TypeBuilderLike} [key]
    * @returns {GenericType}
    */
   keys(key) {
@@ -35,7 +35,7 @@ export class GenericType extends TypeBuilder {
   }
 
   /**
-   * @param {import("../../types/advanced-types").TypeBuilderLike} [value]
+   * @param {import("../../types/advanced-types.d.ts").TypeBuilderLike} [value]
    * @returns {GenericType}
    */
   values(value) {

@@ -13,11 +13,7 @@ export async function main() {
     return;
   }
 
-  const { exitCode } = await spawn("npx", [
-    "tsc",
-    "-p",
-    "./jsconfig.types.json",
-  ]);
+  const { exitCode } = await spawn("npx", ["tsc", "-p", "./jsconfig.json"]);
 
   process.exit(exitCode);
 }
@@ -27,11 +23,6 @@ function cleanUpTypeDefinitionFiles() {
   processDirectoryRecursiveSync(process.cwd(), (file) => {
     if (file.includes("generated/common/types")) {
       // Exclude generated directory
-      return;
-    }
-
-    if (file.includes("types/compas.d.ts")) {
-      // Exclude compas global definition
       return;
     }
 

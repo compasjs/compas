@@ -1,5 +1,5 @@
 /**
- * @typedef {import("./src/app").KoaApplication} Application
+ * @typedef {import("./src/app.js").KoaApplication} Application
  */
 
 /**

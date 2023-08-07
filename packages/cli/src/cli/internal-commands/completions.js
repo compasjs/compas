@@ -94,17 +94,17 @@ export async function cliExecutor(logger, state) {
 /**
  * Resolve completions for the cli and input array
  *
- * @param {import("../types").CliResolved} cli
+ * @param {import("../types.js").CliResolved} cli
  * @param {string[]} input
  * @returns {Promise<{
- *   commandCompletions: CliCompletion[],
- *   flagCompletions: CliCompletion[],
+ *   commandCompletions: import("../../generated/common/types.js").CliCompletion[],
+ *   flagCompletions: import("../../generated/common/types.js").CliCompletion[],
  * }>}
  */
 export async function completionsGetCompletions(cli, input) {
-  /** @type {CliCompletion[]} */
+  /** @type {import("../../generated/common/types.js").CliCompletion[]} */
   let commandCompletions = [];
-  /** @type {CliCompletion[]} */
+  /** @type {import("../../generated/common/types.js").CliCompletion[]} */
   let flagCompletions = [];
 
   const command = completionsMatchCommand(cli, input);
@@ -145,8 +145,8 @@ export async function completionsGetCompletions(cli, input) {
 }
 
 /**
- * @param {import("../../generated/common/types").CliCompletion[]} commandCompletions
- * @param {import("../../generated/common/types").CliCompletion[]} flagCompletions
+ * @param {import("../../generated/common/types.d.ts").CliCompletion[]} commandCompletions
+ * @param {import("../../generated/common/types.d.ts").CliCompletion[]} flagCompletions
  */
 function completionsPrintForZsh(commandCompletions, flagCompletions) {
   let completionResult = `local commands\ncommands=(`;
@@ -154,7 +154,7 @@ function completionsPrintForZsh(commandCompletions, flagCompletions) {
 
   /**
    *
-   * @param {import("../../generated/common/types").CliCompletion} completion
+   * @param {import("../../generated/common/types.d.ts").CliCompletion} completion
    */
   const addCompletion = (completion) => {
     // @ts-ignore
@@ -273,12 +273,12 @@ function completionsMatchCommand(cli, input) {
  *  - We expect commands to be strings containing only 'a-z' and dashes (-), so if not
  * it is a dynamic value or flag.
  *
- * @param {import("../types").CliResolved} command
+ * @param {import("../types.js").CliResolved} command
  * @param {string[]} input
- * @returns {Promise<import("../../generated/common/types").CliCompletion[]>}
+ * @returns {Promise<import("../../generated/common/types.d.ts").CliCompletion[]>}
  */
 async function completionsDetermineCommandCompletions(command, input) {
-  /** @type {CliCompletion[]} */
+  /** @type {import("../../generated/common/types.js").CliCompletion[]} */
   const completions = [];
 
   const { flagArgs } = cliParserSplitArgs(input);
@@ -309,12 +309,12 @@ async function completionsDetermineCommandCompletions(command, input) {
 
 /**
  *
- * @param {Map<string, import("../../generated/common/types").CliFlagDefinition>} availableFlags
+ * @param {Map<string, import("../../generated/common/types.d.ts").CliFlagDefinition>} availableFlags
  * @param {string[]} input
  * @param {{ forceFlagCompletions: boolean }} options
  * @returns {Promise<{
  *   shouldSkipCommands: boolean,
- *   flagCompletions: import("../../generated/common/types").CliCompletion[],
+ *   flagCompletions: import("../../generated/common/types.d.ts").CliCompletion[],
  * }>}
  */
 async function completionGetFlagCompletions(availableFlags, input, options) {
@@ -353,7 +353,7 @@ async function completionGetFlagCompletions(availableFlags, input, options) {
     };
   }
 
-  /** @type {CliCompletion[]} */
+  /** @type {import("../../generated/common/types.js").CliCompletion[]} */
   let oneToLastCompletions = [];
   if (availableFlags.has(oneToLastItem ?? "")) {
     oneToLastCompletions =

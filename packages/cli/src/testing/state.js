@@ -29,7 +29,7 @@
  */
 
 /**
- * @type {Logger}
+ * @type {import("@compas/stdlib").Logger}
  */
 // @ts-ignore
 export let testLogger = undefined;
@@ -60,7 +60,7 @@ export function setAreTestRunning(running) {
 /**
  * Set the test logger
  *
- * @param {Logger} logger
+ * @param {import("@compas/stdlib").Logger} logger
  */
 export function setTestLogger(logger) {
   testLogger = logger;

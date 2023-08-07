@@ -4,7 +4,7 @@
  *
  * @since 0.1.0
  *
- * @param {import("./app").KoaApplication} app
+ * @param {import("./app.js").KoaApplication} app
  * @param {import("axios").AxiosInstance} axios
  * @returns {Promise<void>}
  */
@@ -39,7 +39,7 @@ export async function createTestAppAndClient(app, axios) {
  *
  * @since 0.1.0
  *
- * @param {import("./app").KoaApplication} app
+ * @param {import("./app.js").KoaApplication} app
  * @returns {Promise<void>}
  */
 export function closeTestApp(app) {

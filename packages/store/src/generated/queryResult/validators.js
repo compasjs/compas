@@ -11,8 +11,8 @@ import { validateStoreFileMeta } from "../store/validators.js";
  */
 
 /**
- * @param {import("../common/types").QueryResultStoreFileInput|any} value
- * @returns {Either<import("../common/types").QueryResultStoreFile, ValidatorErrorMap>}
+ * @param {import("../common/types.js").QueryResultStoreFileInput|any} value
+ * @returns {Either<import("../common/types.js").QueryResultStoreFile, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreFile(value) {
   /** @type {ValidatorErrorMap} */
@@ -282,8 +282,8 @@ export function validateQueryResultStoreFile(value) {
 }
 
 /**
- * @param {import("../common/types").QueryResultStoreJobInput|any} value
- * @returns {Either<import("../common/types").QueryResultStoreJob, ValidatorErrorMap>}
+ * @param {import("../common/types.js").QueryResultStoreJobInput|any} value
+ * @returns {Either<import("../common/types.js").QueryResultStoreJob, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreJob(value) {
   /** @type {ValidatorErrorMap} */
@@ -615,8 +615,8 @@ export function validateQueryResultStoreJob(value) {
 }
 
 /**
- * @param {import("../common/types").QueryResultStoreSessionStoreInput|any} value
- * @returns {Either<import("../common/types").QueryResultStoreSessionStore, ValidatorErrorMap>}
+ * @param {import("../common/types.js").QueryResultStoreSessionStoreInput|any} value
+ * @returns {Either<import("../common/types.js").QueryResultStoreSessionStore, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStore(value) {
   /** @type {ValidatorErrorMap} */
@@ -869,8 +869,8 @@ export function validateQueryResultStoreSessionStore(value) {
 }
 
 /**
- * @param {import("../common/types").QueryResultStoreSessionStoreTokenInput|any} value
- * @returns {Either<import("../common/types").QueryResultStoreSessionStoreToken, ValidatorErrorMap>}
+ * @param {import("../common/types.js").QueryResultStoreSessionStoreTokenInput|any} value
+ * @returns {Either<import("../common/types.js").QueryResultStoreSessionStoreToken, ValidatorErrorMap>}
  */
 export function validateQueryResultStoreSessionStoreToken(value) {
   /** @type {ValidatorErrorMap} */

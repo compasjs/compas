@@ -57,7 +57,7 @@ export function crudHandlersGenerate(generateContext) {
 
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersFile(generateContext, crud) {
   return fileContextCreateGeneric(generateContext, `${crud.group}/crud.js`, {
@@ -68,7 +68,7 @@ function crudHandlersFile(generateContext, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersStart(generateContext, file, crud) {
   const { modifierDocs, modifierDestructure } = crudHandlersGetModifiers(crud);
@@ -101,7 +101,7 @@ function crudHandlersStart(generateContext, file, crud) {
 }
 
 /**
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  * @returns {{
  *   modifierDocs: string[],
  *   modifierDestructure: string[],
@@ -196,7 +196,7 @@ function crudHandlersGetModifiers(crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersEnd(generateContext, file, crud) {
   fileWrite(file, `\n${fileFormatInlineComment(file, crud.group)}`);
@@ -206,7 +206,7 @@ function crudHandlersEnd(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersGenerateForType(generateContext, file, crud) {
   crudRouteSwitch(
@@ -230,7 +230,7 @@ function crudHandlersGenerateForType(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersList(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -282,7 +282,7 @@ function crudHandlersList(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersSingle(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -319,7 +319,7 @@ function crudHandlersSingle(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersCreate(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -376,7 +376,7 @@ function crudHandlersCreate(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersUpdate(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
@@ -405,7 +405,7 @@ function crudHandlersUpdate(generateContext, file, crud) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersDelete(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);

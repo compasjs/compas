@@ -17,7 +17,7 @@ import { cliParserParseFlags, cliParserSplitArgs } from "./parser.js";
  * Also registers `--watch`. Which special case captures the command and rewrites it to a
  * `cli.name watch ...` command.
  *
- * @param {import("./types").CliResolved} cli
+ * @param {import("./types.js").CliResolved} cli
  */
 export function cliWatchInit(cli) {
   cliWatchCheckForReservedKeys(cli);
@@ -87,7 +87,7 @@ You can also add a compas config file at 'config/compas.{js,json}' to specify pr
 
 /**
  *
- * @param {import("./types").CliResolved[]} commands
+ * @param {import("./types.js").CliResolved[]} commands
  */
 function cliWatchFilterCommands(commands) {
   const result = [];
@@ -114,10 +114,10 @@ function cliWatchFilterCommands(commands) {
  * Add the `--watch` flag to all watchable commands.
  *
  * @param {string} cliName
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  */
 function cliWatchAddFlagToWatchableCommands(cliName, command) {
-  /** @type {import("../generated/common/types").CliFlagDefinition} */
+  /** @type {import("../generated/common/types.d.ts").CliFlagDefinition} */
   const flag = {
     name: "watch",
     rawName: "--watch",
@@ -152,7 +152,7 @@ function cliWatchAddFlagToWatchableCommands(cliName, command) {
  * Make sure other commands are not using flags and command names used by the 'watch'
  * system.
  *
- * @param {import("./types").CliResolved} command
+ * @param {import("./types.js").CliResolved} command
  */
 export function cliWatchCheckForReservedKeys(command) {
   if (
@@ -187,7 +187,7 @@ export function cliWatchShouldRun(commandArgs, flagArgs) {
  * Execute command in watch-mode. Checking options based on the command.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("./types").CliResolved} cli
+ * @param {import("./types.js").CliResolved} cli
  * @param {string[]} userInput
  * @returns {Promise<import("@compas/stdlib").Either<string, { message: string }>>}
  */
@@ -274,7 +274,7 @@ export async function cliWatchExec(event, cli, userInput) {
 
 /**
  *
- * @param {...import("./types").CliResolved["watchSettings"]} settings
+ * @param {...import("./types.js").CliResolved["watchSettings"]} settings
  * @returns {import("chokidar").WatchOptions}
  */
 function cliWatchGetChokidarOpts(...settings) {

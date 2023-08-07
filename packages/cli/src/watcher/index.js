@@ -116,7 +116,7 @@ export async function watcherRun({ chokidarOptions, hooks }) {
  * Run watcher run & wrap around child process spawn.
  * Makes sure the instance is fully killed, before starting up again.
  *
- * @param {Logger} logger
+ * @param {import("@compas/stdlib").Logger} logger
  * @param {{
  *   chokidarOptions: import("chokidar").WatchOptions,
  *   spawnArguments: [

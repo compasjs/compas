@@ -15,14 +15,14 @@ import { validateCliCommandDefinition } from "../generated/cli/validators.js";
 /**
  * Load the specified directories and return a command array
  *
- * @param {InsightEvent} event
+ * @param {import("@compas/stdlib").InsightEvent} event
  * @param {{inputs: { directory: string, validateOnLoad: boolean }[]}} options
- * @returns {Promise<import("../generated/common/types").CliCommandDefinitionInput[]>}
+ * @returns {Promise<import("../generated/common/types.d.ts").CliCommandDefinitionInput[]>}
  */
 export async function cliLoaderLoadDirectories(event, options) {
   eventStart(event, "cliLoader.loadDirectories");
 
-  /** @type {import("../generated/common/types").CliCommandDefinitionInput[]} */
+  /** @type {import("../generated/common/types.d.ts").CliCommandDefinitionInput[]} */
   const result = [];
 
   for (const input of options.inputs) {

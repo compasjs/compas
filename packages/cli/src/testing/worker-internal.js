@@ -14,7 +14,7 @@ export const workerFile = new URL(
 /**
  * List available test files
  *
- * @property {import("./config").TestConfig} testConfig
+ * @property {import("./config.js").TestConfig} testConfig
  * @returns {Promise<string[]>}
  */
 export async function testingListFiles(testConfig) {
@@ -41,7 +41,7 @@ export async function testingListFiles(testConfig) {
 }
 
 /**
- * @param {import("./config").TestConfig} testConfig
+ * @param {import("./config.js").TestConfig} testConfig
  * @returns {Promise<number>}
  */
 export async function runTestsInProcess(testConfig) {

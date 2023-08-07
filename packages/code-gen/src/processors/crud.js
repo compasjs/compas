@@ -4,11 +4,11 @@ import { structureNamedTypes } from "./structure.js";
  * Get a list of CRUD objects in the structure
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @returns {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>)[]}
+ * @returns {(import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>)[]}
  */
 export function structureCrud(generateContext) {
   /**
-   * @type {(import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>)[]}
+   * @type {(import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>)[]}
    */
   const result = [];
 
@@ -25,7 +25,7 @@ export function structureCrud(generateContext) {
  * Call the route specific functions that are enabled on the CRUD object.
  *
  * @template {any[]} X
- * @param {import("../../types/advanced-types").NamedType<import("../generated/common/types").StructureCrudDefinition>} crud
+ * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  * @param {{
  *   listRoute: (...X) => void,
  *   singleRoute: (...X) => void,

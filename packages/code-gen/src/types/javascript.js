@@ -11,5 +11,5 @@ export function typesJavascriptUseTypeName(generateContext, file, name) {
     return name;
   }
 
-  return `import("../common/types").${name}`;
+  return `import("../common/types.js").${name}`;
 }

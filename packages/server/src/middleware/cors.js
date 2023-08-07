@@ -37,7 +37,7 @@ const defaultOptions = {
 /**
  * CORS middleware for koa2
  *
- * @param {import("../app").CorsOptions} [options]
+ * @param {import("../app.js").CorsOptions} [options]
  * @returns {Function}
  */
 export function cors(options = {}) {

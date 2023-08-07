@@ -13,7 +13,7 @@ import { output } from "../output/static.js";
  *
  * @param {string} projectDirectory
  * @param {boolean} isRootProject
- * @returns {Promise<import("../generated/common/types").CompasResolvedConfig|undefined>}
+ * @returns {Promise<import("../generated/common/types.d.ts").CompasResolvedConfig|undefined>}
  */
 export async function configResolve(projectDirectory, isRootProject) {
   const expectedFileLocation = pathJoin(projectDirectory, "config/compas.json");
@@ -74,7 +74,7 @@ export async function configResolve(projectDirectory, isRootProject) {
     return undefined;
   }
 
-  /** @type {import("../generated/common/types").CompasResolvedConfig} */
+  /** @type {import("../generated/common/types.d.ts").CompasResolvedConfig} */
   const resolvedConfig = {
     ...value,
 

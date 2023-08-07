@@ -148,10 +148,10 @@ export const typeDefinitionTraversePaths = {
  *
  * @param {import("../generated/common/types.js").StructureTypeDefinition|undefined} typeToTraverse
  * @param {(
- *   type: import("../generated/common/types").StructureTypeDefinition,
+ *   type: import("../generated/common/types.d.ts").StructureTypeDefinition,
  *   callback: (
- *   type: import("../generated/common/types").StructureTypeDefinition,
- * ) => import("../generated/common/types").StructureTypeDefinition|void,
+ *   type: import("../generated/common/types.d.ts").StructureTypeDefinition,
+ * ) => import("../generated/common/types.d.ts").StructureTypeDefinition|void,
  * ) => import("../generated/common/types.js").StructureTypeDefinition|void} callback
  * @param {{
  *   isInitialType: boolean,
@@ -160,7 +160,7 @@ export const typeDefinitionTraversePaths = {
  *   type: import("../generated/common/types.js").StructureTypeDefinition,
  *   ) => void,
  *   afterTraversal?: (
- *   type: import("../generated/common/types").StructureTypeDefinition,
+ *   type: import("../generated/common/types.d.ts").StructureTypeDefinition,
  *   ) => void,
  * }} options
  */
