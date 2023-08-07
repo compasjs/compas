@@ -56,6 +56,11 @@ async function cliExecutor(logger, state) {
     await bumpPackageJson(pkg, state.flags.version.substring(1));
   }
 
+  const { exitCode } = await spawn("npx", ["compas", "run", "types"]);
+  if (exitCode !== 0) {
+    throw new Error();
+  }
+
   await spawn("npm", ["i"]);
   await spawn("git", ["add", "./package-lock.json"]);
 
