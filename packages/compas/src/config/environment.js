@@ -7,6 +7,7 @@ import {
   isProduction,
   pathJoin,
   refreshEnvironmentCache,
+  loggerDetermineDefaultDestination,
 } from "@compas/stdlib";
 import dotenv from "dotenv";
 import { debugTimeEnd, debugTimeStart } from "../output/debug.js";
@@ -67,6 +68,8 @@ APP_NAME=${dirname}
       : "Compas v0.0.0",
     nodeVersion: process.version,
   };
+
+  loggerDetermineDefaultDestination();
 
   // Doesn't log anything here, the caller should do that after enabling the appropriate
   // systems.

@@ -50,6 +50,7 @@ export {
   loggerSetGlobalDestination,
   loggerGetPrettyPrinter,
   loggerExtendGlobalContext,
+  loggerDetermineDefaultDestination,
 } from "./src/logger.js";
 export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";
 export {
