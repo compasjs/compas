@@ -2,8 +2,7 @@
 
 import { createReadStream } from "node:fs";
 import { dirnameForModule, isNil, newLogger, pathJoin } from "@compas/stdlib";
-import { configLoadEnvironment } from "./config/environment.js";
-import { configResolve } from "./config/resolve.js";
+import { configLoadEnvironment, configResolve } from "./config.js";
 import { debugEnable } from "./output/debug.js";
 import { logger, loggerEnable } from "./output/log.js";
 import { output } from "./output/static.js";
