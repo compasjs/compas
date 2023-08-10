@@ -1,5 +1,45 @@
 {
   "compas": {
+    "cache": {
+      "docString": "",
+      "isOptional": false,
+      "validator": {
+        "allowNull": false,
+        "strict": true
+      },
+      "sql": {},
+      "type": "object",
+      "group": "compas",
+      "name": "cache",
+      "relations": [],
+      "keys": {
+        "version": {
+          "docString": "",
+          "isOptional": false,
+          "validator": {
+            "allowNull": false,
+            "trim": false,
+            "lowerCase": false,
+            "upperCase": false,
+            "min": 1
+          },
+          "sql": {},
+          "type": "string"
+        },
+        "config": {
+          "docString": "",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "reference",
+          "reference": {
+            "group": "compas",
+            "name": "resolvedConfig",
+            "uniqueName": "CompasResolvedConfig"
+          }
+        }
+      }
+    },
     "config": {
       "docString": "",
       "isOptional": false,
@@ -150,7 +190,7 @@
             "trim": false,
             "lowerCase": false,
             "upperCase": false,
-            "min": 1
+            "min": 0
           },
           "sql": {},
           "type": "string"

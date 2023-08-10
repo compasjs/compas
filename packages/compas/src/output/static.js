@@ -4,6 +4,36 @@ import { logger } from "./log.js";
 import { tuiPrintInformation } from "./tui.js";
 
 export const output = {
+  cache: {
+    notExisting: () => {
+      debugPrint("Did not find a cache file. Defaulting to empty cache.");
+    },
+    errorReadingCache: (e) => {
+      debugPrint("Could not read cache.");
+      debugPrint(AppError.format(e));
+
+      logger.info("Cache is unreadable. Starting with a fresh cache.");
+    },
+    errorValidatingCache: (validationError) => {
+      debugPrint("Could not validate cache.");
+      debugPrint(validationError);
+
+      logger.info("Cache is invalid. Starting with a fresh cache.");
+    },
+    invalidCompasVersion: (existingVersion, expectedVersion) => {
+      debugPrint(
+        `Found a different cache version. Actual: ${existingVersion}, expected: ${expectedVersion}. Removing existing cache.`,
+      );
+
+      logger.info(
+        `Compas version from cache ('${existingVersion}') is not equal to the installed version ('${expectedVersion}'). Starting with a fresh cache.`,
+      );
+    },
+    loaded: (cache) => {
+      debugPrint("Loaded the cache.");
+      debugPrint(cache);
+    },
+  },
   config: {
     environment: {
       creating: () => {

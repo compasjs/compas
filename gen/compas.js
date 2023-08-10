@@ -49,11 +49,16 @@ export function applyCompasStructure(generator) {
   generator.add(
     T.object("config").keys(config),
     T.object("resolvedConfig").keys({
-      rootDirectory: T.string(),
+      rootDirectory: T.string().min(0),
 
       ...config,
 
       projects: T.array().values(T.reference("compas", "resolvedConfig")),
+    }),
+
+    T.object("cache").keys({
+      version: T.string(),
+      config: T.reference("compas", "resolvedConfig").optional(),
     }),
   );
 }

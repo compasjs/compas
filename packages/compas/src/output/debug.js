@@ -100,6 +100,10 @@ export function debugTimeEnd(label) {
  * Enable writing debug info to the debug file.
  */
 export function debugEnable() {
+  if (shouldOutputDebugInfo === true) {
+    return;
+  }
+
   // Write local cache
   mkdirSync(DEBUG_LOCATION.split("/").slice(0, -1).join("/"), {
     recursive: true,

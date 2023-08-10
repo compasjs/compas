@@ -18,7 +18,7 @@ import { output } from "./output/static.js";
 /**
  * Load .env files, resolve the Compas version and information to determine in which mode we're booting.
  *
- * @param {string} relativeDirectory
+ * @param {string} projectDirectory
  * @param {boolean} hasNodeEnvSet
  * @returns {Promise<{
  *   isCI: boolean,
@@ -28,10 +28,10 @@ import { output } from "./output/static.js";
  *   nodeVersion: string,
  * }>}
  */
-export async function configLoadEnvironment(relativeDirectory, hasNodeEnvSet) {
+export async function configLoadEnvironment(projectDirectory, hasNodeEnvSet) {
   debugTimeStart("config.environment");
 
-  const defaultDotEnvFile = pathJoin(relativeDirectory, ".env");
+  const defaultDotEnvFile = pathJoin(projectDirectory, ".env");
 
   if (!hasNodeEnvSet && !existsSync(defaultDotEnvFile)) {
     // Write a default .env file, we only do this if a NODE_ENV is not explicitly set.

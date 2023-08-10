@@ -2,6 +2,7 @@
 
 import { createReadStream } from "node:fs";
 import { dirnameForModule, isNil, newLogger, pathJoin } from "@compas/stdlib";
+import { cacheLoadFromDisk, cacheWriteToDisk } from "./cache.js";
 import { configLoadEnvironment, configResolve } from "./config.js";
 import { debugEnable } from "./output/debug.js";
 import { logger, loggerEnable } from "./output/log.js";
@@ -47,9 +48,17 @@ if (env.isCI) {
     compasVersion: env.compasVersion,
   });
 
-  const config = await configResolve("", true);
+  const cache = await cacheLoadFromDisk("", env.compasVersion);
 
-  tuiPrintInformation("Loading config...");
+  let config = cache.config;
+
+  if (!config) {
+    config = await configResolve("", true);
+
+    cache.config = config;
+    await cacheWriteToDisk("", cache);
+  }
+
   tuiPrintInformation(JSON.stringify(config));
 
   let i = 0;
