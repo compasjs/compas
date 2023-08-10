@@ -22,11 +22,6 @@ export const cliDefinition = {
   },
   flags: [
     {
-      name: "skipTypescript",
-      rawName: "--skip-tsc",
-      description: "Skip running Typescript",
-    },
-    {
       name: "skipLint",
       rawName: "--skip-lint",
       description: "Skip running the linter",
@@ -50,10 +45,6 @@ async function cliExecutor(logger, state) {
   generateStore(logger);
   await generateExamples(logger, state);
 
-  if (state.flags.skipTypescript !== true) {
-    logger.info("Running tsc...");
-    await spawn("compas", ["run", "types"]);
-  }
   if (state.flags.skipLint !== true) {
     await spawn("compas", ["lint"]);
   }

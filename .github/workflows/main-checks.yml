@@ -30,7 +30,7 @@ jobs:
 
       - name: Generate and run types
         run: |
-          npx compas generate --skip-tsc --skip-lint
+          npx compas generate --skip-lint
           npx compas run types
 
   test:
@@ -61,7 +61,7 @@ jobs:
       - name: Generate and migrate
         run: |
           npx compas docker up --postgres-version ${{ matrix.postgresVersion }}
-          npx compas generate --skip-tsc --skip-lint
+          npx compas generate --skip-lint
           npx compas migrate
 
       - name: Run compas test
@@ -97,7 +97,7 @@ jobs:
       - name: Generate and migrate
         run: |
           npx compas docker up --postgres-version ${{ matrix.postgresVersion }}
-          npx compas generate --skip-tsc --skip-lint
+          npx compas generate --skip-lint
           npx compas migrate
 
       - name: Run compas test --coverage
