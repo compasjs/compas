@@ -1,6 +1,6 @@
 import { mkdirSync, appendFileSync } from "node:fs";
 
-const DEBUG_LOCATION = `.cache/compas-debug-${String(Date.now()).slice(
+const DEBUG_LOCATION = `.cache/compas/debug-${String(Date.now()).slice(
   0,
   -3,
 )}.txt`;
@@ -101,7 +101,9 @@ export function debugTimeEnd(label) {
  */
 export function debugEnable() {
   // Write local cache
-  mkdirSync(".cache", { recursive: true });
+  mkdirSync(DEBUG_LOCATION.split("/").slice(0, -1).join("/"), {
+    recursive: true,
+  });
   appendFileSync(DEBUG_LOCATION, `${inMemoryDebugOutput.join("\n")}\n`);
 
   shouldOutputDebugInfo = true;
