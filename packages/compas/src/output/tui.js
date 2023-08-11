@@ -175,6 +175,8 @@ function tuiResize() {
     actionOutputLines,
     totalOutputLines,
   };
+
+  tuiPaintLayout();
 }
 
 /**
@@ -200,6 +202,7 @@ function tuiExit() {
   cursor.goto(1, tuiState.layoutInfo.startingYPosition);
   cursor.reset();
   cursor.flush();
+  process.stdin.setRawMode(false);
   process.exit(1);
 }
 
