@@ -16,17 +16,21 @@ import { debugTimeEnd, debugTimeStart } from "./output/debug.js";
 import { output } from "./output/static.js";
 
 /**
- * Load .env files, resolve the Compas version and information to determine in which mode we're booting.
- *
- * @param {string} projectDirectory
- * @param {boolean} hasNodeEnvSet
- * @returns {Promise<{
+ * @typedef {{
  *   isCI: boolean,
  *   isDevelopment: boolean,
  *   appName: string,
  *   compasVersion: string,
  *   nodeVersion: string,
- * }>}
+ * }} ConfigEnvironment
+ */
+
+/**
+ * Load .env files, resolve the Compas version and information to determine in which mode we're booting.
+ *
+ * @param {string} projectDirectory
+ * @param {boolean} hasNodeEnvSet
+ * @returns {Promise<ConfigEnvironment>}
  */
 export async function configLoadEnvironment(projectDirectory, hasNodeEnvSet) {
   debugTimeStart("config.environment");
