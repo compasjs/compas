@@ -10,6 +10,13 @@ import {
   tuiPrintInformation,
   tuiStateSetMetadata,
 } from "../output/tui.js";
+import {
+  watcherAddListener,
+  watcherEnable,
+  watcherProcessChangesSinceSnapshot,
+  watcherRemoveSnapshot,
+  watcherWriteSnapshot,
+} from "../watcher.js";
 
 /**
  * Run Compas in CI mode
@@ -31,6 +38,7 @@ export async function developmentMode(env) {
   let config = cache.config;
 
   if (!config) {
+    await watcherRemoveSnapshot("");
     config = await configResolve("", true);
 
     cache.config = config;
@@ -41,9 +49,31 @@ export async function developmentMode(env) {
 
   let i = 0;
 
+  await watcherEnable("");
+
+  function foo() {
+    tuiPrintInformation(".env changed");
+  }
+
+  watcherAddListener({
+    glob: "**/.env*",
+    delay: 100,
+    callback: foo,
+  });
+
+  // Write the snapshot after changes
+  watcherAddListener({
+    glob: "**",
+    delay: 3500,
+    callback: watcherWriteSnapshot.bind(undefined, ""),
+  });
+
+  await watcherProcessChangesSinceSnapshot("");
+
   // keep running;
   setInterval(() => {
     tuiPrintInformation(`oops i did it again... ${i++}`);
+    watcherWriteSnapshot("");
 
     if (i === 3) {
       debugEnable();
@@ -52,7 +82,7 @@ export async function developmentMode(env) {
     if (Math.random() > 0.5) {
       tuiAttachStream(
         createReadStream(
-          pathJoin(dirnameForModule(import.meta), "../package.json"),
+          pathJoin(dirnameForModule(import.meta), "../../package.json"),
         ),
       );
     }
