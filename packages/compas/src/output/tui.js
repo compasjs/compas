@@ -67,7 +67,10 @@ export function tuiPrintInformation(information) {
   debugPrint(`[tui] ${information}`);
 
   // Let go of old information, that we for sure will never print again
-  while (tuiState.informationBuffer.length > 10) {
+  while (
+    tuiState.informationBuffer.length >
+    tuiState.layoutInfo.infoOutputLines * 2
+  ) {
     tuiState.informationBuffer.shift();
   }
 
@@ -162,7 +165,7 @@ function tuiResize() {
 
   const hasEnoughRoom = rows > 30;
 
-  const infoOutputLines = hasEnoughRoom ? 5 : 3;
+  const infoOutputLines = hasEnoughRoom ? 10 : 8;
   const actionOutputLines = 2;
 
   // Keep room for 2 headers
@@ -276,14 +279,54 @@ function tuiPaintLayout() {
     .write(tuiFormatHeaderText("Information", tuiState.appName))
     .reset();
 
-  const startingIdx = Math.max(
-    tuiState.informationBuffer.length - tuiState.layoutInfo.infoOutputLines,
-    0,
-  );
+  // Split up the lines to be nicely printed on screen.
+  // We handle new lines and split on spaces when necessary.
+  const linesToWrite = [];
+  const maxLineWidth = process.stdout.columns;
+
+  // Loop through the buffer in reverse, so we always handle the latest messages first
+  for (let i = tuiState.informationBuffer.length - 1; i >= 0; i--) {
+    let infoLine = tuiState.informationBuffer[i];
+    const lineParts = [];
+
+    while (infoLine.length) {
+      const newLineIndex = infoLine.indexOf("\n");
+      const spaceIndex = infoLine.lastIndexOf(
+        " ",
+        newLineIndex === -1
+          ? maxLineWidth
+          : Math.min(newLineIndex, newLineIndex),
+      );
+      const part = infoLine.slice(
+        0,
+        newLineIndex === -1
+          ? infoLine.length > maxLineWidth
+            ? spaceIndex
+            : maxLineWidth
+          : Math.min(newLineIndex, process.stdout.columns),
+      );
+
+      infoLine = infoLine.slice(part.length).trimStart();
+      lineParts.push(part);
+    }
+
+    // This automatically reverses the array.
+    linesToWrite.unshift(...lineParts);
+
+    if (linesToWrite.length >= tuiState.layoutInfo.infoOutputLines) {
+      break;
+    }
+  }
+
+  // We always add all parts, so we may need to truncate the last added message (the
+  // oldest).
+  while (linesToWrite.length > tuiState.layoutInfo.infoOutputLines) {
+    linesToWrite.shift();
+  }
 
   for (let i = 0; i < tuiState.layoutInfo.infoOutputLines; ++i) {
     cursor.goto(1, cursorY++);
-    cursor.write(tuiState.informationBuffer[startingIdx + i] ?? "");
+    cursor.write(linesToWrite.shift() ?? "");
   }
 
   // Action header + Compas version

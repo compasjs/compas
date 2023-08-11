@@ -49,11 +49,18 @@ export const output = {
         logger.info({
           message: `Starting up ${env.appName} with ${env.compasVersion}${
             env.isCI ? " in CI" : env.isDevelopment ? " in production" : ""
-          }`,
+          }.`,
+        });
+        logger.info({
+          message:
+            "Thank you for trying out the new Compas CLI. This is still a work in progress. Checkout https://github.com/compasjs/compas/issues/2774 for planned features and known issues.",
         });
 
         tuiPrintInformation(
-          `Starting up ${env.appName} with ${env.compasVersion}...`,
+          `Starting up '${env.appName}' with ${env.compasVersion}.`,
+        );
+        tuiPrintInformation(
+          `Thank you for trying out the new Compas CLI. This is still a work in progress. Checkout https://github.com/compasjs/compas/issues/2774 for planned features and known issues.`,
         );
       },
     },

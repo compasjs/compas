@@ -1,11 +1,8 @@
-import { createReadStream } from "node:fs";
-import { dirnameForModule, pathJoin } from "@compas/stdlib";
 import { cacheLoadFromDisk, cacheWriteToDisk } from "../cache.js";
 import { configResolve } from "../config.js";
 import { debugEnable } from "../output/debug.js";
 import { output } from "../output/static.js";
 import {
-  tuiAttachStream,
   tuiEnable,
   tuiPrintInformation,
   tuiStateSetMetadata,
@@ -27,6 +24,7 @@ import {
 export async function developmentMode(env) {
   output.config.environment.loaded(env);
 
+  /** @type {any} */
   const state = {
     env,
     config: undefined,
@@ -54,12 +52,11 @@ export async function developmentMode(env) {
     await watcherWriteSnapshot("");
     await cacheWriteToDisk("", state.cache);
   } else {
+    tuiPrintInformation("Loading from cache.");
     // Load from cache
 
     state.config = state.cache.config;
   }
-
-  tuiPrintInformation(JSON.stringify(state.config));
 
   async function configReload() {
     const newConfig = await configResolve("", true);
@@ -68,6 +65,8 @@ export async function developmentMode(env) {
       tuiPrintInformation("Error while reloading config.");
       return;
     }
+
+    tuiPrintInformation("Reloaded config due to a file change.");
 
     state.config = newConfig;
     state.cache.config = newConfig;
@@ -100,9 +99,5 @@ export async function developmentMode(env) {
   await watcherEnable("");
   await watcherProcessChangesSinceSnapshot("");
 
-  // keep running;
-  setInterval(() => {
-    debugEnable();
-    watcherWriteSnapshot("");
-  }, 3000);
+  debugEnable();
 }
