@@ -19,7 +19,7 @@ import {
 } from "../watcher.js";
 
 /**
- * Run Compas in CI mode
+ * Run Compas in development mode
  *
  * @param {import("../config.js").ConfigEnvironment} env
  * @returns {Promise<void>}
@@ -27,29 +27,58 @@ import {
 export async function developmentMode(env) {
   output.config.environment.loaded(env);
 
+  const state = {
+    env,
+    config: undefined,
+    cache: undefined,
+  };
+
   tuiEnable();
   tuiStateSetMetadata({
     appName: env.appName,
     compasVersion: env.compasVersion,
   });
 
-  const cache = await cacheLoadFromDisk("", env.compasVersion);
+  state.cache = await cacheLoadFromDisk("", env.compasVersion);
 
-  let config = cache.config;
+  if (!state.cache.config) {
+    // We have an empty cache
 
-  if (!config) {
+    // Remove watcher snapshot, we are going to resolve everything from scratch
     await watcherRemoveSnapshot("");
-    config = await configResolve("", true);
 
-    cache.config = config;
-    await cacheWriteToDisk("", cache);
+    //
+    state.config = state.cache.config = await configResolve("", true);
+
+    // Persist cache to disk
+    await watcherWriteSnapshot("");
+    await cacheWriteToDisk("", state.cache);
+  } else {
+    // Load from cache
+
+    state.config = state.cache.config;
   }
 
-  tuiPrintInformation(JSON.stringify(config));
+  tuiPrintInformation(JSON.stringify(state.config));
 
-  let i = 0;
+  async function configReload() {
+    const newConfig = await configResolve("", true);
 
-  await watcherEnable("");
+    if (!newConfig) {
+      tuiPrintInformation("Error while reloading config.");
+      return;
+    }
+
+    state.config = newConfig;
+    state.cache.config = newConfig;
+    await cacheWriteToDisk("", state.cache);
+  }
+
+  watcherAddListener({
+    glob: "**/config/compas.json",
+    delay: 150,
+    callback: configReload,
+  });
 
   function foo() {
     tuiPrintInformation(".env changed");
@@ -68,23 +97,12 @@ export async function developmentMode(env) {
     callback: watcherWriteSnapshot.bind(undefined, ""),
   });
 
+  await watcherEnable("");
   await watcherProcessChangesSinceSnapshot("");
 
   // keep running;
   setInterval(() => {
-    tuiPrintInformation(`oops i did it again... ${i++}`);
+    debugEnable();
     watcherWriteSnapshot("");
-
-    if (i === 3) {
-      debugEnable();
-    }
-
-    if (Math.random() > 0.5) {
-      tuiAttachStream(
-        createReadStream(
-          pathJoin(dirnameForModule(import.meta), "../../package.json"),
-        ),
-      );
-    }
   }, 3000);
 }

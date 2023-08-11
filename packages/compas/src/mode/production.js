@@ -4,7 +4,7 @@ import { logger, loggerEnable } from "../output/log.js";
 import { output } from "../output/static.js";
 
 /**
- * Run Compas in CI mode
+ * Run Compas in production mode
  *
  * @param {import("../config.js").ConfigEnvironment} env
  * @returns {Promise<void>}
