@@ -5,6 +5,7 @@ import { output } from "../output/static.js";
 import {
   tuiEnable,
   tuiPrintInformation,
+  tuiStateSetAvailableActions,
   tuiStateSetMetadata,
 } from "../output/tui.js";
 import {
@@ -89,15 +90,24 @@ export async function developmentMode(env) {
     callback: foo,
   });
 
-  // Write the snapshot after changes
-  watcherAddListener({
-    glob: "**",
-    delay: 3500,
-    callback: watcherWriteSnapshot.bind(undefined, ""),
-  });
-
   await watcherEnable("");
   await watcherProcessChangesSinceSnapshot("");
+
+  tuiStateSetAvailableActions(
+    [
+      {
+        name: "Lint",
+        highlight: "L",
+      },
+      {
+        name: "Test",
+        highlight: "T",
+      },
+    ],
+    (action) => {
+      tuiPrintInformation(JSON.stringify(action));
+    },
+  );
 
   debugEnable();
 }

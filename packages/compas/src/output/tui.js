@@ -8,7 +8,11 @@ const cursor = ansi(process.stdout);
 
 /**
  * @type {{
- *   availableActions: *[],
+ *   availableActions: {
+ *     name: string,
+ *     highlight: string,
+ *   }[],
+ *   actionCallback: *,
  *   repaintInterval?: NodeJS.Timer,
  *   layoutInfo: {
  *     startingYPosition: number,
@@ -52,6 +56,30 @@ const tuiState = {
 export function tuiStateSetMetadata(metadata) {
   tuiState.appName = metadata.appName;
   tuiState.compasVersion = metadata.compasVersion;
+}
+
+/**
+ * Set the available actions
+ *
+ * @param actions
+ * @param callback
+ */
+export function tuiStateSetAvailableActions(actions, callback) {
+  tuiState.availableActions = actions;
+  tuiState.actionCallback = callback;
+
+  tuiState.availableActions.push({
+    name: "Quit",
+    highlight: "Q",
+  });
+  tuiState.availableActions.push({
+    name: "Back",
+    highlight: "Esc",
+  });
+
+  if (tuiState.isEnabled) {
+    tuiPaintLayout();
+  }
 }
 
 /**
@@ -150,9 +178,19 @@ export function tuiEnable() {
       tuiExit();
     }
 
-    if (char === "q") {
+    if (char === "q" || char === "Q") {
       // Q quit
       tuiExit();
+    }
+
+    for (const action of tuiState.availableActions) {
+      if (
+        action.highlight.toLowerCase() === char?.toLowerCase() ||
+        (raw?.name === "escape" && action.highlight === "Esc")
+      ) {
+        tuiState.actionCallback(action);
+        break;
+      }
     }
   });
 }
@@ -337,21 +375,55 @@ function tuiPaintLayout() {
     .write(tuiFormatHeaderText("Available actions", tuiState.compasVersion))
     .reset();
 
-  // TODO: format and paint available actions
+  cursor.goto(1, cursorY++);
 
-  // Temp write some actions
-  cursor.goto(1, cursorY++);
-  cursor.bg.blue().write(`L`).reset().write(" Lint    ");
-  cursor.goto(1, cursorY++);
-  cursor.bg
-    .blue()
-    .write(`T`)
-    .reset()
-    .write(" Test    ")
-    .bg.blue()
-    .write("Q")
-    .reset()
-    .write(" Quit");
+  // Split actions in to two rows
+  const actionsRows = [
+    tuiState.availableActions.slice(
+      0,
+      Math.floor(tuiState.availableActions.length / 2),
+    ),
+    tuiState.availableActions.slice(
+      Math.floor(tuiState.availableActions.length / 2),
+    ),
+  ];
+
+  // Determine the max number of columns
+  const columns = Math.max(actionsRows[0].length, actionsRows[1].length);
+
+  // Calculate the column widths, so we can align the values
+  const columnWidths = Array.from({ length: columns }).map((_, idx) => {
+    const zero = actionsRows[0][idx];
+    const one = actionsRows[1][idx];
+
+    return Math.max(
+      (zero?.name ?? "").length + (zero?.highlight ?? "").length + 1,
+      (one?.name ?? "").length + (one?.highlight ?? "").length + 1,
+    );
+  });
+
+  for (const row of actionsRows) {
+    for (let i = 0; i < row.length; ++i) {
+      const columnWidth = columnWidths[i];
+      const action = row[i];
+
+      // Align the hightlights based on the longest highlight for this column.
+      const maxHighlight = Math.max(
+        ...actionsRows.map((it) => it[i]?.highlight?.length ?? 0),
+      );
+
+      cursor
+        .reset()
+        .write(" ".repeat(maxHighlight - action.highlight.length))
+        .green()
+        .write(action.highlight)
+        .reset()
+        .write(
+          `${` ${action.name}`.padEnd(columnWidth - maxHighlight, " ")}   `,
+        );
+    }
+    cursor.goto(1, cursorY++);
+  }
 
   // Reset the cursor, so if the stream starts writing, it can continue where it left off.
   cursor.goto(1, tuiState.layoutInfo.startingYPosition);

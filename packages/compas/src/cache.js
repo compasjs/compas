@@ -4,6 +4,7 @@ import { AppError, pathJoin } from "@compas/stdlib";
 import { validateCompasCache } from "./generated/compas/validators.js";
 import { debugTimeEnd, debugTimeStart } from "./output/debug.js";
 import { output } from "./output/static.js";
+import { watcherWriteSnapshot } from "./watcher.js";
 
 /**
  * @typedef {import("./generated/common/types.js").CompasCache} Cache
@@ -85,6 +86,8 @@ export async function cacheWriteToDisk(projectDirectory, cache) {
 
   await mkdir(cachePath.split("/").slice(0, -1).join("/"), { recursive: true });
   await writeFile(cachePath, JSON.stringify(cache));
+
+  await watcherWriteSnapshot(projectDirectory);
 
   debugTimeEnd("cache.write");
 }
