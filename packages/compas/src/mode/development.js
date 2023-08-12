@@ -104,6 +104,7 @@ export async function developmentMode(env) {
         highlight: "T",
       },
     ],
+    true,
     (action) => {
       tuiPrintInformation(JSON.stringify(action));
     },

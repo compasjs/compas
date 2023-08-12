@@ -33,6 +33,7 @@ const tuiState = {
   compasVersion: "(v0.0.0)",
   informationBuffer: [],
   availableActions: [],
+  actionCallback: () => {},
 
   // initialize with an artificial high number, so we clear the necessary lines.
   linesWrittenIntoLayout: 100,
@@ -61,10 +62,14 @@ export function tuiStateSetMetadata(metadata) {
 /**
  * Set the available actions
  *
- * @param actions
- * @param callback
+ * @param {{
+ *   name: string,
+ *   highlight: string,
+ * }[]} actions
+ * @param {boolean} isRootMenu
+ * @param {(action: { name: string, highlight: string }) => void} callback
  */
-export function tuiStateSetAvailableActions(actions, callback) {
+export function tuiStateSetAvailableActions(actions, isRootMenu, callback) {
   tuiState.availableActions = actions;
   tuiState.actionCallback = callback;
 
@@ -72,10 +77,13 @@ export function tuiStateSetAvailableActions(actions, callback) {
     name: "Quit",
     highlight: "Q",
   });
-  tuiState.availableActions.push({
-    name: "Back",
-    highlight: "Esc",
-  });
+
+  if (!isRootMenu) {
+    tuiState.availableActions.push({
+      name: "Back",
+      highlight: "Esc",
+    });
+  }
 
   if (tuiState.isEnabled) {
     tuiPaintLayout();
@@ -381,10 +389,10 @@ function tuiPaintLayout() {
   const actionsRows = [
     tuiState.availableActions.slice(
       0,
-      Math.floor(tuiState.availableActions.length / 2),
+      Math.ceil(tuiState.availableActions.length / 2),
     ),
     tuiState.availableActions.slice(
-      Math.floor(tuiState.availableActions.length / 2),
+      Math.ceil(tuiState.availableActions.length / 2),
     ),
   ];
 
