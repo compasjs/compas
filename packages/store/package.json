@@ -24,7 +24,7 @@
     "@aws-sdk/lib-storage": "3.386.0",
     "@compas/stdlib": "0.6.0",
     "crc": "4.3.2",
-    "cron-parser": "^4.8.1",
+    "cron-parser": "^4.9.0",
     "file-type": "18.5.0",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
