@@ -44,17 +44,28 @@ export function applyCompasStructure(generator) {
       .docs(
         "Relative paths to projects. Each project is expected to provide their own configuration.",
       ),
+
+    actions: T.array()
+      .values({
+        name: T.string(),
+        shortcut: T.string(),
+        command: T.array().values(T.string()).min(1),
+      })
+      .optional()
+      .docs("Available actions for this project."),
   };
 
   generator.add(
-    T.object("config").keys(config),
-    T.object("resolvedConfig").keys({
-      rootDirectory: T.string().min(0),
+    T.object("config").keys(config).loose(),
+    T.object("resolvedConfig")
+      .keys({
+        rootDirectory: T.string().min(0),
 
-      ...config,
+        ...config,
 
-      projects: T.array().values(T.reference("compas", "resolvedConfig")),
-    }),
+        projects: T.array().values(T.reference("compas", "resolvedConfig")),
+      })
+      .loose(),
 
     T.object("cache").keys({
       version: T.string(),

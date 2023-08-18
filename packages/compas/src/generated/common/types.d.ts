@@ -31,6 +31,15 @@ export type CompasResolvedConfig = {
     }|undefined;
   }|undefined;
   "projects": (CompasResolvedConfig)[];
+  
+  /**
+   * Available actions for this project.
+   */
+  "actions"?: ({
+    "name": string;
+    "shortcut": string;
+    "command": (string)[];
+  })[]|undefined;
 };
 
 export type CompasCache = {
@@ -71,6 +80,15 @@ export type CompasConfig = {
    * Relative paths to projects. Each project is expected to provide their own configuration.
    */
   "projects"?: (string)[]|undefined;
+  
+  /**
+   * Available actions for this project.
+   */
+  "actions"?: ({
+    "name": string;
+    "shortcut": string;
+    "command": (string)[];
+  })[]|undefined;
 };
 
 

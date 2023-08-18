@@ -5,6 +5,7 @@ import { AppError, pathJoin } from "@compas/stdlib";
 import watcher from "@parcel/watcher";
 import micromatch from "micromatch";
 import { debugPrint } from "./output/debug.js";
+import { tuiPrintInformation } from "./output/tui.js";
 
 /**
  * @typedef {object} WatcherListener
@@ -139,8 +140,16 @@ export async function watcherProcessChangesSinceSnapshot(projectDirectory) {
 
   const pathArray = events.map((it) => it.path);
 
+  let didLog = false;
+
   for (const listener of listeners) {
     if (micromatch.some(pathArray, listener.glob)) {
+      if (!didLog) {
+        // Only log once. We don't tell the user  that we are processing the events until
+        // it triggers some action.
+        tuiPrintInformation("Processing file events since the last run.");
+        didLog = true;
+      }
       debugPrint(`Matched ${listener.callback.name} invoking callback.`);
       listener.callback();
     }
@@ -158,10 +167,6 @@ export async function watcherProcessChangesSinceSnapshot(projectDirectory) {
  */
 function debounce(fn, delay) {
   let _timeout = 0;
-
-  if (_timeout) {
-    clearTimeout(_timeout);
-  }
 
   // @ts-expect-error
   return (...args) => {

@@ -57,9 +57,6 @@ export const output = {
         });
 
         tuiPrintInformation(
-          `Starting up '${env.appName}' with ${env.compasVersion}.`,
-        );
-        tuiPrintInformation(
           `Thank you for trying out the new Compas CLI. This is still a work in progress. Checkout https://github.com/compasjs/compas/issues/2774 for planned features and known issues.`,
         );
       },
@@ -133,6 +130,7 @@ export const output = {
               tuiPrintInformation(
                 `Config file at ${expectedFileLocation} contains an unknown error. Run 'zakmes verify' to retrieve the raw error.`,
               );
+              return;
             }
           } else if (key === "$.projects") {
             logger.error({
@@ -143,6 +141,7 @@ export const output = {
             tuiPrintInformation(
               `Config file at ${expectedFileLocation} contains an invalid projects array. Run 'zakmes verify' to retrieve the raw error.`,
             );
+            return;
           } else {
             logger.error({
               message: "Unknown error while loading config",
@@ -152,6 +151,7 @@ export const output = {
             tuiPrintInformation(
               `Config file at ${expectedFileLocation} contains an unknown error. Run 'zakmes verify' to retrieve the raw error.`,
             );
+            return;
           }
         }
       },

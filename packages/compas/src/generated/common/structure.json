@@ -45,7 +45,7 @@
       "isOptional": false,
       "validator": {
         "allowNull": false,
-        "strict": true
+        "strict": false
       },
       "sql": {},
       "type": "object",
@@ -166,6 +166,77 @@
             "sql": {},
             "type": "string"
           }
+        },
+        "actions": {
+          "docString": "Available actions for this project.",
+          "isOptional": true,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "name": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "shortcut": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "command": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "convert": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "array",
+                "values": {
+                  "docString": "",
+                  "isOptional": false,
+                  "validator": {
+                    "allowNull": false,
+                    "trim": false,
+                    "lowerCase": false,
+                    "upperCase": false,
+                    "min": 1
+                  },
+                  "sql": {},
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -174,7 +245,7 @@
       "isOptional": false,
       "validator": {
         "allowNull": false,
-        "strict": true
+        "strict": false
       },
       "sql": {},
       "type": "object",
@@ -305,6 +376,77 @@
               "group": "compas",
               "name": "resolvedConfig",
               "uniqueName": "CompasResolvedConfig"
+            }
+          }
+        },
+        "actions": {
+          "docString": "Available actions for this project.",
+          "isOptional": true,
+          "validator": {
+            "convert": false
+          },
+          "sql": {},
+          "type": "array",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "name": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "shortcut": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "command": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "convert": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "array",
+                "values": {
+                  "docString": "",
+                  "isOptional": false,
+                  "validator": {
+                    "allowNull": false,
+                    "trim": false,
+                    "lowerCase": false,
+                    "upperCase": false,
+                    "min": 1
+                  },
+                  "sql": {},
+                  "type": "string"
+                }
+              }
             }
           }
         }

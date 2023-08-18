@@ -1,1 +1,9 @@
-{}
+{
+  "actions": [
+    {
+      "name": "Debug Compas",
+      "shortcut": "X",
+      "command": ["cat", "LICENSE"]
+    }
+  ]
+}

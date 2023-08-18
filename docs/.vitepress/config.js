@@ -233,6 +233,16 @@ function getHomeSidebar() {
       ],
     },
 
+    {
+      text: "Features (alpha)",
+      items: [
+        {
+          text: "Introduction",
+          link: "/docs/introduction.html",
+        },
+      ],
+    },
+
     getExamplesSidebar(),
 
     {

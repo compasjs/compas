@@ -5,5 +5,37 @@
       "ignorePatterns": ["__fixtures__", ".cache"]
     }
   },
-  "projects": ["packages/compas"]
+  "projects": ["packages/compas"],
+  "actions": [
+    {
+      "name": "Docs",
+      "shortcut": "D",
+      "command": ["npx", "compas", "run", "docs:dev"]
+    },
+    {
+      "name": "Lint",
+      "shortcut": "L",
+      "command": ["npx", "compas", "lint"]
+    },
+    {
+      "name": "Test",
+      "shortcut": "T",
+      "command": ["npx", "compas", "test"]
+    },
+    {
+      "name": "Generate",
+      "shortcut": "G",
+      "command": ["npx", "compas", "generate"]
+    },
+    {
+      "name": "TSC",
+      "shortcut": "S",
+      "command": ["npx", "compas", "run", "types"]
+    },
+    {
+      "name": "TSC Clean",
+      "shortcut": "C",
+      "command": ["npx", "compas", "run", "types", "--script-args", "clean"]
+    }
+  ]
 }

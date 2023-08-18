@@ -1,53 +1,62 @@
-import { emitKeypressEvents, createInterface } from "node:readline";
-import { clearInterval } from "node:timers";
+import { emitKeypressEvents } from "node:readline";
+import * as readline from "node:readline";
 import { AppError } from "@compas/stdlib";
 import ansi from "ansi";
 import { debugPrint } from "./debug.js";
 
-const cursor = ansi(process.stdout);
+/**
+ * @type {import("ansi").Cursor}
+ */
+let cursor;
+
+const MAX_NUMBER_OF_INFO_LINES = 10;
+
+// TODO: Use a virtual buffer in combination with node-pty.
+//  This allows us to keep information at the bottom of the screen like in earlier
+//  screenshots. To do this, we need some way to translate ansi escape sequences with an
+//  offset and have a stable API for where the cursor will be.
 
 /**
  * @type {{
- *   availableActions: {
- *     name: string,
- *     highlight: string,
- *   }[],
- *   actionCallback: *,
- *   repaintInterval?: NodeJS.Timer,
- *   layoutInfo: {
- *     startingYPosition: number,
- *     infoOutputLines: number,
- *     actionOutputLines: number,
- *     totalOutputLines: number
- *   },
- *   compasVersion: string,
- *   informationBuffer: string[],
- *   appName: string,
  *   isEnabled: boolean,
- *   linesWrittenIntoLayout: number
+ *   metadata: {
+ *     compasVersion: string,
+ *     appName: string,
+ *   },
+ *   informationBuffer: string[],
+ *   ghostOutputLineCount: number,
+ *   dynamicActions: ({
+ *     title: string,
+ *     actions: {
+ *       name: string,
+ *       shortcut: string,
+ *       callback: () => (void|Promise<void>),
+ *     }[],
+ *   })[],
+ *   dynamicActionsComputed: {
+ *     longestShortcut: number,
+ *     longestName: number,
+ *   },
  * }}
  */
 const tuiState = {
   isEnabled: false,
-  appName: "Compas",
-  compasVersion: "(v0.0.0)",
+  metadata: {
+    appName: "unknown",
+    compasVersion: "Compas (unknown)",
+  },
   informationBuffer: [],
-  availableActions: [],
-  actionCallback: () => {},
+  ghostOutputLineCount: 0,
 
-  // initialize with an artificial high number, so we clear the necessary lines.
-  linesWrittenIntoLayout: 100,
-  repaintInterval: undefined,
-  layoutInfo: {
-    startingYPosition: 10,
-    infoOutputLines: 5,
-    actionOutputLines: 2,
-    totalOutputLines: 9,
+  dynamicActions: [],
+  dynamicActionsComputed: {
+    longestName: 0,
+    longestShortcut: 0,
   },
 };
 
 /**
- * Set process metadata.
+ * Set process metadata and repaint.
  *
  * @param {{
  *   appName: string,
@@ -55,35 +64,10 @@ const tuiState = {
  * }} metadata
  */
 export function tuiStateSetMetadata(metadata) {
-  tuiState.appName = metadata.appName;
-  tuiState.compasVersion = metadata.compasVersion;
-}
-
-/**
- * Set the available actions
- *
- * @param {{
- *   name: string,
- *   highlight: string,
- * }[]} actions
- * @param {boolean} isRootMenu
- * @param {(action: { name: string, highlight: string }) => void} callback
- */
-export function tuiStateSetAvailableActions(actions, isRootMenu, callback) {
-  tuiState.availableActions = actions;
-  tuiState.actionCallback = callback;
-
-  tuiState.availableActions.push({
-    name: "Quit",
-    highlight: "Q",
-  });
-
-  if (!isRootMenu) {
-    tuiState.availableActions.push({
-      name: "Back",
-      highlight: "Esc",
-    });
-  }
+  tuiState.metadata = {
+    ...tuiState.metadata,
+    ...metadata,
+  };
 
   if (tuiState.isEnabled) {
     tuiPaintLayout();
@@ -91,10 +75,38 @@ export function tuiStateSetAvailableActions(actions, isRootMenu, callback) {
 }
 
 /**
+ * Set the available actions.
+ *
+ * @param {(typeof tuiState)["dynamicActions"]} actions
+ */
+export function tuiStateSetAvailableActions(actions) {
+  tuiState.dynamicActions = actions;
+
+  let longestName = 0;
+  let longestShortcut = 0;
+
+  for (const group of actions) {
+    for (const action of group.actions) {
+      longestName = Math.max(longestName, action.name.length);
+      longestShortcut = Math.max(longestShortcut, action.shortcut.length);
+    }
+  }
+
+  tuiState.dynamicActionsComputed = {
+    longestName: longestName + 4,
+    longestShortcut,
+  };
+  debugPrint(tuiState.dynamicActionsComputed);
+}
+
+/**
  * Add an information line to the TUI output.
  *
  * Contents added to this information buffer should clarify when and why Compas does
- * certain things.
+ * certain things. We only keep the last 10 messages, regardless if they are multi-line
+ * or not.
+ *
+ * We automatically repaint when the system is enabled.
  *
  * @param {string} information
  */
@@ -103,10 +115,7 @@ export function tuiPrintInformation(information) {
   debugPrint(`[tui] ${information}`);
 
   // Let go of old information, that we for sure will never print again
-  while (
-    tuiState.informationBuffer.length >
-    tuiState.layoutInfo.infoOutputLines * 2
-  ) {
+  while (tuiState.informationBuffer.length > 10) {
     tuiState.informationBuffer.shift();
   }
 
@@ -116,50 +125,39 @@ export function tuiPrintInformation(information) {
 }
 
 /**
- * Consumes the stream printing it to the screen.
+ * Executes callback with the ANSI cursor. Make sure to call `tuiClearLayout` before
+ * attempting to call this function.
  *
- * Internally, it puts the stdout in buffered mode to prevent screen flickering caused by
- * rapid updates.
+ * In contrast to {@link tuiPrintInformation} these lines persist in the output. So
+ * should be used around useful context when executing actions.
  *
- * @param {NodeJS.ReadableStream} stream
- * @returns {Promise<void>}
+ * @param {(cursor: import("ansi").Cursor) => *} callback
  */
-export async function tuiAttachStream(stream) {
-  if (!tuiState.isEnabled) {
+export function tuiWritePersistent(callback) {
+  if (tuiState.ghostOutputLineCount !== 0 || !tuiState.isEnabled) {
     throw AppError.serverError({
-      message: "Called `tuiAttachStream`, but tui is not enabled.",
+      message:
+        "Can only write persistent if the tui is enabled and the information is cleared.",
     });
   }
 
-  tuiEnableRepaintInterval();
-
-  const rl = createInterface({
-    input: stream,
-  });
-
-  for await (const line of rl) {
-    cursor.eraseLine().reset().write(`${line}\n`);
-    tuiState.linesWrittenIntoLayout++;
-  }
-
-  rl.close();
-  tuiClearRepaintInterval();
+  cursor.reset().buffer();
+  callback(cursor);
+  cursor.reset().flush();
 }
 
 /**
  * Set up callbacks for various actions to manage and redraw the TUI.
  */
 export function tuiEnable() {
+  cursor = ansi(process.stdout);
   tuiState.isEnabled = true;
 
   // General setup
   cursor.reset();
-
-  // hide the cursor position
   cursor.hide();
 
-  // Initial calls
-  tuiResize();
+  // Do the initial render
   tuiPaintLayout();
 
   // Exit listeners
@@ -174,7 +172,7 @@ export function tuiEnable() {
   });
 
   // Resize listener
-  process.stdout.on("resize", () => tuiResize());
+  process.stdout.on("resize", () => tuiPaintLayout());
 
   // Input setup + listener
   emitKeypressEvents(process.stdin);
@@ -186,144 +184,77 @@ export function tuiEnable() {
       tuiExit();
     }
 
-    if (char === "q" || char === "Q") {
-      // Q quit
-      tuiExit();
-    }
-
-    for (const action of tuiState.availableActions) {
-      if (
-        action.highlight.toLowerCase() === char?.toLowerCase() ||
-        (raw?.name === "escape" && action.highlight === "Esc")
-      ) {
-        tuiState.actionCallback(action);
-        break;
-      }
-    }
+    tuiOnKeyPress(raw);
   });
 }
 
 /**
- * Recalculate the layout info.
+ * Go through all actions in order and match the keypress name with the configured
+ * actions.
+ *
+ * @param {*} keypress
  */
-function tuiResize() {
-  const rows = process.stdout.rows;
+export function tuiOnKeyPress(keypress) {
+  if (!keypress.name) {
+    return;
+  }
 
-  const hasEnoughRoom = rows > 30;
+  // Rename a few keypress for easier matching, we may want to expand this setup later.
+  if (keypress.name === "escape") {
+    keypress.name = "esc";
+  }
 
-  const infoOutputLines = hasEnoughRoom ? 10 : 8;
-  const actionOutputLines = 2;
-
-  // Keep room for 2 headers
-  const totalOutputLines = infoOutputLines + actionOutputLines + 2;
-
-  tuiState.layoutInfo = {
-    // Add 1 since rows are 'end' inclusive, so we can write on the last row as well.
-    startingYPosition: rows - totalOutputLines + 1,
-    infoOutputLines,
-    actionOutputLines,
-    totalOutputLines,
-  };
-
-  tuiPaintLayout();
+  for (const actionGroup of tuiState.dynamicActions) {
+    for (const action of actionGroup.actions) {
+      if (action.shortcut.toLowerCase() === keypress.name.toLowerCase()) {
+        action.callback();
+        return;
+      }
+    }
+  }
 }
 
 /**
  * Cleanup the screen and exit.
  */
-function tuiExit() {
+export function tuiExit() {
   cursor.buffer();
 
   // show the cursor position, it's pretty strange when that gets lost on ya.
   cursor.show();
 
-  // Remove dev server info, while keeping old process output
+  tuiEraseLayout();
 
-  for (
-    let i = tuiState.layoutInfo.startingYPosition;
-    i <= process.stdout.rows;
-    ++i
-  ) {
-    cursor.goto(1, i);
-    cursor.eraseLine();
-  }
-
-  cursor.goto(1, tuiState.layoutInfo.startingYPosition);
   cursor.reset();
   cursor.flush();
+
   process.stdin.setRawMode(false);
   process.exit(1);
 }
 
 /**
- * Buffer cursor commands and periodically flush.
- */
-function tuiEnableRepaintInterval() {
-  tuiClearRepaintInterval();
-
-  tuiState.repaintInterval = setInterval(() => {
-    tuiPaintLayout();
-
-    cursor.flush();
-    cursor.buffer();
-  });
-}
-
-/**
- * Clear the repaint interval, flush for the last time. From now on every action is
- * written immediately.
- */
-function tuiClearRepaintInterval() {
-  if (tuiState.repaintInterval) {
-    clearInterval(tuiState.repaintInterval);
-
-    tuiPaintLayout();
-    cursor.flush();
-  }
-}
-
-/**
  * Write out information and actions + the known metadata.
  */
-function tuiPaintLayout() {
+export function tuiPaintLayout() {
+  tuiEraseLayout();
+
   cursor.reset();
+  cursor.buffer();
 
-  // Make room for the minimum number of lines that we need at the bottom.
-  // This feels kinda hacky, by printing new lines, the buffer scrolls up. Afterward, we
-  // reset the cursor so the stream (if set) starts by overwriting layout output.
-  // However, we buffer those writes and always append these new lines to prevent layout
-  // shifts.
-  let linesThatWeNeed = Math.min(
-    tuiState.linesWrittenIntoLayout,
-    tuiState.layoutInfo.totalOutputLines,
-  );
-  while (linesThatWeNeed) {
-    linesThatWeNeed--;
-    cursor.write("\n");
-  }
+  // Keep track of the line count, so we can easily clear the screen when necessary.
+  // For this to work correctly, we shouldn't use any custom cursor movements in this
+  // function, so `ansi` can keep track of `\n` and return an accurate value.
+  const newlineCountStart = cursor.newlines;
 
-  // We handled these now
-  tuiState.linesWrittenIntoLayout = 0;
-
-  // Clear out the lines that we are going to write
-  for (
-    let i = tuiState.layoutInfo.startingYPosition;
-    i < process.stdout.rows;
-    ++i
-  ) {
-    cursor.goto(1, i).eraseLine();
-  }
-
-  // Keep track of the lines
-  let cursorY = tuiState.layoutInfo.startingYPosition;
-
-  // Information header + app name
-  cursor.goto(1, cursorY++);
-  cursor.bg
-    .grey()
-    .fg.brightWhite()
-    .write(tuiFormatHeaderText("Information", tuiState.appName))
-    .reset();
+  cursor
+    .blue()
+    .write(tuiState.metadata.appName)
+    .reset()
+    .write(" running with ")
+    .green()
+    .write(tuiState.metadata.compasVersion)
+    .reset()
+    .write("\n");
 
   // Split up the lines to be nicely printed on screen.
   // We handle new lines and split on spaces when necessary.
@@ -359,96 +290,97 @@ function tuiPaintLayout() {
     // This automatically reverses the array.
     linesToWrite.unshift(...lineParts);
 
-    if (linesToWrite.length >= tuiState.layoutInfo.infoOutputLines) {
+    if (linesToWrite.length >= MAX_NUMBER_OF_INFO_LINES) {
       break;
     }
   }
 
   // We always add all parts, so we may need to truncate the last added message (the
   // oldest).
-  while (linesToWrite.length > tuiState.layoutInfo.infoOutputLines) {
+  while (linesToWrite.length > MAX_NUMBER_OF_INFO_LINES) {
     linesToWrite.shift();
   }
 
-  for (let i = 0; i < tuiState.layoutInfo.infoOutputLines; ++i) {
-    cursor.goto(1, cursorY++);
-    cursor.write(linesToWrite.shift() ?? "");
+  for (const line of linesToWrite) {
+    cursor.write(line).write("\n");
   }
 
-  // Action header + Compas version
-  cursor.goto(1, cursorY++);
-  cursor.bg
-    .grey()
-    .fg.brightWhite()
-    .write(tuiFormatHeaderText("Available actions", tuiState.compasVersion))
-    .reset();
+  if (tuiState.dynamicActions.length) {
+    cursor.write("\n");
+  }
 
-  cursor.goto(1, cursorY++);
+  for (const actionGroup of tuiState.dynamicActions) {
+    cursor.write(`${actionGroup.title}\n`);
 
-  // Split actions in to two rows
-  const actionsRows = [
-    tuiState.availableActions.slice(
-      0,
-      Math.ceil(tuiState.availableActions.length / 2),
-    ),
-    tuiState.availableActions.slice(
-      Math.ceil(tuiState.availableActions.length / 2),
-    ),
-  ];
+    const shallowCopy = [...actionGroup.actions];
 
-  // Determine the max number of columns
-  const columns = Math.max(actionsRows[0].length, actionsRows[1].length);
+    // Write all actions in 2 column mode.
+    // The widths are based on the longest available shortcut and name.
+    while (shallowCopy.length) {
+      const pop1 = shallowCopy.shift();
+      const pop2 = shallowCopy.shift();
 
-  // Calculate the column widths, so we can align the values
-  const columnWidths = Array.from({ length: columns }).map((_, idx) => {
-    const zero = actionsRows[0][idx];
-    const one = actionsRows[1][idx];
-
-    return Math.max(
-      (zero?.name ?? "").length + (zero?.highlight ?? "").length + 1,
-      (one?.name ?? "").length + (one?.highlight ?? "").length + 1,
-    );
-  });
-
-  for (const row of actionsRows) {
-    for (let i = 0; i < row.length; ++i) {
-      const columnWidth = columnWidths[i];
-      const action = row[i];
-
-      // Align the hightlights based on the longest highlight for this column.
-      const maxHighlight = Math.max(
-        ...actionsRows.map((it) => it[i]?.highlight?.length ?? 0),
-      );
+      if (!pop1) {
+        break;
+      }
 
       cursor
         .reset()
-        .write(" ".repeat(maxHighlight - action.highlight.length))
+        .write("    ")
         .green()
-        .write(action.highlight)
+        .write(
+          " ".repeat(
+            tuiState.dynamicActionsComputed.longestShortcut -
+              pop1.shortcut.length,
+          ) + pop1.shortcut,
+        )
         .reset()
         .write(
-          `${` ${action.name}`.padEnd(columnWidth - maxHighlight, " ")}   `,
+          ` ${pop1.name}${" ".repeat(
+            tuiState.dynamicActionsComputed.longestName - pop1.name.length,
+          )}`,
+        );
+
+      if (!pop2) {
+        // May be undefined with an odd number of actions.
+        cursor.write("\n");
+        break;
+      }
+
+      cursor
+        .reset()
+        .green()
+        .write(
+          " ".repeat(
+            tuiState.dynamicActionsComputed.longestShortcut -
+              pop2.shortcut.length,
+          ) + pop2.shortcut,
+        )
+        .reset()
+        .write(
+          ` ${pop2.name}${" ".repeat(
+            tuiState.dynamicActionsComputed.longestName - pop2.name.length,
+          )}\n`,
         );
     }
-    cursor.goto(1, cursorY++);
   }
 
-  // Reset the cursor, so if the stream starts writing, it can continue where it left off.
-  cursor.goto(1, tuiState.layoutInfo.startingYPosition);
+  cursor.flush();
+
+  // @ts-expect-error
+  tuiState.ghostOutputLineCount = cursor.newlines - newlineCountStart;
 }
 
 /**
- * Format a header. We need to pad with spaces, so the background is enabled continuously.
- *
- * @param {string} [left]
- * @param {string} [right]
+ * Clean up intermediate tui output. This should be done before spawning a process.
  */
-function tuiFormatHeaderText(left, right) {
-  return (
-    (left ?? "") +
-    " ".repeat(
-      process.stdout.columns - (left?.length ?? 0) - (right?.length ?? 0),
-    ) +
-    (right ?? "")
-  );
+export function tuiEraseLayout() {
+  cursor.reset();
+
+  if (tuiState.ghostOutputLineCount) {
+    readline.moveCursor(process.stdout, 0, -tuiState.ghostOutputLineCount);
+    cursor.eraseData().eraseLine();
+  }
+
+  tuiState.ghostOutputLineCount = 0;
 }
