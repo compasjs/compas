@@ -8,19 +8,18 @@ updates:
     open-pull-requests-limit: 10
     versioning-strategy: increase
     groups:
-      aws-sdk:
-        patterns:
-          - "@aws-sdk/*"
-      babel:
-        patterns:
-          - "@babel/*"
-      typescript-eslint:
-        patterns:
-          - "@typescript-eslint/*"
-      typescript-types:
-        patterns:
-          - "@types/node"
-          - "@types/react"
+      development:
+        dependency-type: "development"
+      production-compat:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      production-breaking:
+        dependency-type: "production"
+        update-types:
+          - "major"
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:

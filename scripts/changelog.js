@@ -34,11 +34,14 @@ async function main(logger) {
       !it.title.includes("build(deps-dev)") &&
       !it.title.includes("@types/node") &&
       !it.title.includes("typescript-types group") &&
-      !it.title.includes("sync generated doc files")
+      !it.title.includes("sync generated doc files") &&
+      !it.title.includes("development group")
     );
   });
 
-  const splitCommits = splitGroupedDependencyBumps(relevantCommits);
+  const splitCommits = splitGroupedDependencyBumps(relevantCommits).filter(
+    (it) => !it.title.includes("@types/"),
+  );
   const commits = combineCommits(splitCommits);
 
   decorateCommits(commits);
