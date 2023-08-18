@@ -47,7 +47,6 @@ import {
  */
 export async function developmentMode(env) {
   output.config.environment.loaded(env);
-  debugEnable();
 
   /** @type {DevelopmentState} */
   const state = {
@@ -62,6 +61,7 @@ export async function developmentMode(env) {
     },
   };
 
+  debugEnable();
   tuiEnable();
   tuiStateSetMetadata({
     appName: env.appName,
@@ -76,10 +76,12 @@ export async function developmentMode(env) {
     // Remove watcher snapshot, we are going to resolve everything from scratch
     await watcherRemoveSnapshot("");
 
-    // @ts-expect-error
-    //
     // All actions
-    state.config = state.cache.config = await configResolve("", true);
+
+    // @ts-expect-error
+    state.config = await configResolve("", true);
+    state.cache.config = state.config;
+    state.tui.activeConfig = state.config;
 
     // TODO: ...
 
@@ -94,11 +96,15 @@ export async function developmentMode(env) {
 
     // Restoring state
     state.config = state.cache.config;
+    state.tui.activeConfig = state.config;
 
     // TODO: ...
 
     // End restoring state...
   }
+
+  // Start input cycle
+  developmentManagementCycle(state);
 
   // Register watcher
   watcherAddListener({
@@ -110,9 +116,6 @@ export async function developmentMode(env) {
   await watcherEnable("");
   await watcherProcessChangesSinceSnapshot("");
   // End register watcher
-
-  // Start input cycle
-  developmentManagementCycle(state);
 }
 
 /**
@@ -328,8 +331,7 @@ function developmentSpawnAction(state, command) {
 
   // @ts-expect-error
   cp.exitListener = (status) => {
-    // @ts-expect-error
-    delete state.tui.activeConfig;
+    delete state.tui.activeProcess;
 
     const time = Number((Date.now() - start) / 1000).toFixed(1);
     if (status === 0) {
@@ -363,5 +365,5 @@ function developmentSpawnAction(state, command) {
   // @ts-expect-error
   cp.command = command;
   // @ts-expect-error
-  state.tui.activeConfig = cp;
+  state.tui.activeProcess = cp;
 }
