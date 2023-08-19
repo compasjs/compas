@@ -4,6 +4,102 @@ editLink: false
 
 # Changelog
 
+### [v0.7.0](https://github.com/compasjs/compas/releases/tag/v0.7.0)
+
+Introducing the experimental `zakmes` CLI for an integrated development
+experience! Installable via the `compas` package. See the
+[docs](https://compasjs.com/docs/introduction.html) for more information and
+follow [the issue](https://github.com/compasjs/compas/issues/2774) to stay up to
+date.
+
+#### Features
+
+- feat(eslint-plugin): add 'node-builtin-module-url-import' rule
+  [`923e7b`](https://github.com/compasjs/compas/commit/923e7b00c1f329a3594211d584174c6445be55e7)
+  - Auto-fixes any import of Node.js builtins you use the `node:` specifier.
+
+#### Other
+
+- docs(stdlib): minor insight event documentation improvement
+  ([#2728](https://github.com/compasjs/compas/pull/2728))
+  [`9a8afc`](https://github.com/compasjs/compas/commit/9a8afc4dde76ff137371e96ccca60c9ee5906a14)
+- chore(docs): use vitepress sitemap feature
+  [`28fcb1`](https://github.com/compasjs/compas/commit/28fcb184332db836f70d0726601997f1352e72a3)
+- chore: cleanup code-mods
+  [`c80410`](https://github.com/compasjs/compas/commit/c80410cddb6529f9e6dfa376994e65de5e98114c)
+- chore: typescript maintenance
+  [`7b3e0f`](https://github.com/compasjs/compas/commit/7b3e0f9520f700ff585dd1bc8f1ac814d8330635)
+- chore(release): fail release if types don't check out
+  [`fb4e4d`](https://github.com/compasjs/compas/commit/fb4e4dceac88140ed13d448cf006575dd29c1de1)
+- chore(docs): customize vitepress theme to use green colors
+  [`ba082d`](https://github.com/compasjs/compas/commit/ba082d3638caa842aa876289cbdfb6b7691af243)
+- chore(typescript): remove tsc from the internal generate command
+  [`c3ab53`](https://github.com/compasjs/compas/commit/c3ab53dad257242ea4b19c40027edb28b59f7d24)
+- chore(dependabot): group all dependency updates
+  [`b7186e`](https://github.com/compasjs/compas/commit/b7186ee9ebffcd1e76afccc5652fb9d7f76077de)
+
+#### Dependency updates
+
+- build(deps): bump sharp from 0.32.3 to 0.32.5
+  ([#2743](https://github.com/compasjs/compas/pull/2743),
+  [#2799](https://github.com/compasjs/compas/pull/2799))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump c8 from 8.0.0 to 8.0.1
+  ([#2753](https://github.com/compasjs/compas/pull/2753))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump pino from 8.14.1 to 8.15.0
+  ([#2757](https://github.com/compasjs/compas/pull/2757),
+  [#2779](https://github.com/compasjs/compas/pull/2779))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.4.4 to 46.4.6
+  ([#2758](https://github.com/compasjs/compas/pull/2758),
+  [#2778](https://github.com/compasjs/compas/pull/2778))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump eslint-config-prettier from 8.8.0 to 9.0.0
+  ([#2759](https://github.com/compasjs/compas/pull/2759),
+  [#2773](https://github.com/compasjs/compas/pull/2773),
+  [#2777](https://github.com/compasjs/compas/pull/2777))
+  - Major version bump
+- build(deps): bump eslint-plugin-import from 2.27.5 to 2.28.1
+  ([#2761](https://github.com/compasjs/compas/pull/2761),
+  [#2804](https://github.com/compasjs/compas/pull/2804))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump eslint from 8.45.0 to 8.47.0
+  ([#2760](https://github.com/compasjs/compas/pull/2760),
+  [#2792](https://github.com/compasjs/compas/pull/2792))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.374.0 to 3.395.0
+  ([#2770](https://github.com/compasjs/compas/pull/2770),
+  [#2783](https://github.com/compasjs/compas/pull/2783),
+  [#2804](https://github.com/compasjs/compas/pull/2804))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.374.0 to 3.395.0
+  ([#2770](https://github.com/compasjs/compas/pull/2770),
+  [#2783](https://github.com/compasjs/compas/pull/2783),
+  [#2804](https://github.com/compasjs/compas/pull/2804))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump prettier from 3.0.0 to 3.0.2
+  ([#2772](https://github.com/compasjs/compas/pull/2772),
+  [#2798](https://github.com/compasjs/compas/pull/2798))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump @babel/core from 7.22.9 to 7.22.10
+  ([#2781](https://github.com/compasjs/compas/pull/2781))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.22.9 to 7.22.10
+  ([#2781](https://github.com/compasjs/compas/pull/2781))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump recast from 0.23.3 to 0.23.4
+  ([#2790](https://github.com/compasjs/compas/pull/2790))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- build(deps): bump bcrypt from 5.1.0 to 5.1.1
+  ([#2797](https://github.com/compasjs/compas/pull/2797))
+  - [Release notes](https://github.com/kelektiv/node.bcrypt.js/releases)
+- build(deps): bump cron-parser from 4.8.1 to 4.9.0
+  ([#2795](https://github.com/compasjs/compas/pull/2795))
+  - [Release notes](https://github.com/harrisiirak/cron-parser/releases)
+- build(deps): bump dotenv from 16.0.3 to 16.3.1
+  ([#2804](https://github.com/compasjs/compas/pull/2804))
+
 ### [v0.6.0](https://github.com/compasjs/compas/releases/tag/v0.6.0)
 
 #### Features
