@@ -1,6 +1,6 @@
 {
   "name": "compas",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Unified backend tooling",
   "exports": {
     ".": {
@@ -20,7 +20,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.6.0",
+    "@compas/stdlib": "0.7.0",
     "@parcel/watcher": "2.2.0",
     "ansi": "0.3.1",
     "micromatch": "4.0.5",
