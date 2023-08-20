@@ -172,7 +172,7 @@ export function tuiEnable() {
   });
 
   // Resize listener
-  process.stdout.on("resize", () => tuiPaintLayout());
+  // process.stdout.on("resize", () => tuiPaintLayout());
 
   // Input setup + listener
   emitKeypressEvents(process.stdin);

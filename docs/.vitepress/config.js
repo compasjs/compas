@@ -116,6 +116,7 @@ function getHomeSidebar() {
   return [
     {
       text: "Generators",
+      collapsed: false,
       items: [
         {
           text: "Introduction",
@@ -131,6 +132,7 @@ function getHomeSidebar() {
         },
         {
           text: "Build a custom structure",
+          collapsed: false,
           items: [
             {
               text: "Types and validators",
@@ -152,6 +154,7 @@ function getHomeSidebar() {
         },
         {
           text: "Using the generated code",
+          collapsed: false,
           items: [
             {
               text: "Koa router",
@@ -172,6 +175,7 @@ function getHomeSidebar() {
 
     {
       text: "Features",
+      collapsed: false,
       items: [
         {
           text: "Getting started",
@@ -234,11 +238,34 @@ function getHomeSidebar() {
     },
 
     {
-      text: "Features (alpha)",
+      text: "Docs (alpha)",
+      collapsed: true,
       items: [
         {
-          text: "Introduction",
-          link: "/docs/introduction.html",
+          text: "What is Compas?",
+          link: "/docs/what-is-compas.html",
+        },
+        {
+          text: "Getting started",
+          link: "/docs/getting-started.html",
+        },
+        {
+          text: "Actions and defaults",
+          link: "/docs/actions-and-defaults.html",
+        },
+        {
+          text: "Workspaces",
+          link: "/docs/workspaces.html",
+        },
+        {
+          text: "Integrations",
+          collapsed: false,
+          items: [
+            {
+              text: "Docker",
+              link: "/docs/integrations/docker.html",
+            },
+          ],
         },
       ],
     },
@@ -247,6 +274,7 @@ function getHomeSidebar() {
 
     {
       text: "References",
+      collapsed: true,
       items: [
         {
           text: "Compas configuration",
@@ -270,6 +298,7 @@ function getExamplesSidebar() {
 
   return {
     text: "Examples",
+    collapsed: true,
     items: [
       {
         text: "Introduction",
