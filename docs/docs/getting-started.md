@@ -22,7 +22,7 @@ the stable [CLI](/features/cli.md), the alpha CLI is called `zakmes`.
 Compas can install itself with:
 
 ```shell
-npx compas@latest install
+npx compas@latest init
 ```
 
 **In an empty directory**:
@@ -38,7 +38,7 @@ project, Compas will try to update itself to the latest available version.
 
 ::: info
 
-In the alpha period, use `npx -p compas zakmes@latest install`.
+In the alpha period, use `npx -p compas zakmes@latest init`.
 
 :::
 
