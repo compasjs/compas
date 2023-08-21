@@ -1,10 +1,9 @@
 import { spawn as cpSpawn } from "node:child_process";
 import { once } from "node:events";
 import treeKill from "tree-kill";
-import { cacheLoadFromDisk, cacheWriteToDisk } from "../cache.js";
-import { configResolve } from "../config.js";
-import { debugEnable } from "../output/debug.js";
-import { output } from "../output/static.js";
+import { configResolve } from "../../config.js";
+import { debugEnable } from "../../output/debug.js";
+import { output } from "../../output/static.js";
 import {
   tuiEnable,
   tuiEraseLayout,
@@ -14,23 +13,24 @@ import {
   tuiStateSetAvailableActions,
   tuiStateSetMetadata,
   tuiWritePersistent,
-} from "../output/tui.js";
+} from "../../output/tui.js";
+import { cacheLoadFromDisk, cacheWriteToDisk } from "./cache.js";
 import {
   watcherAddListener,
   watcherEnable,
   watcherProcessChangesSinceSnapshot,
   watcherRemoveSnapshot,
   watcherWriteSnapshot,
-} from "../watcher.js";
+} from "./watcher.js";
 
 /**
  * @typedef {{
- *   env: import("../config.js").ConfigEnvironment,
- *   config: import("../generated/common/types.js").CompasResolvedConfig,
- *   cache: import("../generated/common/types.js").CompasCache,
+ *   env: import("../../config.js").ConfigEnvironment,
+ *   config: import("../../generated/common/types.js").CompasResolvedConfig,
+ *   cache: import("../../generated/common/types.js").CompasCache,
  *   tui: {
- *     activeConfig: import("../generated/common/types.js").CompasResolvedConfig,
- *     navigationStack: import("../generated/common/types.js").CompasResolvedConfig[],
+ *     activeConfig: import("../../generated/common/types.js").CompasResolvedConfig,
+ *     navigationStack: import("../../generated/common/types.js").CompasResolvedConfig[],
  *     activeProcess?: import("child_process").ChildProcess & {
  *       exitListener: (signal?: number|null) => void,
  *       command: string[],
@@ -42,7 +42,7 @@ import {
 /**
  * Run Compas in development mode
  *
- * @param {import("../config.js").ConfigEnvironment} env
+ * @param {import("../../config.js").ConfigEnvironment} env
  * @returns {Promise<void>}
  */
 export async function developmentMode(env) {

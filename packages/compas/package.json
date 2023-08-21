@@ -13,7 +13,7 @@
   },
   "type": "module",
   "bin": {
-    "zakmes": "src/bin.js"
+    "zakmes": "src/cli/bin.js"
   },
   "keywords": [
     "compas"

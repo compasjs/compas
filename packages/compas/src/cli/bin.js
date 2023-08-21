@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import { isNil } from "@compas/stdlib";
-import { configLoadEnvironment } from "./config.js";
-import { ciMode } from "./mode/ci.js";
-import { developmentMode } from "./mode/development.js";
-import { productionMode } from "./mode/production.js";
+import { configLoadEnvironment } from "../config.js";
+import { ciMode } from "../main/ci/index.js";
+import { developmentMode } from "../main/development/index.js";
+import { productionMode } from "../main/production/index.js";
 
 const env = await configLoadEnvironment("", !isNil(process.env.NODE_ENV));
 

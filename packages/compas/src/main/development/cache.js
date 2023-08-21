@@ -1,13 +1,13 @@
 import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { AppError, pathJoin } from "@compas/stdlib";
-import { validateCompasCache } from "./generated/compas/validators.js";
-import { debugTimeEnd, debugTimeStart } from "./output/debug.js";
-import { output } from "./output/static.js";
+import { validateCompasCache } from "../../generated/compas/validators.js";
+import { debugTimeEnd, debugTimeStart } from "../../output/debug.js";
+import { output } from "../../output/static.js";
 import { watcherWriteSnapshot } from "./watcher.js";
 
 /**
- * @typedef {import("./generated/common/types.js").CompasCache} Cache
+ * @typedef {import("../../generated/common/types.js").CompasCache} Cache
  */
 
 /**

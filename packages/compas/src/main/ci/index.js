@@ -1,12 +1,12 @@
 import { newLogger } from "@compas/stdlib";
-import { configResolve } from "../config.js";
-import { logger, loggerEnable } from "../output/log.js";
-import { output } from "../output/static.js";
+import { configResolve } from "../../config.js";
+import { logger, loggerEnable } from "../../output/log.js";
+import { output } from "../../output/static.js";
 
 /**
  * Run Compas in CI mode
  *
- * @param {import("../config.js").ConfigEnvironment} env
+ * @param {import("../../config.js").ConfigEnvironment} env
  * @returns {Promise<void>}
  */
 export async function ciMode(env) {

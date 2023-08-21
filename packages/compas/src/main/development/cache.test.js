@@ -6,7 +6,7 @@ import { cacheLoadFromDisk } from "./cache.js";
 
 mainTestFn(import.meta);
 
-test("compas/cache", (t) => {
+test("compas/main/development/cache", (t) => {
   t.jobs = 2;
 
   const baseDirectory = ".cache/test/config";

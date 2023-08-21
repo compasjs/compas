@@ -4,8 +4,8 @@ import { clearTimeout } from "node:timers";
 import { AppError, pathJoin } from "@compas/stdlib";
 import watcher from "@parcel/watcher";
 import micromatch from "micromatch";
-import { debugPrint } from "./output/debug.js";
-import { tuiPrintInformation } from "./output/tui.js";
+import { debugPrint } from "../../output/debug.js";
+import { tuiPrintInformation } from "../../output/tui.js";
 
 /**
  * @typedef {object} WatcherListener
