@@ -8,7 +8,7 @@ editLink: false
 
 Introducing the experimental `zakmes` CLI for an integrated development
 experience! Installable via the `compas` package. See the
-[docs](https://compasjs.com/docs/introduction.html) for more information and
+[docs](https://compasjs.com/docs/getting-started.html) for more information and
 follow [the issue](https://github.com/compasjs/compas/issues/2774) to stay up to
 date.
 
