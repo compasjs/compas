@@ -15,7 +15,7 @@
   "devDependencies": {
     "@types/node": "20.5.1",
     "@types/react": "18.2.20",
-    "@tanstack/react-query": "4.32.6",
+    "@tanstack/react-query": "4.33.0",
     "axios": "1.4.0",
     "fastest-validator": "1.17.0",
     "lodash": "~4.17.21",
