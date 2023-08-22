@@ -1,0 +1,143 @@
+import { existsSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
+import { exec, newLogger, spawn } from "@compas/stdlib";
+import { configLoadReadOnlyEnvironment } from "../../config.js";
+import { logger, loggerEnable } from "../../output/log.js";
+import { packageManagerDetermineInstallCommand } from "../../package-manager.js";
+
+export async function initCompas() {
+  const env = await configLoadReadOnlyEnvironment();
+
+  loggerEnable(
+    newLogger({
+      ctx: {
+        type: env.appName,
+      },
+    }),
+  );
+  if (env.isCI) {
+    logger.info({
+      message: "Compas init is not supported in CI.",
+    });
+    return;
+  }
+
+  if (!env.isDevelopment) {
+    logger.info({
+      message:
+        "Compas init is not supported when NODE_ENV is explicitly set, but is not 'development'.",
+    });
+    return;
+  }
+
+  if (existsSync("package.json")) {
+    await initCompasInExistingProject(env);
+  } else {
+    await initCompasInNewProject(env);
+  }
+}
+
+async function initCompasInExistingProject(env) {
+  const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
+
+  let alreadyInstalled = false;
+  const compasVersion = env.compasVersion.split("v").pop();
+
+  if (packageJson.dependencies?.compas) {
+    alreadyInstalled = packageJson.dependencies.compas === compasVersion;
+    packageJson.dependencies.compas = compasVersion;
+  } else if (packageJson.devDependencies?.compas) {
+    alreadyInstalled = packageJson.devDependencies.compas === compasVersion;
+    packageJson.devDependencies.compas = compasVersion;
+  } else {
+    packageJson.dependencies ??= {};
+    packageJson.dependencies.compas = compasVersion;
+  }
+
+  if (!alreadyInstalled) {
+    logger.info(
+      `Patching package.json with ${env.compasVersion} and installing dependencies...`,
+    );
+    await writeFile(
+      "package.json",
+      `${JSON.stringify(packageJson, null, 2)}\n`,
+    );
+    const packageManagerCommand = packageManagerDetermineInstallCommand();
+    await spawn(packageManagerCommand[0], packageManagerCommand.slice(1));
+
+    logger.info(`
+Ready to roll! Run 'npx compas' to start the Compas development environment.
+
+Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how to run 'compas' without the 'npx' prefix.
+`);
+  } else {
+    logger.info("Already up-to-date!");
+  }
+}
+
+async function initCompasInNewProject(env) {
+  const compasVersion = env.compasVersion.split("v").pop();
+  const packageJson = {
+    name: env.appName,
+    private: true,
+    version: "0.0.1",
+    type: "module",
+    scripts: {},
+    keywords: [],
+    dependencies: {
+      compas: compasVersion,
+    },
+  };
+
+  await writeFile("package.json", `${JSON.stringify(packageJson, null, 2)}\n`);
+
+  logger.info("Created a package.json. Installing with npm...");
+
+  const packageManagerCommand = packageManagerDetermineInstallCommand();
+  await spawn(packageManagerCommand[0], packageManagerCommand.slice(1));
+
+  if (!existsSync(".gitignore")) {
+    await writeFile(
+      ".gitignore",
+      `# Compas
+.cache
+.env.local
+generated
+
+# OS
+.DS_Store
+
+# IDE
+.idea
+.vscode
+
+# Dependencies
+node_modules
+
+# Log files
+*-debug.log
+*-error.log
+
+# Tests
+coverage
+`,
+    );
+  }
+
+  if ((await exec("git --version")).exitCode === 0 && !existsSync(".git")) {
+    logger.info("Initializing a Git repository.");
+
+    await exec("git init");
+    await exec("git checkout -b main");
+    await exec("git add -A");
+    await exec(`git commit -m "Initialized project with ${env.compasVersion}"`);
+  }
+
+  logger.info(`
+Ready to roll! Run 'npx compas' to start the Compas development environment.
+
+You can switch to a different supported package manager like Yarn or pnpm by removing the created package-lock.json and running the equivalent of 'npm install' with your favorite package manager.
+
+Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how to run 'compas' without the 'npx' prefix.
+`);
+}

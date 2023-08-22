@@ -84,6 +84,42 @@ APP_NAME=${dirname}
 }
 
 /**
+ * Load .env if exists, but other than that prepare for development mode.
+ *
+ * @returns {Promise<ConfigEnvironment>}
+ */
+export async function configLoadReadOnlyEnvironment() {
+  // Load .env.local first, since existing values in `process.env` are not overwritten.
+  dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
+  dotenv.config();
+
+  refreshEnvironmentCache();
+
+  environment.COMPAS_LOG_PRINTER = "pretty";
+
+  const packageJson = JSON.parse(
+    await readFile(
+      pathJoin(dirnameForModule(import.meta), "../package.json"),
+      "utf-8",
+    ),
+  );
+
+  const env = {
+    isCI: environment.CI === "true",
+    isDevelopment: isNil(process.env.NODE_ENV) || !isProduction(),
+    appName: environment.APP_NAME ?? process.cwd().split(path.sep).pop(),
+    compasVersion: packageJson.version
+      ? `Compas ${packageJson.version}`
+      : "Compas v0.0.0",
+    nodeVersion: process.version,
+  };
+
+  loggerDetermineDefaultDestination();
+
+  return env;
+}
+
+/**
  * Try to load the config recursively from disk.
  *
  * Returns undefined when the config couldn't be loaded, for soft errors like no config
