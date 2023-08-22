@@ -117,12 +117,12 @@ module.exports = {
 
       // Check if eventStop is called
       "CallExpression[callee.name='eventStop']"() {
-        if (currentFunction.block) {
+        if (currentFunction?.block) {
           currentFunction.block.hasEventStop = true;
         }
       }, // Check if eventStop is called
       "CallExpression[callee.name='eventStart']"() {
-        if (currentFunction.block) {
+        if (currentFunction?.block) {
           currentFunction.hasEventStart = true;
           currentFunction.block.hasEventStart = true;
         }
@@ -130,7 +130,7 @@ module.exports = {
 
       // Check if block has return statement
       ReturnStatement(node) {
-        if (currentFunction.block) {
+        if (currentFunction?.block) {
           currentFunction.block.returnStatement = node;
         }
       },
@@ -164,13 +164,13 @@ module.exports = {
       },
       "IfStatement[consequent.type='ReturnStatement']"(node) {
         if (
-          !currentFunction.isAsyncEventFunction ||
+          !currentFunction?.isAsyncEventFunction ||
           !currentFunction.hasEventStart
         ) {
           return;
         }
 
-        if (currentFunction.block.hasEventStop) {
+        if (currentFunction.block?.hasEventStop) {
           return;
         }
 
@@ -193,13 +193,13 @@ module.exports = {
       },
       "IfStatement[alternate.type='ReturnStatement']"(node) {
         if (
-          !currentFunction.isAsyncEventFunction ||
+          !currentFunction?.isAsyncEventFunction ||
           !currentFunction.hasEventStart
         ) {
           return;
         }
 
-        if (currentFunction.block.hasEventStop) {
+        if (currentFunction.block?.hasEventStop) {
           return;
         }
 
