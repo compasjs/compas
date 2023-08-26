@@ -1,0 +1,10 @@
+# Global settings
+
+# Test related
+__fixtures__/
+*.test.js
+test/
+test-generated/
+
+# Code-gen related
+generator.js

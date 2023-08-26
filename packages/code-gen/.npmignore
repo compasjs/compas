@@ -1,5 +1,0 @@
-node_modules/
-test/
-test-generated/
-*.test.js
-__fixtures__

@@ -70,7 +70,7 @@ async function cliExecutor(logger, state) {
     "-a",
     state.flags.version,
     "-m",
-    `${state.flags.version}`,
+    `chore: release ${state.flags.version}`,
   ]);
   await spawn("git", ["push"]);
   await spawn("git", ["push", "origin", state.flags.version]);

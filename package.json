@@ -3,8 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepublishOnly": "compas run types",
-    "postpublish": "compas run types --script-args='clean'",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"
