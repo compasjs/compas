@@ -76,7 +76,7 @@ APP_NAME=${dirname}
     isDevelopment: !isProduction(),
     appName: environment.APP_NAME ?? process.cwd().split(path.sep).pop(),
     compasVersion: packageJson.version
-      ? `Compas ${packageJson.version}`
+      ? `Compas v${packageJson.version}`
       : "Compas v0.0.0",
     nodeVersion: process.version,
   };
