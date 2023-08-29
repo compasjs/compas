@@ -27,10 +27,18 @@ export class ActionsIntegration extends BaseIntegration {
      *   command: string[],
      *   workingDirectory: string,
      *   startTime: number,
-     *   boundResetState: () => void,
      * }}
      */
     this.activeProcess = undefined;
+
+    const exitHandler = () => {
+      if (this.activeProcess?.cp) {
+        // @ts-expect-error
+        process.kill(this.activeProcess.cp.pid);
+      }
+    };
+
+    process.once("exit", exitHandler);
 
     this.setActionsGroups();
 
@@ -201,12 +209,11 @@ export class ActionsIntegration extends BaseIntegration {
         cwd: action.workingDirectory,
         stdio: ["ignore", "inherit", "inherit"],
       }),
-      boundResetState: this.resetState.bind(this),
     };
 
     // Separate listeners for screen reset and user information
     this.activeProcess.cp.once("exit", this.onActionExit.bind(this));
-    this.activeProcess.cp.once("exit", this.activeProcess.boundResetState);
+    this.activeProcess.cp.once("exit", this.resetState.bind(this));
   }
 
   async killAction() {
