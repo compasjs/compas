@@ -63,8 +63,22 @@ export function spawn(command, args, opts = {}) {
   return new Promise((resolve, reject) => {
     const sp = cpSpawn(command, args, { stdio: "inherit", ...opts });
 
-    sp.once("error", reject);
+    const exitHandler = (signal) => {
+      sp.kill(signal);
+    };
+
+    process.once("exit", exitHandler);
+
+    sp.once("error", (...args) => {
+      process.removeListener("exit", exitHandler);
+
+      // eslint-disable-next-line prefer-promise-reject-errors
+      return reject(...args);
+    });
+
     sp.once("exit", (code) => {
+      process.removeListener("exit", exitHandler);
+
       resolve({ exitCode: code ?? 0 });
     });
   });
