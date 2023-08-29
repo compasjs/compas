@@ -4,6 +4,73 @@ editLink: false
 
 # Changelog
 
+### [v0.7.1](https://github.com/compasjs/compas/releases/tag/v0.7.1)
+
+#### Features
+
+- feat(compas): add support for `npx compas@latest init`
+  [`5137c8`](https://github.com/compasjs/compas/commit/5137c8a26a38629526cd9c2778a442caddbacfb7)
+- feat(compas): reimplement `zakmes`, add package manager support
+  [`07f28e`](https://github.com/compasjs/compas/commit/07f28e610ba3c05b0e0610c81b5f959c67a11435)
+- feat(code-gen): expand validator error message on query builder validation
+  errors
+  [`69c379`](https://github.com/compasjs/compas/commit/69c379a0f0b81a0e823ab680d6f1072776b0cc4d)
+- feat(code-gen): add error when an uppercase character is used in
+  `.shortName()`
+  [`9d6098`](https://github.com/compasjs/compas/commit/9d6098ed225a2aeb5571929f7d2bbdad4b25bf21)
+
+#### Bug fixes
+
+- fix(eslint-plugin): ignore `eventStop` calls that are not in a function
+  [`2b2f2b`](https://github.com/compasjs/compas/commit/2b2f2bf260d3bb9320f2272aabecd12f40e476f2)
+- fix(all): cleanup .npmignore usage, so types are included again
+  [`b141ad`](https://github.com/compasjs/compas/commit/b141ad08bc8d02af3ae0c11ac2d21d780c54dd74)
+- fix(store): ignore invalid JPEG's when transforming images
+  [`440202`](https://github.com/compasjs/compas/commit/4402025f3f2e9ce6d2a11b2899ab11abdb3d394f)
+- fix(stdlib): prevent zombie processes on process exit
+  [`e30cbb`](https://github.com/compasjs/compas/commit/e30cbbd68fc3e0c5f3c38fcd71399db763633a8d)
+
+#### Other
+
+- chore(docs): write some docs on the new CLI
+  [`37b81c`](https://github.com/compasjs/compas/commit/37b81c31340c393f9174ac9590601f29cae1f156)
+- chore(docs): rename `npx compas install` to `npx compas init`
+  [`40fc90`](https://github.com/compasjs/compas/commit/40fc908dd88375adcaabff6d429f16312748a7d0)
+- chore(docs): fix links to new alpha docs
+  [`d0607c`](https://github.com/compasjs/compas/commit/d0607c40a9bf1029a753e1f31048ed27c70d3c93)
+- chore(compas): move some file around before expansion
+  [`dd3b44`](https://github.com/compasjs/compas/commit/dd3b44519e7f2d74829f96505754b058e40bd524)
+- chore(docs): update vitepress
+  [`3ff4bd`](https://github.com/compasjs/compas/commit/3ff4bd61ee4ac9650fab04bf4da23df113a4a680)
+- chore(compas): prevent zombie processes
+  [`896a29`](https://github.com/compasjs/compas/commit/896a29fabc33ba0c4fb375bcab79c2f246694a00)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.395.0 to 3.400.0
+  ([#2813](https://github.com/compasjs/compas/pull/2813),
+  [#2816](https://github.com/compasjs/compas/pull/2816))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.395.0 to 3.400.0
+  ([#2813](https://github.com/compasjs/compas/pull/2813),
+  [#2816](https://github.com/compasjs/compas/pull/2816))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @babel/core from 7.22.10 to 7.22.11
+  ([#2813](https://github.com/compasjs/compas/pull/2813))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.22.10 to 7.22.11
+  ([#2813](https://github.com/compasjs/compas/pull/2813))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.4.6 to 46.5.0
+  ([#2813](https://github.com/compasjs/compas/pull/2813))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @parcel/watcher from 2.2.0 to 2.3.0
+  ([#2813](https://github.com/compasjs/compas/pull/2813))
+  - [Release notes](https://github.com/parcel-bundler/watcher/releases)
+- build(deps): bump eslint from 8.47.0 to 8.48.0
+  ([#2816](https://github.com/compasjs/compas/pull/2816))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+
 ### [v0.7.0](https://github.com/compasjs/compas/releases/tag/v0.7.0)
 
 Introducing the experimental `zakmes` CLI for an integrated development
