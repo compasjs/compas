@@ -96,10 +96,20 @@ APP_NAME=${dirname}
 export async function configResolveProjectConfig() {
   debugTimeStart("config.resolveProjectConfig");
 
+  const loadedPaths = [];
+
   async function loadRelativeConfig(relativeDirectory) {
     debugPrint(`Resolving config in '${relativeDirectory}'.`);
 
-    const configPath = pathJoin(relativeDirectory, "config/compas.json");
+    const configPath = path.resolve(
+      pathJoin(relativeDirectory, "config/compas.json"),
+    );
+
+    // Prevent recursion when two projects reference each other.
+    if (loadedPaths.includes(configPath)) {
+      return;
+    }
+    loadedPaths.push(configPath);
 
     let rawConfig = {};
     if (existsSync(configPath)) {
@@ -135,9 +145,13 @@ export async function configResolveProjectConfig() {
     const projects = [];
 
     for (const subProject of value.projects ?? []) {
-      projects.push(
-        await loadRelativeConfig(pathJoin(relativeDirectory, subProject)),
+      const config = await loadRelativeConfig(
+        pathJoin(relativeDirectory, subProject),
       );
+
+      if (!isNil(config)) {
+        projects.push(config);
+      }
     }
 
     // @ts-expect-error
