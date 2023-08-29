@@ -37,7 +37,8 @@ export function wrapQueryPart(queryPart, validator, options) {
 
         if (error) {
           throw AppError.serverError({
-            message: "Database result did not pass the validators.",
+            message:
+              "Database result did not pass the validators. When 'select' is used, you may want to use '.execRaw(sql)' instead of '.exec(sql)'.",
             validator: validator.name,
             error,
             databaseValue: queryResult[i],
