@@ -196,70 +196,82 @@ export function jobFileTransformImage(s3Client) {
       return;
     }
 
-    const sharpInstance = sharp(buffer);
-    sharpInstance.rotate();
+    try {
+      const sharpInstance = sharp(buffer);
+      sharpInstance.rotate();
 
-    const metadataPromise = sharpInstance.metadata();
+      const metadataPromise = sharpInstance.metadata();
 
-    const originalWidth =
-      file.meta?.originalWidth ?? (await metadataPromise).width;
-    const originalHeight =
-      file.meta?.originalHeight ?? (await metadataPromise).height;
+      const originalWidth =
+        file.meta?.originalWidth ?? (await metadataPromise).width;
+      const originalHeight =
+        file.meta?.originalHeight ?? (await metadataPromise).height;
 
-    if (!isNil(originalWidth) && originalWidth > options.w) {
-      // Only resize if width is greater than the needed with, so we don't upscale
-      sharpInstance.resize(options.w);
-    }
+      if (!isNil(originalWidth) && originalWidth > options.w) {
+        // Only resize if width is greater than the needed with, so we don't upscale
+        sharpInstance.resize(options.w);
+      }
 
-    if (options.contentType === "image/webp") {
-      sharpInstance.webp({ quality: options.q });
-    } else if (options.contentType === "image/avif") {
-      sharpInstance.avif({ quality: options.q });
-    } else if (options.contentType === "image/png") {
-      sharpInstance.png({ quality: options.q });
-    } else if (
-      options.contentType === "image/jpg" ||
-      options.contentType === "image/jpeg"
-    ) {
-      sharpInstance.jpeg({ quality: options.q });
-    } else if (options.contentType === "image/gif") {
-      sharpInstance.gif({});
-    }
+      if (options.contentType === "image/webp") {
+        sharpInstance.webp({ quality: options.q });
+      } else if (options.contentType === "image/avif") {
+        sharpInstance.avif({ quality: options.q });
+      } else if (options.contentType === "image/png") {
+        sharpInstance.png({ quality: options.q });
+      } else if (
+        options.contentType === "image/jpg" ||
+        options.contentType === "image/jpeg"
+      ) {
+        sharpInstance.jpeg({ quality: options.q });
+      } else if (options.contentType === "image/gif") {
+        sharpInstance.gif({});
+      }
 
-    const image = await fileCreateOrUpdate(
-      sql,
-      s3Client,
-      {
-        // @ts-expect-error
-        bucketName: file.bucketName,
-      },
-      {
-        name: transformKey,
-        contentType: options.contentType,
-        meta: {
-          transformedFromOriginal: file.id,
+      const image = await fileCreateOrUpdate(
+        sql,
+        s3Client,
+        {
+          // @ts-expect-error
+          bucketName: file.bucketName,
         },
-      },
-      await sharpInstance.toBuffer(),
-    );
+        {
+          name: transformKey,
+          contentType: options.contentType,
+          meta: {
+            transformedFromOriginal: file.id,
+          },
+        },
+        await sharpInstance.toBuffer(),
+      );
 
-    // @ts-expect-error
-    await atomicSetTransformKey(sql, file.id, transformKey, image.id);
+      // @ts-expect-error
+      await atomicSetTransformKey(sql, file.id, transformKey, image.id);
 
-    if (
-      (isNil(file.meta?.originalWidth) || isNil(file.meta?.originalHeight)) &&
-      !isNil(originalWidth) &&
-      !isNil(originalHeight)
-    ) {
-      // Update the original image to include the width and height.
-      await query`UPDATE "file"
-                  SET
-                    "meta" = jsonb_set(jsonb_set("meta", '{originalHeight}', ${String(
-                      originalHeight,
-                    )}::jsonb), '{originalWidth}',
-                                       ${String(originalWidth)}::jsonb)
-                  WHERE
-                    id = ${file.id}`.exec(sql);
+      if (
+        (isNil(file.meta?.originalWidth) || isNil(file.meta?.originalHeight)) &&
+        !isNil(originalWidth) &&
+        !isNil(originalHeight)
+      ) {
+        // Update the original image to include the width and height.
+        await query`UPDATE "file"
+                    SET
+                      "meta" = jsonb_set(jsonb_set("meta", '{originalHeight}', ${String(
+                        originalHeight,
+                      )}::jsonb), '{originalWidth}',
+                                         ${String(originalWidth)}::jsonb)
+                    WHERE
+                      id = ${file.id}`.exec(sql);
+      }
+    } catch (/** @type {any} */ e) {
+      if (
+        e.message === "VipsJpeg: Invalid SOS parameters for sequential JPEG"
+      ) {
+        // JPEG error, just return the original image and never try again.
+        // @ts-expect-error
+        await atomicSetTransformKey(sql, file.id, transformKey, file.id);
+      }
+
+      throw e;
     }
 
     eventStop(event);
