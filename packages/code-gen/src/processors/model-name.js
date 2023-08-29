@@ -43,6 +43,16 @@ export function modelNameValidation(generateContext) {
       model.shortName = model.shortName.slice(0, -1);
     }
 
+    if (model.shortName.toLowerCase() !== model.shortName) {
+      errors.push(
+        AppError.serverError({
+          message: `Model ${stringFormatNameForError(
+            model,
+          )} has a '.shortName()' with uppercase characters. This is not supported. Please use lowercase characters only.`,
+        }),
+      );
+    }
+
     if (shortNames[model.shortName]) {
       errors.push(
         AppError.serverError({
