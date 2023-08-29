@@ -14,7 +14,7 @@
       "relations": [],
       "keys": {
         "version": {
-          "docString": "",
+          "docString": "Compas version, used for cache invalidations.",
           "isOptional": false,
           "validator": {
             "allowNull": false,
@@ -27,7 +27,7 @@
           "type": "string"
         },
         "config": {
-          "docString": "",
+          "docString": "The resolved config. Managed by {@link ConfigLoaderIntegration}.",
           "isOptional": true,
           "validator": {},
           "sql": {},
@@ -36,6 +36,80 @@
             "group": "compas",
             "name": "resolvedConfig",
             "uniqueName": "CompasResolvedConfig"
+          }
+        },
+        "rootDirectories": {
+          "docString": "Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.",
+          "isOptional": true,
+          "validator": {
+            "convert": false,
+            "min": 1
+          },
+          "sql": {},
+          "type": "array",
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          }
+        },
+        "cachesCleaned": {
+          "docString": "Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false
+          },
+          "sql": {},
+          "type": "boolean"
+        },
+        "packageManagerInstallCommand": {
+          "docString": "The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "convert": false
+            },
+            "sql": {},
+            "type": "array",
+            "values": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "allowNull": false,
+                "trim": false,
+                "lowerCase": false,
+                "upperCase": false,
+                "min": 1
+              },
+              "sql": {},
+              "type": "string"
+            }
           }
         }
       }
@@ -153,6 +227,7 @@
           },
           "sql": {},
           "type": "array",
+          "defaultValue": "[]",
           "values": {
             "docString": "",
             "isOptional": false,
@@ -175,6 +250,7 @@
           },
           "sql": {},
           "type": "array",
+          "defaultValue": "[]",
           "values": {
             "docString": "",
             "isOptional": false,
@@ -387,6 +463,7 @@
           },
           "sql": {},
           "type": "array",
+          "defaultValue": "[]",
           "values": {
             "docString": "",
             "isOptional": false,

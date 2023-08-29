@@ -1,22 +1,32 @@
 import { newLogger } from "@compas/stdlib";
-import { configResolve } from "../../config.js";
-import { logger, loggerEnable } from "../../output/log.js";
-import { output } from "../../output/static.js";
+import { logger, loggerEnable } from "../../shared/output.js";
 
 /**
  * Run Compas in CI mode
  *
- * @param {import("../../config.js").ConfigEnvironment} env
+ * @param {import("../../shared/config.js").ConfigEnvironment} env
  * @returns {Promise<void>}
  */
-export async function ciMode(env) {
-  loggerEnable(newLogger());
-  output.config.environment.loaded(env);
-
-  const config = await configResolve("", true);
+export function ciMode(env) {
+  loggerEnable(
+    newLogger({
+      ctx: {
+        type: env.appName,
+      },
+    }),
+  );
 
   logger.info({
-    env,
-    config,
+    message: `Starting up ${env.appName} with ${env.compasVersion} in CI.`,
   });
+  logger.info({
+    message:
+      "Thank you for trying out the new Compas CLI. This is still a work in progress. Checkout https://github.com/compasjs/compas/issues/2774 for planned features and known issues.",
+  });
+
+  logger.info({
+    message: "TODO: a future update will do more things...",
+  });
+
+  return Promise.resolve();
 }

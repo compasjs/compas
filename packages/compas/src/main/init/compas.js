@@ -1,31 +1,19 @@
 import { existsSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
-import { exec, newLogger, spawn } from "@compas/stdlib";
-import { configLoadReadOnlyEnvironment } from "../../config.js";
-import { logger, loggerEnable } from "../../output/log.js";
-import { packageManagerDetermineInstallCommand } from "../../package-manager.js";
+import { readFile } from "node:fs/promises";
+import { exec, spawn } from "@compas/stdlib";
+import { writeFileChecked } from "../../shared/fs.js";
+import { logger } from "../../shared/output.js";
+import { packageManagerDetermineInstallCommand } from "../../shared/package-manager.js";
 
-export async function initCompas() {
-  const env = await configLoadReadOnlyEnvironment();
-
-  loggerEnable(
-    newLogger({
-      ctx: {
-        type: env.appName,
-      },
-    }),
-  );
+/**
+ *
+ * @param {import("../../shared/config.js").ConfigEnvironment} env
+ * @returns {Promise<void>}
+ */
+export async function initCompas(env) {
   if (env.isCI) {
     logger.info({
-      message: "Compas init is not supported in CI.",
-    });
-    return;
-  }
-
-  if (!env.isDevelopment) {
-    logger.info({
-      message:
-        "Compas init is not supported when NODE_ENV is explicitly set, but is not 'development'.",
+      message: "'compas init' is not supported in CI.",
     });
     return;
   }
@@ -37,6 +25,11 @@ export async function initCompas() {
   }
 }
 
+/**
+ *
+ * @param {import("../../shared/config.js").ConfigEnvironment} env
+ * @returns {Promise<void>}
+ */
 async function initCompasInExistingProject(env) {
   const packageJson = JSON.parse(await readFile("package.json", "utf-8"));
 
@@ -58,7 +51,7 @@ async function initCompasInExistingProject(env) {
     logger.info(
       `Patching package.json with ${env.compasVersion} and installing dependencies...`,
     );
-    await writeFile(
+    await writeFileChecked(
       "package.json",
       `${JSON.stringify(packageJson, null, 2)}\n`,
     );
@@ -75,6 +68,11 @@ Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how
   }
 }
 
+/**
+ *
+ * @param {import("../../shared/config.js").ConfigEnvironment} env
+ * @returns {Promise<void>}
+ */
 async function initCompasInNewProject(env) {
   const compasVersion = env.compasVersion.split("v").pop();
   const packageJson = {
@@ -89,7 +87,10 @@ async function initCompasInNewProject(env) {
     },
   };
 
-  await writeFile("package.json", `${JSON.stringify(packageJson, null, 2)}\n`);
+  await writeFileChecked(
+    "package.json",
+    `${JSON.stringify(packageJson, null, 2)}\n`,
+  );
 
   logger.info("Created a package.json. Installing with npm...");
 
@@ -97,7 +98,7 @@ async function initCompasInNewProject(env) {
   await spawn(packageManagerCommand[0], packageManagerCommand.slice(1));
 
   if (!existsSync(".gitignore")) {
-    await writeFile(
+    await writeFileChecked(
       ".gitignore",
       `# Compas
 .cache
@@ -136,7 +137,7 @@ coverage
   logger.info(`
 Ready to roll! Run 'npx compas' to start the Compas development environment.
 
-You can switch to a different supported package manager like Yarn or pnpm by removing the created package-lock.json and running the equivalent of 'npm install' with your favorite package manager.
+You can switch to a different supported package manager like Yarn or Pnpm by removing the created package-lock.json and running the equivalent of 'npm install' with your favorite package manager.
 
 Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how to run 'compas' without the 'npx' prefix.
 `);

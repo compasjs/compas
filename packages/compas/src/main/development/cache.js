@@ -1,93 +1,132 @@
+/*
+ - Load .cache/compas/cache.json
+ - Parse errors
+ - Run through validators
+ - Version mismatch
+ - Default to new cache + clean file watcher snapshots in all configured directories
+ - Load up config
+ - Start up file watchers
+ - Watcher snapshot should be stored per top-level watched directory
+ - Clean any found cache in a directory
+
+ - Integrate with State somehow
+ - Config should be retrievable
+ - Derivatives from config should be cached
+ - Derivatives from config should be notified on change
+ - File changes should be executed in order of listener submissions
+
+ */
+
 import { existsSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { readFile, rm } from "node:fs/promises";
 import { AppError, pathJoin } from "@compas/stdlib";
 import { validateCompasCache } from "../../generated/compas/validators.js";
-import { debugTimeEnd, debugTimeStart } from "../../output/debug.js";
-import { output } from "../../output/static.js";
-import { watcherWriteSnapshot } from "./watcher.js";
+import { writeFileChecked } from "../../shared/fs.js";
+import {
+  debugPrint,
+  debugTimeEnd,
+  debugTimeStart,
+} from "../../shared/output.js";
+
+const CACHE_PATH = ".cache/compas/cache.json";
 
 /**
- * @typedef {import("../../generated/common/types.js").CompasCache} Cache
- */
-
-/**
- * Load the cache from disk. Runs the cache through the validators and validates if the
- * loaded cache works with the provided Compas version.
+ * Load the cache based on the working directory.
  *
- * @param {string} projectDirectory
  * @param {string} compasVersion
- * @returns {Promise<Cache>}
+ * @returns {Promise<{
+ *   empty: boolean,
+ *   cache: import("../../generated/common/types.js").CompasCache,
+ * }>}
  */
-export async function cacheLoadFromDisk(projectDirectory, compasVersion) {
+export async function cacheLoad(compasVersion) {
   debugTimeStart("cache.load");
 
-  const cachePath = pathJoin(projectDirectory, ".cache/compas/cache.json");
-  const defaultConfig = {
+  const defaultCache = {
     version: compasVersion,
   };
 
-  if (!existsSync(cachePath)) {
-    output.cache.notExisting();
+  if (!existsSync(CACHE_PATH)) {
+    debugPrint("Cache not found.");
 
-    return defaultConfig;
+    debugTimeEnd("cache.load");
+    return {
+      empty: true,
+      cache: defaultCache,
+    };
   }
 
   let _cache = undefined;
 
   try {
-    _cache = JSON.parse(await readFile(cachePath, "utf-8"));
-  } catch (e) {
-    output.cache.errorReadingCache(e);
+    _cache = JSON.parse(await readFile(CACHE_PATH, "utf-8"));
+  } catch {
+    debugPrint("Cache not parseable");
 
-    return defaultConfig;
+    await cacheClean();
+
+    debugTimeEnd("cache.load");
+    return {
+      empty: true,
+      cache: defaultCache,
+    };
   }
 
   const { value, error } = validateCompasCache(_cache);
 
   if (error) {
-    output.cache.errorValidatingCache(error);
+    debugPrint("Cache not valid.");
 
-    return defaultConfig;
+    await cacheClean();
+
+    debugTimeEnd("cache.load");
+    return {
+      empty: true,
+      cache: defaultCache,
+    };
   }
 
-  if (value.version !== compasVersion) {
-    output.cache.invalidCompasVersion(value.version, compasVersion);
+  if (value.version !== defaultCache.version) {
+    debugPrint("Cache from old version");
 
-    return defaultConfig;
+    await cacheClean();
+
+    debugTimeEnd("cache.load");
+    return {
+      empty: true,
+      cache: defaultCache,
+    };
   }
 
-  output.cache.loaded(value);
   debugTimeEnd("cache.load");
 
-  return value;
+  return {
+    empty: false,
+    cache: value,
+  };
 }
 
 /**
- * Writes the cache to disk. Before writing the cache, we run the validator to make sure
- * that we don't write an invalid cache.
+ * Clean the cache for the specific project.
  *
- * @param {string} projectDirectory
- * @param {Cache} cache
+ * @param {string} project
  * @returns {Promise<void>}
  */
-export async function cacheWriteToDisk(projectDirectory, cache) {
-  debugTimeStart("cache.write");
+export async function cacheClean(project = "") {
+  const cacheFile = pathJoin(project, CACHE_PATH);
 
-  const cachePath = pathJoin(projectDirectory, ".cache/compas/cache.json");
+  await rm(cacheFile, { force: true });
+}
 
-  const { error } = validateCompasCache(cache);
+export async function cachePersist(cache) {
+  const { error, value } = validateCompasCache(cache);
+
   if (error) {
     throw AppError.serverError({
-      message:
-        "Compas failed to set a valid cache entry. Please copy and paste this error (removing private parts of the stacktrace) in to a new issue on GitHub.",
+      message: "Invariant failed. Could not validate cache before persisting.",
       error,
     });
   }
 
-  await mkdir(cachePath.split("/").slice(0, -1).join("/"), { recursive: true });
-  await writeFile(cachePath, JSON.stringify(cache));
-
-  await watcherWriteSnapshot(projectDirectory);
-
-  debugTimeEnd("cache.write");
+  await writeFileChecked(CACHE_PATH, JSON.stringify(value));
 }

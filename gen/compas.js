@@ -40,7 +40,7 @@ export function applyCompasStructure(generator) {
 
     projects: T.array()
       .values(T.string())
-      .optional()
+      .default(`[]`)
       .docs(
         "Relative paths to projects. Each project is expected to provide their own configuration.",
       ),
@@ -51,7 +51,7 @@ export function applyCompasStructure(generator) {
         shortcut: T.string(),
         command: T.array().values(T.string()).min(1),
       })
-      .optional()
+      .default(`[]`)
       .docs("Available actions for this project."),
   };
 
@@ -68,8 +68,35 @@ export function applyCompasStructure(generator) {
       .loose(),
 
     T.object("cache").keys({
-      version: T.string(),
-      config: T.reference("compas", "resolvedConfig").optional(),
+      version: T.string().docs("Compas version, used for cache invalidations."),
+
+      config: T.reference("compas", "resolvedConfig")
+        .optional()
+        .docs(
+          "The resolved config. Managed by {@link ConfigLoaderIntegration}.",
+        ),
+
+      rootDirectories: T.array()
+        .values(T.string())
+        .optional()
+        .min(1)
+        .docs(
+          "Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.",
+        ),
+
+      cachesCleaned: T.bool()
+        .optional()
+        .docs(
+          "Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.",
+        ),
+
+      packageManagerInstallCommand: T.generic()
+        .keys(T.string())
+        .values(T.array().values(T.string()))
+        .optional()
+        .docs(
+          "The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.",
+        ),
     }),
   );
 }

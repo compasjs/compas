@@ -38,12 +38,10 @@ you are currently working on.
 
 ## Limitations
 
-- Compas only supports a single package manager (npm, yarn or pnpm) in a
-  workspace.
 - Compas assumes that nested projects are also setup correctly in your package
   manager and only runs installation (e.g `npm install`) in the root project.
-  For sibling projects, Compas runs the package manager in all individual
-  projects, but it is still limited to a single package manager.
+  For sibling projects, Compas runs the inferred package manager in each
+  project.
 - Compas stores its cache in the project that you started Compas in and removes
   the cache from referenced projects. This way Compas has a single source of
   truth. So the most efficient way of developing is to always start Compas from

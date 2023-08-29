@@ -10,7 +10,7 @@
  */
 
 /**
- * @param {import("../common/types.js").CompasCache|any} value
+ * @param {import("../common/types.js").CompasCacheInput|any} value
  * @returns {Either<import("../common/types.js").CompasCache, ValidatorErrorMap>}
  */
 export function validateCompasCache(value) {
@@ -32,7 +32,13 @@ export function validateCompasCache(value) {
       };
     } else {
       /** @type {Set<string>} */
-      const knownKeys0 = new Set(["version", "config"]);
+      const knownKeys0 = new Set([
+        "version",
+        "config",
+        "rootDirectories",
+        "cachesCleaned",
+        "packageManagerInstallCommand",
+      ]);
       for (const key of Object.keys(value)) {
         if (
           !knownKeys0.has(key) &&
@@ -51,7 +57,13 @@ export function validateCompasCache(value) {
           break;
         }
       }
-      result = { version: undefined, config: undefined };
+      result = {
+        version: undefined,
+        config: undefined,
+        rootDirectories: undefined,
+        cachesCleaned: undefined,
+        packageManagerInstallCommand: undefined,
+      };
 
       if (value["version"] === null || value["version"] === undefined) {
         errorMap[`$.version`] = {
@@ -88,6 +100,231 @@ export function validateCompasCache(value) {
         }
         result["config"] = refResult2.value;
       }
+      if (
+        value["rootDirectories"] === null ||
+        value["rootDirectories"] === undefined
+      ) {
+        result["rootDirectories"] = undefined;
+      } else {
+        /** @type {ValidatorErrorMap} */
+        const intermediateErrorMap4 = {};
+        /** @type {any[]} */
+        let intermediateResult4 = [];
+        /** @type {any|any[]} */
+        let intermediateValue4 = value["rootDirectories"];
+
+        if (!Array.isArray(intermediateValue4)) {
+          errorMap[`$.rootDirectories`] = {
+            key: "validator.array",
+            value: intermediateValue4,
+          };
+        } else {
+          if (intermediateValue4.length < 1) {
+            errorMap[`$.rootDirectories`] = {
+              key: "validator.length",
+              minLength: 1,
+              foundLength: intermediateValue4.length,
+            };
+          }
+          result["rootDirectories"] = [];
+          for (let i4 = 0; i4 < intermediateValue4.length; ++i4) {
+            if (
+              intermediateValue4[i4] === null ||
+              intermediateValue4[i4] === undefined
+            ) {
+              intermediateErrorMap4[`$.${i4}`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString4 = intermediateValue4[i4];
+              if (typeof convertedString4 !== "string") {
+                intermediateErrorMap4[`$.${i4}`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString4.length < 1) {
+                  intermediateErrorMap4[`$.${i4}`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  intermediateResult4[i4] = convertedString4;
+                }
+              }
+            }
+          }
+        }
+        if (Object.keys(intermediateErrorMap4).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap4)) {
+            errorMap[`$.rootDirectories${errorKey.substring(1)}`] =
+              intermediateErrorMap4[errorKey];
+          }
+        } else {
+          result["rootDirectories"] = intermediateResult4;
+        }
+      }
+      if (
+        value["cachesCleaned"] === null ||
+        value["cachesCleaned"] === undefined
+      ) {
+        result["cachesCleaned"] = undefined;
+      } else {
+        if (
+          value["cachesCleaned"] === true ||
+          value["cachesCleaned"] === "true" ||
+          value["cachesCleaned"] === 1 ||
+          value["cachesCleaned"] === "1"
+        ) {
+          result["cachesCleaned"] = true;
+        } else if (
+          value["cachesCleaned"] === false ||
+          value["cachesCleaned"] === "false" ||
+          value["cachesCleaned"] === 0 ||
+          value["cachesCleaned"] === "0"
+        ) {
+          result["cachesCleaned"] = false;
+        } else {
+          errorMap[`$.cachesCleaned`] = {
+            key: "validator.type",
+            expectedType: "boolean",
+          };
+        }
+      }
+      if (
+        value["packageManagerInstallCommand"] === null ||
+        value["packageManagerInstallCommand"] === undefined
+      ) {
+        result["packageManagerInstallCommand"] = undefined;
+      } else {
+        if (
+          typeof value["packageManagerInstallCommand"] !== "object" ||
+          Array.isArray(value["packageManagerInstallCommand"])
+        ) {
+          errorMap[`$.packageManagerInstallCommand`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["packageManagerInstallCommand"] = {};
+          for (let genericKeyInput5 of Object.keys(
+            value["packageManagerInstallCommand"],
+          )) {
+            /** @type {any} */
+            let genericKeyResult6 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap7 = {};
+            if (genericKeyInput5 === null || genericKeyInput5 === undefined) {
+              genericKeyErrorMap7[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString8 = genericKeyInput5;
+              if (typeof convertedString8 !== "string") {
+                genericKeyErrorMap7[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString8.length < 1) {
+                  genericKeyErrorMap7[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  genericKeyResult6 = convertedString8;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap7).length !== 0) {
+              if (errorMap[`$.packageManagerInstallCommand`]) {
+                errorMap[`$.packageManagerInstallCommand`].inputs.push({
+                  key: genericKeyInput5,
+                  errors: genericKeyErrorMap7,
+                });
+              } else {
+                errorMap[`$.packageManagerInstallCommand`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput5, errors: genericKeyErrorMap7 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["packageManagerInstallCommand"][genericKeyResult6] ===
+                  null ||
+                value["packageManagerInstallCommand"][genericKeyResult6] ===
+                  undefined
+              ) {
+                errorMap[
+                  `$.packageManagerInstallCommand.${genericKeyResult6}`
+                ] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {ValidatorErrorMap} */
+                const intermediateErrorMap9 = {};
+                /** @type {any[]} */
+                let intermediateResult9 = [];
+                /** @type {any|any[]} */
+                let intermediateValue9 =
+                  value["packageManagerInstallCommand"][genericKeyResult6];
+
+                if (!Array.isArray(intermediateValue9)) {
+                  errorMap[
+                    `$.packageManagerInstallCommand.${genericKeyResult6}`
+                  ] = {
+                    key: "validator.array",
+                    value: intermediateValue9,
+                  };
+                } else {
+                  result["packageManagerInstallCommand"][genericKeyResult6] =
+                    [];
+                  for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
+                    if (
+                      intermediateValue9[i9] === null ||
+                      intermediateValue9[i9] === undefined
+                    ) {
+                      intermediateErrorMap9[`$.${i9}`] = {
+                        key: "validator.undefined",
+                      };
+                    } else {
+                      /** @type {string} */
+                      let convertedString9 = intermediateValue9[i9];
+                      if (typeof convertedString9 !== "string") {
+                        intermediateErrorMap9[`$.${i9}`] = {
+                          key: "validator.string",
+                        };
+                      } else {
+                        if (convertedString9.length < 1) {
+                          intermediateErrorMap9[`$.${i9}`] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          intermediateResult9[i9] = convertedString9;
+                        }
+                      }
+                    }
+                  }
+                }
+                if (Object.keys(intermediateErrorMap9).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap9)) {
+                    errorMap[
+                      `$.packageManagerInstallCommand.${genericKeyResult6}${errorKey.substring(
+                        1,
+                      )}`
+                    ] = intermediateErrorMap9[errorKey];
+                  }
+                } else {
+                  result["packageManagerInstallCommand"][genericKeyResult6] =
+                    intermediateResult9;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
@@ -97,7 +334,7 @@ export function validateCompasCache(value) {
 }
 
 /**
- * @param {import("../common/types.js").CompasResolvedConfig|any} value
+ * @param {import("../common/types.js").CompasResolvedConfigInput|any} value
  * @returns {Either<import("../common/types.js").CompasResolvedConfig, ValidatorErrorMap>}
  */
 export function validateCompasResolvedConfig(value) {
@@ -469,7 +706,7 @@ export function validateCompasResolvedConfig(value) {
         }
       }
       if (value["actions"] === null || value["actions"] === undefined) {
-        result["actions"] = undefined;
+        result["actions"] = [];
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap5 = {};
@@ -671,7 +908,7 @@ export function validateCompasResolvedConfig(value) {
 }
 
 /**
- * @param {import("../common/types.js").CompasConfig|any} value
+ * @param {import("../common/types.js").CompasConfigInput|any} value
  * @returns {Either<import("../common/types.js").CompasConfig, ValidatorErrorMap>}
  */
 export function validateCompasConfig(value) {
@@ -967,7 +1204,7 @@ export function validateCompasConfig(value) {
         }
       }
       if (value["projects"] === null || value["projects"] === undefined) {
-        result["projects"] = undefined;
+        result["projects"] = [];
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
@@ -1021,7 +1258,7 @@ export function validateCompasConfig(value) {
         }
       }
       if (value["actions"] === null || value["actions"] === undefined) {
-        result["actions"] = undefined;
+        result["actions"] = [];
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap4 = {};

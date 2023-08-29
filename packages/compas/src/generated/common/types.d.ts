@@ -35,6 +35,75 @@ export type CompasResolvedConfig = {
   /**
    * Available actions for this project.
    */
+  "actions": ({
+    "name": string;
+    "shortcut": string;
+    "command": (string)[];
+  })[];
+};
+
+export type CompasCache = {
+  
+  /**
+   * Compas version, used for cache invalidations.
+   */
+  "version": string;
+  
+  /**
+   * The resolved config. Managed by {@link ConfigLoaderIntegration}.
+   */
+  "config"?: CompasResolvedConfig|undefined;
+  
+  /**
+   * Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.
+   */
+  "rootDirectories"?: (string)[]|undefined;
+  
+  /**
+   * Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.
+   */
+  "cachesCleaned"?: boolean|undefined;
+  
+  /**
+   * The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.
+   */
+  "packageManagerInstallCommand"?: { [key: string]: (string)[]}|undefined;
+};
+
+export type CompasResolvedConfigInput = {
+  "rootDirectory": string;
+  
+  /**
+   * Old @compas/cli config
+   */
+  "cli"?: {
+    
+    /**
+     * Array of directories relative to the project root. All JavaScript files will be imported by the CLI and checked if it exports a 'cliDefinition'.
+     */
+    "commandDirectories"?: (string)[]|undefined;
+    
+    /**
+     * Project level watch options, applied to all commands running in 'watch' mode via the Compas CLI.
+     */
+    "globalWatchOptions"?: {
+      
+      /**
+       * Add file extensions that should be watched
+       */
+      "extensions"?: (string)[]|undefined;
+      
+      /**
+       * Remove directories from being watched, this has precedence over the included extensions
+       */
+      "ignorePatterns"?: (string)[]|undefined;
+    }|undefined;
+  }|undefined;
+  "projects": (CompasResolvedConfigInput)[];
+  
+  /**
+   * Available actions for this project.
+   */
   "actions"?: ({
     "name": string;
     "shortcut": string;
@@ -42,12 +111,79 @@ export type CompasResolvedConfig = {
   })[]|undefined;
 };
 
-export type CompasCache = {
+export type CompasCacheInput = {
+  
+  /**
+   * Compas version, used for cache invalidations.
+   */
   "version": string;
-  "config"?: CompasResolvedConfig|undefined;
+  
+  /**
+   * The resolved config. Managed by {@link ConfigLoaderIntegration}.
+   */
+  "config"?: CompasResolvedConfigInput|undefined;
+  
+  /**
+   * Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.
+   */
+  "rootDirectories"?: (string)[]|undefined;
+  
+  /**
+   * Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.
+   */
+  "cachesCleaned"?: boolean|"true"|"false"|undefined;
+  
+  /**
+   * The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.
+   */
+  "packageManagerInstallCommand"?: { [key: string]: (string)[]}|undefined;
 };
 
 export type CompasConfig = {
+  
+  /**
+   * Old @compas/cli config
+   */
+  "cli"?: {
+    
+    /**
+     * Array of directories relative to the project root. All JavaScript files will be imported by the CLI and checked if it exports a 'cliDefinition'.
+     */
+    "commandDirectories"?: (string)[]|undefined;
+    
+    /**
+     * Project level watch options, applied to all commands running in 'watch' mode via the Compas CLI.
+     */
+    "globalWatchOptions"?: {
+      
+      /**
+       * Add file extensions that should be watched
+       */
+      "extensions"?: (string)[]|undefined;
+      
+      /**
+       * Remove directories from being watched, this has precedence over the included extensions
+       */
+      "ignorePatterns"?: (string)[]|undefined;
+    }|undefined;
+  }|undefined;
+  
+  /**
+   * Relative paths to projects. Each project is expected to provide their own configuration.
+   */
+  "projects": (string)[];
+  
+  /**
+   * Available actions for this project.
+   */
+  "actions": ({
+    "name": string;
+    "shortcut": string;
+    "command": (string)[];
+  })[];
+};
+
+export type CompasConfigInput = {
   
   /**
    * Old @compas/cli config

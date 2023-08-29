@@ -1,4 +1,6 @@
-import { mkdirSync, appendFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync } from "node:fs";
+import { noop } from "@compas/stdlib";
+import { writeFileChecked } from "./fs.js";
 
 const DEBUG_LOCATION = `.cache/compas/debug-${String(Date.now()).slice(
   0,
@@ -28,6 +30,33 @@ const inMemoryDebugOutput = [];
 const activeTimers = {};
 
 /**
+ * Default logger, consisting of noop's
+ */
+const noopLogger = {
+  info: noop,
+  error: noop,
+};
+
+/**
+ * \@compas/stdlib Logger to use for pretty printing in normal scenario's. Shouldn't be
+ * used in combination with the TUI.
+ *
+ * Note that a 'noop' logger is used as long as {@link loggerEnable} is not called.
+ *
+ * @type {import("@compas/stdlib").Logger}
+ */
+export let logger = noopLogger;
+
+/**
+ * Set the logger.
+ *
+ * @param {import("@compas/stdlib").Logger} setLogger
+ */
+export function loggerEnable(setLogger) {
+  logger = setLogger;
+}
+
+/**
  * Appends the provided contents with a timestamp to {@link DEBUG_LOCATION}.
  *
  * If the contents aren't a string, they're converted to a string using
@@ -51,9 +80,16 @@ export function debugPrint(contents) {
   }
 
   // Add a date so we know what's up.
-  const outputString = `${new Date().toISOString()} - ${contents}`;
+  const outputString = `${new Date().toISOString()} :: ${contents}`;
 
   if (shouldOutputDebugInfo === true) {
+    if (!existsSync(DEBUG_LOCATION)) {
+      // File is removed for some reason...
+      const dir = DEBUG_LOCATION.split("/").slice(0, -1).join("/");
+
+      mkdirSync(dir, { recursive: true });
+    }
+
     appendFileSync(DEBUG_LOCATION, `${outputString}\n`, {});
   } else {
     inMemoryDebugOutput.push(outputString);
@@ -99,16 +135,15 @@ export function debugTimeEnd(label) {
 /**
  * Enable writing debug info to the debug file.
  */
-export function debugEnable() {
+export async function debugEnable() {
   if (shouldOutputDebugInfo === true) {
     return;
   }
 
-  // Write local cache
-  mkdirSync(DEBUG_LOCATION.split("/").slice(0, -1).join("/"), {
-    recursive: true,
-  });
-  appendFileSync(DEBUG_LOCATION, `${inMemoryDebugOutput.join("\n")}\n`);
+  await writeFileChecked(
+    DEBUG_LOCATION,
+    inMemoryDebugOutput.length > 0 ? `${inMemoryDebugOutput.join("\n")}\n` : "",
+  );
 
   shouldOutputDebugInfo = true;
   inMemoryDebugOutput.splice(0, inMemoryDebugOutput.length);
