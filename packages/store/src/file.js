@@ -192,7 +192,7 @@ export async function fileCreateOrUpdate(
  * @returns {Promise<Buffer>}
  */
 async function fileTransformInPlaceInternal(fileBuffer, operations) {
-  const sharpInstance = sharp(fileBuffer);
+  const sharpInstance = sharp(fileBuffer, { failOn: "error" });
 
   if (operations.stripMetadata !== true) {
     sharpInstance.withMetadata({});
