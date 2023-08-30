@@ -4,6 +4,29 @@ editLink: false
 
 # Changelog
 
+### [v0.7.2](https://github.com/compasjs/compas/releases/tag/v0.7.2)
+
+#### Bug fixes
+
+- fix(compas): prevent infinite recursion while loading configs
+  [`9eb460`](https://github.com/compasjs/compas/commit/9eb4607ea276fc3ceef5df91b830e64180c92a30)
+- fix(code-gen): include correct files in package
+  [`06011b`](https://github.com/compasjs/compas/commit/06011b3bed0fd555e2caeccba2391284f0e4ec03)
+
+#### Other
+
+- chore(compas): fix compas version used in 'compas init'
+  [`462445`](https://github.com/compasjs/compas/commit/4624452da6e0e8a9c07e8e0eee6900fd22fe2bb8)
+
+#### Dependency updates
+
+- build(deps): bump eslint-plugin-jsdoc from 46.5.0 to 46.5.1
+  ([#2821](https://github.com/compasjs/compas/pull/2821))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump prettier from 3.0.2 to 3.0.3
+  ([#2821](https://github.com/compasjs/compas/pull/2821))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+
 ### [v0.7.1](https://github.com/compasjs/compas/releases/tag/v0.7.1)
 
 #### Features
