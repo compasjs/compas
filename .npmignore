@@ -5,6 +5,3 @@ __fixtures__/
 *.test.js
 test/
 test-generated/
-
-# Code-gen related
-generator.js
