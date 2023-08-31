@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.7.3](https://github.com/compasjs/compas/releases/tag/v0.7.3)
+
+#### Features
+
+- feat(store): only let image transformations fail on Sharp errors
+  [`945136`](https://github.com/compasjs/compas/commit/945136d8b3046f804d49819a498e2d1627ea5ad3)
+
 ### [v0.7.2](https://github.com/compasjs/compas/releases/tag/v0.7.2)
 
 #### Bug fixes
