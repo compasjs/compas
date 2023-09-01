@@ -82,7 +82,7 @@ export class PackageManagerIntegration extends BaseIntegration {
       Object.keys(existingMapping).length !== Object.keys(newMapping).length;
 
     for (const key of Object.keys(existingMapping)) {
-      if (existingMapping[key] !== newMapping[key]) {
+      if (existingMapping[key]?.join(" ") !== newMapping[key]?.join(" ")) {
         hasDiff = true;
       }
 

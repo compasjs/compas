@@ -11,10 +11,12 @@ export class CacheCleanupIntegration extends BaseIntegration {
   async init() {
     await super.init();
 
-    await this.cleanup();
-
+    const hasPreviouslyCleaned = this.state.cache.cachesCleaned;
     this.state.cache.cachesCleaned = true;
-    await this.state.emitCacheUpdated();
+
+    if (!hasPreviouslyCleaned) {
+      return await this.state.emitCacheUpdated();
+    }
   }
 
   async onConfigUpdated() {

@@ -220,7 +220,15 @@ export class State {
   async emitCacheUpdated() {
     debugPrint(`State#emitCacheUpdated`);
 
-    await cachePersist(this.cache);
+    if (!this.cachePersistTimer) {
+      const _self = this;
+      this.cachePersistTimer = setTimeout(() => {
+        debugPrint("State#emitCacheUpdated :: Running cachePersist");
+        cachePersist(_self.cache);
+      }, 50);
+    } else {
+      this.cachePersistTimer.refresh();
+    }
 
     for (const integration of this.integrations) {
       await integration.onCacheUpdated();

@@ -28,5 +28,11 @@ export function ciMode(env) {
     message: "TODO: a future update will do more things...",
   });
 
+  // TODO: load project
+
+  // TODO: resolve root directories
+
+  // TODO: for each root directory execute inferredLintCommand
+
   return Promise.resolve();
 }
