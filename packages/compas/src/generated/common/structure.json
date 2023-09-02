@@ -70,8 +70,8 @@
           "sql": {},
           "type": "boolean"
         },
-        "packageManagerInstallCommand": {
-          "docString": "The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.",
+        "packageManager": {
+          "docString": "The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.",
           "isOptional": true,
           "validator": {},
           "sql": {},
@@ -93,22 +93,65 @@
             "docString": "",
             "isOptional": false,
             "validator": {
-              "convert": false
+              "allowNull": false,
+              "strict": true
             },
             "sql": {},
-            "type": "array",
-            "values": {
-              "docString": "",
-              "isOptional": false,
-              "validator": {
-                "allowNull": false,
-                "trim": false,
-                "lowerCase": false,
-                "upperCase": false,
-                "min": 1
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "name": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
               },
-              "sql": {},
-              "type": "string"
+              "installCommand": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "nodeModulesBinCommand": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "packageJsonScriptCommand": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
             }
           }
         }

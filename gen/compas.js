@@ -90,12 +90,17 @@ export function applyCompasStructure(generator) {
           "Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.",
         ),
 
-      packageManagerInstallCommand: T.generic()
+      packageManager: T.generic()
         .keys(T.string())
-        .values(T.array().values(T.string()))
+        .values({
+          name: T.string(),
+          installCommand: T.string(),
+          nodeModulesBinCommand: T.string(),
+          packageJsonScriptCommand: T.string(),
+        })
         .optional()
         .docs(
-          "The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.",
+          "The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.",
         ),
     }),
   );

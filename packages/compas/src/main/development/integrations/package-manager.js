@@ -1,5 +1,8 @@
 import { exec } from "@compas/stdlib";
-import { packageManagerDetermineInstallCommand } from "../../../shared/package-manager.js";
+import {
+  PACKAGE_MANAGER_LOCK_FILES,
+  packageManagerDetermine,
+} from "../../../shared/package-manager.js";
 import { BaseIntegration } from "./base.js";
 
 export class PackageManagerIntegration extends BaseIntegration {
@@ -10,7 +13,7 @@ export class PackageManagerIntegration extends BaseIntegration {
   async init() {
     await super.init();
 
-    if (!this.state.cache.packageManagerInstallCommand) {
+    if (!this.state.cache.packageManager) {
       await this.resolve();
 
       // TODO: do we want to start with an 'await this.execute();'
@@ -24,7 +27,7 @@ export class PackageManagerIntegration extends BaseIntegration {
     });
 
     this.state.fileChangeRegister.push({
-      glob: "**/{package-lock.json,yarn.lock,pnpm-lock.yaml}",
+      glob: `**/{${PACKAGE_MANAGER_LOCK_FILES.join(",")}}`,
       integration: this,
       debounceDelay: 100,
     });
@@ -47,12 +50,10 @@ export class PackageManagerIntegration extends BaseIntegration {
         installCommand = true;
       }
 
-      if (
-        path.endsWith("pnpm-lock.yaml") ||
-        path.endsWith("package-lock.json") ||
-        path.endsWith("yarn.lock")
-      ) {
-        updateCache = true;
+      for (const lockfile of PACKAGE_MANAGER_LOCK_FILES) {
+        if (path.endsWith(lockfile)) {
+          updateCache = true;
+        }
       }
     }
 
@@ -67,22 +68,22 @@ export class PackageManagerIntegration extends BaseIntegration {
 
   async resolve() {
     const existingMapping = {
-      ...this.state.cache.packageManagerInstallCommand,
+      ...this.state.cache.packageManager,
     };
 
     const newMapping = {};
     for (const dir of this.state.cache.rootDirectories ?? []) {
-      newMapping[dir] = packageManagerDetermineInstallCommand(dir);
+      newMapping[dir] = packageManagerDetermine(dir);
     }
 
     // @ts-expect-error
-    this.state.cache.packageManagerInstallCommand = newMapping;
+    this.state.cache.packageManager = newMapping;
 
     let hasDiff =
       Object.keys(existingMapping).length !== Object.keys(newMapping).length;
 
     for (const key of Object.keys(existingMapping)) {
-      if (existingMapping[key]?.join(" ") !== newMapping[key]?.join(" ")) {
+      if (existingMapping[key]?.name !== newMapping[key]?.name) {
         hasDiff = true;
       }
 
@@ -100,10 +101,10 @@ export class PackageManagerIntegration extends BaseIntegration {
     // TODO: this again write the package.json on changes, so we may want to prevent
     //  triggering shortly after the last run.
 
-    for (const [dir, command] of Object.entries(
-      this.state.cache.packageManagerInstallCommand ?? {},
+    for (const [dir, config] of Object.entries(
+      this.state.cache.packageManager ?? {},
     )) {
-      await exec(command.join(" "), {
+      await exec(config.installCommand, {
         cwd: dir,
       });
     }

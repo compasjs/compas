@@ -1,22 +1,53 @@
 import { existsSync } from "node:fs";
 import { pathJoin } from "@compas/stdlib";
-import { debugPrint } from "./output.js";
+
+export const PACKAGE_MANAGER_LOCK_FILES = [
+  "bun.lockb",
+  "yarn.lock",
+  "pnpm-lock.yaml",
+  "package-lock.json",
+];
 
 /**
- * Determine package manager command to use for installing dependencies.
+ * Determine the used package manager and the used utilities that we support for that
+ * package manager.
  *
- * @returns {string[]}
+ * @param {string} rootDirectory
+ * @returns {{
+ *   name: string,
+ *   installCommand: string,
+ *   nodeModulesBinCommand: string,
+ *   packageJsonScriptCommand: string,
+ * }}
  */
-export function packageManagerDetermineInstallCommand(rootDirectory = "") {
-  if (existsSync(pathJoin(rootDirectory, "package-lock.json"))) {
-    return ["npm", "install"];
+export function packageManagerDetermine(rootDirectory = "") {
+  if (existsSync(pathJoin(rootDirectory, "bun.lockb"))) {
+    return {
+      name: "bun",
+      installCommand: "bun install",
+      nodeModulesBinCommand: "bunx",
+      packageJsonScriptCommand: "bun run",
+    };
   } else if (existsSync(pathJoin(rootDirectory, "yarn.lock"))) {
-    return ["yarn"];
+    return {
+      name: "yarn",
+      installCommand: "yarn install",
+      nodeModulesBinCommand: "yarn",
+      packageJsonScriptCommand: "yarn run",
+    };
   } else if (existsSync(pathJoin(rootDirectory, "pnpm-lock.yaml"))) {
-    return ["pnpm", "install"];
+    return {
+      name: "pnpm",
+      installCommand: "pnpm install",
+      nodeModulesBinCommand: "pnpm exec",
+      packageJsonScriptCommand: "pnpm run",
+    };
   }
 
-  debugPrint(`Defaulting install command to npm for '${rootDirectory}'.`);
-
-  return ["npm", "install"];
+  return {
+    name: "npm",
+    installCommand: "npm install",
+    nodeModulesBinCommand: "npx",
+    packageJsonScriptCommand: "npm run",
+  };
 }

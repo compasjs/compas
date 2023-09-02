@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { exec, spawn } from "@compas/stdlib";
 import { writeFileChecked } from "../../shared/fs.js";
 import { logger } from "../../shared/output.js";
-import { packageManagerDetermineInstallCommand } from "../../shared/package-manager.js";
+import { packageManagerDetermine } from "../../shared/package-manager.js";
 
 /**
  *
@@ -55,13 +55,16 @@ async function initCompasInExistingProject(env) {
       "package.json",
       `${JSON.stringify(packageJson, null, 2)}\n`,
     );
-    const packageManagerCommand = packageManagerDetermineInstallCommand();
-    await spawn(packageManagerCommand[0], packageManagerCommand.slice(1));
+
+    const packageManager = packageManagerDetermine();
+
+    const command = packageManager.installCommand.split(" ");
+    await spawn(command[0], command.slice(1));
 
     logger.info(`
-Ready to roll! Run 'npx compas' to start the Compas development environment.
+Ready to roll! Run '${packageManager.nodeModulesBinCommand} compas' to start the Compas development environment.
 
-Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how to run 'compas' without the 'npx' prefix.
+Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how to run 'compas' without the '${packageManager.nodeModulesBinCommand}' prefix.
 `);
   } else {
     logger.info("Already up-to-date!");
@@ -94,8 +97,10 @@ async function initCompasInNewProject(env) {
 
   logger.info("Created a package.json. Installing with npm...");
 
-  const packageManagerCommand = packageManagerDetermineInstallCommand();
-  await spawn(packageManagerCommand[0], packageManagerCommand.slice(1));
+  const packageManager = packageManagerDetermine();
+  const command = packageManager.installCommand.split(" ");
+
+  await spawn(command[0], command.slice(1));
 
   if (!existsSync(".gitignore")) {
     await writeFileChecked(
@@ -137,7 +142,7 @@ coverage
   logger.info(`
 Ready to roll! Run 'npx compas' to start the Compas development environment.
 
-You can switch to a different supported package manager like Yarn or Pnpm by removing the created package-lock.json and running the equivalent of 'npm install' with your favorite package manager.
+You can switch to a different supported package manager like yarn v1 or pnpm by removing the created package-lock.json and running the equivalent of 'npm install' with your favorite package manager.
 
 Tip: See https://compasjs.com/docs/getting-started.html#development-setup on how to run 'compas' without the 'npx' prefix.
 `);

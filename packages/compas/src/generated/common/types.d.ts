@@ -65,9 +65,14 @@ export type CompasCache = {
   "cachesCleaned"?: boolean|undefined;
   
   /**
-   * The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.
+   * The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.
    */
-  "packageManagerInstallCommand"?: { [key: string]: (string)[]}|undefined;
+  "packageManager"?: { [key: string]: {
+    "name": string;
+    "installCommand": string;
+    "nodeModulesBinCommand": string;
+    "packageJsonScriptCommand": string;
+  }}|undefined;
 };
 
 export type CompasResolvedConfigInput = {
@@ -134,9 +139,14 @@ export type CompasCacheInput = {
   "cachesCleaned"?: boolean|"true"|"false"|undefined;
   
   /**
-   * The inferred package install command per rootDirectory. Managed by {@link PackageManagerIntegration}.
+   * The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.
    */
-  "packageManagerInstallCommand"?: { [key: string]: (string)[]}|undefined;
+  "packageManager"?: { [key: string]: {
+    "name": string;
+    "installCommand": string;
+    "nodeModulesBinCommand": string;
+    "packageJsonScriptCommand": string;
+  }}|undefined;
 };
 
 export type CompasConfig = {
