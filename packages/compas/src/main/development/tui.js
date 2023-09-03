@@ -25,7 +25,9 @@ export function tuiInit(state) {
   process.stdout.on("resize", () => state.resizeScreen());
 
   // Input setup + listener
-  process.stdin.setRawMode(true);
+  if (process.stdin.setRawMode) {
+    process.stdin.setRawMode(true);
+  }
   emitKeypressEvents(process.stdin);
 
   process.stdin.on("keypress", (char, raw) => {
@@ -52,7 +54,10 @@ export function tuiExit(state) {
 
   state.cursor.reset();
   state.cursor.flush();
-  process.stdin.setRawMode(false);
+
+  if (process.stdin.setRawMode) {
+    process.stdin.setRawMode(false);
+  }
 }
 
 /**
