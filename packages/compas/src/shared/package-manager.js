@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { pathJoin } from "@compas/stdlib";
+import { environment, pathJoin } from "@compas/stdlib";
 
 export const PACKAGE_MANAGER_LOCK_FILES = [
   "bun.lockb",
@@ -21,7 +21,14 @@ export const PACKAGE_MANAGER_LOCK_FILES = [
  * }}
  */
 export function packageManagerDetermine(rootDirectory = "") {
-  if (existsSync(pathJoin(rootDirectory, "bun.lockb"))) {
+  if (environment._COMPAS_SKIP_PACKAGE_MANAGER === "true") {
+    return {
+      name: "_compas_skip_package_manager",
+      installCommand: "echo '_compas_skip_package_manager_install'",
+      nodeModulesBinCommand: "echo '_compas_skip_package_manager_bin'",
+      packageJsonScriptCommand: "echo '_compas_skip_package_manager_script'",
+    };
+  } else if (existsSync(pathJoin(rootDirectory, "bun.lockb"))) {
     return {
       name: "bun",
       installCommand: "bun install",

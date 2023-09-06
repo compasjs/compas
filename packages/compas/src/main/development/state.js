@@ -110,13 +110,9 @@ export class State {
       new ActionsIntegration(this),
       new PackageManagerIntegration(this),
 
-      // Should be the last integration
+      // Should be the last integration, since it will
       new FileWatcherIntegration(this),
     ];
-
-    // TODO: Package install command
-
-    // TODO: package install
 
     // Init and add to state
     for (const integration of integrations) {

@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { exec, spawn } from "@compas/stdlib";
+import { environment, exec, spawn } from "@compas/stdlib";
 import { writeFileChecked } from "../../shared/fs.js";
 import { logger } from "../../shared/output.js";
 import { packageManagerDetermine } from "../../shared/package-manager.js";
@@ -84,7 +84,6 @@ async function initCompasInNewProject(env) {
     version: "0.0.1",
     type: "module",
     scripts: {},
-    keywords: [],
     dependencies: {
       compas: compasVersion,
     },
@@ -136,7 +135,17 @@ coverage
     await exec("git init");
     await exec("git checkout -b main");
     await exec("git add -A");
-    await exec(`git commit -m "Initialized project with ${env.compasVersion}"`);
+
+    if (environment._COMPAS_SKIP_COMMIT_SIGN === "true") {
+      // Test purposes
+      await exec(
+        `git commit -c commit.gpgsign=false -m "Initialized project with ${env.compasVersion}"`,
+      );
+    } else {
+      await exec(
+        `git commit -m "Initialized project with ${env.compasVersion}"`,
+      );
+    }
   }
 
   logger.info(`
