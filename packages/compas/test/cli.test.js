@@ -1,8 +1,6 @@
-import { existsSync } from "node:fs";
-import { readdir } from "node:fs/promises";
 import { mainTestFn, test } from "@compas/cli";
-import { pathJoin } from "@compas/stdlib";
-import { testCompasCli, testDirectory } from "./utils.js";
+import { isNil } from "@compas/stdlib";
+import { TestCompas, testDirectory } from "./utils.js";
 
 mainTestFn(import.meta);
 
@@ -14,60 +12,69 @@ test("compas/cli", (t) => {
   t.test("does not create a debug file without --debug", async (t) => {
     const cwd = workingDirectory("no-debug");
 
-    await testCompasCli({
-      args: ["foo"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["foo"],
+      },
+    ).launch();
 
-    t.equal(existsSync(pathJoin(cwd, ".cache/compas")), false);
+    await cli.waitForExit();
+    await cli.recalculateOutputState();
+
+    t.ok(isNil(cli.debugFilePath));
   });
 
   t.test("creates a debug file with --debug", async (t) => {
     const cwd = workingDirectory("with-debug");
 
-    await testCompasCli({
-      args: ["foo", "--debug"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["foo", "--debug"],
+      },
+    ).launch();
 
-    t.equal(existsSync(pathJoin(cwd, ".cache/compas")), true);
-    t.equal(
-      (await readdir(pathJoin(cwd, ".cache/compas"), {})).some(
-        (it) => it.startsWith("debug-") && it.endsWith(".txt"),
-      ),
-      true,
-    );
+    await cli.waitForExit();
+    await cli.recalculateOutputState();
+
+    t.ok(cli.debugFilePath);
   });
 
   t.test("package.json is not available", async (t) => {
     const cwd = workingDirectory("no-package-json");
 
-    const { stdout } = await testCompasCli({
-      args: [],
-      inputs: [],
-      waitForExit: true,
+    const cli = new TestCompas({
       cwd,
-    });
+    }).launch();
+
+    await cli.waitForExit();
 
     t.ok(
-      stdout.includes("Please run 'npx compas@latest init' to install Compas."),
+      cli.stdout.includes(
+        "Please run 'npx compas@latest init' to install Compas.",
+      ),
     );
   });
 
   t.test("unsupported command", async (t) => {
     const cwd = workingDirectory("unknown-command");
 
-    const { stdout } = await testCompasCli({
-      args: ["foo"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["foo"],
+      },
+    ).launch();
 
-    t.ok(stdout.includes(`Unsupported command. Available commands:`));
+    await cli.waitForExit();
+
+    t.ok(cli.stdout.includes("Unsupported command. Available commands:"));
   });
 });

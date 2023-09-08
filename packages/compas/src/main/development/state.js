@@ -220,7 +220,9 @@ export class State {
       const _self = this;
       this.cachePersistTimer = setTimeout(() => {
         debugPrint("State#emitCacheUpdated :: Running cachePersist");
-        cachePersist(_self.cache);
+        cachePersist(_self.cache).then(() => {
+          debugPrint("State#emitCacheUpdated :: Done with cachePersist");
+        });
       }, 50);
     } else {
       this.cachePersistTimer.refresh();

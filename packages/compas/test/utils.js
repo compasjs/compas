@@ -1,8 +1,10 @@
 import { spawn } from "node:child_process";
 import { once } from "node:events";
-import { mkdirSync, rmSync } from "node:fs";
+import { writeFileSync, existsSync, mkdirSync, rmSync } from "node:fs";
+import { readdir, readFile } from "node:fs/promises";
 import { setTimeout } from "node:timers/promises";
-import { pathJoin } from "@compas/stdlib";
+import { AppError, pathJoin } from "@compas/stdlib";
+import { writeFileChecked } from "../src/shared/fs.js";
 
 /**
  *
@@ -23,123 +25,280 @@ export function testDirectory(suite) {
 }
 
 /**
- * Util to test CLI execution.
- *
- * Launches the CLI directly and is able to send a list of inputs to it. It collects the
- * stdout and stderr to assert on.
- *
- * By default exits after executing all actions. Provide {@link options.waitForClose} if
- * you want to wait till the process exits automatically.
- *
- * @param {{
- *   args?: string[],
- *   waitForExit?: boolean,
- *   inputs: {
- *     write: string|Buffer,
- *     timeout?: number,
- *   }[]
- * } & import("child_process").SpawnOptionsWithoutStdio} options
- * @returns {Promise<{stdout: string, stderr: string}>}
+ * @typedef {Omit<import("child_process").SpawnOptions, "cwd"> & {
+ *   cwd: string,
+ * }} SpawnOptions
  */
-export async function testCompasCli({
-  args,
-  inputs,
-  waitForExit,
-  ...spawnOpts
-}) {
-  const cp = spawn(
-    `node`,
-    [
-      pathJoin(process.cwd(), "./packages/compas/src/cli/bin.js"),
-      ...(args ?? ["--debug"]),
-    ],
-    {
-      ...spawnOpts,
-      stdio: ["pipe", "pipe", "pipe"],
-      env: {
-        ...(spawnOpts.env ?? {
-          ...process.env,
-          CI: "false",
-          APP_NAME: undefined,
-          _COMPAS_SKIP_PACKAGE_MANAGER: "true",
-          _COMPAS_SKIP_COMMIT_SIGN: "true",
-        }),
+
+/**
+ * Util to test CLI execution
+ *
+ * Launches the CLI, and provides utils to assert on output, debug information and
+ * directory state.
+ *
+ * Starts launching the CLI when `.launch()` is called.
+ */
+export class TestCompas {
+  static DEFAULT_POLL_INTERVAL = 2;
+
+  /**
+   * @param {SpawnOptions} spawnOptions
+   * @param {{
+   *   args?: string[],
+   * }} options
+   */
+  constructor(spawnOptions, { args } = {}) {
+    /**
+     * @type {SpawnOptions}
+     */
+    this.spawnOptions = spawnOptions;
+
+    /**
+     * @type {string[]}
+     */
+    this.args = args ?? ["--debug"];
+
+    /**
+     * @type {import("child_process").ChildProcess|undefined}
+     */
+    this.cp = undefined;
+
+    /**
+     * @type {"IDLE"|"STARTED"|"STOPPED"}
+     */
+    this.cpState = "IDLE";
+
+    /**
+     * @type {string}
+     */
+    this.stdout = "";
+
+    /**
+     * @type {string}
+     */
+    this.stderr = "";
+
+    /**
+     * @type {string|undefined}
+     */
+    this.debugFilePath = undefined;
+
+    /**
+     * @type {{
+     *   debugFileLength: number,
+     *   stdoutLength: number,
+     *   stderrLength: number,
+     * }}
+     */
+    this.outputState = {
+      debugFileLength: 0,
+      stdoutLength: this.stdout.length,
+      stderrLength: this.stderr.length,
+    };
+
+    /**
+     *
+     * @type {TestCompas}
+     * @private
+     */
+    const _self = this;
+
+    /**
+     * @type {() => void}}
+     */
+    this.exitHandler = () => {
+      if (_self.cp && _self.cpState === "STARTED") {
+        _self.cp.kill("SIGTERM");
+      }
+    };
+  }
+
+  async writeFile(relativePath, contents) {
+    const fullPath = pathJoin(this.spawnOptions.cwd, relativePath);
+
+    await this.recalculateOutputState();
+    await writeFileChecked(fullPath, contents);
+  }
+
+  async writeInput(message) {
+    if (this.cpState !== "STARTED") {
+      throw AppError.serverError({
+        message: "Test process is not started",
+      });
+    }
+
+    await this.recalculateOutputState();
+    if (this.cp?.stdin) {
+      this.cp.stdin.write(message);
+    }
+  }
+
+  withPackageJson(contents) {
+    mkdirSync(this.spawnOptions.cwd, { recursive: true });
+    writeFileSync(pathJoin(this.spawnOptions.cwd, "package.json"), contents);
+
+    return this;
+  }
+
+  withConfig(contents) {
+    mkdirSync(pathJoin(this.spawnOptions.cwd, "config"), { recursive: true });
+    writeFileSync(
+      pathJoin(this.spawnOptions.cwd, "config/compas.json"),
+      contents,
+    );
+
+    return this;
+  }
+
+  launch() {
+    if (this.cpState === "STARTED") {
+      throw AppError.serverError({
+        message: "Test process is still active",
+      });
+    }
+
+    this.cp = spawn(
+      `node`,
+      [
+        pathJoin(process.cwd(), "./packages/compas/src/cli/bin.js"),
+        ...this.args,
+      ],
+      {
+        ...this.spawnOptions,
+        stdio: ["pipe", "pipe", "pipe"],
+        env: {
+          ...(this.spawnOptions.env ?? {
+            ...process.env,
+            CI: "false",
+            APP_NAME: undefined,
+            _COMPAS_SKIP_PACKAGE_MANAGER: "true",
+            _COMPAS_SKIP_COMMIT_SIGN: "true",
+          }),
+        },
       },
-    },
-  );
+    );
 
-  const exitHandler = () => {
-    cp.kill("SIGTERM");
-  };
-  process.once("exit", exitHandler);
+    this.cpState = "STARTED";
 
-  const stdoutBuffers = [];
-  const stderrBuffers = [];
+    process.once("exit", this.exitHandler);
 
-  cp.stdout.on("data", (chunk) => {
-    stdoutBuffers.push(chunk);
-  });
-  cp.stderr.on("data", (chunk) => {
-    stderrBuffers.push(chunk);
-  });
+    const _self = this;
 
-  let closed = false;
-  cp.once("exit", () => {
-    closed = true;
-  });
-
-  // Wait max 500ms for the first output or process exit
-  for (let i = 0; i < 100; ++i) {
-    if (stdoutBuffers.length !== 0 || stderrBuffers.length !== 0 || closed) {
-      break;
+    if (this.cp?.stdout) {
+      this.cp.stdout.on("data", (chunk) => {
+        _self.stdout += chunk.toString();
+      });
     }
 
-    await setTimeout(5);
+    if (this.cp?.stderr) {
+      this.cp.stderr.on("data", (chunk) => {
+        _self.stderr += chunk.toString();
+      });
+    }
+
+    this.cp.once("exit", () => {
+      _self.cpState = "STOPPED";
+      process.removeListener("exit", _self.exitHandler);
+    });
+
+    return this;
   }
 
-  if (closed) {
-    process.removeListener("exit", exitHandler);
-    return {
-      stdout: Buffer.concat(stdoutBuffers).toString(),
-      stderr: Buffer.concat(stderrBuffers).toString(),
-    };
-  }
+  async tryLocateDebugFile() {
+    if (this.debugFilePath) {
+      return;
+    }
 
-  for (const input of inputs) {
-    cp.stdin.write(input.write);
+    const cacheDir = pathJoin(this.spawnOptions.cwd, ".cache/compas");
 
-    await setTimeout(input.timeout ?? 0);
+    if (existsSync(cacheDir)) {
+      const files = await readdir(cacheDir);
+      const debugFile = files.find((it) => it.startsWith("debug-"));
 
-    if (closed) {
-      process.removeListener("exit", exitHandler);
-
-      return {
-        stdout: Buffer.concat(stdoutBuffers).toString(),
-        stderr: Buffer.concat(stderrBuffers).toString(),
-      };
+      if (debugFile) {
+        this.debugFilePath = pathJoin(cacheDir, debugFile);
+      }
     }
   }
 
-  if (closed) {
-    process.removeListener("exit", exitHandler);
-    return {
-      stdout: Buffer.concat(stdoutBuffers).toString(),
-      stderr: Buffer.concat(stderrBuffers).toString(),
+  async recalculateOutputState() {
+    await this.tryLocateDebugFile();
+
+    const debugFileLength = this.debugFilePath
+      ? (await readFile(this.debugFilePath, "utf-8")).length
+      : 0;
+
+    this.outputState = {
+      debugFileLength,
+      stdoutLength: this.stdout.length,
+      stderrLength: this.stderr.length,
     };
   }
 
-  const p = once(cp, "exit");
+  async waitForExit() {
+    await this.recalculateOutputState();
 
-  if (!waitForExit) {
-    cp.kill("SIGTERM");
+    if (this.cpState === "IDLE") {
+      throw AppError.serverError({
+        message: "Test process is not started",
+      });
+    } else if (this.cpState === "STOPPED") {
+      return;
+    }
+
+    if (this.cp) {
+      await once(this.cp, "exit");
+    }
   }
 
-  await p;
+  async exit() {
+    await this.recalculateOutputState();
 
-  process.removeListener("exit", exitHandler);
+    if (this.cpState === "IDLE") {
+      throw AppError.serverError({
+        message: "Test process is not started",
+      });
+    } else if (this.cpState === "STOPPED") {
+      return;
+    }
 
-  return {
-    stdout: Buffer.concat(stdoutBuffers).toString(),
-    stderr: Buffer.concat(stderrBuffers).toString(),
-  };
+    if (this.cp) {
+      const p = once(this.cp, "exit");
+
+      this.cp.kill("SIGTERM");
+
+      await p;
+    }
+  }
+
+  /**
+   * @param {"stdout"|"stderr"|"debug"} type
+   * @param {string} message
+   * @returns {Promise<void>}
+   */
+  async waitForOutput(type, message) {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      if (type === "debug") {
+        await this.tryLocateDebugFile();
+
+        if (this.debugFilePath) {
+          const contents = await readFile(this.debugFilePath, "utf-8");
+
+          if (contents.includes(message, this.outputState.debugFileLength)) {
+            return;
+          }
+        }
+      } else if (type === "stdout") {
+        if (this.stdout.includes(message, this.outputState.stdoutLength)) {
+          return;
+        }
+      } else if (type === "stderr") {
+        if (this.stderr.includes(message, this.outputState.stderrLength)) {
+          return;
+        }
+      }
+      await setTimeout(TestCompas.DEFAULT_POLL_INTERVAL);
+    }
+  }
 }

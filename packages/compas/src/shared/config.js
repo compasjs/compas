@@ -125,6 +125,8 @@ export async function configResolveProjectConfig() {
         // @ts-expect-error
         throw AppError.validationError("config.resolve.parseError", {}, e);
       }
+    } else {
+      debugPrint("No config file found.");
     }
 
     const { error, value } = validateCompasConfig(rawConfig);

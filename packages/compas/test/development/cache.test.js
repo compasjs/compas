@@ -1,8 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { dirnameForModule, pathJoin } from "@compas/stdlib";
-import { writeFileChecked } from "../../src/shared/fs.js";
-import { testCompasCli, testDirectory } from "../utils.js";
+import { TestCompas, testDirectory } from "../utils.js";
 
 mainTestFn(import.meta);
 
@@ -14,99 +13,94 @@ test("compas/development/cache", (t) => {
   t.test("cache does not exist", async (t) => {
     const cwd = workingDirectory("no-cache");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
-
-    const { stdout } = await testCompasCli({
-      args: [],
-      inputs: [
-        {
-          write: "Q",
-        },
-      ],
+    const cli = new TestCompas({
       cwd,
-    });
+    })
+      .withPackageJson("{}")
+      .launch();
 
-    t.ok(stdout.includes("Starting up..."));
+    await cli.waitForOutput("stdout", "Starting up...");
+    await cli.writeInput("Q");
+    await cli.waitForExit();
+
+    t.pass();
   });
 
   t.test("cache version mismatch", async (t) => {
     const cwd = workingDirectory("version-mismatch");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
-    await writeFileChecked(
-      pathJoin(cwd, ".cache/compas/cache.json"),
+    const cli = new TestCompas({
+      cwd,
+    }).withPackageJson("{}");
+
+    await cli.writeFile(
+      ".cache/compas/cache.json",
       JSON.stringify({
         version: "0.5.0",
       }),
     );
+    cli.launch();
 
-    const { stdout } = await testCompasCli({
-      args: [],
-      inputs: [
-        {
-          write: "Q",
-        },
-      ],
-      cwd,
-    });
+    await cli.waitForOutput("stdout", "Starting up...");
+    await cli.writeInput("Q");
+    await cli.waitForExit();
 
-    t.ok(stdout.includes("Starting up..."));
+    t.pass();
   });
 
   t.test("cache not parseable", async (t) => {
     const cwd = workingDirectory("no-parseable");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
-    await writeFileChecked(
-      pathJoin(cwd, ".cache/compas/cache.json"),
+    const cli = new TestCompas({
+      cwd,
+    }).withPackageJson("{}");
+
+    await cli.writeFile(
+      ".cache/compas/cache.json",
       JSON.stringify({
         version: "0.5.0",
       }).slice(0, 5),
     );
+    cli.launch();
 
-    const { stdout } = await testCompasCli({
-      args: [],
-      inputs: [
-        {
-          write: "Q",
-        },
-      ],
-      cwd,
-    });
+    await cli.waitForOutput("stdout", "Starting up...");
+    await cli.writeInput("Q");
+    await cli.waitForExit();
 
-    t.ok(stdout.includes("Starting up..."));
+    t.pass();
   });
 
   t.test("cache not passing validators", async (t) => {
     const cwd = workingDirectory("validators");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
-    await writeFileChecked(
-      pathJoin(cwd, ".cache/compas/cache.json"),
+    const cli = new TestCompas({
+      cwd,
+    }).withPackageJson("{}");
+
+    await cli.writeFile(
+      ".cache/compas/cache.json",
       JSON.stringify({
         version: 1,
       }),
     );
+    cli.launch();
 
-    const { stdout } = await testCompasCli({
-      args: [],
-      inputs: [
-        {
-          write: "Q",
-        },
-      ],
-      cwd,
-    });
+    await cli.waitForOutput("stdout", "Starting up...");
+    await cli.writeInput("Q");
+    await cli.waitForExit();
 
-    t.ok(stdout.includes("Starting up..."));
+    t.pass();
   });
 
   t.test("cache is used", async (t) => {
     const cwd = workingDirectory("valid");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
-    await writeFileChecked(
-      pathJoin(cwd, ".cache/compas/cache.json"),
+    const cli = new TestCompas({
+      cwd,
+    }).withPackageJson("{}");
+
+    await cli.writeFile(
+      ".cache/compas/cache.json",
       JSON.stringify({
         version: `Compas v${
           JSON.parse(
@@ -118,58 +112,36 @@ test("compas/development/cache", (t) => {
         }`,
       }),
     );
+    cli.launch();
 
-    const { stdout } = await testCompasCli({
-      args: ["--debug"],
-      inputs: [
-        {
-          write: "Q",
-        },
-      ],
-      cwd,
-    });
+    await cli.waitForOutput("stdout", "Starting up from cache...");
+    await cli.writeInput("Q");
+    await cli.waitForExit();
 
-    t.ok(stdout.includes("Starting up from cache..."));
+    t.pass();
   });
 
   t.test("cache is written", async (t) => {
     const cwd = workingDirectory("valid");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
-    await writeFileChecked(
-      pathJoin(cwd, ".cache/compas/cache.json"),
-      JSON.stringify({
-        version: `Compas v${
-          JSON.parse(
-            await readFile(
-              pathJoin(dirnameForModule(import.meta), "../../package.json"),
-              "utf-8",
-            ),
-          ).version
-        }`,
-      }),
-    );
-
-    const { stdout } = await testCompasCli({
-      args: ["--debug"],
-      inputs: [
-        {
-          write: "1",
-          // Should wait for cache to be written.
-          timeout: 55,
-        },
-        {
-          write: "Q",
-        },
-      ],
+    const cli = new TestCompas({
       cwd,
-    });
+    })
+      .withPackageJson("{}")
+      .launch();
+
+    await cli.waitForOutput("stdout", "Starting up");
+    await cli.waitForOutput(
+      "debug",
+      "State#emitCacheUpdated :: Done with cachePersist",
+    );
+    await cli.writeInput("Q");
+    await cli.waitForExit();
 
     const resolvedCache = JSON.parse(
       await readFile(pathJoin(cwd, ".cache/compas/cache.json"), "utf-8"),
     );
 
-    t.ok(stdout.includes("Starting up from cache..."));
     t.ok(resolvedCache.config);
     t.ok(resolvedCache.cachesCleaned);
   });

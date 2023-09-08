@@ -1,9 +1,8 @@
 import { existsSync } from "node:fs";
-import { mkdir, readdir, readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { mainTestFn, test } from "@compas/cli";
 import { dirnameForModule, pathJoin } from "@compas/stdlib";
-import { writeFileChecked } from "../../src/shared/fs.js";
-import { testCompasCli, testDirectory } from "../utils.js";
+import { TestCompas, testDirectory } from "../utils.js";
 
 mainTestFn(import.meta);
 
@@ -15,29 +14,37 @@ test("compas/commands/init", (t) => {
   t.test("exits in CI mode", async (t) => {
     const cwd = workingDirectory("no-ci");
 
-    const { stdout } = await testCompasCli({
-      args: ["init"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-      env: {
-        ...process.env,
-        CI: "true",
+    const cli = new TestCompas(
+      {
+        cwd,
+        env: {
+          ...process.env,
+          CI: "true",
+        },
       },
-    });
+      {
+        args: ["init"],
+      },
+    ).launch();
 
-    t.ok(stdout.includes("'compas init' is not supported in CI."));
+    await cli.waitForExit();
+
+    t.ok(cli.stdout.includes("'compas init' is not supported in CI."));
   });
 
   t.test("new project", async (t) => {
     const cwd = workingDirectory("new-project");
 
-    const { stdout } = await testCompasCli({
-      args: ["init"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["init"],
+      },
+    ).launch();
+
+    await cli.waitForExit();
 
     // Package.json
     t.ok(
@@ -64,7 +71,7 @@ test("compas/commands/init", (t) => {
     );
 
     // Package manager
-    t.ok(stdout.includes("_compas_skip_package_manager_install"));
+    t.ok(cli.stdout.includes("_compas_skip_package_manager_install"));
 
     // Git
     t.ok(
@@ -74,20 +81,25 @@ test("compas/commands/init", (t) => {
     t.ok(existsSync(pathJoin(cwd, ".git")), "Git repo should've been created");
 
     // Output
-    t.ok(stdout.includes("'npx compas'"));
+    t.ok(cli.stdout.includes("'npx compas'"));
   });
 
   t.test("new project - already .git", async (t) => {
     const cwd = workingDirectory("new-project-already-git");
 
-    await mkdir(pathJoin(cwd, ".git"));
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["init"],
+      },
+    );
 
-    const { stdout } = await testCompasCli({
-      args: ["init"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    await cli.writeFile(".git/.gitkeep", "");
+    cli.launch();
+
+    await cli.waitForExit();
 
     // Package.json
     t.ok(
@@ -96,7 +108,7 @@ test("compas/commands/init", (t) => {
     );
 
     // Package manager
-    t.ok(stdout.includes("_compas_skip_package_manager_install"));
+    t.ok(cli.stdout.includes("_compas_skip_package_manager_install"));
 
     // Git
     t.ok(
@@ -105,28 +117,31 @@ test("compas/commands/init", (t) => {
     );
     t.equal(
       (await readdir(pathJoin(cwd, ".git"))).length,
-      0,
-      ".git directory should be empty",
+      1,
+      ".git directory should only contain a .gitkeep",
     );
 
     // Output
-    t.ok(stdout.includes("'npx compas'"));
+    t.ok(cli.stdout.includes("'npx compas'"));
   });
 
   t.test("exiting project - no dependencies", async (t) => {
     const cwd = workingDirectory("existing-project-no-deps");
 
-    await writeFileChecked(pathJoin(cwd, "package.json"), "{}");
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["init"],
+      },
+    )
+      .withPackageJson("{}")
+      .launch();
 
-    const { stdout } = await testCompasCli({
-      args: ["init"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    await cli.waitForExit();
 
     // Package.json
-
     t.deepEqual(
       JSON.parse(await readFile(pathJoin(cwd, "package.json"), "utf-8")),
       {
@@ -142,36 +157,39 @@ test("compas/commands/init", (t) => {
     );
 
     // Package manager
-    t.ok(stdout.includes("Patching package.json"));
-    t.ok(stdout.includes("_compas_skip_package_manager_install"));
+    t.ok(cli.stdout.includes("Patching package.json"));
+    t.ok(cli.stdout.includes("_compas_skip_package_manager_install"));
 
     // Output
-    t.ok(stdout.includes("Ready to roll!"));
+    t.ok(cli.stdout.includes("Ready to roll!"));
   });
 
   t.test("exiting project - no update", async (t) => {
     const cwd = workingDirectory("existing-project-no-update");
 
-    await writeFileChecked(
-      pathJoin(cwd, "package.json"),
-      JSON.stringify({
-        dependencies: {
-          compas: JSON.parse(
-            await readFile(
-              pathJoin(dirnameForModule(import.meta), "../../package.json"),
-              "utf-8",
-            ),
-          ).version,
-        },
-      }),
-    );
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["init"],
+      },
+    )
+      .withPackageJson(
+        JSON.stringify({
+          dependencies: {
+            compas: JSON.parse(
+              await readFile(
+                pathJoin(dirnameForModule(import.meta), "../../package.json"),
+                "utf-8",
+              ),
+            ).version,
+          },
+        }),
+      )
+      .launch();
 
-    const { stdout } = await testCompasCli({
-      args: ["init"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    await cli.waitForExit();
 
     // Package.json
     t.deepEqual(
@@ -190,32 +208,35 @@ test("compas/commands/init", (t) => {
 
     // Package manager
     t.ok(
-      !stdout.includes("_compas_skip_package_manager_install"),
+      !cli.stdout.includes("_compas_skip_package_manager_install"),
       "Package manager did run, but didn't need to",
     );
 
     // Output
-    t.ok(stdout.includes("Already up-to-date!"));
+    t.ok(cli.stdout.includes("Already up-to-date!"));
   });
 
   t.test("exiting project - update", async (t) => {
     const cwd = workingDirectory("existing-project-update");
 
-    await writeFileChecked(
-      pathJoin(cwd, "package.json"),
-      JSON.stringify({
-        dependencies: {
-          compas: "*",
-        },
-      }),
-    );
+    const cli = new TestCompas(
+      {
+        cwd,
+      },
+      {
+        args: ["init"],
+      },
+    )
+      .withPackageJson(
+        JSON.stringify({
+          dependencies: {
+            compas: "*",
+          },
+        }),
+      )
+      .launch();
 
-    const { stdout } = await testCompasCli({
-      args: ["init"],
-      inputs: [],
-      waitForExit: true,
-      cwd,
-    });
+    await cli.waitForExit();
 
     // Package.json
     t.deepEqual(
@@ -233,10 +254,10 @@ test("compas/commands/init", (t) => {
     );
 
     // Package manager
-    t.ok(stdout.includes("Patching package.json"));
-    t.ok(stdout.includes("_compas_skip_package_manager_install"));
+    t.ok(cli.stdout.includes("Patching package.json"));
+    t.ok(cli.stdout.includes("_compas_skip_package_manager_install"));
 
     // Output
-    t.ok(stdout.includes("Ready to roll!"));
+    t.ok(cli.stdout.includes("Ready to roll!"));
   });
 });
