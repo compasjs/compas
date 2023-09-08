@@ -22,6 +22,10 @@ that Compas executes are now also done relative to that directory. You can
 create another config in `$root/packages/shared/config/compas.json` to define
 custom actions for that specific project and to add even more nested projects.
 
+Navigation to subprojects is automatically added:
+
+![Navigation from the root project](/workspace-navigation-home.png)
+
 Compas also allows projects to be in a sibling directory:
 
 ```json [config/compas.json]
@@ -47,3 +51,4 @@ you are currently working on.
   truth. So the most efficient way of developing is to always start Compas from
   the same project and to navigate inside Compas to other projects when
   necessary.
+- Only 9 subprojects are supported currently.

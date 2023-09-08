@@ -8,10 +8,6 @@ By default, Compas will watch your package.json files and determine if it needs
 to reinstall your dependencies. This way your local environment always matches
 the required dependency versions.
 
-Other actions, like automatically spinning up development dependencies in Docker
-need to be configured explicitly. See the respective integrations for how this
-works.
-
 ## Configuration
 
 Compas is configurable via a JSON file at `config/compas.json`. An empty config
@@ -36,4 +32,29 @@ and return back to the menu. When a process is running, you can restart it with
 'R' or kill the running process by pressing 'K'.
 
 The configuration file is automatically reloaded on changes, assuming that the
-syntax is correct.
+syntax is correct. Allowing you to iterate on it and expand your
+[workspace](/docs/workspaces.html).
+
+## Inferred actions
+
+Compas tries to give you a good experience without any configuration. This is
+why Compas automatically infers some standard actions based on your project
+setup.
+
+These inferred actions are only added when no action with the same or similar
+name is defined. For example, 'Lint' is only added if both 'Lint' and 'Format'
+are not configured.
+
+- 'Dev' is automatically populated from the package.json scripts.
+- 'Lint' defaults to the 'format' script defined in your package.json OR the
+  'lint' script defined in your package.json OR to `compas lint` if the
+  `@compas/cli` package is installed.
+- 'Test' is based on the 'test' script in your package.json OR to `compas test`
+  if the `@compas/cli` package is installed.
+
+## Other integrations
+
+Compas supports much more. Like automatically starting Docker containers for
+services that your development environment needs, or running the code generators
+automatically on changes (not yet implemented). For more information, checkout
+the [integrations](/docs/integrations/docker.md).
