@@ -122,7 +122,7 @@ test("compas/development/cache", (t) => {
   });
 
   t.test("cache is written", async (t) => {
-    const cwd = workingDirectory("valid");
+    const cwd = workingDirectory("written");
 
     const cli = new TestCompas({
       cwd,
