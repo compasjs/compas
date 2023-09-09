@@ -16,8 +16,7 @@ export class PackageManagerIntegration extends BaseIntegration {
     if (!this.state.cache.packageManager) {
       await this.resolve();
 
-      // TODO: do we want to start with an 'await this.execute();'
-      //  May want to do that as background task.
+      this.state.runTask("packageManagerExecute", this.execute());
     }
 
     this.state.fileChangeRegister.push({
@@ -62,7 +61,7 @@ export class PackageManagerIntegration extends BaseIntegration {
     }
 
     if (installCommand) {
-      return this.execute();
+      this.state.runTask("packageManagerExecute", this.execute());
     }
   }
 

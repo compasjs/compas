@@ -93,7 +93,6 @@ export class FileWatcherIntegration extends BaseIntegration {
             );
           }
 
-          // Dangling promise!
           boundEmitFileChange(events.map((it) => it.path));
         },
         FileWatcherIntegration.DEFAULT_WATCH_OPTIONS,

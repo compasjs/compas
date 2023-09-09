@@ -13,13 +13,13 @@ export function tuiInit(state) {
 
   // Exit listeners
   process.on("SIGABRT", () => {
-    state.exit();
+    state.runTask("SIGABRT", state.exit(), { exitOnFailure: true });
   });
   process.on("SIGINT", () => {
-    state.exit();
+    state.runTask("SIGINT", state.exit(), { exitOnFailure: true });
   });
   process.on("beforeExit", () => {
-    state.exit();
+    state.runTask("beforeExit", state.exit());
   });
 
   process.stdout.on("resize", () => state.resizeScreen());
@@ -33,11 +33,12 @@ export function tuiInit(state) {
   process.stdin.on("keypress", (char, raw) => {
     if (raw.name === "c" && raw.ctrl) {
       // Ctrl + C
-      state.exit();
+      state.runTask("Ctrl + C", state.exit(), { exitOnFailure: true });
+
       return;
     }
 
-    state.emitKeypress(raw);
+    state.runTask("tuiEmitKeyPress", state.emitKeypress(raw));
   });
 }
 

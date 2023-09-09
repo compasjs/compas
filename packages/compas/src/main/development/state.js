@@ -84,7 +84,7 @@ export class State {
     };
   }
 
-  // ==== generic ====
+  // ==== generic lifecycle ====
 
   async init() {
     debugTimeStart(`State#init`);
@@ -108,11 +108,15 @@ export class State {
       new ConfigLoaderIntegration(this),
       new RootDirectoriesIntegration(this),
       new CacheCleanupIntegration(this),
-      new InferredActionsIntegration(this),
       new ActionsIntegration(this),
-      new PackageManagerIntegration(this),
 
-      // Should be the last integration, since it will
+      // Try to keep the above list minimal.
+
+      new PackageManagerIntegration(this),
+      new InferredActionsIntegration(this),
+
+      // Should be the last integration, since it will process file changes since the
+      // last snapshot.
       new FileWatcherIntegration(this),
     ];
 
@@ -208,6 +212,48 @@ export class State {
     }
   }
 
+  // ==== background tasks ====
+
+  /**
+   *
+   * @param {string} name
+   * @param {Promise|(() => Promise<any>)} task
+   * @param {{
+   *   exitOnFailure?: boolean,
+   * }} [options]
+   * @returns {*}
+   */
+  runTask(name, task, { exitOnFailure } = {}) {
+    if (typeof task === "function") {
+      return this.runTask(name, task, { exitOnFailure });
+    }
+
+    if (!(task instanceof Promise)) {
+      throw AppError.serverError({
+        message: "Received a task that isn't a promise.",
+        name,
+        task,
+      });
+    }
+
+    const _self = this;
+
+    debugPrint(`State#runTask :: ${name} :: registered`);
+
+    task
+      .then(() => {
+        debugPrint(`State#runTask :: ${name} :: fulfilled`);
+      })
+      .catch((e) => {
+        debugPrint(`State#runTask :: ${name} :: rejected`);
+        debugPrint(AppError.format(e));
+
+        if (exitOnFailure) {
+          _self.runTask("State#exit", _self.exit());
+        }
+      });
+  }
+
   // ==== integrations ====
 
   /**
@@ -249,7 +295,8 @@ export class State {
       return;
     }
 
-    // Rename a few keypress for easier matching and shorter shortcuts, we may want to expand this setup later.
+    // Rename a few keypress for easier matching and shorter shortcuts, we may want to
+    // expand this setup later.
     if (key.name === "escape") {
       key.name = "esc";
     }
@@ -271,21 +318,21 @@ export class State {
   emitFileChange(paths) {
     debugPrint(`State#emitFileChange :: ${JSON.stringify(paths)}}`);
 
-    for (const integration of this.fileChangeRegister) {
-      if (micromatch.some(paths, integration.glob)) {
+    for (const registerItem of this.fileChangeRegister) {
+      if (micromatch.some(paths, registerItem.glob)) {
         debugPrint(
-          `State#emitFileChange :: Matched ${integration.glob} for ${integration.integration.name} debouncing with ${integration.debounceDelay}.`,
+          `State#emitFileChange :: Matched ${registerItem.glob} for ${registerItem.integration.name} debouncing with ${registerItem.debounceDelay}.`,
         );
 
-        if (integration.existingTimeout) {
-          integration.existingTimeout.refresh();
+        if (registerItem.existingTimeout) {
+          registerItem.existingTimeout.refresh();
         } else {
-          integration.existingTimeout = setTimeout(() => {
-            // We don't ever clear the timeout, since refreshing will restart the timeout.
-
-            // Dangling promise!
-            integration.integration.onFileChanged(paths);
-          }, integration.debounceDelay);
+          registerItem.existingTimeout = setTimeout(() => {
+            registerItem.integration.state.runTask(
+              "Integration#onFileChaged",
+              registerItem.integration.onFileChanged(paths),
+            );
+          }, registerItem.debounceDelay);
         }
       }
     }

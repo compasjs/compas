@@ -15,7 +15,10 @@ export class InferredActionsIntegration extends BaseIntegration {
     await super.init();
 
     if (isNil(this.state.cache.availableActions)) {
-      await this.resolveAvailableActions();
+      this.state.runTask(
+        "inferredActionsResolve",
+        this.resolveAvailableActions(),
+      );
     }
 
     this.state.fileChangeRegister.push({
@@ -27,12 +30,18 @@ export class InferredActionsIntegration extends BaseIntegration {
 
   async onCacheUpdated() {
     await super.onCacheUpdated();
-    await this.resolveAvailableActions();
+    this.state.runTask(
+      "inferredActionsResolve",
+      this.resolveAvailableActions(),
+    );
   }
 
   async onFileChanged(paths) {
     await super.onFileChanged(paths);
-    await this.resolveAvailableActions();
+    this.state.runTask(
+      "inferredActionsResolve",
+      this.resolveAvailableActions(),
+    );
   }
 
   async resolveAvailableActions() {
