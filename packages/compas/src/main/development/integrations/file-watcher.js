@@ -5,7 +5,7 @@ import { BaseIntegration } from "./base.js";
 
 export class FileWatcherIntegration extends BaseIntegration {
   static DEFAULT_WATCH_OPTIONS = {
-    ignore: [".cache", ".git"],
+    ignore: [".cache", ".git", "node_modules"],
   };
 
   constructor(state) {

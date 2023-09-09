@@ -1,34 +1,113 @@
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { pathJoin } from "@compas/stdlib";
+import { packageManagerDetermine } from "./package-manager.js";
 
 /**
- * Try to infer the lint command for a specific directory
+ * Infer the lint command
  *
  * @param {string} rootDirectory
  * @returns {Promise<string[]|undefined>}
  */
-export async function inferActionLint(rootDirectory = "") {
+export async function inferLintCommand(rootDirectory = "") {
   const usesCompas = await inferUsesLegacyCompasCli(rootDirectory);
+  const packageManager = packageManagerDetermine(rootDirectory);
 
   if (usesCompas) {
-    // TODO: use package manager
-    return ["npx", "compas", "lint"];
+    return [
+      ...packageManager.nodeModulesBinCommand.split(" "),
+      "compas",
+      "lint",
+    ];
   }
 
-  const packageJsonFile = pathJoin(rootDirectory, "package.json");
+  const packageJson = pathJoin(rootDirectory, "package.json");
 
-  if (!packageJsonFile) {
+  if (!existsSync(packageJson)) {
     return undefined;
   }
 
-  const file = JSON.parse(await readFile(packageJsonFile, "utf-8"));
-  const command = file.scripts?.format ?? file.scripts?.lint;
+  const contents = JSON.parse(await readFile(packageJson, "utf-8"));
+  const command = contents.scripts?.format ?? contents.scripts?.lint;
 
   if (!command) {
     return undefined;
   }
 
-  return command.split(" ");
+  return [
+    ...packageManager.nodeModulesBinCommand.split(" "),
+    ...command.split(" "),
+  ];
+}
+
+/**
+ * Infer the 'dev' command
+ *
+ * @param {string} rootDirectory
+ * @returns {Promise<string[]|undefined>}
+ */
+export async function inferDevCommand(rootDirectory = "") {
+  const usesCompas = await inferUsesLegacyCompasCli(rootDirectory);
+  const packageManager = packageManagerDetermine(rootDirectory);
+
+  if (usesCompas) {
+    return undefined;
+  }
+
+  const packageJson = pathJoin(rootDirectory, "package.json");
+
+  if (!existsSync(packageJson)) {
+    return undefined;
+  }
+
+  const contents = JSON.parse(await readFile(packageJson, "utf-8"));
+  const command = contents.scripts?.dev;
+
+  if (!command) {
+    return undefined;
+  }
+
+  return [
+    ...packageManager.nodeModulesBinCommand.split(" "),
+    ...command.split(" "),
+  ];
+}
+
+/**
+ * Infer the 'test' command
+ *
+ * @param {string} rootDirectory
+ * @returns {Promise<string[]|undefined>}
+ */
+export async function inferTestCommand(rootDirectory = "") {
+  const usesCompas = await inferUsesLegacyCompasCli(rootDirectory);
+  const packageManager = packageManagerDetermine(rootDirectory);
+
+  if (usesCompas) {
+    return [
+      ...packageManager.nodeModulesBinCommand.split(" "),
+      "compas",
+      "test",
+    ];
+  }
+
+  const packageJson = pathJoin(rootDirectory, "package.json");
+
+  if (!existsSync(packageJson)) {
+    return undefined;
+  }
+
+  const contents = JSON.parse(await readFile(packageJson, "utf-8"));
+  const command = contents.scripts?.test;
+
+  if (!command) {
+    return undefined;
+  }
+
+  return [
+    ...packageManager.nodeModulesBinCommand.split(" "),
+    ...command.split(" "),
+  ];
 }
 
 /**
@@ -49,14 +128,11 @@ export async function inferUsesLegacyCompasCli(rootDirectory = "") {
     return false;
   }
 
-  const file = JSON.parse(await readFile(packageJsonFile, "utf-8"));
-
-  if (
-    !file.dependencies["@compas/cli"] &&
-    !file.devDependencies["@compas/cli"]
-  ) {
+  if (!existsSync(pathJoin(rootDirectory, "node_modules/.bin/compas"))) {
     return false;
   }
 
-  return !file.scripts["lint"] && !file.scripts["format"];
+  const file = JSON.parse(await readFile(packageJsonFile, "utf-8"));
+
+  return !file.scripts?.["lint"] && !file.scripts?.["format"];
 }

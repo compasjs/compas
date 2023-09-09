@@ -73,6 +73,14 @@ export type CompasCache = {
     "nodeModulesBinCommand": string;
     "packageJsonScriptCommand": string;
   }}|undefined;
+  
+  /**
+   * Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.
+   */
+  "availableActions"?: { [key: string]: ({
+    "name": string;
+    "command": (string)[];
+  })[]}|undefined;
 };
 
 export type CompasResolvedConfigInput = {
@@ -147,6 +155,14 @@ export type CompasCacheInput = {
     "nodeModulesBinCommand": string;
     "packageJsonScriptCommand": string;
   }}|undefined;
+  
+  /**
+   * Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.
+   */
+  "availableActions"?: { [key: string]: ({
+    "name": string;
+    "command": (string)[];
+  })[]}|undefined;
 };
 
 export type CompasConfig = {

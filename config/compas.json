@@ -13,16 +13,6 @@
       "command": ["npx", "compas", "run", "docs:dev"]
     },
     {
-      "name": "Lint",
-      "shortcut": "L",
-      "command": ["npx", "compas", "lint"]
-    },
-    {
-      "name": "Test",
-      "shortcut": "T",
-      "command": ["npx", "compas", "test"]
-    },
-    {
       "name": "Generate",
       "shortcut": "G",
       "command": ["npx", "compas", "generate"]

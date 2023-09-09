@@ -127,6 +127,11 @@ export class TestCompas {
       });
     }
 
+    // Wait till actions are alive
+    await this.waitForOutput("debug", "actions :: init", {
+      ignoreOffset: true,
+    });
+
     await this.recalculateOutputState();
     if (this.cp?.stdin) {
       this.cp.stdin.write(message);
@@ -274,9 +279,12 @@ export class TestCompas {
   /**
    * @param {"stdout"|"stderr"|"debug"} type
    * @param {string} message
+   * @param {{
+   *   ignoreOffset?: boolean
+   * }} [options]
    * @returns {Promise<void>}
    */
-  async waitForOutput(type, message) {
+  async waitForOutput(type, message, { ignoreOffset } = {}) {
     // eslint-disable-next-line no-constant-condition
     while (true) {
       if (type === "debug") {
@@ -285,16 +293,31 @@ export class TestCompas {
         if (this.debugFilePath) {
           const contents = await readFile(this.debugFilePath, "utf-8");
 
-          if (contents.includes(message, this.outputState.debugFileLength)) {
+          if (
+            contents.includes(
+              message,
+              ignoreOffset ? 0 : this.outputState.debugFileLength,
+            )
+          ) {
             return;
           }
         }
       } else if (type === "stdout") {
-        if (this.stdout.includes(message, this.outputState.stdoutLength)) {
+        if (
+          this.stdout.includes(
+            message,
+            ignoreOffset ? 0 : this.outputState.stdoutLength,
+          )
+        ) {
           return;
         }
       } else if (type === "stderr") {
-        if (this.stderr.includes(message, this.outputState.stderrLength)) {
+        if (
+          this.stderr.includes(
+            message,
+            ignoreOffset ? 0 : this.outputState.stderrLength,
+          )
+        ) {
           return;
         }
       }

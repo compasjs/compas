@@ -102,6 +102,19 @@ export function applyCompasStructure(generator) {
         .docs(
           "The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.",
         ),
+
+      availableActions: T.generic()
+        .keys(T.string())
+        .values([
+          {
+            name: T.string(),
+            command: [T.string()],
+          },
+        ])
+        .optional()
+        .docs(
+          "Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.",
+        ),
     }),
   );
 }

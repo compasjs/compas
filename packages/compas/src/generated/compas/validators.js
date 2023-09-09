@@ -38,6 +38,7 @@ export function validateCompasCache(value) {
         "rootDirectories",
         "cachesCleaned",
         "packageManager",
+        "availableActions",
       ]);
       for (const key of Object.keys(value)) {
         if (
@@ -63,6 +64,7 @@ export function validateCompasCache(value) {
         rootDirectories: undefined,
         cachesCleaned: undefined,
         packageManager: undefined,
+        availableActions: undefined,
       };
 
       if (value["version"] === null || value["version"] === undefined) {
@@ -458,6 +460,254 @@ export function validateCompasCache(value) {
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+      if (
+        value["availableActions"] === null ||
+        value["availableActions"] === undefined
+      ) {
+        result["availableActions"] = undefined;
+      } else {
+        if (
+          typeof value["availableActions"] !== "object" ||
+          Array.isArray(value["availableActions"])
+        ) {
+          errorMap[`$.availableActions`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["availableActions"] = {};
+          for (let genericKeyInput6 of Object.keys(value["availableActions"])) {
+            /** @type {any} */
+            let genericKeyResult7 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap8 = {};
+            if (genericKeyInput6 === null || genericKeyInput6 === undefined) {
+              genericKeyErrorMap8[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString9 = genericKeyInput6;
+              if (typeof convertedString9 !== "string") {
+                genericKeyErrorMap8[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString9.length < 1) {
+                  genericKeyErrorMap8[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  genericKeyResult7 = convertedString9;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap8).length !== 0) {
+              if (errorMap[`$.availableActions`]) {
+                errorMap[`$.availableActions`].inputs.push({
+                  key: genericKeyInput6,
+                  errors: genericKeyErrorMap8,
+                });
+              } else {
+                errorMap[`$.availableActions`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput6, errors: genericKeyErrorMap8 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["availableActions"][genericKeyResult7] === null ||
+                value["availableActions"][genericKeyResult7] === undefined
+              ) {
+                errorMap[`$.availableActions.${genericKeyResult7}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {ValidatorErrorMap} */
+                const intermediateErrorMap10 = {};
+                /** @type {any[]} */
+                let intermediateResult10 = [];
+                /** @type {any|any[]} */
+                let intermediateValue10 =
+                  value["availableActions"][genericKeyResult7];
+
+                if (!Array.isArray(intermediateValue10)) {
+                  errorMap[`$.availableActions.${genericKeyResult7}`] = {
+                    key: "validator.array",
+                    value: intermediateValue10,
+                  };
+                } else {
+                  result["availableActions"][genericKeyResult7] = [];
+                  for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
+                    if (
+                      intermediateValue10[i10] === null ||
+                      intermediateValue10[i10] === undefined
+                    ) {
+                      intermediateErrorMap10[`$.${i10}`] = {
+                        key: "validator.undefined",
+                      };
+                    } else {
+                      if (
+                        typeof intermediateValue10[i10] !== "object" ||
+                        Array.isArray(intermediateValue10[i10])
+                      ) {
+                        intermediateErrorMap10[`$.${i10}`] = {
+                          key: "validator.object",
+                          value: intermediateValue10[i10],
+                          foundType: typeof intermediateValue10[i10],
+                        };
+                      } else {
+                        /** @type {Set<string>} */
+                        const knownKeys10 = new Set(["name", "command"]);
+                        for (const key of Object.keys(
+                          intermediateValue10[i10],
+                        )) {
+                          if (
+                            !knownKeys10.has(key) &&
+                            intermediateValue10[i10][key] !== null &&
+                            intermediateValue10[i10][key] !== undefined
+                          ) {
+                            const expectedKeys = [...knownKeys10];
+                            const foundKeys = Object.keys(
+                              intermediateValue10[i10],
+                            );
+                            const unknownKeys = foundKeys.filter(
+                              (it) => !knownKeys10.has(it),
+                            );
+                            intermediateErrorMap10[`$.${i10}`] = {
+                              key: "validator.keys",
+                              unknownKeys,
+                              expectedKeys,
+                              foundKeys,
+                            };
+                            break;
+                          }
+                        }
+                        intermediateResult10[i10] = {
+                          name: undefined,
+                          command: undefined,
+                        };
+
+                        if (
+                          intermediateValue10[i10]["name"] === null ||
+                          intermediateValue10[i10]["name"] === undefined
+                        ) {
+                          intermediateErrorMap10[`$.${i10}.name`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          /** @type {string} */
+                          let convertedString11 =
+                            intermediateValue10[i10]["name"];
+                          if (typeof convertedString11 !== "string") {
+                            intermediateErrorMap10[`$.${i10}.name`] = {
+                              key: "validator.string",
+                            };
+                          } else {
+                            if (convertedString11.length < 1) {
+                              intermediateErrorMap10[`$.${i10}.name`] = {
+                                key: "validator.length",
+                                minLength: 1,
+                              };
+                            } else {
+                              intermediateResult10[i10]["name"] =
+                                convertedString11;
+                            }
+                          }
+                        }
+                        if (
+                          intermediateValue10[i10]["command"] === null ||
+                          intermediateValue10[i10]["command"] === undefined
+                        ) {
+                          intermediateErrorMap10[`$.${i10}.command`] = {
+                            key: "validator.undefined",
+                          };
+                        } else {
+                          /** @type {ValidatorErrorMap} */
+                          const intermediateErrorMap13 = {};
+                          /** @type {any[]} */
+                          let intermediateResult13 = [];
+                          /** @type {any|any[]} */
+                          let intermediateValue13 =
+                            intermediateValue10[i10]["command"];
+
+                          if (!Array.isArray(intermediateValue13)) {
+                            intermediateErrorMap10[`$.${i10}.command`] = {
+                              key: "validator.array",
+                              value: intermediateValue13,
+                            };
+                          } else {
+                            intermediateResult10[i10]["command"] = [];
+                            for (
+                              let i13 = 0;
+                              i13 < intermediateValue13.length;
+                              ++i13
+                            ) {
+                              if (
+                                intermediateValue13[i13] === null ||
+                                intermediateValue13[i13] === undefined
+                              ) {
+                                intermediateErrorMap13[`$.${i13}`] = {
+                                  key: "validator.undefined",
+                                };
+                              } else {
+                                /** @type {string} */
+                                let convertedString13 =
+                                  intermediateValue13[i13];
+                                if (typeof convertedString13 !== "string") {
+                                  intermediateErrorMap13[`$.${i13}`] = {
+                                    key: "validator.string",
+                                  };
+                                } else {
+                                  if (convertedString13.length < 1) {
+                                    intermediateErrorMap13[`$.${i13}`] = {
+                                      key: "validator.length",
+                                      minLength: 1,
+                                    };
+                                  } else {
+                                    intermediateResult13[i13] =
+                                      convertedString13;
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          if (Object.keys(intermediateErrorMap13).length) {
+                            for (const errorKey of Object.keys(
+                              intermediateErrorMap13,
+                            )) {
+                              intermediateErrorMap10[
+                                `$.${i10}.command${errorKey.substring(1)}`
+                              ] = intermediateErrorMap13[errorKey];
+                            }
+                          } else {
+                            intermediateResult10[i10]["command"] =
+                              intermediateResult13;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                if (Object.keys(intermediateErrorMap10).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap10)) {
+                    errorMap[
+                      `$.availableActions.${genericKeyResult7}${errorKey.substring(
+                        1,
+                      )}`
+                    ] = intermediateErrorMap10[errorKey];
+                  }
+                } else {
+                  result["availableActions"][genericKeyResult7] =
+                    intermediateResult10;
                 }
               }
             }

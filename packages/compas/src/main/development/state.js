@@ -12,6 +12,7 @@ import { ActionsIntegration } from "./integrations/actions.js";
 import { CacheCleanupIntegration } from "./integrations/cache-cleanup.js";
 import { ConfigLoaderIntegration } from "./integrations/config-loader.js";
 import { FileWatcherIntegration } from "./integrations/file-watcher.js";
+import { InferredActionsIntegration } from "./integrations/inferred-actions.js";
 import { PackageManagerIntegration } from "./integrations/package-manager.js";
 import { RootDirectoriesIntegration } from "./integrations/root-directories.js";
 import { tuiClearScreen, tuiExit, tuiInit, tuiPaint } from "./tui.js";
@@ -107,6 +108,7 @@ export class State {
       new ConfigLoaderIntegration(this),
       new RootDirectoriesIntegration(this),
       new CacheCleanupIntegration(this),
+      new InferredActionsIntegration(this),
       new ActionsIntegration(this),
       new PackageManagerIntegration(this),
 

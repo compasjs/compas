@@ -154,6 +154,83 @@
               }
             }
           }
+        },
+        "availableActions": {
+          "docString": "Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "convert": false
+            },
+            "sql": {},
+            "type": "array",
+            "values": {
+              "docString": "",
+              "isOptional": false,
+              "validator": {
+                "allowNull": false,
+                "strict": true
+              },
+              "sql": {},
+              "type": "object",
+              "relations": [],
+              "keys": {
+                "name": {
+                  "docString": "",
+                  "isOptional": false,
+                  "validator": {
+                    "allowNull": false,
+                    "trim": false,
+                    "lowerCase": false,
+                    "upperCase": false,
+                    "min": 1
+                  },
+                  "sql": {},
+                  "type": "string"
+                },
+                "command": {
+                  "docString": "",
+                  "isOptional": false,
+                  "validator": {
+                    "convert": false
+                  },
+                  "sql": {},
+                  "type": "array",
+                  "values": {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "trim": false,
+                      "lowerCase": false,
+                      "upperCase": false,
+                      "min": 1
+                    },
+                    "sql": {},
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },

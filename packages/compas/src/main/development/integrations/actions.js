@@ -2,6 +2,7 @@ import { spawn as cpSpawn } from "node:child_process";
 import { once } from "node:events";
 import path from "node:path";
 import treeKill from "tree-kill";
+import { debugPrint } from "../../../shared/output.js";
 import { BaseIntegration } from "./base.js";
 
 export class ActionsIntegration extends BaseIntegration {
@@ -59,6 +60,16 @@ export class ActionsIntegration extends BaseIntegration {
     }
   }
 
+  async onCacheUpdated() {
+    await super.onCacheUpdated();
+
+    this.setActionsGroups();
+
+    if (this.state.screen.state === "idle") {
+      this.state.paintScreen();
+    }
+  }
+
   async onExit() {
     await new Promise((r) => {
       if (this.activeProcess) {
@@ -104,6 +115,8 @@ export class ActionsIntegration extends BaseIntegration {
      */
     // @ts-expect-error
     const currentProject = this.navigationStack.at(-1);
+    const inferredActions =
+      this.state.cache.availableActions?.[currentProject.rootDirectory] ?? [];
 
     for (let i = 0; i < currentProject.projects.length; ++i) {
       if (name === String(i + 1)) {
@@ -124,6 +137,16 @@ export class ActionsIntegration extends BaseIntegration {
         return;
       }
     }
+
+    for (const action of inferredActions) {
+      if (action.name[0].toLowerCase() === name) {
+        await this.spawnAction({
+          command: action.command,
+          workingDirectory: currentProject.rootDirectory,
+        });
+        return;
+      }
+    }
   }
 
   setActionsGroups() {
@@ -132,6 +155,27 @@ export class ActionsIntegration extends BaseIntegration {
      */
     // @ts-expect-error
     const currentProject = this.navigationStack.at(-1);
+    const inferredActions =
+      this.state.cache.availableActions?.[currentProject.rootDirectory] ?? [];
+
+    const usedActions = [];
+    for (const action of inferredActions) {
+      if (action.name === "Lint") {
+        if (
+          !currentProject.actions.some(
+            (it) => it.name === "Format" || it.name === "Lint",
+          )
+        ) {
+          usedActions.push(action);
+        }
+      } else if (
+        !currentProject.actions.some((it) => it.name === action.name)
+      ) {
+        usedActions.push(action);
+      }
+    }
+
+    debugPrint(`Using ${JSON.stringify(usedActions)} inferred actions...`);
 
     this.state.screen.actionGroups = [
       {
@@ -154,14 +198,20 @@ export class ActionsIntegration extends BaseIntegration {
       },
     ];
 
-    if (currentProject.actions?.length) {
+    if (currentProject.actions?.length || usedActions.length) {
       this.state.screen.actionGroups.push(
         {
           title: "Available actions:",
-          actions: currentProject.actions.map((it) => ({
-            shortcut: it.shortcut,
-            name: it.name,
-          })),
+          actions: [
+            ...usedActions.map((it) => ({
+              shortcut: it.name[0],
+              name: it.name,
+            })),
+            ...currentProject.actions.map((it) => ({
+              shortcut: it.shortcut,
+              name: it.name,
+            })),
+          ],
         },
         {
           title: "Shortcuts while an action is active:",
