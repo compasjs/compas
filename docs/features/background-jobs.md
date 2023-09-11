@@ -25,7 +25,10 @@ When to use which function of adding a job:
   based on the specific `cronExpression`. Jos created will have a default
   priority of '4'.
 
-Every job runs with a timeout. It is determined in the following order:
+Every job runs with a timeout. This timeout is enforced with an `AbortSignal` on
+the `event` argument passed to your handler and automatically checked with calls
+like `eventStart` and `newEventFromEvent`. It is determined in the following
+order:
 
 - Timeout of the specific job, via `handlerTimeout` property. Should be used
   sporadically
