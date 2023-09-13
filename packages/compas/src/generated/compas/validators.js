@@ -749,6 +749,7 @@ export function validateCompasResolvedConfig(value) {
         cli: undefined,
         projects: undefined,
         actions: undefined,
+        dockerContainers: undefined,
       };
 
       if (
@@ -1288,6 +1289,253 @@ export function validateCompasResolvedConfig(value) {
           result["actions"] = intermediateResult5;
         }
       }
+      if (
+        value["dockerContainers"] === null ||
+        value["dockerContainers"] === undefined
+      ) {
+        result["dockerContainers"] = {};
+      } else {
+        if (
+          typeof value["dockerContainers"] !== "object" ||
+          Array.isArray(value["dockerContainers"])
+        ) {
+          errorMap[`$.dockerContainers`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["dockerContainers"] = {};
+          for (let genericKeyInput5 of Object.keys(value["dockerContainers"])) {
+            /** @type {any} */
+            let genericKeyResult6 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap7 = {};
+            if (genericKeyInput5 === null || genericKeyInput5 === undefined) {
+              genericKeyErrorMap7[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString8 = genericKeyInput5;
+              if (typeof convertedString8 !== "string") {
+                genericKeyErrorMap7[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString8.length < 1) {
+                  genericKeyErrorMap7[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (!/[a-z-0-9]+/g.test(convertedString8)) {
+                  genericKeyErrorMap7[`$`] = {
+                    key: "validator.pattern",
+                  };
+                } else {
+                  genericKeyResult6 = convertedString8;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap7).length !== 0) {
+              if (errorMap[`$.dockerContainers`]) {
+                errorMap[`$.dockerContainers`].inputs.push({
+                  key: genericKeyInput5,
+                  errors: genericKeyErrorMap7,
+                });
+              } else {
+                errorMap[`$.dockerContainers`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput5, errors: genericKeyErrorMap7 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["dockerContainers"][genericKeyResult6] === null ||
+                value["dockerContainers"][genericKeyResult6] === undefined
+              ) {
+                errorMap[`$.dockerContainers.${genericKeyResult6}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                if (
+                  typeof value["dockerContainers"][genericKeyResult6] !==
+                    "object" ||
+                  Array.isArray(value["dockerContainers"][genericKeyResult6])
+                ) {
+                  errorMap[`$.dockerContainers.${genericKeyResult6}`] = {
+                    key: "validator.object",
+                    value: value["dockerContainers"][genericKeyResult6],
+                    foundType:
+                      typeof value["dockerContainers"][genericKeyResult6],
+                  };
+                } else {
+                  /** @type {Set<string>} */
+                  const knownKeys8 = new Set([
+                    "image",
+                    "createArguments",
+                    "runArguments",
+                  ]);
+                  for (const key of Object.keys(
+                    value["dockerContainers"][genericKeyResult6],
+                  )) {
+                    if (
+                      !knownKeys8.has(key) &&
+                      value["dockerContainers"][genericKeyResult6][key] !==
+                        null &&
+                      value["dockerContainers"][genericKeyResult6][key] !==
+                        undefined
+                    ) {
+                      const expectedKeys = [...knownKeys8];
+                      const foundKeys = Object.keys(
+                        value["dockerContainers"][genericKeyResult6],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys8.has(it),
+                      );
+                      errorMap[`$.dockerContainers.${genericKeyResult6}`] = {
+                        key: "validator.keys",
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
+                      };
+                      break;
+                    }
+                  }
+                  result["dockerContainers"][genericKeyResult6] = {
+                    image: undefined,
+                    createArguments: undefined,
+                    runArguments: undefined,
+                  };
+
+                  if (
+                    value["dockerContainers"][genericKeyResult6]["image"] ===
+                      null ||
+                    value["dockerContainers"][genericKeyResult6]["image"] ===
+                      undefined
+                  ) {
+                    errorMap[`$.dockerContainers.${genericKeyResult6}.image`] =
+                      {
+                        key: "validator.undefined",
+                      };
+                  } else {
+                    /** @type {string} */
+                    let convertedString9 =
+                      value["dockerContainers"][genericKeyResult6]["image"];
+                    if (typeof convertedString9 !== "string") {
+                      errorMap[
+                        `$.dockerContainers.${genericKeyResult6}.image`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString9.length < 1) {
+                        errorMap[
+                          `$.dockerContainers.${genericKeyResult6}.image`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["dockerContainers"][genericKeyResult6]["image"] =
+                          convertedString9;
+                      }
+                    }
+                  }
+                  if (
+                    value["dockerContainers"][genericKeyResult6][
+                      "createArguments"
+                    ] === null ||
+                    value["dockerContainers"][genericKeyResult6][
+                      "createArguments"
+                    ] === undefined
+                  ) {
+                    result["dockerContainers"][genericKeyResult6][
+                      "createArguments"
+                    ] = undefined;
+                  } else {
+                    /** @type {string} */
+                    let convertedString10 =
+                      value["dockerContainers"][genericKeyResult6][
+                        "createArguments"
+                      ];
+                    if (typeof convertedString10 !== "string") {
+                      errorMap[
+                        `$.dockerContainers.${genericKeyResult6}.createArguments`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString10.length === 0) {
+                        result["dockerContainers"][genericKeyResult6][
+                          "createArguments"
+                        ] = undefined;
+                      } else {
+                        if (convertedString10.length < 1) {
+                          errorMap[
+                            `$.dockerContainers.${genericKeyResult6}.createArguments`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["dockerContainers"][genericKeyResult6][
+                            "createArguments"
+                          ] = convertedString10;
+                        }
+                      }
+                    }
+                  }
+                  if (
+                    value["dockerContainers"][genericKeyResult6][
+                      "runArguments"
+                    ] === null ||
+                    value["dockerContainers"][genericKeyResult6][
+                      "runArguments"
+                    ] === undefined
+                  ) {
+                    result["dockerContainers"][genericKeyResult6][
+                      "runArguments"
+                    ] = undefined;
+                  } else {
+                    /** @type {string} */
+                    let convertedString11 =
+                      value["dockerContainers"][genericKeyResult6][
+                        "runArguments"
+                      ];
+                    if (typeof convertedString11 !== "string") {
+                      errorMap[
+                        `$.dockerContainers.${genericKeyResult6}.runArguments`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString11.length === 0) {
+                        result["dockerContainers"][genericKeyResult6][
+                          "runArguments"
+                        ] = undefined;
+                      } else {
+                        if (convertedString11.length < 1) {
+                          errorMap[
+                            `$.dockerContainers.${genericKeyResult6}.runArguments`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["dockerContainers"][genericKeyResult6][
+                            "runArguments"
+                          ] = convertedString11;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
@@ -1318,7 +1566,12 @@ export function validateCompasConfig(value) {
         foundType: typeof value,
       };
     } else {
-      result = { cli: undefined, projects: undefined, actions: undefined };
+      result = {
+        cli: undefined,
+        projects: undefined,
+        actions: undefined,
+        dockerContainers: undefined,
+      };
 
       if (value["cli"] === null || value["cli"] === undefined) {
         result["cli"] = undefined;
@@ -1838,6 +2091,253 @@ export function validateCompasConfig(value) {
           }
         } else {
           result["actions"] = intermediateResult4;
+        }
+      }
+      if (
+        value["dockerContainers"] === null ||
+        value["dockerContainers"] === undefined
+      ) {
+        result["dockerContainers"] = {};
+      } else {
+        if (
+          typeof value["dockerContainers"] !== "object" ||
+          Array.isArray(value["dockerContainers"])
+        ) {
+          errorMap[`$.dockerContainers`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["dockerContainers"] = {};
+          for (let genericKeyInput4 of Object.keys(value["dockerContainers"])) {
+            /** @type {any} */
+            let genericKeyResult5 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap6 = {};
+            if (genericKeyInput4 === null || genericKeyInput4 === undefined) {
+              genericKeyErrorMap6[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString7 = genericKeyInput4;
+              if (typeof convertedString7 !== "string") {
+                genericKeyErrorMap6[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString7.length < 1) {
+                  genericKeyErrorMap6[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else if (!/[a-z-0-9]+/g.test(convertedString7)) {
+                  genericKeyErrorMap6[`$`] = {
+                    key: "validator.pattern",
+                  };
+                } else {
+                  genericKeyResult5 = convertedString7;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap6).length !== 0) {
+              if (errorMap[`$.dockerContainers`]) {
+                errorMap[`$.dockerContainers`].inputs.push({
+                  key: genericKeyInput4,
+                  errors: genericKeyErrorMap6,
+                });
+              } else {
+                errorMap[`$.dockerContainers`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput4, errors: genericKeyErrorMap6 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["dockerContainers"][genericKeyResult5] === null ||
+                value["dockerContainers"][genericKeyResult5] === undefined
+              ) {
+                errorMap[`$.dockerContainers.${genericKeyResult5}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                if (
+                  typeof value["dockerContainers"][genericKeyResult5] !==
+                    "object" ||
+                  Array.isArray(value["dockerContainers"][genericKeyResult5])
+                ) {
+                  errorMap[`$.dockerContainers.${genericKeyResult5}`] = {
+                    key: "validator.object",
+                    value: value["dockerContainers"][genericKeyResult5],
+                    foundType:
+                      typeof value["dockerContainers"][genericKeyResult5],
+                  };
+                } else {
+                  /** @type {Set<string>} */
+                  const knownKeys7 = new Set([
+                    "image",
+                    "createArguments",
+                    "runArguments",
+                  ]);
+                  for (const key of Object.keys(
+                    value["dockerContainers"][genericKeyResult5],
+                  )) {
+                    if (
+                      !knownKeys7.has(key) &&
+                      value["dockerContainers"][genericKeyResult5][key] !==
+                        null &&
+                      value["dockerContainers"][genericKeyResult5][key] !==
+                        undefined
+                    ) {
+                      const expectedKeys = [...knownKeys7];
+                      const foundKeys = Object.keys(
+                        value["dockerContainers"][genericKeyResult5],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys7.has(it),
+                      );
+                      errorMap[`$.dockerContainers.${genericKeyResult5}`] = {
+                        key: "validator.keys",
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
+                      };
+                      break;
+                    }
+                  }
+                  result["dockerContainers"][genericKeyResult5] = {
+                    image: undefined,
+                    createArguments: undefined,
+                    runArguments: undefined,
+                  };
+
+                  if (
+                    value["dockerContainers"][genericKeyResult5]["image"] ===
+                      null ||
+                    value["dockerContainers"][genericKeyResult5]["image"] ===
+                      undefined
+                  ) {
+                    errorMap[`$.dockerContainers.${genericKeyResult5}.image`] =
+                      {
+                        key: "validator.undefined",
+                      };
+                  } else {
+                    /** @type {string} */
+                    let convertedString8 =
+                      value["dockerContainers"][genericKeyResult5]["image"];
+                    if (typeof convertedString8 !== "string") {
+                      errorMap[
+                        `$.dockerContainers.${genericKeyResult5}.image`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString8.length < 1) {
+                        errorMap[
+                          `$.dockerContainers.${genericKeyResult5}.image`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["dockerContainers"][genericKeyResult5]["image"] =
+                          convertedString8;
+                      }
+                    }
+                  }
+                  if (
+                    value["dockerContainers"][genericKeyResult5][
+                      "createArguments"
+                    ] === null ||
+                    value["dockerContainers"][genericKeyResult5][
+                      "createArguments"
+                    ] === undefined
+                  ) {
+                    result["dockerContainers"][genericKeyResult5][
+                      "createArguments"
+                    ] = undefined;
+                  } else {
+                    /** @type {string} */
+                    let convertedString9 =
+                      value["dockerContainers"][genericKeyResult5][
+                        "createArguments"
+                      ];
+                    if (typeof convertedString9 !== "string") {
+                      errorMap[
+                        `$.dockerContainers.${genericKeyResult5}.createArguments`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString9.length === 0) {
+                        result["dockerContainers"][genericKeyResult5][
+                          "createArguments"
+                        ] = undefined;
+                      } else {
+                        if (convertedString9.length < 1) {
+                          errorMap[
+                            `$.dockerContainers.${genericKeyResult5}.createArguments`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["dockerContainers"][genericKeyResult5][
+                            "createArguments"
+                          ] = convertedString9;
+                        }
+                      }
+                    }
+                  }
+                  if (
+                    value["dockerContainers"][genericKeyResult5][
+                      "runArguments"
+                    ] === null ||
+                    value["dockerContainers"][genericKeyResult5][
+                      "runArguments"
+                    ] === undefined
+                  ) {
+                    result["dockerContainers"][genericKeyResult5][
+                      "runArguments"
+                    ] = undefined;
+                  } else {
+                    /** @type {string} */
+                    let convertedString10 =
+                      value["dockerContainers"][genericKeyResult5][
+                        "runArguments"
+                      ];
+                    if (typeof convertedString10 !== "string") {
+                      errorMap[
+                        `$.dockerContainers.${genericKeyResult5}.runArguments`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString10.length === 0) {
+                        result["dockerContainers"][genericKeyResult5][
+                          "runArguments"
+                        ] = undefined;
+                      } else {
+                        if (convertedString10.length < 1) {
+                          errorMap[
+                            `$.dockerContainers.${genericKeyResult5}.runArguments`
+                          ] = {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                        } else {
+                          result["dockerContainers"][genericKeyResult5][
+                            "runArguments"
+                          ] = convertedString10;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -27,5 +27,16 @@
       "shortcut": "C",
       "command": ["npx", "compas", "run", "types", "--script-args", "clean"]
     }
-  ]
+  ],
+  "dockerContainers": {
+    "compas-postgres-15": {
+      "image": "postgres:15",
+      "createArguments": "-e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-15:/var/lib/postgresql/data/pgdata -p 5432:5432"
+    },
+    "compas-minio": {
+      "image": "minio/minio",
+      "createArguments": "-e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v compas-minio:/data -p 9000:9000",
+      "runArguments": "server /data"
+    }
+  }
 }

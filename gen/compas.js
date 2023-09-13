@@ -53,6 +53,16 @@ export function applyCompasStructure(generator) {
       })
       .default(`[]`)
       .docs("Available actions for this project."),
+
+    dockerContainers: T.generic()
+      .keys(T.string().pattern(/[a-z-0-9]+/g))
+      .values({
+        image: T.string(),
+        createArguments: T.string().optional(),
+        runArguments: T.string().optional(),
+      })
+      .default("{}")
+      .docs("Docker container configuration."),
   };
 
   generator.add(

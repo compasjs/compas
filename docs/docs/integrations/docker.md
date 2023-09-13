@@ -20,8 +20,9 @@ following contents:
 {
   "dockerContainers": {
     "compas-postgres-15": {
+      "image": "postgres:15",
       "createArguments": "-e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-15:/var/lib/postgresql/data/pgdata -p 5432:5432",
-      "image": "postgres:15"
+      "runArguments": ""
     }
   }
 }

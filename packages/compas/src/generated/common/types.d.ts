@@ -40,6 +40,15 @@ export type CompasResolvedConfig = {
     "shortcut": string;
     "command": (string)[];
   })[];
+  
+  /**
+   * Docker container configuration.
+   */
+  "dockerContainers": { [key: string]: {
+    "image": string;
+    "createArguments"?: string|undefined;
+    "runArguments"?: string|undefined;
+  }};
 };
 
 export type CompasCache = {
@@ -122,6 +131,15 @@ export type CompasResolvedConfigInput = {
     "shortcut": string;
     "command": (string)[];
   })[]|undefined;
+  
+  /**
+   * Docker container configuration.
+   */
+  "dockerContainers"?: { [key: string]: {
+    "image": string;
+    "createArguments"?: string|undefined;
+    "runArguments"?: string|undefined;
+  }}|undefined;
 };
 
 export type CompasCacheInput = {
@@ -207,6 +225,15 @@ export type CompasConfig = {
     "shortcut": string;
     "command": (string)[];
   })[];
+  
+  /**
+   * Docker container configuration.
+   */
+  "dockerContainers": { [key: string]: {
+    "image": string;
+    "createArguments"?: string|undefined;
+    "runArguments"?: string|undefined;
+  }};
 };
 
 export type CompasConfigInput = {
@@ -251,6 +278,15 @@ export type CompasConfigInput = {
     "shortcut": string;
     "command": (string)[];
   })[]|undefined;
+  
+  /**
+   * Docker container configuration.
+   */
+  "dockerContainers"?: { [key: string]: {
+    "image": string;
+    "createArguments"?: string|undefined;
+    "runArguments"?: string|undefined;
+  }}|undefined;
 };
 
 

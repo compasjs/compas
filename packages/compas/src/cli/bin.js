@@ -64,11 +64,15 @@ if (args.length === 0) {
   if (command === "init") {
     const { initCompas } = await import("../main/init/compas.js");
     await initCompas(env);
+  } else if (command === "init docker") {
+    const { initDocker } = await import("../main/init/docker.js");
+    await initDocker(env);
   } else {
     // eslint-disable-next-line no-console
     logger.info(`Unsupported command. Available commands:
 
 - compas
-- compas init`);
+- compas init
+- compas init docker`);
   }
 }

@@ -433,6 +433,80 @@
               }
             }
           }
+        },
+        "dockerContainers": {
+          "docString": "Docker container configuration.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "defaultValue": "{}",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1,
+              "pattern": "/[a-z-0-9]+/g"
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "image": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "createArguments": {
+                "docString": "",
+                "isOptional": true,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "runArguments": {
+                "docString": "",
+                "isOptional": true,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },
@@ -643,6 +717,80 @@
                   "sql": {},
                   "type": "string"
                 }
+              }
+            }
+          }
+        },
+        "dockerContainers": {
+          "docString": "Docker container configuration.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "defaultValue": "{}",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1,
+              "pattern": "/[a-z-0-9]+/g"
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "image": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "createArguments": {
+                "docString": "",
+                "isOptional": true,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "runArguments": {
+                "docString": "",
+                "isOptional": true,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
               }
             }
           }
