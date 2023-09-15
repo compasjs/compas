@@ -128,7 +128,7 @@ export class TestCompas {
     }
 
     // Wait till actions are alive
-    await this.waitForOutput("debug", "actions :: init", {
+    await this.waitForOutput("stdout", "Started file watchers", {
       ignoreOffset: true,
     });
 

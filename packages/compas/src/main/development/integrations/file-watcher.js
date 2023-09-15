@@ -61,6 +61,14 @@ export class FileWatcherIntegration extends BaseIntegration {
     }
   }
 
+  async onExit() {
+    await super.onExit();
+
+    for (const watcher of Object.values(this.subscriptions)) {
+      await watcher.unsubscribe();
+    }
+  }
+
   async refreshWatchers() {
     const dirs = this.state.cache.rootDirectories ?? [];
 
