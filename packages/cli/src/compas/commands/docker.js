@@ -379,16 +379,16 @@ async function cleanContainers(logger, state, context) {
     "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid <> pg_backend_pid();";
   for (const command of stdout.split("\n")) {
     if (command.trim().startsWith("DROP DATABASE")) {
-      pgCommand += `${command.trim()};`;
+      pgCommand += `${command.trim()}`;
     }
   }
 
   for (const project of projects) {
-    pgCommand += `CREATE DATABASE ${project};`;
+    pgCommand += `CREATE DATABASE "${project}";`;
   }
 
   const { exitCode, ...dockerLogs } = await exec(
-    `echo "${pgCommand}" | docker exec -i ${postgresContainer} psql --user postgres`,
+    `echo '${pgCommand}' | docker exec -i ${postgresContainer} psql --user postgres`,
   );
 
   if (exitCode !== 0) {
