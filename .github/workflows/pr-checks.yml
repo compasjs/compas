@@ -99,6 +99,14 @@ jobs:
           npx zakmes
           npx compas test
 
+      - name: Persist debug artifacts
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name:
+            cache-artifact-test-${{ matrix.node }}-${{ matrix.postgresVersion }}
+          path: .cache/
+
   coverage:
     permissions:
       contents: read
@@ -133,6 +141,15 @@ jobs:
       - name: Run compas test --coverage
         run: |
           npx compas test --coverage
+
+      - name: Persist debug artifacts
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name:
+            cache-artifact-coverage-${{ matrix.node }}-${{
+            matrix.postgresVersion }}
+          path: .cache/
 
       - name: Upload coverage
         uses: codecov/codecov-action@v3
