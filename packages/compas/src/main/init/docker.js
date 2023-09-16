@@ -27,10 +27,10 @@ export async function initDocker(env) {
   }
 
   const dockerContainers = {
-    [`compas-postgres-15`]: {
-      image: "postgres:15",
+    [`compas-postgres-16`]: {
+      image: "postgres:16",
       createArguments:
-        "-e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-15:/var/lib/postgresql/data/pgdata -p 5432:5432",
+        "-e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-16:/var/lib/postgresql/data/pgdata -p 5432:5432",
     },
     "compas-minio": {
       image: "minio/minio",

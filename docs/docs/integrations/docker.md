@@ -45,8 +45,13 @@ Each container definition has the following properties:
 
 ## Limitations
 
-- Compas currently does not have any behavior to automatically stop containers.
-- The Docker containers will still run in the background even though you stopped
-  the development CLI. This could cause conflicts with for example used ports
-  when you start working on a different project. You can stop containers with
-  `docker stop $name` and remove them with `docker rm $name`.
+- Compas only evaluates the state of the Docker containers on startup and on
+  configuration changes.
+- Compas automatically stops all containers that are not required for the
+  current project. However, once the development environment exits, the
+  containers will be kept running.
+- Compas assumes that containers with the same name are compatible across
+  projects. Make sure to use unique names when that is not the case.
+- Compas does not detect changes to the `image`, `createArguments` or
+  `runArguments`. Manually remove the container with `docker container rm $name`
+  to let Compas recreate the container.

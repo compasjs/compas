@@ -11,6 +11,7 @@ import { cacheLoad, cachePersist } from "./cache.js";
 import { ActionsIntegration } from "./integrations/actions.js";
 import { CacheCleanupIntegration } from "./integrations/cache-cleanup.js";
 import { ConfigLoaderIntegration } from "./integrations/config-loader.js";
+import { DockerIntegration } from "./integrations/docker.js";
 import { FileWatcherIntegration } from "./integrations/file-watcher.js";
 import { InferredActionsIntegration } from "./integrations/inferred-actions.js";
 import { PackageManagerIntegration } from "./integrations/package-manager.js";
@@ -114,6 +115,7 @@ export class State {
 
       new PackageManagerIntegration(this),
       new InferredActionsIntegration(this),
+      new DockerIntegration(this),
 
       // Should be the last integration, since it will process file changes since the
       // last snapshot.

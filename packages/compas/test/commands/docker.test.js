@@ -47,7 +47,7 @@ test("compas/commands/init/docker", (t) => {
         JSON.stringify({
           dockerContainers: {
             foo: {
-              image: "postgres:15",
+              image: "postgres:16",
             },
           },
         }),
@@ -82,7 +82,7 @@ test("compas/commands/init/docker", (t) => {
       await readFile(pathJoin(cwd, "config/compas.json"), "utf-8"),
     );
 
-    t.ok(contents.dockerContainers["compas-postgres-15"]);
+    t.ok(contents.dockerContainers["compas-postgres-16"]);
     t.ok(contents.dockerContainers["compas-minio"]);
   });
 
@@ -113,7 +113,7 @@ test("compas/commands/init/docker", (t) => {
       await readFile(pathJoin(cwd, "config/compas.json"), "utf-8"),
     );
 
-    t.ok(contents.dockerContainers["compas-postgres-15"]);
+    t.ok(contents.dockerContainers["compas-postgres-16"]);
     t.ok(contents.dockerContainers["compas-minio"]);
   });
 });
