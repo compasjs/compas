@@ -4,6 +4,80 @@ editLink: false
 
 # Changelog
 
+### [v0.7.4](https://github.com/compasjs/compas/releases/tag/v0.7.4)
+
+#### Features
+
+- feat(compas): improved package manager support
+  [`0c59d0`](https://github.com/compasjs/compas/commit/0c59d09a50fb1a328140d264acf3db4e8ae0b2c6)
+- feat(compas): add inferred 'dev', 'lint' and 'test' actions
+  [`59bb35`](https://github.com/compasjs/compas/commit/59bb3582e4b218014a908722eef4773f12212987)
+- feat(compas): add 'compas init docker'
+  [`1b18b4`](https://github.com/compasjs/compas/commit/1b18b4d0b36a310af1eb8cbda826195e5b6a9e6f)
+- feat(compas): add docker integration in dev server
+  [`560f0b`](https://github.com/compasjs/compas/commit/560f0bbea460951b1a9129b77a9ac3a2b29420f9)
+
+#### Bug fixes
+
+- fix(compas): debounce persist cache, fix package-manager comparison
+  [`1c0578`](https://github.com/compasjs/compas/commit/1c057832b80279877378a58a30b4b693871a8514)
+- fix(compas): don't assume stdin has 'setRawMode'
+  [`eba39e`](https://github.com/compasjs/compas/commit/eba39e8b2c5abe81e22100ebda5c3733a5361f8c)
+- fix(cli): correctly clean on `compas docker clean --project foo-bar` with a
+  `-` in the name
+  [`6cf9cc`](https://github.com/compasjs/compas/commit/6cf9ccaed2382975173f19334bf8eab4579d4a37)
+
+#### Other
+
+- chore(compas): add cli test setup
+  [`26a8c5`](https://github.com/compasjs/compas/commit/26a8c52d20b535aa59bd2f2113feca61d3fbe910)
+- chore(compas): better test abstraction
+  [`89e1f9`](https://github.com/compasjs/compas/commit/89e1f9cf19a0cd7311bb5ecd8b10464b85cacc1f)
+- chore(docs): add docs on inferred actions
+  [`471ebe`](https://github.com/compasjs/compas/commit/471ebe75d04a9c24e037a2afe10e08a426e0309a)
+- chore(compas): use unique test directories
+  [`6ca3da`](https://github.com/compasjs/compas/commit/6ca3dad9d70234ea9f79220e53eea127db4e0672)
+- chore(compas): minimize dangling promises
+  [`1ec564`](https://github.com/compasjs/compas/commit/1ec564e0823a6044402a9781954522fb2a899794)
+- chore(docs): add docs on the Docker integrations for the new CLI
+  [`d95259`](https://github.com/compasjs/compas/commit/d952592f7bf886a8443343243cc8d64ebfc26802)
+- chore(docs): add minor update to background jobs handler timeout
+  [`5f1d65`](https://github.com/compasjs/compas/commit/5f1d65d054767f6a5a914591ac5a0328dd1cbe4a)
+- chore(ci): persist cache directory on CI failures
+  [`b74d1f`](https://github.com/compasjs/compas/commit/b74d1fe4981b3f9ad1c8a58fa9d54be93b5443bf)
+- chore(compas): wait for the file-watchers in tests
+  [`a6f65e`](https://github.com/compasjs/compas/commit/a6f65e79509526a9a280b1840ae2967d1e72bbff)
+
+#### Dependency updates
+
+- build(deps): bump @babel/core from 7.22.11 to 7.22.19
+  ([#2830](https://github.com/compasjs/compas/pull/2830),
+  [#2841](https://github.com/compasjs/compas/pull/2841))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.22.11 to 7.22.15
+  ([#2830](https://github.com/compasjs/compas/pull/2830))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint from 8.48.0 to 8.49.0
+  ([#2830](https://github.com/compasjs/compas/pull/2830))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump tar from 6.1.15 to 6.2.0
+  ([#2830](https://github.com/compasjs/compas/pull/2830))
+  - [Release notes](https://github.com/isaacs/node-tar/releases)
+- build(deps): bump pino from 8.15.0 to 8.15.1
+  ([#2830](https://github.com/compasjs/compas/pull/2830))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.400.0 to 3.414.0
+  ([#2830](https://github.com/compasjs/compas/pull/2830),
+  [#2841](https://github.com/compasjs/compas/pull/2841))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.400.0 to 3.414.0
+  ([#2830](https://github.com/compasjs/compas/pull/2830),
+  [#2841](https://github.com/compasjs/compas/pull/2841))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.5.1 to 46.8.1
+  ([#2841](https://github.com/compasjs/compas/pull/2841))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.7.3](https://github.com/compasjs/compas/releases/tag/v0.7.3)
 
 #### Features
