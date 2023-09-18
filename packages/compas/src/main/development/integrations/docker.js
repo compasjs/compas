@@ -46,6 +46,9 @@ export class DockerIntegration extends BaseIntegration {
     if (!(await this.checkEnv())) {
       return;
     }
+
+    let didExecuteAHostAction = false;
+
     const { containersOnHost, runningContainersOnHost } =
       await this.containersOnHost();
 
@@ -54,6 +57,8 @@ export class DockerIntegration extends BaseIntegration {
     );
 
     if (containersToStop.length > 0) {
+      didExecuteAHostAction = true;
+
       this.state.logInformation(
         "Stopping containers that are not required for the current project.",
       );
@@ -68,6 +73,8 @@ export class DockerIntegration extends BaseIntegration {
     }
 
     if (imagesToPull.length > 0) {
+      didExecuteAHostAction = true;
+
       this.state.logInformation(
         "Downloading images and creating containers in the background...",
       );
@@ -76,6 +83,8 @@ export class DockerIntegration extends BaseIntegration {
 
     for (const key of Object.keys(containerObject)) {
       if (!containersOnHost.includes(key)) {
+        didExecuteAHostAction = true;
+
         const info = containerObject[key];
         await exec(
           `docker create ${info.createArguments ?? ""} --name ${key} ${
@@ -90,10 +99,14 @@ export class DockerIntegration extends BaseIntegration {
     );
 
     if (containersToStart.length > 0) {
+      didExecuteAHostAction = true;
+
       await exec(`docker start ${Object.keys(containerObject).join(" ")}`);
     }
 
-    this.state.logInformation("Required docker containers are running!");
+    if (didExecuteAHostAction) {
+      this.state.logInformation("Required docker containers are running!");
+    }
   }
 
   async containersOnHost() {
