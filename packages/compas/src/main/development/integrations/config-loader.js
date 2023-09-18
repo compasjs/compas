@@ -26,13 +26,17 @@ export class ConfigLoaderIntegration extends BaseIntegration {
   async onFileChanged(paths) {
     await super.onFileChanged(paths);
 
+    const originalConfig = JSON.stringify(this.state.cache.config);
+
     try {
       this.state.cache.config = await configResolveProjectConfig();
 
       await this.state.emitCacheUpdated();
       await this.state.emitConfigUpdated();
 
-      this.state.logInformation("Reloaded config, due to file change.");
+      if (JSON.stringify(this.state.cache.config) !== originalConfig) {
+        this.state.logInformation("Reloaded config, due to file change.");
+      }
     } catch (/** @type {any} */ e) {
       if (e.key === "config.resolve.parseError") {
         this.state.logInformation(
