@@ -257,6 +257,9 @@ export class ActionsIntegration extends BaseIntegration {
       startTime: Date.now(),
       cp: cpSpawn(action.command[0], action.command.slice(1), {
         cwd: action.workingDirectory,
+        env: {
+          ...this.state.env.hostEnv,
+        },
         stdio: ["ignore", "inherit", "inherit"],
       }),
     };

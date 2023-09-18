@@ -23,6 +23,7 @@ import { debugPrint, debugTimeEnd, debugTimeStart } from "./output.js";
  *   appName: string,
  *   compasVersion: string,
  *   nodeVersion: string,
+ *   hostEnv: Record<string, string|undefined>,
  * }} ConfigEnvironment
  */
 
@@ -35,6 +36,8 @@ import { debugPrint, debugTimeEnd, debugTimeStart } from "./output.js";
  */
 export async function configLoadEnvironment(preferPrettyPrint) {
   debugTimeStart("config.environment");
+
+  const hostEnv = { ...process.env };
 
   const defaultDotEnvFile = ".env";
 
@@ -79,6 +82,7 @@ APP_NAME=${dirname}
       ? `Compas v${packageJson.version}`
       : "Compas v0.0.0",
     nodeVersion: process.version,
+    hostEnv,
   };
 
   debugPrint(env);
