@@ -72,7 +72,8 @@ export class State {
      *   glob: string,
      *   integration: import("./integrations/base.js").BaseIntegration,
      *   debounceDelay: number,
-     *   existingTimeout?: NodeJS.Timeout
+     *   existingTimeout?: NodeJS.Timeout,
+     *   accumulatedPaths?: string[],
      * }[]}
      */
     this.fileChangeRegister = [];
@@ -315,7 +316,7 @@ export class State {
    * glob, added to {@link State#fileChangeRegister}, and call with the specified
    * debounce-delay.
    *
-   * @param paths
+   * @param {string[]} paths
    */
   emitFileChange(paths) {
     debugPrint(`State#emitFileChange :: ${JSON.stringify(paths)}}`);
@@ -326,13 +327,21 @@ export class State {
           `State#emitFileChange :: Matched ${registerItem.glob} for ${registerItem.integration.name} debouncing with ${registerItem.debounceDelay}.`,
         );
 
+        // Merge all paths from debounced matches
+        registerItem.accumulatedPaths ??= [];
+        registerItem.accumulatedPaths.push(...paths);
+
         if (registerItem.existingTimeout) {
           registerItem.existingTimeout.refresh();
         } else {
           registerItem.existingTimeout = setTimeout(() => {
+            // Reset paths for debounced matches
+            const accumulatedPaths = registerItem.accumulatedPaths ?? [];
+            registerItem.accumulatedPaths = [];
+
             registerItem.integration.state.runTask(
               "Integration#onFileChaged",
-              registerItem.integration.onFileChanged(paths),
+              registerItem.integration.onFileChanged(accumulatedPaths),
             );
           }, registerItem.debounceDelay);
         }
