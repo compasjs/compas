@@ -265,6 +265,14 @@ function getHomeSidebar() {
               text: "Docker",
               link: "/docs/integrations/docker.html",
             },
+            {
+              text: "Lint",
+              link: "/docs/integrations/lint.html",
+            },
+            {
+              text: "Migrations",
+              link: "/docs/integrations/migrations.html",
+            },
           ],
         },
       ],

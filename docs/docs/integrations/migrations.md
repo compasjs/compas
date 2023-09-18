@@ -1,0 +1,5 @@
+- Dynamic actions
+- Clean & remigrate OR migrate
+  - Does `compas docker info` output enough info?
+- Continuously watches `migrations/**.{js,sql}`
+- Only integrates with the existing `compas docker` commands for now

@@ -1,0 +1,9 @@
+- Run `--check` or equivalent on file changes
+- Try to minimize full runs (?)
+- Integrates with ESLint and Prettier
+  - Auto-detect if installed
+- `zakmes init lint`
+  - Adds @compas/eslint-plugin
+    - Except when ESLint / Prettier is already configured
+  - Adds required config files
+  - Bails out if config files are already present
