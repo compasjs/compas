@@ -4,6 +4,24 @@ editLink: false
 
 # Changelog
 
+### [v0.7.5](https://github.com/compasjs/compas/releases/tag/v0.7.5)
+
+#### Bug fixes
+
+- fix(compas): merge file change paths on debounced calls
+  [`30f464`](https://github.com/compasjs/compas/commit/30f464d8f6689591453ad338fda63490d1902ee2)
+- fix(compas): use original process env when spawning actions
+  [`7711cb`](https://github.com/compasjs/compas/commit/7711cbab97848f6ace6e94100c837a280ede6b61)
+- fix(compas): only print info on changes to the resolved config
+  [`e493d1`](https://github.com/compasjs/compas/commit/e493d1656518992cf50adb4c1c215ab8058e4ea7)
+- fix(compas): only print info on changes to the started docker containers
+  [`01ef1e`](https://github.com/compasjs/compas/commit/01ef1eb9f5410d790b63fb65ee68110deb8607e1)
+
+#### Other
+
+- chore(docs): add page scaffolding for lint and migration integrations
+  [`20a815`](https://github.com/compasjs/compas/commit/20a8151078b81ac12129b7a29a1c8682db606e05)
+
 ### [v0.7.4](https://github.com/compasjs/compas/releases/tag/v0.7.4)
 
 #### Features
