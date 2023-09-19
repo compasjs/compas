@@ -262,12 +262,12 @@ function getHomeSidebar() {
           collapsed: false,
           items: [
             {
-              text: "Docker",
-              link: "/docs/integrations/docker.html",
-            },
-            {
               text: "Lint",
               link: "/docs/integrations/lint.html",
+            },
+            {
+              text: "Docker",
+              link: "/docs/integrations/docker.html",
             },
             {
               text: "Migrations",
