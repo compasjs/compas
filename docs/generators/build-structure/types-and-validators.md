@@ -431,7 +431,7 @@ T.pick("pickBigObject")
 
 ### Extend
 
-It could happen that you want to add extra properties on an `T.objct()` that is
+It could happen that you want to add extra properties on an `T.object()` that is
 provided by a library. A use case is when using Compas' store package to save
 files. It provides a typed `fileMeta` type which you can extend to add extra
 properties.
