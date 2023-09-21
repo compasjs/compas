@@ -82,6 +82,7 @@ export async function createTestPostgresDatabase(rawOpts, options = {}) {
     const creationSql = await createDatabaseIfNotExists(
       undefined,
       name,
+      undefined,
       testDatabase?.options?.database,
       connectionOptions,
     );
@@ -104,6 +105,7 @@ export async function createTestPostgresDatabase(rawOpts, options = {}) {
     undefined,
     connectionOptions.database,
     undefined,
+    undefined,
     connectionOptions,
   );
 
@@ -123,6 +125,7 @@ export async function createTestPostgresDatabase(rawOpts, options = {}) {
   await createDatabaseIfNotExists(
     creationSql,
     name,
+    undefined,
     connectionOptions.database,
     connectionOptions,
   );

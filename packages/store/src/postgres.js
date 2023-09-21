@@ -66,10 +66,16 @@ export function buildAndCheckOpts(opts) {
  * 'date' and 'time' columns, used by `T.date().timeOnly()` and `T.date().dateOnly()', as
  * strings.
  *
+ * With `createIfNotExists`, Compas will try to connect to Postgres and first check if
+ * the database exists before establishing the requested connection. Postgres will
+ * default to connect to a database with the same name as the provided user, but you can
+ * manually specify the 'maintenanceDatabase' for the temporary connection.
+ *
  * @since 0.1.0
  *
  * @param {import("postgres").Options & {
  *   createIfNotExists?: boolean,
+ *   maintenanceDatabaase?: string,
  * }} [opts]
  * @returns {Promise<import("postgres").Sql<{}>>}
  */
@@ -80,6 +86,7 @@ export async function newPostgresConnection(opts) {
     const oldConnection = await createDatabaseIfNotExists(
       undefined,
       connectionOpts.database,
+      opts.maintenanceDatabaase,
       undefined,
       connectionOpts,
     );
@@ -92,6 +99,7 @@ export async function newPostgresConnection(opts) {
 /**
  * @param sql
  * @param databaseName
+ * @param maintenanceDatabase
  * @param template
  * @param connectionOptions
  * @returns {Promise<import("postgres").Sql<{}>>}
@@ -99,6 +107,7 @@ export async function newPostgresConnection(opts) {
 export async function createDatabaseIfNotExists(
   sql,
   databaseName,
+  maintenanceDatabase,
   template,
   connectionOptions,
 ) {
@@ -111,7 +120,7 @@ export async function createDatabaseIfNotExists(
   // Don't connect to a database
   const opts = {
     ...connectionOptions,
-    database: undefined,
+    database: maintenanceDatabase ?? undefined,
   };
   if (!sql) {
     sql = postgres(environment.POSTGRES_URI ?? opts, opts);
