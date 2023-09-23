@@ -48,7 +48,7 @@ async function cliExecutor(logger, state) {
   } else {
     // We only need to generate for the specified sub command.
     const subCommand = state.command.at(-1);
-    if (subCommand === "generate") {
+    if (subCommand === "application") {
       steps.unshift(generateApplication);
     }
   }
