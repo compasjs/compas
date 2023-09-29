@@ -48,20 +48,13 @@ export class ActionsIntegration extends BaseIntegration {
     }
   }
 
-  async onConfigUpdated() {
-    await super.onConfigUpdated();
-
-    // @ts-expect-error
-    this.navigationStack = [this.state.cache.config];
-    this.setActionsGroups();
-
-    if (this.state.screen.state === "idle") {
-      this.state.paintScreen();
-    }
-  }
-
   async onCacheUpdated() {
     await super.onCacheUpdated();
+
+    if (this.navigationStack?.[0] !== this.state.cache.config) {
+      // @ts-expect-error
+      this.navigationStack = [this.state.cache.config];
+    }
 
     this.setActionsGroups();
 

@@ -48,11 +48,6 @@ export class BaseIntegration {
   }
 
   // eslint-disable-next-line require-await
-  async onConfigUpdated() {
-    debugPrint(`${this.name} :: onConfigUpdated`);
-  }
-
-  // eslint-disable-next-line require-await
   async onExit() {
     debugPrint(`${this.name} :: onExit`);
   }

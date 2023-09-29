@@ -15,8 +15,8 @@ export class RootDirectoriesIntegration extends BaseIntegration {
     }
   }
 
-  async onConfigUpdated() {
-    await super.onConfigUpdated();
+  async onCacheUpdated() {
+    await super.onCacheUpdated();
 
     const existingRootDirectories = [
       ...(this.state.cache.rootDirectories ?? []),

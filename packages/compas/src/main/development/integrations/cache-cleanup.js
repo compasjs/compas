@@ -19,8 +19,8 @@ export class CacheCleanupIntegration extends BaseIntegration {
     }
   }
 
-  async onConfigUpdated() {
-    await super.onConfigUpdated();
+  async onCacheUpdated() {
+    await super.onCacheUpdated();
 
     this.state.runTask("CachesCleanup", this.cleanup());
   }

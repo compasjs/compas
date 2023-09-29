@@ -22,8 +22,8 @@ export class DockerIntegration extends BaseIntegration {
     this.state.runTask("dockerStart", this.startContainers(resolvedContainers));
   }
 
-  async onConfigUpdated() {
-    await super.onConfigUpdated();
+  async onCacheUpdated() {
+    await super.onCacheUpdated();
 
     const resolvedContainers = this.listContainers();
     this.state.runTask("dockerCheck", this.startContainers(resolvedContainers));

@@ -13,7 +13,6 @@ export class ConfigLoaderIntegration extends BaseIntegration {
       this.state.cache.config = await configResolveProjectConfig();
 
       await this.state.emitCacheUpdated();
-      await this.state.emitConfigUpdated();
     }
 
     this.state.fileChangeRegister.push({
@@ -32,7 +31,6 @@ export class ConfigLoaderIntegration extends BaseIntegration {
       this.state.cache.config = await configResolveProjectConfig();
 
       await this.state.emitCacheUpdated();
-      await this.state.emitConfigUpdated();
 
       if (JSON.stringify(this.state.cache.config) !== originalConfig) {
         this.state.logInformation("Reloaded config, due to file change.");

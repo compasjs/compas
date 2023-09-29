@@ -348,12 +348,4 @@ export class State {
       }
     }
   }
-
-  async emitConfigUpdated() {
-    debugPrint(`State#emitConfigUpdated`);
-
-    for (const integration of this.integrations) {
-      await integration.onConfigUpdated();
-    }
-  }
 }
