@@ -28,17 +28,6 @@ export class BaseIntegration {
   }
 
   /**
-   * @param {{
-   *   name: string
-   * }} key
-   * @returns {Promise<void>}
-   */
-  // eslint-disable-next-line require-await,no-unused-vars
-  async onKeypress(key) {
-    debugPrint(`${this.name} :: onKeypress`);
-  }
-
-  /**
    * @param {string[]} paths
    * @returns {Promise<void>}
    */

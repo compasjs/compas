@@ -7,8 +7,12 @@ import {
   debugTimeEnd,
   debugTimeStart,
 } from "../../shared/output.js";
+import {
+  actionsHandleKeypress,
+  actionsInit,
+  actionsUpdateInfo,
+} from "./actions.js";
 import { cacheLoad, cachePersist } from "./cache.js";
-import { ActionsIntegration } from "./integrations/actions.js";
 import { CacheCleanupIntegration } from "./integrations/cache-cleanup.js";
 import { ConfigLoaderIntegration } from "./integrations/config-loader.js";
 import { DockerIntegration } from "./integrations/docker.js";
@@ -44,12 +48,19 @@ export class State {
      *       name: string,
      *     }[],
      *   }[],
+     *   navigationStack:
+     *   import("../../generated/common/types.js").CompasResolvedConfig[], activeProcess:
+     *   (undefined|{ cp: import("child_process").ChildProcess, command: string[],
+     *   workingDirectory: string, startTime: number,
+     *   }),
      * }}
      */
     this.screen = {
       ghostOutputLineCount: 0,
       state: "idle",
       actionGroups: [],
+      navigationStack: [],
+      activeProcess: undefined,
     };
 
     /**
@@ -93,6 +104,7 @@ export class State {
     debugPrint("State#init");
 
     tuiInit(this);
+    actionsInit(this);
 
     const { empty, cache } = await cacheLoad(this.env.compasVersion);
 
@@ -110,7 +122,6 @@ export class State {
       new ConfigLoaderIntegration(this),
       new RootDirectoriesIntegration(this),
       new CacheCleanupIntegration(this),
-      new ActionsIntegration(this),
 
       // Try to keep the above list minimal.
 
@@ -128,6 +139,11 @@ export class State {
       await integration.init();
 
       this.integrations.push(integration);
+    }
+
+    actionsUpdateInfo(this);
+    if (this.screen.state === "idle") {
+      this.paintScreen();
     }
 
     debugTimeEnd(`State#init`);
@@ -282,6 +298,11 @@ export class State {
     for (const integration of this.integrations) {
       await integration.onCacheUpdated();
     }
+
+    actionsUpdateInfo(this);
+    if (this.screen.state === "idle") {
+      this.paintScreen();
+    }
   }
 
   /**
@@ -304,8 +325,11 @@ export class State {
       key.name = "esc";
     }
 
-    for (const integration of this.integrations) {
-      await integration.onKeypress(key);
+    await actionsHandleKeypress(this, key);
+
+    actionsUpdateInfo(this);
+    if (this.screen.state === "idle") {
+      this.paintScreen();
     }
   }
 

@@ -1,22 +1,3 @@
-/*
- - Load .cache/compas/cache.json
- - Parse errors
- - Run through validators
- - Version mismatch
- - Default to new cache + clean file watcher snapshots in all configured directories
- - Load up config
- - Start up file watchers
- - Watcher snapshot should be stored per top-level watched directory
- - Clean any found cache in a directory
-
- - Integrate with State somehow
- - Config should be retrievable
- - Derivatives from config should be cached
- - Derivatives from config should be notified on change
- - File changes should be executed in order of listener submissions
-
- */
-
 import { existsSync } from "node:fs";
 import { readFile, rm } from "node:fs/promises";
 import { AppError, pathJoin } from "@compas/stdlib";
