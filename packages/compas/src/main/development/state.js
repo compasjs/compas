@@ -1,4 +1,3 @@
-import { setTimeout } from "node:timers";
 import { AppError } from "@compas/stdlib";
 import ansi from "ansi";
 import micromatch from "micromatch";
@@ -16,11 +15,16 @@ import { cacheLoad, cachePersist } from "./cache.js";
 import { CacheCleanupIntegration } from "./integrations/cache-cleanup.js";
 import { ConfigLoaderIntegration } from "./integrations/config-loader.js";
 import { DockerIntegration } from "./integrations/docker.js";
-import { FileWatcherIntegration } from "./integrations/file-watcher.js";
 import { InferredActionsIntegration } from "./integrations/inferred-actions.js";
 import { PackageManagerIntegration } from "./integrations/package-manager.js";
 import { RootDirectoriesIntegration } from "./integrations/root-directories.js";
 import { tuiClearScreen, tuiExit, tuiInit, tuiPaint } from "./tui.js";
+import {
+  watchersExit,
+  watchersInit,
+  watchersRefresh,
+  watchersWriteSnapshot,
+} from "./watchers.js";
 
 export class State {
   /**
@@ -78,6 +82,31 @@ export class State {
     this.integrations = [];
 
     /**
+     * @type {Record<string, import("@parcel/watcher").AsyncSubscription>}
+     */
+    this.directorySubscriptions = {};
+
+    /**
+     * @type {string[]}
+     */
+    this._filesUpdated = [];
+
+    const _self = this;
+    const boundEmitFileChange = this.emitFileChange.bind(this);
+
+    /**
+     * @type {NodeJS.Timer}
+     */
+    this.debouncedEmitFilechange = setTimeout(() => {
+      const shallowCopy = [..._self._filesUpdated];
+      _self._filesUpdated = [];
+
+      if (shallowCopy.length > 0) {
+        boundEmitFileChange(shallowCopy);
+      }
+    }, 50);
+
+    /**
      *
      * @type {{
      *   glob: string,
@@ -128,10 +157,6 @@ export class State {
       new PackageManagerIntegration(this),
       new InferredActionsIntegration(this),
       new DockerIntegration(this),
-
-      // Should be the last integration, since it will process file changes since the
-      // last snapshot.
-      new FileWatcherIntegration(this),
     ];
 
     // Init and add to state
@@ -146,11 +171,15 @@ export class State {
       this.paintScreen();
     }
 
+    await watchersInit(this);
+
     debugTimeEnd(`State#init`);
   }
 
   async exit() {
     debugPrint("State#exit");
+
+    await watchersExit(this);
 
     for (const integration of this.integrations) {
       await integration.onExit();
@@ -303,6 +332,9 @@ export class State {
     if (this.screen.state === "idle") {
       this.paintScreen();
     }
+
+    await watchersRefresh(this);
+    await watchersWriteSnapshot(this);
   }
 
   /**
