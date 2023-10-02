@@ -1,78 +1,83 @@
-import { existsSync } from "node:fs";
-import { rm } from "node:fs/promises";
-import { isNil, pathJoin } from "@compas/stdlib";
-import { BaseIntegration } from "./base.js";
+import { existsSync, rmSync } from "node:fs";
+import { pathJoin } from "@compas/stdlib";
 
-export class CacheCleanupIntegration extends BaseIntegration {
-  constructor(state) {
-    super(state, "cacheCleanup");
+/**
+ * @type {import("./base.js").Integration}
+ */
+export const cacheCleanupIntegration = {
+  getStaticName() {
+    return "cacheCleanup";
+  },
+
+  onColdStart(state) {
+    cacheCleanup(state.cache.config, {
+      isColdStart: true,
+      isRootConfig: true,
+    });
+  },
+
+  onCachedStart(state) {
+    cacheCleanup(state.cache.config, {
+      isColdStart: true,
+      isRootConfig: true,
+    });
+  },
+
+  onExternalChanges(state) {
+    cacheCleanup(state.cache.config, {
+      isColdStart: true,
+      isRootConfig: true,
+    });
+  },
+};
+
+/**
+ *
+ * @param {import("../../../generated/common/types.js").CompasResolvedConfig|undefined} config
+ * @param {{
+ *   isRootConfig: boolean,
+ *   isColdStart: boolean,
+ * }} options
+ */
+function cacheCleanup(config, { isColdStart, isRootConfig }) {
+  if (!config) {
+    return;
   }
 
-  async init() {
-    await super.init();
-
-    const hasPreviouslyCleaned = this.state.cache.cachesCleaned;
-    this.state.cache.cachesCleaned = true;
-
-    if (!hasPreviouslyCleaned) {
-      await this.cleanup();
+  if (isColdStart && isRootConfig) {
+    // Watcher snapshot when ran from another project
+    rmSync(".cache/compas/watcher-snapshot.txt", { force: true });
+  } else if (isColdStart && !isRootConfig) {
+    // Remove caches and snapshots from other runs
+    rmSync(pathJoin(config.rootDirectory, ".cache/compas/cache.json"), {
+      force: true,
+    });
+    rmSync(
+      pathJoin(config.rootDirectory, ".cache/compas/watcher-snapshot.json"),
+      { force: true },
+    );
+  } else if (!isColdStart && !isRootConfig) {
+    // Project could have ran in standalone, without referencing this project. Which
+    // means that we will be quite confused. At least clean this up. We may need to
+    // revisit this later, that we still want to boot up freshly after cleaning up
+    // the root cache.
+    if (
+      existsSync(pathJoin(config.rootDirectory, ".cache/compas/cache.json"))
+    ) {
+      rmSync(pathJoin(config.rootDirectory, ".cache/compas/cache.json"), {
+        force: true,
+      });
+      rmSync(
+        pathJoin(config.rootDirectory, ".cache/compas/watcher-snapshot.json"),
+        { force: true },
+      );
     }
   }
 
-  async onCacheUpdated() {
-    await super.onCacheUpdated();
-
-    this.state.runTask("CachesCleanup", this.cleanup());
-  }
-
-  async cleanup() {
-    const isCleanBoot = isNil(this.state.cache.cachesCleaned);
-
-    async function handleProject(project) {
-      const isRootProject = (project.rootDirectory = process.cwd());
-
-      if (isCleanBoot && isRootProject) {
-        // Watcher snapshot when ran from another project
-        await rm(".cache/compas/watcher-snapshot.txt", { force: true });
-      } else if (isCleanBoot && !isRootProject) {
-        // Remove caches and snapshots from other runs
-        await rm(pathJoin(project.rootDirectory, ".cache/compas/cache.json"), {
-          force: true,
-        });
-        await rm(
-          pathJoin(
-            project.rootDirectory,
-            ".cache/compas/watcher-snapshot.json",
-          ),
-          { force: true },
-        );
-      } else if (!isCleanBoot && !isRootProject) {
-        // Project could have ran in standalone, without referencing this project. Which
-        // means that we will be quite confused. At least clean this up. We may need to
-        // revisit this later, that we still want to boot up freshly after cleaning up
-        // the root cache.
-        if (
-          existsSync(
-            pathJoin(project.rootDirectory, ".cache/compas/cache.json"),
-          )
-        ) {
-          await rm(
-            pathJoin(project.rootDirectory, ".cache/compas/cache.json"),
-            {
-              force: true,
-            },
-          );
-          await rm(
-            pathJoin(
-              project.rootDirectory,
-              ".cache/compas/watcher-snapshot.json",
-            ),
-            { force: true },
-          );
-        }
-      }
-    }
-
-    await handleProject(this.state.cache.config);
+  for (const project of config.projects) {
+    cacheCleanup(project, {
+      isColdStart,
+      isRootConfig: false,
+    });
   }
 }

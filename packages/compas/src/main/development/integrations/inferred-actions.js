@@ -1,84 +1,53 @@
-import { isNil } from "@compas/stdlib";
 import {
   inferDevCommand,
   inferLintCommand,
   inferTestCommand,
 } from "../../../shared/inferred-actions.js";
-import { BaseIntegration } from "./base.js";
 
-export class InferredActionsIntegration extends BaseIntegration {
-  constructor(state) {
-    super(state, "inferredActions");
-  }
+/**
+ * @type {import("./base.js").Integration}
+ */
+export const inferredActionsIntegration = {
+  getStaticName() {
+    return "inferredActions";
+  },
 
-  async init() {
-    await super.init();
+  async onColdStart(state) {
+    await inferredActionsResolve(state);
+  },
 
-    if (isNil(this.state.cache.availableActions)) {
-      this.state.runTask(
-        "inferredActionsResolve",
-        this.resolveAvailableActions(),
-      );
-    }
-
-    this.state.fileChangeRegister.push({
-      glob: "**/package.json",
-      integration: this,
-      debounceDelay: 50,
-    });
-  }
-
-  async onCacheUpdated() {
-    await super.onCacheUpdated();
-    this.state.runTask(
-      "inferredActionsResolve",
-      this.resolveAvailableActions(),
+  async onExternalChanges(state, { filePaths }) {
+    const hasPackageJsonOrConfigChange = filePaths.some(
+      (it) => it.endsWith("package.json") || it.endsWith("config/compas.json"),
     );
-  }
 
-  async onFileChanged(paths) {
-    await super.onFileChanged(paths);
-    this.state.runTask(
-      "inferredActionsResolve",
-      this.resolveAvailableActions(),
-    );
-  }
-
-  async resolveAvailableActions() {
-    const existingActions = this.state.cache.availableActions ?? {};
-    const resolvedActions = {};
-
-    for (const dir of this.state.cache.rootDirectories ?? []) {
-      resolvedActions[dir] = [
-        {
-          name: "Dev",
-          command: await inferDevCommand(dir),
-        },
-        {
-          name: "Lint",
-          command: await inferLintCommand(dir),
-        },
-        {
-          name: "Test",
-          command: await inferTestCommand(dir),
-        },
-      ].filter((it) => it.command);
+    if (hasPackageJsonOrConfigChange) {
+      await inferredActionsResolve(state);
     }
+  },
+};
 
+/**
+ * @param {import("../state.js").State} state
+ */
+async function inferredActionsResolve(state) {
+  state.cache.availableActions = {};
+
+  for (const dir of state.cache.rootDirectories ?? []) {
     // @ts-expect-error
-    this.state.cache.availableActions = resolvedActions;
-
-    if (
-      Object.keys(existingActions).length !==
-      Object.keys(resolvedActions).length
-    ) {
-      await this.state.emitCacheUpdated();
-      return;
-    }
-
-    if (JSON.stringify(existingActions) !== JSON.stringify(resolvedActions)) {
-      await this.state.emitCacheUpdated();
-      return;
-    }
+    state.cache.availableActions[dir] = [
+      {
+        name: "Dev",
+        command: await inferDevCommand(dir),
+      },
+      {
+        name: "Lint",
+        command: await inferLintCommand(dir),
+      },
+      {
+        name: "Test",
+        command: await inferTestCommand(dir),
+      },
+    ].filter((it) => it.command);
   }
 }

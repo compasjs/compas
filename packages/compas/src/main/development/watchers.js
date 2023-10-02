@@ -32,7 +32,8 @@ export async function watchersInit(state) {
 
   state.logInformation(`Started file watchers, ready for some action!`);
 
-  state.emitFileChange(events.map((it) => it.path));
+  state.externalChanges.filePaths.push(...events.map((it) => it.path));
+  state.debouncedOnExternalChanges.refresh();
 }
 
 /**
@@ -99,8 +100,8 @@ export async function watchersRefresh(state) {
           );
         }
 
-        state._filesUpdated.push(...events.map((it) => it.path));
-        state.debouncedEmitFilechange.refresh();
+        state.externalChanges.filePaths.push(...events.map((it) => it.path));
+        state.debouncedOnExternalChanges.refresh();
       },
       DEFAULT_WATCH_OPTIONS,
     );

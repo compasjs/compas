@@ -94,12 +94,6 @@ export function applyCompasStructure(generator) {
           "Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.",
         ),
 
-      cachesCleaned: T.bool()
-        .optional()
-        .docs(
-          "Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.",
-        ),
-
       packageManager: T.generic()
         .keys(T.string())
         .values({

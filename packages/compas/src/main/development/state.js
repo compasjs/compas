@@ -1,6 +1,5 @@
 import { AppError } from "@compas/stdlib";
 import ansi from "ansi";
-import micromatch from "micromatch";
 import {
   debugPrint,
   debugTimeEnd,
@@ -12,12 +11,12 @@ import {
   actionsUpdateInfo,
 } from "./actions.js";
 import { cacheLoad, cachePersist } from "./cache.js";
-import { CacheCleanupIntegration } from "./integrations/cache-cleanup.js";
-import { ConfigLoaderIntegration } from "./integrations/config-loader.js";
-import { DockerIntegration } from "./integrations/docker.js";
-import { InferredActionsIntegration } from "./integrations/inferred-actions.js";
-import { PackageManagerIntegration } from "./integrations/package-manager.js";
-import { RootDirectoriesIntegration } from "./integrations/root-directories.js";
+import { cacheCleanupIntegration } from "./integrations/cache-cleanup.js";
+import { configLoaderIntegration } from "./integrations/config-loader.js";
+import { dockerIntegration } from "./integrations/docker.js";
+import { inferredActionsIntegration } from "./integrations/inferred-actions.js";
+import { packageManagerIntegration } from "./integrations/package-manager.js";
+import { rootDirectoriesIntegration } from "./integrations/root-directories.js";
 import { tuiClearScreen, tuiExit, tuiInit, tuiPaint } from "./tui.js";
 import {
   watchersExit,
@@ -77,9 +76,16 @@ export class State {
     ];
 
     /**
-     * @type {import("./integrations/base.js").BaseIntegration[]}
+     * @type {import("./integrations/base.js").Integration[]}
      */
-    this.integrations = [];
+    this.integrations = [
+      configLoaderIntegration,
+      rootDirectoriesIntegration,
+      cacheCleanupIntegration,
+      packageManagerIntegration,
+      inferredActionsIntegration,
+      dockerIntegration,
+    ];
 
     /**
      * @type {Record<string, import("@parcel/watcher").AsyncSubscription>}
@@ -87,37 +93,20 @@ export class State {
     this.directorySubscriptions = {};
 
     /**
-     * @type {string[]}
+     * @type {{
+     *   filePaths: string[],
+     * }}
      */
-    this._filesUpdated = [];
+    this.externalChanges = {
+      filePaths: [],
+    };
 
-    const _self = this;
-    const boundEmitFileChange = this.emitFileChange.bind(this);
+    const boundOnExternalChanges = this.onExternalChanges.bind(this);
 
     /**
      * @type {NodeJS.Timer}
      */
-    this.debouncedEmitFilechange = setTimeout(() => {
-      const shallowCopy = [..._self._filesUpdated];
-      _self._filesUpdated = [];
-
-      if (shallowCopy.length > 0) {
-        boundEmitFileChange(shallowCopy);
-      }
-    }, 50);
-
-    /**
-     *
-     * @type {{
-     *   glob: string,
-     *   integration: import("./integrations/base.js").BaseIntegration,
-     *   debounceDelay: number,
-     *   existingTimeout?: NodeJS.Timeout,
-     *   accumulatedPaths?: string[],
-     * }[]}
-     */
-    this.fileChangeRegister = [];
-
+    this.debouncedOnExternalChanges = setTimeout(boundOnExternalChanges, 50);
     /**
      * @type {import("../../generated/common/types.js").CompasCache}
      */
@@ -145,25 +134,20 @@ export class State {
 
     this.cache = cache;
 
-    // We start with a separate array, to make sure that we init things in order, without
-    // causing reactivity loops.
-    const integrations = [
-      new ConfigLoaderIntegration(this),
-      new RootDirectoriesIntegration(this),
-      new CacheCleanupIntegration(this),
-
-      // Try to keep the above list minimal.
-
-      new PackageManagerIntegration(this),
-      new InferredActionsIntegration(this),
-      new DockerIntegration(this),
-    ];
-
-    // Init and add to state
-    for (const integration of integrations) {
-      await integration.init();
-
-      this.integrations.push(integration);
+    if (empty) {
+      for (const integration of this.integrations) {
+        if (integration.onColdStart) {
+          debugPrint(`${integration.getStaticName()} :: onColdStart`);
+          await integration.onColdStart(this);
+        }
+      }
+    } else {
+      for (const integration of this.integrations) {
+        if (integration.onCachedStart) {
+          debugPrint(`${integration.getStaticName()} :: onCachedStart`);
+          await integration.onCachedStart(this);
+        }
+      }
     }
 
     actionsUpdateInfo(this);
@@ -180,10 +164,6 @@ export class State {
     debugPrint("State#exit");
 
     await watchersExit(this);
-
-    for (const integration of this.integrations) {
-      await integration.onExit();
-    }
 
     tuiExit(this);
     process.exit();
@@ -263,6 +243,7 @@ export class State {
   // ==== background tasks ====
 
   /**
+   * TODO: this will probably be obsolete with `registerAsyncTask` in the future?
    *
    * @param {string} name
    * @param {Promise|(() => Promise<any>)} task
@@ -304,28 +285,27 @@ export class State {
 
   // ==== integrations ====
 
-  /**
-   * Notify that the cache is updated.
-   *
-   * @returns {Promise<void>}
-   */
-  async emitCacheUpdated() {
-    debugPrint(`State#emitCacheUpdated`);
-
-    if (!this.cachePersistTimer) {
-      const _self = this;
-      this.cachePersistTimer = setTimeout(() => {
-        debugPrint("State#emitCacheUpdated :: Running cachePersist");
-        cachePersist(_self.cache).then(() => {
-          debugPrint("State#emitCacheUpdated :: Done with cachePersist");
-        });
-      }, 50);
-    } else {
-      this.cachePersistTimer.refresh();
+  async onExternalChanges() {
+    if (this.externalChanges.filePaths.length === 0) {
+      return;
     }
 
+    const changes = {
+      ...this.externalChanges,
+    };
+
+    this.externalChanges = {
+      filePaths: [],
+    };
+
+    debugPrint(`State#onExternalChanges`);
+    debugPrint(changes);
+
     for (const integration of this.integrations) {
-      await integration.onCacheUpdated();
+      if (integration.onExternalChanges) {
+        debugPrint(`${integration.getStaticName()} :: onExternalChanges`);
+        await integration.onExternalChanges(this, changes);
+      }
     }
 
     actionsUpdateInfo(this);
@@ -333,12 +313,12 @@ export class State {
       this.paintScreen();
     }
 
+    await cachePersist(this.cache);
     await watchersRefresh(this);
     await watchersWriteSnapshot(this);
   }
 
   /**
-   *
    * @param {{
    *   name: string,
    * }} key
@@ -362,46 +342,6 @@ export class State {
     actionsUpdateInfo(this);
     if (this.screen.state === "idle") {
       this.paintScreen();
-    }
-  }
-
-  /**
-   * Emit file changes to integrations.
-   *
-   * This is different from most other integrations, in that we match on the registered
-   * glob, added to {@link State#fileChangeRegister}, and call with the specified
-   * debounce-delay.
-   *
-   * @param {string[]} paths
-   */
-  emitFileChange(paths) {
-    debugPrint(`State#emitFileChange :: ${JSON.stringify(paths)}}`);
-
-    for (const registerItem of this.fileChangeRegister) {
-      if (micromatch.some(paths, registerItem.glob)) {
-        debugPrint(
-          `State#emitFileChange :: Matched ${registerItem.glob} for ${registerItem.integration.name} debouncing with ${registerItem.debounceDelay}.`,
-        );
-
-        // Merge all paths from debounced matches
-        registerItem.accumulatedPaths ??= [];
-        registerItem.accumulatedPaths.push(...paths);
-
-        if (registerItem.existingTimeout) {
-          registerItem.existingTimeout.refresh();
-        } else {
-          registerItem.existingTimeout = setTimeout(() => {
-            // Reset paths for debounced matches
-            const accumulatedPaths = registerItem.accumulatedPaths ?? [];
-            registerItem.accumulatedPaths = [];
-
-            registerItem.integration.state.runTask(
-              "Integration#onFileChaged",
-              registerItem.integration.onFileChanged(accumulatedPaths),
-            );
-          }, registerItem.debounceDelay);
-        }
-      }
     }
   }
 }
