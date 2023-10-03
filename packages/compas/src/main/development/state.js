@@ -155,9 +155,8 @@ export class State {
       this.paintScreen();
     }
 
-    await watchersInit(this);
-
     await cachePersist(this.cache);
+    await watchersInit(this);
     await watchersWriteSnapshot(this);
 
     debugTimeEnd(`State#init`);
