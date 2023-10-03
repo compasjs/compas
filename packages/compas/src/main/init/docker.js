@@ -18,7 +18,7 @@ export async function initDocker(env) {
 
   const config = await configResolveProjectConfig();
 
-  if (Object.keys(config.dockerContainers).length > 0) {
+  if (Object.keys(config.dockerContainers ?? {}).length > 0) {
     logger.info(
       "The project already includes 'dockerContainers' in the config. Please edit the file manually or remove 'dockerContainers' from the config and rerun 'compas init docker'.",
     );

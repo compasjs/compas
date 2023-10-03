@@ -131,10 +131,6 @@ test("compas/development/cache", (t) => {
       .launch();
 
     await cli.waitForOutput("stdout", "Starting up");
-    await cli.waitForOutput(
-      "debug",
-      "State#emitCacheUpdated :: Done with cachePersist",
-    );
     await cli.writeInput("Q");
     await cli.waitForExit();
 
@@ -143,6 +139,5 @@ test("compas/development/cache", (t) => {
     );
 
     t.ok(resolvedCache.config);
-    t.ok(resolvedCache.cachesCleaned);
   });
 });

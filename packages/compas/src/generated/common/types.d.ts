@@ -59,22 +59,17 @@ export type CompasCache = {
   "version": string;
   
   /**
-   * The resolved config. Managed by {@link ConfigLoaderIntegration}.
+   * The resolved config. Managed by {@link configLoaderIntegration}.
    */
   "config"?: CompasResolvedConfig|undefined;
   
   /**
-   * Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.
+   * Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.
    */
   "rootDirectories"?: (string)[]|undefined;
   
   /**
-   * Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.
-   */
-  "cachesCleaned"?: boolean|undefined;
-  
-  /**
-   * The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.
+   * The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.
    */
   "packageManager"?: { [key: string]: {
     "name": string;
@@ -84,7 +79,7 @@ export type CompasCache = {
   }}|undefined;
   
   /**
-   * Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.
+   * Shared available actions per rootDirectory. Managed by {@link inferredActionIntegration}.
    */
   "availableActions"?: { [key: string]: ({
     "name": string;
@@ -150,22 +145,17 @@ export type CompasCacheInput = {
   "version": string;
   
   /**
-   * The resolved config. Managed by {@link ConfigLoaderIntegration}.
+   * The resolved config. Managed by {@link configLoaderIntegration}.
    */
   "config"?: CompasResolvedConfigInput|undefined;
   
   /**
-   * Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.
+   * Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.
    */
   "rootDirectories"?: (string)[]|undefined;
   
   /**
-   * Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.
-   */
-  "cachesCleaned"?: boolean|"true"|"false"|undefined;
-  
-  /**
-   * The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.
+   * The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.
    */
   "packageManager"?: { [key: string]: {
     "name": string;
@@ -175,7 +165,7 @@ export type CompasCacheInput = {
   }}|undefined;
   
   /**
-   * Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.
+   * Shared available actions per rootDirectory. Managed by {@link inferredActionIntegration}.
    */
   "availableActions"?: { [key: string]: ({
     "name": string;

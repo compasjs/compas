@@ -83,7 +83,7 @@ export function applyCompasStructure(generator) {
       config: T.reference("compas", "resolvedConfig")
         .optional()
         .docs(
-          "The resolved config. Managed by {@link ConfigLoaderIntegration}.",
+          "The resolved config. Managed by {@link configLoaderIntegration}.",
         ),
 
       rootDirectories: T.array()
@@ -91,7 +91,7 @@ export function applyCompasStructure(generator) {
         .optional()
         .min(1)
         .docs(
-          "Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.",
+          "Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.",
         ),
 
       packageManager: T.generic()
@@ -104,7 +104,7 @@ export function applyCompasStructure(generator) {
         })
         .optional()
         .docs(
-          "The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.",
+          "The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.",
         ),
 
       availableActions: T.generic()
@@ -117,7 +117,7 @@ export function applyCompasStructure(generator) {
         ])
         .optional()
         .docs(
-          "Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.",
+          "Shared available actions per rootDirectory. Managed by {@link inferredActionIntegration}.",
         ),
     }),
   );

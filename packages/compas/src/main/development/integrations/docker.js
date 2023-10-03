@@ -118,8 +118,12 @@ function dockerListContainersInConfig(state) {
   /** @type {import("../../../generated/common/types.js").CompasResolvedConfig["dockerContainers"]} */
   const result = {};
 
+  if (!state.cache.config) {
+    return result;
+  }
+
   function handleConfig(config) {
-    for (const name of Object.keys(config.dockerContainers)) {
+    for (const name of Object.keys(config.dockerContainers ?? {})) {
       result[name] = config.dockerContainers[name];
     }
 

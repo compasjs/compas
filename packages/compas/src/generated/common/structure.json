@@ -27,7 +27,7 @@
           "type": "string"
         },
         "config": {
-          "docString": "The resolved config. Managed by {@link ConfigLoaderIntegration}.",
+          "docString": "The resolved config. Managed by {@link configLoaderIntegration}.",
           "isOptional": true,
           "validator": {},
           "sql": {},
@@ -39,7 +39,7 @@
           }
         },
         "rootDirectories": {
-          "docString": "Resolved project root directories. Managed by {@link RootDirectoriesIntegration}.",
+          "docString": "Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.",
           "isOptional": true,
           "validator": {
             "convert": false,
@@ -61,17 +61,8 @@
             "type": "string"
           }
         },
-        "cachesCleaned": {
-          "docString": "Did clean caches from project directories. Managed by {@link CacheCleanupIntegration}.",
-          "isOptional": true,
-          "validator": {
-            "allowNull": false
-          },
-          "sql": {},
-          "type": "boolean"
-        },
         "packageManager": {
-          "docString": "The inferred package manager per rootDirectory. Managed by {@link PackageManagerIntegration}.",
+          "docString": "The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.",
           "isOptional": true,
           "validator": {},
           "sql": {},
@@ -156,7 +147,7 @@
           }
         },
         "availableActions": {
-          "docString": "Shared available actions per rootDirectory. Managed by {@link InferredActionIntegration}.",
+          "docString": "Shared available actions per rootDirectory. Managed by {@link inferredActionIntegration}.",
           "isOptional": true,
           "validator": {},
           "sql": {},

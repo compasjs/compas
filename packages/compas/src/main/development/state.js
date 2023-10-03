@@ -157,6 +157,9 @@ export class State {
 
     await watchersInit(this);
 
+    await cachePersist(this.cache);
+    await watchersWriteSnapshot(this);
+
     debugTimeEnd(`State#init`);
   }
 

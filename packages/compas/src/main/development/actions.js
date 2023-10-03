@@ -142,7 +142,7 @@ export async function actionsHandleKeypress(state, key) {
     return;
   }
 
-  if (name === "q" && state.screen.navigationStack.length === 1) {
+  if (name === "q" && state.screen.navigationStack.length <= 1) {
     return state.exit();
   }
 
