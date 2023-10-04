@@ -77,58 +77,49 @@ export function applyCompasStructure(generator) {
       })
       .loose(),
 
-    T.object("cache").keys({
-      version: T.string().docs("Compas version, used for cache invalidations."),
-
-      config: T.reference("compas", "resolvedConfig")
-        .optional()
-        .docs(
-          "The resolved config. Managed by {@link configLoaderIntegration}.",
+    T.object("cache")
+      .keys({
+        version: T.string().docs(
+          "Compas version, used for cache invalidations.",
         ),
 
-      rootDirectories: T.array()
-        .values(T.string())
-        .optional()
-        .min(1)
-        .docs(
-          "Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.",
-        ),
+        config: T.reference("compas", "resolvedConfig")
+          .optional()
+          .docs(
+            "The resolved config. Managed by {@link configLoaderIntegration}.",
+          ),
 
-      dynamicAvailableActions: T.generic()
-        .keys(T.string())
-        .values({
-          shortcut: T.string(),
-          name: T.string(),
-          callback: T.string(),
-        })
-        .default("{}")
-        .docs("Dynamic actions that are available."),
+        rootDirectories: T.array()
+          .values(T.string())
+          .optional()
+          .min(1)
+          .docs(
+            "Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.",
+          ),
 
-      packageManager: T.generic()
-        .keys(T.string())
-        .values({
-          name: T.string(),
-          installCommand: T.string(),
-          nodeModulesBinCommand: T.string(),
-          packageJsonScriptCommand: T.string(),
-        })
-        .optional()
-        .docs(
-          "The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.",
-        ),
-
-      availableActions: T.generic()
-        .keys(T.string())
-        .values([
-          {
+        dynamicAvailableActions: T.generic()
+          .keys(T.string())
+          .values({
+            shortcut: T.string(),
             name: T.string(),
-            command: [T.string()],
-          },
-        ])
-        .optional()
-        .docs(
-          "Shared available actions per rootDirectory. Managed by {@link inferredActionIntegration}.",
-        ),
-    }),
+            callback: T.string(),
+          })
+          .default("{}")
+          .docs("Dynamic actions that are available."),
+
+        packageManager: T.generic()
+          .keys(T.string())
+          .values({
+            name: T.string(),
+            installCommand: T.string(),
+            nodeModulesBinCommand: T.string(),
+            packageJsonScriptCommand: T.string(),
+          })
+          .optional()
+          .docs(
+            "The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.",
+          ),
+      })
+      .loose(),
   );
 }

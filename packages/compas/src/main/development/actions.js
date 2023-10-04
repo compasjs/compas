@@ -41,25 +41,6 @@ export function actionsUpdateInfo(state) {
    */
   // @ts-expect-error
   const currentProject = state.screen.navigationStack.at(-1);
-  const inferredActions =
-    state.cache.availableActions?.[currentProject.rootDirectory] ?? [];
-
-  const usedActions = [];
-  for (const action of inferredActions) {
-    if (action.name === "Lint") {
-      if (
-        !currentProject.actions.some(
-          (it) => it.name === "Format" || it.name === "Lint",
-        )
-      ) {
-        usedActions.push(action);
-      }
-    } else if (!currentProject.actions.some((it) => it.name === action.name)) {
-      usedActions.push(action);
-    }
-  }
-
-  debugPrint(`Using ${JSON.stringify(usedActions)} inferred actions...`);
 
   state.screen.actionGroups = [
     {
@@ -92,15 +73,11 @@ export function actionsUpdateInfo(state) {
     });
   }
 
-  if (currentProject.actions?.length || usedActions.length) {
+  if (currentProject.actions?.length) {
     state.screen.actionGroups.push(
       {
         title: "Configured actions:",
         actions: [
-          ...usedActions.map((it) => ({
-            shortcut: it.name[0],
-            name: it.name,
-          })),
           ...currentProject.actions.map((it) => ({
             shortcut: it.shortcut,
             name: it.name,
@@ -180,8 +157,6 @@ export async function actionsHandleKeypress(state, key) {
    */
   // @ts-expect-error
   const currentProject = state.screen.navigationStack.at(-1);
-  const inferredActions =
-    state.cache.availableActions?.[currentProject.rootDirectory] ?? [];
 
   for (let i = 0; i < currentProject.projects.length; ++i) {
     if (name === String(i + 1)) {
@@ -192,16 +167,6 @@ export async function actionsHandleKeypress(state, key) {
 
   for (const action of currentProject.actions ?? []) {
     if (action.shortcut.toLowerCase() === name) {
-      await actionsSpawnAction(state, {
-        command: action.command,
-        workingDirectory: currentProject.rootDirectory,
-      });
-      return;
-    }
-  }
-
-  for (const action of inferredActions) {
-    if (action.name[0].toLowerCase() === name) {
       await actionsSpawnAction(state, {
         command: action.command,
         workingDirectory: currentProject.rootDirectory,

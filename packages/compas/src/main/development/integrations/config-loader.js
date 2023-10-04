@@ -23,7 +23,7 @@ export const configLoaderIntegration = {
       state.cache.config = await configResolveProjectConfig();
 
       if (JSON.stringify(state.cache.config) !== originalConfig) {
-        state.logInformation("Reloaded config, due to file change.");
+        state.logInformation("Reloaded config due to file change.");
       }
     } catch (/** @type {any} */ e) {
       if (e.key === "config.resolve.parseError") {

@@ -31,23 +31,48 @@ export const inferredActionsIntegration = {
  * @param {import("../state.js").State} state
  */
 async function inferredActionsResolve(state) {
-  state.cache.availableActions = {};
+  const rootDirectories = state.cache.rootDirectories ?? [];
 
-  for (const dir of state.cache.rootDirectories ?? []) {
-    // @ts-expect-error
-    state.cache.availableActions[dir] = [
-      {
-        name: "Dev",
-        command: await inferDevCommand(dir),
-      },
-      {
-        name: "Lint",
-        command: await inferLintCommand(dir),
-      },
-      {
-        name: "Test",
-        command: await inferTestCommand(dir),
-      },
-    ].filter((it) => it.command);
+  async function handleConfig(config) {
+    if (rootDirectories.includes(config.rootDirectory)) {
+      const [dev, lint, test] = await Promise.all([
+        inferDevCommand(config.rootDirectory),
+        inferLintCommand(config.rootDirectory),
+        inferTestCommand(config.rootDirectory),
+      ]);
+
+      if (test && !config.actions.find((it) => it.name === "Test")) {
+        config.actions.unshift({
+          name: "Test",
+          shortcut: "T",
+          command: test,
+        });
+      }
+
+      if (
+        lint &&
+        !config.actions.find((it) => it.name === "Lint" || it.name === "Format")
+      ) {
+        config.actions.unshift({
+          name: "Lint",
+          shortcut: "L",
+          command: lint,
+        });
+      }
+
+      if (dev && !config.actions.find((it) => it.name === "Dev")) {
+        config.actions.unshift({
+          name: "Dev",
+          shortcut: "D",
+          command: dev,
+        });
+      }
+    }
+
+    for (const project of config.projects) {
+      await handleConfig(project);
+    }
   }
+
+  await handleConfig(state.cache.config);
 }
