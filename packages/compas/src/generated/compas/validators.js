@@ -36,6 +36,7 @@ export function validateCompasCache(value) {
         "version",
         "config",
         "rootDirectories",
+        "dynamicAvailableActions",
         "packageManager",
         "availableActions",
       ]);
@@ -61,6 +62,7 @@ export function validateCompasCache(value) {
         version: undefined,
         config: undefined,
         rootDirectories: undefined,
+        dynamicAvailableActions: undefined,
         packageManager: undefined,
         availableActions: undefined,
       };
@@ -165,21 +167,23 @@ export function validateCompasCache(value) {
         }
       }
       if (
-        value["packageManager"] === null ||
-        value["packageManager"] === undefined
+        value["dynamicAvailableActions"] === null ||
+        value["dynamicAvailableActions"] === undefined
       ) {
-        result["packageManager"] = undefined;
+        result["dynamicAvailableActions"] = {};
       } else {
         if (
-          typeof value["packageManager"] !== "object" ||
-          Array.isArray(value["packageManager"])
+          typeof value["dynamicAvailableActions"] !== "object" ||
+          Array.isArray(value["dynamicAvailableActions"])
         ) {
-          errorMap[`$.packageManager`] = {
+          errorMap[`$.dynamicAvailableActions`] = {
             key: "validator.generic",
           };
         } else {
-          result["packageManager"] = {};
-          for (let genericKeyInput4 of Object.keys(value["packageManager"])) {
+          result["dynamicAvailableActions"] = {};
+          for (let genericKeyInput4 of Object.keys(
+            value["dynamicAvailableActions"],
+          )) {
             /** @type {any} */
             let genericKeyResult5 = undefined;
             /** @type {ValidatorErrorMap} */
@@ -207,13 +211,13 @@ export function validateCompasCache(value) {
               }
             }
             if (Object.keys(genericKeyErrorMap6).length !== 0) {
-              if (errorMap[`$.packageManager`]) {
-                errorMap[`$.packageManager`].inputs.push({
+              if (errorMap[`$.dynamicAvailableActions`]) {
+                errorMap[`$.dynamicAvailableActions`].inputs.push({
                   key: genericKeyInput4,
                   errors: genericKeyErrorMap6,
                 });
               } else {
-                errorMap[`$.packageManager`] = {
+                errorMap[`$.dynamicAvailableActions`] = {
                   key: "validator.generic",
                   inputs: [
                     { key: genericKeyInput4, errors: genericKeyErrorMap6 },
@@ -222,50 +226,54 @@ export function validateCompasCache(value) {
               }
             } else {
               if (
-                value["packageManager"][genericKeyResult5] === null ||
-                value["packageManager"][genericKeyResult5] === undefined
+                value["dynamicAvailableActions"][genericKeyResult5] === null ||
+                value["dynamicAvailableActions"][genericKeyResult5] ===
+                  undefined
               ) {
-                errorMap[`$.packageManager.${genericKeyResult5}`] = {
+                errorMap[`$.dynamicAvailableActions.${genericKeyResult5}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 if (
-                  typeof value["packageManager"][genericKeyResult5] !==
+                  typeof value["dynamicAvailableActions"][genericKeyResult5] !==
                     "object" ||
-                  Array.isArray(value["packageManager"][genericKeyResult5])
+                  Array.isArray(
+                    value["dynamicAvailableActions"][genericKeyResult5],
+                  )
                 ) {
-                  errorMap[`$.packageManager.${genericKeyResult5}`] = {
+                  errorMap[`$.dynamicAvailableActions.${genericKeyResult5}`] = {
                     key: "validator.object",
-                    value: value["packageManager"][genericKeyResult5],
+                    value: value["dynamicAvailableActions"][genericKeyResult5],
                     foundType:
-                      typeof value["packageManager"][genericKeyResult5],
+                      typeof value["dynamicAvailableActions"][
+                        genericKeyResult5
+                      ],
                   };
                 } else {
                   /** @type {Set<string>} */
-                  const knownKeys7 = new Set([
-                    "name",
-                    "installCommand",
-                    "nodeModulesBinCommand",
-                    "packageJsonScriptCommand",
-                  ]);
+                  const knownKeys7 = new Set(["shortcut", "name", "callback"]);
                   for (const key of Object.keys(
-                    value["packageManager"][genericKeyResult5],
+                    value["dynamicAvailableActions"][genericKeyResult5],
                   )) {
                     if (
                       !knownKeys7.has(key) &&
-                      value["packageManager"][genericKeyResult5][key] !==
-                        null &&
-                      value["packageManager"][genericKeyResult5][key] !==
-                        undefined
+                      value["dynamicAvailableActions"][genericKeyResult5][
+                        key
+                      ] !== null &&
+                      value["dynamicAvailableActions"][genericKeyResult5][
+                        key
+                      ] !== undefined
                     ) {
                       const expectedKeys = [...knownKeys7];
                       const foundKeys = Object.keys(
-                        value["packageManager"][genericKeyResult5],
+                        value["dynamicAvailableActions"][genericKeyResult5],
                       );
                       const unknownKeys = foundKeys.filter(
                         (it) => !knownKeys7.has(it),
                       );
-                      errorMap[`$.packageManager.${genericKeyResult5}`] = {
+                      errorMap[
+                        `$.dynamicAvailableActions.${genericKeyResult5}`
+                      ] = {
                         key: "validator.keys",
                         unknownKeys,
                         expectedKeys,
@@ -274,160 +282,129 @@ export function validateCompasCache(value) {
                       break;
                     }
                   }
-                  result["packageManager"][genericKeyResult5] = {
+                  result["dynamicAvailableActions"][genericKeyResult5] = {
+                    shortcut: undefined,
                     name: undefined,
-                    installCommand: undefined,
-                    nodeModulesBinCommand: undefined,
-                    packageJsonScriptCommand: undefined,
+                    callback: undefined,
                   };
 
                   if (
-                    value["packageManager"][genericKeyResult5]["name"] ===
-                      null ||
-                    value["packageManager"][genericKeyResult5]["name"] ===
-                      undefined
+                    value["dynamicAvailableActions"][genericKeyResult5][
+                      "shortcut"
+                    ] === null ||
+                    value["dynamicAvailableActions"][genericKeyResult5][
+                      "shortcut"
+                    ] === undefined
                   ) {
-                    errorMap[`$.packageManager.${genericKeyResult5}.name`] = {
+                    errorMap[
+                      `$.dynamicAvailableActions.${genericKeyResult5}.shortcut`
+                    ] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
                     let convertedString8 =
-                      value["packageManager"][genericKeyResult5]["name"];
+                      value["dynamicAvailableActions"][genericKeyResult5][
+                        "shortcut"
+                      ];
                     if (typeof convertedString8 !== "string") {
-                      errorMap[`$.packageManager.${genericKeyResult5}.name`] = {
+                      errorMap[
+                        `$.dynamicAvailableActions.${genericKeyResult5}.shortcut`
+                      ] = {
                         key: "validator.string",
                       };
                     } else {
                       if (convertedString8.length < 1) {
-                        errorMap[`$.packageManager.${genericKeyResult5}.name`] =
-                          {
-                            key: "validator.length",
-                            minLength: 1,
-                          };
+                        errorMap[
+                          `$.dynamicAvailableActions.${genericKeyResult5}.shortcut`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
                       } else {
-                        result["packageManager"][genericKeyResult5]["name"] =
-                          convertedString8;
+                        result["dynamicAvailableActions"][genericKeyResult5][
+                          "shortcut"
+                        ] = convertedString8;
                       }
                     }
                   }
                   if (
-                    value["packageManager"][genericKeyResult5][
-                      "installCommand"
+                    value["dynamicAvailableActions"][genericKeyResult5][
+                      "name"
                     ] === null ||
-                    value["packageManager"][genericKeyResult5][
-                      "installCommand"
+                    value["dynamicAvailableActions"][genericKeyResult5][
+                      "name"
                     ] === undefined
                   ) {
                     errorMap[
-                      `$.packageManager.${genericKeyResult5}.installCommand`
+                      `$.dynamicAvailableActions.${genericKeyResult5}.name`
                     ] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
                     let convertedString9 =
-                      value["packageManager"][genericKeyResult5][
-                        "installCommand"
+                      value["dynamicAvailableActions"][genericKeyResult5][
+                        "name"
                       ];
                     if (typeof convertedString9 !== "string") {
                       errorMap[
-                        `$.packageManager.${genericKeyResult5}.installCommand`
+                        `$.dynamicAvailableActions.${genericKeyResult5}.name`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
                       if (convertedString9.length < 1) {
                         errorMap[
-                          `$.packageManager.${genericKeyResult5}.installCommand`
+                          `$.dynamicAvailableActions.${genericKeyResult5}.name`
                         ] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        result["packageManager"][genericKeyResult5][
-                          "installCommand"
+                        result["dynamicAvailableActions"][genericKeyResult5][
+                          "name"
                         ] = convertedString9;
                       }
                     }
                   }
                   if (
-                    value["packageManager"][genericKeyResult5][
-                      "nodeModulesBinCommand"
+                    value["dynamicAvailableActions"][genericKeyResult5][
+                      "callback"
                     ] === null ||
-                    value["packageManager"][genericKeyResult5][
-                      "nodeModulesBinCommand"
+                    value["dynamicAvailableActions"][genericKeyResult5][
+                      "callback"
                     ] === undefined
                   ) {
                     errorMap[
-                      `$.packageManager.${genericKeyResult5}.nodeModulesBinCommand`
+                      `$.dynamicAvailableActions.${genericKeyResult5}.callback`
                     ] = {
                       key: "validator.undefined",
                     };
                   } else {
                     /** @type {string} */
                     let convertedString10 =
-                      value["packageManager"][genericKeyResult5][
-                        "nodeModulesBinCommand"
+                      value["dynamicAvailableActions"][genericKeyResult5][
+                        "callback"
                       ];
                     if (typeof convertedString10 !== "string") {
                       errorMap[
-                        `$.packageManager.${genericKeyResult5}.nodeModulesBinCommand`
+                        `$.dynamicAvailableActions.${genericKeyResult5}.callback`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
                       if (convertedString10.length < 1) {
                         errorMap[
-                          `$.packageManager.${genericKeyResult5}.nodeModulesBinCommand`
+                          `$.dynamicAvailableActions.${genericKeyResult5}.callback`
                         ] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        result["packageManager"][genericKeyResult5][
-                          "nodeModulesBinCommand"
+                        result["dynamicAvailableActions"][genericKeyResult5][
+                          "callback"
                         ] = convertedString10;
-                      }
-                    }
-                  }
-                  if (
-                    value["packageManager"][genericKeyResult5][
-                      "packageJsonScriptCommand"
-                    ] === null ||
-                    value["packageManager"][genericKeyResult5][
-                      "packageJsonScriptCommand"
-                    ] === undefined
-                  ) {
-                    errorMap[
-                      `$.packageManager.${genericKeyResult5}.packageJsonScriptCommand`
-                    ] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString11 =
-                      value["packageManager"][genericKeyResult5][
-                        "packageJsonScriptCommand"
-                      ];
-                    if (typeof convertedString11 !== "string") {
-                      errorMap[
-                        `$.packageManager.${genericKeyResult5}.packageJsonScriptCommand`
-                      ] = {
-                        key: "validator.string",
-                      };
-                    } else {
-                      if (convertedString11.length < 1) {
-                        errorMap[
-                          `$.packageManager.${genericKeyResult5}.packageJsonScriptCommand`
-                        ] = {
-                          key: "validator.length",
-                          minLength: 1,
-                        };
-                      } else {
-                        result["packageManager"][genericKeyResult5][
-                          "packageJsonScriptCommand"
-                        ] = convertedString11;
                       }
                     }
                   }
@@ -438,21 +415,21 @@ export function validateCompasCache(value) {
         }
       }
       if (
-        value["availableActions"] === null ||
-        value["availableActions"] === undefined
+        value["packageManager"] === null ||
+        value["packageManager"] === undefined
       ) {
-        result["availableActions"] = undefined;
+        result["packageManager"] = undefined;
       } else {
         if (
-          typeof value["availableActions"] !== "object" ||
-          Array.isArray(value["availableActions"])
+          typeof value["packageManager"] !== "object" ||
+          Array.isArray(value["packageManager"])
         ) {
-          errorMap[`$.availableActions`] = {
+          errorMap[`$.packageManager`] = {
             key: "validator.generic",
           };
         } else {
-          result["availableActions"] = {};
-          for (let genericKeyInput5 of Object.keys(value["availableActions"])) {
+          result["packageManager"] = {};
+          for (let genericKeyInput5 of Object.keys(value["packageManager"])) {
             /** @type {any} */
             let genericKeyResult6 = undefined;
             /** @type {ValidatorErrorMap} */
@@ -480,13 +457,13 @@ export function validateCompasCache(value) {
               }
             }
             if (Object.keys(genericKeyErrorMap7).length !== 0) {
-              if (errorMap[`$.availableActions`]) {
-                errorMap[`$.availableActions`].inputs.push({
+              if (errorMap[`$.packageManager`]) {
+                errorMap[`$.packageManager`].inputs.push({
                   key: genericKeyInput5,
                   errors: genericKeyErrorMap7,
                 });
               } else {
-                errorMap[`$.availableActions`] = {
+                errorMap[`$.packageManager`] = {
                   key: "validator.generic",
                   inputs: [
                     { key: genericKeyInput5, errors: genericKeyErrorMap7 },
@@ -495,63 +472,338 @@ export function validateCompasCache(value) {
               }
             } else {
               if (
-                value["availableActions"][genericKeyResult6] === null ||
-                value["availableActions"][genericKeyResult6] === undefined
+                value["packageManager"][genericKeyResult6] === null ||
+                value["packageManager"][genericKeyResult6] === undefined
               ) {
-                errorMap[`$.availableActions.${genericKeyResult6}`] = {
+                errorMap[`$.packageManager.${genericKeyResult6}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                if (
+                  typeof value["packageManager"][genericKeyResult6] !==
+                    "object" ||
+                  Array.isArray(value["packageManager"][genericKeyResult6])
+                ) {
+                  errorMap[`$.packageManager.${genericKeyResult6}`] = {
+                    key: "validator.object",
+                    value: value["packageManager"][genericKeyResult6],
+                    foundType:
+                      typeof value["packageManager"][genericKeyResult6],
+                  };
+                } else {
+                  /** @type {Set<string>} */
+                  const knownKeys8 = new Set([
+                    "name",
+                    "installCommand",
+                    "nodeModulesBinCommand",
+                    "packageJsonScriptCommand",
+                  ]);
+                  for (const key of Object.keys(
+                    value["packageManager"][genericKeyResult6],
+                  )) {
+                    if (
+                      !knownKeys8.has(key) &&
+                      value["packageManager"][genericKeyResult6][key] !==
+                        null &&
+                      value["packageManager"][genericKeyResult6][key] !==
+                        undefined
+                    ) {
+                      const expectedKeys = [...knownKeys8];
+                      const foundKeys = Object.keys(
+                        value["packageManager"][genericKeyResult6],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys8.has(it),
+                      );
+                      errorMap[`$.packageManager.${genericKeyResult6}`] = {
+                        key: "validator.keys",
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
+                      };
+                      break;
+                    }
+                  }
+                  result["packageManager"][genericKeyResult6] = {
+                    name: undefined,
+                    installCommand: undefined,
+                    nodeModulesBinCommand: undefined,
+                    packageJsonScriptCommand: undefined,
+                  };
+
+                  if (
+                    value["packageManager"][genericKeyResult6]["name"] ===
+                      null ||
+                    value["packageManager"][genericKeyResult6]["name"] ===
+                      undefined
+                  ) {
+                    errorMap[`$.packageManager.${genericKeyResult6}.name`] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    /** @type {string} */
+                    let convertedString9 =
+                      value["packageManager"][genericKeyResult6]["name"];
+                    if (typeof convertedString9 !== "string") {
+                      errorMap[`$.packageManager.${genericKeyResult6}.name`] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString9.length < 1) {
+                        errorMap[`$.packageManager.${genericKeyResult6}.name`] =
+                          {
+                            key: "validator.length",
+                            minLength: 1,
+                          };
+                      } else {
+                        result["packageManager"][genericKeyResult6]["name"] =
+                          convertedString9;
+                      }
+                    }
+                  }
+                  if (
+                    value["packageManager"][genericKeyResult6][
+                      "installCommand"
+                    ] === null ||
+                    value["packageManager"][genericKeyResult6][
+                      "installCommand"
+                    ] === undefined
+                  ) {
+                    errorMap[
+                      `$.packageManager.${genericKeyResult6}.installCommand`
+                    ] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    /** @type {string} */
+                    let convertedString10 =
+                      value["packageManager"][genericKeyResult6][
+                        "installCommand"
+                      ];
+                    if (typeof convertedString10 !== "string") {
+                      errorMap[
+                        `$.packageManager.${genericKeyResult6}.installCommand`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString10.length < 1) {
+                        errorMap[
+                          `$.packageManager.${genericKeyResult6}.installCommand`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["packageManager"][genericKeyResult6][
+                          "installCommand"
+                        ] = convertedString10;
+                      }
+                    }
+                  }
+                  if (
+                    value["packageManager"][genericKeyResult6][
+                      "nodeModulesBinCommand"
+                    ] === null ||
+                    value["packageManager"][genericKeyResult6][
+                      "nodeModulesBinCommand"
+                    ] === undefined
+                  ) {
+                    errorMap[
+                      `$.packageManager.${genericKeyResult6}.nodeModulesBinCommand`
+                    ] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    /** @type {string} */
+                    let convertedString11 =
+                      value["packageManager"][genericKeyResult6][
+                        "nodeModulesBinCommand"
+                      ];
+                    if (typeof convertedString11 !== "string") {
+                      errorMap[
+                        `$.packageManager.${genericKeyResult6}.nodeModulesBinCommand`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString11.length < 1) {
+                        errorMap[
+                          `$.packageManager.${genericKeyResult6}.nodeModulesBinCommand`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["packageManager"][genericKeyResult6][
+                          "nodeModulesBinCommand"
+                        ] = convertedString11;
+                      }
+                    }
+                  }
+                  if (
+                    value["packageManager"][genericKeyResult6][
+                      "packageJsonScriptCommand"
+                    ] === null ||
+                    value["packageManager"][genericKeyResult6][
+                      "packageJsonScriptCommand"
+                    ] === undefined
+                  ) {
+                    errorMap[
+                      `$.packageManager.${genericKeyResult6}.packageJsonScriptCommand`
+                    ] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    /** @type {string} */
+                    let convertedString12 =
+                      value["packageManager"][genericKeyResult6][
+                        "packageJsonScriptCommand"
+                      ];
+                    if (typeof convertedString12 !== "string") {
+                      errorMap[
+                        `$.packageManager.${genericKeyResult6}.packageJsonScriptCommand`
+                      ] = {
+                        key: "validator.string",
+                      };
+                    } else {
+                      if (convertedString12.length < 1) {
+                        errorMap[
+                          `$.packageManager.${genericKeyResult6}.packageJsonScriptCommand`
+                        ] = {
+                          key: "validator.length",
+                          minLength: 1,
+                        };
+                      } else {
+                        result["packageManager"][genericKeyResult6][
+                          "packageJsonScriptCommand"
+                        ] = convertedString12;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      if (
+        value["availableActions"] === null ||
+        value["availableActions"] === undefined
+      ) {
+        result["availableActions"] = undefined;
+      } else {
+        if (
+          typeof value["availableActions"] !== "object" ||
+          Array.isArray(value["availableActions"])
+        ) {
+          errorMap[`$.availableActions`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["availableActions"] = {};
+          for (let genericKeyInput6 of Object.keys(value["availableActions"])) {
+            /** @type {any} */
+            let genericKeyResult7 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap8 = {};
+            if (genericKeyInput6 === null || genericKeyInput6 === undefined) {
+              genericKeyErrorMap8[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString9 = genericKeyInput6;
+              if (typeof convertedString9 !== "string") {
+                genericKeyErrorMap8[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString9.length < 1) {
+                  genericKeyErrorMap8[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  genericKeyResult7 = convertedString9;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap8).length !== 0) {
+              if (errorMap[`$.availableActions`]) {
+                errorMap[`$.availableActions`].inputs.push({
+                  key: genericKeyInput6,
+                  errors: genericKeyErrorMap8,
+                });
+              } else {
+                errorMap[`$.availableActions`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput6, errors: genericKeyErrorMap8 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["availableActions"][genericKeyResult7] === null ||
+                value["availableActions"][genericKeyResult7] === undefined
+              ) {
+                errorMap[`$.availableActions.${genericKeyResult7}`] = {
                   key: "validator.undefined",
                 };
               } else {
                 /** @type {ValidatorErrorMap} */
-                const intermediateErrorMap9 = {};
+                const intermediateErrorMap10 = {};
                 /** @type {any[]} */
-                let intermediateResult9 = [];
+                let intermediateResult10 = [];
                 /** @type {any|any[]} */
-                let intermediateValue9 =
-                  value["availableActions"][genericKeyResult6];
+                let intermediateValue10 =
+                  value["availableActions"][genericKeyResult7];
 
-                if (!Array.isArray(intermediateValue9)) {
-                  errorMap[`$.availableActions.${genericKeyResult6}`] = {
+                if (!Array.isArray(intermediateValue10)) {
+                  errorMap[`$.availableActions.${genericKeyResult7}`] = {
                     key: "validator.array",
-                    value: intermediateValue9,
+                    value: intermediateValue10,
                   };
                 } else {
-                  result["availableActions"][genericKeyResult6] = [];
-                  for (let i9 = 0; i9 < intermediateValue9.length; ++i9) {
+                  result["availableActions"][genericKeyResult7] = [];
+                  for (let i10 = 0; i10 < intermediateValue10.length; ++i10) {
                     if (
-                      intermediateValue9[i9] === null ||
-                      intermediateValue9[i9] === undefined
+                      intermediateValue10[i10] === null ||
+                      intermediateValue10[i10] === undefined
                     ) {
-                      intermediateErrorMap9[`$.${i9}`] = {
+                      intermediateErrorMap10[`$.${i10}`] = {
                         key: "validator.undefined",
                       };
                     } else {
                       if (
-                        typeof intermediateValue9[i9] !== "object" ||
-                        Array.isArray(intermediateValue9[i9])
+                        typeof intermediateValue10[i10] !== "object" ||
+                        Array.isArray(intermediateValue10[i10])
                       ) {
-                        intermediateErrorMap9[`$.${i9}`] = {
+                        intermediateErrorMap10[`$.${i10}`] = {
                           key: "validator.object",
-                          value: intermediateValue9[i9],
-                          foundType: typeof intermediateValue9[i9],
+                          value: intermediateValue10[i10],
+                          foundType: typeof intermediateValue10[i10],
                         };
                       } else {
                         /** @type {Set<string>} */
-                        const knownKeys9 = new Set(["name", "command"]);
-                        for (const key of Object.keys(intermediateValue9[i9])) {
+                        const knownKeys10 = new Set(["name", "command"]);
+                        for (const key of Object.keys(
+                          intermediateValue10[i10],
+                        )) {
                           if (
-                            !knownKeys9.has(key) &&
-                            intermediateValue9[i9][key] !== null &&
-                            intermediateValue9[i9][key] !== undefined
+                            !knownKeys10.has(key) &&
+                            intermediateValue10[i10][key] !== null &&
+                            intermediateValue10[i10][key] !== undefined
                           ) {
-                            const expectedKeys = [...knownKeys9];
+                            const expectedKeys = [...knownKeys10];
                             const foundKeys = Object.keys(
-                              intermediateValue9[i9],
+                              intermediateValue10[i10],
                             );
                             const unknownKeys = foundKeys.filter(
-                              (it) => !knownKeys9.has(it),
+                              (it) => !knownKeys10.has(it),
                             );
-                            intermediateErrorMap9[`$.${i9}`] = {
+                            intermediateErrorMap10[`$.${i10}`] = {
                               key: "validator.keys",
                               unknownKeys,
                               expectedKeys,
@@ -560,123 +812,123 @@ export function validateCompasCache(value) {
                             break;
                           }
                         }
-                        intermediateResult9[i9] = {
+                        intermediateResult10[i10] = {
                           name: undefined,
                           command: undefined,
                         };
 
                         if (
-                          intermediateValue9[i9]["name"] === null ||
-                          intermediateValue9[i9]["name"] === undefined
+                          intermediateValue10[i10]["name"] === null ||
+                          intermediateValue10[i10]["name"] === undefined
                         ) {
-                          intermediateErrorMap9[`$.${i9}.name`] = {
+                          intermediateErrorMap10[`$.${i10}.name`] = {
                             key: "validator.undefined",
                           };
                         } else {
                           /** @type {string} */
-                          let convertedString10 =
-                            intermediateValue9[i9]["name"];
-                          if (typeof convertedString10 !== "string") {
-                            intermediateErrorMap9[`$.${i9}.name`] = {
+                          let convertedString11 =
+                            intermediateValue10[i10]["name"];
+                          if (typeof convertedString11 !== "string") {
+                            intermediateErrorMap10[`$.${i10}.name`] = {
                               key: "validator.string",
                             };
                           } else {
-                            if (convertedString10.length < 1) {
-                              intermediateErrorMap9[`$.${i9}.name`] = {
+                            if (convertedString11.length < 1) {
+                              intermediateErrorMap10[`$.${i10}.name`] = {
                                 key: "validator.length",
                                 minLength: 1,
                               };
                             } else {
-                              intermediateResult9[i9]["name"] =
-                                convertedString10;
+                              intermediateResult10[i10]["name"] =
+                                convertedString11;
                             }
                           }
                         }
                         if (
-                          intermediateValue9[i9]["command"] === null ||
-                          intermediateValue9[i9]["command"] === undefined
+                          intermediateValue10[i10]["command"] === null ||
+                          intermediateValue10[i10]["command"] === undefined
                         ) {
-                          intermediateErrorMap9[`$.${i9}.command`] = {
+                          intermediateErrorMap10[`$.${i10}.command`] = {
                             key: "validator.undefined",
                           };
                         } else {
                           /** @type {ValidatorErrorMap} */
-                          const intermediateErrorMap12 = {};
+                          const intermediateErrorMap13 = {};
                           /** @type {any[]} */
-                          let intermediateResult12 = [];
+                          let intermediateResult13 = [];
                           /** @type {any|any[]} */
-                          let intermediateValue12 =
-                            intermediateValue9[i9]["command"];
+                          let intermediateValue13 =
+                            intermediateValue10[i10]["command"];
 
-                          if (!Array.isArray(intermediateValue12)) {
-                            intermediateErrorMap9[`$.${i9}.command`] = {
+                          if (!Array.isArray(intermediateValue13)) {
+                            intermediateErrorMap10[`$.${i10}.command`] = {
                               key: "validator.array",
-                              value: intermediateValue12,
+                              value: intermediateValue13,
                             };
                           } else {
-                            intermediateResult9[i9]["command"] = [];
+                            intermediateResult10[i10]["command"] = [];
                             for (
-                              let i12 = 0;
-                              i12 < intermediateValue12.length;
-                              ++i12
+                              let i13 = 0;
+                              i13 < intermediateValue13.length;
+                              ++i13
                             ) {
                               if (
-                                intermediateValue12[i12] === null ||
-                                intermediateValue12[i12] === undefined
+                                intermediateValue13[i13] === null ||
+                                intermediateValue13[i13] === undefined
                               ) {
-                                intermediateErrorMap12[`$.${i12}`] = {
+                                intermediateErrorMap13[`$.${i13}`] = {
                                   key: "validator.undefined",
                                 };
                               } else {
                                 /** @type {string} */
-                                let convertedString12 =
-                                  intermediateValue12[i12];
-                                if (typeof convertedString12 !== "string") {
-                                  intermediateErrorMap12[`$.${i12}`] = {
+                                let convertedString13 =
+                                  intermediateValue13[i13];
+                                if (typeof convertedString13 !== "string") {
+                                  intermediateErrorMap13[`$.${i13}`] = {
                                     key: "validator.string",
                                   };
                                 } else {
-                                  if (convertedString12.length < 1) {
-                                    intermediateErrorMap12[`$.${i12}`] = {
+                                  if (convertedString13.length < 1) {
+                                    intermediateErrorMap13[`$.${i13}`] = {
                                       key: "validator.length",
                                       minLength: 1,
                                     };
                                   } else {
-                                    intermediateResult12[i12] =
-                                      convertedString12;
+                                    intermediateResult13[i13] =
+                                      convertedString13;
                                   }
                                 }
                               }
                             }
                           }
-                          if (Object.keys(intermediateErrorMap12).length) {
+                          if (Object.keys(intermediateErrorMap13).length) {
                             for (const errorKey of Object.keys(
-                              intermediateErrorMap12,
+                              intermediateErrorMap13,
                             )) {
-                              intermediateErrorMap9[
-                                `$.${i9}.command${errorKey.substring(1)}`
-                              ] = intermediateErrorMap12[errorKey];
+                              intermediateErrorMap10[
+                                `$.${i10}.command${errorKey.substring(1)}`
+                              ] = intermediateErrorMap13[errorKey];
                             }
                           } else {
-                            intermediateResult9[i9]["command"] =
-                              intermediateResult12;
+                            intermediateResult10[i10]["command"] =
+                              intermediateResult13;
                           }
                         }
                       }
                     }
                   }
                 }
-                if (Object.keys(intermediateErrorMap9).length) {
-                  for (const errorKey of Object.keys(intermediateErrorMap9)) {
+                if (Object.keys(intermediateErrorMap10).length) {
+                  for (const errorKey of Object.keys(intermediateErrorMap10)) {
                     errorMap[
-                      `$.availableActions.${genericKeyResult6}${errorKey.substring(
+                      `$.availableActions.${genericKeyResult7}${errorKey.substring(
                         1,
                       )}`
-                    ] = intermediateErrorMap9[errorKey];
+                    ] = intermediateErrorMap10[errorKey];
                   }
                 } else {
-                  result["availableActions"][genericKeyResult6] =
-                    intermediateResult9;
+                  result["availableActions"][genericKeyResult7] =
+                    intermediateResult10;
                 }
               }
             }

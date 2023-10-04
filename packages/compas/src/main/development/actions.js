@@ -82,10 +82,20 @@ export function actionsUpdateInfo(state) {
     },
   ];
 
+  if (Object.keys(state.cache.dynamicAvailableActions ?? {}).length > 0) {
+    state.screen.actionGroups.push({
+      title: "Dynamic actions:",
+      actions: Object.values(state.cache.dynamicAvailableActions).map((it) => ({
+        shortcut: it.shortcut,
+        name: it.name,
+      })),
+    });
+  }
+
   if (currentProject.actions?.length || usedActions.length) {
     state.screen.actionGroups.push(
       {
-        title: "Available actions:",
+        title: "Configured actions:",
         actions: [
           ...usedActions.map((it) => ({
             shortcut: it.name[0],
@@ -144,6 +154,25 @@ export async function actionsHandleKeypress(state, key) {
 
   if (name === "q" && state.screen.navigationStack.length <= 1) {
     return state.exit();
+  }
+
+  if (Object.keys(state.cache.dynamicAvailableActions ?? {}).length > 0) {
+    for (const [key, action] of Object.entries(
+      state.cache.dynamicAvailableActions,
+    )) {
+      if (action.shortcut.toLowerCase() === name) {
+        state.logInformation(`Executing '${action.name}'...`);
+
+        if (isNil(state.dynamicActionCallbacks[key])) {
+          debugPrint(`Couldn't find a dynamicActionCallback for '${name}'`);
+          return;
+        }
+
+        await state.dynamicActionCallbacks[key](state);
+
+        return;
+      }
+    }
   }
 
   /**

@@ -94,6 +94,16 @@ export function applyCompasStructure(generator) {
           "Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.",
         ),
 
+      dynamicAvailableActions: T.generic()
+        .keys(T.string())
+        .values({
+          shortcut: T.string(),
+          name: T.string(),
+          callback: T.string(),
+        })
+        .default("{}")
+        .docs("Dynamic actions that are available."),
+
       packageManager: T.generic()
         .keys(T.string())
         .values({

@@ -1,5 +1,7 @@
 import { exec, isNil } from "@compas/stdlib";
 
+const DOCKER_START_ACTION = "dockerStartNecessaryContainers";
+
 /**
  * @type {import("./base.js").Integration}
  */
@@ -9,11 +11,23 @@ export const dockerIntegration = {
   },
 
   async onColdStart(state) {
+    state.dynamicActionCallbacks[DOCKER_START_ACTION] =
+      dockerStartNecessaryContainers;
     await dockerStartNecessaryContainers(state);
+
+    setInterval(() => {
+      state.runTask("dockerBackgroundCheck", dockerBackgroundCheck);
+    }, 10000);
   },
 
   async onCachedStart(state) {
+    state.dynamicActionCallbacks[DOCKER_START_ACTION] =
+      dockerStartNecessaryContainers;
     await dockerStartNecessaryContainers(state);
+
+    setInterval(() => {
+      state.runTask("dockerBackgroundCheck", dockerBackgroundCheck);
+    }, 10000);
   },
 
   async onExternalChanges(state, { filePaths }) {
@@ -36,12 +50,13 @@ async function dockerStartNecessaryContainers(state) {
   const containersInConfig = dockerListContainersInConfig(state);
 
   if (Object.keys(containersInConfig).length === 0) {
+    delete state.cache.dynamicAvailableActions[DOCKER_START_ACTION];
     return;
   }
 
   if (!(await dockerCheckEnv())) {
-    state.logInformation(
-      "Can't start docker containers. Make sure that Docker can be executed without 'sudo'. See https://docs.docker.com/install/ for more information.",
+    state.logInformationUnique(
+      "Can't start docker containers. Make sure that Docker can be executed without 'sudo'. See https://docs.docker.com/install/ for more information. Restart 'compas' after the Docker installation to automatically start the necessary containers.",
     );
 
     return;
@@ -106,6 +121,50 @@ async function dockerStartNecessaryContainers(state) {
 
   if (didExecuteAHostAction) {
     state.logInformation("Required docker containers are running!");
+  }
+
+  delete state.cache.dynamicAvailableActions[DOCKER_START_ACTION];
+}
+
+/**
+ * @param {import("../state.js").State} state
+ * @returns {Promise<void>}
+ */
+async function dockerBackgroundCheck(state) {
+  const containersInConfig = dockerListContainersInConfig(state);
+
+  if (Object.keys(containersInConfig).length === 0) {
+    return;
+  }
+
+  if (!(await dockerCheckEnv())) {
+    state.logInformationUnique(
+      "Can't start docker containers. Make sure that Docker can be executed without 'sudo'. See https://docs.docker.com/install/ for more information. Restart 'compas' after the Docker installation to automatically start the necessary containers.",
+    );
+
+    return;
+  }
+
+  const { runningContainersOnHost } = await dockerContainersOnHost();
+
+  const containersToStart = Object.keys(containersInConfig).filter(
+    (it) => !runningContainersOnHost.includes(it),
+  );
+
+  if (containersToStart.length > 0) {
+    state.logInformationUnique(
+      `Not all required Docker containers are running. ${containersToStart.join(
+        ", ",
+      )} will be started by pressing 'D'.`,
+    );
+
+    // Set the action and refresh, so we repaint.
+    state.cache.dynamicAvailableActions[DOCKER_START_ACTION] = {
+      name: "Restart Docker containers",
+      callback: DOCKER_START_ACTION,
+      shortcut: "D",
+    };
+    state.debouncedOnExternalChanges.refresh();
   }
 }
 

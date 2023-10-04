@@ -76,6 +76,11 @@ export class State {
     ];
 
     /**
+     * @type {Record<string, (state: State) => (void|Promise<void>)>}
+     */
+    this.dynamicActionCallbacks = {};
+
+    /**
      * @type {import("./integrations/base.js").Integration[]}
      */
     this.integrations = [
@@ -107,11 +112,13 @@ export class State {
      * @type {NodeJS.Timer}
      */
     this.debouncedOnExternalChanges = setTimeout(boundOnExternalChanges, 50);
+
     /**
      * @type {import("../../generated/common/types.js").CompasCache}
      */
     this.cache = {
       version: "unknown",
+      dynamicAvailableActions: {},
     };
   }
 
@@ -189,6 +196,26 @@ export class State {
       this.paintScreen();
     }
   }
+  /**
+   * @param {string} line
+   */
+  logInformationUnique(line) {
+    debugPrint(`State#logInformationUnique :: ${line}`);
+
+    if (this.information.includes(line)) {
+      this.information.splice(this.information.indexOf(line), 1);
+    }
+
+    this.information.push(line);
+
+    while (this.information.length > 10) {
+      this.information.shift();
+    }
+
+    if (this.screen.state === "idle") {
+      this.paintScreen();
+    }
+  }
 
   /**
    * @param {(cursor: import("ansi").Cursor)=> void} callback
@@ -245,10 +272,10 @@ export class State {
   // ==== background tasks ====
 
   /**
-   * TODO: this will probably be obsolete with `registerAsyncTask` in the future?
+   * Start a promise in the background.
    *
    * @param {string} name
-   * @param {Promise|(() => Promise<any>)} task
+   * @param {Promise|((state: State) => Promise<any>)} task
    * @param {{
    *   exitOnFailure?: boolean,
    * }} [options]
@@ -256,7 +283,7 @@ export class State {
    */
   runTask(name, task, { exitOnFailure } = {}) {
     if (typeof task === "function") {
-      return this.runTask(name, task, { exitOnFailure });
+      return this.runTask(name, task(this), { exitOnFailure });
     }
 
     if (!(task instanceof Promise)) {
@@ -288,10 +315,6 @@ export class State {
   // ==== integrations ====
 
   async onExternalChanges() {
-    if (this.externalChanges.filePaths.length === 0) {
-      return;
-    }
-
     const changes = {
       ...this.externalChanges,
     };

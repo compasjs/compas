@@ -61,6 +61,79 @@
             "type": "string"
           }
         },
+        "dynamicAvailableActions": {
+          "docString": "Dynamic actions that are available.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "defaultValue": "{}",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "shortcut": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "name": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              },
+              "callback": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {
+                  "allowNull": false,
+                  "trim": false,
+                  "lowerCase": false,
+                  "upperCase": false,
+                  "min": 1
+                },
+                "sql": {},
+                "type": "string"
+              }
+            }
+          }
+        },
         "packageManager": {
           "docString": "The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.",
           "isOptional": true,

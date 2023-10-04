@@ -69,6 +69,15 @@ export type CompasCache = {
   "rootDirectories"?: (string)[]|undefined;
   
   /**
+   * Dynamic actions that are available.
+   */
+  "dynamicAvailableActions": { [key: string]: {
+    "shortcut": string;
+    "name": string;
+    "callback": string;
+  }};
+  
+  /**
    * The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.
    */
   "packageManager"?: { [key: string]: {
@@ -153,6 +162,15 @@ export type CompasCacheInput = {
    * Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.
    */
   "rootDirectories"?: (string)[]|undefined;
+  
+  /**
+   * Dynamic actions that are available.
+   */
+  "dynamicAvailableActions"?: { [key: string]: {
+    "shortcut": string;
+    "name": string;
+    "callback": string;
+  }}|undefined;
   
   /**
    * The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.

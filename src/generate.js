@@ -128,7 +128,7 @@ export async function generateExamples(logger, state) {
         parts.push("--skip-lint");
       }
 
-      const { exitCode, stdout } = await exec(parts.join(" "), {
+      const { exitCode, stdout, stderr } = await exec(parts.join(" "), {
         cwd: config.exampleMetadata.path,
       });
 
@@ -136,6 +136,7 @@ export async function generateExamples(logger, state) {
         throw AppError.serverError({
           message: "One of the examples failed to generate",
           stdout,
+          stderr,
           path: config.exampleMetadata.path,
         });
       }
