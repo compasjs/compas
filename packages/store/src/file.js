@@ -64,7 +64,7 @@ export const STORE_FILE_IMAGE_TYPES = [
  * }} options
  * @param {Partial<import("./generated/common/types.d.ts").StoreFile> & Pick<import("./generated/common/types.d.ts").StoreFile,
  *   "name">} props
- * @param {NodeJS.ReadableStream|string|Buffer} source
+ * @param {import("stream").Readable|string|Buffer} source
  * @returns {Promise<import("./generated/common/types.d.ts").StoreFile>}
  */
 export async function fileCreateOrUpdate(
@@ -284,9 +284,9 @@ export async function fileTransformInPlace(
  * }} options
  * @param {Partial<import("./generated/common/types.d.ts").StoreFile> & Pick<import("./generated/common/types.d.ts").StoreFile,
  *   "name">} props
- * @param {NodeJS.ReadableStream|string|Buffer} source
+ * @param {import("stream").Readable|string|Buffer} source
  * @returns {Promise<{
- *   source: NodeJS.ReadableStream|string|Buffer,
+ *   source: import("stream").Readable|string|Buffer,
  *   contentType: string,
  * }>}
  */
