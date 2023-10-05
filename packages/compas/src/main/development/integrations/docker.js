@@ -50,7 +50,7 @@ async function dockerStartNecessaryContainers(state) {
   const containersInConfig = dockerListContainersInConfig(state);
 
   if (Object.keys(containersInConfig).length === 0) {
-    delete state.cache.dynamicAvailableActions[DOCKER_START_ACTION];
+    delete state.cache.dynamicAvailableActions?.[DOCKER_START_ACTION];
     return;
   }
 
@@ -123,7 +123,7 @@ async function dockerStartNecessaryContainers(state) {
     state.logInformation("Required docker containers are running!");
   }
 
-  delete state.cache.dynamicAvailableActions[DOCKER_START_ACTION];
+  delete state.cache.dynamicAvailableActions?.[DOCKER_START_ACTION];
 }
 
 /**
