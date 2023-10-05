@@ -25,6 +25,7 @@ export async function cacheLoad(compasVersion) {
 
   const defaultCache = {
     version: compasVersion,
+    dynamicAvailableActions: {},
   };
 
   if (!existsSync(CACHE_PATH)) {
