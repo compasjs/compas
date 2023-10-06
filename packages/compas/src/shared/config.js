@@ -176,3 +176,29 @@ export async function configResolveProjectConfig() {
   // @ts-expect-error
   return config;
 }
+
+/**
+ * Flatten the provided config.
+ *
+ * @param {import("../generated/common/types.d.ts").CompasResolvedConfig|undefined} config
+ * @returns {import("../generated/common/types.d.ts").CompasResolvedConfig[]}
+ */
+export function configFlatten(config) {
+  const result = [];
+
+  if (!config) {
+    return result;
+  }
+
+  function handleConfig(conf) {
+    result.push(conf);
+
+    for (const p of conf.projects) {
+      result.push(p);
+    }
+  }
+
+  handleConfig(config);
+
+  return result;
+}

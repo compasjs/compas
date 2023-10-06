@@ -1,3 +1,5 @@
+import { configFlatten } from "../../../shared/config.js";
+
 /**
  * @type {import("./base.js").Integration}
  */
@@ -20,29 +22,24 @@ export const rootDirectoriesIntegration = {
  */
 function rootDirectoriesResolve(state) {
   const resolved = [process.cwd()];
+  const configs = configFlatten(state.cache.config);
 
-  function handleProject(project) {
+  for (const config of configs) {
     for (const dir of resolved) {
-      if (project.rootDirectory.startsWith(dir)) {
+      if (config.rootDirectory.startsWith(dir)) {
         // Project is in subdirectory of current directory.
         break;
       }
 
-      if (dir.startsWith(project.rootDirectory)) {
+      if (dir.startsWith(config.rootDirectory)) {
         // More root directory than existing one.
         resolved.splice(resolved.indexOf(dir), 1);
         resolved.push(dir);
         break;
       }
-      resolved.push(project.rootDirectory);
-    }
-
-    for (const sub of project.projects) {
-      handleProject(sub);
+      resolved.push(config.rootDirectory);
     }
   }
-
-  handleProject(state.cache.config);
 
   return resolved;
 }

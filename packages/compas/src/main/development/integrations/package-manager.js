@@ -23,6 +23,7 @@ export const packageManagerIntegration = {
       state.cache.packageManager[dir] = packageManagerDetermine(dir);
     }
 
+    state.logInformation("Checking if node_modules is up-to-date...");
     await packageManagerExec(state);
   },
 
@@ -64,31 +65,6 @@ export const packageManagerIntegration = {
     }
 
     let hasLockFileChange = false;
-
-    //
-    // const hasLockFileChange = filePaths.some((it) =>
-    //                                            PACKAGE_MANAGER_LOCK_FILES.some((lockfile) => it.endsWith(lockfile)),
-    // );
-    //
-    // const nonExistentRootDirectories = (
-    //   state.cache.rootDirectories ?? []
-    // ).filter((it) => isNil(state.cache.packageManager[it]));
-    // const obsoleteRootDirectories = Object.keys(
-    //   state.cache.packageManager,
-    // ).filter((it) => !state.cache.rootDirectories.includes(it));
-    //
-    // if (
-    //   hasLockFileChange ||
-    //   nonExistentRootDirectories.length > 0 ||
-    //   obsoleteRootDirectories.length > 0
-    // ) {
-    //   state.cache.packageManager = {};
-    //
-    //   for (const dir of state.cache.rootDirectories ?? []) {
-    //     state.cache.packageManager[dir] = packageManagerDetermine(dir);
-    //   }
-    // }
-    //
 
     // Cleanup old rootDirectories
     for (const key of Object.keys(state.cache.packageManager ?? {})) {

@@ -1,4 +1,5 @@
 import { exec, isNil } from "@compas/stdlib";
+import { configFlatten } from "../../../shared/config.js";
 
 const DOCKER_START_ACTION = "dockerStartNecessaryContainers";
 
@@ -181,17 +182,13 @@ function dockerListContainersInConfig(state) {
     return result;
   }
 
-  function handleConfig(config) {
+  const configs = configFlatten(state.cache.config);
+
+  for (const config of configs) {
     for (const name of Object.keys(config.dockerContainers ?? {})) {
       result[name] = config.dockerContainers[name];
     }
-
-    for (const p of config.projects) {
-      handleConfig(p);
-    }
   }
-
-  handleConfig(state.cache.config);
 
   return result;
 }
