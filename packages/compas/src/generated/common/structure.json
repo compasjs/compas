@@ -527,6 +527,18 @@
               }
             }
           }
+        },
+        "migrations": {
+          "docString": "Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "relations": [],
+          "keys": {}
         }
       }
     },
@@ -814,6 +826,18 @@
               }
             }
           }
+        },
+        "migrations": {
+          "docString": "Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false,
+            "strict": true
+          },
+          "sql": {},
+          "type": "object",
+          "relations": [],
+          "keys": {}
         }
       }
     }

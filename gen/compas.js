@@ -63,6 +63,13 @@ export function applyCompasStructure(generator) {
       })
       .default("{}")
       .docs("Docker container configuration."),
+
+    migrations: T.object()
+      .keys({})
+      .optional()
+      .docs(
+        "Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.",
+      ),
   };
 
   generator.add(

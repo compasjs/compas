@@ -49,6 +49,12 @@ export type CompasResolvedConfig = {
     "createArguments"?: string|undefined;
     "runArguments"?: string|undefined;
   }};
+  
+  /**
+   * Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.
+   */
+  "migrations"?: {
+  }|undefined;
 };
 
 export type CompasCache = {
@@ -141,6 +147,12 @@ export type CompasResolvedConfigInput = {
     "createArguments"?: string|undefined;
     "runArguments"?: string|undefined;
   }}|undefined;
+  
+  /**
+   * Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.
+   */
+  "migrations"?: {
+  }|undefined;
 };
 
 export type CompasCacheInput = {
@@ -236,6 +248,12 @@ export type CompasConfig = {
     "createArguments"?: string|undefined;
     "runArguments"?: string|undefined;
   }};
+  
+  /**
+   * Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.
+   */
+  "migrations"?: {
+  }|undefined;
 };
 
 export type CompasConfigInput = {
@@ -289,6 +307,12 @@ export type CompasConfigInput = {
     "createArguments"?: string|undefined;
     "runArguments"?: string|undefined;
   }}|undefined;
+  
+  /**
+   * Migration configuration. Nothing to configure yet, but is required for the migration integration to kick in.
+   */
+  "migrations"?: {
+  }|undefined;
 };
 
 

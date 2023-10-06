@@ -791,6 +791,7 @@ export function validateCompasResolvedConfig(value) {
         projects: undefined,
         actions: undefined,
         dockerContainers: undefined,
+        migrations: undefined,
       };
 
       if (
@@ -1577,6 +1578,42 @@ export function validateCompasResolvedConfig(value) {
           }
         }
       }
+      if (value["migrations"] === null || value["migrations"] === undefined) {
+        result["migrations"] = undefined;
+      } else {
+        if (
+          typeof value["migrations"] !== "object" ||
+          Array.isArray(value["migrations"])
+        ) {
+          errorMap[`$.migrations`] = {
+            key: "validator.object",
+            value: value["migrations"],
+            foundType: typeof value["migrations"],
+          };
+        } else {
+          /** @type {Set<string>} */
+          const knownKeys6 = new Set([]);
+          for (const key of Object.keys(value["migrations"])) {
+            if (
+              !knownKeys6.has(key) &&
+              value["migrations"][key] !== null &&
+              value["migrations"][key] !== undefined
+            ) {
+              const expectedKeys = [...knownKeys6];
+              const foundKeys = Object.keys(value["migrations"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys6.has(it));
+              errorMap[`$.migrations`] = {
+                key: "validator.keys",
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
+              };
+              break;
+            }
+          }
+          result["migrations"] = {};
+        }
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
@@ -1612,6 +1649,7 @@ export function validateCompasConfig(value) {
         projects: undefined,
         actions: undefined,
         dockerContainers: undefined,
+        migrations: undefined,
       };
 
       if (value["cli"] === null || value["cli"] === undefined) {
@@ -2379,6 +2417,42 @@ export function validateCompasConfig(value) {
               }
             }
           }
+        }
+      }
+      if (value["migrations"] === null || value["migrations"] === undefined) {
+        result["migrations"] = undefined;
+      } else {
+        if (
+          typeof value["migrations"] !== "object" ||
+          Array.isArray(value["migrations"])
+        ) {
+          errorMap[`$.migrations`] = {
+            key: "validator.object",
+            value: value["migrations"],
+            foundType: typeof value["migrations"],
+          };
+        } else {
+          /** @type {Set<string>} */
+          const knownKeys5 = new Set([]);
+          for (const key of Object.keys(value["migrations"])) {
+            if (
+              !knownKeys5.has(key) &&
+              value["migrations"][key] !== null &&
+              value["migrations"][key] !== undefined
+            ) {
+              const expectedKeys = [...knownKeys5];
+              const foundKeys = Object.keys(value["migrations"]);
+              const unknownKeys = foundKeys.filter((it) => !knownKeys5.has(it));
+              errorMap[`$.migrations`] = {
+                key: "validator.keys",
+                unknownKeys,
+                expectedKeys,
+                foundKeys,
+              };
+              break;
+            }
+          }
+          result["migrations"] = {};
         }
       }
     }
