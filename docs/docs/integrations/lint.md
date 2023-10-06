@@ -8,8 +8,9 @@ Prettier to add a custom action when there are files available to be linted.
 ## Getting started
 
 Compas automatically enables this integration when it detects that ESLint and/or
-Prettier is installed. Compas can add `@compas/eslint-plugin` as a development
-dependency when you run:
+Prettier is installed.
+
+Compas can add `@compas/eslint-plugin` as a development dependency when you run:
 
 ```shell
 compas init lint
@@ -25,14 +26,6 @@ Prettier.
 When `@compas/eslint-plugin` is installed and no config file is present for
 ESLint and Prettier, Compas will automatically supply the necessary config
 files. You can override this behavior by manually creating the config files.
-
----
-
-TODO: figure out how we show to the user that files are available to lint
-
-TODO: What happens on slower setups?
-
----
 
 ## Limitations
 

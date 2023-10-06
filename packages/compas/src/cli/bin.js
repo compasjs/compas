@@ -64,6 +64,9 @@ if (args.length === 0) {
   if (command === "init") {
     const { initCompas } = await import("../main/init/compas.js");
     await initCompas(env);
+  } else if (command === "init lint") {
+    const { initLint } = await import("../main/init/lint.js");
+    await initLint(env);
   } else if (command === "init docker") {
     const { initDocker } = await import("../main/init/docker.js");
     await initDocker(env);
@@ -76,6 +79,7 @@ if (args.length === 0) {
 
 - compas
 - compas init
+- compas init lint
 - compas init docker
 - compas init migrations`);
   }

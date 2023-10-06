@@ -1,9 +1,10 @@
 import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { isNil } from "@compas/stdlib";
+import { exec, isNil } from "@compas/stdlib";
 import { configResolveProjectConfig } from "../../shared/config.js";
 import { writeFileChecked } from "../../shared/fs.js";
 import { logger } from "../../shared/output.js";
+import { packageManagerDetermine } from "../../shared/package-manager.js";
 
 /**
  * @param {import("../../shared/config.js").ConfigEnvironment} env
@@ -69,9 +70,13 @@ export async function initMigrations(env) {
       "package.json",
       `${JSON.stringify(packageJson, null, 2)}\n`,
     );
+
+    const packageManager = packageManagerDetermine("");
+    logger.info("Wrote to the package.json. Installing dependencies...");
+    await exec(packageManager.installCommand);
   }
 
   logger.info(
-    "Updated the config. Compas will notify you from now on when a migrations are available to run.",
+    "Updated the config. Compas will notify you from now on when migrations are available to run.",
   );
 }
