@@ -86,6 +86,11 @@ export type CompasCache = {
     "nodeModulesBinCommand": string;
     "packageJsonScriptCommand": string;
   }}|undefined;
+  
+  /**
+   * Cached package manager files. Managed by {@link packageManagerIntegration}.
+   */
+  "packageManagerSourceFiles"?: { [key: string]: string}|undefined;
 };
 
 export type CompasResolvedConfigInput = {
@@ -173,6 +178,11 @@ export type CompasCacheInput = {
     "nodeModulesBinCommand": string;
     "packageJsonScriptCommand": string;
   }}|undefined;
+  
+  /**
+   * Cached package manager files. Managed by {@link packageManagerIntegration}.
+   */
+  "packageManagerSourceFiles"?: { [key: string]: string}|undefined;
 };
 
 export type CompasConfig = {

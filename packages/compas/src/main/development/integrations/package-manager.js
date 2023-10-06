@@ -1,4 +1,7 @@
-import { exec } from "@compas/stdlib";
+import { createHash } from "node:crypto";
+import { existsSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { exec, isNil, pathJoin } from "@compas/stdlib";
 import {
   PACKAGE_MANAGER_LOCK_FILES,
   packageManagerDetermine,
@@ -14,6 +17,7 @@ export const packageManagerIntegration = {
 
   async onColdStart(state) {
     state.cache.packageManager = {};
+    state.cache.packageManagerSourceFiles = {};
 
     for (const dir of state.cache.rootDirectories ?? []) {
       state.cache.packageManager[dir] = packageManagerDetermine(dir);
@@ -23,22 +27,106 @@ export const packageManagerIntegration = {
   },
 
   async onExternalChanges(state, { filePaths }) {
-    const hasPackageJsonChange = filePaths.some((it) =>
-      it.endsWith("package.json"),
-    );
-    const hasLockFileChange = filePaths.some((it) =>
-      PACKAGE_MANAGER_LOCK_FILES.some((lockfile) => it.endsWith(lockfile)),
+    state.cache.packageManagerSourceFiles ??= {};
+
+    const packageManagerFiles = filePaths.filter(
+      (it) =>
+        it.endsWith("package.json") ||
+        PACKAGE_MANAGER_LOCK_FILES.some((lockfile) => it.endsWith(lockfile)),
     );
 
-    if (hasLockFileChange) {
-      state.cache.packageManager = {};
+    let hasPackageManagerChange = false;
 
-      for (const dir of state.cache.rootDirectories ?? []) {
-        state.cache.packageManager[dir] = packageManagerDetermine(dir);
+    for (const packageManagerFile of packageManagerFiles) {
+      if (!existsSync(packageManagerFile)) {
+        // File is deleted
+        delete state.cache.packageManagerSourceFiles[packageManagerFile];
+        hasPackageManagerChange = true;
+        continue;
+      }
+
+      const sourceHash = createHash("sha256")
+        .update(await readFile(packageManagerFile, "utf-8"))
+        .digest("hex");
+
+      if (
+        isNil(state.cache.packageManagerSourceFiles[packageManagerFile]) ||
+        state.cache.packageManagerSourceFiles[packageManagerFile] !== sourceHash
+      ) {
+        // First change for this cached start.
+        state.cache.packageManagerSourceFiles[packageManagerFile] = sourceHash;
+        hasPackageManagerChange = true;
+
+        // TODO: We currently exec the package manager in all root directories. A first
+        //   optimization should be to only run the package manager in the changed root
+        //   directories instead of in all root directories.
       }
     }
 
-    if (hasLockFileChange || hasPackageJsonChange) {
+    let hasLockFileChange = false;
+
+    //
+    // const hasLockFileChange = filePaths.some((it) =>
+    //                                            PACKAGE_MANAGER_LOCK_FILES.some((lockfile) => it.endsWith(lockfile)),
+    // );
+    //
+    // const nonExistentRootDirectories = (
+    //   state.cache.rootDirectories ?? []
+    // ).filter((it) => isNil(state.cache.packageManager[it]));
+    // const obsoleteRootDirectories = Object.keys(
+    //   state.cache.packageManager,
+    // ).filter((it) => !state.cache.rootDirectories.includes(it));
+    //
+    // if (
+    //   hasLockFileChange ||
+    //   nonExistentRootDirectories.length > 0 ||
+    //   obsoleteRootDirectories.length > 0
+    // ) {
+    //   state.cache.packageManager = {};
+    //
+    //   for (const dir of state.cache.rootDirectories ?? []) {
+    //     state.cache.packageManager[dir] = packageManagerDetermine(dir);
+    //   }
+    // }
+    //
+
+    // Cleanup old rootDirectories
+    for (const key of Object.keys(state.cache.packageManager ?? {})) {
+      if (!state.cache.rootDirectories?.includes(key)) {
+        delete state.cache.packageManager?.[key];
+      }
+    }
+
+    for (const rootDirectory of state.cache.rootDirectories ?? []) {
+      // Unknown root directory
+      if (isNil(state.cache.packageManager?.[rootDirectory])) {
+        // @ts-expect-error
+        state.cache.packageManager[rootDirectory] =
+          packageManagerDetermine(rootDirectory);
+        hasLockFileChange = true;
+
+        continue;
+      }
+
+      const lockfilePaths = PACKAGE_MANAGER_LOCK_FILES.map((it) =>
+        pathJoin(rootDirectory, it),
+      );
+
+      // The package manager changed for this root directory.
+      if (filePaths.some((it) => lockfilePaths.includes(it))) {
+        const packageManager = packageManagerDetermine(rootDirectory);
+        if (
+          packageManager.name !==
+          state.cache.packageManager?.[rootDirectory]?.name
+        ) {
+          // @ts-expect-error
+          state.cache.packageManager[rootDirectory] = packageManager;
+          hasLockFileChange = true;
+        }
+      }
+    }
+
+    if (hasLockFileChange || hasPackageManagerChange) {
       await packageManagerExec(state);
     }
   },

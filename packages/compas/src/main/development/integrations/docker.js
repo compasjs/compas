@@ -17,7 +17,7 @@ export const dockerIntegration = {
 
     setInterval(() => {
       state.runTask("dockerBackgroundCheck", dockerBackgroundCheck);
-    }, 10000);
+    }, 20000);
   },
 
   async onCachedStart(state) {
@@ -27,7 +27,7 @@ export const dockerIntegration = {
 
     setInterval(() => {
       state.runTask("dockerBackgroundCheck", dockerBackgroundCheck);
-    }, 10000);
+    }, 20000);
   },
 
   async onExternalChanges(state, { filePaths }) {

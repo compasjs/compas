@@ -218,6 +218,39 @@
               }
             }
           }
+        },
+        "packageManagerSourceFiles": {
+          "docString": "Cached package manager files. Managed by {@link packageManagerIntegration}.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          }
         }
       }
     },

@@ -119,6 +119,14 @@ export function applyCompasStructure(generator) {
           .docs(
             "The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.",
           ),
+
+        packageManagerSourceFiles: T.generic()
+          .keys(T.string())
+          .values(T.string())
+          .optional()
+          .docs(
+            "Cached package manager files. Managed by {@link packageManagerIntegration}.",
+          ),
       })
       .loose(),
   );

@@ -37,6 +37,7 @@ export function validateCompasCache(value) {
         rootDirectories: undefined,
         dynamicAvailableActions: undefined,
         packageManager: undefined,
+        packageManagerSourceFiles: undefined,
       };
 
       if (value["version"] === null || value["version"] === undefined) {
@@ -652,6 +653,101 @@ export function validateCompasCache(value) {
                         ] = convertedString12;
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      if (
+        value["packageManagerSourceFiles"] === null ||
+        value["packageManagerSourceFiles"] === undefined
+      ) {
+        result["packageManagerSourceFiles"] = undefined;
+      } else {
+        if (
+          typeof value["packageManagerSourceFiles"] !== "object" ||
+          Array.isArray(value["packageManagerSourceFiles"])
+        ) {
+          errorMap[`$.packageManagerSourceFiles`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["packageManagerSourceFiles"] = {};
+          for (let genericKeyInput6 of Object.keys(
+            value["packageManagerSourceFiles"],
+          )) {
+            /** @type {any} */
+            let genericKeyResult7 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap8 = {};
+            if (genericKeyInput6 === null || genericKeyInput6 === undefined) {
+              genericKeyErrorMap8[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString9 = genericKeyInput6;
+              if (typeof convertedString9 !== "string") {
+                genericKeyErrorMap8[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString9.length < 1) {
+                  genericKeyErrorMap8[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  genericKeyResult7 = convertedString9;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap8).length !== 0) {
+              if (errorMap[`$.packageManagerSourceFiles`]) {
+                errorMap[`$.packageManagerSourceFiles`].inputs.push({
+                  key: genericKeyInput6,
+                  errors: genericKeyErrorMap8,
+                });
+              } else {
+                errorMap[`$.packageManagerSourceFiles`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput6, errors: genericKeyErrorMap8 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["packageManagerSourceFiles"][genericKeyResult7] ===
+                  null ||
+                value["packageManagerSourceFiles"][genericKeyResult7] ===
+                  undefined
+              ) {
+                errorMap[`$.packageManagerSourceFiles.${genericKeyResult7}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                /** @type {string} */
+                let convertedString9 =
+                  value["packageManagerSourceFiles"][genericKeyResult7];
+                if (typeof convertedString9 !== "string") {
+                  errorMap[`$.packageManagerSourceFiles.${genericKeyResult7}`] =
+                    {
+                      key: "validator.string",
+                    };
+                } else {
+                  if (convertedString9.length < 1) {
+                    errorMap[
+                      `$.packageManagerSourceFiles.${genericKeyResult7}`
+                    ] = {
+                      key: "validator.length",
+                      minLength: 1,
+                    };
+                  } else {
+                    result["packageManagerSourceFiles"][genericKeyResult7] =
+                      convertedString9;
                   }
                 }
               }
