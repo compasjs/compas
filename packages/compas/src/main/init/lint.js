@@ -1,7 +1,5 @@
-import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { exec, isNil } from "@compas/stdlib";
-import { configResolveProjectConfig } from "../../shared/config.js";
 import { writeFileChecked } from "../../shared/fs.js";
 import { logger } from "../../shared/output.js";
 import { packageManagerDetermine } from "../../shared/package-manager.js";
