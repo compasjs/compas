@@ -104,14 +104,14 @@ export function applyCompasStructure(generator) {
             "Resolved project root directories. Managed by {@link rootDirectoriesIntegration}.",
           ),
 
-        dynamicAvailableActions: T.generic()
-          .keys(T.string())
+        dynamicAvailableActions: T.array()
           .values({
             shortcut: T.string(),
             name: T.string(),
             callback: T.string(),
+            rootDirectory: T.string().optional(),
           })
-          .default("{}")
+          .default("[]")
           .docs("Dynamic actions that are available."),
 
         packageManager: T.generic()
@@ -134,6 +134,23 @@ export function applyCompasStructure(generator) {
           .docs(
             "Cached package manager files. Managed by {@link packageManagerIntegration}.",
           ),
+
+        prettier: T.generic()
+          .keys(T.string())
+          .values({
+            configValue: T.anyOf().values(
+              {
+                // Write default config file to cache dir and use that.
+                type: "compasEslintPlugin",
+              },
+              {
+                // Either no path, or let Prettier figure out the path.
+                type: "default",
+              },
+            ),
+          })
+          .optional()
+          .docs("Detected prettier config per root directory."),
       })
       .loose(),
   );

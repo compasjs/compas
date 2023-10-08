@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { readFile, rm } from "node:fs/promises";
-import { AppError, pathJoin } from "@compas/stdlib";
+import { AppError, isNil, pathJoin } from "@compas/stdlib";
 import { validateCompasCache } from "../../generated/compas/validators.js";
 import { writeFileChecked } from "../../shared/fs.js";
 import {
@@ -25,7 +25,7 @@ export async function cacheLoad(compasVersion) {
 
   const defaultCache = {
     version: compasVersion,
-    dynamicAvailableActions: {},
+    dynamicAvailableActions: [],
   };
 
   if (!existsSync(CACHE_PATH)) {
@@ -111,4 +111,24 @@ export async function cachePersist(cache) {
   }
 
   await writeFileChecked(CACHE_PATH, JSON.stringify(value));
+}
+
+/**
+ *
+ * @param {import("../../generated/common/types.js").CompasCache} cache
+ * @param {string} callback
+ * @param {string} [rootDirectory]
+ */
+export function cacheRemoveDynamicAction(cache, callback, rootDirectory) {
+  // Reverse loop, since splice will ruin the index.
+  for (let i = cache.dynamicAvailableActions.length - 1; i >= 0; --i) {
+    const action = cache.dynamicAvailableActions[i];
+
+    if (
+      action.callback === callback &&
+      (isNil(rootDirectory) || action.rootDirectory === rootDirectory)
+    ) {
+      cache.dynamicAvailableActions.splice(i, 1);
+    }
+  }
 }

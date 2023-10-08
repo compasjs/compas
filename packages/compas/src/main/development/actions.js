@@ -63,13 +63,19 @@ export function actionsUpdateInfo(state) {
     },
   ];
 
-  if (Object.keys(state.cache.dynamicAvailableActions ?? {}).length > 0) {
+  if ((state.cache.dynamicAvailableActions ?? []).length > 0) {
     state.screen.actionGroups.push({
       title: "Dynamic actions:",
-      actions: Object.values(state.cache.dynamicAvailableActions).map((it) => ({
-        shortcut: it.shortcut,
-        name: it.name,
-      })),
+      actions: state.cache.dynamicAvailableActions
+        .filter(
+          (it) =>
+            isNil(it.rootDirectory) ||
+            it.rootDirectory === currentProject?.rootDirectory,
+        )
+        .map((it) => ({
+          shortcut: it.shortcut,
+          name: it.name,
+        })),
     });
   }
 
@@ -133,30 +139,41 @@ export async function actionsHandleKeypress(state, key) {
     return state.exit();
   }
 
-  if (Object.keys(state.cache.dynamicAvailableActions ?? {}).length > 0) {
-    for (const [key, action] of Object.entries(
-      state.cache.dynamicAvailableActions,
-    )) {
-      if (action.shortcut.toLowerCase() === name) {
-        state.logInformation(`Executing '${action.name}'...`);
-
-        if (isNil(state.dynamicActionCallbacks[key])) {
-          debugPrint(`Couldn't find a dynamicActionCallback for '${name}'`);
-          return;
-        }
-
-        await state.dynamicActionCallbacks[key](state);
-
-        return;
-      }
-    }
-  }
-
   /**
    * @type {import("../../generated/common/types.js").CompasResolvedConfig}
    */
   // @ts-expect-error
   const currentProject = state.screen.navigationStack.at(-1);
+
+  if ((state.cache.dynamicAvailableActions ?? []).length > 0) {
+    for (const action of state.cache.dynamicAvailableActions) {
+      if (
+        action.rootDirectory &&
+        action.rootDirectory !== currentProject.rootDirectory
+      ) {
+        continue;
+      }
+
+      if (action.shortcut.toLowerCase() === name) {
+        state.logInformation(`Executing '${action.name}'...`);
+
+        if (isNil(state.dynamicActionCallbacks[action.callback])) {
+          debugPrint(
+            `Couldn't find a dynamicActionCallback for '${action.name}'`,
+          );
+          debugPrint({ key, action });
+          return;
+        }
+
+        await state.dynamicActionCallbacks[action.callback](
+          state,
+          currentProject.rootDirectory,
+        );
+
+        return;
+      }
+    }
+  }
 
   for (let i = 0; i < currentProject.projects.length; ++i) {
     if (name === String(i + 1)) {
@@ -186,7 +203,7 @@ export async function actionsHandleKeypress(state, key) {
  * }} action
  * @returns {void}
  */
-function actionsSpawnAction(state, action) {
+export function actionsSpawnAction(state, action) {
   state.clearScreen();
   state.screen.state = "action";
 

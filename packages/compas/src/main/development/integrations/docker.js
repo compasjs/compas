@@ -1,5 +1,6 @@
 import { exec, isNil } from "@compas/stdlib";
 import { configFlatten } from "../../../shared/config.js";
+import { cacheRemoveDynamicAction } from "../cache.js";
 
 const DOCKER_START_ACTION = "dockerStartNecessaryContainers";
 
@@ -51,7 +52,8 @@ async function dockerStartNecessaryContainers(state) {
   const containersInConfig = dockerListContainersInConfig(state);
 
   if (Object.keys(containersInConfig).length === 0) {
-    delete state.cache.dynamicAvailableActions?.[DOCKER_START_ACTION];
+    cacheRemoveDynamicAction(state.cache, DOCKER_START_ACTION);
+
     return;
   }
 
@@ -124,7 +126,7 @@ async function dockerStartNecessaryContainers(state) {
     state.logInformation("Required docker containers are running!");
   }
 
-  delete state.cache.dynamicAvailableActions?.[DOCKER_START_ACTION];
+  cacheRemoveDynamicAction(state.cache, DOCKER_START_ACTION);
 }
 
 /**
@@ -152,6 +154,8 @@ async function dockerBackgroundCheck(state) {
     (it) => !runningContainersOnHost.includes(it),
   );
 
+  cacheRemoveDynamicAction(state.cache, DOCKER_START_ACTION);
+
   if (containersToStart.length > 0) {
     state.logInformationUnique(
       `Not all required Docker containers are running. ${containersToStart.join(
@@ -160,11 +164,11 @@ async function dockerBackgroundCheck(state) {
     );
 
     // Set the action and refresh, so we repaint.
-    state.cache.dynamicAvailableActions[DOCKER_START_ACTION] = {
+    state.cache.dynamicAvailableActions.push({
       name: "Restart Docker containers",
       callback: DOCKER_START_ACTION,
       shortcut: "D",
-    };
+    });
     state.debouncedOnExternalChanges.refresh();
   }
 }

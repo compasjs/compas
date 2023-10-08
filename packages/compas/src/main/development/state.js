@@ -16,6 +16,7 @@ import { configLoaderIntegration } from "./integrations/config-loader.js";
 import { dockerIntegration } from "./integrations/docker.js";
 import { inferredActionsIntegration } from "./integrations/inferred-actions.js";
 import { packageManagerIntegration } from "./integrations/package-manager.js";
+import { prettierIntegration } from "./integrations/prettier.js";
 import { rootDirectoriesIntegration } from "./integrations/root-directories.js";
 import { tuiClearScreen, tuiExit, tuiInit, tuiPaint } from "./tui.js";
 import {
@@ -76,7 +77,7 @@ export class State {
     ];
 
     /**
-     * @type {Record<string, (state: State) => (void|Promise<void>)>}
+     * @type {Record<string, (state: State, rootDirectory: string) => (void|Promise<void>)>}
      */
     this.dynamicActionCallbacks = {};
 
@@ -89,6 +90,7 @@ export class State {
       cacheCleanupIntegration,
       packageManagerIntegration,
       inferredActionsIntegration,
+      prettierIntegration,
       dockerIntegration,
     ];
 
@@ -118,7 +120,7 @@ export class State {
      */
     this.cache = {
       version: "unknown",
-      dynamicAvailableActions: {},
+      dynamicAvailableActions: [],
     };
   }
 

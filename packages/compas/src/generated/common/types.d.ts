@@ -77,11 +77,12 @@ export type CompasCache = {
   /**
    * Dynamic actions that are available.
    */
-  "dynamicAvailableActions": { [key: string]: {
+  "dynamicAvailableActions": ({
     "shortcut": string;
     "name": string;
     "callback": string;
-  }};
+    "rootDirectory"?: string|undefined;
+  })[];
   
   /**
    * The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.
@@ -97,6 +98,19 @@ export type CompasCache = {
    * Cached package manager files. Managed by {@link packageManagerIntegration}.
    */
   "packageManagerSourceFiles"?: { [key: string]: string}|undefined;
+  
+  /**
+   * Detected prettier config per root directory.
+   */
+  "prettier"?: { [key: string]: {
+    "configValue": 
+      |{
+        "type": "compasEslintPlugin";
+      }
+      |{
+        "type": "default";
+      };
+  }}|undefined;
 };
 
 export type CompasResolvedConfigInput = {
@@ -175,11 +189,12 @@ export type CompasCacheInput = {
   /**
    * Dynamic actions that are available.
    */
-  "dynamicAvailableActions"?: { [key: string]: {
+  "dynamicAvailableActions"?: ({
     "shortcut": string;
     "name": string;
     "callback": string;
-  }}|undefined;
+    "rootDirectory"?: string|undefined;
+  })[]|undefined;
   
   /**
    * The inferred package manager per rootDirectory. Managed by {@link packageManagerIntegration}.
@@ -195,6 +210,19 @@ export type CompasCacheInput = {
    * Cached package manager files. Managed by {@link packageManagerIntegration}.
    */
   "packageManagerSourceFiles"?: { [key: string]: string}|undefined;
+  
+  /**
+   * Detected prettier config per root directory.
+   */
+  "prettier"?: { [key: string]: {
+    "configValue": 
+      |{
+        "type": "compasEslintPlugin";
+      }
+      |{
+        "type": "default";
+      };
+  }}|undefined;
 };
 
 export type CompasConfig = {

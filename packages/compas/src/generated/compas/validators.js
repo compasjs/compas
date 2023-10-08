@@ -38,6 +38,7 @@ export function validateCompasCache(value) {
         dynamicAvailableActions: undefined,
         packageManager: undefined,
         packageManagerSourceFiles: undefined,
+        prettier: undefined,
       };
 
       if (value["version"] === null || value["version"] === undefined) {
@@ -143,241 +144,175 @@ export function validateCompasCache(value) {
         value["dynamicAvailableActions"] === null ||
         value["dynamicAvailableActions"] === undefined
       ) {
-        result["dynamicAvailableActions"] = {};
+        result["dynamicAvailableActions"] = [];
       } else {
-        if (
-          typeof value["dynamicAvailableActions"] !== "object" ||
-          Array.isArray(value["dynamicAvailableActions"])
-        ) {
+        /** @type {ValidatorErrorMap} */
+        const intermediateErrorMap5 = {};
+        /** @type {any[]} */
+        let intermediateResult5 = [];
+        /** @type {any|any[]} */
+        let intermediateValue5 = value["dynamicAvailableActions"];
+
+        if (!Array.isArray(intermediateValue5)) {
           errorMap[`$.dynamicAvailableActions`] = {
-            key: "validator.generic",
+            key: "validator.array",
+            value: intermediateValue5,
           };
         } else {
-          result["dynamicAvailableActions"] = {};
-          for (let genericKeyInput4 of Object.keys(
-            value["dynamicAvailableActions"],
-          )) {
-            /** @type {any} */
-            let genericKeyResult5 = undefined;
-            /** @type {ValidatorErrorMap} */
-            const genericKeyErrorMap6 = {};
-            if (genericKeyInput4 === null || genericKeyInput4 === undefined) {
-              genericKeyErrorMap6[`$`] = {
+          result["dynamicAvailableActions"] = [];
+          for (let i5 = 0; i5 < intermediateValue5.length; ++i5) {
+            if (
+              intermediateValue5[i5] === null ||
+              intermediateValue5[i5] === undefined
+            ) {
+              intermediateErrorMap5[`$.${i5}`] = {
                 key: "validator.undefined",
               };
             } else {
-              /** @type {string} */
-              let convertedString7 = genericKeyInput4;
-              if (typeof convertedString7 !== "string") {
-                genericKeyErrorMap6[`$`] = {
-                  key: "validator.string",
-                };
-              } else {
-                if (convertedString7.length < 1) {
-                  genericKeyErrorMap6[`$`] = {
-                    key: "validator.length",
-                    minLength: 1,
-                  };
-                } else {
-                  genericKeyResult5 = convertedString7;
-                }
-              }
-            }
-            if (Object.keys(genericKeyErrorMap6).length !== 0) {
-              if (errorMap[`$.dynamicAvailableActions`]) {
-                errorMap[`$.dynamicAvailableActions`].inputs.push({
-                  key: genericKeyInput4,
-                  errors: genericKeyErrorMap6,
-                });
-              } else {
-                errorMap[`$.dynamicAvailableActions`] = {
-                  key: "validator.generic",
-                  inputs: [
-                    { key: genericKeyInput4, errors: genericKeyErrorMap6 },
-                  ],
-                };
-              }
-            } else {
               if (
-                value["dynamicAvailableActions"][genericKeyResult5] === null ||
-                value["dynamicAvailableActions"][genericKeyResult5] ===
-                  undefined
+                typeof intermediateValue5[i5] !== "object" ||
+                Array.isArray(intermediateValue5[i5])
               ) {
-                errorMap[`$.dynamicAvailableActions.${genericKeyResult5}`] = {
-                  key: "validator.undefined",
+                intermediateErrorMap5[`$.${i5}`] = {
+                  key: "validator.object",
+                  value: intermediateValue5[i5],
+                  foundType: typeof intermediateValue5[i5],
                 };
               } else {
+                /** @type {Set<string>} */
+                const knownKeys5 = new Set([
+                  "shortcut",
+                  "name",
+                  "callback",
+                  "rootDirectory",
+                ]);
+                for (const key of Object.keys(intermediateValue5[i5])) {
+                  if (
+                    !knownKeys5.has(key) &&
+                    intermediateValue5[i5][key] !== null &&
+                    intermediateValue5[i5][key] !== undefined
+                  ) {
+                    const expectedKeys = [...knownKeys5];
+                    const foundKeys = Object.keys(intermediateValue5[i5]);
+                    const unknownKeys = foundKeys.filter(
+                      (it) => !knownKeys5.has(it),
+                    );
+                    intermediateErrorMap5[`$.${i5}`] = {
+                      key: "validator.keys",
+                      unknownKeys,
+                      expectedKeys,
+                      foundKeys,
+                    };
+                    break;
+                  }
+                }
+                intermediateResult5[i5] = {
+                  shortcut: undefined,
+                  name: undefined,
+                  callback: undefined,
+                  rootDirectory: undefined,
+                };
+
                 if (
-                  typeof value["dynamicAvailableActions"][genericKeyResult5] !==
-                    "object" ||
-                  Array.isArray(
-                    value["dynamicAvailableActions"][genericKeyResult5],
-                  )
+                  intermediateValue5[i5]["shortcut"] === null ||
+                  intermediateValue5[i5]["shortcut"] === undefined
                 ) {
-                  errorMap[`$.dynamicAvailableActions.${genericKeyResult5}`] = {
-                    key: "validator.object",
-                    value: value["dynamicAvailableActions"][genericKeyResult5],
-                    foundType:
-                      typeof value["dynamicAvailableActions"][
-                        genericKeyResult5
-                      ],
+                  intermediateErrorMap5[`$.${i5}.shortcut`] = {
+                    key: "validator.undefined",
                   };
                 } else {
-                  /** @type {Set<string>} */
-                  const knownKeys7 = new Set(["shortcut", "name", "callback"]);
-                  for (const key of Object.keys(
-                    value["dynamicAvailableActions"][genericKeyResult5],
-                  )) {
-                    if (
-                      !knownKeys7.has(key) &&
-                      value["dynamicAvailableActions"][genericKeyResult5][
-                        key
-                      ] !== null &&
-                      value["dynamicAvailableActions"][genericKeyResult5][
-                        key
-                      ] !== undefined
-                    ) {
-                      const expectedKeys = [...knownKeys7];
-                      const foundKeys = Object.keys(
-                        value["dynamicAvailableActions"][genericKeyResult5],
-                      );
-                      const unknownKeys = foundKeys.filter(
-                        (it) => !knownKeys7.has(it),
-                      );
-                      errorMap[
-                        `$.dynamicAvailableActions.${genericKeyResult5}`
-                      ] = {
-                        key: "validator.keys",
-                        unknownKeys,
-                        expectedKeys,
-                        foundKeys,
-                      };
-                      break;
-                    }
-                  }
-                  result["dynamicAvailableActions"][genericKeyResult5] = {
-                    shortcut: undefined,
-                    name: undefined,
-                    callback: undefined,
-                  };
-
-                  if (
-                    value["dynamicAvailableActions"][genericKeyResult5][
-                      "shortcut"
-                    ] === null ||
-                    value["dynamicAvailableActions"][genericKeyResult5][
-                      "shortcut"
-                    ] === undefined
-                  ) {
-                    errorMap[
-                      `$.dynamicAvailableActions.${genericKeyResult5}.shortcut`
-                    ] = {
-                      key: "validator.undefined",
+                  /** @type {string} */
+                  let convertedString6 = intermediateValue5[i5]["shortcut"];
+                  if (typeof convertedString6 !== "string") {
+                    intermediateErrorMap5[`$.${i5}.shortcut`] = {
+                      key: "validator.string",
                     };
                   } else {
-                    /** @type {string} */
-                    let convertedString8 =
-                      value["dynamicAvailableActions"][genericKeyResult5][
-                        "shortcut"
-                      ];
-                    if (typeof convertedString8 !== "string") {
-                      errorMap[
-                        `$.dynamicAvailableActions.${genericKeyResult5}.shortcut`
-                      ] = {
-                        key: "validator.string",
+                    if (convertedString6.length < 1) {
+                      intermediateErrorMap5[`$.${i5}.shortcut`] = {
+                        key: "validator.length",
+                        minLength: 1,
                       };
                     } else {
-                      if (convertedString8.length < 1) {
-                        errorMap[
-                          `$.dynamicAvailableActions.${genericKeyResult5}.shortcut`
-                        ] = {
-                          key: "validator.length",
-                          minLength: 1,
-                        };
-                      } else {
-                        result["dynamicAvailableActions"][genericKeyResult5][
-                          "shortcut"
-                        ] = convertedString8;
-                      }
+                      intermediateResult5[i5]["shortcut"] = convertedString6;
                     }
                   }
-                  if (
-                    value["dynamicAvailableActions"][genericKeyResult5][
-                      "name"
-                    ] === null ||
-                    value["dynamicAvailableActions"][genericKeyResult5][
-                      "name"
-                    ] === undefined
-                  ) {
-                    errorMap[
-                      `$.dynamicAvailableActions.${genericKeyResult5}.name`
-                    ] = {
-                      key: "validator.undefined",
+                }
+                if (
+                  intermediateValue5[i5]["name"] === null ||
+                  intermediateValue5[i5]["name"] === undefined
+                ) {
+                  intermediateErrorMap5[`$.${i5}.name`] = {
+                    key: "validator.undefined",
+                  };
+                } else {
+                  /** @type {string} */
+                  let convertedString7 = intermediateValue5[i5]["name"];
+                  if (typeof convertedString7 !== "string") {
+                    intermediateErrorMap5[`$.${i5}.name`] = {
+                      key: "validator.string",
                     };
                   } else {
-                    /** @type {string} */
-                    let convertedString9 =
-                      value["dynamicAvailableActions"][genericKeyResult5][
-                        "name"
-                      ];
-                    if (typeof convertedString9 !== "string") {
-                      errorMap[
-                        `$.dynamicAvailableActions.${genericKeyResult5}.name`
-                      ] = {
-                        key: "validator.string",
+                    if (convertedString7.length < 1) {
+                      intermediateErrorMap5[`$.${i5}.name`] = {
+                        key: "validator.length",
+                        minLength: 1,
                       };
+                    } else {
+                      intermediateResult5[i5]["name"] = convertedString7;
+                    }
+                  }
+                }
+                if (
+                  intermediateValue5[i5]["callback"] === null ||
+                  intermediateValue5[i5]["callback"] === undefined
+                ) {
+                  intermediateErrorMap5[`$.${i5}.callback`] = {
+                    key: "validator.undefined",
+                  };
+                } else {
+                  /** @type {string} */
+                  let convertedString8 = intermediateValue5[i5]["callback"];
+                  if (typeof convertedString8 !== "string") {
+                    intermediateErrorMap5[`$.${i5}.callback`] = {
+                      key: "validator.string",
+                    };
+                  } else {
+                    if (convertedString8.length < 1) {
+                      intermediateErrorMap5[`$.${i5}.callback`] = {
+                        key: "validator.length",
+                        minLength: 1,
+                      };
+                    } else {
+                      intermediateResult5[i5]["callback"] = convertedString8;
+                    }
+                  }
+                }
+                if (
+                  intermediateValue5[i5]["rootDirectory"] === null ||
+                  intermediateValue5[i5]["rootDirectory"] === undefined
+                ) {
+                  intermediateResult5[i5]["rootDirectory"] = undefined;
+                } else {
+                  /** @type {string} */
+                  let convertedString9 =
+                    intermediateValue5[i5]["rootDirectory"];
+                  if (typeof convertedString9 !== "string") {
+                    intermediateErrorMap5[`$.${i5}.rootDirectory`] = {
+                      key: "validator.string",
+                    };
+                  } else {
+                    if (convertedString9.length === 0) {
+                      intermediateResult5[i5]["rootDirectory"] = undefined;
                     } else {
                       if (convertedString9.length < 1) {
-                        errorMap[
-                          `$.dynamicAvailableActions.${genericKeyResult5}.name`
-                        ] = {
+                        intermediateErrorMap5[`$.${i5}.rootDirectory`] = {
                           key: "validator.length",
                           minLength: 1,
                         };
                       } else {
-                        result["dynamicAvailableActions"][genericKeyResult5][
-                          "name"
-                        ] = convertedString9;
-                      }
-                    }
-                  }
-                  if (
-                    value["dynamicAvailableActions"][genericKeyResult5][
-                      "callback"
-                    ] === null ||
-                    value["dynamicAvailableActions"][genericKeyResult5][
-                      "callback"
-                    ] === undefined
-                  ) {
-                    errorMap[
-                      `$.dynamicAvailableActions.${genericKeyResult5}.callback`
-                    ] = {
-                      key: "validator.undefined",
-                    };
-                  } else {
-                    /** @type {string} */
-                    let convertedString10 =
-                      value["dynamicAvailableActions"][genericKeyResult5][
-                        "callback"
-                      ];
-                    if (typeof convertedString10 !== "string") {
-                      errorMap[
-                        `$.dynamicAvailableActions.${genericKeyResult5}.callback`
-                      ] = {
-                        key: "validator.string",
-                      };
-                    } else {
-                      if (convertedString10.length < 1) {
-                        errorMap[
-                          `$.dynamicAvailableActions.${genericKeyResult5}.callback`
-                        ] = {
-                          key: "validator.length",
-                          minLength: 1,
-                        };
-                      } else {
-                        result["dynamicAvailableActions"][genericKeyResult5][
-                          "callback"
-                        ] = convertedString10;
+                        intermediateResult5[i5]["rootDirectory"] =
+                          convertedString9;
                       }
                     }
                   }
@@ -385,6 +320,14 @@ export function validateCompasCache(value) {
               }
             }
           }
+        }
+        if (Object.keys(intermediateErrorMap5).length) {
+          for (const errorKey of Object.keys(intermediateErrorMap5)) {
+            errorMap[`$.dynamicAvailableActions${errorKey.substring(1)}`] =
+              intermediateErrorMap5[errorKey];
+          }
+        } else {
+          result["dynamicAvailableActions"] = intermediateResult5;
         }
       }
       if (
@@ -748,6 +691,330 @@ export function validateCompasCache(value) {
                   } else {
                     result["packageManagerSourceFiles"][genericKeyResult7] =
                       convertedString9;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      if (value["prettier"] === null || value["prettier"] === undefined) {
+        result["prettier"] = undefined;
+      } else {
+        if (
+          typeof value["prettier"] !== "object" ||
+          Array.isArray(value["prettier"])
+        ) {
+          errorMap[`$.prettier`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["prettier"] = {};
+          for (let genericKeyInput7 of Object.keys(value["prettier"])) {
+            /** @type {any} */
+            let genericKeyResult8 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap9 = {};
+            if (genericKeyInput7 === null || genericKeyInput7 === undefined) {
+              genericKeyErrorMap9[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString10 = genericKeyInput7;
+              if (typeof convertedString10 !== "string") {
+                genericKeyErrorMap9[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString10.length < 1) {
+                  genericKeyErrorMap9[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  genericKeyResult8 = convertedString10;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap9).length !== 0) {
+              if (errorMap[`$.prettier`]) {
+                errorMap[`$.prettier`].inputs.push({
+                  key: genericKeyInput7,
+                  errors: genericKeyErrorMap9,
+                });
+              } else {
+                errorMap[`$.prettier`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput7, errors: genericKeyErrorMap9 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["prettier"][genericKeyResult8] === null ||
+                value["prettier"][genericKeyResult8] === undefined
+              ) {
+                errorMap[`$.prettier.${genericKeyResult8}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                if (
+                  typeof value["prettier"][genericKeyResult8] !== "object" ||
+                  Array.isArray(value["prettier"][genericKeyResult8])
+                ) {
+                  errorMap[`$.prettier.${genericKeyResult8}`] = {
+                    key: "validator.object",
+                    value: value["prettier"][genericKeyResult8],
+                    foundType: typeof value["prettier"][genericKeyResult8],
+                  };
+                } else {
+                  /** @type {Set<string>} */
+                  const knownKeys10 = new Set(["configValue"]);
+                  for (const key of Object.keys(
+                    value["prettier"][genericKeyResult8],
+                  )) {
+                    if (
+                      !knownKeys10.has(key) &&
+                      value["prettier"][genericKeyResult8][key] !== null &&
+                      value["prettier"][genericKeyResult8][key] !== undefined
+                    ) {
+                      const expectedKeys = [...knownKeys10];
+                      const foundKeys = Object.keys(
+                        value["prettier"][genericKeyResult8],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys10.has(it),
+                      );
+                      errorMap[`$.prettier.${genericKeyResult8}`] = {
+                        key: "validator.keys",
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
+                      };
+                      break;
+                    }
+                  }
+                  result["prettier"][genericKeyResult8] = {
+                    configValue: undefined,
+                  };
+
+                  if (
+                    value["prettier"][genericKeyResult8]["configValue"] ===
+                      null ||
+                    value["prettier"][genericKeyResult8]["configValue"] ===
+                      undefined
+                  ) {
+                    errorMap[`$.prettier.${genericKeyResult8}.configValue`] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    let hasAnyOfMatch11 = false;
+                    errorMap[`$.prettier.${genericKeyResult8}.configValue`] = {
+                      key: "validator.anyOf",
+                      errors: [],
+                    };
+                    if (!hasAnyOfMatch11) {
+                      /** @type {ValidatorErrorMap} */
+                      const intermediateErrorMap13 = {};
+                      /** @type {any} */
+                      let intermediateResult13 = undefined;
+                      /** @type {any} */
+                      let intermediateValue13 =
+                        value["prettier"][genericKeyResult8]["configValue"];
+
+                      if (
+                        intermediateValue13 === null ||
+                        intermediateValue13 === undefined
+                      ) {
+                        intermediateErrorMap13[`$`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        if (
+                          typeof intermediateValue13 !== "object" ||
+                          Array.isArray(intermediateValue13)
+                        ) {
+                          intermediateErrorMap13[`$`] = {
+                            key: "validator.object",
+                            value: intermediateValue13,
+                            foundType: typeof intermediateValue13,
+                          };
+                        } else {
+                          /** @type {Set<string>} */
+                          const knownKeys13 = new Set(["type"]);
+                          for (const key of Object.keys(intermediateValue13)) {
+                            if (
+                              !knownKeys13.has(key) &&
+                              intermediateValue13[key] !== null &&
+                              intermediateValue13[key] !== undefined
+                            ) {
+                              const expectedKeys = [...knownKeys13];
+                              const foundKeys =
+                                Object.keys(intermediateValue13);
+                              const unknownKeys = foundKeys.filter(
+                                (it) => !knownKeys13.has(it),
+                              );
+                              intermediateErrorMap13[`$`] = {
+                                key: "validator.keys",
+                                unknownKeys,
+                                expectedKeys,
+                                foundKeys,
+                              };
+                              break;
+                            }
+                          }
+                          intermediateResult13 = { type: undefined };
+
+                          if (
+                            intermediateValue13["type"] === null ||
+                            intermediateValue13["type"] === undefined
+                          ) {
+                            intermediateErrorMap13[`$.type`] = {
+                              key: "validator.undefined",
+                            };
+                          } else {
+                            /** @type {string} */
+                            let convertedString14 = intermediateValue13["type"];
+                            if (typeof convertedString14 !== "string") {
+                              intermediateErrorMap13[`$.type`] = {
+                                key: "validator.string",
+                              };
+                            } else {
+                              if (convertedString14.length < 1) {
+                                intermediateErrorMap13[`$.type`] = {
+                                  key: "validator.length",
+                                  minLength: 1,
+                                };
+                              } else if (
+                                convertedString14 !== "compasEslintPlugin"
+                              ) {
+                                intermediateErrorMap13[`$.type`] = {
+                                  key: "validator.oneOf",
+                                  allowedValues: ["compasEslintPlugin"],
+                                  foundValue: convertedString14,
+                                };
+                              } else {
+                                intermediateResult13["type"] =
+                                  convertedString14;
+                              }
+                            }
+                          }
+                        }
+                      }
+                      if (Object.keys(intermediateErrorMap13).length > 0) {
+                        errorMap[
+                          `$.prettier.${genericKeyResult8}.configValue`
+                        ].errors.push(intermediateErrorMap13);
+                      } else {
+                        hasAnyOfMatch11 = true;
+                        delete errorMap[
+                          `$.prettier.${genericKeyResult8}.configValue`
+                        ];
+                        result["prettier"][genericKeyResult8]["configValue"] =
+                          intermediateResult13;
+                      }
+                    }
+                    if (!hasAnyOfMatch11) {
+                      /** @type {ValidatorErrorMap} */
+                      const intermediateErrorMap13 = {};
+                      /** @type {any} */
+                      let intermediateResult13 = undefined;
+                      /** @type {any} */
+                      let intermediateValue13 =
+                        value["prettier"][genericKeyResult8]["configValue"];
+
+                      if (
+                        intermediateValue13 === null ||
+                        intermediateValue13 === undefined
+                      ) {
+                        intermediateErrorMap13[`$`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        if (
+                          typeof intermediateValue13 !== "object" ||
+                          Array.isArray(intermediateValue13)
+                        ) {
+                          intermediateErrorMap13[`$`] = {
+                            key: "validator.object",
+                            value: intermediateValue13,
+                            foundType: typeof intermediateValue13,
+                          };
+                        } else {
+                          /** @type {Set<string>} */
+                          const knownKeys13 = new Set(["type"]);
+                          for (const key of Object.keys(intermediateValue13)) {
+                            if (
+                              !knownKeys13.has(key) &&
+                              intermediateValue13[key] !== null &&
+                              intermediateValue13[key] !== undefined
+                            ) {
+                              const expectedKeys = [...knownKeys13];
+                              const foundKeys =
+                                Object.keys(intermediateValue13);
+                              const unknownKeys = foundKeys.filter(
+                                (it) => !knownKeys13.has(it),
+                              );
+                              intermediateErrorMap13[`$`] = {
+                                key: "validator.keys",
+                                unknownKeys,
+                                expectedKeys,
+                                foundKeys,
+                              };
+                              break;
+                            }
+                          }
+                          intermediateResult13 = { type: undefined };
+
+                          if (
+                            intermediateValue13["type"] === null ||
+                            intermediateValue13["type"] === undefined
+                          ) {
+                            intermediateErrorMap13[`$.type`] = {
+                              key: "validator.undefined",
+                            };
+                          } else {
+                            /** @type {string} */
+                            let convertedString14 = intermediateValue13["type"];
+                            if (typeof convertedString14 !== "string") {
+                              intermediateErrorMap13[`$.type`] = {
+                                key: "validator.string",
+                              };
+                            } else {
+                              if (convertedString14.length < 1) {
+                                intermediateErrorMap13[`$.type`] = {
+                                  key: "validator.length",
+                                  minLength: 1,
+                                };
+                              } else if (convertedString14 !== "default") {
+                                intermediateErrorMap13[`$.type`] = {
+                                  key: "validator.oneOf",
+                                  allowedValues: ["default"],
+                                  foundValue: convertedString14,
+                                };
+                              } else {
+                                intermediateResult13["type"] =
+                                  convertedString14;
+                              }
+                            }
+                          }
+                        }
+                      }
+                      if (Object.keys(intermediateErrorMap13).length > 0) {
+                        errorMap[
+                          `$.prettier.${genericKeyResult8}.configValue`
+                        ].errors.push(intermediateErrorMap13);
+                      } else {
+                        hasAnyOfMatch11 = true;
+                        delete errorMap[
+                          `$.prettier.${genericKeyResult8}.configValue`
+                        ];
+                        result["prettier"][genericKeyResult8]["configValue"] =
+                          intermediateResult13;
+                      }
+                    }
                   }
                 }
               }
