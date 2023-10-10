@@ -167,7 +167,11 @@ export function jobFileTransformImage(s3Client) {
       return;
     }
 
-    if (file.contentLength === 0 || file.contentType === "image/svg+xml") {
+    if (
+      file.contentLength === 0 ||
+      !STORE_FILE_IMAGE_TYPES.includes(file.contentType) ||
+      file.contentType === "image/svg+xml"
+    ) {
       // Empty file is an empty transform, SVG's are not supported
       // @ts-expect-error
       await atomicSetTransformKey(sql, file.id, transformKey, file.id);
