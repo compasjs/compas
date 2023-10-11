@@ -27,13 +27,15 @@ export const configLoaderIntegration = {
       }
     } catch (/** @type {any} */ e) {
       if (e.key === "config.resolve.parseError") {
-        state.logInformation(`Could not reload config due to a syntax error.`);
+        state.logInformationUnique(
+          `Could not reload config due to a syntax error.`,
+        );
       } else if (e.key === "config.resolve.validationError") {
-        state.logInformation(
+        state.logInformationUnique(
           `Could not reload config due to a validation error. Check the docs for supported properties.`,
         );
       } else {
-        state.logInformation(
+        state.logInformationUnique(
           `Could not reload the config due to an error. Please check your file.`,
         );
       }

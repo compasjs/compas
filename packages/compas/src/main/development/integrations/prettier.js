@@ -7,7 +7,7 @@ import { cacheRemoveDynamicAction } from "../cache.js";
 
 const PRETTIER_RUN_ACTION = "prettierRunAction";
 
-let _prettierInterval = undefined;
+let _prettierTimeout = undefined;
 
 /**
  * @type {import("./base.js").Integration}
@@ -24,7 +24,7 @@ export const prettierIntegration = {
     await prettierDetectInformation(state);
 
     if (state.cache.prettier) {
-      _prettierInterval = prettierCheckFilesInterval(state);
+      prettierRefreshBackgroundCheckTimeout(state);
     }
   },
 
@@ -33,7 +33,7 @@ export const prettierIntegration = {
     state.dynamicActionCallbacks[PRETTIER_RUN_ACTION] = prettierRunAction;
 
     if (state.cache.prettier) {
-      _prettierInterval = prettierCheckFilesInterval(state);
+      prettierRefreshBackgroundCheckTimeout(state);
     }
   },
 
@@ -52,15 +52,16 @@ export const prettierIntegration = {
 
     if (packageJsonChange || configChange) {
       await prettierDetectInformation(state);
-
-      if (state.cache.prettier && isNil(_prettierInterval)) {
-        _prettierInterval = prettierCheckFilesInterval(state);
-      } else if (isNil(state.cache.prettier) && !isNil(_prettierInterval)) {
-        clearInterval(_prettierInterval);
-      }
     }
 
-    // TODO: Call Prettier only on the changed files
+    if (packageJsonChange || configChange || filePaths.length > 0) {
+      if (state.cache.prettier) {
+        prettierRefreshBackgroundCheckTimeout(state);
+      } else if (isNil(state.cache.prettier) && !isNil(_prettierTimeout)) {
+        clearTimeout(_prettierTimeout);
+        _prettierTimeout = undefined;
+      }
+    }
   },
 };
 
@@ -72,7 +73,7 @@ export const prettierIntegration = {
 async function prettierRunAction(state, rootDirectory) {
   cacheRemoveDynamicAction(state.cache, PRETTIER_RUN_ACTION, rootDirectory);
 
-  const prettierConfig = state.cache.prettier[rootDirectory];
+  const prettierConfig = state.cache.prettier?.[rootDirectory];
 
   if (isNil(prettierConfig)) {
     return;
@@ -125,7 +126,7 @@ async function prettierFormatCommand(state, rootDirectory) {
 async function prettierDetectInformation(state) {
   state.cache.prettier = {};
 
-  for (const rootDirectory of state.cache.rootDirectories) {
+  for (const rootDirectory of state.cache.rootDirectories ?? []) {
     const packageJson = JSON.parse(
       await readFile(pathJoin(rootDirectory, "package.json"), "utf-8"),
     );
@@ -158,10 +159,14 @@ async function prettierDetectInformation(state) {
   }
 }
 
-function prettierCheckFilesInterval(state) {
-  return setInterval(() => {
-    state.runTask("prettierBackgroundCheck", prettierBackgroundCheck);
-  }, 10000);
+function prettierRefreshBackgroundCheckTimeout(state) {
+  if (_prettierTimeout) {
+    _prettierTimeout.refresh();
+  } else {
+    _prettierTimeout = setTimeout(() => {
+      state.runTask("prettierBackgroundCheck", prettierBackgroundCheck);
+    }, 200);
+  }
 }
 
 /**
@@ -170,10 +175,10 @@ function prettierCheckFilesInterval(state) {
  */
 async function prettierBackgroundCheck(state) {
   await Promise.all(
-    state.cache.rootDirectories.map(async (rootDirectory) => {
+    (state.cache.rootDirectories ?? []).map(async (rootDirectory) => {
       cacheRemoveDynamicAction(state.cache, PRETTIER_RUN_ACTION, rootDirectory);
 
-      const prettierConfig = state.cache.prettier[rootDirectory];
+      const prettierConfig = state.cache.prettier?.[rootDirectory];
 
       if (isNil(prettierConfig)) {
         return;

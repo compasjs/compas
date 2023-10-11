@@ -182,6 +182,11 @@ export class State {
 
   // === user information ===
 
+  // TODO: Rethink log information.
+  //   - We log a lot of duplicate info
+  //   - Information is often not relevant after running an action.
+  //   - In some cases information + action combined gives the full picture.
+
   /**
    * @param {string} line
    */
