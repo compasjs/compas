@@ -255,7 +255,103 @@
           }
         },
         "prettier": {
-          "docString": "Detected prettier config per root directory.",
+          "docString": "Detected Prettier config per root directory.",
+          "isOptional": true,
+          "validator": {},
+          "sql": {},
+          "type": "generic",
+          "keys": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "trim": false,
+              "lowerCase": false,
+              "upperCase": false,
+              "min": 1
+            },
+            "sql": {},
+            "type": "string"
+          },
+          "values": {
+            "docString": "",
+            "isOptional": false,
+            "validator": {
+              "allowNull": false,
+              "strict": true
+            },
+            "sql": {},
+            "type": "object",
+            "relations": [],
+            "keys": {
+              "configValue": {
+                "docString": "",
+                "isOptional": false,
+                "validator": {},
+                "sql": {},
+                "type": "anyOf",
+                "values": [
+                  {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "strict": true
+                    },
+                    "sql": {},
+                    "type": "object",
+                    "relations": [],
+                    "keys": {
+                      "type": {
+                        "docString": "",
+                        "isOptional": false,
+                        "validator": {
+                          "allowNull": false,
+                          "trim": false,
+                          "lowerCase": false,
+                          "upperCase": false,
+                          "min": 1
+                        },
+                        "sql": {},
+                        "type": "string",
+                        "oneOf": ["compasEslintPlugin"]
+                      }
+                    }
+                  },
+                  {
+                    "docString": "",
+                    "isOptional": false,
+                    "validator": {
+                      "allowNull": false,
+                      "strict": true
+                    },
+                    "sql": {},
+                    "type": "object",
+                    "relations": [],
+                    "keys": {
+                      "type": {
+                        "docString": "",
+                        "isOptional": false,
+                        "validator": {
+                          "allowNull": false,
+                          "trim": false,
+                          "lowerCase": false,
+                          "upperCase": false,
+                          "min": 1
+                        },
+                        "sql": {},
+                        "type": "string",
+                        "oneOf": ["default"]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "eslint": {
+          "docString": "Detected ESLint config per root directory.",
           "isOptional": true,
           "validator": {},
           "sql": {},

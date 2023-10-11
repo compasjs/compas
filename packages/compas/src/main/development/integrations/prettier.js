@@ -149,13 +149,17 @@ async function prettierDetectInformation(state) {
           type: "compasEslintPlugin",
         },
       };
-    } else {
+    } else if (hasConfig) {
       state.cache.prettier[rootDirectory] = {
         configValue: {
           type: "default",
         },
       };
     }
+  }
+
+  if (Object.keys(state.cache.prettier).length === 0) {
+    delete state.cache.prettier;
   }
 }
 

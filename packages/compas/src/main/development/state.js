@@ -14,6 +14,7 @@ import { cacheLoad, cachePersist } from "./cache.js";
 import { cacheCleanupIntegration } from "./integrations/cache-cleanup.js";
 import { configLoaderIntegration } from "./integrations/config-loader.js";
 import { dockerIntegration } from "./integrations/docker.js";
+import { eslintIntegration } from "./integrations/eslint.js";
 import { inferredActionsIntegration } from "./integrations/inferred-actions.js";
 import { packageManagerIntegration } from "./integrations/package-manager.js";
 import { prettierIntegration } from "./integrations/prettier.js";
@@ -91,6 +92,7 @@ export class State {
       packageManagerIntegration,
       inferredActionsIntegration,
       prettierIntegration,
+      eslintIntegration,
       dockerIntegration,
     ];
 

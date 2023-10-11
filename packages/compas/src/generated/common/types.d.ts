@@ -100,9 +100,22 @@ export type CompasCache = {
   "packageManagerSourceFiles"?: { [key: string]: string}|undefined;
   
   /**
-   * Detected prettier config per root directory.
+   * Detected Prettier config per root directory.
    */
   "prettier"?: { [key: string]: {
+    "configValue": 
+      |{
+        "type": "compasEslintPlugin";
+      }
+      |{
+        "type": "default";
+      };
+  }}|undefined;
+  
+  /**
+   * Detected ESLint config per root directory.
+   */
+  "eslint"?: { [key: string]: {
     "configValue": 
       |{
         "type": "compasEslintPlugin";
@@ -212,9 +225,22 @@ export type CompasCacheInput = {
   "packageManagerSourceFiles"?: { [key: string]: string}|undefined;
   
   /**
-   * Detected prettier config per root directory.
+   * Detected Prettier config per root directory.
    */
   "prettier"?: { [key: string]: {
+    "configValue": 
+      |{
+        "type": "compasEslintPlugin";
+      }
+      |{
+        "type": "default";
+      };
+  }}|undefined;
+  
+  /**
+   * Detected ESLint config per root directory.
+   */
+  "eslint"?: { [key: string]: {
     "configValue": 
       |{
         "type": "compasEslintPlugin";

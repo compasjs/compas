@@ -150,7 +150,24 @@ export function applyCompasStructure(generator) {
             ),
           })
           .optional()
-          .docs("Detected prettier config per root directory."),
+          .docs("Detected Prettier config per root directory."),
+
+        eslint: T.generic()
+          .keys(T.string())
+          .values({
+            configValue: T.anyOf().values(
+              {
+                // Write default config file to cache dir and use that.
+                type: "compasEslintPlugin",
+              },
+              {
+                // Either no path, or let Prettier figure out the path.
+                type: "default",
+              },
+            ),
+          })
+          .optional()
+          .docs("Detected ESLint config per root directory."),
       })
       .loose(),
   );

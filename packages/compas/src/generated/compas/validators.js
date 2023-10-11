@@ -39,6 +39,7 @@ export function validateCompasCache(value) {
         packageManager: undefined,
         packageManagerSourceFiles: undefined,
         prettier: undefined,
+        eslint: undefined,
       };
 
       if (value["version"] === null || value["version"] === undefined) {
@@ -1013,6 +1014,330 @@ export function validateCompasCache(value) {
                         ];
                         result["prettier"][genericKeyResult8]["configValue"] =
                           intermediateResult13;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      if (value["eslint"] === null || value["eslint"] === undefined) {
+        result["eslint"] = undefined;
+      } else {
+        if (
+          typeof value["eslint"] !== "object" ||
+          Array.isArray(value["eslint"])
+        ) {
+          errorMap[`$.eslint`] = {
+            key: "validator.generic",
+          };
+        } else {
+          result["eslint"] = {};
+          for (let genericKeyInput8 of Object.keys(value["eslint"])) {
+            /** @type {any} */
+            let genericKeyResult9 = undefined;
+            /** @type {ValidatorErrorMap} */
+            const genericKeyErrorMap10 = {};
+            if (genericKeyInput8 === null || genericKeyInput8 === undefined) {
+              genericKeyErrorMap10[`$`] = {
+                key: "validator.undefined",
+              };
+            } else {
+              /** @type {string} */
+              let convertedString11 = genericKeyInput8;
+              if (typeof convertedString11 !== "string") {
+                genericKeyErrorMap10[`$`] = {
+                  key: "validator.string",
+                };
+              } else {
+                if (convertedString11.length < 1) {
+                  genericKeyErrorMap10[`$`] = {
+                    key: "validator.length",
+                    minLength: 1,
+                  };
+                } else {
+                  genericKeyResult9 = convertedString11;
+                }
+              }
+            }
+            if (Object.keys(genericKeyErrorMap10).length !== 0) {
+              if (errorMap[`$.eslint`]) {
+                errorMap[`$.eslint`].inputs.push({
+                  key: genericKeyInput8,
+                  errors: genericKeyErrorMap10,
+                });
+              } else {
+                errorMap[`$.eslint`] = {
+                  key: "validator.generic",
+                  inputs: [
+                    { key: genericKeyInput8, errors: genericKeyErrorMap10 },
+                  ],
+                };
+              }
+            } else {
+              if (
+                value["eslint"][genericKeyResult9] === null ||
+                value["eslint"][genericKeyResult9] === undefined
+              ) {
+                errorMap[`$.eslint.${genericKeyResult9}`] = {
+                  key: "validator.undefined",
+                };
+              } else {
+                if (
+                  typeof value["eslint"][genericKeyResult9] !== "object" ||
+                  Array.isArray(value["eslint"][genericKeyResult9])
+                ) {
+                  errorMap[`$.eslint.${genericKeyResult9}`] = {
+                    key: "validator.object",
+                    value: value["eslint"][genericKeyResult9],
+                    foundType: typeof value["eslint"][genericKeyResult9],
+                  };
+                } else {
+                  /** @type {Set<string>} */
+                  const knownKeys11 = new Set(["configValue"]);
+                  for (const key of Object.keys(
+                    value["eslint"][genericKeyResult9],
+                  )) {
+                    if (
+                      !knownKeys11.has(key) &&
+                      value["eslint"][genericKeyResult9][key] !== null &&
+                      value["eslint"][genericKeyResult9][key] !== undefined
+                    ) {
+                      const expectedKeys = [...knownKeys11];
+                      const foundKeys = Object.keys(
+                        value["eslint"][genericKeyResult9],
+                      );
+                      const unknownKeys = foundKeys.filter(
+                        (it) => !knownKeys11.has(it),
+                      );
+                      errorMap[`$.eslint.${genericKeyResult9}`] = {
+                        key: "validator.keys",
+                        unknownKeys,
+                        expectedKeys,
+                        foundKeys,
+                      };
+                      break;
+                    }
+                  }
+                  result["eslint"][genericKeyResult9] = {
+                    configValue: undefined,
+                  };
+
+                  if (
+                    value["eslint"][genericKeyResult9]["configValue"] ===
+                      null ||
+                    value["eslint"][genericKeyResult9]["configValue"] ===
+                      undefined
+                  ) {
+                    errorMap[`$.eslint.${genericKeyResult9}.configValue`] = {
+                      key: "validator.undefined",
+                    };
+                  } else {
+                    let hasAnyOfMatch12 = false;
+                    errorMap[`$.eslint.${genericKeyResult9}.configValue`] = {
+                      key: "validator.anyOf",
+                      errors: [],
+                    };
+                    if (!hasAnyOfMatch12) {
+                      /** @type {ValidatorErrorMap} */
+                      const intermediateErrorMap14 = {};
+                      /** @type {any} */
+                      let intermediateResult14 = undefined;
+                      /** @type {any} */
+                      let intermediateValue14 =
+                        value["eslint"][genericKeyResult9]["configValue"];
+
+                      if (
+                        intermediateValue14 === null ||
+                        intermediateValue14 === undefined
+                      ) {
+                        intermediateErrorMap14[`$`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        if (
+                          typeof intermediateValue14 !== "object" ||
+                          Array.isArray(intermediateValue14)
+                        ) {
+                          intermediateErrorMap14[`$`] = {
+                            key: "validator.object",
+                            value: intermediateValue14,
+                            foundType: typeof intermediateValue14,
+                          };
+                        } else {
+                          /** @type {Set<string>} */
+                          const knownKeys14 = new Set(["type"]);
+                          for (const key of Object.keys(intermediateValue14)) {
+                            if (
+                              !knownKeys14.has(key) &&
+                              intermediateValue14[key] !== null &&
+                              intermediateValue14[key] !== undefined
+                            ) {
+                              const expectedKeys = [...knownKeys14];
+                              const foundKeys =
+                                Object.keys(intermediateValue14);
+                              const unknownKeys = foundKeys.filter(
+                                (it) => !knownKeys14.has(it),
+                              );
+                              intermediateErrorMap14[`$`] = {
+                                key: "validator.keys",
+                                unknownKeys,
+                                expectedKeys,
+                                foundKeys,
+                              };
+                              break;
+                            }
+                          }
+                          intermediateResult14 = { type: undefined };
+
+                          if (
+                            intermediateValue14["type"] === null ||
+                            intermediateValue14["type"] === undefined
+                          ) {
+                            intermediateErrorMap14[`$.type`] = {
+                              key: "validator.undefined",
+                            };
+                          } else {
+                            /** @type {string} */
+                            let convertedString15 = intermediateValue14["type"];
+                            if (typeof convertedString15 !== "string") {
+                              intermediateErrorMap14[`$.type`] = {
+                                key: "validator.string",
+                              };
+                            } else {
+                              if (convertedString15.length < 1) {
+                                intermediateErrorMap14[`$.type`] = {
+                                  key: "validator.length",
+                                  minLength: 1,
+                                };
+                              } else if (
+                                convertedString15 !== "compasEslintPlugin"
+                              ) {
+                                intermediateErrorMap14[`$.type`] = {
+                                  key: "validator.oneOf",
+                                  allowedValues: ["compasEslintPlugin"],
+                                  foundValue: convertedString15,
+                                };
+                              } else {
+                                intermediateResult14["type"] =
+                                  convertedString15;
+                              }
+                            }
+                          }
+                        }
+                      }
+                      if (Object.keys(intermediateErrorMap14).length > 0) {
+                        errorMap[
+                          `$.eslint.${genericKeyResult9}.configValue`
+                        ].errors.push(intermediateErrorMap14);
+                      } else {
+                        hasAnyOfMatch12 = true;
+                        delete errorMap[
+                          `$.eslint.${genericKeyResult9}.configValue`
+                        ];
+                        result["eslint"][genericKeyResult9]["configValue"] =
+                          intermediateResult14;
+                      }
+                    }
+                    if (!hasAnyOfMatch12) {
+                      /** @type {ValidatorErrorMap} */
+                      const intermediateErrorMap14 = {};
+                      /** @type {any} */
+                      let intermediateResult14 = undefined;
+                      /** @type {any} */
+                      let intermediateValue14 =
+                        value["eslint"][genericKeyResult9]["configValue"];
+
+                      if (
+                        intermediateValue14 === null ||
+                        intermediateValue14 === undefined
+                      ) {
+                        intermediateErrorMap14[`$`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        if (
+                          typeof intermediateValue14 !== "object" ||
+                          Array.isArray(intermediateValue14)
+                        ) {
+                          intermediateErrorMap14[`$`] = {
+                            key: "validator.object",
+                            value: intermediateValue14,
+                            foundType: typeof intermediateValue14,
+                          };
+                        } else {
+                          /** @type {Set<string>} */
+                          const knownKeys14 = new Set(["type"]);
+                          for (const key of Object.keys(intermediateValue14)) {
+                            if (
+                              !knownKeys14.has(key) &&
+                              intermediateValue14[key] !== null &&
+                              intermediateValue14[key] !== undefined
+                            ) {
+                              const expectedKeys = [...knownKeys14];
+                              const foundKeys =
+                                Object.keys(intermediateValue14);
+                              const unknownKeys = foundKeys.filter(
+                                (it) => !knownKeys14.has(it),
+                              );
+                              intermediateErrorMap14[`$`] = {
+                                key: "validator.keys",
+                                unknownKeys,
+                                expectedKeys,
+                                foundKeys,
+                              };
+                              break;
+                            }
+                          }
+                          intermediateResult14 = { type: undefined };
+
+                          if (
+                            intermediateValue14["type"] === null ||
+                            intermediateValue14["type"] === undefined
+                          ) {
+                            intermediateErrorMap14[`$.type`] = {
+                              key: "validator.undefined",
+                            };
+                          } else {
+                            /** @type {string} */
+                            let convertedString15 = intermediateValue14["type"];
+                            if (typeof convertedString15 !== "string") {
+                              intermediateErrorMap14[`$.type`] = {
+                                key: "validator.string",
+                              };
+                            } else {
+                              if (convertedString15.length < 1) {
+                                intermediateErrorMap14[`$.type`] = {
+                                  key: "validator.length",
+                                  minLength: 1,
+                                };
+                              } else if (convertedString15 !== "default") {
+                                intermediateErrorMap14[`$.type`] = {
+                                  key: "validator.oneOf",
+                                  allowedValues: ["default"],
+                                  foundValue: convertedString15,
+                                };
+                              } else {
+                                intermediateResult14["type"] =
+                                  convertedString15;
+                              }
+                            }
+                          }
+                        }
+                      }
+                      if (Object.keys(intermediateErrorMap14).length > 0) {
+                        errorMap[
+                          `$.eslint.${genericKeyResult9}.configValue`
+                        ].errors.push(intermediateErrorMap14);
+                      } else {
+                        hasAnyOfMatch12 = true;
+                        delete errorMap[
+                          `$.eslint.${genericKeyResult9}.configValue`
+                        ];
+                        result["eslint"][genericKeyResult9]["configValue"] =
+                          intermediateResult14;
                       }
                     }
                   }
