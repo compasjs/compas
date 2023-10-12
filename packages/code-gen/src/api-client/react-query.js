@@ -630,11 +630,15 @@ ${hookName}.setQueryData = (
       })}`,
     );
 
+    const defaultedResponseType =
+      contextNames.responseTypeName ??
+      (distilledTargetInfo.isFetch ? "Response" : "unknown");
+
     fileWriteInline(
       file,
-      `export function ${hookName}(options: UseMutationOptions<${
-        contextNames.responseTypeName
-      }, AppErrorResponse, ${upperCaseFirst(hookName)}Props> = {},`,
+      `export function ${hookName}(options: UseMutationOptions<${defaultedResponseType}, AppErrorResponse, ${upperCaseFirst(
+        hookName,
+      )}Props> = {},`,
     );
 
     if (route.invalidations.length > 0) {
@@ -647,9 +651,9 @@ ${hookName}.setQueryData = (
 
     fileWrite(
       file,
-      `): UseMutationResult<${
-        contextNames.responseTypeName ?? "Response"
-      }, AppErrorResponse, ${upperCaseFirst(hookName)}Props, unknown> {`,
+      `): UseMutationResult<${defaultedResponseType}, AppErrorResponse, ${upperCaseFirst(
+        hookName,
+      )}Props, unknown> {`,
     );
 
     if (!distilledTargetInfo.useGlobalClients) {
