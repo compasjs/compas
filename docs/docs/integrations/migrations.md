@@ -32,15 +32,6 @@ either migrate or rebuild the database.
 - Migrate executes the pending migrations.
 - Rebuild clears the full database and runs all migrations from scratch.
 
----
-
-TODO: How are these actions displayed to the user when they become available
-
-TODO: Action output should work like any other action, but we can dynamically
-import the required migration functions from `@compas/store`.
-
----
-
 ## Limitations
 
 - Compas assumes that you have Postgres running.

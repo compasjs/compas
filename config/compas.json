@@ -38,5 +38,6 @@
       "createArguments": "-e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v compas-minio:/data -p 9000:9000",
       "runArguments": "server /data"
     }
-  }
+  },
+  "migrations": {}
 }

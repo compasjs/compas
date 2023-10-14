@@ -16,6 +16,7 @@ import { configLoaderIntegration } from "./integrations/config-loader.js";
 import { dockerIntegration } from "./integrations/docker.js";
 import { eslintIntegration } from "./integrations/eslint.js";
 import { inferredActionsIntegration } from "./integrations/inferred-actions.js";
+import { migrationsIntegration } from "./integrations/migrations.js";
 import { packageManagerIntegration } from "./integrations/package-manager.js";
 import { prettierIntegration } from "./integrations/prettier.js";
 import { rootDirectoriesIntegration } from "./integrations/root-directories.js";
@@ -94,6 +95,7 @@ export class State {
       prettierIntegration,
       eslintIntegration,
       dockerIntegration,
+      migrationsIntegration,
     ];
 
     /**
