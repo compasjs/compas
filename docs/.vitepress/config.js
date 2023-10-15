@@ -275,6 +275,10 @@ function getHomeSidebar() {
             },
           ],
         },
+        {
+          text: "Continuous Integration",
+          link: "/docs/continuous-integration.html",
+        },
       ],
     },
 
