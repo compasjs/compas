@@ -7,8 +7,6 @@ import { TestCompas, testDirectory } from "../utils.js";
 mainTestFn(import.meta);
 
 test("compas/development/config", (t) => {
-  t.jobs = 4;
-
   const workingDirectory = testDirectory(t.name);
 
   t.test("config does not exist", async (t) => {

@@ -6,7 +6,6 @@ import { TestCompas, testDirectory } from "../utils.js";
 mainTestFn(import.meta);
 
 test("compas/development/cache", (t) => {
-  t.jobs = 4;
   t.timeout = 5000;
 
   const workingDirectory = testDirectory(t.name);
