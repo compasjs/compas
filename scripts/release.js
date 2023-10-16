@@ -44,7 +44,6 @@ async function cliExecutor(logger, state) {
     "code-gen",
     "server",
     "store",
-    "compas",
     "create-compas",
   ];
 

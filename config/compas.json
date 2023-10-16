@@ -4,40 +4,5 @@
       "extensions": [],
       "ignorePatterns": ["__fixtures__", ".cache"]
     }
-  },
-  "projects": ["packages/compas"],
-  "actions": [
-    {
-      "name": "Docs",
-      "shortcut": "D",
-      "command": ["npx", "compas", "run", "docs:dev"]
-    },
-    {
-      "name": "Generate",
-      "shortcut": "G",
-      "command": ["npx", "compas", "generate"]
-    },
-    {
-      "name": "TSC",
-      "shortcut": "S",
-      "command": ["npx", "compas", "run", "types"]
-    },
-    {
-      "name": "TSC Clean",
-      "shortcut": "C",
-      "command": ["npx", "compas", "run", "types", "--script-args", "clean"]
-    }
-  ],
-  "dockerContainers": {
-    "compas-postgres-16": {
-      "image": "postgres:16",
-      "createArguments": "-e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-16:/var/lib/postgresql/data/pgdata -p 5432:5432"
-    },
-    "compas-minio": {
-      "image": "minio/minio",
-      "createArguments": "-e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v compas-minio:/data -p 9000:9000",
-      "runArguments": "server /data"
-    }
-  },
-  "migrations": {}
+  }
 }

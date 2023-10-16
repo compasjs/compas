@@ -2,7 +2,6 @@ import { spawn } from "@compas/stdlib";
 import {
   generateCli,
   generateCodeGen,
-  generateCompas,
   generateExamples,
   generateStore,
 } from "../src/generate.js";
@@ -40,7 +39,6 @@ async function cliExecutor(logger, state) {
   logger.info("Generating cli, compas, code-gen & store...");
 
   generateCli(logger);
-  generateCompas(logger);
   generateCodeGen(logger);
   generateStore(logger);
   await generateExamples(logger, state);
