@@ -4,6 +4,72 @@ editLink: false
 
 # Changelog
 
+### [v0.7.6](https://github.com/compasjs/compas/releases/tag/v0.7.6)
+
+#### Features
+
+- feat(store): support specifying a maintenance database when using
+  'createIfNotExists'
+  [`673276`](https://github.com/compasjs/compas/commit/673276158f890ac1cc1b936df3124a0db578fd7d)
+
+#### Bug fixes
+
+- fix(examples): correct subCommand check
+  ([#2850](https://github.com/compasjs/compas/pull/2850))
+  [`c73d66`](https://github.com/compasjs/compas/commit/c73d66dfbc6a6d87b3ca7734a66055a3110a925a)
+- fix(store): use stream.Readable types in file functions
+  [`729347`](https://github.com/compasjs/compas/commit/7293477b4f3b959fa0515e1b0a1dd35b30179a27)
+- fix(store): skip transform on unsupported image formats like .ico files
+  [`0a4745`](https://github.com/compasjs/compas/commit/0a4745b40dcb52c182cf15d5f6c444603a7792db)
+- fix(code-gen): align response type in react-query generator when not known
+  [`d933b8`](https://github.com/compasjs/compas/commit/d933b85c102b075804b57dc0d36d960d60e5b1fb)
+
+#### Other
+
+- chore(docs): fix typo in types-and-validators.md
+  [`97b797`](https://github.com/compasjs/compas/commit/97b797715b3ed6b2806ac83cb54cdec4e8b39124)
+- chore(docs): add CI docs
+  [`663d58`](https://github.com/compasjs/compas/commit/663d587dcdb230cb73fa7f8bcb14d74b9ba966b0)
+- chore(compas): drop package
+  [`5c4664`](https://github.com/compasjs/compas/commit/5c4664d59e4a47d5062dd865a6bd0e6bb3b7b9c4)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.414.0 to 3.428.0
+  ([#2849](https://github.com/compasjs/compas/pull/2849),
+  [#2858](https://github.com/compasjs/compas/pull/2858),
+  [#2875](https://github.com/compasjs/compas/pull/2875),
+  [#2890](https://github.com/compasjs/compas/pull/2890))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.414.0 to 3.428.0
+  ([#2849](https://github.com/compasjs/compas/pull/2849),
+  [#2858](https://github.com/compasjs/compas/pull/2858),
+  [#2875](https://github.com/compasjs/compas/pull/2875),
+  [#2890](https://github.com/compasjs/compas/pull/2890))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump sharp from 0.32.5 to 0.32.6
+  ([#2849](https://github.com/compasjs/compas/pull/2849))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump @babel/core from 7.22.19 to 7.23.2
+  ([#2849](https://github.com/compasjs/compas/pull/2849),
+  [#2858](https://github.com/compasjs/compas/pull/2858),
+  [#2890](https://github.com/compasjs/compas/pull/2890))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.8.1 to 46.8.2
+  ([#2849](https://github.com/compasjs/compas/pull/2849))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump eslint from 8.49.0 to 8.51.0
+  ([#2858](https://github.com/compasjs/compas/pull/2858),
+  [#2890](https://github.com/compasjs/compas/pull/2890))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump pino from 8.15.1 to 8.16.0
+  ([#2875](https://github.com/compasjs/compas/pull/2875),
+  [#2890](https://github.com/compasjs/compas/pull/2890))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump postgres from 3.3.5 to 3.4.0
+  ([#2890](https://github.com/compasjs/compas/pull/2890))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+
 ### [v0.7.5](https://github.com/compasjs/compas/releases/tag/v0.7.5)
 
 #### Bug fixes
