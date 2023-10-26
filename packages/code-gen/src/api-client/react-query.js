@@ -454,13 +454,14 @@ export function reactQueryGenerateFunction(
 
     fileWriteInline(
       file,
-      `return useQuery(${hookName}.queryKey(${
-        routeHasMandatoryInputs ? "opts" : ""
-      }),`,
+      `return useQuery({
+        queryKey: ${hookName}.queryKey(${
+          routeHasMandatoryInputs ? "opts" : ""
+        }),`,
     );
     fileWrite(
       file,
-      `({ signal }) => {
+      `queryFn: ({ signal }) => {
 ${reactQueryCheckIfRequiredVariablesArePresent(
   generateContext,
   hookName,
@@ -477,7 +478,7 @@ return ${apiName}(${apiInstanceParameter}
     defaultToNull: false,
   })}
   );
-}, options);`,
+}, ...options });`,
     );
 
     fileBlockEnd(file);
@@ -523,9 +524,9 @@ ${hookName}.queryKey = (
     requireAllParams: false,
   })}
  ) => {
-  return queryClient.fetchQuery(
-    ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
-    () => {
+  return queryClient.fetchQuery({
+    queryKey: ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
+    queryFn: () => {
     ${reactQueryCheckIfRequiredVariablesArePresent(
       generateContext,
       `${hookName}.fetchQuery`,
@@ -538,7 +539,7 @@ ${hookName}.queryKey = (
     withRequestConfig: true,
     defaultToNull: false,
   })}
-  ); });
+  ); }, });
 }
 
 /**
@@ -553,9 +554,9 @@ ${hookName}.queryKey = (
     requireAllParams: false,
   })},
  ) => {
-  return queryClient.prefetchQuery(
-    ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
-    () => {
+  return queryClient.prefetchQuery({
+    queryKey: ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
+    queryFn: () => {
   ${reactQueryCheckIfRequiredVariablesArePresent(
     generateContext,
     `${hookName}.prefetchQuery`,
@@ -570,7 +571,7 @@ ${hookName}.queryKey = (
        defaultToNull: false,
      })}
   );
-});
+}, });
 }
 
 /**
@@ -587,9 +588,9 @@ ${hookName}.invalidate = (
         })},`
       : ""
   }
-) => queryClient.invalidateQueries(${hookName}.queryKey(${
+) => queryClient.invalidateQueries({ queryKey: ${hookName}.queryKey(${
         routeHasMandatoryInputs ? "opts" : ""
-      }));
+      }) });
   
 
 /**
@@ -636,9 +637,9 @@ ${hookName}.setQueryData = (
 
     fileWriteInline(
       file,
-      `export function ${hookName}(options: UseMutationOptions<${defaultedResponseType}, AppErrorResponse, ${upperCaseFirst(
+      `export function ${hookName}<Context = unknown>(options: UseMutationOptions<${defaultedResponseType}, AppErrorResponse, ${upperCaseFirst(
         hookName,
-      )}Props> = {},`,
+      )}Props, Context> = {},`,
     );
 
     if (route.invalidations.length > 0) {
@@ -653,7 +654,7 @@ ${hookName}.setQueryData = (
       file,
       `): UseMutationResult<${defaultedResponseType}, AppErrorResponse, ${upperCaseFirst(
         hookName,
-      )}Props, unknown> {`,
+      )}Props, Context> {`,
     );
 
     if (!distilledTargetInfo.useGlobalClients) {
@@ -681,14 +682,14 @@ ${hookName}.setQueryData = (
 
     fileWrite(
       file,
-      `return useMutation((variables) => ${apiName}(
+      `return useMutation({ mutationFn: (variables) => ${apiName}(
    ${apiInstanceParameter}
   ${parameterListWithExtraction({
     prefix: "variables",
     withRequestConfig: true,
     defaultToNull: false,
   })}
-), options);
+), ...options });
 `,
     );
 
@@ -839,7 +840,7 @@ function reactQueryWriteInvalidations(file, route) {
 
     fileWriteInline(
       file,
-      `queryClient.invalidateQueries(["${invalidation.target.group}",`,
+      `queryClient.invalidateQueries({ queryKey: ["${invalidation.target.group}",`,
     );
     if (invalidation.target.name) {
       fileWriteInline(file, `"${invalidation.target.name}",`);
@@ -850,7 +851,7 @@ function reactQueryWriteInvalidations(file, route) {
     if (query.length) {
       fileWriteInline(file, query);
     }
-    fileWrite(file, `]);`);
+    fileWrite(file, `] });`);
   }
 
   fileBlockStart(file, `if (typeof originalOnSuccess === "function")`);
