@@ -1,3 +1,4 @@
+import { keepPreviousData } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import "./App.css";
 import {
@@ -16,7 +17,7 @@ function App() {
   const { data } = useDateConvertNumber({
     value: dateInput,
     queryOptions: {
-      keepPreviousData: true,
+      placeholderData: keepPreviousData,
     },
   });
 

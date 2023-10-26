@@ -277,9 +277,9 @@ export function reactQueryGenerateFunction(
           } }`
         : undefined,
       withQueryOptions
-        ? `{ queryOptions?: UseQueryOptions<${
+        ? `{ queryOptions?: Omit<UseQueryOptions<${
             contextNames.responseTypeName ?? "unknown"
-          }, AppErrorResponse, TData> }`
+          }, AppErrorResponse, TData>, "queryFn"|"queryKey"> }`
         : undefined,
     ].filter((it) => !!it);
 
