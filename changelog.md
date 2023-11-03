@@ -4,32 +4,42 @@ editLink: false
 
 # Changelog
 
-
 ### [v0.8.0](https://github.com/compasjs/compas/releases/tag/v0.8.0)
 
 #### Features
 
-- feat(code-gen): generate RQ5 like object arguments while staying on RQ4 [`127699`](https://github.com/compasjs/compas/commit/127699362951d66d65b0c6abdc613fb9b420b035)
+- feat(code-gen): generate RQ5 like object arguments while staying on RQ4
+  [`127699`](https://github.com/compasjs/compas/commit/127699362951d66d65b0c6abdc613fb9b420b035)
   - References [#2644](https://github.com/compasjs/compas/pull/2644)
-- feat(code-gen): support react-query v5 [`e4862f`](https://github.com/compasjs/compas/commit/e4862f36f2879bda72ef14983cf4cbee216b9b70)
+- feat(code-gen): support react-query v5
+  [`e4862f`](https://github.com/compasjs/compas/commit/e4862f36f2879bda72ef14983cf4cbee216b9b70)
   - Closes [#2644](https://github.com/compasjs/compas/pull/2644)
 
 #### Dependency updates
 
-- build(deps): bump @aws-sdk/client-s3 from 3.428.0 to 3.436.0 ([#2907](https://github.com/compasjs/compas/pull/2907), [#2922](https://github.com/compasjs/compas/pull/2922))
+- build(deps): bump @aws-sdk/client-s3 from 3.428.0 to 3.436.0
+  ([#2907](https://github.com/compasjs/compas/pull/2907),
+  [#2922](https://github.com/compasjs/compas/pull/2922))
   - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
-- build(deps): bump @aws-sdk/lib-storage from 3.428.0 to 3.436.0 ([#2907](https://github.com/compasjs/compas/pull/2907), [#2922](https://github.com/compasjs/compas/pull/2922))
+- build(deps): bump @aws-sdk/lib-storage from 3.428.0 to 3.436.0
+  ([#2907](https://github.com/compasjs/compas/pull/2907),
+  [#2922](https://github.com/compasjs/compas/pull/2922))
   - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
-- build(deps): bump actions/setup-node from 3.8.1 to 4.0.0 ([#2919](https://github.com/compasjs/compas/pull/2919))
+- build(deps): bump actions/setup-node from 3.8.1 to 4.0.0
+  ([#2919](https://github.com/compasjs/compas/pull/2919))
   - Major version bump
   - [Release notes](https://github.com/actions/setup-node/releases)
-- build(deps): bump postgres from 3.4.0 to 3.4.1 ([#2922](https://github.com/compasjs/compas/pull/2922))
+- build(deps): bump postgres from 3.4.0 to 3.4.1
+  ([#2922](https://github.com/compasjs/compas/pull/2922))
   - [Release notes](https://github.com/porsager/postgres/releases)
-- build(deps): bump eslint from 8.51.0 to 8.52.0 ([#2922](https://github.com/compasjs/compas/pull/2922))
+- build(deps): bump eslint from 8.51.0 to 8.52.0
+  ([#2922](https://github.com/compasjs/compas/pull/2922))
   - [Release notes](https://github.com/eslint/eslint/releases)
-- build(deps): bump eslint-plugin-import from 2.28.1 to 2.29.0 ([#2922](https://github.com/compasjs/compas/pull/2922))
+- build(deps): bump eslint-plugin-import from 2.28.1 to 2.29.0
+  ([#2922](https://github.com/compasjs/compas/pull/2922))
   - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
-- build(deps): bump pino from 8.16.0 to 8.16.1 ([#2922](https://github.com/compasjs/compas/pull/2922))
+- build(deps): bump pino from 8.16.0 to 8.16.1
+  ([#2922](https://github.com/compasjs/compas/pull/2922))
   - [Release notes](https://github.com/pinojs/pino/releases)
 
 ### [v0.7.6](https://github.com/compasjs/compas/releases/tag/v0.7.6)

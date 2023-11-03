@@ -1,38 +1,25 @@
 import { keepPreviousData } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import "./App.css";
+import { useEmojisEmojisGet } from "./generated/emojis/reactQueries.tsx";
 import {
   fetchWithBaseUrl,
   setFetchFn,
 } from "./generated/common/api-client.tsx";
-import { useDateConvertNumber } from "./generated/date/reactQueries.tsx";
 
 function App() {
-  const [dateInput, setDateInput] = useState(1687000000000);
-
   useEffect(() => {
-    setFetchFn(fetchWithBaseUrl(fetch, "https://ddv.tools/"));
+    setFetchFn(fetchWithBaseUrl(fetch, "https://api.github.com/"));
   }, []);
 
-  const { data } = useDateConvertNumber({
-    value: dateInput,
-    queryOptions: {
-      placeholderData: keepPreviousData,
-    },
-  });
+  const { data } = useEmojisEmojisGet({});
 
   return (
     <>
       <h1>Compas + React + Fetch + React Query</h1>
       <div className="card">
-        <span>Change the number:</span>
-        <input
-          type="number"
-          onChange={(element) => setDateInput(Number(element.target.value))}
-          value={dateInput}
-        />
-        {data && <p>Date is {data.isoString}</p>}
-        {!data && <p>Change the input to get a new value.</p>}
+        {data && <p>GitHub supports {Object.keys(data).length} emojis.</p>}
+        {!data && <p>Fetching emojis from GitHub</p>}
       </div>
 
       <div className="card">
