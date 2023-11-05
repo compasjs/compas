@@ -20,16 +20,16 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-s3": "3.436.0",
-    "@aws-sdk/lib-storage": "3.436.0",
+    "@aws-sdk/client-s3": "3.441.0",
+    "@aws-sdk/lib-storage": "3.441.0",
     "@compas/stdlib": "0.8.0",
     "crc": "4.3.2",
     "cron-parser": "^4.9.0",
-    "file-type": "18.5.0",
+    "file-type": "18.6.0",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
     "mime-types": "2.1.35",
-    "postgres": "3.4.1",
+    "postgres": "3.4.3",
     "sharp": "0.32.6"
   },
   "author": {
