@@ -14,7 +14,7 @@
     "@types/node": "20.9.0",
     "@types/react": "18.2.33",
     "@tanstack/react-query": "5.0.5",
-    "axios": "1.5.1",
+    "axios": "1.6.0",
     "fastest-validator": "1.17.0",
     "lodash": "~4.17.21",
     "meriyah": "4.3.7",
