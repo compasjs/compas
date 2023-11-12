@@ -4,6 +4,42 @@ editLink: false
 
 # Changelog
 
+### [v0.8.1](https://github.com/compasjs/compas/releases/tag/v0.8.1)
+
+#### Other
+
+- examples(react-fetch): show GitHub emojis
+  [`cc6b52`](https://github.com/compasjs/compas/commit/cc6b521ec0f3b378ff549ddd78b8cc71e4aa058b)
+
+#### Dependency updates
+
+- build(deps): bump eslint from 8.52.0 to 8.53.0
+  ([#2949](https://github.com/compasjs/compas/pull/2949))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.436.0 to 3.445.0
+  ([#2949](https://github.com/compasjs/compas/pull/2949),
+  [#2956](https://github.com/compasjs/compas/pull/2956))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.436.0 to 3.445.0
+  ([#2949](https://github.com/compasjs/compas/pull/2949),
+  [#2956](https://github.com/compasjs/compas/pull/2956))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 18.5.0 to 18.6.0
+  ([#2949](https://github.com/compasjs/compas/pull/2949))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump postgres from 3.4.1 to 3.4.3
+  ([#2949](https://github.com/compasjs/compas/pull/2949))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+- build(deps): bump @babel/core from 7.23.2 to 7.23.3
+  ([#2959](https://github.com/compasjs/compas/pull/2959))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.22.15 to 7.23.3
+  ([#2959](https://github.com/compasjs/compas/pull/2959))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.8.2 to 46.9.0
+  ([#2959](https://github.com/compasjs/compas/pull/2959))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+
 ### [v0.8.0](https://github.com/compasjs/compas/releases/tag/v0.8.0)
 
 #### Features
