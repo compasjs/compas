@@ -171,8 +171,8 @@ function trieCreateNode(path, route) {
     prio: path.includes("*")
       ? RoutePrio.WILDCARD
       : path.includes(":")
-      ? RoutePrio.PARAM
-      : RoutePrio.STATIC,
+        ? RoutePrio.PARAM
+        : RoutePrio.STATIC,
     path,
     route,
   };

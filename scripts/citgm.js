@@ -132,11 +132,10 @@ async function executor(logger, state) {
       ]) {
         for (const dep of Object.keys(packageJson[key] ?? {})) {
           if (dep.includes("compas")) {
-            packageJson[key][
-              dep
-            ] = `https://gitpkg.now.sh/compasjs/compas/packages/${dep
-              .split("/")
-              .pop()}?main`;
+            packageJson[key][dep] =
+              `https://gitpkg.now.sh/compasjs/compas/packages/${dep
+                .split("/")
+                .pop()}?main`;
           }
         }
       }

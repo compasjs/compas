@@ -83,9 +83,8 @@ function openApiBuildFile(generateContext) {
     description: "",
   }));
 
-  openApiSpec[
-    "x-generator"
-  ] = `Compas (https://compasjs.com) v${compasVersion}`;
+  openApiSpec["x-generator"] =
+    `Compas (https://compasjs.com) v${compasVersion}`;
 
   return openApiSpec;
 }

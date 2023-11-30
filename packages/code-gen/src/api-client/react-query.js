@@ -268,8 +268,8 @@ export function reactQueryGenerateFunction(
             distilledTargetInfo.isAxios
               ? `AxiosRequestConfig`
               : distilledTargetInfo.isFetch
-              ? `RequestInit`
-              : "unknown"
+                ? `RequestInit`
+                : "unknown"
           }${
             route.response && !distilledTargetInfo.skipResponseValidation
               ? `, skipResponseValidation?: boolean`
@@ -398,17 +398,17 @@ export function reactQueryGenerateFunction(
   const apiInstanceArgument = distilledTargetInfo.useGlobalClients
     ? ""
     : distilledTargetInfo.isAxios
-    ? `axiosInstance: AxiosInstance,`
-    : distilledTargetInfo.isFetch
-    ? "fetchFn: FetchFn,"
-    : "";
+      ? `axiosInstance: AxiosInstance,`
+      : distilledTargetInfo.isFetch
+        ? "fetchFn: FetchFn,"
+        : "";
   const apiInstanceParameter = distilledTargetInfo.useGlobalClients
     ? ""
     : distilledTargetInfo.isAxios
-    ? "axiosInstance,"
-    : distilledTargetInfo.isFetch
-    ? "fetchFn,"
-    : "";
+      ? "axiosInstance,"
+      : distilledTargetInfo.isFetch
+        ? "fetchFn,"
+        : "";
   const queryClientArgument = distilledTargetInfo.useGlobalClients
     ? ""
     : `queryClient: QueryClient,`;

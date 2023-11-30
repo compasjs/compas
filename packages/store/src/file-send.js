@@ -172,8 +172,8 @@ export async function fileSendTransformedImageResponse(
           contentType: acceptsWebp
             ? "image/webp"
             : acceptsAvif
-            ? "image/avif"
-            : file.contentType,
+              ? "image/avif"
+              : file.contentType,
         },
       },
     });
@@ -205,8 +205,8 @@ export async function fileSendTransformedImageResponse(
           contentType: acceptsWebp
             ? "image/webp"
             : acceptsAvif
-            ? "image/avif"
-            : file.contentType,
+              ? "image/avif"
+              : file.contentType,
         },
       },
     });

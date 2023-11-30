@@ -468,8 +468,8 @@ export function generatedQueryBuilderHelper(
       subEntity !== entity
         ? subEntity.shortName
         : shortName === entity.shortName
-        ? `${shortName}2`
-        : entity.shortName;
+          ? `${shortName}2`
+          : entity.shortName;
 
     // We build a JSON object for all columns and it's relations, since sub queries need
     // to return a single column result.

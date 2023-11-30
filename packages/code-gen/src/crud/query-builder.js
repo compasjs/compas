@@ -59,9 +59,8 @@ function crudQueryBuilderBuild(crud, options) {
     options.includeOwnParam &&
     (isNil(relation) || relation?.subType === "oneToMany")
   ) {
-    result.where[
-      primaryKeyName
-    ] = `ctx.validatedParams.${crudInformationGetParamName(crud)}`;
+    result.where[primaryKeyName] =
+      `ctx.validatedParams.${crudInformationGetParamName(crud)}`;
   }
 
   if (options.traverseParents && crudInformationGetParent(crud)) {

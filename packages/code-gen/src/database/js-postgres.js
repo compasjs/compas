@@ -227,16 +227,16 @@ export function jsPostgresGenerateWhere(
           fieldType === "number" && !isFloat
             ? "int"
             : fieldType === "number" && isFloat
-            ? "float"
-            : fieldType === "string"
-            ? "varchar"
-            : fieldType === "date" && dateOnly
-            ? "date"
-            : fieldType === "date" && timeOnly
-            ? "time"
-            : fieldType === "date"
-            ? "timestamptz"
-            : "uuid",
+              ? "float"
+              : fieldType === "string"
+                ? "varchar"
+                : fieldType === "date" && dateOnly
+                  ? "date"
+                  : fieldType === "date" && timeOnly
+                    ? "time"
+                    : fieldType === "date"
+                      ? "timestamptz"
+                      : "uuid",
         matchers: [],
       };
     }

@@ -269,10 +269,10 @@ export const crudPartialInlineRelationInserts = (relations, parentName) =>
           relation.isInlineArray
             ? `${relation.name}[i].map(it => it.${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey});`
             : relation.isOptional
-            ? `if (${relation.name}[i]) {
+              ? `if (${relation.name}[i]) {
              ${relation.name}[i].${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey};
             }`
-            : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey};`
+              : `${relation.name}[i].${relation.referencedKey} = ${parentName}[i].${relation.parentPrimaryKey};`
         }
       }
       

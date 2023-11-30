@@ -62,6 +62,6 @@ export type Returning<
 > = Selector extends "*"
   ? Type[]
   : Selector extends Array<infer T>
-  ? // @ts-ignore
-    Pick<Type, T>[]
-  : undefined;
+    ? // @ts-ignore
+      Pick<Type, T>[]
+    : undefined;
