@@ -2,6 +2,7 @@ import { environment, exec, isNil, spawn } from "@compas/stdlib";
 
 /**
  * @typedef {{
+ *   useHost: boolean,
  *   containersForContext: {
  *     [p: string]: {
  *       createCommand: string,
@@ -96,6 +97,15 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
         },
       },
     },
+    {
+      name: "useHost",
+      rawName: "--use-host",
+      description:
+        "Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true.",
+      value: {
+        specification: "boolean",
+      },
+    },
   ],
   executor: cliExecutor,
 };
@@ -107,42 +117,49 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
  * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 export async function cliExecutor(logger, state) {
-  const context = getContainerInformation(state.flags.postgresVersion ?? "12");
+  const useHost =
+    state.flags.useHost ?? environment.COMPAS_SKIP_DOCKER === "true";
+  const postgresVersion = state.flags.postgresVersion ?? "12";
 
-  if (!(await isDockerAvailable())) {
-    logger.error(
-      "Make sure to install Docker first. See https://docs.docker.com/install/",
-    );
+  // @ts-expect-error
+  const context = getContainerInformation(postgresVersion, useHost);
 
-    return { exitStatus: "failed" };
-  }
+  if (!useHost) {
+    if (!(await isDockerAvailable())) {
+      logger.error(
+        "Make sure to install Docker first. See https://docs.docker.com/install/",
+      );
 
-  const { exitCode, stdout, stderr } = await exec(
-    "docker container ls -a --format '{{.Names}}'",
-  );
-
-  if (exitCode !== 0) {
-    logger.error(
-      "Could not list containers available on host. Is Docker correctly installed?",
-    );
-
-    // TODO: Enable with verbose flag?
-    if (state.flags.verbose) {
-      logger.error({
-        stdout,
-        stderr,
-      });
+      return { exitStatus: "failed" };
     }
 
-    return {
-      exitStatus: "failed",
-    };
-  }
+    const { exitCode, stdout, stderr } = await exec(
+      "docker container ls -a --format '{{.Names}}'",
+    );
 
-  context.containersOnHost = stdout
-    .split("\n")
-    .map((it) => it.trim())
-    .filter((it) => it.length > 0);
+    if (exitCode !== 0) {
+      logger.error(
+        "Could not list containers available on host. Is Docker correctly installed?",
+      );
+
+      // TODO: Enable with verbose flag?
+      if (state.flags.verbose) {
+        logger.error({
+          stdout,
+          stderr,
+        });
+      }
+
+      return {
+        exitStatus: "failed",
+      };
+    }
+
+    context.containersOnHost = stdout
+      .split("\n")
+      .map((it) => it.trim())
+      .filter((it) => it.length > 0);
+  }
 
   if (state.command.includes("up")) {
     return await startContainers(logger, state, context);
@@ -166,9 +183,17 @@ export async function cliExecutor(logger, state) {
  * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 async function startContainers(logger, state, context) {
+  if (context.useHost) {
+    logger.info(`Using host values. Skipping 'up' command...`);
+    return {
+      exitStatus: "failed",
+    };
+  }
+
   // Stop all containers that should not be brought up by this context.
   // Prevent conflicts of having multiple PostgreSQL containers using the same ports.
   const stopResult = await stopContainers(logger, state, {
+    useHost: context.useHost,
     globalContainers: context.globalContainers,
     containersOnHost: context.containersOnHost.filter((it) =>
       isNil(context.containersForContext[it]),
@@ -261,6 +286,13 @@ async function startContainers(logger, state, context) {
  * @returns {Promise<import("../../cli/types.js").CliResult>}
  */
 async function stopContainers(logger, state, context) {
+  if (context.useHost) {
+    logger.info(`Using host values. Skipping 'down' command...`);
+    return {
+      exitStatus: "failed",
+    };
+  }
+
   const containersToStop = context.globalContainers.filter((it) =>
     context.containersOnHost.includes(it),
   );
@@ -299,6 +331,15 @@ async function cleanContainers(logger, state, context) {
   const allProjects = isNil(state.flags.projects);
 
   if (allProjects) {
+    if (context.useHost) {
+      logger.info(
+        `Using host values. Skipping 'clean' command without projects specified...`,
+      );
+      return {
+        exitStatus: "failed",
+      };
+    }
+
     logger.info("Removing all containers and volumes.");
 
     const stopResult = await stopContainers(logger, state, context);
@@ -352,21 +393,23 @@ async function cleanContainers(logger, state, context) {
   logger.info(`Resetting databases for '${projects.join("', '")}'.`);
 
   // Make sure containers are started
-  const startResult = await startContainers(logger, state, context);
-  if (startResult.exitStatus === "failed") {
-    return startResult;
+  if (!context.useHost) {
+    const startResult = await startContainers(logger, state, context);
+    if (startResult.exitStatus === "failed") {
+      return startResult;
+    }
   }
 
-  const postgresContainer = Object.keys(context.containersForContext).find(
-    (it) => it.startsWith("compas-postgres-"),
-  );
+  const psqlCommand = context.useHost
+    ? `psql --user postgres`
+    : `docker exec -i ${Object.keys(context.containersForContext).find((it) =>
+        it.startsWith("compas-postgres-"),
+      )} psql --user postgres`;
 
   const { stdout } = await exec(
     `echo "SELECT 'DROP DATABASE ' || quote_ident(datname) || ';' FROM pg_database WHERE (${projects
       .map((it) => `datname LIKE '${it}%'`)
-      .join(
-        " OR ",
-      )}) AND datistemplate=false" | docker exec -i ${postgresContainer} psql --user postgres`,
+      .join(" OR ")}) AND datistemplate=false" | ${psqlCommand}`,
   );
 
   logger.info(
@@ -388,7 +431,7 @@ async function cleanContainers(logger, state, context) {
   }
 
   const { exitCode, ...dockerLogs } = await exec(
-    `echo '${pgCommand}' | docker exec -i ${postgresContainer} psql --user postgres`,
+    `echo '${pgCommand}' | ${psqlCommand}`,
   );
 
   if (exitCode !== 0) {
@@ -403,11 +446,13 @@ async function cleanContainers(logger, state, context) {
 
 /**
  *
- * @param postgresVersion
+ * @param {string} postgresVersion
+ * @param {boolean} useHost
  * @returns {DockerContext}
  */
-function getContainerInformation(postgresVersion) {
+function getContainerInformation(postgresVersion, useHost) {
   return {
+    useHost,
     containersForContext: {
       [`compas-postgres-${postgresVersion}`]: {
         pullCommand: ["docker", ["pull", `postgres:${postgresVersion}`]],
