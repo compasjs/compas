@@ -4,6 +4,48 @@ editLink: false
 
 # Changelog
 
+### [v0.9.0](https://github.com/compasjs/compas/releases/tag/v0.9.0)
+
+#### Features
+
+- feat(cli): support `--use-host` on `compas docker` commands
+  [`428f5a`](https://github.com/compasjs/compas/commit/428f5af2cb401598a0db16bd9956537b37b2ed8d)
+
+#### Other
+
+- chore: run prettier on all files
+  [`e3009b`](https://github.com/compasjs/compas/commit/e3009b9f14c0cb4d1d9bc0f8cd87c2df960e86b8)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.445.0 to 3.462.0
+  ([#2968](https://github.com/compasjs/compas/pull/2968),
+  [#3006](https://github.com/compasjs/compas/pull/3006))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.445.0 to 3.462.0
+  ([#2968](https://github.com/compasjs/compas/pull/2968),
+  [#3006](https://github.com/compasjs/compas/pull/3006))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 18.6.0 to 18.7.0
+  ([#2968](https://github.com/compasjs/compas/pull/2968))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump prettier from 3.0.3 to 3.1.0
+  ([#2968](https://github.com/compasjs/compas/pull/2968))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump @babel/core from 7.23.3 to 7.23.5
+  ([#3006](https://github.com/compasjs/compas/pull/3006))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint from 8.53.0 to 8.54.0
+  ([#3006](https://github.com/compasjs/compas/pull/3006))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump sharp from 0.32.6 to 0.33.0
+  ([#3006](https://github.com/compasjs/compas/pull/3006))
+  - Major version bump
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump pino from 8.16.1 to 8.16.2
+  ([#3006](https://github.com/compasjs/compas/pull/3006))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+
 ### [v0.8.1](https://github.com/compasjs/compas/releases/tag/v0.8.1)
 
 #### Other
