@@ -43,7 +43,7 @@
   "homepage": "https://compasjs.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/compasjs/compas.git",
+    "url": "git+https://github.com/compasjs/compas.git",
     "directory": "packages/server"
   },
   "publishConfig": {
