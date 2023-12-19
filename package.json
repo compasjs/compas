@@ -12,15 +12,15 @@
   },
   "devDependencies": {
     "@types/node": "20.10.1",
-    "@types/react": "18.2.43",
-    "@tanstack/react-query": "5.13.4",
+    "@types/react": "18.2.45",
+    "@tanstack/react-query": "5.14.1",
     "axios": "1.6.2",
     "fastest-validator": "1.17.0",
     "lodash": "~4.17.21",
     "meriyah": "4.3.9",
     "react": "18.2.0",
     "typescript": "5.3.3",
-    "vitepress": "1.0.0-rc.31"
+    "vitepress": "1.0.0-rc.32"
   },
   "author": {
     "name": "Dirk de Visser",
