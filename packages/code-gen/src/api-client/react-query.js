@@ -161,6 +161,7 @@ export function reactQueryGetApiClientFile(generateContext, route) {
 
   // @tanstack/react-query imports
   importCollector.destructure("@tanstack/react-query", "QueryKey");
+  importCollector.destructure("@tanstack/react-query", "Updater");
   importCollector.destructure("@tanstack/react-query", "UseMutationOptions");
   importCollector.destructure("@tanstack/react-query", "UseMutationResult");
   importCollector.destructure("@tanstack/react-query", "UseQueryOptions");
@@ -607,7 +608,9 @@ ${hookName}.setQueryData = (
         })},`
       : ""
   }
-  data: ${contextNames.responseTypeName ?? "unknown"},
+  data: Updater<${contextNames.responseTypeName ?? "unknown"}, ${
+    contextNames.responseTypeName ?? "unknown"
+  }>,
 ) => {
   ${reactQueryCheckIfRequiredVariablesArePresent(
     generateContext,

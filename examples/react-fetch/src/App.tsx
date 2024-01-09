@@ -1,11 +1,10 @@
-import { keepPreviousData } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
-import { useEmojisEmojisGet } from "./generated/emojis/reactQueries.tsx";
 import {
   fetchWithBaseUrl,
   setFetchFn,
 } from "./generated/common/api-client.tsx";
+import { useEmojisEmojisGet } from "./generated/emojis/reactQueries.tsx";
 
 function App() {
   useEffect(() => {
