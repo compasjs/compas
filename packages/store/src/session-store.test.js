@@ -40,7 +40,7 @@ test("store/session-store", (t) => {
 
     const accessTokenResult = await sessionStoreVerifyAndDecodeJWT(
       newTestEvent(t),
-      sessionSettings,
+      sessionSettings.signingKey,
       tokenResult.value.accessToken,
     );
 
@@ -110,7 +110,7 @@ test("store/session-store", (t) => {
 
       const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(
         newTestEvent(t),
-        sessionSettings,
+        sessionSettings.signingKey,
         result.value.accessToken,
       );
       t.ok(isNil(accessTokenPayload.error));
@@ -631,7 +631,7 @@ test("store/session-store", (t) => {
 
       const accessTokenPayload = await sessionStoreVerifyAndDecodeJWT(
         newTestEvent(t),
-        sessionSettings,
+        sessionSettings.signingKey,
         sessionRefreshResult.value.accessToken,
       );
       t.ok(isNil(accessTokenPayload.error));

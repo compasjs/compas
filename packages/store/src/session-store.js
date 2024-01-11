@@ -20,9 +20,18 @@ import { queueWorkerAddJob } from "./queue-worker.js";
  */
 
 /**
+ * Session store settings. Either the `tokenMaxAgeResolver` is required or the resolved
+ * fields.
+ *
  * @typedef {object} SessionStoreSettings
- * @property {number} accessTokenMaxAgeInSeconds
- * @property {number} refreshTokenMaxAgeInSeconds
+ * @property {(sql: import("postgres").Sql<{}>, session:
+ *   import("./generated/common/types.d.ts").QueryResultStoreSessionStore) => (Promise<{
+ *   accessTokenMaxAgeInSeconds: number, refreshTokenMaxAgeInSeconds: number,
+ * }>|{
+ *  accessTokenMaxAgeInSeconds: number, refreshTokenMaxAgeInSeconds: number,
+ * })} [tokenMaxAgeResolver]
+ * @property {number} [accessTokenMaxAgeInSeconds]
+ * @property {number} [refreshTokenMaxAgeInSeconds]
  * @property {string} signingKey
  */
 
@@ -105,7 +114,7 @@ export async function sessionStoreGet(
 
   const token = await sessionStoreVerifyAndDecodeJWT(
     newEventFromEvent(event),
-    sessionSettings,
+    sessionSettings.signingKey,
     accessTokenString,
   );
 
@@ -290,7 +299,7 @@ export async function sessionStoreRefreshTokens(
 
   const token = await sessionStoreVerifyAndDecodeJWT(
     newEventFromEvent(event),
-    sessionSettings,
+    sessionSettings.signingKey,
     refreshTokenString,
   );
 
@@ -509,6 +518,9 @@ export async function sessionStoreCreateTokenPair(
     return validateResult;
   }
 
+  const { accessTokenMaxAgeInSeconds, refreshTokenMaxAgeInSeconds } =
+    await sessionStoreResolveTokenMaxAge(sql, session, sessionSettings);
+
   const accessTokenId = uuid();
   const refreshTokenId = uuid();
 
@@ -516,12 +528,10 @@ export async function sessionStoreCreateTokenPair(
   const refreshTokenExpireDate = new Date();
 
   accessTokenExpireDate.setSeconds(
-    accessTokenExpireDate.getSeconds() +
-      sessionSettings.accessTokenMaxAgeInSeconds,
+    accessTokenExpireDate.getSeconds() + accessTokenMaxAgeInSeconds,
   );
   refreshTokenExpireDate.setSeconds(
-    refreshTokenExpireDate.getSeconds() +
-      sessionSettings.refreshTokenMaxAgeInSeconds,
+    refreshTokenExpireDate.getSeconds() + refreshTokenMaxAgeInSeconds,
   );
 
   await queries.sessionStoreTokenInsert(
@@ -630,7 +640,7 @@ export function sessionStoreCreateJWT(
  * Verify and decode a JWT token
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {SessionStoreSettings} sessionSettings
+ * @param {string} signingKey
  * @param {string} [tokenString]
  * @returns {Promise<Either<{
  *   header: object,
@@ -643,7 +653,7 @@ export function sessionStoreCreateJWT(
  */
 export async function sessionStoreVerifyAndDecodeJWT(
   event,
-  sessionSettings,
+  signingKey,
   tokenString,
 ) {
   eventStart(event, "sessionStore.verifyAndDecodeJWT");
@@ -666,7 +676,8 @@ export async function sessionStoreVerifyAndDecodeJWT(
 
   tokenString = tokenString.trim();
 
-  // Arbitrary length check, jws verify checks the contents but expects 3 parts for a valid JWT
+  // Arbitrary length check, jws verify checks the contents but expects 3 parts for a
+  // valid JWT
   if (tokenString.length < 6 || tokenString.split(".").length !== 3) {
     eventStop(event);
 
@@ -678,7 +689,7 @@ export async function sessionStoreVerifyAndDecodeJWT(
   const { value, error } = await new Promise((resolve) => {
     createVerify({
       signature: tokenString,
-      secret: sessionSettings.signingKey,
+      secret: signingKey,
       algorithm: "HS256",
     })
       .once("error", (error) => {
@@ -729,6 +740,44 @@ export async function sessionStoreVerifyAndDecodeJWT(
 }
 
 /**
+ * Resolve token lifetimes for the provided session.
+ *
+ * @param {import("postgres").Sql<{}>} sql
+ * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
+ * @param {SessionStoreSettings} settings
+ * @returns {Promise<{
+ *   accessTokenMaxAgeInSeconds: number,
+ *   refreshTokenMaxAgeInSeconds: number
+ * }>}
+ */
+export async function sessionStoreResolveTokenMaxAge(sql, session, settings) {
+  let { accessTokenMaxAgeInSeconds, refreshTokenMaxAgeInSeconds } = settings;
+
+  if (typeof settings.tokenMaxAgeResolver === "function") {
+    const result = await settings.tokenMaxAgeResolver(sql, session);
+    accessTokenMaxAgeInSeconds = result.accessTokenMaxAgeInSeconds;
+    refreshTokenMaxAgeInSeconds = result.refreshTokenMaxAgeInSeconds;
+  }
+
+  accessTokenMaxAgeInSeconds ??= 0;
+  refreshTokenMaxAgeInSeconds ??= 0;
+
+  if (accessTokenMaxAgeInSeconds >= refreshTokenMaxAgeInSeconds) {
+    throw AppError.validationError("validator.error", {
+      "$.sessionStoreSettings.accessTokenMaxAgeInSeconds": {
+        message:
+          "Max age of refresh token should be longer than the max age of an access token",
+      },
+    });
+  }
+
+  return {
+    accessTokenMaxAgeInSeconds,
+    refreshTokenMaxAgeInSeconds,
+  };
+}
+
+/**
  * Create a fast checksum for the data object
  *
  * @param {any} data
@@ -747,15 +796,27 @@ function sessionStoreChecksumForData(data) {
 function validateSessionStoreSettings(input) {
   const errObject = {};
 
-  if (typeof input.accessTokenMaxAgeInSeconds !== "number") {
-    errObject["$.sessionStoreSettings.accessTokenMaxAgeInSeconds"] = {
-      key: "validator.number.type",
+  if (
+    typeof input.tokenMaxAgeResolver !== "function" &&
+    (typeof input.accessTokenMaxAgeInSeconds !== "number" ||
+      typeof input.refreshTokenMaxAgeInSeconds !== "number")
+  ) {
+    errObject["$.tokenMaxAgeResolver"] = {
+      key: "validator.function.type",
     };
   }
-  if (typeof input.refreshTokenMaxAgeInSeconds !== "number") {
-    errObject["$.sessionStoreSettings.refreshTokenMaxAgeInSeconds"] = {
-      key: "validator.number.type",
-    };
+
+  if (typeof input.tokenMaxAgeResolver !== "function") {
+    if (typeof input.accessTokenMaxAgeInSeconds !== "number") {
+      errObject["$.sessionStoreSettings.accessTokenMaxAgeInSeconds"] = {
+        key: "validator.number.type",
+      };
+    }
+    if (typeof input.refreshTokenMaxAgeInSeconds !== "number") {
+      errObject["$.sessionStoreSettings.refreshTokenMaxAgeInSeconds"] = {
+        key: "validator.number.type",
+      };
+    }
   }
 
   if (typeof input.signingKey !== "string") {
@@ -774,17 +835,6 @@ function validateSessionStoreSettings(input) {
   if (Object.keys(errObject).length > 0) {
     return {
       error: new AppError("validator.error", 400, errObject),
-    };
-  }
-
-  if (input.accessTokenMaxAgeInSeconds >= input.refreshTokenMaxAgeInSeconds) {
-    return {
-      error: AppError.validationError("validator.error", {
-        "$.sessionStoreSettings.accessTokenMaxAgeInSeconds": {
-          message:
-            "Max age of refresh token should be longer than the max age of an access token",
-        },
-      }),
     };
   }
 

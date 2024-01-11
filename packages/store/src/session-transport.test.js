@@ -55,7 +55,7 @@ test("store/session-transport", (t) => {
 
     const accessTokenResult = await sessionStoreVerifyAndDecodeJWT(
       newTestEvent(t),
-      sessionStoreSettings,
+      sessionStoreSettings.signingKey,
       tokenResult.value.accessToken,
     );
 
