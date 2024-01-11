@@ -4,6 +4,71 @@ editLink: false
 
 # Changelog
 
+### [v0.10.0](https://github.com/compasjs/compas/releases/tag/v0.10.0)
+
+#### Features
+
+- feat(code-gen): support `Updater` in RQ `setQueryData`
+  [`7ba289`](https://github.com/compasjs/compas/commit/7ba289bbbf6e7597c0890d34eba73b8573b9f043)
+- feat(store): accept a `tokenMaxAgeResolver` in the session settings
+  [`9fa68b`](https://github.com/compasjs/compas/commit/9fa68b8caa0f547c4adc47cfa22cc87d770930b2)
+
+#### Other
+
+- chore: run `npm pkg fix`
+  [`5dc314`](https://github.com/compasjs/compas/commit/5dc314839505516707694669c34df911e7d70cf9)
+
+#### Dependency updates
+
+- build(deps): bump github/codeql-action from 2 to 3
+  ([#3014](https://github.com/compasjs/compas/pull/3014))
+  [`e3252b`](https://github.com/compasjs/compas/commit/e3252b5ec6deef5466ad55d05d3f1ac1b2fd1157)
+  - [Release notes](https://github.com/github/codeql-action/releases)
+- build(deps): bump actions/upload-artifact from 3 to 4
+  ([#3016](https://github.com/compasjs/compas/pull/3016))
+  [`57398e`](https://github.com/compasjs/compas/commit/57398eb32df2b8594bcae483a2a416758ab72c04)
+  - [Release notes](https://github.com/actions/upload-artifact/releases)
+- build(deps): bump file-type from 18.7.0 to 19.0.0
+  ([#3032](https://github.com/compasjs/compas/pull/3032))
+  - Major version bump
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump c8 from 8.0.1 to 9.0.0
+  ([#3032](https://github.com/compasjs/compas/pull/3032))
+  - Major version bump
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump eslint-plugin-jsdoc from 46.9.0 to 48.0.2
+  ([#3032](https://github.com/compasjs/compas/pull/3032))
+  - Major version bump
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @babel/core from 7.23.5 to 7.23.7
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint from 8.54.0 to 8.56.0
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump eslint-config-prettier from 9.0.0 to 9.1.0
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+- build(deps): bump eslint-plugin-import from 2.29.0 to 2.29.1
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump prettier from 3.1.0 to 3.1.1
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump koa from 2.14.2 to 2.15.0
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+- build(deps): bump pino from 8.16.2 to 8.17.2
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.462.0 to 3.489.0
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.462.0 to 3.489.0
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump sharp from 0.33.0 to 0.33.1
+  ([#3035](https://github.com/compasjs/compas/pull/3035))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+
 ### [v0.9.0](https://github.com/compasjs/compas/releases/tag/v0.9.0)
 
 #### Features
