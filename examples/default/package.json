@@ -11,7 +11,7 @@
   "devDependencies": {
     "@compas/code-gen": "*",
     "@compas/eslint-plugin": "*",
-    "axios": "1.6.5"
+    "axios": "1.6.7"
   },
   "prettier": "@compas/eslint-plugin/prettierrc",
   "exampleMetadata": {
