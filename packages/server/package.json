@@ -27,7 +27,7 @@
     "co-body": "6.1.0",
     "formidable": "2.1.1",
     "keygrip": "1.1.0",
-    "koa": "2.15.0"
+    "koa": "2.15.1"
   },
   "author": {
     "name": "Dirk de Visser",
