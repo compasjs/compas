@@ -20,10 +20,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@types/node": "20.12.4",
+    "@types/node": "20.12.7",
     "dotenv": "16.4.5",
     "lodash.merge": "4.6.2",
-    "pino": "8.19.0"
+    "pino": "8.20.0"
   },
   "author": {
     "name": "Dirk de Visser",
