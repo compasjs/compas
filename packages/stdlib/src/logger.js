@@ -3,6 +3,7 @@ import { environment, isProduction } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil, isPlainObject, merge } from "./lodash.js";
 import { loggerWriteGithubActions, loggerWritePretty } from "./log-writers.js";
+import { _compasSentryExport } from "./sentry.js";
 
 /**
  * @typedef {object} Logger
@@ -122,6 +123,63 @@ export function newLogger(options) {
   const childLogger = rootInstance.child({
     context,
   });
+
+  if (typeof _compasSentryExport?.addBreadcrumb === "function") {
+    let addedContextAsBreadcrumb = false;
+
+    return {
+      info: (message) => {
+        if (!addedContextAsBreadcrumb) {
+          // @ts-expect-error
+          _compasSentryExport.addBreadcrumb({
+            category: context.type,
+            data: {
+              ...context,
+            },
+            level: "info",
+            type: "default",
+          });
+          addedContextAsBreadcrumb = true;
+        }
+
+        // @ts-expect-error
+        _compasSentryExport.addBreadcrumb({
+          category: context.type,
+          data: typeof message === "string" ? undefined : message,
+          message: typeof message === "string" ? message : undefined,
+          level: "info",
+          type: "default",
+        });
+
+        childLogger.info({ message });
+      },
+      error: (message) => {
+        if (!addedContextAsBreadcrumb) {
+          // @ts-expect-error
+          _compasSentryExport.addBreadcrumb({
+            category: "log",
+            data: {
+              ...context,
+            },
+            level: "info",
+            type: "default",
+          });
+          addedContextAsBreadcrumb = true;
+        }
+
+        // @ts-expect-error
+        _compasSentryExport.addBreadcrumb({
+          category: "log",
+          data: typeof message === "string" ? undefined : message,
+          message: typeof message === "string" ? message : undefined,
+          level: "error",
+          type: "error",
+        });
+
+        childLogger.error({ message });
+      },
+    };
+  }
 
   return {
     info: (message) => childLogger.info({ message }),

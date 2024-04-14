@@ -9,9 +9,10 @@ import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
 import {
   loggerDetermineDefaultDestination,
-  newLogger,
   loggerExtendGlobalContext,
+  newLogger,
 } from "./logger.js";
+import { _compasSentryExport } from "./sentry.js";
 
 /**
  * Get the number of seconds since Unix epoch (1-1-1970).
@@ -97,30 +98,42 @@ export function mainFn(meta, cb) {
     process.exit(1);
   };
 
-  process.on("unhandledRejection", (reason, promise) =>
+  process.on("unhandledRejection", (reason, promise) => {
+    if (_compasSentryExport) {
+      _compasSentryExport.captureException(reason);
+    }
+
     unhandled({
       type: "unhandledRejection",
       reason: AppError.format(reason),
       promise,
-    }),
-  );
+    });
+  });
 
-  process.on("uncaughtException", (error, origin) =>
+  process.on("uncaughtException", (error, origin) => {
+    if (_compasSentryExport) {
+      _compasSentryExport.captureException(error);
+    }
+
     unhandled({
       type: "uncaughtException",
       error: AppError.format(error),
       origin,
-    }),
-  );
+    });
+  });
 
-  process.on("warning", (warn) =>
+  process.on("warning", (warn) => {
     logger.error({
       type: "warning",
       warning: AppError.format(warn),
-    }),
-  );
+    });
+  });
 
   Promise.resolve(cb(logger)).catch((e) => {
+    if (_compasSentryExport) {
+      _compasSentryExport.captureException(e);
+    }
+
     unhandled({
       type: "error",
       message: "Error caught from callback passed in `mainFn`",

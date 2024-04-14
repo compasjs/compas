@@ -25,6 +25,9 @@
     "lodash.merge": "4.6.2",
     "pino": "8.20.0"
   },
+  "devDependencies": {
+    "@sentry/node": "^7.110.0"
+  },
   "author": {
     "name": "Dirk de Visser",
     "email": "npm@dirkdevisser.nl",

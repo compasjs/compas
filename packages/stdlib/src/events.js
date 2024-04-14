@@ -1,5 +1,6 @@
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
+import { _compasSentryExport } from "./sentry.js";
 
 /**
  * @typedef {object} InsightEventSpan
@@ -13,8 +14,8 @@ import { isNil } from "./lodash.js";
 
 /**
  * The insight event is a tool for tracking the duration of (async) functions manually.
- * By utilizing the insight event, you can gain access to a task or request-specific logger and
- * obtain insights into the execution time of your functions.
+ * By utilizing the insight event, you can gain access to a task or request-specific
+ * logger and obtain insights into the execution time of your functions.
  *
  * How to use the Insight Event:
  *
@@ -24,7 +25,8 @@ import { isNil } from "./lodash.js";
  * In your tests you can use {@link newTestEvent}.
  *
  * You could pass the event object down through your (async) functions as an argument.
- * This allows the insight event to associate the event with the specific task or request.
+ * This allows the insight event to associate the event with the specific task or
+ * request.
  *
  * Finally, you should stop the event for correct logging by calling {@link eventStop}.
  * When the root event is stopped via {@link eventStop} it calculates the duration
@@ -64,6 +66,7 @@ import { isNil } from "./lodash.js";
  * @property {InsightEvent} [rootEvent]
  * @property {string} [name]
  * @property {InsightEventSpan} span
+ * @property {import("@sentry/node").Span} [_compasSentrySpan]
  */
 
 /**
@@ -91,6 +94,8 @@ function InsightEventConstructor(logger, signal) {
       abortedTime: undefined,
       children: [],
     },
+
+    _compasSentrySpan: undefined,
   };
 }
 
@@ -119,6 +124,10 @@ export function newEvent(logger, signal) {
 export function newEventFromEvent(event) {
   if (event.signal?.aborted) {
     event.span.abortedTime = Date.now();
+
+    if (event._compasSentrySpan) {
+      event._compasSentrySpan.end();
+    }
 
     throw AppError.serverError({
       message: "Operation aborted",
@@ -151,8 +160,20 @@ export function eventStart(event, name) {
   event.span.name = name;
   event.span.startTime = Date.now();
 
+  if (typeof _compasSentryExport?.startInactiveSpan === "function") {
+    event._compasSentrySpan = _compasSentryExport.startInactiveSpan({
+      op: "event",
+      name: name,
+      description: name,
+    });
+  }
+
   if (event.signal?.aborted) {
     event.span.abortedTime = Date.now();
+
+    if (event._compasSentrySpan) {
+      event._compasSentrySpan.end();
+    }
 
     throw AppError.serverError({
       message: "Operation aborted",
@@ -174,8 +195,17 @@ export function eventRename(event, name) {
   event.name = name;
   event.span.name = name;
 
+  if (event._compasSentrySpan) {
+    event._compasSentrySpan.description = name;
+    event._compasSentrySpan.updateName(name);
+  }
+
   if (event.signal?.aborted) {
     event.span.abortedTime = Date.now();
+
+    if (event._compasSentrySpan) {
+      event._compasSentrySpan.end();
+    }
 
     throw AppError.serverError({
       message: "Operation aborted",
@@ -197,6 +227,10 @@ export function eventStop(event) {
 
   if (event.span.startTime && event.span.stopTime) {
     event.span.duration = event.span.stopTime - event.span.startTime;
+  }
+
+  if (event._compasSentrySpan) {
+    event._compasSentrySpan.end();
   }
 
   if (isNil(event.rootEvent)) {

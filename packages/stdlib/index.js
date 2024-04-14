@@ -92,3 +92,5 @@ export {
   eventStop,
   newEventFromEvent,
 } from "./src/events.js";
+
+export { _compasSentryExport, compasWithSentry } from "./src/sentry.js";
