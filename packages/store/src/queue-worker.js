@@ -1,5 +1,6 @@
 import { setTimeout } from "node:timers/promises";
 import {
+  _compasSentryExport,
   AppError,
   eventStart,
   eventStop,
@@ -498,82 +499,109 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
       job,
     });
 
+    if (_compasSentryExport && isCronJob) {
+      _compasSentryExport.captureException(
+        new Error("No handler registered for the job."),
+      );
+    }
+
     return;
   }
 
-  const event = newEvent(
-    newLogger({
-      ctx: {
-        type: "queue_handler",
-        id: job.id,
+  if (_compasSentryExport) {
+    await _compasSentryExport.startSpan(
+      {
+        op: "job",
+        name: job.name,
+        description: job.name,
       },
-    }),
-    AbortSignal.timeout(timeout),
-  );
+      async () => {
+        return await exec();
+      },
+    );
+  } else {
+    await exec();
+  }
 
-  event.log.info({
-    job,
-  });
-
-  try {
-    // @ts-expect-error
-    await sql.savepoint(async (sql) => {
-      // @ts-expect-error
-      await handler(event, sql, job);
-    });
-    isJobComplete = true;
-  } catch (e) {
-    event.log.error({
-      type: "job_error",
-      name: job.name,
-      scheduledAt: job.scheduledAt,
-      retryCount: job.retryCount,
-      error: AppError.format(e),
-    });
-
-    isJobComplete = job.retryCount + 1 >= options.maxRetryCount;
-
-    if (options.deleteJobOnCompletion && !isJobComplete) {
-      // Re insert the job, since this transaction did remove the job.
-      await queries.jobInsert(sql, {
-        ...job,
-        isComplete: false,
-        retryCount: job.retryCount + 1,
-      });
-    } else {
-      await queries.jobUpdate(sql, {
-        update: {
-          isComplete: isJobComplete,
-          retryCount: job.retryCount + 1,
-        },
-        where: {
+  async function exec() {
+    const event = newEvent(
+      newLogger({
+        ctx: {
+          type: "queue_handler",
           id: job.id,
+        },
+      }),
+      AbortSignal.timeout(timeout),
+    );
+
+    event.log.info({
+      job,
+    });
+
+    try {
+      // @ts-expect-error
+      await sql.savepoint(async (sql) => {
+        // @ts-expect-error
+        await handler(event, sql, job);
+      });
+      isJobComplete = true;
+    } catch (e) {
+      if (_compasSentryExport) {
+        _compasSentryExport.captureException(e);
+      }
+
+      event.log.error({
+        type: "job_error",
+        name: job.name,
+        scheduledAt: job.scheduledAt,
+        retryCount: job.retryCount,
+        error: AppError.format(e),
+      });
+
+      isJobComplete = job.retryCount + 1 >= options.maxRetryCount;
+
+      if (options.deleteJobOnCompletion && !isJobComplete) {
+        // Re insert the job, since this transaction did remove the job.
+        await queries.jobInsert(sql, {
+          ...job,
+          isComplete: false,
+          retryCount: job.retryCount + 1,
+        });
+      } else {
+        await queries.jobUpdate(sql, {
+          update: {
+            isComplete: isJobComplete,
+            retryCount: job.retryCount + 1,
+          },
+          where: {
+            id: job.id,
+          },
+        });
+      }
+    }
+
+    if (isCronJob && isJobComplete) {
+      const nextValue = cron
+        .parseExpression(job.data.cronExpression, {
+          utc: true,
+        })
+        .next()
+        .toDate();
+
+      // This causes an extra insert if a finished cron job is manually restarted. We don't
+      // correct for this behaviour here, since we are kinda in a hot loop. It will be
+      // autocorrected on the next call of `queueWorkerRegisterCronJobs` (at queue
+      // startup).
+      await queries.jobInsert(sql, {
+        name: job.name,
+        priority: job.priority,
+        scheduledAt: nextValue,
+        data: {
+          jobType: JOB_TYPE_CRON,
+          cronExpression: job.data.cronExpression,
+          cronLastCompletedAt: new Date(),
         },
       });
     }
-  }
-
-  if (isCronJob && isJobComplete) {
-    const nextValue = cron
-      .parseExpression(job.data.cronExpression, {
-        utc: true,
-      })
-      .next()
-      .toDate();
-
-    // This causes an extra insert if a finished cron job is manually restarted. We don't
-    // correct for this behaviour here, since we are kinda in a hot loop. It will be
-    // autocorrected on the next call of `queueWorkerRegisterCronJobs` (at queue
-    // startup).
-    await queries.jobInsert(sql, {
-      name: job.name,
-      priority: job.priority,
-      scheduledAt: nextValue,
-      data: {
-        jobType: JOB_TYPE_CRON,
-        cronExpression: job.data.cronExpression,
-        cronLastCompletedAt: new Date(),
-      },
-    });
   }
 }
