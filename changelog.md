@@ -4,6 +4,102 @@ editLink: false
 
 # Changelog
 
+### [v0.10.1](https://github.com/compasjs/compas/releases/tag/v0.10.1)
+
+#### Features
+
+- feat(stdlib): add Sentry support
+  [`a8a4ef`](https://github.com/compasjs/compas/commit/a8a4ef2d47da2484faa49519be8f2b34e3e29c4f)
+- feat(store): add Sentry support to the queue
+  [`b8041f`](https://github.com/compasjs/compas/commit/b8041feb018aa29459ba146a4011c5bb6ee8c3b3)
+- feat(server): add Sentry support to the Koa instance returned by `getApp`
+  [`db1ea9`](https://github.com/compasjs/compas/commit/db1ea9fab69fab40248ba417fa79ecf491f8f002)
+
+See the
+[inline docs](https://github.com/compasjs/compas/blob/main/packages/stdlib/src/sentry.js)
+for more information.
+
+#### Dependency updates
+
+- build(deps): bump prettier from 3.1.1 to 3.2.5
+  ([#3047](https://github.com/compasjs/compas/pull/3047),
+  [#3064](https://github.com/compasjs/compas/pull/3064))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump c8 from 9.0.0 to 9.1.0
+  ([#3047](https://github.com/compasjs/compas/pull/3047))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump dotenv from 16.3.1 to 16.4.5
+  ([#3047](https://github.com/compasjs/compas/pull/3047),
+  [#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3079](https://github.com/compasjs/compas/pull/3079),
+  [#3089](https://github.com/compasjs/compas/pull/3089))
+- build(deps): bump @aws-sdk/client-s3 from 3.489.0 to 3.554.0
+  ([#3047](https://github.com/compasjs/compas/pull/3047),
+  [#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3079](https://github.com/compasjs/compas/pull/3079),
+  [#3085](https://github.com/compasjs/compas/pull/3085),
+  [#3104](https://github.com/compasjs/compas/pull/3104),
+  [#3139](https://github.com/compasjs/compas/pull/3139),
+  [#3150](https://github.com/compasjs/compas/pull/3150))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.489.0 to 3.554.0
+  ([#3047](https://github.com/compasjs/compas/pull/3047),
+  [#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3079](https://github.com/compasjs/compas/pull/3079),
+  [#3085](https://github.com/compasjs/compas/pull/3085),
+  [#3104](https://github.com/compasjs/compas/pull/3104),
+  [#3139](https://github.com/compasjs/compas/pull/3139),
+  [#3150](https://github.com/compasjs/compas/pull/3150))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump sharp from 0.33.1 to 0.33.3
+  ([#3047](https://github.com/compasjs/compas/pull/3047),
+  [#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump @babel/core from 7.23.7 to 7.24.4
+  ([#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3104](https://github.com/compasjs/compas/pull/3104),
+  [#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @babel/eslint-parser from 7.23.3 to 7.24.1
+  ([#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump eslint-plugin-jsdoc from 48.0.2 to 48.2.3
+  ([#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3079](https://github.com/compasjs/compas/pull/3079),
+  [#3085](https://github.com/compasjs/compas/pull/3085),
+  [#3089](https://github.com/compasjs/compas/pull/3089),
+  [#3104](https://github.com/compasjs/compas/pull/3104),
+  [#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump pino from 8.17.2 to 8.20.0
+  ([#3064](https://github.com/compasjs/compas/pull/3064),
+  [#3085](https://github.com/compasjs/compas/pull/3085),
+  [#3150](https://github.com/compasjs/compas/pull/3150))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump actions/setup-node from 4.0.0 to 4.0.2
+  ([#3069](https://github.com/compasjs/compas/pull/3069))
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- build(deps): bump chokidar from 3.5.3 to 3.6.0
+  ([#3079](https://github.com/compasjs/compas/pull/3079))
+  - [Release notes](https://github.com/paulmillr/chokidar/releases)
+- build(deps): bump recast from 0.23.4 to 0.23.6
+  ([#3104](https://github.com/compasjs/compas/pull/3104),
+  [#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- build(deps): bump eslint from 8.56.0 to 8.57.0
+  ([#3104](https://github.com/compasjs/compas/pull/3104))
+  - [Release notes](https://github.com/eslint/eslint/releases)
+- build(deps): bump tar from 6.2.0 to 6.2.1
+  ([#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/isaacs/node-tar/releases)
+- build(deps): bump koa from 2.15.0 to 2.15.3
+  ([#3139](https://github.com/compasjs/compas/pull/3139),
+  [#3150](https://github.com/compasjs/compas/pull/3150))
+- build(deps): bump postgres from 3.4.3 to 3.4.4
+  ([#3139](https://github.com/compasjs/compas/pull/3139))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+
 ### [v0.10.0](https://github.com/compasjs/compas/releases/tag/v0.10.0)
 
 #### Features
