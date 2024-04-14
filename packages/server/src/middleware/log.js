@@ -1,5 +1,6 @@
 import { Transform } from "node:stream";
 import {
+  _compasSentryExport,
   AppError,
   eventStart,
   eventStop,
@@ -41,7 +42,7 @@ export function logMiddleware(app, options) {
    * @param {bigint} startTime
    * @param {number} length
    */
-  function logInfo(ctx, startTime, length) {
+  function logInfoAndEndTrace(ctx, startTime, length) {
     const duration = Math.round(
       Number(process.hrtime.bigint() - startTime) / 1000000,
     );
@@ -79,7 +80,29 @@ export function logMiddleware(app, options) {
     // Skip eventStop if we don't have events enabled.
     // Skip eventStop for CORS requests, this gives a bit cleaner logs.
     if (options.disableRootEvent !== true && ctx.method !== "OPTIONS") {
+      if (_compasSentryExport) {
+        const span = _compasSentryExport.getActiveSpan();
+        if (span) {
+          span.description = ctx.event.name;
+          span.updateName(ctx.event.name);
+        }
+      }
+
       eventStop(ctx.event);
+    }
+
+    if (_compasSentryExport) {
+      const span = _compasSentryExport.getActiveSpan();
+      if (span) {
+        span.setStatus(
+          _compasSentryExport.getSpanStatusFromHttpCode(ctx.status),
+        );
+        span.setAttributes({
+          params: ctx.validatedParams,
+          query: ctx.validatedQuery,
+        });
+        span.end();
+      }
     }
   }
 
@@ -96,6 +119,10 @@ export function logMiddleware(app, options) {
       syscall: error.syscall,
       error: AppError.format(error),
     });
+
+    if (_compasSentryExport) {
+      _compasSentryExport.captureException(error);
+    }
   });
 
   return async (ctx, next) => {
@@ -124,8 +151,9 @@ export function logMiddleware(app, options) {
     } catch {
       // May throw on circular objects
     }
+
     if (!isNil(responseLength)) {
-      logInfo(ctx, startTime, responseLength);
+      logInfoAndEndTrace(ctx, startTime, responseLength);
       return;
     } else if (ctx.body && ctx.body.readable) {
       const body = ctx.body;
@@ -134,7 +162,7 @@ export function logMiddleware(app, options) {
       await bodyCloseOrFinish(ctx);
     }
 
-    logInfo(ctx, startTime, isNil(counter) ? 0 : counter.length);
+    logInfoAndEndTrace(ctx, startTime, isNil(counter) ? 0 : counter.length);
   };
 }
 

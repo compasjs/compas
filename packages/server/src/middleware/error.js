@@ -1,4 +1,4 @@
-import { AppError, isProduction } from "@compas/stdlib";
+import { _compasSentryExport, AppError, isProduction } from "@compas/stdlib";
 
 /**
  * @type {NonNullable<import("../app.js").ErrorHandlerOptions["onError"]>}
@@ -30,6 +30,7 @@ export function errorHandler(opts) {
         return;
       }
 
+      const origErr = error;
       let err = error;
       let log = ctx.log.info;
 
@@ -38,6 +39,20 @@ export function errorHandler(opts) {
       }
 
       if (err.status >= 500) {
+        if (_compasSentryExport) {
+          if (err === origErr) {
+            // An AppError.serverError was thrown.
+            _compasSentryExport.captureException(
+              new Error(err.key, {
+                cause: err,
+              }),
+            );
+          } else {
+            // Something else was thrown.
+            _compasSentryExport.captureException(origErr);
+          }
+        }
+
         log = ctx.log.error;
       }
 
