@@ -39,7 +39,7 @@ export function sentry() {
         name: "http",
         description: "http",
         ...traceParentData,
-        data: {
+        attributes: {
           "http.request.method": ctx.method,
           "http.request.url": ctx.url,
         },

@@ -119,10 +119,6 @@ export function logMiddleware(app, options) {
       syscall: error.syscall,
       error: AppError.format(error),
     });
-
-    if (_compasSentryExport) {
-      _compasSentryExport.captureException(error);
-    }
   });
 
   return async (ctx, next) => {
