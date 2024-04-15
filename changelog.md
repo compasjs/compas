@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.10.3](https://github.com/compasjs/compas/releases/tag/v0.10.3)
+
+#### Bug fixes
+
+- fix(store): import `_compasSentryEnableQuerySpans`
+  [`eae66a`](https://github.com/compasjs/compas/commit/eae66a0d62db04baf7e638295ce158c8fbee76ef)
+
 ### [v0.10.2](https://github.com/compasjs/compas/releases/tag/v0.10.2)
 
 #### Features
