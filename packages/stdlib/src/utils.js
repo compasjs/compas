@@ -101,6 +101,13 @@ export function mainFn(meta, cb) {
   process.on("unhandledRejection", (reason, promise) => {
     if (_compasSentryExport) {
       _compasSentryExport.captureException(reason);
+      return _compasSentryExport.close(1000).then(() => {
+        unhandled({
+          type: "unhandledRejection",
+          reason: AppError.format(reason),
+          promise,
+        });
+      });
     }
 
     unhandled({
@@ -113,6 +120,13 @@ export function mainFn(meta, cb) {
   process.on("uncaughtException", (error, origin) => {
     if (_compasSentryExport) {
       _compasSentryExport.captureException(error);
+      return _compasSentryExport.close(1000).then(() => {
+        unhandled({
+          type: "uncaughtException",
+          error: AppError.format(error),
+          origin,
+        });
+      });
     }
 
     unhandled({
@@ -132,6 +146,13 @@ export function mainFn(meta, cb) {
   Promise.resolve(cb(logger)).catch((e) => {
     if (_compasSentryExport) {
       _compasSentryExport.captureException(e);
+      return _compasSentryExport.close(1000).then(() => {
+        unhandled({
+          type: "error",
+          message: "Error caught from callback passed in `mainFn`",
+          error: AppError.format(e),
+        });
+      });
     }
 
     unhandled({
