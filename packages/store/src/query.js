@@ -1,6 +1,10 @@
 // @ts-nocheck
 
-import { _compasSentryExport, isNil } from "@compas/stdlib";
+import {
+  _compasSentryEnableQuerySpans,
+  _compasSentryExport,
+  isNil,
+} from "@compas/stdlib";
 
 /**
  * Format and append query parts, and execute the final result in a safe way.
