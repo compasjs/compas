@@ -162,7 +162,7 @@ export function eventStart(event, name) {
 
   if (typeof _compasSentryExport?.startInactiveSpan === "function") {
     event._compasSentrySpan = _compasSentryExport.startInactiveSpan({
-      op: "event",
+      op: "function",
       name: name,
       description: name,
     });
@@ -231,9 +231,7 @@ export function eventStop(event) {
 
   if (event._compasSentrySpan) {
     event._compasSentrySpan.end();
-  }
-
-  if (isNil(event.rootEvent)) {
+  } else if (isNil(event.rootEvent)) {
     event.log.info({
       type: "event_span",
       aborted: !!event.signal?.aborted,

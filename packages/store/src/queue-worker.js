@@ -511,9 +511,10 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
   if (_compasSentryExport) {
     await _compasSentryExport.startSpan(
       {
-        op: "job",
+        op: "queue.task",
         name: job.name,
         description: job.name,
+        forceTransaction: true,
       },
       async () => {
         return await exec();

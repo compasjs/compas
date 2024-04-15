@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { isNil } from "@compas/stdlib";
+import { _compasSentryExport, isNil } from "@compas/stdlib";
 
 /**
  * Format and append query parts, and execute the final result in a safe way.
@@ -84,11 +84,24 @@ export function query(strings, ...values) {
     }
 
     // Strip out undefined values
-    return await sql.unsafe(
-      str,
-      /** @type {NonNullable<QueryPartArg>} */
-      _values.filter((it) => it !== undefined),
-    );
+    /** @type {NonNullable<QueryPartArg>} */
+    const parameters = _values.filter((it) => it !== undefined);
+
+    if (
+      typeof _compasSentryExport?.startSpan === "function" &&
+      _compasSentryEnableQuerySpans
+    ) {
+      return await _compasSentryExport.startSpan(
+        {
+          op: "db.query",
+          name: str,
+          data: { "db.system": "postgresql" },
+        },
+        () => sql.unsafe(str, parameters),
+      );
+    }
+
+    return await sql.unsafe(str, parameters);
   }
 }
 
