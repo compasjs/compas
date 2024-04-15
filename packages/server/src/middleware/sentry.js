@@ -22,7 +22,9 @@ export function sentry() {
   }
 
   return async (ctx, next) => {
-    let traceParentData;
+    let traceParentData = {
+      forceTransaction: true,
+    };
     if (ctx.request.get("sentry-trace")) {
       // @ts-expect-error
       traceParentData = _compasSentryExport.extractTraceparentData(
@@ -33,9 +35,14 @@ export function sentry() {
     // @ts-expect-error
     return await _compasSentryExport.startSpanManual(
       {
-        op: "http",
+        op: "http.server",
         name: "http",
+        description: "http",
         ...traceParentData,
+        data: {
+          "http.request.method": ctx.method,
+          "http.request.url": ctx.url,
+        },
       },
       async () => {
         return await next();
