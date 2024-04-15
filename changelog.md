@@ -4,6 +4,15 @@ editLink: false
 
 # Changelog
 
+### [v0.10.4](https://github.com/compasjs/compas/releases/tag/v0.10.4)
+
+#### Bug fixes
+
+- fix(stdlib): make sure to flush Sentry before exit
+  [`579c04`](https://github.com/compasjs/compas/commit/579c044bd304a110cfee04604b579c8a4bc8d04c)
+- fix(server): sent http method as sentry attribute
+  [`42fdeb`](https://github.com/compasjs/compas/commit/42fdebd8d77e8489ceb24d241b03aa08877b6634)
+
 ### [v0.10.3](https://github.com/compasjs/compas/releases/tag/v0.10.3)
 
 #### Bug fixes
