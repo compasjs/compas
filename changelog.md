@@ -4,6 +4,17 @@ editLink: false
 
 # Changelog
 
+### [v0.10.2](https://github.com/compasjs/compas/releases/tag/v0.10.2)
+
+#### Features
+
+- feat(server): use conventional 'op', force transaction, provide more data to
+  Sentry
+  [`cc9203`](https://github.com/compasjs/compas/commit/cc9203efab450437d1854423e7419bc755ee9baf)
+- feat(stdlib,store): use conventional 'op', force transaction, support queries
+  as spans
+  [`432c51`](https://github.com/compasjs/compas/commit/432c5192ad4da53fc337f8201482179ed9ba4983)
+
 ### [v0.10.1](https://github.com/compasjs/compas/releases/tag/v0.10.1)
 
 #### Features
