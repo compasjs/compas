@@ -22,6 +22,10 @@ export function sentry() {
   }
 
   return async (ctx, next) => {
+    if (ctx.method === "OPTIONS" || ctx.method === "HEAD") {
+      return next();
+    }
+
     let traceParentData = {
       forceTransaction: true,
     };
