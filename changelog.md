@@ -4,6 +4,15 @@ editLink: false
 
 # Changelog
 
+### [v0.10.5](https://github.com/compasjs/compas/releases/tag/v0.10.5)
+
+#### Features
+
+- feat(server): skip sentry span creation for head and options requests
+  [`31eb5b`](https://github.com/compasjs/compas/commit/31eb5b9a3f5e68a076624eacb3abf755084ce57f)
+- feat(store): only start Sentry span for queries if a parent span exists
+  [`d5d842`](https://github.com/compasjs/compas/commit/d5d8428300cae829d01b349037d4e704e07dbf09)
+
 ### [v0.10.4](https://github.com/compasjs/compas/releases/tag/v0.10.4)
 
 #### Bug fixes
