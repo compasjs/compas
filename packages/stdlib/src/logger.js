@@ -129,6 +129,13 @@ export function newLogger(options) {
 
     return {
       info: (message) => {
+        childLogger.info({ message });
+
+        if (!_compasSentryExport.getActiveSpan()) {
+          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs from showing up in a random span.
+          return;
+        }
+
         if (!addedContextAsBreadcrumb) {
           // @ts-expect-error
           _compasSentryExport.addBreadcrumb({
@@ -150,10 +157,15 @@ export function newLogger(options) {
           level: "info",
           type: "default",
         });
-
-        childLogger.info({ message });
       },
       error: (message) => {
+        childLogger.error({ message });
+
+        if (!_compasSentryExport.getActiveSpan()) {
+          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs from showing up in a random span.
+          return;
+        }
+
         if (!addedContextAsBreadcrumb) {
           // @ts-expect-error
           _compasSentryExport.addBreadcrumb({
@@ -175,8 +187,6 @@ export function newLogger(options) {
           level: "error",
           type: "error",
         });
-
-        childLogger.error({ message });
       },
     };
   }
