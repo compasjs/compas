@@ -16,6 +16,7 @@ import {
 import { setAreTestRunning, setTestLogger } from "./state.js";
 
 const configPath = pathJoin(process.cwd(), "test/config.js");
+const packageJsonPath = pathJoin(process.cwd(), "package.json");
 
 /**
  * @typedef {object} TestConfig
@@ -147,6 +148,13 @@ export async function testingLoadConfig(logger, flags) {
 
     resolvedConfig.setup = config.setup ?? noop;
     resolvedConfig.teardown = config.teardown ?? noop;
+  } else if (!existsSync(packageJsonPath)) {
+    // If we can't resolve a test config, double check that the user executes the tests
+    // from the project root. Always running tests from the project root has the least
+    // surprises in the long run.
+    throw new Error(
+      `Make sure to start the tests from the project root, found '${process.cwd()}'. If you really need to run tests from this directory, create a 'package.json' in this directory.`,
+    );
   }
 
   // Initialize environment
