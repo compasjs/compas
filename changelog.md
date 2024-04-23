@@ -4,6 +4,21 @@ editLink: false
 
 # Changelog
 
+### [v0.10.6](https://github.com/compasjs/compas/releases/tag/v0.10.6)
+
+#### Features
+
+- feat(stdlib): only add logs as breadcrumbs if a span is active
+  [`d1a897`](https://github.com/compasjs/compas/commit/d1a897608b4a0b7baf4f0961cd91cc2f7fda4543)
+- feat(cli): hard error the test runner if we don't have a test config and no
+  package.json in the cwd
+  [`fb1166`](https://github.com/compasjs/compas/commit/fb1166e70a39188ea883f60fb12cddf4466fb9f9)
+
+#### Other
+
+- chore(stdlib): fix TS issues
+  [`ce2f67`](https://github.com/compasjs/compas/commit/ce2f67e9c7d6894293a84c97a0a91b34a463e1a4)
+
 ### [v0.10.5](https://github.com/compasjs/compas/releases/tag/v0.10.5)
 
 #### Features
