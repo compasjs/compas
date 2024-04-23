@@ -131,13 +131,12 @@ export function newLogger(options) {
       info: (message) => {
         childLogger.info({ message });
 
-        if (!_compasSentryExport.getActiveSpan()) {
+        if (!_compasSentryExport?.getActiveSpan?.()) {
           // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs from showing up in a random span.
           return;
         }
 
         if (!addedContextAsBreadcrumb) {
-          // @ts-expect-error
           _compasSentryExport.addBreadcrumb({
             category: context.type,
             data: {
@@ -149,7 +148,6 @@ export function newLogger(options) {
           addedContextAsBreadcrumb = true;
         }
 
-        // @ts-expect-error
         _compasSentryExport.addBreadcrumb({
           category: context.type,
           data: typeof message === "string" ? undefined : message,
@@ -161,13 +159,12 @@ export function newLogger(options) {
       error: (message) => {
         childLogger.error({ message });
 
-        if (!_compasSentryExport.getActiveSpan()) {
+        if (!_compasSentryExport?.getActiveSpan?.()) {
           // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs from showing up in a random span.
           return;
         }
 
         if (!addedContextAsBreadcrumb) {
-          // @ts-expect-error
           _compasSentryExport.addBreadcrumb({
             category: "log",
             data: {
@@ -179,7 +176,6 @@ export function newLogger(options) {
           addedContextAsBreadcrumb = true;
         }
 
-        // @ts-expect-error
         _compasSentryExport.addBreadcrumb({
           category: "log",
           data: typeof message === "string" ? undefined : message,
