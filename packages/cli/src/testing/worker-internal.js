@@ -24,7 +24,11 @@ export async function testingListFiles(testConfig) {
       return;
     }
 
-    if (!file.endsWith(".test.js")) {
+    if (
+      !file.endsWith(".test.js") &&
+      !file.endsWith(".test.mjs") &&
+      !file.endsWith(".test.cjs")
+    ) {
       return;
     }
 
