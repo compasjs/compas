@@ -62,6 +62,22 @@ ruleTester.run("check-event-name", rule, {
   ],
   invalid: [
     {
+      code: `async function missingEventStart(event) { const foo = 5; }`,
+      errors: [
+        {
+          message: rule.meta.messages.missingEventStart,
+          suggestions: [
+            {
+              messageId: "addEventStart",
+              data: {},
+              output: `async function missingEventStart(event) { eventStart(event, "");
+  const foo = 5; }`,
+            },
+          ],
+        },
+      ],
+    },
+    {
       code: `async function fooBar(event) { eventStart(event, "foo"); }`,
       errors: [
         {

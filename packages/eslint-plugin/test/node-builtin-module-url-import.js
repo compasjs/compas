@@ -33,6 +33,7 @@ ruleTester.run("node-builtin-module-url-import", rule, {
   invalid: [
     {
       code: `import { join } from "path";`,
+      output: `import { join } from "node:path";`,
       errors: [
         {
           message: rule.meta.messages.consistentImport,
