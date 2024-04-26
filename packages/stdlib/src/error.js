@@ -18,7 +18,16 @@ export class AppError extends Error {
    * @param {Error} [cause]
    */
   constructor(key, status, info, cause) {
-    super();
+    let errMessage = info?.message ?? info?.type ?? "";
+    if (typeof errMessage !== "string") {
+      errMessage = "";
+    }
+
+    if (errMessage) {
+      errMessage = `: ${errMessage}`;
+    }
+
+    super(`AppError: ${key}${errMessage}`);
 
     this.key = key;
     this.status = status;

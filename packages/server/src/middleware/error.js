@@ -38,22 +38,15 @@ export function errorHandler(opts) {
         err = AppError.serverError({}, err);
       }
 
-      if (err.status >= 500) {
-        if (_compasSentryExport) {
-          if (err === origErr) {
-            // An AppError.serverError was thrown.
-            _compasSentryExport.captureException(
-              new Error(err.key, {
-                cause: err,
-              }),
-            );
-          } else {
-            // Something else was thrown.
-            _compasSentryExport.captureException(origErr);
-          }
-        }
+      const isUnexpectedError = err.status >= 500;
 
+      if (isUnexpectedError) {
+        // Upgrade to error logging, developer probably has alerting on error logs.
         log = ctx.log.error;
+      }
+
+      if (_compasSentryExport && isUnexpectedError) {
+        _compasSentryExport.captureException(origErr);
       }
 
       ctx.status = err.status;
@@ -66,8 +59,14 @@ export function errorHandler(opts) {
 
       if (onAppError === defaultOnAppError) {
         if (isProduction()) {
+          // Delete generic internals
           delete formatted.stack;
           delete formatted.cause;
+
+          if (isUnexpectedError) {
+            // Remove any possible internal details. In explicit 400's for example, info is useful to the caller.
+            delete formatted.info;
+          }
         }
 
         ctx.body = formatted;

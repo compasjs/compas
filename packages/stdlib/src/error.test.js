@@ -11,6 +11,7 @@ test("stdlib/error", (t) => {
     const e = new AppError(500, 500);
 
     t.equal(AppError.instanceOf(e), true);
+    t.equal(e.message, "AppError: error.server.internal");
     t.equal(e.key, "error.server.internal");
     t.equal(e.info.appErrorConstructParams.key, 500);
     t.equal(e.cause.key, 500);
@@ -20,6 +21,7 @@ test("stdlib/error", (t) => {
     const e = new AppError("test.error", "500");
 
     t.equal(AppError.instanceOf(e), true);
+    t.equal(e.message, "AppError: error.server.internal");
     t.equal(e.key, "error.server.internal");
     t.equal(e.info.appErrorConstructParams.key, "test.error");
     t.equal(e.info.appErrorConstructParams.status, "500");
@@ -27,11 +29,35 @@ test("stdlib/error", (t) => {
     t.equal(e.cause.status, "500");
   });
 
+  t.test("AppError sets Error#message based on info object", (t) => {
+    t.equal(new AppError("foo", 200, {}).message, "AppError: foo");
+    t.equal(
+      new AppError("foo", 200, {
+        message: "message prop",
+      }).message,
+      "AppError: foo: message prop",
+    );
+    t.equal(
+      new AppError("foo", 200, {
+        type: "type prop",
+      }).message,
+      "AppError: foo: type prop",
+    );
+    t.equal(
+      new AppError("foo", 200, {
+        type: "type prop",
+        message: "prefers message",
+      }).message,
+      "AppError: foo: prefers message",
+    );
+  });
+
   t.test("AppError#format with stack", (t) => {
     try {
       throw AppError.validationError("test.error", {});
     } catch (e) {
       t.ok(AppError.instanceOf(e));
+      t.equal(e.message, "AppError: test.error");
 
       const formatted = AppError.format(e);
       t.equal(formatted.key, "test.error");
