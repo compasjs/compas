@@ -4,6 +4,25 @@ editLink: false
 
 # Changelog
 
+### [v0.11.0](https://github.com/compasjs/compas/releases/tag/v0.11.0)
+
+#### Breaking changes
+
+- feat(eslint-plugin): stricter checks on missing `eventStart` calls
+  [`491561`](https://github.com/compasjs/compas/commit/491561c10ccc52ba32df2cd740fc7594a4b268ea)
+  - Correctness checks; if `event` is passed into an async function, you most
+    certainly want to call `eventStart`.
+
+#### Features
+
+- feat(stdlib): make AppError compatible with Sentry
+  [`056d40`](https://github.com/compasjs/compas/commit/056d4025662e09754df25ec0212051b114c1d579)
+
+#### Bug fixes
+
+- fix(cli): make sure to load .cjs and .mjs test files
+  [`ed546c`](https://github.com/compasjs/compas/commit/ed546c56ec26a2e958e20a138738ab9dd1775044)
+
 ### [v0.10.6](https://github.com/compasjs/compas/releases/tag/v0.10.6)
 
 #### Features
