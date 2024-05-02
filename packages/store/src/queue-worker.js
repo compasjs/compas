@@ -7,6 +7,7 @@ import {
   isNil,
   newEvent,
   newLogger,
+  uuid,
 } from "@compas/stdlib";
 import cron from "cron-parser";
 import { jobWhere } from "./generated/database/job.js";
@@ -511,10 +512,14 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
   if (_compasSentryExport) {
     await _compasSentryExport.startSpan(
       {
+        // Force a new trace for every request. This keeps the traces view usable.
+        traceId: uuid().replace(/-/g, ""),
+        spanId: uuid().replace(/-/g, "").slice(16),
+        forceTransaction: true,
+
         op: "queue.task",
         name: job.name,
         description: job.name,
-        forceTransaction: true,
       },
       async () => {
         return await exec();
