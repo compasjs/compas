@@ -231,7 +231,8 @@ export function eventStop(event) {
 
   if (event._compasSentrySpan) {
     event._compasSentrySpan.end();
-  } else if (isNil(event.rootEvent)) {
+  }
+  if (isNil(event.rootEvent)) {
     event.log.info({
       type: "event_span",
       aborted: !!event.signal?.aborted,
