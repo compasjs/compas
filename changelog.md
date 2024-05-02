@@ -4,6 +4,20 @@ editLink: false
 
 # Changelog
 
+### [v0.11.1](https://github.com/compasjs/compas/releases/tag/v0.11.1)
+
+#### Features
+
+- feat(server): force a new Sentry trace id for each request
+  [`6ca680`](https://github.com/compasjs/compas/commit/6ca6806aaf7da68ea9ff3c132f29424b78370901)
+- feat(store): force a new Sentry trace id for job
+  [`f4de6a`](https://github.com/compasjs/compas/commit/f4de6a09db5a9a56ac05b12e0bf172c3ed20d200)
+
+#### Bug fixes
+
+- fix(stdlib): enable event_span logging, even if sentry is used
+  [`dfc0da`](https://github.com/compasjs/compas/commit/dfc0daa1c005b7c517768d5a5c7190bec40f1927)
+
 ### [v0.11.0](https://github.com/compasjs/compas/releases/tag/v0.11.0)
 
 #### Breaking changes
