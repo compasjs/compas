@@ -1,4 +1,4 @@
-import { _compasSentryExport } from "@compas/stdlib";
+import { _compasSentryExport, isNil, uuid } from "@compas/stdlib";
 
 /**
  * Sentry support;
@@ -21,28 +21,32 @@ export function sentry() {
     };
   }
 
-  return async (ctx, next) => {
+  return (ctx, next) => {
     if (ctx.method === "OPTIONS" || ctx.method === "HEAD") {
       return next();
     }
 
-    let traceParentData = {
-      forceTransaction: true,
-    };
-    if (ctx.request.get("sentry-trace")) {
-      // @ts-expect-error
-      traceParentData = _compasSentryExport.extractTraceparentData(
-        ctx.request.get("sentry-trace"),
-      );
+    if (!_compasSentryExport) {
+      return next();
     }
 
-    // @ts-expect-error
-    return await _compasSentryExport.startSpanManual(
+    const traceHeader = ctx.request.get("sentry-trace");
+    /** @type {any} */
+    const traceParentData =
+      _compasSentryExport.extractTraceparentData(traceHeader) ?? {};
+
+    // Use a manual span, so we can end it right after the body is send.
+    return _compasSentryExport.startSpanManual(
       {
+        // Force a new trace for every request. This keeps the traces view usable.
+        traceId: uuid().replace(/-/g, ""),
+        ...traceParentData,
+        spanId: uuid().replace(/-/g, "").slice(16),
+        forceTransaction: isNil(traceParentData.parentSpanId),
+
         op: "http.server",
         name: "http",
         description: "http",
-        ...traceParentData,
         attributes: {
           "http.request.method": ctx.method,
           "http.request.url": ctx.url,
