@@ -231,9 +231,9 @@ export function fileOrderBy(orderBy, orderBySpec, options = {}) {
  */
 async function fileCount(sql, where) {
   const [result] =
-    await query`select count(f."id") as "recordCount" FROM "file" f WHERE ${fileWhere(
-      where,
-    )}`.exec(sql);
+    await query`select count(f."id") as "recordCount" FROM "file" f WHERE ${fileWhere(where)}`.exec(
+      sql,
+    );
   return Number(result?.recordCount ?? "0");
 }
 

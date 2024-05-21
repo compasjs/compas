@@ -231,9 +231,9 @@ export function sessionStoreOrderBy(orderBy, orderBySpec, options = {}) {
  */
 async function sessionStoreCount(sql, where) {
   const [result] =
-    await query`select count(ss."id") as "recordCount" FROM "sessionStore" ss WHERE ${sessionStoreWhere(
-      where,
-    )}`.exec(sql);
+    await query`select count(ss."id") as "recordCount" FROM "sessionStore" ss WHERE ${sessionStoreWhere(where)}`.exec(
+      sql,
+    );
   return Number(result?.recordCount ?? "0");
 }
 

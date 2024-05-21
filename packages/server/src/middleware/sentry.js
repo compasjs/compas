@@ -22,7 +22,8 @@ export function sentry() {
   }
 
   return (ctx, next) => {
-    if (ctx.method === "OPTIONS" || ctx.method === "HEAD") {
+    const method = ctx.method.toLowerCase();
+    if (method === "options" || method === "head") {
       return next();
     }
 

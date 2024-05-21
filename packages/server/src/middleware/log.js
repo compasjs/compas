@@ -92,6 +92,15 @@ export function logMiddleware(app, options) {
     }
 
     if (_compasSentryExport) {
+      if (_compasSentryExport?.metrics?.increment) {
+        _compasSentryExport.metrics.increment("compas.route.name", 1, {
+          tags: {
+            compasRouteName: ctx.event.name ?? "<unmatched>",
+          },
+          unit: "none",
+        });
+      }
+
       const span = _compasSentryExport.getActiveSpan();
       if (span) {
         span.setStatus(

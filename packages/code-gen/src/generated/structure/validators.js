@@ -13253,9 +13253,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                             intermediateErrorMap11,
                           )) {
                             errorMap[
-                              `$.properties.specification.params.${genericKeyResult8}${errorKey.substring(
-                                1,
-                              )}`
+                              `$.properties.specification.params.${genericKeyResult8}${errorKey.substring(1)}`
                             ] = intermediateErrorMap11[errorKey];
                           }
                         } else {
@@ -13410,9 +13408,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                             intermediateErrorMap12,
                           )) {
                             errorMap[
-                              `$.properties.specification.query.${genericKeyResult9}${errorKey.substring(
-                                1,
-                              )}`
+                              `$.properties.specification.query.${genericKeyResult9}${errorKey.substring(1)}`
                             ] = intermediateErrorMap12[errorKey];
                           }
                         } else {
@@ -13564,9 +13560,7 @@ export function validateStructureStructure(value) {
                     if (refResult6.error) {
                       for (const errorKey of Object.keys(refResult6.error)) {
                         errorMap[
-                          `$.${genericKeyResult1}.${genericKeyResult4}${errorKey.substring(
-                            1,
-                          )}`
+                          `$.${genericKeyResult1}.${genericKeyResult4}${errorKey.substring(1)}`
                         ] = refResult6.error[errorKey];
                       }
                     }

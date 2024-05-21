@@ -295,9 +295,9 @@ export function jobOrderBy(orderBy, orderBySpec, options = {}) {
  */
 async function jobCount(sql, where) {
   const [result] =
-    await query`select count(j."id") as "recordCount" FROM "job" j WHERE ${jobWhere(
-      where,
-    )}`.exec(sql);
+    await query`select count(j."id") as "recordCount" FROM "job" j WHERE ${jobWhere(where)}`.exec(
+      sql,
+    );
   return Number(result?.recordCount ?? "0");
 }
 

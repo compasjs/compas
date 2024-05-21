@@ -313,9 +313,9 @@ export function sessionStoreTokenOrderBy(orderBy, orderBySpec, options = {}) {
  */
 async function sessionStoreTokenCount(sql, where) {
   const [result] =
-    await query`select count(sst."id") as "recordCount" FROM "sessionStoreToken" sst WHERE ${sessionStoreTokenWhere(
-      where,
-    )}`.exec(sql);
+    await query`select count(sst."id") as "recordCount" FROM "sessionStoreToken" sst WHERE ${sessionStoreTokenWhere(where)}`.exec(
+      sql,
+    );
   return Number(result?.recordCount ?? "0");
 }
 
@@ -558,9 +558,7 @@ function sessionStoreTokenDelete(sql, where = {}) {
  * @returns {import("@compas/store").QueryPart<any>}
  */
 function sessionStoreTokenDeleteInternal(where = {}) {
-  return query`DELETE FROM "sessionStoreToken" sst WHERE ${sessionStoreTokenWhere(
-    where,
-  )}`;
+  return query`DELETE FROM "sessionStoreToken" sst WHERE ${sessionStoreTokenWhere(where)}`;
 }
 
 /** @type {any} */
