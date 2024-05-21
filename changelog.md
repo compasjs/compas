@@ -4,6 +4,14 @@ editLink: false
 
 # Changelog
 
+### [v0.11.2](https://github.com/compasjs/compas/releases/tag/v0.11.2)
+
+#### Features
+
+- feat(server,store): keep track of Sentry metrics about which routes and jobs
+  are run
+  [`ca1a0a`](https://github.com/compasjs/compas/commit/ca1a0a82e54d5ef50231d2eed4f717b41fcef89a)
+
 ### [v0.11.1](https://github.com/compasjs/compas/releases/tag/v0.11.1)
 
 #### Features
