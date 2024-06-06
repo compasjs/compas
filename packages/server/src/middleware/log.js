@@ -92,10 +92,15 @@ export function logMiddleware(app, options) {
     }
 
     if (_compasSentryExport) {
-      if (_compasSentryExport?.metrics?.increment) {
+      if (_compasSentryExport.metrics?.increment) {
+        let compasRouteName = ctx.event.name;
+        if (!compasRouteName.startsWith("router.")) {
+          compasRouteName = "<unmatched>";
+        }
+
         _compasSentryExport.metrics.increment("compas.route.name", 1, {
           tags: {
-            compasRouteName: ctx.event.name ?? "<unmatched>",
+            compasRouteName,
           },
           unit: "none",
         });
