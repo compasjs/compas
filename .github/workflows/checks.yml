@@ -2,8 +2,38 @@ name: Checks
 on:
   push:
     branches: [main]
+  pull_request:
 
 jobs:
+  lint:
+    permissions:
+      contents: read
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        node: [20]
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: ${{ matrix.node }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Run compas lint
+        run: |
+          CI=false npx compas generate
+          npx compas lint
+
   types:
     permissions:
       contents: read
@@ -39,8 +69,8 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [18, 20]
-        postgresVersion: [12, 13, 14]
+        node: [18, 20, 22]
+        postgresVersion: [12, 14, 16]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -82,8 +112,8 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [18]
-        postgresVersion: [14]
+        node: [20]
+        postgresVersion: [15]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -121,13 +151,13 @@ jobs:
           path: .cache/
 
       - name: Upload coverage
-        if: matrix.node == '18'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./coverage
 
   sync-website:
+    if: ${{ github.event.ref == 'refs/heads/main' }}
     permissions:
       contents: read
     timeout-minutes: 15
@@ -168,6 +198,7 @@ jobs:
 
   analyze:
     name: Analyze
+    if: ${{ github.event.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       security-events: write
