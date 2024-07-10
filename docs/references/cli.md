@@ -79,7 +79,7 @@ Execute the specified code-mod.
 Manage common docker components.
 
 Manages a single PostgreSQL and Minio container for use in all your local
-projects. It can switch between multiple PostgreSQL versions (12, 13 and 14 are
+projects. It can switch between multiple PostgreSQL versions (12-16 are
 supported via --postgres-version), however only a single version can be 'up' at
 a time.
 
@@ -91,6 +91,12 @@ Minio credentials:
 
 - ACCESS_KEY: minio
 - SECRET_KEY: minio123
+
+You can prevent Docker usage, but still use commands like 'compas docker clean'
+with either the '--use-host' flag or by setting 'COMPAS_SKIP_DOCKER=true' in
+your environment.
+
+---
 
 Don't use this command and secrets for your production deployment.
 

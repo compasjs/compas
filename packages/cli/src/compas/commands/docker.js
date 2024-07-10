@@ -22,7 +22,7 @@ export const cliDefinition = {
   name: "docker",
   shortDescription: "Manage common docker components.",
   longDescription: `Manages a single PostgreSQL and Minio container for use in all your local projects.
-It can switch between multiple PostgreSQL versions (12, 13 and 14 are supported via --postgres-version), however only a single version can be 'up' at a time.
+It can switch between multiple PostgreSQL versions (12-16 are supported via --postgres-version), however only a single version can be 'up' at a time.
 
 PostgreSQL credentials:
 > postgresql://postgres:postgres@127.0.0.1:5432/postgres
@@ -31,7 +31,9 @@ Minio credentials:
 - ACCESS_KEY: minio
 - SECRET_KEY: minio123
 
+You can prevent Docker usage, but still use commands like 'compas docker clean' with either the '--use-host' flag or by setting 'COMPAS_SKIP_DOCKER=true' in your environment.
 
+---
 Don't use this command and secrets for your production deployment.
 `,
   modifiers: {
@@ -82,7 +84,8 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
       value: {
         specification: "number",
         validator: (value) => {
-          const isValid = [12, 13, 14].includes(value);
+          const versions = [12, 13, 14, 15, 16];
+          const isValid = versions.includes(value);
 
           if (isValid) {
             return { isValid };
@@ -91,7 +94,7 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
           return {
             isValid,
             error: {
-              message: "Only PostgreSQL version 12, 13 and 14 are supported.",
+              message: `The following PostgreSQL versions are supported: ${versions.join(", ")}.`,
             },
           };
         },
@@ -467,6 +470,8 @@ function getContainerInformation(postgresVersion, useHost) {
       "compas-postgres-12",
       "compas-postgres-13",
       "compas-postgres-14",
+      "compas-postgres-15",
+      "compas-postgres-16",
       "compas-minio",
     ],
     containersOnHost: [],
