@@ -7,18 +7,6 @@ updates:
       time: "04:15"
     open-pull-requests-limit: 10
     versioning-strategy: increase
-    groups:
-      development:
-        dependency-type: "development"
-      production-compat:
-        dependency-type: "production"
-        update-types:
-          - "minor"
-          - "patch"
-      production-breaking:
-        dependency-type: "production"
-        update-types:
-          - "major"
 
   - package-ecosystem: github-actions
     directory: "/"
