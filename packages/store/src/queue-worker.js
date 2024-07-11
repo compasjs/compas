@@ -519,7 +519,7 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
 
   if (_compasSentryExport) {
     const _sentry = _compasSentryExport;
-    await _sentry.withIsolationScope(() => {
+    await _sentry.startNewTrace(() => {
       return _sentry.startSpan(
         {
           op: "queue.task",

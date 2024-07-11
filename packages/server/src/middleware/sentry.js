@@ -33,7 +33,7 @@ export function sentry() {
 
     const _sentry = _compasSentryExport;
 
-    return _sentry.withIsolationScope(() => {
+    return _sentry.startNewTrace(() => {
       return _sentry.startSpanManual(
         {
           op: "http.server",

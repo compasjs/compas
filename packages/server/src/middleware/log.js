@@ -79,7 +79,11 @@ export function logMiddleware(app, options) {
 
     // Skip eventStop if we don't have events enabled.
     // Skip eventStop for CORS requests, this gives a bit cleaner logs.
-    if (options.disableRootEvent !== true && ctx.method !== "OPTIONS") {
+    if (
+      options.disableRootEvent !== true &&
+      ctx.method !== "OPTIONS" &&
+      ctx.method !== "HEAD"
+    ) {
       if (_compasSentryExport) {
         const span = _compasSentryExport.getActiveSpan();
         if (span) {
@@ -91,12 +95,12 @@ export function logMiddleware(app, options) {
     }
 
     if (_compasSentryExport) {
-      if (_compasSentryExport.metrics?.increment) {
-        let compasRouteName = ctx.event.name;
-        if (!compasRouteName.startsWith("router.")) {
-          compasRouteName = "<unmatched>";
-        }
+      const span = _compasSentryExport.getActiveSpan();
+      const routeName = ctx.event.name;
+      const isMatchedRoute = routeName.startsWith("router.");
 
+      if (_compasSentryExport.metrics?.increment) {
+        const compasRouteName = isMatchedRoute ? routeName : "<unmatched>";
         _compasSentryExport.metrics.increment("compas.route.name", 1, {
           tags: {
             compasRouteName,
@@ -105,8 +109,14 @@ export function logMiddleware(app, options) {
         });
       }
 
-      const span = _compasSentryExport.getActiveSpan();
       if (span) {
+        if (!isMatchedRoute) {
+          // @ts-expect-error Private property?
+          //
+          // Discard sampled spans which don't match a route.
+          span._sampled = false;
+        }
+
         span.setStatus(
           _compasSentryExport.getSpanStatusFromHttpCode(ctx.status),
         );
