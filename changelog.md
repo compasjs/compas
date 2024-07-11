@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.12.2](https://github.com/compasjs/compas/releases/tag/v0.12.2)
+
+#### Features
+
+- feat(stdlib,store,server): Sentry v7 & v8 compat
+  [`738283`](https://github.com/compasjs/compas/commit/7382836934485aafb58875d468ef0faba0d36395)
+
 ### [v0.12.1](https://github.com/compasjs/compas/releases/tag/v0.12.1)
 
 #### Features
