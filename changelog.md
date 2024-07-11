@@ -4,6 +4,14 @@ editLink: false
 
 # Changelog
 
+### [v0.12.3](https://github.com/compasjs/compas/releases/tag/v0.12.3)
+
+#### Bug fixes
+
+- fix(sentry): use local identity functions when `startNewTrace` is not
+  available
+  [`28e89d`](https://github.com/compasjs/compas/commit/28e89ddbca9ed23f6bd0ab85a81915eeb22b8618)
+
 ### [v0.12.2](https://github.com/compasjs/compas/releases/tag/v0.12.2)
 
 #### Features
