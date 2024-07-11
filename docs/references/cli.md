@@ -172,6 +172,9 @@ ESLint is used for all JavaScript files and Prettier runs on JavaScript, JSON,
 Markdown, and YAML files. The default configuration can be initialized via
 'compas init --lint-config'.
 
+If the 'lint' (or 'lint:ci') script exists, they are preferred over manually
+running ESLint and Prettier.
+
 | Option                  | Description                                                                |
 | ----------------------- | -------------------------------------------------------------------------- |
 | --skip-prettier         | Skip running Prettier. (boolean)                                           |

@@ -1,4 +1,5 @@
-import { environment, spawn } from "@compas/stdlib";
+import { environment, isNil, spawn } from "@compas/stdlib";
+import { collectPackageScripts } from "../../utils.js";
 
 /**
  * @type {import("../../generated/common/types.js").CliCommandDefinitionInput}
@@ -10,6 +11,8 @@ export const cliDefinition = {
   
 ESLint is used for all JavaScript files and Prettier runs on JavaScript, JSON, Markdown, and YAML files.
 The default configuration can be initialized via 'compas init --lint-config'.
+
+If the 'lint' (or 'lint:ci') script exists, they are preferred over manually running ESLint and Prettier.
 `,
   flags: [
     {
@@ -46,6 +49,23 @@ The default configuration can be initialized via 'compas init --lint-config'.
  */
 export async function cliExecutor(logger, state) {
   let exitCode = 0;
+  const scripts = collectPackageScripts();
+  const isCi = environment.CI === "true";
+  const script = isCi ? "lint:ci" : "lint";
+
+  if (!isNil(scripts[script])) {
+    const { exitCode } = await spawn(`npm`, ["run", script]);
+
+    if (exitCode !== 0) {
+      return {
+        exitStatus: "failed",
+      };
+    }
+
+    return {
+      exitStatus: "passed",
+    };
+  }
 
   if (state.flags.skipEslint !== true) {
     logger.info("Running ESLint...");

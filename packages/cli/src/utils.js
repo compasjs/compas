@@ -20,6 +20,14 @@ import { pathJoin } from "@compas/stdlib";
  */
 export function collectScripts() {
   /** @type {ScriptCollection} */
+  return {
+    ...collectUserScripts(),
+    ...collectPackageScripts(),
+  };
+}
+
+function collectUserScripts() {
+  /** @type {ScriptCollection} */
   const result = {};
 
   const userDir = pathJoin(process.cwd(), "scripts");
@@ -42,6 +50,16 @@ export function collectScripts() {
       };
     }
   }
+
+  return result;
+}
+
+/**
+ * @returns {ScriptCollection}
+ */
+export function collectPackageScripts() {
+  /** @type {ScriptCollection} */
+  const result = {};
 
   const pkgJsonPath = pathJoin(process.cwd(), "package.json");
   if (existsSync(pkgJsonPath)) {
