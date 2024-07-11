@@ -1,6 +1,6 @@
 {
   "name": "@compas/code-gen",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "Generate various boring parts of your server",
   "exports": {
     ".": {
@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.12.2"
+    "@compas/stdlib": "0.12.3"
   },
   "author": {
     "name": "Dirk de Visser",
