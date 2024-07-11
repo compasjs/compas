@@ -4,6 +4,66 @@ editLink: false
 
 # Changelog
 
+### [v0.12.0](https://github.com/compasjs/compas/releases/tag/v0.12.0)
+
+#### Breaking changes
+
+- feat(stdlib): support Sentry V8
+  [`8891d3`](https://github.com/compasjs/compas/commit/8891d38d76fdb7c5043241d6fef1b0a8eaf0f20b)
+  - Requires Sentry v8+. This should result in the same information in Sentry,
+    since Compas already used the new Span based api's.
+  - Removes the need for `_experiments.metricsAggregator`
+  - Use lazy imports after `Sentry.init`, this allows Sentry to instrument other
+    imports.
+  - Removes the need for calling
+    `Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()`.
+  - Removes the need for explicitly setting `captureErrorCause: true`.
+
+#### Features
+
+- feat(cli): widen range of supported Postgres versions
+  [`4cd0b7`](https://github.com/compasjs/compas/commit/4cd0b7719eb3c3013cb77f50136035b658f6f52d)
+- feat(cli): prefer 'lint' and 'lint:ci' scripts from `package.json` when
+  running 'compas lint'
+  [`127d73`](https://github.com/compasjs/compas/commit/127d73b2cef7dd9bd3373e11bf8e70e7b81225db)
+
+#### Bug fixes
+
+- fix(server): collapse sentry metrics for OPTIONS and HEAD requests
+  [`5167f1`](https://github.com/compasjs/compas/commit/5167f112553f948b5d6b8cd9b3df883789a7de64)
+
+#### Other
+
+- chore(dependabot): drop grouped updates
+  [`928b6d`](https://github.com/compasjs/compas/commit/928b6d5a53463b543fd682c26fc707659e9809ec)
+- chore(ci): simplify CI
+  [`4a24ee`](https://github.com/compasjs/compas/commit/4a24ee83bc39f6a5bed2da77e8c488ba4d52ce73)
+
+#### Dependency updates
+
+- build(deps): bump braces from 3.0.2 to 3.0.3 in the npm_and_yarn group
+  ([#3212](https://github.com/compasjs/compas/pull/3212))
+  [`d2fda5`](https://github.com/compasjs/compas/commit/d2fda56a85614e8b08316b1da9141f78c680c8ad)
+- build(deps): bump pino from 8.20.0 to 9.2.0
+  ([#3234](https://github.com/compasjs/compas/pull/3234))
+  - Major version bump
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump c8 from 9.1.0 to 10.1.2
+  ([#3229](https://github.com/compasjs/compas/pull/3229))
+  - Major version bump
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump co-body from 6.1.0 to 6.2.0
+  ([#3231](https://github.com/compasjs/compas/pull/3231))
+- build(deps): bump prettier from 3.2.5 to 3.3.2
+  ([#3228](https://github.com/compasjs/compas/pull/3228))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump eslint-plugin-jsdoc from 48.2.3 to 48.7.0
+  ([#3244](https://github.com/compasjs/compas/pull/3244))
+  - [Release notes](https://github.com/gajus/eslint-plugin-jsdoc/releases)
+- build(deps): bump @babel/core from 7.24.4 to 7.24.7
+  ([#3237](https://github.com/compasjs/compas/pull/3237))
+  - [Release notes](https://github.com/babel/babel/releases)
+
 ### [v0.11.2](https://github.com/compasjs/compas/releases/tag/v0.11.2)
 
 #### Features
