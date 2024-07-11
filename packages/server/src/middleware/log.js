@@ -83,7 +83,6 @@ export function logMiddleware(app, options) {
       if (_compasSentryExport) {
         const span = _compasSentryExport.getActiveSpan();
         if (span) {
-          span.description = ctx.event.name;
           span.updateName(ctx.event.name);
         }
       }
@@ -112,8 +111,9 @@ export function logMiddleware(app, options) {
           _compasSentryExport.getSpanStatusFromHttpCode(ctx.status),
         );
         span.setAttributes({
-          params: ctx.validatedParams,
-          query: ctx.validatedQuery,
+          "http.query": ctx.validatedQuery,
+          "http.response.status_code": ctx.status,
+          "http.response.content_length": length,
         });
         span.end();
       }

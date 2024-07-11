@@ -7,7 +7,6 @@ import {
   isNil,
   newEvent,
   newLogger,
-  uuid,
 } from "@compas/stdlib";
 import cron from "cron-parser";
 import { jobWhere } from "./generated/database/job.js";
@@ -519,30 +518,28 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
   }
 
   if (_compasSentryExport) {
-    await _compasSentryExport.startSpan(
-      {
-        // Force a new trace for every request. This keeps the traces view usable.
-        traceId: uuid().replace(/-/g, ""),
-        spanId: uuid().replace(/-/g, "").slice(16),
-        forceTransaction: true,
+    const _sentry = _compasSentryExport;
+    await _sentry.withIsolationScope(() => {
+      return _sentry.startSpan(
+        {
+          op: "queue.task",
+          name: job.name,
+          forceTransaction: true,
+        },
+        async () => {
+          if (_sentry?.metrics?.increment) {
+            _sentry.metrics.increment("compas.queue.job", 1, {
+              tags: {
+                compasQueueJob: job.name,
+              },
+              unit: "none",
+            });
+          }
 
-        op: "queue.task",
-        name: job.name,
-        description: job.name,
-      },
-      async () => {
-        if (_compasSentryExport?.metrics?.increment) {
-          _compasSentryExport.metrics.increment("compas.queue.job", 1, {
-            tags: {
-              compasQueueJob: job.name,
-            },
-            unit: "none",
-          });
-        }
-
-        return await exec();
-      },
-    );
+          return await exec();
+        },
+      );
+    });
   } else {
     await exec();
   }

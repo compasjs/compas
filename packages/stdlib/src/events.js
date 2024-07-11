@@ -164,7 +164,6 @@ export function eventStart(event, name) {
     event._compasSentrySpan = _compasSentryExport.startInactiveSpan({
       op: "function",
       name: name,
-      description: name,
     });
   }
 
@@ -196,7 +195,6 @@ export function eventRename(event, name) {
   event.span.name = name;
 
   if (event._compasSentrySpan) {
-    event._compasSentrySpan.description = name;
     event._compasSentrySpan.updateName(name);
   }
 

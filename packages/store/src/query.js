@@ -99,7 +99,9 @@ export function query(strings, ...values) {
         {
           op: "db.query",
           name: str,
-          data: { "db.system": "postgresql" },
+          attributes: {
+            "db.system": "postgresql",
+          },
           onlyIfParent: true,
         },
         () => sql.unsafe(str, parameters),
