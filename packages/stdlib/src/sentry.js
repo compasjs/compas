@@ -47,11 +47,4 @@ export let _compasSentryEnableQuerySpans = false;
 export function compasWithSentry(instance, { sendQueriesAsSpans } = {}) {
   _compasSentryExport = instance;
   _compasSentryEnableQuerySpans = sendQueriesAsSpans ?? false;
-
-  if (typeof instance?.startNewTrace !== "function") {
-    // v7 / v8 compat
-    instance.startNewTrace = (cb) => {
-      return cb();
-    };
-  }
 }

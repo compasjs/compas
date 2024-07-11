@@ -15,6 +15,10 @@ import { validateStoreJob } from "./generated/store/validators.js";
 import { queries } from "./generated.js";
 import { query } from "./query.js";
 
+const cbIdentity = (cb) => {
+  return cb();
+};
+
 /**
  * @typedef {(
  *   event: import("@compas/stdlib").InsightEvent,
@@ -520,7 +524,10 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
 
   if (_compasSentryExport) {
     const _sentry = _compasSentryExport;
-    await _sentry.startNewTrace(() => {
+    // Sentry v7 / v8 compat
+    const startNewTrace = _sentry.startNewTrace ?? cbIdentity;
+
+    await startNewTrace(() => {
       return _sentry.startSpan(
         {
           // @ts-expect-error compat

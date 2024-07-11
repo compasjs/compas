@@ -1,5 +1,9 @@
 import { _compasSentryExport, uuid } from "@compas/stdlib";
 
+const cbIdentity = (cb) => {
+  return cb();
+};
+
 /**
  * Sentry support;
  * - Starts a new root span for each incoming request.
@@ -32,8 +36,10 @@ export function sentry() {
     }
 
     const _sentry = _compasSentryExport;
+    // Sentry v7 / v8 compat
+    const startNewTrace = _sentry.startNewTrace ?? cbIdentity;
 
-    return _sentry.startNewTrace(() => {
+    return startNewTrace(() => {
       return _sentry.startSpanManual(
         {
           // @ts-expect-error compat
