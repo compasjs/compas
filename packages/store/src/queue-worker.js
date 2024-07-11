@@ -7,6 +7,7 @@ import {
   isNil,
   newEvent,
   newLogger,
+  uuid,
 } from "@compas/stdlib";
 import cron from "cron-parser";
 import { jobWhere } from "./generated/database/job.js";
@@ -522,6 +523,12 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
     await _sentry.startNewTrace(() => {
       return _sentry.startSpan(
         {
+          // @ts-expect-error compat
+          //
+          // v7 / v8 compat to force a new trace
+          traceId: uuid().replace(/-/g, ""),
+          spanId: uuid().replace(/-/g, "").slice(16),
+
           op: "queue.task",
           name: job.name,
           forceTransaction: true,

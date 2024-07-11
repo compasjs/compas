@@ -1,4 +1,4 @@
-import { _compasSentryExport } from "@compas/stdlib";
+import { _compasSentryExport, uuid } from "@compas/stdlib";
 
 /**
  * Sentry support;
@@ -36,6 +36,12 @@ export function sentry() {
     return _sentry.startNewTrace(() => {
       return _sentry.startSpanManual(
         {
+          // @ts-expect-error compat
+          //
+          // v7 / v8 compat to force a new trace
+          traceId: uuid().replace(/-/g, ""),
+          spanId: uuid().replace(/-/g, "").slice(16),
+
           op: "http.server",
           name: "http",
           attributes: {
