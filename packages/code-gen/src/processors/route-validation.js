@@ -46,8 +46,6 @@ function routeValidationSimpleQueryAndParamTypes(
 
   const resolvedType = structureResolveReference(
     generateContext.structure,
-
-    // @ts-expect-error
     route[subType],
   );
 
