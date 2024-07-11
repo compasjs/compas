@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.12.1](https://github.com/compasjs/compas/releases/tag/v0.12.1)
+
+#### Features
+
+- feat(stdlib,queue): explicit wrap Sentry in new traces
+  [`3ff39e`](https://github.com/compasjs/compas/commit/3ff39e4516762da99e1a4599a087704ba77e66fc)
+
 ### [v0.12.0](https://github.com/compasjs/compas/releases/tag/v0.12.0)
 
 #### Breaking changes
