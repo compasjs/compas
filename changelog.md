@@ -28,18 +28,19 @@ editLink: false
 
 ### [v0.12.0](https://github.com/compasjs/compas/releases/tag/v0.12.0)
 
-#### Breaking changes
+#### Notable changes
 
-- feat(stdlib): support Sentry V8
+- feat(stdlib): support Sentry v8
   [`8891d3`](https://github.com/compasjs/compas/commit/8891d38d76fdb7c5043241d6fef1b0a8eaf0f20b)
-  - Requires Sentry v8+. This should result in the same information in Sentry,
-    since Compas already used the new Span based api's.
-  - Removes the need for `_experiments.metricsAggregator`
-  - Use lazy imports after `Sentry.init`, this allows Sentry to instrument other
-    imports.
-  - Removes the need for calling
-    `Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()`.
-  - Removes the need for explicitly setting `captureErrorCause: true`.
+  - Compatible with both Sentry v7 & v8.
+  - Note that Sentry v8 uses Node.js Module Loader hooks, which doesn't support
+    primitive live bindings and thus might break your application. Watch
+    https://github.com/getsentry/sentry-javascript/issues/12806 for updates.
+  - For v8, the following options can be removed from the `Sentry.init` call:
+    - Removes the need for `_experiments.metricsAggregator`
+    - Removes the need for calling
+      `Sentry.autoDiscoverNodePerformanceMonitoringIntegrations()`.
+    - Removes the need for explicitly setting `captureErrorCause: true`.
 
 #### Features
 
