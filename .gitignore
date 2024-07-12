@@ -14,8 +14,13 @@ node_modules
 # NPM / Yarn
 *-debug.log
 *-error.log
-yarn.lock
 npm-shrinkwrap.json
+
+# Package lock files (see https://github.com/sindresorhus/ama/issues/479#issuecomment-310661514)
+bun.lockb
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
 
 # node-clinic
 .clinic

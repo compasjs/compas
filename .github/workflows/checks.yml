@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
+          cache-dependency-path: ${{ hashFiles('**/package.json') }}
 
       - name: Install dependencies
         run: |
@@ -53,6 +54,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
+          cache-dependency-path: ${{ hashFiles('**/package.json') }}
 
       - name: Install dependencies
         run: |
@@ -83,6 +85,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
+          cache-dependency-path: ${{ hashFiles('**/package.json') }}
 
       - name: Install dependencies
         run: |
@@ -126,6 +129,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
+          cache-dependency-path: ${{ hashFiles('**/package.json') }}
 
       - name: Install dependencies
         run: |
@@ -177,6 +181,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
+          cache-dependency-path: ${{ hashFiles('**/package.json') }}
 
       - name: Install dependencies
         run: |
