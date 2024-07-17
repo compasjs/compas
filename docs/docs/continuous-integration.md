@@ -17,7 +17,7 @@ is not listed, try to mimic the following Shell commands:
 
 ```shell
 # Either install packages via the package manager that you use and invoke Compas
-npm ci
+npm install
 npx compas ci
 
 # OR let Compas infer the used package manager and install packages for you.
