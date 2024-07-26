@@ -26,7 +26,7 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jsdoc": "48.7.0",
-    "prettier": "3.3.2"
+    "prettier": "3.3.3"
   },
   "author": {
     "name": "Dirk de Visser",
