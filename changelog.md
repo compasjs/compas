@@ -4,6 +4,48 @@ editLink: false
 
 # Changelog
 
+### [v0.12.4](https://github.com/compasjs/compas/releases/tag/v0.12.4)
+
+#### Other
+
+- chore(changelog): clarify v0.12.0 release notes
+  [`bdab74`](https://github.com/compasjs/compas/commit/bdab74d5a5b29df089087c171ae48bf14c908eb0)
+- chore: remove lockfile + prevent creation
+  [`6075e3`](https://github.com/compasjs/compas/commit/6075e338a834e1b8e3850fbd7a01059b962214b8)
+- chore(store): call `eventStop` in `queueWorker` if application didn't
+  [`14b9b3`](https://github.com/compasjs/compas/commit/14b9b35683ebc0dd2debec0b79f74f97f5e4eeb4)
+
+#### Dependency updates
+
+- build(deps): bump sharp from 0.33.3 to 0.33.4
+  ([#3247](https://github.com/compasjs/compas/pull/3247))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump @babel/eslint-parser from 7.24.1 to 7.25.1
+  ([#3249](https://github.com/compasjs/compas/pull/3249),
+  [#3285](https://github.com/compasjs/compas/pull/3285))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump recast from 0.23.6 to 0.23.9
+  ([#3253](https://github.com/compasjs/compas/pull/3253))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- build(deps): bump file-type from 19.0.0 to 19.3.0
+  ([#3265](https://github.com/compasjs/compas/pull/3265))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump pino from 9.2.0 to 9.3.2
+  ([#3272](https://github.com/compasjs/compas/pull/3272))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump prettier from 3.3.2 to 3.3.3
+  ([#3256](https://github.com/compasjs/compas/pull/3256))
+  - [Release notes](https://github.com/prettier/prettier/releases)
+- build(deps): bump @babel/core from 7.24.7 to 7.25.2
+  ([#3285](https://github.com/compasjs/compas/pull/3285))
+  - [Release notes](https://github.com/babel/babel/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.554.0 to 3.620.1
+  ([#3284](https://github.com/compasjs/compas/pull/3284))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.554.0 to 3.620.1
+  ([#3284](https://github.com/compasjs/compas/pull/3284))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.12.3](https://github.com/compasjs/compas/releases/tag/v0.12.3)
 
 #### Bug fixes
