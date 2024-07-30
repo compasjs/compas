@@ -497,7 +497,7 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
     job.handlerTimeout ??
     (typeof handler === "function"
       ? options.handlerTimeout
-      : handler?.timeout ?? options.handlerTimeout);
+      : (handler?.timeout ?? options.handlerTimeout));
   let isJobComplete = false;
 
   // @ts-expect-error
