@@ -61,8 +61,6 @@ async function cliExecutor(logger, state) {
   }
 
   await spawn("npm", ["i"]);
-  await spawn("git", ["add", "./package-lock.json"]);
-
   await spawn("git", ["commit", "-m", `${state.flags.version}`]);
   await spawn("git", [
     "tag",
