@@ -579,6 +579,7 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
         // @ts-expect-error
         await handler(event, sql, job);
       });
+
       isJobComplete = true;
     } catch (e) {
       if (_compasSentryExport) {
@@ -613,6 +614,11 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
           },
         });
       }
+    }
+
+    if (isNil(event.span.stopTime)) {
+      // Stop the root event, so even if the job failed or forgot to call eventStop. We still have a event callstack
+      eventStop(event);
     }
 
     if (isCronJob && isJobComplete) {
