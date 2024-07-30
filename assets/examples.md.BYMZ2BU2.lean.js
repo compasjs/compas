@@ -1,0 +1,1 @@
+import{_ as s,c as a,o as e,a4 as n}from"./chunks/framework.BbahnWyB.js";const g=JSON.parse('{"title":"Compas examples","description":"","frontmatter":{},"headers":[],"relativePath":"examples.md","filePath":"examples.md"}'),p={name:"examples.md"},t=n("",8),l=[t];function i(o,r,c,m,h,d){return e(),a("div",null,l)}const f=s(p,[["render",i]]);export{g as __pageData,f as default};
