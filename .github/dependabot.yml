@@ -7,6 +7,14 @@ updates:
       time: "04:15"
     open-pull-requests-limit: 10
     versioning-strategy: increase
+    groups:
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/*"
+
+      babel:
+        patterns:
+          - "@babel/*"
 
   - package-ecosystem: github-actions
     directory: "/"
