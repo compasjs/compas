@@ -1,5 +1,12 @@
-import { AnyType, RouteBuilder } from "../builders/index.js";
+import {
+  AnyType,
+  ObjectType,
+  ReferenceType,
+  RouteBuilder,
+  StringType,
+} from "../builders/index.js";
 import { Generator } from "../generator.js";
+import { openApiBuildFile } from "../open-api/generator.js";
 import { structureRoutes } from "./routes.js";
 import { structureAddType, structureNamedTypes } from "./structure.js";
 
@@ -9,6 +16,12 @@ import { structureAddType, structureNamedTypes } from "./structure.js";
  * @type {WeakMap<object, string>}
  */
 const routeStructureCache = new WeakMap();
+/**
+ * Cache the openapi structure string based on the current generate context.
+ *
+ * @type {WeakMap<object, string>}
+ */
+const openApiStructureCache = new WeakMap();
 
 /**
  * Extract the route structure from generate context
@@ -55,10 +68,38 @@ export function routeStructureCreate(generateContext) {
       (v) => `\\${v}`,
     ),
   );
+  openApiStructureCache.set(
+    generateContext,
+    JSON.stringify(
+      openApiBuildFile({
+        structure: routesOnlyGenerator.internalStructure,
+        options: {
+          generators: {
+            openApi: {
+              openApiExtensions: {},
+              openApiRouteExtensions: {},
+            },
+          },
+        },
+      }),
+    ).replace(/([`\\])/gm, (v) => `\\${v}`),
+  );
 
   structureAddType(
     generateContext.structure,
+    new ObjectType("compas", "structureQuery")
+      .keys({
+        format: new StringType().oneOf("compas", "openapi").default(`"compas"`),
+      })
+      .build(),
+    {
+      skipReferenceExtraction: false,
+    },
+  );
+  structureAddType(
+    generateContext.structure,
     new RouteBuilder("GET", "compas", "structure", "_compas/structure.json")
+      .query(new ReferenceType("compas", "structureQuery"))
       .response(new AnyType())
       .tags("_compas")
       .docs("Return the full available API structure")
@@ -77,4 +118,14 @@ export function routeStructureCreate(generateContext) {
  */
 export function routeStructureGet(generateContext) {
   return routeStructureCache.get(generateContext) ?? "";
+}
+
+/**
+ * Get the saved route structure in OpenApi format
+ *
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @returns {string}
+ */
+export function routeStructureGetOpenApi(generateContext) {
+  return openApiStructureCache.get(generateContext) ?? "";
 }

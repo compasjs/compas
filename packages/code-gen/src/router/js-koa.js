@@ -8,7 +8,10 @@ import {
   fileContextSetIndent,
 } from "../file/context.js";
 import { fileWrite } from "../file/write.js";
-import { routeStructureGet } from "../processors/route-structure.js";
+import {
+  routeStructureGet,
+  routeStructureGetOpenApi,
+} from "../processors/route-structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesCacheGet } from "../types/cache.js";
 import {
@@ -433,7 +436,11 @@ export function jsKoaRegisterCompasStructureRoute(generateContext, file) {
     `compasHandlers.structure = (ctx) => {
   ctx.set("Content-Type", "application/json");
 
+  if (ctx.validatedQuery.format === "compas") {
   ctx.body = \`${routeStructureGet(generateContext)}\`;
+  } else if (ctx.validatedQuery.format === "openapi") {
+  ctx.body = \`${routeStructureGetOpenApi(generateContext)}\`;
+  }
 };
 `,
   );

@@ -31,7 +31,7 @@ export function openApiGenerate(generateContext) {
 /**
  * @param {import("../generate.js").GenerateContext} generateContext
  */
-function openApiBuildFile(generateContext) {
+export function openApiBuildFile(generateContext) {
   const openApiSpec = merge(
     {
       openapi: "3.0.3",
