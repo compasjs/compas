@@ -73,7 +73,10 @@ export function routeStructureCreate(generateContext) {
     JSON.stringify(
       openApiBuildFile({
         structure: routesOnlyGenerator.internalStructure,
+        log: generateContext.log,
+        files: new Map(),
         options: {
+          targetLanguage: "js",
           generators: {
             openApi: {
               openApiExtensions: {},
