@@ -4,6 +4,35 @@ editLink: false
 
 # Changelog
 
+### [v0.13.0](https://github.com/compasjs/compas/releases/tag/v0.13.0)
+
+#### Features
+
+- feat(code-gen): always expose the Compas structure in OpenAPI format
+  [`18cc26`](https://github.com/compasjs/compas/commit/18cc26f4dd053a7c375b84f7e44f296eaa88c21f)
+- feat(store): add option to 'jobSessionStoreCleanup' to revoke sessions after N
+  days
+  [`21a3f8`](https://github.com/compasjs/compas/commit/21a3f86c8711b944f2b0903c5b5a385b90aed960)
+
+#### Other
+
+- chore(release): don't try to commit package-lock.json
+  [`d31756`](https://github.com/compasjs/compas/commit/d31756ac4dfb43ddc3ea9d03ffc2c051df1e4b06)
+- chore: fix type issues
+  [`c71a6b`](https://github.com/compasjs/compas/commit/c71a6b0a998aa38a02727a503265693dbcd9aab9)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3330](https://github.com/compasjs/compas/pull/3330))
+  [`468dac`](https://github.com/compasjs/compas/commit/468dac5940cff24ebbcd07639064556057393254)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump tar from 6.2.1 to 7.4.3
+  ([#3274](https://github.com/compasjs/compas/pull/3274))
+  - Major version bump
+  - [Release notes](https://github.com/isaacs/node-tar/releases)
+
 ### [v0.12.4](https://github.com/compasjs/compas/releases/tag/v0.12.4)
 
 #### Other
