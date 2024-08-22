@@ -390,12 +390,14 @@ export async function sessionStoreRefreshTokens(
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("postgres").Sql<{}>} sql
  * @param {number} maxRevokedAgeInDays
+ * @param {number} [maxSessionLifetimeInDays]
  * @returns {Promise<void>}
  */
 export async function sessionStoreCleanupExpiredSessions(
   event,
   sql,
   maxRevokedAgeInDays,
+  maxSessionLifetimeInDays,
 ) {
   eventStart(event, "sessionStore.cleanupExpiredSessions");
 
@@ -422,6 +424,15 @@ export async function sessionStoreCleanupExpiredSessions(
   await queries.sessionStoreDelete(sql, {
     accessTokensNotExists: {},
   });
+
+  if (!isNil(maxSessionLifetimeInDays) && maxSessionLifetimeInDays > 1) {
+    const d = new Date();
+    d.setDate(d.getDate() - maxSessionLifetimeInDays);
+
+    await queries.sessionStoreDelete(sql, {
+      createdAtLowerThan: d,
+    });
+  }
 
   eventStop(event);
 }

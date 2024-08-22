@@ -6,11 +6,15 @@ import { sessionStoreCleanupExpiredSessions } from "./session-store.js";
  * {@link sessionStoreCleanupExpiredSessions}. By default, removes expired and revoked
  * sessions after 14 days.
  *
+ * If 'maxSessionLifetimeInDays' is provided, even active sessions will be removed if
+ * they are created 'maxSessionLifetimeInDays'-days ago.
+ *
  * Recommended interval: daily
  * Recommended cronExpression: 0 2 * * *
  *
  * @param {{
  *   maxRevokedAgeInDays?: number,
+ *   maxSessionLifetimeInDays?: number,
  * }} [options]
  * @returns {import("./queue-worker.js").QueueWorkerHandler}
  */
@@ -27,6 +31,7 @@ export function jobSessionStoreCleanup(options) {
       newEventFromEvent(event),
       sql,
       options?.maxRevokedAgeInDays ?? 14,
+      options?.maxSessionLifetimeInDays,
     );
 
     eventStop(event);
