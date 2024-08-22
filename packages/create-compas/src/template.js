@@ -13,7 +13,7 @@ import {
   spawn,
   uuid,
 } from "@compas/stdlib";
-import tar from "tar";
+import * as tar from "tar";
 
 /**
  * Try to resolve the template, this way we can explicitly error instead of an extraction
@@ -130,6 +130,7 @@ export async function templateGetAndExtractStream(logger, options) {
 
   await tar.extract(
     {
+      // @ts-expect-error this just works :tm:
       file: tmpFile,
       cwd: options.outputDirectory,
       strip: options.template.path
