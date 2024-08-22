@@ -130,6 +130,7 @@ export async function templateGetAndExtractStream(logger, options) {
 
   await tar.extract(
     {
+      // @ts-expect-error It still errors?
       file: tmpFile,
       cwd: options.outputDirectory,
       strip: options.template.path
