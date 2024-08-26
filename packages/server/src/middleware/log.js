@@ -111,10 +111,8 @@ export function logMiddleware(app, options) {
 
       if (span) {
         if (!isMatchedRoute) {
-          // @ts-expect-error Private property?
-          //
           // Discard sampled spans which don't match a route.
-          span._sampled = false;
+          span.setAttribute("_compas.skip-event", true);
         }
 
         span.setStatus(

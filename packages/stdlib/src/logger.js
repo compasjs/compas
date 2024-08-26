@@ -3,7 +3,7 @@ import { environment, isProduction } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil, isPlainObject, merge } from "./lodash.js";
 import { loggerWriteGithubActions, loggerWritePretty } from "./log-writers.js";
-import { _compasSentryExport } from "./sentry.js";
+import { _compasSentryExport, sentrySpanIsSampled } from "./sentry.js";
 
 /**
  * @typedef {object} Logger
@@ -131,13 +131,14 @@ export function newLogger(options) {
       info: (message) => {
         childLogger.info({ message });
 
-        if (!_compasSentryExport?.getActiveSpan?.()) {
-          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs from showing up in a random span.
+        if (!sentrySpanIsSampled(_compasSentryExport?.getActiveSpan?.())) {
+          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs
+          // from showing up in a random span.
           return;
         }
 
         if (!addedContextAsBreadcrumb) {
-          _compasSentryExport.addBreadcrumb({
+          _compasSentryExport?.addBreadcrumb({
             category: context.type,
             data: {
               ...context,
@@ -148,7 +149,7 @@ export function newLogger(options) {
           addedContextAsBreadcrumb = true;
         }
 
-        _compasSentryExport.addBreadcrumb({
+        _compasSentryExport?.addBreadcrumb({
           category: context.type,
           data: typeof message === "string" ? undefined : message,
           message: typeof message === "string" ? message : undefined,
@@ -159,13 +160,14 @@ export function newLogger(options) {
       error: (message) => {
         childLogger.error({ message });
 
-        if (!_compasSentryExport?.getActiveSpan?.()) {
-          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs from showing up in a random span.
+        if (!sentrySpanIsSampled(_compasSentryExport?.getActiveSpan?.())) {
+          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs
+          // from showing up in a random span.
           return;
         }
 
         if (!addedContextAsBreadcrumb) {
-          _compasSentryExport.addBreadcrumb({
+          _compasSentryExport?.addBreadcrumb({
             category: "log",
             data: {
               ...context,
@@ -176,7 +178,7 @@ export function newLogger(options) {
           addedContextAsBreadcrumb = true;
         }
 
-        _compasSentryExport.addBreadcrumb({
+        _compasSentryExport?.addBreadcrumb({
           category: "log",
           data: typeof message === "string" ? undefined : message,
           message: typeof message === "string" ? message : undefined,

@@ -1,7 +1,7 @@
 /**
  * The Sentry version that all Compas packages use if set via {@link compasWithSentry}.
  *
- * @type {undefined|import("@sentry/node")}
+ * @type {undefined|typeof import("@sentry/node")}
  */
 export let _compasSentryExport = undefined;
 
@@ -16,7 +16,8 @@ export let _compasSentryEnableQuerySpans = false;
  * Enable Sentry support. This comes with the following changes:
  *
  * Stdlib:
- * - Logger: both info and error logs are added as breadcrumbs to the current active span.
+ * - Logger: both info and error logs are added as breadcrumbs to the current active
+ * span.
  * - Event: Events are propagated to Sentry as (inactive) spans.
  *     Meaning that further logs are not necessarily correlated to the correct event.
  *     The final event callstack is not logged.
@@ -24,22 +25,26 @@ export let _compasSentryEnableQuerySpans = false;
  * Server:
  * - Starts a new root span for each incoming request.
  * - Tries to name it based on the finalized name of `ctx.event`.
- *     This is most likely in the format `router.foo.bar` for matched routes by the generated router.
+ *     This is most likely in the format `router.foo.bar` for matched routes by the
+ * generated router.
  * - Uses the sentry-trace header when provided.
  *     Note that if a custom list of `allowHeaders` is provided in the CORS options,
  *     'sentry-trace' and 'baggage' should be allowed as well.
- * - If the error handler retrieves an unknown or AppError.serverError, it is reported as an uncaught exception.
- *     It is advised to set 'normalizeDepth' to '0' in your Sentry config, and to enable the 'extraErrorDataIntegration' integration.
+ * - If the error handler retrieves an unknown or AppError.serverError, it is reported as
+ * an uncaught exception. It is advised to set 'normalizeDepth' to '0' in your Sentry
+ * config, and to enable the 'extraErrorDataIntegration' integration.
  *
  * Store:
  * - Starts a new root span for each handled Job in the QueueWorker
- *     The span name is based on the job name. Unhandled errors are captured as exceptions.
- * - Supports passing queries to Sentry as spans. Requires {@link opts.sendQueriesAsSpans} to be set.
+ *     The span name is based on the job name. Unhandled errors are captured as
+ * exceptions.
+ * - Supports passing queries to Sentry as spans. Requires {@link
+ * opts.sendQueriesAsSpans} to be set.
  *
  * All:
  * - All error logs in Compas package code are captured as exceptions.
  *
- * @param {import("@sentry/node")} instance
+ * @param {typeof import("@sentry/node")} instance
  * @param {{
  *   sendQueriesAsSpans?: boolean
  * }} [opts]
@@ -47,4 +52,25 @@ export let _compasSentryEnableQuerySpans = false;
 export function compasWithSentry(instance, { sendQueriesAsSpans } = {}) {
   _compasSentryExport = instance;
   _compasSentryEnableQuerySpans = sendQueriesAsSpans ?? false;
+
+  _compasSentryExport.addEventProcessor((event) => {
+    if (event.spans?.some?.((it) => it.data?.["_compas.skip-event"])) {
+      return null;
+    }
+
+    return event;
+  });
+}
+
+/**
+ * @see https://github.com/getsentry/sentry-javascript/blob/8bec42e0285ee301e8fc9bcaf02046daf48e0495/packages/core/src/utils/spanUtils.ts#L103
+ */
+export function sentrySpanIsSampled(span) {
+  if (!span) {
+    return false;
+  }
+
+  const { traceFlags } = span.spanContext();
+
+  return Boolean(traceFlags & 0x1);
 }
