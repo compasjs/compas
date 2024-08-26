@@ -4,6 +4,25 @@ editLink: false
 
 # Changelog
 
+### [v0.13.1](https://github.com/compasjs/compas/releases/tag/v0.13.1)
+
+#### Bug fixes
+
+- fix(stdlib,server): correct Sentry sampled checks and dropping of trace events
+  [`f70085`](https://github.com/compasjs/compas/commit/f7008555aa619f4bf950ead558e50fd014134da2)
+
+#### Dependency updates
+
+- build(deps): bump file-type from 19.3.0 to 19.4.1
+  ([#3337](https://github.com/compasjs/compas/pull/3337))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.635.0 to 3.637.0
+  ([#3336](https://github.com/compasjs/compas/pull/3336))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.635.0 to 3.637.0
+  ([#3336](https://github.com/compasjs/compas/pull/3336))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.13.0](https://github.com/compasjs/compas/releases/tag/v0.13.0)
 
 #### Features
