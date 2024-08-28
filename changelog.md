@@ -4,6 +4,14 @@ editLink: false
 
 # Changelog
 
+### [v0.14.0](https://github.com/compasjs/compas/releases/tag/v0.14.0)
+
+#### Breaking changes
+
+- chore(stdlib,store,server): remove Sentry v7 compatibility
+  [`381cfa`](https://github.com/compasjs/compas/commit/381cfab1ed2b79f618cf26a5a926a1b79d68918e)
+  - Compas now only works with Sentry v8+
+
 ### [v0.13.1](https://github.com/compasjs/compas/releases/tag/v0.13.1)
 
 #### Bug fixes
