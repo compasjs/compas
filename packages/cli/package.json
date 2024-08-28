@@ -1,6 +1,6 @@
 {
   "name": "@compas/cli",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "description": "CLI containing utilities and simple script runner",
   "exports": {
     ".": {
@@ -28,7 +28,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.13.1",
+    "@compas/stdlib": "0.14.0",
     "c8": "10.1.2",
     "chokidar": "3.6.0",
     "recast": "0.23.9",
