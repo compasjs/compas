@@ -112,7 +112,7 @@ export function logMiddleware(app, options) {
       if (span) {
         if (!isMatchedRoute) {
           // Discard sampled spans which don't match a route.
-          span.setAttribute("_compas.skip-event", true);
+          _compasSentryExport.setExtra("_compas.skip-event", true);
         }
 
         span.setStatus(

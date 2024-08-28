@@ -1,6 +1,6 @@
 import { mkdir, rm } from "node:fs/promises";
 import { threadId } from "node:worker_threads";
-import { uuid } from "@compas/stdlib";
+import { compasWithSentry, uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
   objectStorageCreateClient,
@@ -57,6 +57,27 @@ export async function injectTestServices() {
 
   testTemporaryDirectory = `.cache/tmp/${threadId}`;
   await mkdir(testTemporaryDirectory, { recursive: true });
+
+  compasWithSentry(await import("@sentry/node"), { sendQueriesAsSpans: true });
+  const { init, extraErrorDataIntegration } = await import("@sentry/node");
+  init({
+    // debug: true,
+
+    dsn: "foo@bar",
+
+    integrations: [
+      // Include custom AppError properties.
+      extraErrorDataIntegration({
+        depth: 30,
+      }),
+    ],
+
+    tracesSampleRate: 1,
+    normalizeDepth: 0,
+    registerEsmLoaderHooks: {
+      include: [/^node:.+$/],
+    },
+  });
 }
 
 /**

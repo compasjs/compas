@@ -53,8 +53,8 @@ export function compasWithSentry(instance, { sendQueriesAsSpans } = {}) {
   _compasSentryExport = instance;
   _compasSentryEnableQuerySpans = sendQueriesAsSpans ?? false;
 
-  _compasSentryExport.addEventProcessor((event) => {
-    if (event.spans?.some?.((it) => it.data?.["_compas.skip-event"])) {
+  _compasSentryExport.getIsolationScope().addEventProcessor((event) => {
+    if (event.extra?.["_compas.skip-event"]) {
       return null;
     }
 

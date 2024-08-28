@@ -1,8 +1,4 @@
-import { _compasSentryExport, uuid } from "@compas/stdlib";
-
-const cbIdentity = (cb) => {
-  return cb();
-};
+import { _compasSentryExport } from "@compas/stdlib";
 
 /**
  * Sentry support;
@@ -36,18 +32,9 @@ export function sentry() {
     }
 
     const _sentry = _compasSentryExport;
-    // Sentry v7 / v8 compat
-    const startNewTrace = _sentry.startNewTrace ?? cbIdentity;
-
-    return startNewTrace(() => {
-      return _sentry.startSpanManual(
+    return _sentry.withIsolationScope(async () => {
+      return await _sentry.startSpanManual(
         {
-          // @ts-expect-error compat
-          //
-          // v7 / v8 compat to force a new trace
-          traceId: uuid().replace(/-/g, ""),
-          spanId: uuid().replace(/-/g, "").slice(16),
-
           op: "http.server",
           name: "http",
           attributes: {

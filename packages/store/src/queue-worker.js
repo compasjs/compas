@@ -7,17 +7,12 @@ import {
   isNil,
   newEvent,
   newLogger,
-  uuid,
 } from "@compas/stdlib";
 import cron from "cron-parser";
 import { jobWhere } from "./generated/database/job.js";
 import { validateStoreJob } from "./generated/store/validators.js";
 import { queries } from "./generated.js";
 import { query } from "./query.js";
-
-const cbIdentity = (cb) => {
-  return cb();
-};
 
 /**
  * @typedef {(
@@ -524,18 +519,10 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
 
   if (_compasSentryExport) {
     const _sentry = _compasSentryExport;
-    // Sentry v7 / v8 compat
-    const startNewTrace = _sentry.startNewTrace ?? cbIdentity;
 
-    await startNewTrace(() => {
-      return _sentry.startSpan(
+    await _sentry.withIsolationScope(async () => {
+      return await _sentry.startSpan(
         {
-          // @ts-expect-error compat
-          //
-          // v7 / v8 compat to force a new trace
-          traceId: uuid().replace(/-/g, ""),
-          spanId: uuid().replace(/-/g, "").slice(16),
-
           op: "queue.task",
           name: job.name,
           forceTransaction: true,
