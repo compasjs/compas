@@ -209,6 +209,11 @@ export function tsAxiosGenerateFunction(
             `data.append("${key}", ${parameter}["${key}"].data, ${parameter}["${key}"].name);`,
           );
         }
+      } else if (fieldType.type === "number") {
+        fileWrite(
+          file,
+          `data.append("${key}", ${parameter}["${key}"].toString());`,
+        );
       } else {
         fileWrite(file, `data.append("${key}", ${parameter}["${key}"]);`);
       }
