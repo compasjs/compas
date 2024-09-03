@@ -608,7 +608,7 @@ ${hookName}.setQueryData = (
         })},`
       : ""
   }
-  data: Updater<${contextNames.responseTypeName ?? "unknown"}, ${
+  data: Updater<${contextNames.responseTypeName ?? "unknown"} | undefined, ${
     contextNames.responseTypeName ?? "unknown"
   }>,
 ) => {
