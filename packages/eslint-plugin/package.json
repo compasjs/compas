@@ -24,7 +24,7 @@
     "@babel/plugin-syntax-class-properties": "7.12.13",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-import": "2.30.0",
     "eslint-plugin-jsdoc": "48.7.0",
     "prettier": "3.3.3"
   },
