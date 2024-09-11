@@ -1,6 +1,6 @@
 {
   "name": "@compas/store",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "Postgres & S3-compatible wrappers for common things",
   "exports": {
     ".": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "3.649.0",
     "@aws-sdk/lib-storage": "3.649.0",
-    "@compas/stdlib": "0.14.0",
+    "@compas/stdlib": "0.14.1",
     "crc": "4.3.2",
     "cron-parser": "^4.9.0",
     "file-type": "19.5.0",
