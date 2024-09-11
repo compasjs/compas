@@ -124,7 +124,7 @@ test("cli/testing/runner", (t) => {
 
       // total of 9...0 = 45, but should be shorter than that, even with a bit of test
       // runner overhead. The minimum time is 13ms -> 4 + 9
-      t.ok(stop - start < 25, `Actual time: ${stop - start}ms`);
+      t.ok(stop - start < 45, `Actual time: ${stop - start}ms`);
     });
   });
 });

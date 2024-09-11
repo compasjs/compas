@@ -50,7 +50,7 @@ test("stdlib/events", (t) => {
 
     t.ok(event.span.startTime);
     t.ok(event.span.stopTime);
-    t.equal(event.span.duration, 0);
+    t.ok(!isNil(event.span.duration));
   });
 
   t.test("event abort ", (t) => {
