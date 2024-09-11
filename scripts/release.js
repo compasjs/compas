@@ -9,6 +9,7 @@ export const cliDefinition = {
     {
       name: "version",
       rawName: "--version",
+      description: "New version number like v1.3.4",
       modifiers: {
         isRequired: true,
       },
@@ -19,6 +20,7 @@ export const cliDefinition = {
     {
       name: "otp",
       rawName: "--otp",
+      description: "OTP for your logged in NPM account",
       modifiers: {
         isRequired: true,
       },
