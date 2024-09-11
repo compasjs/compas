@@ -4,6 +4,42 @@ editLink: false
 
 # Changelog
 
+### [v0.14.1](https://github.com/compasjs/compas/releases/tag/v0.14.1)
+
+#### Bug fixes
+
+- fix(code-gen): convert numbers to string in functions using FormData
+  ([#3350](https://github.com/compasjs/compas/pull/3350))
+  [`047cc5`](https://github.com/compasjs/compas/commit/047cc5aa13f3c8c4508007306cc843ff9a5f5481)
+
+#### Other
+
+- chore(cli,stdlib): fix flaky tests
+  [`1a9bde`](https://github.com/compasjs/compas/commit/1a9bde4d853aa8230abaf27e79f12de76c16030b)
+
+#### Dependency updates
+
+- build(deps): bump pino from 9.3.2 to 9.4.0
+  ([#3353](https://github.com/compasjs/compas/pull/3353))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump sharp from 0.33.4 to 0.33.5
+  ([#3329](https://github.com/compasjs/compas/pull/3329))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump eslint-plugin-import from 2.29.1 to 2.30.0
+  ([#3352](https://github.com/compasjs/compas/pull/3352))
+  - [Release notes](https://github.com/import-js/eslint-plugin-import/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.637.0 to 3.649.0
+  ([#3356](https://github.com/compasjs/compas/pull/3356),
+  [#3364](https://github.com/compasjs/compas/pull/3364))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.637.0 to 3.649.0
+  ([#3356](https://github.com/compasjs/compas/pull/3356),
+  [#3364](https://github.com/compasjs/compas/pull/3364))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 19.4.1 to 19.5.0
+  ([#3359](https://github.com/compasjs/compas/pull/3359))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+
 ### [v0.14.0](https://github.com/compasjs/compas/releases/tag/v0.14.0)
 
 #### Breaking changes
