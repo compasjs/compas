@@ -116,12 +116,12 @@ export class CrudType extends TypeBuilder {
    *
    * @param {{
    *   readable: {
-   *     $omit?: string[],
-   *     $pick?: string[],
+   *     $omit?: Array<string>,
+   *     $pick?: Array<string>,
    *   }|import("../../types/advanced-types.js").TypeBuilderLike,
    *   writable: {
-   *     $omit?: string[],
-   *     $pick?: string[],
+   *     $omit?: Array<string>,
+   *     $pick?: Array<string>,
    *   }
    * }} fieldOptions
    * @returns {CrudType}

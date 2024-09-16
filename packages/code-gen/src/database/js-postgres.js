@@ -161,9 +161,7 @@ export function jsPostgresCreateFile(generateContext, model) {
     fileWrite(file, `${model.name}Delete,`);
     fileWrite(
       file,
-      `${model.name}UpsertOn${upperCaseFirst(
-        modelKeyGetPrimary(model).primaryKeyName,
-      )},`,
+      `${model.name}UpsertOn${upperCaseFirst(modelKeyGetPrimary(model).primaryKeyName)},`,
     );
   }
 
@@ -198,12 +196,12 @@ export function jsPostgresGenerateWhere(
   // TODO: abstract this logic in the generator, instead of here.
   for (const info of whereInformation.fields) {
     const fieldType =
-      model.keys[info.modelKey].type === "reference"
-        ? structureResolveReference(
-            generateContext.structure,
-            model.keys[info.modelKey],
-          )?.type
-        : model.keys[info.modelKey].type;
+      model.keys[info.modelKey].type === "reference" ?
+        structureResolveReference(
+          generateContext.structure,
+          model.keys[info.modelKey],
+        )?.type
+      : model.keys[info.modelKey].type;
     const isFloat =
       fieldType === "number" &&
       referenceUtilsGetProperty(
@@ -224,19 +222,13 @@ export function jsPostgresGenerateWhere(
       fieldSpecs[info.modelKey] = {
         tableKey: info.modelKey,
         keyType:
-          fieldType === "number" && !isFloat
-            ? "int"
-            : fieldType === "number" && isFloat
-              ? "float"
-              : fieldType === "string"
-                ? "varchar"
-                : fieldType === "date" && dateOnly
-                  ? "date"
-                  : fieldType === "date" && timeOnly
-                    ? "time"
-                    : fieldType === "date"
-                      ? "timestamptz"
-                      : "uuid",
+          fieldType === "number" && !isFloat ? "int"
+          : fieldType === "number" && isFloat ? "float"
+          : fieldType === "string" ? "varchar"
+          : fieldType === "date" && dateOnly ? "date"
+          : fieldType === "date" && timeOnly ? "time"
+          : fieldType === "date" ? "timestamptz"
+          : "uuid",
         matchers: [],
       };
     }
@@ -293,9 +285,7 @@ export function jsPostgresGenerateWhere(
       tableKey: relationInfo.virtualKeyNameInverse,
       matchers: [
         {
-          matcherKey: `via${upperCaseFirst(
-            relationInfo.virtualKeyNameInverse,
-          )}`,
+          matcherKey: `via${upperCaseFirst(relationInfo.virtualKeyNameInverse)}`,
           matcherType: "via",
           relation: {
             entityName: relationInfo.modelOwn.name,
@@ -449,9 +439,9 @@ export function jsPostgresGenerateOrderBy(
   );
 
   const orderByArray =
-    model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes
-      ? ["createdAt", "updatedAt", modelKeyGetPrimary(model).primaryKeyName]
-      : [modelKeyGetPrimary(model).primaryKeyName];
+    model.queryOptions?.withDates || model.queryOptions?.withSoftDeletes ?
+      ["createdAt", "updatedAt", modelKeyGetPrimary(model).primaryKeyName]
+    : [modelKeyGetPrimary(model).primaryKeyName];
 
   fileWrite(file, `orderBy ??= ${JSON.stringify(orderByArray)};`);
   fileWrite(file, `orderBySpec ??= {};`);
@@ -587,7 +577,7 @@ export function jsPostgresGenerateInsert(
     file,
     ` @param {${contextNames.insertType.inputType}["insert"]} insert`,
   );
-  fileWrite(file, ` @param {{ withPrimaryKey?: boolean }} [options={}]`);
+  fileWrite(file, ` @param {{ withPrimaryKey?: boolean }} [_options={}]`);
   fileWrite(file, ` @returns {Promise<${contextNames.model.outputType}[]>}`);
 
   fileWrite(file, `/`);
@@ -596,7 +586,7 @@ export function jsPostgresGenerateInsert(
   // Function
   fileBlockStart(
     file,
-    `function ${model.name}Insert(sql, insert, options = {})`,
+    `function ${model.name}Insert(sql, insert, _options = {})`,
   );
 
   fileBlockStart(
@@ -679,9 +669,9 @@ export function jsPostgresGenerateInsert(
       "primary",
     ]);
     const fieldType =
-      field.type === "reference"
-        ? structureResolveReference(generateContext.structure, field).type
-        : field.type;
+      field.type === "reference" ?
+        structureResolveReference(generateContext.structure, field).type
+      : field.type;
 
     const isPrimitive = [
       "boolean",
@@ -743,10 +733,7 @@ export function jsPostgresGenerateInsert(
   fileBlockStart(file, `if(validatedInput.returning === "*")`);
   fileWrite(
     file,
-    `str.push(\` RETURNING ${JSON.stringify(Object.keys(model.keys)).slice(
-      1,
-      -1,
-    )}\`);`,
+    `str.push(\` RETURNING ${JSON.stringify(Object.keys(model.keys)).slice(1, -1)}\`);`,
   );
   fileWrite(file, `args.push(undefined);`);
   fileBlockEnd(file);
@@ -914,10 +901,7 @@ export function jsPostgresGenerateUpsertOnPrimaryKey(
   fileBlockStart(file, `if(validatedInput.returning === "*")`);
   fileWrite(
     file,
-    `str.push(\` RETURNING ${JSON.stringify(Object.keys(model.keys)).slice(
-      1,
-      -1,
-    )}\`);`,
+    `str.push(\` RETURNING ${JSON.stringify(Object.keys(model.keys)).slice(1, -1)}\`);`,
   );
   fileWrite(file, `args.push(undefined);`);
   fileBlockEnd(file);
@@ -970,16 +954,15 @@ export function jsPostgresGenerateUpdate(
 
   for (const key of Object.keys(model.keys)) {
     const type =
-      model.keys[key].type === "reference"
-        ? structureResolveReference(generateContext.structure, model.keys[key])
-            .type
-        : model.keys[key].type;
+      model.keys[key].type === "reference" ?
+        structureResolveReference(generateContext.structure, model.keys[key])
+          .type
+      : model.keys[key].type;
 
-    const subType = ["number", "boolean", "string", "date", "uuid"].includes(
-      type,
-    )
-      ? type
-      : "jsonb";
+    const subType =
+      ["number", "boolean", "string", "date", "uuid"].includes(type) ? type : (
+        "jsonb"
+      );
 
     entityUpdateSpec.fields[key] = {
       type: subType,

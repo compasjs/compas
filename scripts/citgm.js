@@ -105,9 +105,8 @@ export const cliDefinition = {
  */
 async function executor(logger, state) {
   const { targetDirectory, version } = state.flags;
-  const packageManager = existsSync(pathJoin(targetDirectory, "yarn.lock"))
-    ? "yarn"
-    : "npm";
+  const packageManager =
+    existsSync(pathJoin(targetDirectory, "yarn.lock")) ? "yarn" : "npm";
   const currentBranch = await gitGetCurrentBranch(targetDirectory);
   const targetBranch = "compas/citgm";
 
@@ -149,21 +148,20 @@ async function executor(logger, state) {
       // in package local node_modules of other Compas packages. Remove these, so they
       // import the project installed versions (ie our latest version on GitHub).
       await Promise.all(
-        ["cli", "code-gen", "eslint-plugin", "server", "stdlib", "store"].map(
-          (it) =>
-            rm(
-              pathJoin(
-                targetDirectory,
-                "node_modules",
-                "@compas",
-                it,
-                "node_modules",
-              ),
-              {
-                force: true,
-                recursive: true,
-              },
+        ["cli", "code-gen", "server", "stdlib", "store"].map((it) =>
+          rm(
+            pathJoin(
+              targetDirectory,
+              "node_modules",
+              "@compas",
+              it,
+              "node_modules",
             ),
+            {
+              force: true,
+              recursive: true,
+            },
+          ),
         ),
       );
     } else {

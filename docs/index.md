@@ -13,15 +13,12 @@ hero:
 features:
   - title: All in one specification
     details:
-      "Build up a specification based on types, routes and entities with
-      flexible builders, or import an existing OpenAPI schema."
+      "Build up a specification based on types, routes and entities with flexible
+      builders, or import an existing OpenAPI schema."
   - title: Multi target generators
     details:
-      "Reuse a specification and generate types, validators, routers, api
-      clients and database queries in different languages and with different
-      base libraries."
+      "Reuse a specification and generate types, validators, routers, api clients and
+      database queries in different languages and with different base libraries."
   - title: Unified utilities
-    details:
-      "Session handling, file storage, test runner and more all in a few
-      packages."
+    details: "Session handling, file storage, test runner and more all in a few packages."
 ---

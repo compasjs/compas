@@ -3,10 +3,10 @@ import { isQueryPart, query } from "./query.js";
 
 /**
  * @typedef {object} EntityWhere
- * @property {{
+ * @property {Array<{
  *   tableKey: string,
  *   keyType: string,
- *   matchers: {
+ *   matchers: Array<{
  *     matcherKey: string,
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
  *                    "like"|"iLike"|"notLike"|"notILike"|
@@ -19,8 +19,8 @@ import { isQueryPart, query } from "./query.js";
  *       referencedKey: string,
  *       where: () => EntityWhere,
  *     },
- *   }[],
- * }[]} fieldSpecification
+ *   }>,
+ * }>} fieldSpecification
  */
 
 /**
@@ -28,14 +28,14 @@ import { isQueryPart, query } from "./query.js";
  * @property {string} schemaName
  * @property {string} name
  * @property {string} shortName
- * @property {string[]} columns
+ * @property {Array<string>} columns
  * @property {EntityWhere} where
  * @property {boolean} injectUpdatedAt
  * @property {Record<string, {
  *   type: "boolean"|"number"|"string"|"date"|"jsonb",
- *   atomicUpdates: ("$negate"|"$add"|"$subtract"|
+ *   atomicUpdates: Array<("$negate"|"$add"|"$subtract"|
  *       "$multiply"|"$divide"|
- *       "$append"|"$set"|"$remove")[]
+ *       "$append"|"$set"|"$remove")>
  * }>} fields
  */
 
@@ -43,24 +43,24 @@ import { isQueryPart, query } from "./query.js";
  * @typedef {object} EntityQueryBuilder
  * @property {string} name
  * @property {string} shortName
- * @property {string[]} columns
- * @property {( orderBy?: any[],
+ * @property {Array<string>} columns
+ * @property {( orderBy?: Array<any>,
  *   orderBySpec?: *,
  *   shortName?: string,
  *   options?: { skipValidator?: boolean|undefined },
  *   ) => import("../types/advanced-types.d.ts").QueryPart} [orderBy]
- * @property {( orderBy?: any[],
+ * @property {( orderBy?: Array<any>,
  *   orderBySpec?: *,
  *   options?: { shortName?: string;  skipValidator?: boolean|undefined },
  *   ) => import("../types/advanced-types.d.ts").QueryPart} [orderByExperimental]
  * @property {EntityWhere} where
- * @property {{
+ * @property {Array<{
  *   builderKey: string,
  *   ownKey: string,
  *   referencedKey: string,
  *   returnsMany: boolean,
  *   entityInformation: () => EntityQueryBuilder,
- * }[]} relations
+ * }>} relations
  */
 
 /**
@@ -77,7 +77,7 @@ export function generatedWhereBuilderHelper(
   shortName,
 ) {
   const strings = ["1 = 1"];
-  /** @type {import("../types/advanced-types.d.ts").QueryPartArg[]} */
+  /** @type {Array<import("../types/advanced-types.d.ts").QueryPartArg>} */
   const values = [undefined];
 
   if (typeof entityWhereInformation === "function") {
@@ -208,8 +208,9 @@ export function generatedWhereBuilderHelper(
         strings.push(` AND ${shortName}"${fieldSpec.tableKey}" IS NOT NULL `);
         values.push(undefined);
       } else if (matcherKeyExists && matcher.matcherType === "via") {
-        const offsetLimit = !isNil(where[matcher.matcherKey]?.offset)
-          ? query`OFFSET
+        const offsetLimit =
+          !isNil(where[matcher.matcherKey]?.offset) ?
+            query`OFFSET
         ${where[matcher.matcherKey]?.offset}`
           : query``;
 
@@ -261,7 +262,7 @@ export function generatedWhereBuilderHelper(
  *
  * @param {EntityUpdate} entity
  * @param {*} input
- * @returns {import("../types/advanced-types.d.ts").QueryPart<any[]>}
+ * @returns {import("../types/advanced-types.d.ts").QueryPart<Array<any>>}
  */
 export function generatedUpdateHelper(entity, input) {
   if (Object.keys(input.where).length === 0) {
@@ -280,7 +281,7 @@ export function generatedUpdateHelper(entity, input) {
     `UPDATE ${entity.schemaName}"${entity.name}" ${entity.shortName}
      SET `,
   ];
-  /** @type {any[]} */
+  /** @type {Array<any>} */
   const args = [undefined];
 
   const state = {
@@ -431,7 +432,7 @@ export function generatedUpdateHelper(entity, input) {
  *   wherePart?: string,
  *   nestedIndex?: number,
  * }} options
- * @returns {import("../types/advanced-types.d.ts").QueryPart<any[]>}
+ * @returns {import("../types/advanced-types.d.ts").QueryPart<Array<any>>}
  */
 export function generatedQueryBuilderHelper(
   entity,
@@ -465,11 +466,9 @@ export function generatedQueryBuilderHelper(
     // variables, without keeping track of them, since for joins we only need to know
     // this shortName and the nested shortName
     const otherShortName =
-      subEntity !== entity
-        ? subEntity.shortName
-        : shortName === entity.shortName
-          ? `${shortName}2`
-          : entity.shortName;
+      subEntity !== entity ? subEntity.shortName
+      : shortName === entity.shortName ? `${shortName}2`
+      : entity.shortName;
 
     // We build a JSON object for all columns and it's relations, since sub queries need
     // to return a single column result.

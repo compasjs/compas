@@ -98,9 +98,9 @@ test("stdlib/lodash", (t) => {
 
     t.deepEqual(
       unFlatten({
-        foo: "Overwritten",
+        "foo": "Overwritten",
         "foo.baz": "Yep overwritten",
-        str: false,
+        "str": false,
       }),
       {
         foo: { baz: "Yep overwritten" },

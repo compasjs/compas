@@ -20,8 +20,9 @@ import {
  *   input: string,
  *   output: string,
  * }} nameSuffixes
- * @property {(import("../generated/common/types.d.ts").StructureAnyDefinitionTarget
- *  )[]} targets
+ * @property {Array<
+ *   import("../generated/common/types.d.ts").StructureAnyDefinitionTarget
+ *  >} targets
  */
 
 /**

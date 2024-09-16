@@ -1,6 +1,6 @@
-import { mainTestFn, test } from "@compas/cli";
 import { isNil, isPlainObject } from "@compas/stdlib";
 import { collectScripts } from "./utils.js";
+import { mainTestFn, test } from "@compas/cli";
 
 mainTestFn(import.meta);
 

@@ -1,10 +1,10 @@
 import { mainTestFn, test } from "@compas/cli";
 import { isPlainObject } from "@compas/stdlib";
+import { postgresTableSizes } from "./insight.js";
 import {
   cleanupTestPostgresDatabase,
   createTestPostgresDatabase,
 } from "@compas/store";
-import { postgresTableSizes } from "./insight.js";
 
 mainTestFn(import.meta);
 

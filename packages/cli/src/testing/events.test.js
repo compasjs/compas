@@ -1,5 +1,5 @@
-import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import { eventStart, eventStop, isNil } from "@compas/stdlib";
+import { mainTestFn, newTestEvent, test } from "@compas/cli";
 
 mainTestFn(import.meta);
 

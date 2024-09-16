@@ -219,9 +219,7 @@ export function tsFetchGenerateFunction(
     file,
     `export async function api${upperCaseFirst(route.group)}${upperCaseFirst(
       route.name,
-    )}(${args.join(", ")}): Promise<${
-      contextNames.responseTypeName ?? "Response"
-    }>`,
+    )}(${args.join(", ")}): Promise<${contextNames.responseTypeName ?? "Response"}>`,
   );
 
   if (route.metadata?.requestBodyType === "form-data") {
@@ -245,9 +243,9 @@ export function tsFetchGenerateFunction(
 
     for (const key of Object.keys(type.keys)) {
       const fieldType =
-        type.keys[key].type === "reference"
-          ? structureResolveReference(generateContext.structure, type.keys[key])
-          : type.keys[key];
+        type.keys[key].type === "reference" ?
+          structureResolveReference(generateContext.structure, type.keys[key])
+        : type.keys[key];
 
       const isOptional = referenceUtilsGetProperty(
         generateContext,

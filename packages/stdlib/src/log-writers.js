@@ -61,11 +61,9 @@ export function loggerWriteGithubActions(
  * @returns {string}
  */
 export function loggerFormatPretty(level, timestamp, context, message) {
-  let prefix = level
-    ? `${loggerFormatDate(timestamp)} ${loggerFormatLevel(
-        level,
-        context?.type,
-      )} `
+  let prefix =
+    level ?
+      `${loggerFormatDate(timestamp)} ${loggerFormatLevel(level, context?.type)} `
     : "";
 
   if (Object.keys(context).length > (context?.type ? 1 : 0)) {
@@ -120,8 +118,8 @@ function loggerFormatLevel(level, type) {
   const str =
     typeof type === "string" && type.length > 0 ? `${level}[${type}]` : level;
 
-  return level === "error"
-    ? `\x1b[31m${str}\x1b[39m`
+  return level === "error" ?
+      `\x1b[31m${str}\x1b[39m`
     : `\x1b[34m${str}\x1b[39m`;
 }
 

@@ -17,7 +17,7 @@
 
 /**
  * @template Type
- * @template {undefined | "*" | string[]} Selector
+ * @template {undefined | "*" | Array<string>} Selector
  * @typedef {import("./types/advanced-types.js").Returning<Type, Selector>} Returning
  */
 

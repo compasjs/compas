@@ -5,11 +5,11 @@ import { typeDefinitionTraverse } from "../processors/type-definition-traverse.j
  * Cache to check if for the provided type we already have resolved the used targets.
  *
  * @type {WeakMap<import("../generated/common/types.js").StructureTypeSystemDefinition,
- *   import("../generated/common/types.d.ts").StructureAnyDefinitionTarget[]>}
+ *   Array<import("../generated/common/types.d.ts").StructureAnyDefinitionTarget>>}
  */
 const typeTargetCache = new WeakMap();
 
-/** @type {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} */
+/** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
 const fileTargets = [
   "jsAxiosNode",
   "jsKoaReceive",
@@ -24,7 +24,7 @@ const fileTargets = [
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
- * @returns {import("../generated/common/types.js").StructureAnyDefinitionTarget[]}
+ * @returns {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>}
  */
 export function typeTargetsDetermine(generateContext, type) {
   if (typeTargetCache.has(type)) {
@@ -78,9 +78,9 @@ export function typeTargetsDetermine(generateContext, type) {
  *
  * Does not alter the order of the provided {@link usedTargetsByGenerator} array.
  *
- * @param {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} availableTargetsInType
- * @param {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} usedTargetsByGenerator
- * @returns {import("../generated/common/types.js").StructureAnyDefinitionTarget[]}
+ * @param {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} availableTargetsInType
+ * @param {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} usedTargetsByGenerator
+ * @returns {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>}
  */
 export function typeTargetsGetUsed(
   availableTargetsInType,

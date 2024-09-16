@@ -1,7 +1,7 @@
 # Store
 
-This is the current migration state of `@compas/store` and should be used as
-your first migration:
+This is the current migration state of `@compas/store` and should be used as your first
+migration:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

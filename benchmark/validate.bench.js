@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
+import { testTemporaryDirectory } from "../src/testing.js";
 import { bench, mainBenchFn } from "@compas/cli";
 import { Generator } from "@compas/code-gen";
 import { AppError, mainFn, pathJoin } from "@compas/stdlib";
-import { testTemporaryDirectory } from "../src/testing.js";
 
 mainFn(import.meta, main);
 

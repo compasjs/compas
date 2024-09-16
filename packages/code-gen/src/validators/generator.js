@@ -61,8 +61,8 @@ const validatorCache = new WeakMap();
  * @property {string} outputTypeName
  * @property {import("../types/generator.js").GenerateTypeOptions} outputTypeOptions
  * @property {number} reusedVariableIndex
- * @property {ValidatorPath[]} validatedValuePath
- * @property {import("../generated/common/types.js").StructureReferenceDefinition[]} dependingValidators
+ * @property {Array<ValidatorPath>} validatedValuePath
+ * @property {Array<import("../generated/common/types.js").StructureReferenceDefinition>} dependingValidators
  * @property {boolean} [jsHasInlineTypes]
  * @property {boolean} [skipFirstNilCheck]
  */
@@ -158,7 +158,8 @@ export function validatorGeneratorGenerateValidator(
   // Prepare the types that we are using, this way we can fetch the name from the type
   // cache.
   if (outputTypeOptions.preferInputBaseName) {
-    // Generate the input type first, this way it can get the 'normal' name without a suffix, improving usability
+    // Generate the input type first, this way it can get the 'normal' name without a suffix,
+    // improving usability
     typesGeneratorGenerateNamedType(generateContext, type, inputTypeOptions);
     typesGeneratorGenerateNamedType(generateContext, type, outputTypeOptions);
   } else {
@@ -194,9 +195,7 @@ export function validatorGeneratorGenerateValidator(
 
   if (!file) {
     throw AppError.serverError({
-      message: `Could not resolve validator file for ${stringFormatNameForError(
-        type,
-      )}.`,
+      message: `Could not resolve validator file for ${stringFormatNameForError(type)}.`,
     });
   }
 

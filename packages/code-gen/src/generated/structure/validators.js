@@ -49,7 +49,7 @@ export function validateStructureAnyDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -75,7 +75,7 @@ export function validateStructureAnyDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -99,7 +99,7 @@ export function validateStructureAnyDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -123,7 +123,7 @@ export function validateStructureAnyDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -179,7 +179,7 @@ export function validateStructureAnyDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -187,7 +187,7 @@ export function validateStructureAnyDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -217,7 +217,7 @@ export function validateStructureAnyDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -259,7 +259,7 @@ export function validateStructureAnyDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -465,7 +465,7 @@ export function validateStructureAnyDefinition(value) {
           };
         } else {
           result["targets"] = {};
-          for (let genericKeyInput9 of Object.keys(value["targets"])) {
+          for (const genericKeyInput9 of Object.keys(value["targets"])) {
             /** @type {any} */
             let genericKeyResult10 = undefined;
             /** @type {ValidatorErrorMap} */
@@ -572,7 +572,7 @@ export function validateStructureAnyDefinition(value) {
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString13 =
+                    const convertedString13 =
                       value["targets"][genericKeyResult10][
                         "validatorInputType"
                       ];
@@ -612,7 +612,7 @@ export function validateStructureAnyDefinition(value) {
                     };
                   } else {
                     /** @type {string} */
-                    let convertedString14 =
+                    const convertedString14 =
                       value["targets"][genericKeyResult10][
                         "validatorOutputType"
                       ];
@@ -650,7 +650,7 @@ export function validateStructureAnyDefinition(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString15 =
+                    const convertedString15 =
                       value["targets"][genericKeyResult10][
                         "validatorExpression"
                       ];
@@ -691,7 +691,7 @@ export function validateStructureAnyDefinition(value) {
                       undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString16 =
+                    const convertedString16 =
                       value["targets"][genericKeyResult10]["validatorImport"];
                     if (typeof convertedString16 !== "string") {
                       errorMap[
@@ -750,7 +750,7 @@ export function validateStructureAnyDefinitionTarget(value) {
     };
   } else {
     /** @type {string} */
-    let convertedString0 = value;
+    const convertedString0 = value;
     if (typeof convertedString0 !== "string") {
       errorMap[`$`] = {
         key: "validator.string",
@@ -850,7 +850,7 @@ export function validateStructureAnyOfDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -876,7 +876,7 @@ export function validateStructureAnyOfDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -900,7 +900,7 @@ export function validateStructureAnyOfDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -924,7 +924,7 @@ export function validateStructureAnyOfDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -980,7 +980,7 @@ export function validateStructureAnyOfDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -988,7 +988,7 @@ export function validateStructureAnyOfDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -1018,7 +1018,7 @@ export function validateStructureAnyOfDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -1060,7 +1060,7 @@ export function validateStructureAnyOfDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -1228,7 +1228,7 @@ export function validateStructureAnyOfDefinition(value) {
             result["validator"]["discriminant"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString9 = value["validator"]["discriminant"];
+            const convertedString9 = value["validator"]["discriminant"];
             if (typeof convertedString9 !== "string") {
               errorMap[`$.validator.discriminant`] = {
                 key: "validator.string",
@@ -1257,10 +1257,10 @@ export function validateStructureAnyOfDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap10 = {};
-        /** @type {any[]} */
-        let intermediateResult10 = [];
-        /** @type {any|any[]} */
-        let intermediateValue10 = value["values"];
+        /** @type {Array<any>} */
+        const intermediateResult10 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue10 = value["values"];
 
         if (!Array.isArray(intermediateValue10)) {
           errorMap[`$.values`] = {
@@ -1549,7 +1549,7 @@ export function validateStructureArrayDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -1575,7 +1575,7 @@ export function validateStructureArrayDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -1599,7 +1599,7 @@ export function validateStructureArrayDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -1623,7 +1623,7 @@ export function validateStructureArrayDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -1679,7 +1679,7 @@ export function validateStructureArrayDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -1687,7 +1687,7 @@ export function validateStructureArrayDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -1717,7 +1717,7 @@ export function validateStructureArrayDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -1759,7 +1759,7 @@ export function validateStructureArrayDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2096,7 +2096,7 @@ export function validateStructureBooleanDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -2122,7 +2122,7 @@ export function validateStructureBooleanDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -2146,7 +2146,7 @@ export function validateStructureBooleanDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -2170,7 +2170,7 @@ export function validateStructureBooleanDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -2226,7 +2226,7 @@ export function validateStructureBooleanDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2234,7 +2234,7 @@ export function validateStructureBooleanDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -2264,7 +2264,7 @@ export function validateStructureBooleanDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2306,7 +2306,7 @@ export function validateStructureBooleanDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2576,7 +2576,7 @@ export function validateStructureCrudDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -2602,7 +2602,7 @@ export function validateStructureCrudDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -2626,7 +2626,7 @@ export function validateStructureCrudDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -2650,7 +2650,7 @@ export function validateStructureCrudDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -2706,7 +2706,7 @@ export function validateStructureCrudDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2714,7 +2714,7 @@ export function validateStructureCrudDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -2744,7 +2744,7 @@ export function validateStructureCrudDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2786,7 +2786,7 @@ export function validateStructureCrudDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -2952,7 +2952,7 @@ export function validateStructureCrudDefinition(value) {
         result["basePath"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString9 = value["basePath"];
+        const convertedString9 = value["basePath"];
         if (typeof convertedString9 !== "string") {
           errorMap[`$.basePath`] = {
             key: "validator.string",
@@ -3011,7 +3011,7 @@ export function validateStructureCrudDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString12 = value["fromParent"]["field"];
+            const convertedString12 = value["fromParent"]["field"];
             if (typeof convertedString12 !== "string") {
               errorMap[`$.fromParent.field`] = {
                 key: "validator.string",
@@ -3052,7 +3052,8 @@ export function validateStructureCrudDefinition(value) {
                 result["fromParent"]["options"]["name"] = undefined;
               } else {
                 /** @type {string} */
-                let convertedString14 = value["fromParent"]["options"]["name"];
+                const convertedString14 =
+                  value["fromParent"]["options"]["name"];
                 if (typeof convertedString14 !== "string") {
                   errorMap[`$.fromParent.options.name`] = {
                     key: "validator.string",
@@ -3293,10 +3294,10 @@ export function validateStructureCrudDefinition(value) {
               } else {
                 /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap16 = {};
-                /** @type {any[]} */
-                let intermediateResult16 = [];
-                /** @type {any|any[]} */
-                let intermediateValue16 =
+                /** @type {Array<any>} */
+                const intermediateResult16 = [];
+                /** @type {any | Array<any>} */
+                const intermediateValue16 =
                   value["fieldOptions"]["readable"]["$omit"];
 
                 if (!Array.isArray(intermediateValue16)) {
@@ -3316,7 +3317,7 @@ export function validateStructureCrudDefinition(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString16 = intermediateValue16[i16];
+                      const convertedString16 = intermediateValue16[i16];
                       if (typeof convertedString16 !== "string") {
                         intermediateErrorMap16[`$.${i16}`] = {
                           key: "validator.string",
@@ -3353,10 +3354,10 @@ export function validateStructureCrudDefinition(value) {
               } else {
                 /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap17 = {};
-                /** @type {any[]} */
-                let intermediateResult17 = [];
-                /** @type {any|any[]} */
-                let intermediateValue17 =
+                /** @type {Array<any>} */
+                const intermediateResult17 = [];
+                /** @type {any | Array<any>} */
+                const intermediateValue17 =
                   value["fieldOptions"]["readable"]["$pick"];
 
                 if (!Array.isArray(intermediateValue17)) {
@@ -3376,7 +3377,7 @@ export function validateStructureCrudDefinition(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString17 = intermediateValue17[i17];
+                      const convertedString17 = intermediateValue17[i17];
                       if (typeof convertedString17 !== "string") {
                         intermediateErrorMap17[`$.${i17}`] = {
                           key: "validator.string",
@@ -3455,10 +3456,10 @@ export function validateStructureCrudDefinition(value) {
               } else {
                 /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap18 = {};
-                /** @type {any[]} */
-                let intermediateResult18 = [];
-                /** @type {any|any[]} */
-                let intermediateValue18 =
+                /** @type {Array<any>} */
+                const intermediateResult18 = [];
+                /** @type {any | Array<any>} */
+                const intermediateValue18 =
                   value["fieldOptions"]["writable"]["$omit"];
 
                 if (!Array.isArray(intermediateValue18)) {
@@ -3478,7 +3479,7 @@ export function validateStructureCrudDefinition(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString18 = intermediateValue18[i18];
+                      const convertedString18 = intermediateValue18[i18];
                       if (typeof convertedString18 !== "string") {
                         intermediateErrorMap18[`$.${i18}`] = {
                           key: "validator.string",
@@ -3515,10 +3516,10 @@ export function validateStructureCrudDefinition(value) {
               } else {
                 /** @type {ValidatorErrorMap} */
                 const intermediateErrorMap19 = {};
-                /** @type {any[]} */
-                let intermediateResult19 = [];
-                /** @type {any|any[]} */
-                let intermediateValue19 =
+                /** @type {Array<any>} */
+                const intermediateResult19 = [];
+                /** @type {any | Array<any>} */
+                const intermediateValue19 =
                   value["fieldOptions"]["writable"]["$pick"];
 
                 if (!Array.isArray(intermediateValue19)) {
@@ -3538,7 +3539,7 @@ export function validateStructureCrudDefinition(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString19 = intermediateValue19[i19];
+                      const convertedString19 = intermediateValue19[i19];
                       if (typeof convertedString19 !== "string") {
                         intermediateErrorMap19[`$.${i19}`] = {
                           key: "validator.string",
@@ -3581,10 +3582,10 @@ export function validateStructureCrudDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap15 = {};
-        /** @type {any[]} */
-        let intermediateResult15 = [];
-        /** @type {any|any[]} */
-        let intermediateValue15 = value["inlineRelations"];
+        /** @type {Array<any>} */
+        const intermediateResult15 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue15 = value["inlineRelations"];
 
         if (!Array.isArray(intermediateValue15)) {
           errorMap[`$.inlineRelations`] = {
@@ -3635,10 +3636,10 @@ export function validateStructureCrudDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap16 = {};
-        /** @type {any[]} */
-        let intermediateResult16 = [];
-        /** @type {any|any[]} */
-        let intermediateValue16 = value["nestedRelations"];
+        /** @type {Array<any>} */
+        const intermediateResult16 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue16 = value["nestedRelations"];
 
         if (!Array.isArray(intermediateValue16)) {
           errorMap[`$.nestedRelations`] = {
@@ -3725,7 +3726,7 @@ export function validateStructureReferenceDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -3751,7 +3752,7 @@ export function validateStructureReferenceDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString2 = value["docString"];
+        const convertedString2 = value["docString"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -3807,7 +3808,7 @@ export function validateStructureReferenceDefinition(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["defaultValue"];
+          const intermediateValue6 = value["defaultValue"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -3815,7 +3816,7 @@ export function validateStructureReferenceDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString6 = intermediateValue6;
+            const convertedString6 = intermediateValue6;
             if (typeof convertedString6 !== "string") {
               intermediateErrorMap6[`$`] = {
                 key: "validator.string",
@@ -3845,7 +3846,7 @@ export function validateStructureReferenceDefinition(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["defaultValue"];
+          const intermediateValue6 = value["defaultValue"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -3887,7 +3888,7 @@ export function validateStructureReferenceDefinition(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["defaultValue"];
+          const intermediateValue6 = value["defaultValue"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -4132,7 +4133,7 @@ export function validateStructureNamePart(value) {
     };
   } else {
     /** @type {string} */
-    let convertedString0 = value;
+    const convertedString0 = value;
     if (typeof convertedString0 !== "string") {
       errorMap[`$`] = {
         key: "validator.string",
@@ -4198,7 +4199,7 @@ export function validateStructureDateDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -4224,7 +4225,7 @@ export function validateStructureDateDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -4248,7 +4249,7 @@ export function validateStructureDateDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -4272,7 +4273,7 @@ export function validateStructureDateDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -4328,7 +4329,7 @@ export function validateStructureDateDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -4336,7 +4337,7 @@ export function validateStructureDateDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -4366,7 +4367,7 @@ export function validateStructureDateDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -4408,7 +4409,7 @@ export function validateStructureDateDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -4720,7 +4721,7 @@ export function validateStructureDateDefinition(value) {
         result["specifier"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString9 = value["specifier"];
+        const convertedString9 = value["specifier"];
         if (typeof convertedString9 !== "string") {
           errorMap[`$.specifier`] = {
             key: "validator.string",
@@ -4799,7 +4800,7 @@ export function validateStructureExtendDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -4825,7 +4826,7 @@ export function validateStructureExtendDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -4849,7 +4850,7 @@ export function validateStructureExtendDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -4873,7 +4874,7 @@ export function validateStructureExtendDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -4929,7 +4930,7 @@ export function validateStructureExtendDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -4937,7 +4938,7 @@ export function validateStructureExtendDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -4967,7 +4968,7 @@ export function validateStructureExtendDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -5009,7 +5010,7 @@ export function validateStructureExtendDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -5182,7 +5183,7 @@ export function validateStructureExtendDefinition(value) {
           };
         } else {
           result["keys"] = {};
-          for (let genericKeyInput9 of Object.keys(value["keys"])) {
+          for (const genericKeyInput9 of Object.keys(value["keys"])) {
             /** @type {any} */
             let genericKeyResult10 = undefined;
             /** @type {ValidatorErrorMap} */
@@ -5193,7 +5194,7 @@ export function validateStructureExtendDefinition(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString12 = genericKeyInput9;
+              const convertedString12 = genericKeyInput9;
               if (typeof convertedString12 !== "string") {
                 genericKeyErrorMap11[`$`] = {
                   key: "validator.string",
@@ -5273,10 +5274,10 @@ export function validateStructureExtendDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap12 = {};
-        /** @type {any[]} */
-        let intermediateResult12 = [];
-        /** @type {any|any[]} */
-        let intermediateValue12 = value["relations"];
+        /** @type {Array<any>} */
+        const intermediateResult12 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue12 = value["relations"];
 
         if (!Array.isArray(intermediateValue12)) {
           errorMap[`$.relations`] = {
@@ -5362,7 +5363,7 @@ export function validateStructureRelationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -5390,7 +5391,7 @@ export function validateStructureRelationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = value["subType"];
+        const convertedString2 = value["subType"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.subType`] = {
             key: "validator.string",
@@ -5445,7 +5446,7 @@ export function validateStructureRelationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString4 = value["ownKey"];
+        const convertedString4 = value["ownKey"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.ownKey`] = {
             key: "validator.string",
@@ -5468,7 +5469,7 @@ export function validateStructureRelationDefinition(value) {
         result["referencedKey"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString5 = value["referencedKey"];
+        const convertedString5 = value["referencedKey"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.referencedKey`] = {
             key: "validator.string",
@@ -5561,7 +5562,7 @@ export function validateStructureFileDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -5587,7 +5588,7 @@ export function validateStructureFileDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -5611,7 +5612,7 @@ export function validateStructureFileDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -5635,7 +5636,7 @@ export function validateStructureFileDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -5691,7 +5692,7 @@ export function validateStructureFileDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -5699,7 +5700,7 @@ export function validateStructureFileDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -5729,7 +5730,7 @@ export function validateStructureFileDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -5771,7 +5772,7 @@ export function validateStructureFileDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -5942,10 +5943,10 @@ export function validateStructureFileDefinition(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap10 = {};
-            /** @type {any[]} */
-            let intermediateResult10 = [];
-            /** @type {any|any[]} */
-            let intermediateValue10 = value["validator"]["mimeTypes"];
+            /** @type {Array<any>} */
+            const intermediateResult10 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue10 = value["validator"]["mimeTypes"];
 
             if (!Array.isArray(intermediateValue10)) {
               errorMap[`$.validator.mimeTypes`] = {
@@ -5964,7 +5965,7 @@ export function validateStructureFileDefinition(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString10 = intermediateValue10[i10];
+                  const convertedString10 = intermediateValue10[i10];
                   if (typeof convertedString10 !== "string") {
                     intermediateErrorMap10[`$.${i10}`] = {
                       key: "validator.string",
@@ -6042,7 +6043,7 @@ export function validateStructureGenericDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -6068,7 +6069,7 @@ export function validateStructureGenericDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -6092,7 +6093,7 @@ export function validateStructureGenericDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -6116,7 +6117,7 @@ export function validateStructureGenericDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -6172,7 +6173,7 @@ export function validateStructureGenericDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -6180,7 +6181,7 @@ export function validateStructureGenericDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -6210,7 +6211,7 @@ export function validateStructureGenericDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -6252,7 +6253,7 @@ export function validateStructureGenericDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -6494,7 +6495,7 @@ export function validateStructureNumberDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -6520,7 +6521,7 @@ export function validateStructureNumberDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -6544,7 +6545,7 @@ export function validateStructureNumberDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -6568,7 +6569,7 @@ export function validateStructureNumberDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -6624,7 +6625,7 @@ export function validateStructureNumberDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -6632,7 +6633,7 @@ export function validateStructureNumberDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -6662,7 +6663,7 @@ export function validateStructureNumberDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -6704,7 +6705,7 @@ export function validateStructureNumberDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -7009,10 +7010,10 @@ export function validateStructureNumberDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap10 = {};
-        /** @type {any[]} */
-        let intermediateResult10 = [];
-        /** @type {any|any[]} */
-        let intermediateValue10 = value["oneOf"];
+        /** @type {Array<any>} */
+        const intermediateResult10 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue10 = value["oneOf"];
 
         if (!Array.isArray(intermediateValue10)) {
           errorMap[`$.oneOf`] = {
@@ -7124,7 +7125,7 @@ export function validateStructureObjectDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -7150,7 +7151,7 @@ export function validateStructureObjectDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -7174,7 +7175,7 @@ export function validateStructureObjectDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -7198,7 +7199,7 @@ export function validateStructureObjectDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -7254,7 +7255,7 @@ export function validateStructureObjectDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -7262,7 +7263,7 @@ export function validateStructureObjectDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -7292,7 +7293,7 @@ export function validateStructureObjectDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -7334,7 +7335,7 @@ export function validateStructureObjectDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -7559,7 +7560,7 @@ export function validateStructureObjectDefinition(value) {
         result["shortName"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString9 = value["shortName"];
+        const convertedString9 = value["shortName"];
         if (typeof convertedString9 !== "string") {
           errorMap[`$.shortName`] = {
             key: "validator.string",
@@ -7590,7 +7591,7 @@ export function validateStructureObjectDefinition(value) {
           };
         } else {
           result["keys"] = {};
-          for (let genericKeyInput10 of Object.keys(value["keys"])) {
+          for (const genericKeyInput10 of Object.keys(value["keys"])) {
             /** @type {any} */
             let genericKeyResult11 = undefined;
             /** @type {ValidatorErrorMap} */
@@ -7601,7 +7602,7 @@ export function validateStructureObjectDefinition(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString13 = genericKeyInput10;
+              const convertedString13 = genericKeyInput10;
               if (typeof convertedString13 !== "string") {
                 genericKeyErrorMap12[`$`] = {
                   key: "validator.string",
@@ -7825,7 +7826,7 @@ export function validateStructureObjectDefinition(value) {
             result["queryOptions"]["schema"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString17 = value["queryOptions"]["schema"];
+            const convertedString17 = value["queryOptions"]["schema"];
             if (typeof convertedString17 !== "string") {
               errorMap[`$.queryOptions.schema`] = {
                 key: "validator.string",
@@ -7854,10 +7855,10 @@ export function validateStructureObjectDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap14 = {};
-        /** @type {any[]} */
-        let intermediateResult14 = [];
-        /** @type {any|any[]} */
-        let intermediateValue14 = value["relations"];
+        /** @type {Array<any>} */
+        const intermediateResult14 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue14 = value["relations"];
 
         if (!Array.isArray(intermediateValue14)) {
           errorMap[`$.relations`] = {
@@ -7947,7 +7948,7 @@ export function validateStructureOmitDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -7973,7 +7974,7 @@ export function validateStructureOmitDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -7997,7 +7998,7 @@ export function validateStructureOmitDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -8021,7 +8022,7 @@ export function validateStructureOmitDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -8077,7 +8078,7 @@ export function validateStructureOmitDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -8085,7 +8086,7 @@ export function validateStructureOmitDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -8115,7 +8116,7 @@ export function validateStructureOmitDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -8157,7 +8158,7 @@ export function validateStructureOmitDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -8385,10 +8386,10 @@ export function validateStructureOmitDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap10 = {};
-        /** @type {any[]} */
-        let intermediateResult10 = [];
-        /** @type {any|any[]} */
-        let intermediateValue10 = value["keys"];
+        /** @type {Array<any>} */
+        const intermediateResult10 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue10 = value["keys"];
 
         if (!Array.isArray(intermediateValue10)) {
           errorMap[`$.keys`] = {
@@ -8407,7 +8408,7 @@ export function validateStructureOmitDefinition(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString10 = intermediateValue10[i10];
+              const convertedString10 = intermediateValue10[i10];
               if (typeof convertedString10 !== "string") {
                 intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.string",
@@ -8500,7 +8501,7 @@ export function validateStructurePickDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -8526,7 +8527,7 @@ export function validateStructurePickDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -8550,7 +8551,7 @@ export function validateStructurePickDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -8574,7 +8575,7 @@ export function validateStructurePickDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -8630,7 +8631,7 @@ export function validateStructurePickDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -8638,7 +8639,7 @@ export function validateStructurePickDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -8668,7 +8669,7 @@ export function validateStructurePickDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -8710,7 +8711,7 @@ export function validateStructurePickDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -8938,10 +8939,10 @@ export function validateStructurePickDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap10 = {};
-        /** @type {any[]} */
-        let intermediateResult10 = [];
-        /** @type {any|any[]} */
-        let intermediateValue10 = value["keys"];
+        /** @type {Array<any>} */
+        const intermediateResult10 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue10 = value["keys"];
 
         if (!Array.isArray(intermediateValue10)) {
           errorMap[`$.keys`] = {
@@ -8960,7 +8961,7 @@ export function validateStructurePickDefinition(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString10 = intermediateValue10[i10];
+              const convertedString10 = intermediateValue10[i10];
               if (typeof convertedString10 !== "string") {
                 intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.string",
@@ -9052,7 +9053,7 @@ export function validateStructureStringDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -9078,7 +9079,7 @@ export function validateStructureStringDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -9102,7 +9103,7 @@ export function validateStructureStringDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -9126,7 +9127,7 @@ export function validateStructureStringDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -9182,7 +9183,7 @@ export function validateStructureStringDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -9190,7 +9191,7 @@ export function validateStructureStringDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -9220,7 +9221,7 @@ export function validateStructureStringDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -9262,7 +9263,7 @@ export function validateStructureStringDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -9602,7 +9603,7 @@ export function validateStructureStringDefinition(value) {
             result["validator"]["pattern"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString14 = value["validator"]["pattern"];
+            const convertedString14 = value["validator"]["pattern"];
             if (typeof convertedString14 !== "string") {
               errorMap[`$.validator.pattern`] = {
                 key: "validator.string",
@@ -9657,10 +9658,10 @@ export function validateStructureStringDefinition(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap17 = {};
-            /** @type {any[]} */
-            let intermediateResult17 = [];
-            /** @type {any|any[]} */
-            let intermediateValue17 =
+            /** @type {Array<any>} */
+            const intermediateResult17 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue17 =
               value["validator"]["disallowedCharacters"];
 
             if (!Array.isArray(intermediateValue17)) {
@@ -9680,7 +9681,7 @@ export function validateStructureStringDefinition(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString17 = intermediateValue17[i17];
+                  const convertedString17 = intermediateValue17[i17];
                   if (typeof convertedString17 !== "string") {
                     intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.string",
@@ -9721,10 +9722,10 @@ export function validateStructureStringDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap10 = {};
-        /** @type {any[]} */
-        let intermediateResult10 = [];
-        /** @type {any|any[]} */
-        let intermediateValue10 = value["oneOf"];
+        /** @type {Array<any>} */
+        const intermediateResult10 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue10 = value["oneOf"];
 
         if (!Array.isArray(intermediateValue10)) {
           errorMap[`$.oneOf`] = {
@@ -9743,7 +9744,7 @@ export function validateStructureStringDefinition(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString10 = intermediateValue10[i10];
+              const convertedString10 = intermediateValue10[i10];
               if (typeof convertedString10 !== "string") {
                 intermediateErrorMap10[`$.${i10}`] = {
                   key: "validator.string",
@@ -9817,7 +9818,7 @@ export function validateStructureUuidDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -9843,7 +9844,7 @@ export function validateStructureUuidDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -9867,7 +9868,7 @@ export function validateStructureUuidDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -9891,7 +9892,7 @@ export function validateStructureUuidDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -9947,7 +9948,7 @@ export function validateStructureUuidDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -9955,7 +9956,7 @@ export function validateStructureUuidDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -9985,7 +9986,7 @@ export function validateStructureUuidDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -10027,7 +10028,7 @@ export function validateStructureUuidDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -10266,7 +10267,7 @@ export function validateStructureGenerateOptions(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["targetLanguage"];
+        const convertedString1 = value["targetLanguage"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.targetLanguage`] = {
             key: "validator.string",
@@ -10295,7 +10296,7 @@ export function validateStructureGenerateOptions(value) {
         result["outputDirectory"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["outputDirectory"];
+        const convertedString2 = value["outputDirectory"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.outputDirectory`] = {
             key: "validator.string",
@@ -10533,7 +10534,7 @@ export function validateStructureGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString7 =
+                    const convertedString7 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "version"
                       ];
@@ -10577,7 +10578,7 @@ export function validateStructureGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString8 =
+                    const convertedString8 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "title"
                       ];
@@ -10620,7 +10621,7 @@ export function validateStructureGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    let convertedString9 =
+                    const convertedString9 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "description"
                       ];
@@ -10675,7 +10676,7 @@ export function validateStructureGenerateOptions(value) {
                 } else {
                   result["generators"]["openApi"]["openApiRouteExtensions"] =
                     {};
-                  for (let genericKeyInput7 of Object.keys(
+                  for (const genericKeyInput7 of Object.keys(
                     value["generators"]["openApi"]["openApiRouteExtensions"],
                   )) {
                     /** @type {any} */
@@ -10691,7 +10692,7 @@ export function validateStructureGenerateOptions(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString10 = genericKeyInput7;
+                      const convertedString10 = genericKeyInput7;
                       if (typeof convertedString10 !== "string") {
                         genericKeyErrorMap9[`$`] = {
                           key: "validator.string",
@@ -10820,7 +10821,7 @@ export function validateStructureGenerateOptions(value) {
                   /** @type {any} */
                   let intermediateResult9 = undefined;
                   /** @type {any} */
-                  let intermediateValue9 =
+                  const intermediateValue9 =
                     value["generators"]["router"]["target"];
 
                   if (
@@ -10874,7 +10875,7 @@ export function validateStructureGenerateOptions(value) {
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString10 = intermediateValue9["library"];
+                        const convertedString10 = intermediateValue9["library"];
                         if (typeof convertedString10 !== "string") {
                           intermediateErrorMap9[`$.library`] = {
                             key: "validator.string",
@@ -11008,7 +11009,7 @@ export function validateStructureGenerateOptions(value) {
                   /** @type {any} */
                   let intermediateResult10 = undefined;
                   /** @type {any} */
-                  let intermediateValue10 =
+                  const intermediateValue10 =
                     value["generators"]["database"]["target"];
 
                   if (
@@ -11065,7 +11066,8 @@ export function validateStructureGenerateOptions(value) {
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString11 = intermediateValue10["dialect"];
+                        const convertedString11 =
+                          intermediateValue10["dialect"];
                         if (typeof convertedString11 !== "string") {
                           intermediateErrorMap10[`$.dialect`] = {
                             key: "validator.string",
@@ -11316,7 +11318,7 @@ export function validateStructureGenerateOptions(value) {
                   /** @type {any} */
                   let intermediateResult12 = undefined;
                   /** @type {any} */
-                  let intermediateValue12 =
+                  const intermediateValue12 =
                     value["generators"]["apiClient"]["target"];
 
                   if (
@@ -11380,7 +11382,8 @@ export function validateStructureGenerateOptions(value) {
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString13 = intermediateValue12["library"];
+                        const convertedString13 =
+                          intermediateValue12["library"];
                         if (typeof convertedString13 !== "string") {
                           intermediateErrorMap12[`$.library`] = {
                             key: "validator.string",
@@ -11411,7 +11414,7 @@ export function validateStructureGenerateOptions(value) {
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString14 =
+                        const convertedString14 =
                           intermediateValue12["targetRuntime"];
                         if (typeof convertedString14 !== "string") {
                           intermediateErrorMap12[`$.targetRuntime`] = {
@@ -11450,7 +11453,7 @@ export function validateStructureGenerateOptions(value) {
                         intermediateResult12["includeWrapper"] = undefined;
                       } else {
                         /** @type {string} */
-                        let convertedString15 =
+                        const convertedString15 =
                           intermediateValue12["includeWrapper"];
                         if (typeof convertedString15 !== "string") {
                           intermediateErrorMap12[`$.includeWrapper`] = {
@@ -11524,7 +11527,7 @@ export function validateStructureGenerateOptions(value) {
                   /** @type {any} */
                   let intermediateResult12 = undefined;
                   /** @type {any} */
-                  let intermediateValue12 =
+                  const intermediateValue12 =
                     value["generators"]["apiClient"]["target"];
 
                   if (
@@ -11588,7 +11591,8 @@ export function validateStructureGenerateOptions(value) {
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString13 = intermediateValue12["library"];
+                        const convertedString13 =
+                          intermediateValue12["library"];
                         if (typeof convertedString13 !== "string") {
                           intermediateErrorMap12[`$.library`] = {
                             key: "validator.string",
@@ -11619,7 +11623,7 @@ export function validateStructureGenerateOptions(value) {
                         };
                       } else {
                         /** @type {string} */
-                        let convertedString14 =
+                        const convertedString14 =
                           intermediateValue12["targetRuntime"];
                         if (typeof convertedString14 !== "string") {
                           intermediateErrorMap12[`$.targetRuntime`] = {
@@ -11658,7 +11662,7 @@ export function validateStructureGenerateOptions(value) {
                         intermediateResult12["includeWrapper"] = undefined;
                       } else {
                         /** @type {string} */
-                        let convertedString15 =
+                        const convertedString15 =
                           intermediateValue12["includeWrapper"];
                         if (typeof convertedString15 !== "string") {
                           intermediateErrorMap12[`$.includeWrapper`] = {
@@ -11950,7 +11954,7 @@ export function validateStructureNamePartOptional(value) {
     result = undefined;
   } else {
     /** @type {string} */
-    let convertedString0 = value;
+    const convertedString0 = value;
     if (typeof convertedString0 !== "string") {
       errorMap[`$`] = {
         key: "validator.string",
@@ -12222,7 +12226,7 @@ export function validateStructureRouteDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -12248,7 +12252,7 @@ export function validateStructureRouteDefinition(value) {
         result["group"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["group"];
+        const convertedString2 = value["group"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.group`] = {
             key: "validator.string",
@@ -12272,7 +12276,7 @@ export function validateStructureRouteDefinition(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -12296,7 +12300,7 @@ export function validateStructureRouteDefinition(value) {
         result["docString"] = "";
       } else {
         /** @type {string} */
-        let convertedString4 = value["docString"];
+        const convertedString4 = value["docString"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.docString`] = {
             key: "validator.string",
@@ -12352,7 +12356,7 @@ export function validateStructureRouteDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -12360,7 +12364,7 @@ export function validateStructureRouteDefinition(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString8 = intermediateValue8;
+            const convertedString8 = intermediateValue8;
             if (typeof convertedString8 !== "string") {
               intermediateErrorMap8[`$`] = {
                 key: "validator.string",
@@ -12390,7 +12394,7 @@ export function validateStructureRouteDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -12432,7 +12436,7 @@ export function validateStructureRouteDefinition(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["defaultValue"];
+          const intermediateValue8 = value["defaultValue"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -12600,7 +12604,7 @@ export function validateStructureRouteDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString9 = value["method"];
+        const convertedString9 = value["method"];
         if (typeof convertedString9 !== "string") {
           errorMap[`$.method`] = {
             key: "validator.string",
@@ -12661,7 +12665,7 @@ export function validateStructureRouteDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString11 = value["path"];
+        const convertedString11 = value["path"];
         if (typeof convertedString11 !== "string") {
           errorMap[`$.path`] = {
             key: "validator.string",
@@ -12684,10 +12688,10 @@ export function validateStructureRouteDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap13 = {};
-        /** @type {any[]} */
-        let intermediateResult13 = [];
-        /** @type {any|any[]} */
-        let intermediateValue13 = value["tags"];
+        /** @type {Array<any>} */
+        const intermediateResult13 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue13 = value["tags"];
 
         if (!Array.isArray(intermediateValue13)) {
           errorMap[`$.tags`] = {
@@ -12706,7 +12710,7 @@ export function validateStructureRouteDefinition(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString13 = intermediateValue13[i13];
+              const convertedString13 = intermediateValue13[i13];
               if (typeof convertedString13 !== "string") {
                 intermediateErrorMap13[`$.${i13}`] = {
                   key: "validator.string",
@@ -12801,10 +12805,10 @@ export function validateStructureRouteDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap18 = {};
-        /** @type {any[]} */
-        let intermediateResult18 = [];
-        /** @type {any|any[]} */
-        let intermediateValue18 = value["invalidations"];
+        /** @type {Array<any>} */
+        const intermediateResult18 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue18 = value["invalidations"];
 
         if (!Array.isArray(intermediateValue18)) {
           errorMap[`$.invalidations`] = {
@@ -12867,7 +12871,7 @@ export function validateStructureRouteDefinition(value) {
             result["metadata"]["requestBodyType"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString19 = value["metadata"]["requestBodyType"];
+            const convertedString19 = value["metadata"]["requestBodyType"];
             if (typeof convertedString19 !== "string") {
               errorMap[`$.metadata.requestBodyType`] = {
                 key: "validator.string",
@@ -12936,7 +12940,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["type"];
+        const convertedString1 = value["type"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.type`] = {
             key: "validator.string",
@@ -13129,7 +13133,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                   };
                 } else {
                   result["properties"]["specification"]["params"] = {};
-                  for (let genericKeyInput7 of Object.keys(
+                  for (const genericKeyInput7 of Object.keys(
                     value["properties"]["specification"]["params"],
                   )) {
                     /** @type {any} */
@@ -13145,7 +13149,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString10 = genericKeyInput7;
+                      const convertedString10 = genericKeyInput7;
                       if (typeof convertedString10 !== "string") {
                         genericKeyErrorMap9[`$`] = {
                           key: "validator.string",
@@ -13197,10 +13201,10 @@ export function validateStructureRouteInvalidationDefinition(value) {
                       } else {
                         /** @type {ValidatorErrorMap} */
                         const intermediateErrorMap11 = {};
-                        /** @type {any[]} */
-                        let intermediateResult11 = [];
-                        /** @type {any|any[]} */
-                        let intermediateValue11 =
+                        /** @type {Array<any>} */
+                        const intermediateResult11 = [];
+                        /** @type {any | Array<any>} */
+                        const intermediateValue11 =
                           value["properties"]["specification"]["params"][
                             genericKeyResult8
                           ];
@@ -13230,7 +13234,8 @@ export function validateStructureRouteInvalidationDefinition(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString11 = intermediateValue11[i11];
+                              const convertedString11 =
+                                intermediateValue11[i11];
                               if (typeof convertedString11 !== "string") {
                                 intermediateErrorMap11[`$.${i11}`] = {
                                   key: "validator.string",
@@ -13284,7 +13289,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                   };
                 } else {
                   result["properties"]["specification"]["query"] = {};
-                  for (let genericKeyInput8 of Object.keys(
+                  for (const genericKeyInput8 of Object.keys(
                     value["properties"]["specification"]["query"],
                   )) {
                     /** @type {any} */
@@ -13300,7 +13305,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                       };
                     } else {
                       /** @type {string} */
-                      let convertedString11 = genericKeyInput8;
+                      const convertedString11 = genericKeyInput8;
                       if (typeof convertedString11 !== "string") {
                         genericKeyErrorMap10[`$`] = {
                           key: "validator.string",
@@ -13352,10 +13357,10 @@ export function validateStructureRouteInvalidationDefinition(value) {
                       } else {
                         /** @type {ValidatorErrorMap} */
                         const intermediateErrorMap12 = {};
-                        /** @type {any[]} */
-                        let intermediateResult12 = [];
-                        /** @type {any|any[]} */
-                        let intermediateValue12 =
+                        /** @type {Array<any>} */
+                        const intermediateResult12 = [];
+                        /** @type {any | Array<any>} */
+                        const intermediateValue12 =
                           value["properties"]["specification"]["query"][
                             genericKeyResult9
                           ];
@@ -13385,7 +13390,8 @@ export function validateStructureRouteInvalidationDefinition(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString12 = intermediateValue12[i12];
+                              const convertedString12 =
+                                intermediateValue12[i12];
                               if (typeof convertedString12 !== "string") {
                                 intermediateErrorMap12[`$.${i12}`] = {
                                   key: "validator.string",
@@ -13454,7 +13460,7 @@ export function validateStructureStructure(value) {
       };
     } else {
       result = {};
-      for (let genericKeyInput0 of Object.keys(value)) {
+      for (const genericKeyInput0 of Object.keys(value)) {
         /** @type {any} */
         let genericKeyResult1 = undefined;
         /** @type {ValidatorErrorMap} */
@@ -13504,7 +13510,7 @@ export function validateStructureStructure(value) {
               };
             } else {
               result[genericKeyResult1] = {};
-              for (let genericKeyInput3 of Object.keys(
+              for (const genericKeyInput3 of Object.keys(
                 value[genericKeyResult1],
               )) {
                 /** @type {any} */
@@ -13609,7 +13615,7 @@ export function validateStructureTypeDefinition(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -13641,7 +13647,7 @@ export function validateStructureTypeDefinition(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -13673,7 +13679,7 @@ export function validateStructureTypeDefinition(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -13705,7 +13711,7 @@ export function validateStructureTypeDefinition(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {

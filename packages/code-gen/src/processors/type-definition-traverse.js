@@ -10,10 +10,10 @@ import { AppError, isNil } from "@compas/stdlib";
  *
  * @type {Record<
  *   import("../generated/common/types.js").StructureTypeDefinition["type"],
- *   {
+ *   Array<{
  *     key: string,
  *     amount: "single" | "many"
- *   }[]>}
+ *   }>>}
  */
 export const typeDefinitionTraversePaths = {
   any: [],

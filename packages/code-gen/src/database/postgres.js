@@ -80,10 +80,7 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
       file,
       fileFormatInlineComment(
         file,
-        `Required columns: ${JSON.stringify(Object.keys(model.keys)).slice(
-          1,
-          -1,
-        )}`,
+        `Required columns: ${JSON.stringify(Object.keys(model.keys)).slice(1, -1)}`,
       ),
     );
     fileWrite(file, "");
@@ -106,9 +103,9 @@ function databasePostgresWriteModelDDL(generateContext, file, model) {
     }
 
     const type =
-      field.type === "reference"
-        ? structureResolveReference(generateContext.structure, field).type
-        : field.type;
+      field.type === "reference" ?
+        structureResolveReference(generateContext.structure, field).type
+      : field.type;
 
     const isPrimary = referenceUtilsGetProperty(generateContext, field, [
       "sql",

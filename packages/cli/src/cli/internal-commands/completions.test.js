@@ -17,9 +17,9 @@ test("cli/internal-commands/completions", async (t) => {
 
   /**
    *
-   * @param {string[]} input
-   * @returns {Promise<{commandCompletions: CliCompletion[], flagCompletions:
-   *   CliCompletion[]}>}
+   * @param {Array<string>} input
+   * @returns {Promise<{commandCompletions: Array<CliCompletion>, flagCompletions:
+   *   Array<CliCompletion>}>}
    */
   const generateCompletions = async (input) => {
     const { commandCompletions, flagCompletions } =

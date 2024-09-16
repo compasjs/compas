@@ -4,9 +4,9 @@ Building your own structure starts with types and validators.
 
 ## Getting started
 
-The entrypoint for building your own structure is the `TypeCreator`. It defines
-the group or flow that the type belongs to and all the methods for building your
-own structure which we will explore later.
+The entrypoint for building your own structure is the `TypeCreator`. It defines the group
+or flow that the type belongs to and all the methods for building your own structure which
+we will explore later.
 
 ```js
 import { Generator, TypeCreator } from "@compas/code-gen";
@@ -15,22 +15,22 @@ const generator = new Generator();
 const T = new TypeCreator("myFlowName"); // like 'user' or 'userOnboarding'
 
 generator.add(
-  T.bool("myType"),
+	T.bool("myType"),
 
-  T.bool("otherType"),
+	T.bool("otherType"),
 );
 
 generator.generate({
-  targetLanguage: "ts",
-  outputDirectory: "./src/generated",
-  generators: {
-    validators: { includeBaseTypes: true },
-  },
+	targetLanguage: "ts",
+	outputDirectory: "./src/generated",
+	generators: {
+		validators: { includeBaseTypes: true },
+	},
 });
 ```
 
-Calling this script should give you `src/generated/common/types.d.ts` with two
-types defined;
+Calling this script should give you `src/generated/common/types.d.ts` with two types
+defined;
 
 ```ts
 // Concatenation of 'MyFlowName' and 'MyType'
@@ -86,23 +86,23 @@ validateAppInteger({}); // => { error: { "$": { key: "validator.type" } }
 
 ## Optionality
 
-Values are by default required and `null` is coerced to `undefined` for
-JavaScript and TypeScript targets.
+Values are by default required and `null` is coerced to `undefined` for JavaScript and
+TypeScript targets.
 
 ```ts
 const T = new TypeCreator();
 
 generator.add(
-  T.bool("requiredBoolean"),
-  T.bool("optionalBoolean").optional(),
-  T.bool("nullableBoolean").allowNull(),
+	T.bool("requiredBoolean"),
+	T.bool("optionalBoolean").optional(),
+	T.bool("nullableBoolean").allowNull(),
 );
 
 // And usage
 import {
-  validateAppRequiredBoolean,
-  validateAppOptionalBoolean,
-  validateAppNullableBoolean,
+	validateAppRequiredBoolean,
+	validateAppOptionalBoolean,
+	validateAppNullableBoolean,
 } from "generated/app/validators";
 
 // Input type: boolean
@@ -123,25 +123,25 @@ validateAppNullableBoolean(null); // => { value: null }
 
 ## Objects and arrays
 
-Less primitive, but as important are objects and arrays. We will quickly glance
-over the basics
+Less primitive, but as important are objects and arrays. We will quickly glance over the
+basics
 
 ```ts
 const T = new TypeCreator();
 
 generator.add(
-  T.object("user").keys({
-    id: T.uuid(), // using primitive types without names
-    name: T.string(),
-  }),
+	T.object("user").keys({
+		id: T.uuid(), // using primitive types without names
+		name: T.string(),
+	}),
 
-  T.array("objectList").values(
-    T.object().keys({
-      // Object without a name. You can still define a name here, which will
-      // result in a named type for your target language.
-      velocity: T.number(),
-    }),
-  ),
+	T.array("objectList").values(
+		T.object().keys({
+			// Object without a name. You can still define a name here, which will
+			// result in a named type for your target language.
+			velocity: T.number(),
+		}),
+	),
 );
 
 // Generated types
@@ -160,19 +160,19 @@ Compas supports inferring unnamed builders for objects, arrays and literals
 
 ```ts
 T.object("named").keys({
-  // inline objects are the same as `T.object().keys({ ... })`
-  inferredObject: {
-    key: T.string(),
-  },
+	// inline objects are the same as `T.object().keys({ ... })`
+	inferredObject: {
+		key: T.string(),
+	},
 
-  // Arrays are inferred by providing a single length array instead of `T.array().values(...)`
-  inferredArray: [T.string()],
+	// Arrays are inferred by providing a single length array instead of `T.array().values(...)`
+	inferredArray: [T.string()],
 
-  // boolean, number and string literals are supported as well. This uses `.oneOf()`, which
-  // is further detailed below.
-  inferredBoolean: true,
-  inferredNumber: 5,
-  inferredString: "north",
+	// boolean, number and string literals are supported as well. This uses `.oneOf()`, which
+	// is further detailed below.
+	inferredBoolean: true,
+	inferredNumber: 5,
+	inferredString: "north",
 });
 ```
 
@@ -247,8 +247,7 @@ T.string().pattern(/^\d{4}$/g); // Enforce a specific regex
 
 ## Uuid
 
-The uuid type does not have any options. It accepts any string in an uuid v4
-like format.
+The uuid type does not have any options. It accepts any string in an uuid v4 like format.
 
 ```ts
 T.uuid();
@@ -259,8 +258,8 @@ T.uuid();
 
 ## Any
 
-Accept any value. Can be used as an escape hatch to validate values that are not
-natively supported by Compas.
+Accept any value. Can be used as an escape hatch to validate values that are not natively
+supported by Compas.
 
 ```ts
 T.any();
@@ -310,7 +309,7 @@ T.array().values(T.bool()).convert(); // Convert non-array values to an array
 
 ```ts
 T.object().keys({
-  foo: T.bool(),
+	foo: T.bool(),
 });
 // -> Typescript type: { foo: boolean };
 // -> Valid validator inputs: { foo: true }
@@ -344,25 +343,25 @@ T.anyOf().values(T.bool(), T.string());
 
 // A discriminated union with named types is the most common usage
 T.anyOf("state")
-  .values(
-    T.object("startState").keys({
-      type: "start",
-      // ... extra keys
-    }),
-    T.object("inProgressState").keys({
-      type: "inProgress",
-      // ... extra keys
-    }),
-  )
-  // Adding a discriminant ensures faster validators and cleaner validation errors
-  // This can only be used when all possible values are objects and have a literal string value on the 'discriminant' property.
-  .discriminant("type");
+	.values(
+		T.object("startState").keys({
+			type: "start",
+			// ... extra keys
+		}),
+		T.object("inProgressState").keys({
+			type: "inProgress",
+			// ... extra keys
+		}),
+	)
+	// Adding a discriminant ensures faster validators and cleaner validation errors
+	// This can only be used when all possible values are objects and have a literal string value on the 'discriminant' property.
+	.discriminant("type");
 ```
 
 ## File
 
-Only usable in route / api client definitions. This is typed specifically to the
-router or api client target that is used.
+Only usable in route / api client definitions. This is typed specifically to the router or
+api client target that is used.
 
 ```ts
 T.file();
@@ -377,14 +376,14 @@ Named types can be reused as well.
 
 ```ts
 generator.add(
-  T.object("item").keys({
-    id: T.uuid(),
-    name: T.string(),
-  }),
-  T.object("itemList").keys({
-    total: T.number(),
-    items: [T.reference("app", "item")],
-  }),
+	T.object("item").keys({
+		id: T.uuid(),
+		name: T.string(),
+	}),
+	T.object("itemList").keys({
+		total: T.number(),
+		items: [T.reference("app", "item")],
+	}),
 );
 
 // Generates the following;
@@ -401,9 +400,9 @@ Copy all keys from a named object type and omit some of them
 
 ```ts
 T.object("bigObject").keys({
-  key1: T.string(),
-  key2: T.string(),
-  key3: T.string(),
+	key1: T.string(),
+	key2: T.string(),
+	key3: T.string(),
 });
 // { key1: string, key2: string, key3: string }
 
@@ -417,28 +416,25 @@ Copy some fields from a named object type
 
 ```ts
 T.object("bigObject").keys({
-  key1: T.string(),
-  key2: T.string(),
-  key3: T.string(),
+	key1: T.string(),
+	key2: T.string(),
+	key3: T.string(),
 });
 // { key1: string, key2: string, key3: string }
 
-T.pick("pickBigObject")
-  .object(T.reference("app", "bigObject"))
-  .keys("key1", "key2");
+T.pick("pickBigObject").object(T.reference("app", "bigObject")).keys("key1", "key2");
 // { key1: string, key2: string }
 ```
 
 ### Extend
 
-It could happen that you want to add extra properties on an `T.object()` that is
-provided by a library. A use case is when using Compas' store package to save
-files. It provides a typed `fileMeta` type which you can extend to add extra
-properties.
+It could happen that you want to add extra properties on an `T.object()` that is provided
+by a library. A use case is when using Compas' store package to save files. It provides a
+typed `fileMeta` type which you can extend to add extra properties.
 
 ```ts
 T.extendNamedObject(T.reference("store", "fileMeta")).keys({
-  hashCode: T.string(),
+	hashCode: T.string(),
 });
 // type StoreFileMeta = { ...existingKeys; hashCode: string, };
 ```

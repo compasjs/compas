@@ -10,10 +10,9 @@
   },
   "devDependencies": {
     "@compas/code-gen": "*",
-    "@compas/eslint-plugin": "*",
+    "@lightbase/eslint-config": "*",
     "axios": "1.7.7"
   },
-  "prettier": "@compas/eslint-plugin/prettierrc",
   "exampleMetadata": {
     "generating": "compas generate",
     "testing": [

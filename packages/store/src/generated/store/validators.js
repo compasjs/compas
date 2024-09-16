@@ -91,16 +91,12 @@ export function validateStoreFile(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -150,7 +146,7 @@ export function validateStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString3 = value["bucketName"];
+        const convertedString3 = value["bucketName"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
@@ -172,7 +168,7 @@ export function validateStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString4 = value["contentType"];
+        const convertedString4 = value["contentType"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.contentType`] = {
             key: "validator.string",
@@ -194,7 +190,7 @@ export function validateStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString5 = value["name"];
+        const convertedString5 = value["name"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -353,7 +349,7 @@ export function validateStoreFileMeta(value) {
         result["transformedFromOriginal"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["transformedFromOriginal"];
+        const convertedString2 = value["transformedFromOriginal"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.transformedFromOriginal`] = {
             key: "validator.string",
@@ -454,7 +450,7 @@ export function validateStoreFileMeta(value) {
         result["placeholderImage"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString5 = value["placeholderImage"];
+        const convertedString5 = value["placeholderImage"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.placeholderImage`] = {
             key: "validator.string",
@@ -478,7 +474,7 @@ export function validateStoreFileMeta(value) {
         result["altText"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString6 = value["altText"];
+        const convertedString6 = value["altText"];
         if (typeof convertedString6 !== "string") {
           errorMap[`$.altText`] = {
             key: "validator.string",
@@ -620,10 +616,10 @@ export function validateStoreFileWhereValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -679,16 +675,12 @@ export function validateStoreFileWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -708,16 +700,11 @@ export function validateStoreFileWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["idNotEqual"].length === 32) {
-          result["idNotEqual"] =
-            value["idNotEqual"].slice(0, 8) +
-            "-" +
-            value["idNotEqual"].slice(8, 12) +
-            "-" +
-            value["idNotEqual"].slice(12, 16) +
-            "-" +
-            value["idNotEqual"].slice(16, 20) +
-            "-" +
-            value["idNotEqual"].slice(20);
+          result["idNotEqual"] = `${value["idNotEqual"].slice(0, 8)}-${value[
+            "idNotEqual"
+          ].slice(8, 12)}-${value["idNotEqual"].slice(12, 16)}-${value[
+            "idNotEqual"
+          ].slice(16, 20)}-${value["idNotEqual"].slice(20)}`;
         } else {
           result["idNotEqual"] = value["idNotEqual"];
         }
@@ -736,7 +723,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -745,10 +732,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -778,16 +765,19 @@ export function validateStoreFileWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue8[i8].length === 32) {
-                    intermediateResult8[i8] =
-                      intermediateValue8[i8].slice(0, 8) +
-                      "-" +
-                      intermediateValue8[i8].slice(8, 12) +
-                      "-" +
-                      intermediateValue8[i8].slice(12, 16) +
-                      "-" +
-                      intermediateValue8[i8].slice(16, 20) +
-                      "-" +
-                      intermediateValue8[i8].slice(20);
+                    intermediateResult8[i8] = `${intermediateValue8[i8].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue8[i8].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue8[i8].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue8[i8].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue8[i8].slice(20)}`;
                   } else {
                     intermediateResult8[i8] = intermediateValue8[i8];
                   }
@@ -817,7 +807,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -857,7 +847,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -866,10 +856,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -899,16 +889,19 @@ export function validateStoreFileWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue9[i9].length === 32) {
-                    intermediateResult9[i9] =
-                      intermediateValue9[i9].slice(0, 8) +
-                      "-" +
-                      intermediateValue9[i9].slice(8, 12) +
-                      "-" +
-                      intermediateValue9[i9].slice(12, 16) +
-                      "-" +
-                      intermediateValue9[i9].slice(16, 20) +
-                      "-" +
-                      intermediateValue9[i9].slice(20);
+                    intermediateResult9[i9] = `${intermediateValue9[i9].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue9[i9].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue9[i9].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue9[i9].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue9[i9].slice(20)}`;
                   } else {
                     intermediateResult9[i9] = intermediateValue9[i9];
                   }
@@ -938,7 +931,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -968,7 +961,7 @@ export function validateStoreFileWhereValidated(value) {
         result["bucketName"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString7 = value["bucketName"];
+        const convertedString7 = value["bucketName"];
         if (typeof convertedString7 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
@@ -995,7 +988,7 @@ export function validateStoreFileWhereValidated(value) {
         result["bucketNameNotEqual"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString8 = value["bucketNameNotEqual"];
+        const convertedString8 = value["bucketNameNotEqual"];
         if (typeof convertedString8 !== "string") {
           errorMap[`$.bucketNameNotEqual`] = {
             key: "validator.string",
@@ -1032,7 +1025,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["bucketNameIn"];
+          const intermediateValue11 = value["bucketNameIn"];
 
           if (
             intermediateValue11 === null ||
@@ -1044,10 +1037,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap12 = {};
-            /** @type {any[]} */
-            let intermediateResult12 = [];
-            /** @type {any|any[]} */
-            let intermediateValue12 = intermediateValue11;
+            /** @type {Array<any>} */
+            const intermediateResult12 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
               intermediateErrorMap11[`$`] = {
@@ -1066,7 +1059,7 @@ export function validateStoreFileWhereValidated(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString12 = intermediateValue12[i12];
+                  const convertedString12 = intermediateValue12[i12];
                   if (typeof convertedString12 !== "string") {
                     intermediateErrorMap12[`$.${i12}`] = {
                       key: "validator.string",
@@ -1107,7 +1100,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["bucketNameIn"];
+          const intermediateValue11 = value["bucketNameIn"];
 
           if (
             intermediateValue11 === null ||
@@ -1153,7 +1146,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["bucketNameNotIn"];
+          const intermediateValue12 = value["bucketNameNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -1165,10 +1158,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap13 = {};
-            /** @type {any[]} */
-            let intermediateResult13 = [];
-            /** @type {any|any[]} */
-            let intermediateValue13 = intermediateValue12;
+            /** @type {Array<any>} */
+            const intermediateResult13 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
               intermediateErrorMap12[`$`] = {
@@ -1187,7 +1180,7 @@ export function validateStoreFileWhereValidated(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString13 = intermediateValue13[i13];
+                  const convertedString13 = intermediateValue13[i13];
                   if (typeof convertedString13 !== "string") {
                     intermediateErrorMap13[`$.${i13}`] = {
                       key: "validator.string",
@@ -1228,7 +1221,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["bucketNameNotIn"];
+          const intermediateValue12 = value["bucketNameNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -1264,7 +1257,7 @@ export function validateStoreFileWhereValidated(value) {
         result["bucketNameLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString11 = value["bucketNameLike"];
+        const convertedString11 = value["bucketNameLike"];
         if (typeof convertedString11 !== "string") {
           errorMap[`$.bucketNameLike`] = {
             key: "validator.string",
@@ -1291,7 +1284,7 @@ export function validateStoreFileWhereValidated(value) {
         result["bucketNameILike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString12 = value["bucketNameILike"];
+        const convertedString12 = value["bucketNameILike"];
         if (typeof convertedString12 !== "string") {
           errorMap[`$.bucketNameILike`] = {
             key: "validator.string",
@@ -1318,7 +1311,7 @@ export function validateStoreFileWhereValidated(value) {
         result["bucketNameNotLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString13 = value["bucketNameNotLike"];
+        const convertedString13 = value["bucketNameNotLike"];
         if (typeof convertedString13 !== "string") {
           errorMap[`$.bucketNameNotLike`] = {
             key: "validator.string",
@@ -1404,7 +1397,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["createdAtIn"];
+          const intermediateValue18 = value["createdAtIn"];
 
           if (
             intermediateValue18 === null ||
@@ -1416,10 +1409,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap19 = {};
-            /** @type {any[]} */
-            let intermediateResult19 = [];
-            /** @type {any|any[]} */
-            let intermediateValue19 = intermediateValue18;
+            /** @type {Array<any>} */
+            const intermediateResult19 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
               intermediateErrorMap18[`$`] = {
@@ -1488,7 +1481,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["createdAtIn"];
+          const intermediateValue18 = value["createdAtIn"];
 
           if (
             intermediateValue18 === null ||
@@ -1534,7 +1527,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult19 = undefined;
           /** @type {any} */
-          let intermediateValue19 = value["createdAtNotIn"];
+          const intermediateValue19 = value["createdAtNotIn"];
 
           if (
             intermediateValue19 === null ||
@@ -1546,10 +1539,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap20 = {};
-            /** @type {any[]} */
-            let intermediateResult20 = [];
-            /** @type {any|any[]} */
-            let intermediateValue20 = intermediateValue19;
+            /** @type {Array<any>} */
+            const intermediateResult20 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue20 = intermediateValue19;
 
             if (!Array.isArray(intermediateValue20)) {
               intermediateErrorMap19[`$`] = {
@@ -1618,7 +1611,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult19 = undefined;
           /** @type {any} */
-          let intermediateValue19 = value["createdAtNotIn"];
+          const intermediateValue19 = value["createdAtNotIn"];
 
           if (
             intermediateValue19 === null ||
@@ -1771,7 +1764,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["updatedAtIn"];
+          const intermediateValue24 = value["updatedAtIn"];
 
           if (
             intermediateValue24 === null ||
@@ -1783,10 +1776,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap25 = {};
-            /** @type {any[]} */
-            let intermediateResult25 = [];
-            /** @type {any|any[]} */
-            let intermediateValue25 = intermediateValue24;
+            /** @type {Array<any>} */
+            const intermediateResult25 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
               intermediateErrorMap24[`$`] = {
@@ -1855,7 +1848,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["updatedAtIn"];
+          const intermediateValue24 = value["updatedAtIn"];
 
           if (
             intermediateValue24 === null ||
@@ -1901,7 +1894,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult25 = undefined;
           /** @type {any} */
-          let intermediateValue25 = value["updatedAtNotIn"];
+          const intermediateValue25 = value["updatedAtNotIn"];
 
           if (
             intermediateValue25 === null ||
@@ -1913,10 +1906,10 @@ export function validateStoreFileWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap26 = {};
-            /** @type {any[]} */
-            let intermediateResult26 = [];
-            /** @type {any|any[]} */
-            let intermediateValue26 = intermediateValue25;
+            /** @type {Array<any>} */
+            const intermediateResult26 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue26 = intermediateValue25;
 
             if (!Array.isArray(intermediateValue26)) {
               intermediateErrorMap25[`$`] = {
@@ -1985,7 +1978,7 @@ export function validateStoreFileWhereValidated(value) {
           /** @type {any} */
           let intermediateResult25 = undefined;
           /** @type {any} */
-          let intermediateValue25 = value["updatedAtNotIn"];
+          const intermediateValue25 = value["updatedAtNotIn"];
 
           if (
             intermediateValue25 === null ||
@@ -2106,7 +2099,7 @@ export function validateStoreFileOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -2137,7 +2130,7 @@ export function validateStoreFileOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -2146,10 +2139,10 @@ export function validateStoreFileOrderBy(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -2168,7 +2161,7 @@ export function validateStoreFileOrderBy(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -2284,7 +2277,7 @@ export function validateStoreFileOrderBySpec(value) {
         result["id"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString1 = value["id"];
+        const convertedString1 = value["id"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.id`] = {
             key: "validator.string",
@@ -2317,7 +2310,7 @@ export function validateStoreFileOrderBySpec(value) {
         result["bucketName"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["bucketName"];
+        const convertedString2 = value["bucketName"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
@@ -2350,7 +2343,7 @@ export function validateStoreFileOrderBySpec(value) {
         result["createdAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["createdAt"];
+        const convertedString3 = value["createdAt"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.createdAt`] = {
             key: "validator.string",
@@ -2383,7 +2376,7 @@ export function validateStoreFileOrderBySpec(value) {
         result["updatedAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString4 = value["updatedAt"];
+        const convertedString4 = value["updatedAt"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.updatedAt`] = {
             key: "validator.string",
@@ -2629,7 +2622,7 @@ export function validateStoreFileReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -2637,7 +2630,7 @@ export function validateStoreFileReturning(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = intermediateValue2;
+        const convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
             key: "validator.string",
@@ -2673,7 +2666,7 @@ export function validateStoreFileReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -2682,10 +2675,10 @@ export function validateStoreFileReturning(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -2704,7 +2697,7 @@ export function validateStoreFileReturning(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -2821,9 +2814,9 @@ export function validateStoreFileInsertValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap2 = {};
-        /** @type {any[]} */
-        let intermediateResult2 = [];
-        /** @type {any|any[]} */
+        /** @type {Array<any>} */
+        const intermediateResult2 = [];
+        /** @type {any | Array<any>} */
         let intermediateValue2 = value["insert"];
 
         if (!Array.isArray(intermediateValue2)) {
@@ -2973,16 +2966,12 @@ export function validateStoreFileInsertPartialValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -3032,7 +3021,7 @@ export function validateStoreFileInsertPartialValidated(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString3 = value["bucketName"];
+        const convertedString3 = value["bucketName"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
@@ -3054,7 +3043,7 @@ export function validateStoreFileInsertPartialValidated(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString4 = value["contentType"];
+        const convertedString4 = value["contentType"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.contentType`] = {
             key: "validator.string",
@@ -3076,7 +3065,7 @@ export function validateStoreFileInsertPartialValidated(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString5 = value["name"];
+        const convertedString5 = value["name"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -3335,7 +3324,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["contentLength"];
+          const intermediateValue3 = value["contentLength"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateErrorMap3[`$`] = {
@@ -3431,7 +3420,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["contentLength"];
+          const intermediateValue3 = value["contentLength"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateErrorMap3[`$`] = {
@@ -3527,7 +3516,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["contentLength"];
+          const intermediateValue3 = value["contentLength"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateErrorMap3[`$`] = {
@@ -3623,7 +3612,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["contentLength"];
+          const intermediateValue3 = value["contentLength"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateErrorMap3[`$`] = {
@@ -3719,7 +3708,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["contentLength"];
+          const intermediateValue3 = value["contentLength"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateResult3 = undefined;
@@ -3778,7 +3767,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["bucketName"];
+          const intermediateValue4 = value["bucketName"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -3828,7 +3817,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString5 = intermediateValue4["$append"];
+                const convertedString5 = intermediateValue4["$append"];
                 if (typeof convertedString5 !== "string") {
                   intermediateErrorMap4[`$.$append`] = {
                     key: "validator.string",
@@ -3860,13 +3849,13 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["bucketName"];
+          const intermediateValue4 = value["bucketName"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateResult4 = undefined;
           } else {
             /** @type {string} */
-            let convertedString4 = intermediateValue4;
+            const convertedString4 = intermediateValue4;
             if (typeof convertedString4 !== "string") {
               intermediateErrorMap4[`$`] = {
                 key: "validator.string",
@@ -3909,7 +3898,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["contentType"];
+          const intermediateValue5 = value["contentType"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -3959,7 +3948,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString6 = intermediateValue5["$append"];
+                const convertedString6 = intermediateValue5["$append"];
                 if (typeof convertedString6 !== "string") {
                   intermediateErrorMap5[`$.$append`] = {
                     key: "validator.string",
@@ -3991,13 +3980,13 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["contentType"];
+          const intermediateValue5 = value["contentType"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateResult5 = undefined;
           } else {
             /** @type {string} */
-            let convertedString5 = intermediateValue5;
+            const convertedString5 = intermediateValue5;
             if (typeof convertedString5 !== "string") {
               intermediateErrorMap5[`$`] = {
                 key: "validator.string",
@@ -4040,7 +4029,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["name"];
+          const intermediateValue6 = value["name"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -4090,7 +4079,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString7 = intermediateValue6["$append"];
+                const convertedString7 = intermediateValue6["$append"];
                 if (typeof convertedString7 !== "string") {
                   intermediateErrorMap6[`$.$append`] = {
                     key: "validator.string",
@@ -4122,13 +4111,13 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["name"];
+          const intermediateValue6 = value["name"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateResult6 = undefined;
           } else {
             /** @type {string} */
-            let convertedString6 = intermediateValue6;
+            const convertedString6 = intermediateValue6;
             if (typeof convertedString6 !== "string") {
               intermediateErrorMap6[`$`] = {
                 key: "validator.string",
@@ -4171,7 +4160,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["meta"];
+          const intermediateValue7 = value["meta"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -4267,10 +4256,10 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   } else {
                     /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap10 = {};
-                    /** @type {any[]} */
-                    let intermediateResult10 = [];
-                    /** @type {any|any[]} */
-                    let intermediateValue10 =
+                    /** @type {Array<any>} */
+                    const intermediateResult10 = [];
+                    /** @type {any | Array<any>} */
+                    const intermediateValue10 =
                       intermediateValue7["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue10)) {
@@ -4304,7 +4293,8 @@ export function validateStoreFileUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult12 = undefined;
                             /** @type {any} */
-                            let intermediateValue12 = intermediateValue10[i10];
+                            const intermediateValue12 =
+                              intermediateValue10[i10];
 
                             if (
                               intermediateValue12 === null ||
@@ -4363,7 +4353,8 @@ export function validateStoreFileUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult12 = undefined;
                             /** @type {any} */
-                            let intermediateValue12 = intermediateValue10[i10];
+                            const intermediateValue12 =
+                              intermediateValue10[i10];
 
                             if (
                               intermediateValue12 === null ||
@@ -4374,7 +4365,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString12 = intermediateValue12;
+                              const convertedString12 = intermediateValue12;
                               if (typeof convertedString12 !== "string") {
                                 intermediateErrorMap12[`$`] = {
                                   key: "validator.string",
@@ -4447,7 +4438,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["meta"];
+          const intermediateValue7 = value["meta"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -4544,10 +4535,10 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   } else {
                     /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap10 = {};
-                    /** @type {any[]} */
-                    let intermediateResult10 = [];
-                    /** @type {any|any[]} */
-                    let intermediateValue10 =
+                    /** @type {Array<any>} */
+                    const intermediateResult10 = [];
+                    /** @type {any | Array<any>} */
+                    const intermediateValue10 =
                       intermediateValue7["$remove"]["path"];
 
                     if (!Array.isArray(intermediateValue10)) {
@@ -4581,7 +4572,8 @@ export function validateStoreFileUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult12 = undefined;
                             /** @type {any} */
-                            let intermediateValue12 = intermediateValue10[i10];
+                            const intermediateValue12 =
+                              intermediateValue10[i10];
 
                             if (
                               intermediateValue12 === null ||
@@ -4640,7 +4632,8 @@ export function validateStoreFileUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult12 = undefined;
                             /** @type {any} */
-                            let intermediateValue12 = intermediateValue10[i10];
+                            const intermediateValue12 =
+                              intermediateValue10[i10];
 
                             if (
                               intermediateValue12 === null ||
@@ -4651,7 +4644,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString12 = intermediateValue12;
+                              const convertedString12 = intermediateValue12;
                               if (typeof convertedString12 !== "string") {
                                 intermediateErrorMap12[`$`] = {
                                   key: "validator.string",
@@ -4713,7 +4706,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["meta"];
+          const intermediateValue7 = value["meta"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateResult7 = {};
@@ -4751,7 +4744,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["createdAt"];
+          const intermediateValue8 = value["createdAt"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -4801,7 +4794,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString9 = intermediateValue8["$subtract"];
+                const convertedString9 = intermediateValue8["$subtract"];
                 if (typeof convertedString9 !== "string") {
                   intermediateErrorMap8[`$.$subtract`] = {
                     key: "validator.string",
@@ -4833,7 +4826,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["createdAt"];
+          const intermediateValue8 = value["createdAt"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -4883,7 +4876,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString9 = intermediateValue8["$add"];
+                const convertedString9 = intermediateValue8["$add"];
                 if (typeof convertedString9 !== "string") {
                   intermediateErrorMap8[`$.$add`] = {
                     key: "validator.string",
@@ -4915,7 +4908,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["createdAt"];
+          const intermediateValue8 = value["createdAt"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateResult8 = undefined;
@@ -4965,7 +4958,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult9 = undefined;
           /** @type {any} */
-          let intermediateValue9 = value["updatedAt"];
+          const intermediateValue9 = value["updatedAt"];
 
           if (intermediateValue9 === null || intermediateValue9 === undefined) {
             intermediateErrorMap9[`$`] = {
@@ -5015,7 +5008,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString10 = intermediateValue9["$subtract"];
+                const convertedString10 = intermediateValue9["$subtract"];
                 if (typeof convertedString10 !== "string") {
                   intermediateErrorMap9[`$.$subtract`] = {
                     key: "validator.string",
@@ -5047,7 +5040,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult9 = undefined;
           /** @type {any} */
-          let intermediateValue9 = value["updatedAt"];
+          const intermediateValue9 = value["updatedAt"];
 
           if (intermediateValue9 === null || intermediateValue9 === undefined) {
             intermediateErrorMap9[`$`] = {
@@ -5097,7 +5090,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString10 = intermediateValue9["$add"];
+                const convertedString10 = intermediateValue9["$add"];
                 if (typeof convertedString10 !== "string") {
                   intermediateErrorMap9[`$.$add`] = {
                     key: "validator.string",
@@ -5129,7 +5122,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult9 = undefined;
           /** @type {any} */
-          let intermediateValue9 = value["updatedAt"];
+          const intermediateValue9 = value["updatedAt"];
 
           if (intermediateValue9 === null || intermediateValue9 === undefined) {
             intermediateResult9 = undefined;
@@ -5175,8 +5168,9 @@ export function validateStoreFileUpdatePartialValidated(value) {
 
 /**
  * Postgres based job queue.
- *Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link queueWorkerRegisterCronJobs} for all your recurring jobs.
- *Use {@link queueWorkerCreate} as a way to pick up jobs.
+ *Use {@link queueWorkerAddJob} to insert new jobs in to the queue and {@link
+ *queueWorkerRegisterCronJobs} for all your recurring jobs. Use {@link queueWorkerCreate} as a way
+ *to pick up jobs.
  *
  * @param {import("../common/types.js").StoreJobInput|any} value
  * @returns {Either<import("../common/types.js").StoreJob, ValidatorErrorMap>}
@@ -5404,7 +5398,7 @@ export function validateStoreJob(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString6 = value["name"];
+        const convertedString6 = value["name"];
         if (typeof convertedString6 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -5650,10 +5644,10 @@ export function validateStoreJobWhereValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -5776,7 +5770,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -5785,10 +5779,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -5862,7 +5856,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -5902,7 +5896,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -5911,10 +5905,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -5988,7 +5982,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -6167,7 +6161,7 @@ export function validateStoreJobWhereValidated(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString12 = value["name"];
+        const convertedString12 = value["name"];
         if (typeof convertedString12 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -6194,7 +6188,7 @@ export function validateStoreJobWhereValidated(value) {
         result["nameNotEqual"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString13 = value["nameNotEqual"];
+        const convertedString13 = value["nameNotEqual"];
         if (typeof convertedString13 !== "string") {
           errorMap[`$.nameNotEqual`] = {
             key: "validator.string",
@@ -6228,7 +6222,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["nameIn"];
+          const intermediateValue16 = value["nameIn"];
 
           if (
             intermediateValue16 === null ||
@@ -6240,10 +6234,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap17 = {};
-            /** @type {any[]} */
-            let intermediateResult17 = [];
-            /** @type {any|any[]} */
-            let intermediateValue17 = intermediateValue16;
+            /** @type {Array<any>} */
+            const intermediateResult17 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
               intermediateErrorMap16[`$`] = {
@@ -6262,7 +6256,7 @@ export function validateStoreJobWhereValidated(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString17 = intermediateValue17[i17];
+                  const convertedString17 = intermediateValue17[i17];
                   if (typeof convertedString17 !== "string") {
                     intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.string",
@@ -6303,7 +6297,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["nameIn"];
+          const intermediateValue16 = value["nameIn"];
 
           if (
             intermediateValue16 === null ||
@@ -6346,7 +6340,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["nameNotIn"];
+          const intermediateValue17 = value["nameNotIn"];
 
           if (
             intermediateValue17 === null ||
@@ -6358,10 +6352,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap18 = {};
-            /** @type {any[]} */
-            let intermediateResult18 = [];
-            /** @type {any|any[]} */
-            let intermediateValue18 = intermediateValue17;
+            /** @type {Array<any>} */
+            const intermediateResult18 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
               intermediateErrorMap17[`$`] = {
@@ -6380,7 +6374,7 @@ export function validateStoreJobWhereValidated(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString18 = intermediateValue18[i18];
+                  const convertedString18 = intermediateValue18[i18];
                   if (typeof convertedString18 !== "string") {
                     intermediateErrorMap18[`$.${i18}`] = {
                       key: "validator.string",
@@ -6421,7 +6415,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["nameNotIn"];
+          const intermediateValue17 = value["nameNotIn"];
 
           if (
             intermediateValue17 === null ||
@@ -6454,7 +6448,7 @@ export function validateStoreJobWhereValidated(value) {
         result["nameLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString16 = value["nameLike"];
+        const convertedString16 = value["nameLike"];
         if (typeof convertedString16 !== "string") {
           errorMap[`$.nameLike`] = {
             key: "validator.string",
@@ -6478,7 +6472,7 @@ export function validateStoreJobWhereValidated(value) {
         result["nameILike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString17 = value["nameILike"];
+        const convertedString17 = value["nameILike"];
         if (typeof convertedString17 !== "string") {
           errorMap[`$.nameILike`] = {
             key: "validator.string",
@@ -6502,7 +6496,7 @@ export function validateStoreJobWhereValidated(value) {
         result["nameNotLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString18 = value["nameNotLike"];
+        const convertedString18 = value["nameNotLike"];
         if (typeof convertedString18 !== "string") {
           errorMap[`$.nameNotLike`] = {
             key: "validator.string",
@@ -6594,7 +6588,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult23 = undefined;
           /** @type {any} */
-          let intermediateValue23 = value["scheduledAtIn"];
+          const intermediateValue23 = value["scheduledAtIn"];
 
           if (
             intermediateValue23 === null ||
@@ -6606,10 +6600,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap24 = {};
-            /** @type {any[]} */
-            let intermediateResult24 = [];
-            /** @type {any|any[]} */
-            let intermediateValue24 = intermediateValue23;
+            /** @type {Array<any>} */
+            const intermediateResult24 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue24 = intermediateValue23;
 
             if (!Array.isArray(intermediateValue24)) {
               intermediateErrorMap23[`$`] = {
@@ -6678,7 +6672,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult23 = undefined;
           /** @type {any} */
-          let intermediateValue23 = value["scheduledAtIn"];
+          const intermediateValue23 = value["scheduledAtIn"];
 
           if (
             intermediateValue23 === null ||
@@ -6724,7 +6718,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["scheduledAtNotIn"];
+          const intermediateValue24 = value["scheduledAtNotIn"];
 
           if (
             intermediateValue24 === null ||
@@ -6736,10 +6730,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap25 = {};
-            /** @type {any[]} */
-            let intermediateResult25 = [];
-            /** @type {any|any[]} */
-            let intermediateValue25 = intermediateValue24;
+            /** @type {Array<any>} */
+            const intermediateResult25 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
               intermediateErrorMap24[`$`] = {
@@ -6808,7 +6802,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["scheduledAtNotIn"];
+          const intermediateValue24 = value["scheduledAtNotIn"];
 
           if (
             intermediateValue24 === null ||
@@ -7017,7 +7011,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult31 = undefined;
           /** @type {any} */
-          let intermediateValue31 = value["createdAtIn"];
+          const intermediateValue31 = value["createdAtIn"];
 
           if (
             intermediateValue31 === null ||
@@ -7029,10 +7023,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap32 = {};
-            /** @type {any[]} */
-            let intermediateResult32 = [];
-            /** @type {any|any[]} */
-            let intermediateValue32 = intermediateValue31;
+            /** @type {Array<any>} */
+            const intermediateResult32 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue32 = intermediateValue31;
 
             if (!Array.isArray(intermediateValue32)) {
               intermediateErrorMap31[`$`] = {
@@ -7101,7 +7095,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult31 = undefined;
           /** @type {any} */
-          let intermediateValue31 = value["createdAtIn"];
+          const intermediateValue31 = value["createdAtIn"];
 
           if (
             intermediateValue31 === null ||
@@ -7147,7 +7141,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult32 = undefined;
           /** @type {any} */
-          let intermediateValue32 = value["createdAtNotIn"];
+          const intermediateValue32 = value["createdAtNotIn"];
 
           if (
             intermediateValue32 === null ||
@@ -7159,10 +7153,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap33 = {};
-            /** @type {any[]} */
-            let intermediateResult33 = [];
-            /** @type {any|any[]} */
-            let intermediateValue33 = intermediateValue32;
+            /** @type {Array<any>} */
+            const intermediateResult33 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue33 = intermediateValue32;
 
             if (!Array.isArray(intermediateValue33)) {
               intermediateErrorMap32[`$`] = {
@@ -7231,7 +7225,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult32 = undefined;
           /** @type {any} */
-          let intermediateValue32 = value["createdAtNotIn"];
+          const intermediateValue32 = value["createdAtNotIn"];
 
           if (
             intermediateValue32 === null ||
@@ -7384,7 +7378,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult37 = undefined;
           /** @type {any} */
-          let intermediateValue37 = value["updatedAtIn"];
+          const intermediateValue37 = value["updatedAtIn"];
 
           if (
             intermediateValue37 === null ||
@@ -7396,10 +7390,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap38 = {};
-            /** @type {any[]} */
-            let intermediateResult38 = [];
-            /** @type {any|any[]} */
-            let intermediateValue38 = intermediateValue37;
+            /** @type {Array<any>} */
+            const intermediateResult38 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue38 = intermediateValue37;
 
             if (!Array.isArray(intermediateValue38)) {
               intermediateErrorMap37[`$`] = {
@@ -7468,7 +7462,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult37 = undefined;
           /** @type {any} */
-          let intermediateValue37 = value["updatedAtIn"];
+          const intermediateValue37 = value["updatedAtIn"];
 
           if (
             intermediateValue37 === null ||
@@ -7514,7 +7508,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult38 = undefined;
           /** @type {any} */
-          let intermediateValue38 = value["updatedAtNotIn"];
+          const intermediateValue38 = value["updatedAtNotIn"];
 
           if (
             intermediateValue38 === null ||
@@ -7526,10 +7520,10 @@ export function validateStoreJobWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap39 = {};
-            /** @type {any[]} */
-            let intermediateResult39 = [];
-            /** @type {any|any[]} */
-            let intermediateValue39 = intermediateValue38;
+            /** @type {Array<any>} */
+            const intermediateResult39 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue39 = intermediateValue38;
 
             if (!Array.isArray(intermediateValue39)) {
               intermediateErrorMap38[`$`] = {
@@ -7598,7 +7592,7 @@ export function validateStoreJobWhereValidated(value) {
           /** @type {any} */
           let intermediateResult38 = undefined;
           /** @type {any} */
-          let intermediateValue38 = value["updatedAtNotIn"];
+          const intermediateValue38 = value["updatedAtNotIn"];
 
           if (
             intermediateValue38 === null ||
@@ -7719,7 +7713,7 @@ export function validateStoreJobOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -7750,7 +7744,7 @@ export function validateStoreJobOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -7759,10 +7753,10 @@ export function validateStoreJobOrderBy(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -7781,7 +7775,7 @@ export function validateStoreJobOrderBy(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -7905,7 +7899,7 @@ export function validateStoreJobOrderBySpec(value) {
         result["id"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString1 = value["id"];
+        const convertedString1 = value["id"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.id`] = {
             key: "validator.string",
@@ -7938,7 +7932,7 @@ export function validateStoreJobOrderBySpec(value) {
         result["isComplete"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["isComplete"];
+        const convertedString2 = value["isComplete"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.isComplete`] = {
             key: "validator.string",
@@ -7978,7 +7972,7 @@ export function validateStoreJobOrderBySpec(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["name"];
+        const convertedString3 = value["name"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -8011,7 +8005,7 @@ export function validateStoreJobOrderBySpec(value) {
         result["scheduledAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString4 = value["scheduledAt"];
+        const convertedString4 = value["scheduledAt"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.scheduledAt`] = {
             key: "validator.string",
@@ -8051,7 +8045,7 @@ export function validateStoreJobOrderBySpec(value) {
         result["createdAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString5 = value["createdAt"];
+        const convertedString5 = value["createdAt"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.createdAt`] = {
             key: "validator.string",
@@ -8084,7 +8078,7 @@ export function validateStoreJobOrderBySpec(value) {
         result["updatedAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString6 = value["updatedAt"];
+        const convertedString6 = value["updatedAt"];
         if (typeof convertedString6 !== "string") {
           errorMap[`$.updatedAt`] = {
             key: "validator.string",
@@ -8332,7 +8326,7 @@ export function validateStoreJobReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -8340,7 +8334,7 @@ export function validateStoreJobReturning(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = intermediateValue2;
+        const convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
             key: "validator.string",
@@ -8376,7 +8370,7 @@ export function validateStoreJobReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -8385,10 +8379,10 @@ export function validateStoreJobReturning(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -8407,7 +8401,7 @@ export function validateStoreJobReturning(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -8528,9 +8522,9 @@ export function validateStoreJobInsertValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap2 = {};
-        /** @type {any[]} */
-        let intermediateResult2 = [];
-        /** @type {any|any[]} */
+        /** @type {Array<any>} */
+        const intermediateResult2 = [];
+        /** @type {any | Array<any>} */
         let intermediateValue2 = value["insert"];
 
         if (!Array.isArray(intermediateValue2)) {
@@ -8828,7 +8822,7 @@ export function validateStoreJobInsertPartialValidated(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString6 = value["name"];
+        const convertedString6 = value["name"];
         if (typeof convertedString6 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -9105,7 +9099,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["isComplete"];
+          const intermediateValue3 = value["isComplete"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateErrorMap3[`$`] = {
@@ -9191,7 +9185,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["isComplete"];
+          const intermediateValue3 = value["isComplete"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateResult3 = false;
@@ -9243,7 +9237,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["handlerTimeout"];
+          const intermediateValue4 = value["handlerTimeout"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -9339,7 +9333,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["handlerTimeout"];
+          const intermediateValue4 = value["handlerTimeout"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -9435,7 +9429,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["handlerTimeout"];
+          const intermediateValue4 = value["handlerTimeout"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -9531,7 +9525,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["handlerTimeout"];
+          const intermediateValue4 = value["handlerTimeout"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -9627,7 +9621,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["handlerTimeout"];
+          const intermediateValue4 = value["handlerTimeout"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateResult4 = intermediateValue4;
@@ -9681,7 +9675,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["priority"];
+          const intermediateValue5 = value["priority"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -9777,7 +9771,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["priority"];
+          const intermediateValue5 = value["priority"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -9873,7 +9867,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["priority"];
+          const intermediateValue5 = value["priority"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -9969,7 +9963,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["priority"];
+          const intermediateValue5 = value["priority"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -10065,7 +10059,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["priority"];
+          const intermediateValue5 = value["priority"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateResult5 = 0;
@@ -10119,7 +10113,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["retryCount"];
+          const intermediateValue6 = value["retryCount"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -10215,7 +10209,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["retryCount"];
+          const intermediateValue6 = value["retryCount"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -10311,7 +10305,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["retryCount"];
+          const intermediateValue6 = value["retryCount"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -10407,7 +10401,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["retryCount"];
+          const intermediateValue6 = value["retryCount"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -10503,7 +10497,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["retryCount"];
+          const intermediateValue6 = value["retryCount"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateResult6 = 0;
@@ -10562,7 +10556,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["name"];
+          const intermediateValue7 = value["name"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -10612,7 +10606,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString8 = intermediateValue7["$append"];
+                const convertedString8 = intermediateValue7["$append"];
                 if (typeof convertedString8 !== "string") {
                   intermediateErrorMap7[`$.$append`] = {
                     key: "validator.string",
@@ -10644,13 +10638,13 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["name"];
+          const intermediateValue7 = value["name"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateResult7 = undefined;
           } else {
             /** @type {string} */
-            let convertedString7 = intermediateValue7;
+            const convertedString7 = intermediateValue7;
             if (typeof convertedString7 !== "string") {
               intermediateErrorMap7[`$`] = {
                 key: "validator.string",
@@ -10693,7 +10687,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["scheduledAt"];
+          const intermediateValue8 = value["scheduledAt"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -10743,7 +10737,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString9 = intermediateValue8["$subtract"];
+                const convertedString9 = intermediateValue8["$subtract"];
                 if (typeof convertedString9 !== "string") {
                   intermediateErrorMap8[`$.$subtract`] = {
                     key: "validator.string",
@@ -10775,7 +10769,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["scheduledAt"];
+          const intermediateValue8 = value["scheduledAt"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -10825,7 +10819,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString9 = intermediateValue8["$add"];
+                const convertedString9 = intermediateValue8["$add"];
                 if (typeof convertedString9 !== "string") {
                   intermediateErrorMap8[`$.$add`] = {
                     key: "validator.string",
@@ -10857,7 +10851,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["scheduledAt"];
+          const intermediateValue8 = value["scheduledAt"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateResult8 = new Date();
@@ -10907,7 +10901,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult9 = undefined;
           /** @type {any} */
-          let intermediateValue9 = value["data"];
+          const intermediateValue9 = value["data"];
 
           if (intermediateValue9 === null || intermediateValue9 === undefined) {
             intermediateErrorMap9[`$`] = {
@@ -11003,10 +10997,10 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   } else {
                     /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap12 = {};
-                    /** @type {any[]} */
-                    let intermediateResult12 = [];
-                    /** @type {any|any[]} */
-                    let intermediateValue12 =
+                    /** @type {Array<any>} */
+                    const intermediateResult12 = [];
+                    /** @type {any | Array<any>} */
+                    const intermediateValue12 =
                       intermediateValue9["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue12)) {
@@ -11040,7 +11034,8 @@ export function validateStoreJobUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult14 = undefined;
                             /** @type {any} */
-                            let intermediateValue14 = intermediateValue12[i12];
+                            const intermediateValue14 =
+                              intermediateValue12[i12];
 
                             if (
                               intermediateValue14 === null ||
@@ -11099,7 +11094,8 @@ export function validateStoreJobUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult14 = undefined;
                             /** @type {any} */
-                            let intermediateValue14 = intermediateValue12[i12];
+                            const intermediateValue14 =
+                              intermediateValue12[i12];
 
                             if (
                               intermediateValue14 === null ||
@@ -11110,7 +11106,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString14 = intermediateValue14;
+                              const convertedString14 = intermediateValue14;
                               if (typeof convertedString14 !== "string") {
                                 intermediateErrorMap14[`$`] = {
                                   key: "validator.string",
@@ -11183,7 +11179,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult9 = undefined;
           /** @type {any} */
-          let intermediateValue9 = value["data"];
+          const intermediateValue9 = value["data"];
 
           if (intermediateValue9 === null || intermediateValue9 === undefined) {
             intermediateErrorMap9[`$`] = {
@@ -11280,10 +11276,10 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   } else {
                     /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap12 = {};
-                    /** @type {any[]} */
-                    let intermediateResult12 = [];
-                    /** @type {any|any[]} */
-                    let intermediateValue12 =
+                    /** @type {Array<any>} */
+                    const intermediateResult12 = [];
+                    /** @type {any | Array<any>} */
+                    const intermediateValue12 =
                       intermediateValue9["$remove"]["path"];
 
                     if (!Array.isArray(intermediateValue12)) {
@@ -11317,7 +11313,8 @@ export function validateStoreJobUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult14 = undefined;
                             /** @type {any} */
-                            let intermediateValue14 = intermediateValue12[i12];
+                            const intermediateValue14 =
+                              intermediateValue12[i12];
 
                             if (
                               intermediateValue14 === null ||
@@ -11376,7 +11373,8 @@ export function validateStoreJobUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult14 = undefined;
                             /** @type {any} */
-                            let intermediateValue14 = intermediateValue12[i12];
+                            const intermediateValue14 =
+                              intermediateValue12[i12];
 
                             if (
                               intermediateValue14 === null ||
@@ -11387,7 +11385,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString14 = intermediateValue14;
+                              const convertedString14 = intermediateValue14;
                               if (typeof convertedString14 !== "string") {
                                 intermediateErrorMap14[`$`] = {
                                   key: "validator.string",
@@ -11449,7 +11447,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult9 = undefined;
           /** @type {any} */
-          let intermediateValue9 = value["data"];
+          const intermediateValue9 = value["data"];
 
           if (intermediateValue9 === null || intermediateValue9 === undefined) {
             intermediateResult9 = {};
@@ -11479,7 +11477,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult10 = undefined;
           /** @type {any} */
-          let intermediateValue10 = value["createdAt"];
+          const intermediateValue10 = value["createdAt"];
 
           if (
             intermediateValue10 === null ||
@@ -11532,7 +11530,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString11 = intermediateValue10["$subtract"];
+                const convertedString11 = intermediateValue10["$subtract"];
                 if (typeof convertedString11 !== "string") {
                   intermediateErrorMap10[`$.$subtract`] = {
                     key: "validator.string",
@@ -11564,7 +11562,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult10 = undefined;
           /** @type {any} */
-          let intermediateValue10 = value["createdAt"];
+          const intermediateValue10 = value["createdAt"];
 
           if (
             intermediateValue10 === null ||
@@ -11617,7 +11615,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString11 = intermediateValue10["$add"];
+                const convertedString11 = intermediateValue10["$add"];
                 if (typeof convertedString11 !== "string") {
                   intermediateErrorMap10[`$.$add`] = {
                     key: "validator.string",
@@ -11649,7 +11647,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult10 = undefined;
           /** @type {any} */
-          let intermediateValue10 = value["createdAt"];
+          const intermediateValue10 = value["createdAt"];
 
           if (
             intermediateValue10 === null ||
@@ -11702,7 +11700,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["updatedAt"];
+          const intermediateValue11 = value["updatedAt"];
 
           if (
             intermediateValue11 === null ||
@@ -11755,7 +11753,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString12 = intermediateValue11["$subtract"];
+                const convertedString12 = intermediateValue11["$subtract"];
                 if (typeof convertedString12 !== "string") {
                   intermediateErrorMap11[`$.$subtract`] = {
                     key: "validator.string",
@@ -11787,7 +11785,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["updatedAt"];
+          const intermediateValue11 = value["updatedAt"];
 
           if (
             intermediateValue11 === null ||
@@ -11840,7 +11838,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString12 = intermediateValue11["$add"];
+                const convertedString12 = intermediateValue11["$add"];
                 if (typeof convertedString12 !== "string") {
                   intermediateErrorMap11[`$.$add`] = {
                     key: "validator.string",
@@ -11872,7 +11870,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["updatedAt"];
+          const intermediateValue11 = value["updatedAt"];
 
           if (
             intermediateValue11 === null ||
@@ -11996,16 +11994,12 @@ export function validateStoreSessionStore(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -12016,7 +12010,7 @@ export function validateStoreSessionStore(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = value["checksum"];
+        const convertedString2 = value["checksum"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.checksum`] = {
             key: "validator.string",
@@ -12225,10 +12219,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -12284,16 +12278,12 @@ export function validateStoreSessionStoreWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -12313,16 +12303,11 @@ export function validateStoreSessionStoreWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["idNotEqual"].length === 32) {
-          result["idNotEqual"] =
-            value["idNotEqual"].slice(0, 8) +
-            "-" +
-            value["idNotEqual"].slice(8, 12) +
-            "-" +
-            value["idNotEqual"].slice(12, 16) +
-            "-" +
-            value["idNotEqual"].slice(16, 20) +
-            "-" +
-            value["idNotEqual"].slice(20);
+          result["idNotEqual"] = `${value["idNotEqual"].slice(0, 8)}-${value[
+            "idNotEqual"
+          ].slice(8, 12)}-${value["idNotEqual"].slice(12, 16)}-${value[
+            "idNotEqual"
+          ].slice(16, 20)}-${value["idNotEqual"].slice(20)}`;
         } else {
           result["idNotEqual"] = value["idNotEqual"];
         }
@@ -12341,7 +12326,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -12350,10 +12335,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -12383,16 +12368,19 @@ export function validateStoreSessionStoreWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue8[i8].length === 32) {
-                    intermediateResult8[i8] =
-                      intermediateValue8[i8].slice(0, 8) +
-                      "-" +
-                      intermediateValue8[i8].slice(8, 12) +
-                      "-" +
-                      intermediateValue8[i8].slice(12, 16) +
-                      "-" +
-                      intermediateValue8[i8].slice(16, 20) +
-                      "-" +
-                      intermediateValue8[i8].slice(20);
+                    intermediateResult8[i8] = `${intermediateValue8[i8].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue8[i8].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue8[i8].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue8[i8].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue8[i8].slice(20)}`;
                   } else {
                     intermediateResult8[i8] = intermediateValue8[i8];
                   }
@@ -12422,7 +12410,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -12462,7 +12450,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -12471,10 +12459,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -12504,16 +12492,19 @@ export function validateStoreSessionStoreWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue9[i9].length === 32) {
-                    intermediateResult9[i9] =
-                      intermediateValue9[i9].slice(0, 8) +
-                      "-" +
-                      intermediateValue9[i9].slice(8, 12) +
-                      "-" +
-                      intermediateValue9[i9].slice(12, 16) +
-                      "-" +
-                      intermediateValue9[i9].slice(16, 20) +
-                      "-" +
-                      intermediateValue9[i9].slice(20);
+                    intermediateResult9[i9] = `${intermediateValue9[i9].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue9[i9].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue9[i9].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue9[i9].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue9[i9].slice(20)}`;
                   } else {
                     intermediateResult9[i9] = intermediateValue9[i9];
                   }
@@ -12543,7 +12534,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -12635,7 +12626,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["createdAtIn"];
+          const intermediateValue11 = value["createdAtIn"];
 
           if (
             intermediateValue11 === null ||
@@ -12647,10 +12638,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap12 = {};
-            /** @type {any[]} */
-            let intermediateResult12 = [];
-            /** @type {any|any[]} */
-            let intermediateValue12 = intermediateValue11;
+            /** @type {Array<any>} */
+            const intermediateResult12 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
               intermediateErrorMap11[`$`] = {
@@ -12719,7 +12710,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["createdAtIn"];
+          const intermediateValue11 = value["createdAtIn"];
 
           if (
             intermediateValue11 === null ||
@@ -12765,7 +12756,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["createdAtNotIn"];
+          const intermediateValue12 = value["createdAtNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -12777,10 +12768,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap13 = {};
-            /** @type {any[]} */
-            let intermediateResult13 = [];
-            /** @type {any|any[]} */
-            let intermediateValue13 = intermediateValue12;
+            /** @type {Array<any>} */
+            const intermediateResult13 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
               intermediateErrorMap12[`$`] = {
@@ -12849,7 +12840,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["createdAtNotIn"];
+          const intermediateValue12 = value["createdAtNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -13002,7 +12993,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["updatedAtIn"];
+          const intermediateValue17 = value["updatedAtIn"];
 
           if (
             intermediateValue17 === null ||
@@ -13014,10 +13005,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap18 = {};
-            /** @type {any[]} */
-            let intermediateResult18 = [];
-            /** @type {any|any[]} */
-            let intermediateValue18 = intermediateValue17;
+            /** @type {Array<any>} */
+            const intermediateResult18 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
               intermediateErrorMap17[`$`] = {
@@ -13086,7 +13077,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["updatedAtIn"];
+          const intermediateValue17 = value["updatedAtIn"];
 
           if (
             intermediateValue17 === null ||
@@ -13132,7 +13123,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["updatedAtNotIn"];
+          const intermediateValue18 = value["updatedAtNotIn"];
 
           if (
             intermediateValue18 === null ||
@@ -13144,10 +13135,10 @@ export function validateStoreSessionStoreWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap19 = {};
-            /** @type {any[]} */
-            let intermediateResult19 = [];
-            /** @type {any|any[]} */
-            let intermediateValue19 = intermediateValue18;
+            /** @type {Array<any>} */
+            const intermediateResult19 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
               intermediateErrorMap18[`$`] = {
@@ -13216,7 +13207,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["updatedAtNotIn"];
+          const intermediateValue18 = value["updatedAtNotIn"];
 
           if (
             intermediateValue18 === null ||
@@ -13589,10 +13580,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -13648,16 +13639,12 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -13677,16 +13664,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["idNotEqual"].length === 32) {
-          result["idNotEqual"] =
-            value["idNotEqual"].slice(0, 8) +
-            "-" +
-            value["idNotEqual"].slice(8, 12) +
-            "-" +
-            value["idNotEqual"].slice(12, 16) +
-            "-" +
-            value["idNotEqual"].slice(16, 20) +
-            "-" +
-            value["idNotEqual"].slice(20);
+          result["idNotEqual"] = `${value["idNotEqual"].slice(0, 8)}-${value[
+            "idNotEqual"
+          ].slice(8, 12)}-${value["idNotEqual"].slice(12, 16)}-${value[
+            "idNotEqual"
+          ].slice(16, 20)}-${value["idNotEqual"].slice(20)}`;
         } else {
           result["idNotEqual"] = value["idNotEqual"];
         }
@@ -13705,7 +13687,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -13714,10 +13696,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -13747,16 +13729,19 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue8[i8].length === 32) {
-                    intermediateResult8[i8] =
-                      intermediateValue8[i8].slice(0, 8) +
-                      "-" +
-                      intermediateValue8[i8].slice(8, 12) +
-                      "-" +
-                      intermediateValue8[i8].slice(12, 16) +
-                      "-" +
-                      intermediateValue8[i8].slice(16, 20) +
-                      "-" +
-                      intermediateValue8[i8].slice(20);
+                    intermediateResult8[i8] = `${intermediateValue8[i8].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue8[i8].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue8[i8].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue8[i8].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue8[i8].slice(20)}`;
                   } else {
                     intermediateResult8[i8] = intermediateValue8[i8];
                   }
@@ -13786,7 +13771,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -13826,7 +13811,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -13835,10 +13820,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -13868,16 +13853,19 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue9[i9].length === 32) {
-                    intermediateResult9[i9] =
-                      intermediateValue9[i9].slice(0, 8) +
-                      "-" +
-                      intermediateValue9[i9].slice(8, 12) +
-                      "-" +
-                      intermediateValue9[i9].slice(12, 16) +
-                      "-" +
-                      intermediateValue9[i9].slice(16, 20) +
-                      "-" +
-                      intermediateValue9[i9].slice(20);
+                    intermediateResult9[i9] = `${intermediateValue9[i9].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue9[i9].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue9[i9].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue9[i9].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue9[i9].slice(20)}`;
                   } else {
                     intermediateResult9[i9] = intermediateValue9[i9];
                   }
@@ -13907,7 +13895,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -13948,16 +13936,11 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["session"].length === 32) {
-          result["session"] =
-            value["session"].slice(0, 8) +
-            "-" +
-            value["session"].slice(8, 12) +
-            "-" +
-            value["session"].slice(12, 16) +
-            "-" +
-            value["session"].slice(16, 20) +
-            "-" +
-            value["session"].slice(20);
+          result["session"] = `${value["session"].slice(0, 8)}-${value[
+            "session"
+          ].slice(8, 12)}-${value["session"].slice(12, 16)}-${value[
+            "session"
+          ].slice(16, 20)}-${value["session"].slice(20)}`;
         } else {
           result["session"] = value["session"];
         }
@@ -13980,16 +13963,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["sessionNotEqual"].length === 32) {
-          result["sessionNotEqual"] =
-            value["sessionNotEqual"].slice(0, 8) +
-            "-" +
-            value["sessionNotEqual"].slice(8, 12) +
-            "-" +
-            value["sessionNotEqual"].slice(12, 16) +
-            "-" +
-            value["sessionNotEqual"].slice(16, 20) +
-            "-" +
-            value["sessionNotEqual"].slice(20);
+          result["sessionNotEqual"] = `${value["sessionNotEqual"].slice(
+            0,
+            8,
+          )}-${value["sessionNotEqual"].slice(8, 12)}-${value[
+            "sessionNotEqual"
+          ].slice(12, 16)}-${value["sessionNotEqual"].slice(16, 20)}-${value[
+            "sessionNotEqual"
+          ].slice(20)}`;
         } else {
           result["sessionNotEqual"] = value["sessionNotEqual"];
         }
@@ -14008,7 +13989,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["sessionIn"];
+          const intermediateValue11 = value["sessionIn"];
 
           if (
             intermediateValue11 === null ||
@@ -14020,10 +14001,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap12 = {};
-            /** @type {any[]} */
-            let intermediateResult12 = [];
-            /** @type {any|any[]} */
-            let intermediateValue12 = intermediateValue11;
+            /** @type {Array<any>} */
+            const intermediateResult12 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
               intermediateErrorMap11[`$`] = {
@@ -14053,16 +14034,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue12[i12].length === 32) {
-                    intermediateResult12[i12] =
-                      intermediateValue12[i12].slice(0, 8) +
-                      "-" +
-                      intermediateValue12[i12].slice(8, 12) +
-                      "-" +
-                      intermediateValue12[i12].slice(12, 16) +
-                      "-" +
-                      intermediateValue12[i12].slice(16, 20) +
-                      "-" +
-                      intermediateValue12[i12].slice(20);
+                    intermediateResult12[i12] = `${intermediateValue12[
+                      i12
+                    ].slice(0, 8)}-${intermediateValue12[i12].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue12[i12].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue12[i12].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue12[i12].slice(20)}`;
                   } else {
                     intermediateResult12[i12] = intermediateValue12[i12];
                   }
@@ -14092,7 +14075,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["sessionIn"];
+          const intermediateValue11 = value["sessionIn"];
 
           if (
             intermediateValue11 === null ||
@@ -14138,7 +14121,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["sessionNotIn"];
+          const intermediateValue12 = value["sessionNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -14150,10 +14133,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap13 = {};
-            /** @type {any[]} */
-            let intermediateResult13 = [];
-            /** @type {any|any[]} */
-            let intermediateValue13 = intermediateValue12;
+            /** @type {Array<any>} */
+            const intermediateResult13 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
               intermediateErrorMap12[`$`] = {
@@ -14183,16 +14166,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue13[i13].length === 32) {
-                    intermediateResult13[i13] =
-                      intermediateValue13[i13].slice(0, 8) +
-                      "-" +
-                      intermediateValue13[i13].slice(8, 12) +
-                      "-" +
-                      intermediateValue13[i13].slice(12, 16) +
-                      "-" +
-                      intermediateValue13[i13].slice(16, 20) +
-                      "-" +
-                      intermediateValue13[i13].slice(20);
+                    intermediateResult13[i13] = `${intermediateValue13[
+                      i13
+                    ].slice(0, 8)}-${intermediateValue13[i13].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue13[i13].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue13[i13].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue13[i13].slice(20)}`;
                   } else {
                     intermediateResult13[i13] = intermediateValue13[i13];
                   }
@@ -14222,7 +14207,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["sessionNotIn"];
+          const intermediateValue12 = value["sessionNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -14317,7 +14302,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult15 = undefined;
           /** @type {any} */
-          let intermediateValue15 = value["expiresAtIn"];
+          const intermediateValue15 = value["expiresAtIn"];
 
           if (
             intermediateValue15 === null ||
@@ -14329,10 +14314,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap16 = {};
-            /** @type {any[]} */
-            let intermediateResult16 = [];
-            /** @type {any|any[]} */
-            let intermediateValue16 = intermediateValue15;
+            /** @type {Array<any>} */
+            const intermediateResult16 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue16 = intermediateValue15;
 
             if (!Array.isArray(intermediateValue16)) {
               intermediateErrorMap15[`$`] = {
@@ -14401,7 +14386,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult15 = undefined;
           /** @type {any} */
-          let intermediateValue15 = value["expiresAtIn"];
+          const intermediateValue15 = value["expiresAtIn"];
 
           if (
             intermediateValue15 === null ||
@@ -14447,7 +14432,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["expiresAtNotIn"];
+          const intermediateValue16 = value["expiresAtNotIn"];
 
           if (
             intermediateValue16 === null ||
@@ -14459,10 +14444,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap17 = {};
-            /** @type {any[]} */
-            let intermediateResult17 = [];
-            /** @type {any|any[]} */
-            let intermediateValue17 = intermediateValue16;
+            /** @type {Array<any>} */
+            const intermediateResult17 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
               intermediateErrorMap16[`$`] = {
@@ -14531,7 +14516,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["expiresAtNotIn"];
+          const intermediateValue16 = value["expiresAtNotIn"];
 
           if (
             intermediateValue16 === null ||
@@ -14636,16 +14621,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["refreshToken"].length === 32) {
-          result["refreshToken"] =
-            value["refreshToken"].slice(0, 8) +
-            "-" +
-            value["refreshToken"].slice(8, 12) +
-            "-" +
-            value["refreshToken"].slice(12, 16) +
-            "-" +
-            value["refreshToken"].slice(16, 20) +
-            "-" +
-            value["refreshToken"].slice(20);
+          result["refreshToken"] = `${value["refreshToken"].slice(
+            0,
+            8,
+          )}-${value["refreshToken"].slice(8, 12)}-${value[
+            "refreshToken"
+          ].slice(12, 16)}-${value["refreshToken"].slice(16, 20)}-${value[
+            "refreshToken"
+          ].slice(20)}`;
         } else {
           result["refreshToken"] = value["refreshToken"];
         }
@@ -14668,16 +14651,14 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["refreshTokenNotEqual"].length === 32) {
-          result["refreshTokenNotEqual"] =
-            value["refreshTokenNotEqual"].slice(0, 8) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(8, 12) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(12, 16) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(16, 20) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(20);
+          result["refreshTokenNotEqual"] = `${value[
+            "refreshTokenNotEqual"
+          ].slice(0, 8)}-${value["refreshTokenNotEqual"].slice(8, 12)}-${value[
+            "refreshTokenNotEqual"
+          ].slice(12, 16)}-${value["refreshTokenNotEqual"].slice(
+            16,
+            20,
+          )}-${value["refreshTokenNotEqual"].slice(20)}`;
         } else {
           result["refreshTokenNotEqual"] = value["refreshTokenNotEqual"];
         }
@@ -14699,7 +14680,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult21 = undefined;
           /** @type {any} */
-          let intermediateValue21 = value["refreshTokenIn"];
+          const intermediateValue21 = value["refreshTokenIn"];
 
           if (
             intermediateValue21 === null ||
@@ -14711,10 +14692,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap22 = {};
-            /** @type {any[]} */
-            let intermediateResult22 = [];
-            /** @type {any|any[]} */
-            let intermediateValue22 = intermediateValue21;
+            /** @type {Array<any>} */
+            const intermediateResult22 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue22 = intermediateValue21;
 
             if (!Array.isArray(intermediateValue22)) {
               intermediateErrorMap21[`$`] = {
@@ -14744,16 +14725,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue22[i22].length === 32) {
-                    intermediateResult22[i22] =
-                      intermediateValue22[i22].slice(0, 8) +
-                      "-" +
-                      intermediateValue22[i22].slice(8, 12) +
-                      "-" +
-                      intermediateValue22[i22].slice(12, 16) +
-                      "-" +
-                      intermediateValue22[i22].slice(16, 20) +
-                      "-" +
-                      intermediateValue22[i22].slice(20);
+                    intermediateResult22[i22] = `${intermediateValue22[
+                      i22
+                    ].slice(0, 8)}-${intermediateValue22[i22].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue22[i22].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue22[i22].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue22[i22].slice(20)}`;
                   } else {
                     intermediateResult22[i22] = intermediateValue22[i22];
                   }
@@ -14783,7 +14766,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult21 = undefined;
           /** @type {any} */
-          let intermediateValue21 = value["refreshTokenIn"];
+          const intermediateValue21 = value["refreshTokenIn"];
 
           if (
             intermediateValue21 === null ||
@@ -14829,7 +14812,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult22 = undefined;
           /** @type {any} */
-          let intermediateValue22 = value["refreshTokenNotIn"];
+          const intermediateValue22 = value["refreshTokenNotIn"];
 
           if (
             intermediateValue22 === null ||
@@ -14841,10 +14824,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap23 = {};
-            /** @type {any[]} */
-            let intermediateResult23 = [];
-            /** @type {any|any[]} */
-            let intermediateValue23 = intermediateValue22;
+            /** @type {Array<any>} */
+            const intermediateResult23 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue23 = intermediateValue22;
 
             if (!Array.isArray(intermediateValue23)) {
               intermediateErrorMap22[`$`] = {
@@ -14874,16 +14857,18 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue23[i23].length === 32) {
-                    intermediateResult23[i23] =
-                      intermediateValue23[i23].slice(0, 8) +
-                      "-" +
-                      intermediateValue23[i23].slice(8, 12) +
-                      "-" +
-                      intermediateValue23[i23].slice(12, 16) +
-                      "-" +
-                      intermediateValue23[i23].slice(16, 20) +
-                      "-" +
-                      intermediateValue23[i23].slice(20);
+                    intermediateResult23[i23] = `${intermediateValue23[
+                      i23
+                    ].slice(0, 8)}-${intermediateValue23[i23].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue23[i23].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue23[i23].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue23[i23].slice(20)}`;
                   } else {
                     intermediateResult23[i23] = intermediateValue23[i23];
                   }
@@ -14913,7 +14898,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult22 = undefined;
           /** @type {any} */
-          let intermediateValue22 = value["refreshTokenNotIn"];
+          const intermediateValue22 = value["refreshTokenNotIn"];
 
           if (
             intermediateValue22 === null ||
@@ -15062,7 +15047,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult27 = undefined;
           /** @type {any} */
-          let intermediateValue27 = value["revokedAtIn"];
+          const intermediateValue27 = value["revokedAtIn"];
 
           if (
             intermediateValue27 === null ||
@@ -15074,10 +15059,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap28 = {};
-            /** @type {any[]} */
-            let intermediateResult28 = [];
-            /** @type {any|any[]} */
-            let intermediateValue28 = intermediateValue27;
+            /** @type {Array<any>} */
+            const intermediateResult28 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue28 = intermediateValue27;
 
             if (!Array.isArray(intermediateValue28)) {
               intermediateErrorMap27[`$`] = {
@@ -15146,7 +15131,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult27 = undefined;
           /** @type {any} */
-          let intermediateValue27 = value["revokedAtIn"];
+          const intermediateValue27 = value["revokedAtIn"];
 
           if (
             intermediateValue27 === null ||
@@ -15192,7 +15177,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult28 = undefined;
           /** @type {any} */
-          let intermediateValue28 = value["revokedAtNotIn"];
+          const intermediateValue28 = value["revokedAtNotIn"];
 
           if (
             intermediateValue28 === null ||
@@ -15204,10 +15189,10 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap29 = {};
-            /** @type {any[]} */
-            let intermediateResult29 = [];
-            /** @type {any|any[]} */
-            let intermediateValue29 = intermediateValue28;
+            /** @type {Array<any>} */
+            const intermediateResult29 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue29 = intermediateValue28;
 
             if (!Array.isArray(intermediateValue29)) {
               intermediateErrorMap28[`$`] = {
@@ -15276,7 +15261,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
           /** @type {any} */
           let intermediateResult28 = undefined;
           /** @type {any} */
-          let intermediateValue28 = value["revokedAtNotIn"];
+          const intermediateValue28 = value["revokedAtNotIn"];
 
           if (
             intermediateValue28 === null ||
@@ -15850,7 +15835,7 @@ export function validateStoreSessionStoreOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -15881,7 +15866,7 @@ export function validateStoreSessionStoreOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -15890,10 +15875,10 @@ export function validateStoreSessionStoreOrderBy(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -15912,7 +15897,7 @@ export function validateStoreSessionStoreOrderBy(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -16012,7 +15997,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
         result["id"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString1 = value["id"];
+        const convertedString1 = value["id"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.id`] = {
             key: "validator.string",
@@ -16045,7 +16030,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
         result["createdAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["createdAt"];
+        const convertedString2 = value["createdAt"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.createdAt`] = {
             key: "validator.string",
@@ -16078,7 +16063,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
         result["updatedAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["updatedAt"];
+        const convertedString3 = value["updatedAt"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.updatedAt`] = {
             key: "validator.string",
@@ -16346,7 +16331,7 @@ export function validateStoreSessionStoreReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -16354,7 +16339,7 @@ export function validateStoreSessionStoreReturning(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = intermediateValue2;
+        const convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
             key: "validator.string",
@@ -16390,7 +16375,7 @@ export function validateStoreSessionStoreReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -16399,10 +16384,10 @@ export function validateStoreSessionStoreReturning(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -16421,7 +16406,7 @@ export function validateStoreSessionStoreReturning(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -16754,7 +16739,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -16785,7 +16770,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -16794,10 +16779,10 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -16816,7 +16801,7 @@ export function validateStoreSessionStoreTokenOrderBy(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -16936,7 +16921,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         result["id"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString1 = value["id"];
+        const convertedString1 = value["id"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.id`] = {
             key: "validator.string",
@@ -16969,7 +16954,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         result["session"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString2 = value["session"];
+        const convertedString2 = value["session"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.session`] = {
             key: "validator.string",
@@ -17002,7 +16987,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         result["expiresAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["expiresAt"];
+        const convertedString3 = value["expiresAt"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.expiresAt`] = {
             key: "validator.string",
@@ -17038,7 +17023,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         result["refreshToken"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString4 = value["refreshToken"];
+        const convertedString4 = value["refreshToken"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.refreshToken`] = {
             key: "validator.string",
@@ -17078,7 +17063,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
         result["revokedAt"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString5 = value["revokedAt"];
+        const convertedString5 = value["revokedAt"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.revokedAt`] = {
             key: "validator.string",
@@ -17146,7 +17131,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -17154,7 +17139,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = intermediateValue2;
+        const convertedString2 = intermediateValue2;
         if (typeof convertedString2 !== "string") {
           intermediateErrorMap2[`$`] = {
             key: "validator.string",
@@ -17190,7 +17175,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -17199,10 +17184,10 @@ export function validateStoreSessionStoreTokenReturning(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -17221,7 +17206,7 @@ export function validateStoreSessionStoreTokenReturning(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -17334,9 +17319,9 @@ export function validateStoreSessionStoreInsertValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap2 = {};
-        /** @type {any[]} */
-        let intermediateResult2 = [];
-        /** @type {any|any[]} */
+        /** @type {Array<any>} */
+        const intermediateResult2 = [];
+        /** @type {any | Array<any>} */
         let intermediateValue2 = value["insert"];
 
         if (!Array.isArray(intermediateValue2)) {
@@ -17484,16 +17469,12 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -17504,7 +17485,7 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = value["checksum"];
+        const convertedString2 = value["checksum"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.checksum`] = {
             key: "validator.string",
@@ -17776,7 +17757,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["checksum"];
+          const intermediateValue3 = value["checksum"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateErrorMap3[`$`] = {
@@ -17826,7 +17807,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString4 = intermediateValue3["$append"];
+                const convertedString4 = intermediateValue3["$append"];
                 if (typeof convertedString4 !== "string") {
                   intermediateErrorMap3[`$.$append`] = {
                     key: "validator.string",
@@ -17858,13 +17839,13 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["checksum"];
+          const intermediateValue3 = value["checksum"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateResult3 = undefined;
           } else {
             /** @type {string} */
-            let convertedString3 = intermediateValue3;
+            const convertedString3 = intermediateValue3;
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap3[`$`] = {
                 key: "validator.string",
@@ -17907,7 +17888,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["revokedAt"];
+          const intermediateValue4 = value["revokedAt"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -17957,7 +17938,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString5 = intermediateValue4["$subtract"];
+                const convertedString5 = intermediateValue4["$subtract"];
                 if (typeof convertedString5 !== "string") {
                   intermediateErrorMap4[`$.$subtract`] = {
                     key: "validator.string",
@@ -17989,7 +17970,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["revokedAt"];
+          const intermediateValue4 = value["revokedAt"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -18039,7 +18020,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString5 = intermediateValue4["$add"];
+                const convertedString5 = intermediateValue4["$add"];
                 if (typeof convertedString5 !== "string") {
                   intermediateErrorMap4[`$.$add`] = {
                     key: "validator.string",
@@ -18071,7 +18052,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["revokedAt"];
+          const intermediateValue4 = value["revokedAt"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateResult4 = intermediateValue4;
@@ -18121,7 +18102,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["data"];
+          const intermediateValue5 = value["data"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -18217,10 +18198,11 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   } else {
                     /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap8 = {};
-                    /** @type {any[]} */
-                    let intermediateResult8 = [];
-                    /** @type {any|any[]} */
-                    let intermediateValue8 = intermediateValue5["$set"]["path"];
+                    /** @type {Array<any>} */
+                    const intermediateResult8 = [];
+                    /** @type {any | Array<any>} */
+                    const intermediateValue8 =
+                      intermediateValue5["$set"]["path"];
 
                     if (!Array.isArray(intermediateValue8)) {
                       intermediateErrorMap5[`$.$set.path`] = {
@@ -18249,7 +18231,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult10 = undefined;
                             /** @type {any} */
-                            let intermediateValue10 = intermediateValue8[i8];
+                            const intermediateValue10 = intermediateValue8[i8];
 
                             if (
                               intermediateValue10 === null ||
@@ -18308,7 +18290,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult10 = undefined;
                             /** @type {any} */
-                            let intermediateValue10 = intermediateValue8[i8];
+                            const intermediateValue10 = intermediateValue8[i8];
 
                             if (
                               intermediateValue10 === null ||
@@ -18319,7 +18301,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString10 = intermediateValue10;
+                              const convertedString10 = intermediateValue10;
                               if (typeof convertedString10 !== "string") {
                                 intermediateErrorMap10[`$`] = {
                                   key: "validator.string",
@@ -18391,7 +18373,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["data"];
+          const intermediateValue5 = value["data"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -18488,10 +18470,10 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   } else {
                     /** @type {ValidatorErrorMap} */
                     const intermediateErrorMap8 = {};
-                    /** @type {any[]} */
-                    let intermediateResult8 = [];
-                    /** @type {any|any[]} */
-                    let intermediateValue8 =
+                    /** @type {Array<any>} */
+                    const intermediateResult8 = [];
+                    /** @type {any | Array<any>} */
+                    const intermediateValue8 =
                       intermediateValue5["$remove"]["path"];
 
                     if (!Array.isArray(intermediateValue8)) {
@@ -18521,7 +18503,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult10 = undefined;
                             /** @type {any} */
-                            let intermediateValue10 = intermediateValue8[i8];
+                            const intermediateValue10 = intermediateValue8[i8];
 
                             if (
                               intermediateValue10 === null ||
@@ -18580,7 +18562,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                             /** @type {any} */
                             let intermediateResult10 = undefined;
                             /** @type {any} */
-                            let intermediateValue10 = intermediateValue8[i8];
+                            const intermediateValue10 = intermediateValue8[i8];
 
                             if (
                               intermediateValue10 === null ||
@@ -18591,7 +18573,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                               };
                             } else {
                               /** @type {string} */
-                              let convertedString10 = intermediateValue10;
+                              const convertedString10 = intermediateValue10;
                               if (typeof convertedString10 !== "string") {
                                 intermediateErrorMap10[`$`] = {
                                   key: "validator.string",
@@ -18653,7 +18635,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["data"];
+          const intermediateValue5 = value["data"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateResult5 = {};
@@ -18683,7 +18665,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["createdAt"];
+          const intermediateValue6 = value["createdAt"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -18733,7 +18715,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString7 = intermediateValue6["$subtract"];
+                const convertedString7 = intermediateValue6["$subtract"];
                 if (typeof convertedString7 !== "string") {
                   intermediateErrorMap6[`$.$subtract`] = {
                     key: "validator.string",
@@ -18765,7 +18747,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["createdAt"];
+          const intermediateValue6 = value["createdAt"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -18815,7 +18797,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString7 = intermediateValue6["$add"];
+                const convertedString7 = intermediateValue6["$add"];
                 if (typeof convertedString7 !== "string") {
                   intermediateErrorMap6[`$.$add`] = {
                     key: "validator.string",
@@ -18847,7 +18829,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["createdAt"];
+          const intermediateValue6 = value["createdAt"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateResult6 = undefined;
@@ -18897,7 +18879,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["updatedAt"];
+          const intermediateValue7 = value["updatedAt"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -18947,7 +18929,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString8 = intermediateValue7["$subtract"];
+                const convertedString8 = intermediateValue7["$subtract"];
                 if (typeof convertedString8 !== "string") {
                   intermediateErrorMap7[`$.$subtract`] = {
                     key: "validator.string",
@@ -18979,7 +18961,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["updatedAt"];
+          const intermediateValue7 = value["updatedAt"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -19029,7 +19011,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString8 = intermediateValue7["$add"];
+                const convertedString8 = intermediateValue7["$add"];
                 if (typeof convertedString8 !== "string") {
                   intermediateErrorMap7[`$.$add`] = {
                     key: "validator.string",
@@ -19061,7 +19043,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["updatedAt"];
+          const intermediateValue7 = value["updatedAt"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateResult7 = undefined;
@@ -19182,16 +19164,12 @@ export function validateStoreSessionStoreToken(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -19213,16 +19191,11 @@ export function validateStoreSessionStoreToken(value) {
             patternExplanation: "UUID",
           };
         } else if (value["session"].length === 32) {
-          result["session"] =
-            value["session"].slice(0, 8) +
-            "-" +
-            value["session"].slice(8, 12) +
-            "-" +
-            value["session"].slice(12, 16) +
-            "-" +
-            value["session"].slice(16, 20) +
-            "-" +
-            value["session"].slice(20);
+          result["session"] = `${value["session"].slice(0, 8)}-${value[
+            "session"
+          ].slice(8, 12)}-${value["session"].slice(12, 16)}-${value[
+            "session"
+          ].slice(16, 20)}-${value["session"].slice(20)}`;
         } else {
           result["session"] = value["session"];
         }
@@ -19271,16 +19244,14 @@ export function validateStoreSessionStoreToken(value) {
             patternExplanation: "UUID",
           };
         } else if (value["refreshToken"].length === 32) {
-          result["refreshToken"] =
-            value["refreshToken"].slice(0, 8) +
-            "-" +
-            value["refreshToken"].slice(8, 12) +
-            "-" +
-            value["refreshToken"].slice(12, 16) +
-            "-" +
-            value["refreshToken"].slice(16, 20) +
-            "-" +
-            value["refreshToken"].slice(20);
+          result["refreshToken"] = `${value["refreshToken"].slice(
+            0,
+            8,
+          )}-${value["refreshToken"].slice(8, 12)}-${value[
+            "refreshToken"
+          ].slice(12, 16)}-${value["refreshToken"].slice(16, 20)}-${value[
+            "refreshToken"
+          ].slice(20)}`;
         } else {
           result["refreshToken"] = value["refreshToken"];
         }
@@ -19394,9 +19365,9 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap2 = {};
-        /** @type {any[]} */
-        let intermediateResult2 = [];
-        /** @type {any|any[]} */
+        /** @type {Array<any>} */
+        const intermediateResult2 = [];
+        /** @type {any | Array<any>} */
         let intermediateValue2 = value["insert"];
 
         if (!Array.isArray(intermediateValue2)) {
@@ -19545,16 +19516,12 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -19576,16 +19543,11 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["session"].length === 32) {
-          result["session"] =
-            value["session"].slice(0, 8) +
-            "-" +
-            value["session"].slice(8, 12) +
-            "-" +
-            value["session"].slice(12, 16) +
-            "-" +
-            value["session"].slice(16, 20) +
-            "-" +
-            value["session"].slice(20);
+          result["session"] = `${value["session"].slice(0, 8)}-${value[
+            "session"
+          ].slice(8, 12)}-${value["session"].slice(12, 16)}-${value[
+            "session"
+          ].slice(16, 20)}-${value["session"].slice(20)}`;
         } else {
           result["session"] = value["session"];
         }
@@ -19634,16 +19596,14 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
             patternExplanation: "UUID",
           };
         } else if (value["refreshToken"].length === 32) {
-          result["refreshToken"] =
-            value["refreshToken"].slice(0, 8) +
-            "-" +
-            value["refreshToken"].slice(8, 12) +
-            "-" +
-            value["refreshToken"].slice(12, 16) +
-            "-" +
-            value["refreshToken"].slice(16, 20) +
-            "-" +
-            value["refreshToken"].slice(20);
+          result["refreshToken"] = `${value["refreshToken"].slice(
+            0,
+            8,
+          )}-${value["refreshToken"].slice(8, 12)}-${value[
+            "refreshToken"
+          ].slice(12, 16)}-${value["refreshToken"].slice(16, 20)}-${value[
+            "refreshToken"
+          ].slice(20)}`;
         } else {
           result["refreshToken"] = value["refreshToken"];
         }
@@ -19877,7 +19837,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult3 = undefined;
           /** @type {any} */
-          let intermediateValue3 = value["session"];
+          const intermediateValue3 = value["session"];
 
           if (intermediateValue3 === null || intermediateValue3 === undefined) {
             intermediateResult3 = undefined;
@@ -19894,16 +19854,15 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 patternExplanation: "UUID",
               };
             } else if (intermediateValue3.length === 32) {
-              intermediateResult3 =
-                intermediateValue3.slice(0, 8) +
-                "-" +
-                intermediateValue3.slice(8, 12) +
-                "-" +
-                intermediateValue3.slice(12, 16) +
-                "-" +
-                intermediateValue3.slice(16, 20) +
-                "-" +
-                intermediateValue3.slice(20);
+              intermediateResult3 = `${intermediateValue3.slice(
+                0,
+                8,
+              )}-${intermediateValue3.slice(8, 12)}-${intermediateValue3.slice(
+                12,
+                16,
+              )}-${intermediateValue3.slice(16, 20)}-${intermediateValue3.slice(
+                20,
+              )}`;
             } else {
               intermediateResult3 = intermediateValue3;
             }
@@ -19931,7 +19890,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["expiresAt"];
+          const intermediateValue4 = value["expiresAt"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -19981,7 +19940,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString5 = intermediateValue4["$subtract"];
+                const convertedString5 = intermediateValue4["$subtract"];
                 if (typeof convertedString5 !== "string") {
                   intermediateErrorMap4[`$.$subtract`] = {
                     key: "validator.string",
@@ -20013,7 +19972,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["expiresAt"];
+          const intermediateValue4 = value["expiresAt"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -20063,7 +20022,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString5 = intermediateValue4["$add"];
+                const convertedString5 = intermediateValue4["$add"];
                 if (typeof convertedString5 !== "string") {
                   intermediateErrorMap4[`$.$add`] = {
                     key: "validator.string",
@@ -20095,7 +20054,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["expiresAt"];
+          const intermediateValue4 = value["expiresAt"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateResult4 = undefined;
@@ -20148,7 +20107,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["refreshToken"];
+          const intermediateValue5 = value["refreshToken"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateResult5 = intermediateValue5;
@@ -20165,16 +20124,15 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 patternExplanation: "UUID",
               };
             } else if (intermediateValue5.length === 32) {
-              intermediateResult5 =
-                intermediateValue5.slice(0, 8) +
-                "-" +
-                intermediateValue5.slice(8, 12) +
-                "-" +
-                intermediateValue5.slice(12, 16) +
-                "-" +
-                intermediateValue5.slice(16, 20) +
-                "-" +
-                intermediateValue5.slice(20);
+              intermediateResult5 = `${intermediateValue5.slice(
+                0,
+                8,
+              )}-${intermediateValue5.slice(8, 12)}-${intermediateValue5.slice(
+                12,
+                16,
+              )}-${intermediateValue5.slice(16, 20)}-${intermediateValue5.slice(
+                20,
+              )}`;
             } else {
               intermediateResult5 = intermediateValue5;
             }
@@ -20202,7 +20160,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["revokedAt"];
+          const intermediateValue6 = value["revokedAt"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -20252,7 +20210,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString7 = intermediateValue6["$subtract"];
+                const convertedString7 = intermediateValue6["$subtract"];
                 if (typeof convertedString7 !== "string") {
                   intermediateErrorMap6[`$.$subtract`] = {
                     key: "validator.string",
@@ -20284,7 +20242,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["revokedAt"];
+          const intermediateValue6 = value["revokedAt"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {
@@ -20334,7 +20292,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString7 = intermediateValue6["$add"];
+                const convertedString7 = intermediateValue6["$add"];
                 if (typeof convertedString7 !== "string") {
                   intermediateErrorMap6[`$.$add`] = {
                     key: "validator.string",
@@ -20366,7 +20324,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["revokedAt"];
+          const intermediateValue6 = value["revokedAt"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateResult6 = intermediateValue6;
@@ -20416,7 +20374,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["createdAt"];
+          const intermediateValue7 = value["createdAt"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -20466,7 +20424,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString8 = intermediateValue7["$subtract"];
+                const convertedString8 = intermediateValue7["$subtract"];
                 if (typeof convertedString8 !== "string") {
                   intermediateErrorMap7[`$.$subtract`] = {
                     key: "validator.string",
@@ -20498,7 +20456,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["createdAt"];
+          const intermediateValue7 = value["createdAt"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -20548,7 +20506,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
                 };
               } else {
                 /** @type {string} */
-                let convertedString8 = intermediateValue7["$add"];
+                const convertedString8 = intermediateValue7["$add"];
                 if (typeof convertedString8 !== "string") {
                   intermediateErrorMap7[`$.$add`] = {
                     key: "validator.string",
@@ -20580,7 +20538,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["createdAt"];
+          const intermediateValue7 = value["createdAt"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateResult7 = undefined;
@@ -20703,16 +20661,12 @@ export function validateStoreFileResponse(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -20723,7 +20677,7 @@ export function validateStoreFileResponse(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = value["name"];
+        const convertedString2 = value["name"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -20745,7 +20699,7 @@ export function validateStoreFileResponse(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString3 = value["contentType"];
+        const convertedString3 = value["contentType"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.contentType`] = {
             key: "validator.string",
@@ -20841,7 +20795,7 @@ export function validateStoreFileResponse(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString6 = value["url"];
+        const convertedString6 = value["url"];
         if (typeof convertedString6 !== "string") {
           errorMap[`$.url`] = {
             key: "validator.string",
@@ -20864,7 +20818,7 @@ export function validateStoreFileResponse(value) {
         result["placeholderImage"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString7 = value["placeholderImage"];
+        const convertedString7 = value["placeholderImage"];
         if (typeof convertedString7 !== "string") {
           errorMap[`$.placeholderImage`] = {
             key: "validator.string",
@@ -20888,7 +20842,7 @@ export function validateStoreFileResponse(value) {
         result["altText"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString8 = value["altText"];
+        const convertedString8 = value["altText"];
         if (typeof convertedString8 !== "string") {
           errorMap[`$.altText`] = {
             key: "validator.string",
@@ -20917,7 +20871,8 @@ export function validateStoreFileResponse(value) {
 }
 
 /**
- * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use 'sendTransformedImage'.
+ * Set as '.query(T.reference("store", "imageTransformOptions"))' of routes that use
+ * 'sendTransformedImage'.
  *
  * @param {import("../common/types.js").StoreImageTransformOptionsInput|any} value
  * @returns {Either<import("../common/types.js").StoreImageTransformOptions, ValidatorErrorMap>}
@@ -20992,7 +20947,7 @@ export function validateStoreImageTransformOptions(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["w"];
+          const intermediateValue4 = value["w"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -21044,7 +20999,7 @@ export function validateStoreImageTransformOptions(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["w"];
+          const intermediateValue4 = value["w"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -21052,7 +21007,7 @@ export function validateStoreImageTransformOptions(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString4 = intermediateValue4;
+            const convertedString4 = intermediateValue4;
             if (typeof convertedString4 !== "string") {
               intermediateErrorMap4[`$`] = {
                 key: "validator.string",
@@ -21092,7 +21047,8 @@ export function validateStoreImageTransformOptions(value) {
 }
 
 /**
- * Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use 'sendTransformedImage' and 'fileVerifyAccessToken'.
+ * Set as '.query(T.reference("store", "secureImageTransformOptions"))' of routes that use
+ * 'sendTransformedImage' and 'fileVerifyAccessToken'.
  *
  * @param {import("../common/types.js").StoreSecureImageTransformOptionsInput|any} value
  * @returns {Either<import("../common/types.js").StoreSecureImageTransformOptions, ValidatorErrorMap>}
@@ -21123,7 +21079,7 @@ export function validateStoreSecureImageTransformOptions(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["accessToken"];
+        const convertedString1 = value["accessToken"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.accessToken`] = {
             key: "validator.string",
@@ -21189,7 +21145,7 @@ export function validateStoreSecureImageTransformOptions(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["w"];
+          const intermediateValue5 = value["w"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -21241,7 +21197,7 @@ export function validateStoreSecureImageTransformOptions(value) {
           /** @type {any} */
           let intermediateResult5 = undefined;
           /** @type {any} */
-          let intermediateValue5 = value["w"];
+          const intermediateValue5 = value["w"];
 
           if (intermediateValue5 === null || intermediateValue5 === undefined) {
             intermediateErrorMap5[`$`] = {
@@ -21249,7 +21205,7 @@ export function validateStoreSecureImageTransformOptions(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString5 = intermediateValue5;
+            const convertedString5 = intermediateValue5;
             if (typeof convertedString5 !== "string") {
               intermediateErrorMap5[`$`] = {
                 key: "validator.string",
@@ -21394,10 +21350,10 @@ export function validateStoreFileWhereValidated_1(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -21453,16 +21409,12 @@ export function validateStoreFileWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -21482,16 +21434,11 @@ export function validateStoreFileWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["idNotEqual"].length === 32) {
-          result["idNotEqual"] =
-            value["idNotEqual"].slice(0, 8) +
-            "-" +
-            value["idNotEqual"].slice(8, 12) +
-            "-" +
-            value["idNotEqual"].slice(12, 16) +
-            "-" +
-            value["idNotEqual"].slice(16, 20) +
-            "-" +
-            value["idNotEqual"].slice(20);
+          result["idNotEqual"] = `${value["idNotEqual"].slice(0, 8)}-${value[
+            "idNotEqual"
+          ].slice(8, 12)}-${value["idNotEqual"].slice(12, 16)}-${value[
+            "idNotEqual"
+          ].slice(16, 20)}-${value["idNotEqual"].slice(20)}`;
         } else {
           result["idNotEqual"] = value["idNotEqual"];
         }
@@ -21510,7 +21457,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -21519,10 +21466,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -21552,16 +21499,19 @@ export function validateStoreFileWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue8[i8].length === 32) {
-                    intermediateResult8[i8] =
-                      intermediateValue8[i8].slice(0, 8) +
-                      "-" +
-                      intermediateValue8[i8].slice(8, 12) +
-                      "-" +
-                      intermediateValue8[i8].slice(12, 16) +
-                      "-" +
-                      intermediateValue8[i8].slice(16, 20) +
-                      "-" +
-                      intermediateValue8[i8].slice(20);
+                    intermediateResult8[i8] = `${intermediateValue8[i8].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue8[i8].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue8[i8].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue8[i8].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue8[i8].slice(20)}`;
                   } else {
                     intermediateResult8[i8] = intermediateValue8[i8];
                   }
@@ -21591,7 +21541,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -21623,7 +21573,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -21632,10 +21582,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -21665,16 +21615,19 @@ export function validateStoreFileWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue9[i9].length === 32) {
-                    intermediateResult9[i9] =
-                      intermediateValue9[i9].slice(0, 8) +
-                      "-" +
-                      intermediateValue9[i9].slice(8, 12) +
-                      "-" +
-                      intermediateValue9[i9].slice(12, 16) +
-                      "-" +
-                      intermediateValue9[i9].slice(16, 20) +
-                      "-" +
-                      intermediateValue9[i9].slice(20);
+                    intermediateResult9[i9] = `${intermediateValue9[i9].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue9[i9].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue9[i9].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue9[i9].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue9[i9].slice(20)}`;
                   } else {
                     intermediateResult9[i9] = intermediateValue9[i9];
                   }
@@ -21704,7 +21657,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -21726,7 +21679,7 @@ export function validateStoreFileWhereValidated_1(value) {
         result["bucketName"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString7 = value["bucketName"];
+        const convertedString7 = value["bucketName"];
         if (typeof convertedString7 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
@@ -21753,7 +21706,7 @@ export function validateStoreFileWhereValidated_1(value) {
         result["bucketNameNotEqual"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString8 = value["bucketNameNotEqual"];
+        const convertedString8 = value["bucketNameNotEqual"];
         if (typeof convertedString8 !== "string") {
           errorMap[`$.bucketNameNotEqual`] = {
             key: "validator.string",
@@ -21790,7 +21743,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["bucketNameIn"];
+          const intermediateValue11 = value["bucketNameIn"];
 
           if (
             intermediateValue11 === null ||
@@ -21802,10 +21755,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap12 = {};
-            /** @type {any[]} */
-            let intermediateResult12 = [];
-            /** @type {any|any[]} */
-            let intermediateValue12 = intermediateValue11;
+            /** @type {Array<any>} */
+            const intermediateResult12 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
               intermediateErrorMap11[`$`] = {
@@ -21824,7 +21777,7 @@ export function validateStoreFileWhereValidated_1(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString12 = intermediateValue12[i12];
+                  const convertedString12 = intermediateValue12[i12];
                   if (typeof convertedString12 !== "string") {
                     intermediateErrorMap12[`$.${i12}`] = {
                       key: "validator.string",
@@ -21865,7 +21818,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["bucketNameIn"];
+          const intermediateValue11 = value["bucketNameIn"];
 
           if (
             intermediateValue11 === null ||
@@ -21903,7 +21856,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["bucketNameNotIn"];
+          const intermediateValue12 = value["bucketNameNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -21915,10 +21868,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap13 = {};
-            /** @type {any[]} */
-            let intermediateResult13 = [];
-            /** @type {any|any[]} */
-            let intermediateValue13 = intermediateValue12;
+            /** @type {Array<any>} */
+            const intermediateResult13 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
               intermediateErrorMap12[`$`] = {
@@ -21937,7 +21890,7 @@ export function validateStoreFileWhereValidated_1(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString13 = intermediateValue13[i13];
+                  const convertedString13 = intermediateValue13[i13];
                   if (typeof convertedString13 !== "string") {
                     intermediateErrorMap13[`$.${i13}`] = {
                       key: "validator.string",
@@ -21978,7 +21931,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["bucketNameNotIn"];
+          const intermediateValue12 = value["bucketNameNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -22006,7 +21959,7 @@ export function validateStoreFileWhereValidated_1(value) {
         result["bucketNameLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString11 = value["bucketNameLike"];
+        const convertedString11 = value["bucketNameLike"];
         if (typeof convertedString11 !== "string") {
           errorMap[`$.bucketNameLike`] = {
             key: "validator.string",
@@ -22033,7 +21986,7 @@ export function validateStoreFileWhereValidated_1(value) {
         result["bucketNameILike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString12 = value["bucketNameILike"];
+        const convertedString12 = value["bucketNameILike"];
         if (typeof convertedString12 !== "string") {
           errorMap[`$.bucketNameILike`] = {
             key: "validator.string",
@@ -22060,7 +22013,7 @@ export function validateStoreFileWhereValidated_1(value) {
         result["bucketNameNotLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString13 = value["bucketNameNotLike"];
+        const convertedString13 = value["bucketNameNotLike"];
         if (typeof convertedString13 !== "string") {
           errorMap[`$.bucketNameNotLike`] = {
             key: "validator.string",
@@ -22146,7 +22099,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["createdAtIn"];
+          const intermediateValue18 = value["createdAtIn"];
 
           if (
             intermediateValue18 === null ||
@@ -22158,10 +22111,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap19 = {};
-            /** @type {any[]} */
-            let intermediateResult19 = [];
-            /** @type {any|any[]} */
-            let intermediateValue19 = intermediateValue18;
+            /** @type {Array<any>} */
+            const intermediateResult19 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
               intermediateErrorMap18[`$`] = {
@@ -22230,7 +22183,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["createdAtIn"];
+          const intermediateValue18 = value["createdAtIn"];
 
           if (
             intermediateValue18 === null ||
@@ -22268,7 +22221,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult19 = undefined;
           /** @type {any} */
-          let intermediateValue19 = value["createdAtNotIn"];
+          const intermediateValue19 = value["createdAtNotIn"];
 
           if (
             intermediateValue19 === null ||
@@ -22280,10 +22233,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap20 = {};
-            /** @type {any[]} */
-            let intermediateResult20 = [];
-            /** @type {any|any[]} */
-            let intermediateValue20 = intermediateValue19;
+            /** @type {Array<any>} */
+            const intermediateResult20 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue20 = intermediateValue19;
 
             if (!Array.isArray(intermediateValue20)) {
               intermediateErrorMap19[`$`] = {
@@ -22352,7 +22305,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult19 = undefined;
           /** @type {any} */
-          let intermediateValue19 = value["createdAtNotIn"];
+          const intermediateValue19 = value["createdAtNotIn"];
 
           if (
             intermediateValue19 === null ||
@@ -22497,7 +22450,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["updatedAtIn"];
+          const intermediateValue24 = value["updatedAtIn"];
 
           if (
             intermediateValue24 === null ||
@@ -22509,10 +22462,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap25 = {};
-            /** @type {any[]} */
-            let intermediateResult25 = [];
-            /** @type {any|any[]} */
-            let intermediateValue25 = intermediateValue24;
+            /** @type {Array<any>} */
+            const intermediateResult25 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
               intermediateErrorMap24[`$`] = {
@@ -22581,7 +22534,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["updatedAtIn"];
+          const intermediateValue24 = value["updatedAtIn"];
 
           if (
             intermediateValue24 === null ||
@@ -22619,7 +22572,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult25 = undefined;
           /** @type {any} */
-          let intermediateValue25 = value["updatedAtNotIn"];
+          const intermediateValue25 = value["updatedAtNotIn"];
 
           if (
             intermediateValue25 === null ||
@@ -22631,10 +22584,10 @@ export function validateStoreFileWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap26 = {};
-            /** @type {any[]} */
-            let intermediateResult26 = [];
-            /** @type {any|any[]} */
-            let intermediateValue26 = intermediateValue25;
+            /** @type {Array<any>} */
+            const intermediateResult26 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue26 = intermediateValue25;
 
             if (!Array.isArray(intermediateValue26)) {
               intermediateErrorMap25[`$`] = {
@@ -22703,7 +22656,7 @@ export function validateStoreFileWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult25 = undefined;
           /** @type {any} */
-          let intermediateValue25 = value["updatedAtNotIn"];
+          const intermediateValue25 = value["updatedAtNotIn"];
 
           if (
             intermediateValue25 === null ||
@@ -22922,10 +22875,10 @@ export function validateStoreJobWhereValidated_1(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -23048,7 +23001,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -23057,10 +23010,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -23134,7 +23087,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -23166,7 +23119,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -23175,10 +23128,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -23252,7 +23205,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -23423,7 +23376,7 @@ export function validateStoreJobWhereValidated_1(value) {
         result["name"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString12 = value["name"];
+        const convertedString12 = value["name"];
         if (typeof convertedString12 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -23450,7 +23403,7 @@ export function validateStoreJobWhereValidated_1(value) {
         result["nameNotEqual"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString13 = value["nameNotEqual"];
+        const convertedString13 = value["nameNotEqual"];
         if (typeof convertedString13 !== "string") {
           errorMap[`$.nameNotEqual`] = {
             key: "validator.string",
@@ -23484,7 +23437,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["nameIn"];
+          const intermediateValue16 = value["nameIn"];
 
           if (
             intermediateValue16 === null ||
@@ -23496,10 +23449,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap17 = {};
-            /** @type {any[]} */
-            let intermediateResult17 = [];
-            /** @type {any|any[]} */
-            let intermediateValue17 = intermediateValue16;
+            /** @type {Array<any>} */
+            const intermediateResult17 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
               intermediateErrorMap16[`$`] = {
@@ -23518,7 +23471,7 @@ export function validateStoreJobWhereValidated_1(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString17 = intermediateValue17[i17];
+                  const convertedString17 = intermediateValue17[i17];
                   if (typeof convertedString17 !== "string") {
                     intermediateErrorMap17[`$.${i17}`] = {
                       key: "validator.string",
@@ -23559,7 +23512,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["nameIn"];
+          const intermediateValue16 = value["nameIn"];
 
           if (
             intermediateValue16 === null ||
@@ -23594,7 +23547,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["nameNotIn"];
+          const intermediateValue17 = value["nameNotIn"];
 
           if (
             intermediateValue17 === null ||
@@ -23606,10 +23559,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap18 = {};
-            /** @type {any[]} */
-            let intermediateResult18 = [];
-            /** @type {any|any[]} */
-            let intermediateValue18 = intermediateValue17;
+            /** @type {Array<any>} */
+            const intermediateResult18 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
               intermediateErrorMap17[`$`] = {
@@ -23628,7 +23581,7 @@ export function validateStoreJobWhereValidated_1(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString18 = intermediateValue18[i18];
+                  const convertedString18 = intermediateValue18[i18];
                   if (typeof convertedString18 !== "string") {
                     intermediateErrorMap18[`$.${i18}`] = {
                       key: "validator.string",
@@ -23669,7 +23622,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["nameNotIn"];
+          const intermediateValue17 = value["nameNotIn"];
 
           if (
             intermediateValue17 === null ||
@@ -23694,7 +23647,7 @@ export function validateStoreJobWhereValidated_1(value) {
         result["nameLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString16 = value["nameLike"];
+        const convertedString16 = value["nameLike"];
         if (typeof convertedString16 !== "string") {
           errorMap[`$.nameLike`] = {
             key: "validator.string",
@@ -23718,7 +23671,7 @@ export function validateStoreJobWhereValidated_1(value) {
         result["nameILike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString17 = value["nameILike"];
+        const convertedString17 = value["nameILike"];
         if (typeof convertedString17 !== "string") {
           errorMap[`$.nameILike`] = {
             key: "validator.string",
@@ -23742,7 +23695,7 @@ export function validateStoreJobWhereValidated_1(value) {
         result["nameNotLike"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString18 = value["nameNotLike"];
+        const convertedString18 = value["nameNotLike"];
         if (typeof convertedString18 !== "string") {
           errorMap[`$.nameNotLike`] = {
             key: "validator.string",
@@ -23834,7 +23787,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult23 = undefined;
           /** @type {any} */
-          let intermediateValue23 = value["scheduledAtIn"];
+          const intermediateValue23 = value["scheduledAtIn"];
 
           if (
             intermediateValue23 === null ||
@@ -23846,10 +23799,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap24 = {};
-            /** @type {any[]} */
-            let intermediateResult24 = [];
-            /** @type {any|any[]} */
-            let intermediateValue24 = intermediateValue23;
+            /** @type {Array<any>} */
+            const intermediateResult24 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue24 = intermediateValue23;
 
             if (!Array.isArray(intermediateValue24)) {
               intermediateErrorMap23[`$`] = {
@@ -23918,7 +23871,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult23 = undefined;
           /** @type {any} */
-          let intermediateValue23 = value["scheduledAtIn"];
+          const intermediateValue23 = value["scheduledAtIn"];
 
           if (
             intermediateValue23 === null ||
@@ -23956,7 +23909,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["scheduledAtNotIn"];
+          const intermediateValue24 = value["scheduledAtNotIn"];
 
           if (
             intermediateValue24 === null ||
@@ -23968,10 +23921,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap25 = {};
-            /** @type {any[]} */
-            let intermediateResult25 = [];
-            /** @type {any|any[]} */
-            let intermediateValue25 = intermediateValue24;
+            /** @type {Array<any>} */
+            const intermediateResult25 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue25 = intermediateValue24;
 
             if (!Array.isArray(intermediateValue25)) {
               intermediateErrorMap24[`$`] = {
@@ -24040,7 +23993,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult24 = undefined;
           /** @type {any} */
-          let intermediateValue24 = value["scheduledAtNotIn"];
+          const intermediateValue24 = value["scheduledAtNotIn"];
 
           if (
             intermediateValue24 === null ||
@@ -24241,7 +24194,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult31 = undefined;
           /** @type {any} */
-          let intermediateValue31 = value["createdAtIn"];
+          const intermediateValue31 = value["createdAtIn"];
 
           if (
             intermediateValue31 === null ||
@@ -24253,10 +24206,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap32 = {};
-            /** @type {any[]} */
-            let intermediateResult32 = [];
-            /** @type {any|any[]} */
-            let intermediateValue32 = intermediateValue31;
+            /** @type {Array<any>} */
+            const intermediateResult32 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue32 = intermediateValue31;
 
             if (!Array.isArray(intermediateValue32)) {
               intermediateErrorMap31[`$`] = {
@@ -24325,7 +24278,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult31 = undefined;
           /** @type {any} */
-          let intermediateValue31 = value["createdAtIn"];
+          const intermediateValue31 = value["createdAtIn"];
 
           if (
             intermediateValue31 === null ||
@@ -24363,7 +24316,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult32 = undefined;
           /** @type {any} */
-          let intermediateValue32 = value["createdAtNotIn"];
+          const intermediateValue32 = value["createdAtNotIn"];
 
           if (
             intermediateValue32 === null ||
@@ -24375,10 +24328,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap33 = {};
-            /** @type {any[]} */
-            let intermediateResult33 = [];
-            /** @type {any|any[]} */
-            let intermediateValue33 = intermediateValue32;
+            /** @type {Array<any>} */
+            const intermediateResult33 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue33 = intermediateValue32;
 
             if (!Array.isArray(intermediateValue33)) {
               intermediateErrorMap32[`$`] = {
@@ -24447,7 +24400,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult32 = undefined;
           /** @type {any} */
-          let intermediateValue32 = value["createdAtNotIn"];
+          const intermediateValue32 = value["createdAtNotIn"];
 
           if (
             intermediateValue32 === null ||
@@ -24592,7 +24545,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult37 = undefined;
           /** @type {any} */
-          let intermediateValue37 = value["updatedAtIn"];
+          const intermediateValue37 = value["updatedAtIn"];
 
           if (
             intermediateValue37 === null ||
@@ -24604,10 +24557,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap38 = {};
-            /** @type {any[]} */
-            let intermediateResult38 = [];
-            /** @type {any|any[]} */
-            let intermediateValue38 = intermediateValue37;
+            /** @type {Array<any>} */
+            const intermediateResult38 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue38 = intermediateValue37;
 
             if (!Array.isArray(intermediateValue38)) {
               intermediateErrorMap37[`$`] = {
@@ -24676,7 +24629,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult37 = undefined;
           /** @type {any} */
-          let intermediateValue37 = value["updatedAtIn"];
+          const intermediateValue37 = value["updatedAtIn"];
 
           if (
             intermediateValue37 === null ||
@@ -24714,7 +24667,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult38 = undefined;
           /** @type {any} */
-          let intermediateValue38 = value["updatedAtNotIn"];
+          const intermediateValue38 = value["updatedAtNotIn"];
 
           if (
             intermediateValue38 === null ||
@@ -24726,10 +24679,10 @@ export function validateStoreJobWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap39 = {};
-            /** @type {any[]} */
-            let intermediateResult39 = [];
-            /** @type {any|any[]} */
-            let intermediateValue39 = intermediateValue38;
+            /** @type {Array<any>} */
+            const intermediateResult39 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue39 = intermediateValue38;
 
             if (!Array.isArray(intermediateValue39)) {
               intermediateErrorMap38[`$`] = {
@@ -24798,7 +24751,7 @@ export function validateStoreJobWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult38 = undefined;
           /** @type {any} */
-          let intermediateValue38 = value["updatedAtNotIn"];
+          const intermediateValue38 = value["updatedAtNotIn"];
 
           if (
             intermediateValue38 === null ||
@@ -24981,10 +24934,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -25040,16 +24993,12 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -25069,16 +25018,11 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["idNotEqual"].length === 32) {
-          result["idNotEqual"] =
-            value["idNotEqual"].slice(0, 8) +
-            "-" +
-            value["idNotEqual"].slice(8, 12) +
-            "-" +
-            value["idNotEqual"].slice(12, 16) +
-            "-" +
-            value["idNotEqual"].slice(16, 20) +
-            "-" +
-            value["idNotEqual"].slice(20);
+          result["idNotEqual"] = `${value["idNotEqual"].slice(0, 8)}-${value[
+            "idNotEqual"
+          ].slice(8, 12)}-${value["idNotEqual"].slice(12, 16)}-${value[
+            "idNotEqual"
+          ].slice(16, 20)}-${value["idNotEqual"].slice(20)}`;
         } else {
           result["idNotEqual"] = value["idNotEqual"];
         }
@@ -25097,7 +25041,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -25106,10 +25050,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -25139,16 +25083,19 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue8[i8].length === 32) {
-                    intermediateResult8[i8] =
-                      intermediateValue8[i8].slice(0, 8) +
-                      "-" +
-                      intermediateValue8[i8].slice(8, 12) +
-                      "-" +
-                      intermediateValue8[i8].slice(12, 16) +
-                      "-" +
-                      intermediateValue8[i8].slice(16, 20) +
-                      "-" +
-                      intermediateValue8[i8].slice(20);
+                    intermediateResult8[i8] = `${intermediateValue8[i8].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue8[i8].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue8[i8].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue8[i8].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue8[i8].slice(20)}`;
                   } else {
                     intermediateResult8[i8] = intermediateValue8[i8];
                   }
@@ -25178,7 +25125,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -25210,7 +25157,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -25219,10 +25166,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -25252,16 +25199,19 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue9[i9].length === 32) {
-                    intermediateResult9[i9] =
-                      intermediateValue9[i9].slice(0, 8) +
-                      "-" +
-                      intermediateValue9[i9].slice(8, 12) +
-                      "-" +
-                      intermediateValue9[i9].slice(12, 16) +
-                      "-" +
-                      intermediateValue9[i9].slice(16, 20) +
-                      "-" +
-                      intermediateValue9[i9].slice(20);
+                    intermediateResult9[i9] = `${intermediateValue9[i9].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue9[i9].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue9[i9].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue9[i9].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue9[i9].slice(20)}`;
                   } else {
                     intermediateResult9[i9] = intermediateValue9[i9];
                   }
@@ -25291,7 +25241,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -25375,7 +25325,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["createdAtIn"];
+          const intermediateValue11 = value["createdAtIn"];
 
           if (
             intermediateValue11 === null ||
@@ -25387,10 +25337,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap12 = {};
-            /** @type {any[]} */
-            let intermediateResult12 = [];
-            /** @type {any|any[]} */
-            let intermediateValue12 = intermediateValue11;
+            /** @type {Array<any>} */
+            const intermediateResult12 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
               intermediateErrorMap11[`$`] = {
@@ -25459,7 +25409,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["createdAtIn"];
+          const intermediateValue11 = value["createdAtIn"];
 
           if (
             intermediateValue11 === null ||
@@ -25497,7 +25447,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["createdAtNotIn"];
+          const intermediateValue12 = value["createdAtNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -25509,10 +25459,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap13 = {};
-            /** @type {any[]} */
-            let intermediateResult13 = [];
-            /** @type {any|any[]} */
-            let intermediateValue13 = intermediateValue12;
+            /** @type {Array<any>} */
+            const intermediateResult13 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
               intermediateErrorMap12[`$`] = {
@@ -25581,7 +25531,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["createdAtNotIn"];
+          const intermediateValue12 = value["createdAtNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -25726,7 +25676,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["updatedAtIn"];
+          const intermediateValue17 = value["updatedAtIn"];
 
           if (
             intermediateValue17 === null ||
@@ -25738,10 +25688,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap18 = {};
-            /** @type {any[]} */
-            let intermediateResult18 = [];
-            /** @type {any|any[]} */
-            let intermediateValue18 = intermediateValue17;
+            /** @type {Array<any>} */
+            const intermediateResult18 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue18 = intermediateValue17;
 
             if (!Array.isArray(intermediateValue18)) {
               intermediateErrorMap17[`$`] = {
@@ -25810,7 +25760,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult17 = undefined;
           /** @type {any} */
-          let intermediateValue17 = value["updatedAtIn"];
+          const intermediateValue17 = value["updatedAtIn"];
 
           if (
             intermediateValue17 === null ||
@@ -25848,7 +25798,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["updatedAtNotIn"];
+          const intermediateValue18 = value["updatedAtNotIn"];
 
           if (
             intermediateValue18 === null ||
@@ -25860,10 +25810,10 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap19 = {};
-            /** @type {any[]} */
-            let intermediateResult19 = [];
-            /** @type {any|any[]} */
-            let intermediateValue19 = intermediateValue18;
+            /** @type {Array<any>} */
+            const intermediateResult19 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue19 = intermediateValue18;
 
             if (!Array.isArray(intermediateValue19)) {
               intermediateErrorMap18[`$`] = {
@@ -25932,7 +25882,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult18 = undefined;
           /** @type {any} */
-          let intermediateValue18 = value["updatedAtNotIn"];
+          const intermediateValue18 = value["updatedAtNotIn"];
 
           if (
             intermediateValue18 === null ||
@@ -26289,10 +26239,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = value["$or"];
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = value["$or"];
 
         if (!Array.isArray(intermediateValue3)) {
           errorMap[`$.$or`] = {
@@ -26348,16 +26298,12 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -26377,16 +26323,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["idNotEqual"].length === 32) {
-          result["idNotEqual"] =
-            value["idNotEqual"].slice(0, 8) +
-            "-" +
-            value["idNotEqual"].slice(8, 12) +
-            "-" +
-            value["idNotEqual"].slice(12, 16) +
-            "-" +
-            value["idNotEqual"].slice(16, 20) +
-            "-" +
-            value["idNotEqual"].slice(20);
+          result["idNotEqual"] = `${value["idNotEqual"].slice(0, 8)}-${value[
+            "idNotEqual"
+          ].slice(8, 12)}-${value["idNotEqual"].slice(12, 16)}-${value[
+            "idNotEqual"
+          ].slice(16, 20)}-${value["idNotEqual"].slice(20)}`;
         } else {
           result["idNotEqual"] = value["idNotEqual"];
         }
@@ -26405,7 +26346,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -26414,10 +26355,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = intermediateValue7;
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = intermediateValue7;
 
             if (!Array.isArray(intermediateValue8)) {
               intermediateErrorMap7[`$`] = {
@@ -26447,16 +26388,19 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue8[i8].length === 32) {
-                    intermediateResult8[i8] =
-                      intermediateValue8[i8].slice(0, 8) +
-                      "-" +
-                      intermediateValue8[i8].slice(8, 12) +
-                      "-" +
-                      intermediateValue8[i8].slice(12, 16) +
-                      "-" +
-                      intermediateValue8[i8].slice(16, 20) +
-                      "-" +
-                      intermediateValue8[i8].slice(20);
+                    intermediateResult8[i8] = `${intermediateValue8[i8].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue8[i8].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue8[i8].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue8[i8].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue8[i8].slice(20)}`;
                   } else {
                     intermediateResult8[i8] = intermediateValue8[i8];
                   }
@@ -26486,7 +26430,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult7 = undefined;
           /** @type {any} */
-          let intermediateValue7 = value["idIn"];
+          const intermediateValue7 = value["idIn"];
 
           if (intermediateValue7 === null || intermediateValue7 === undefined) {
             intermediateErrorMap7[`$`] = {
@@ -26518,7 +26462,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -26527,10 +26471,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = intermediateValue8;
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = intermediateValue8;
 
             if (!Array.isArray(intermediateValue9)) {
               intermediateErrorMap8[`$`] = {
@@ -26560,16 +26504,19 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue9[i9].length === 32) {
-                    intermediateResult9[i9] =
-                      intermediateValue9[i9].slice(0, 8) +
-                      "-" +
-                      intermediateValue9[i9].slice(8, 12) +
-                      "-" +
-                      intermediateValue9[i9].slice(12, 16) +
-                      "-" +
-                      intermediateValue9[i9].slice(16, 20) +
-                      "-" +
-                      intermediateValue9[i9].slice(20);
+                    intermediateResult9[i9] = `${intermediateValue9[i9].slice(
+                      0,
+                      8,
+                    )}-${intermediateValue9[i9].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue9[i9].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue9[i9].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue9[i9].slice(20)}`;
                   } else {
                     intermediateResult9[i9] = intermediateValue9[i9];
                   }
@@ -26599,7 +26546,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult8 = undefined;
           /** @type {any} */
-          let intermediateValue8 = value["idNotIn"];
+          const intermediateValue8 = value["idNotIn"];
 
           if (intermediateValue8 === null || intermediateValue8 === undefined) {
             intermediateErrorMap8[`$`] = {
@@ -26632,16 +26579,11 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["session"].length === 32) {
-          result["session"] =
-            value["session"].slice(0, 8) +
-            "-" +
-            value["session"].slice(8, 12) +
-            "-" +
-            value["session"].slice(12, 16) +
-            "-" +
-            value["session"].slice(16, 20) +
-            "-" +
-            value["session"].slice(20);
+          result["session"] = `${value["session"].slice(0, 8)}-${value[
+            "session"
+          ].slice(8, 12)}-${value["session"].slice(12, 16)}-${value[
+            "session"
+          ].slice(16, 20)}-${value["session"].slice(20)}`;
         } else {
           result["session"] = value["session"];
         }
@@ -26664,16 +26606,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["sessionNotEqual"].length === 32) {
-          result["sessionNotEqual"] =
-            value["sessionNotEqual"].slice(0, 8) +
-            "-" +
-            value["sessionNotEqual"].slice(8, 12) +
-            "-" +
-            value["sessionNotEqual"].slice(12, 16) +
-            "-" +
-            value["sessionNotEqual"].slice(16, 20) +
-            "-" +
-            value["sessionNotEqual"].slice(20);
+          result["sessionNotEqual"] = `${value["sessionNotEqual"].slice(
+            0,
+            8,
+          )}-${value["sessionNotEqual"].slice(8, 12)}-${value[
+            "sessionNotEqual"
+          ].slice(12, 16)}-${value["sessionNotEqual"].slice(16, 20)}-${value[
+            "sessionNotEqual"
+          ].slice(20)}`;
         } else {
           result["sessionNotEqual"] = value["sessionNotEqual"];
         }
@@ -26692,7 +26632,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["sessionIn"];
+          const intermediateValue11 = value["sessionIn"];
 
           if (
             intermediateValue11 === null ||
@@ -26704,10 +26644,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap12 = {};
-            /** @type {any[]} */
-            let intermediateResult12 = [];
-            /** @type {any|any[]} */
-            let intermediateValue12 = intermediateValue11;
+            /** @type {Array<any>} */
+            const intermediateResult12 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue12 = intermediateValue11;
 
             if (!Array.isArray(intermediateValue12)) {
               intermediateErrorMap11[`$`] = {
@@ -26737,16 +26677,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue12[i12].length === 32) {
-                    intermediateResult12[i12] =
-                      intermediateValue12[i12].slice(0, 8) +
-                      "-" +
-                      intermediateValue12[i12].slice(8, 12) +
-                      "-" +
-                      intermediateValue12[i12].slice(12, 16) +
-                      "-" +
-                      intermediateValue12[i12].slice(16, 20) +
-                      "-" +
-                      intermediateValue12[i12].slice(20);
+                    intermediateResult12[i12] = `${intermediateValue12[
+                      i12
+                    ].slice(0, 8)}-${intermediateValue12[i12].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue12[i12].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue12[i12].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue12[i12].slice(20)}`;
                   } else {
                     intermediateResult12[i12] = intermediateValue12[i12];
                   }
@@ -26776,7 +26718,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult11 = undefined;
           /** @type {any} */
-          let intermediateValue11 = value["sessionIn"];
+          const intermediateValue11 = value["sessionIn"];
 
           if (
             intermediateValue11 === null ||
@@ -26814,7 +26756,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["sessionNotIn"];
+          const intermediateValue12 = value["sessionNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -26826,10 +26768,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap13 = {};
-            /** @type {any[]} */
-            let intermediateResult13 = [];
-            /** @type {any|any[]} */
-            let intermediateValue13 = intermediateValue12;
+            /** @type {Array<any>} */
+            const intermediateResult13 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue13 = intermediateValue12;
 
             if (!Array.isArray(intermediateValue13)) {
               intermediateErrorMap12[`$`] = {
@@ -26859,16 +26801,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue13[i13].length === 32) {
-                    intermediateResult13[i13] =
-                      intermediateValue13[i13].slice(0, 8) +
-                      "-" +
-                      intermediateValue13[i13].slice(8, 12) +
-                      "-" +
-                      intermediateValue13[i13].slice(12, 16) +
-                      "-" +
-                      intermediateValue13[i13].slice(16, 20) +
-                      "-" +
-                      intermediateValue13[i13].slice(20);
+                    intermediateResult13[i13] = `${intermediateValue13[
+                      i13
+                    ].slice(0, 8)}-${intermediateValue13[i13].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue13[i13].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue13[i13].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue13[i13].slice(20)}`;
                   } else {
                     intermediateResult13[i13] = intermediateValue13[i13];
                   }
@@ -26898,7 +26842,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult12 = undefined;
           /** @type {any} */
-          let intermediateValue12 = value["sessionNotIn"];
+          const intermediateValue12 = value["sessionNotIn"];
 
           if (
             intermediateValue12 === null ||
@@ -26985,7 +26929,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult15 = undefined;
           /** @type {any} */
-          let intermediateValue15 = value["expiresAtIn"];
+          const intermediateValue15 = value["expiresAtIn"];
 
           if (
             intermediateValue15 === null ||
@@ -26997,10 +26941,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap16 = {};
-            /** @type {any[]} */
-            let intermediateResult16 = [];
-            /** @type {any|any[]} */
-            let intermediateValue16 = intermediateValue15;
+            /** @type {Array<any>} */
+            const intermediateResult16 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue16 = intermediateValue15;
 
             if (!Array.isArray(intermediateValue16)) {
               intermediateErrorMap15[`$`] = {
@@ -27069,7 +27013,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult15 = undefined;
           /** @type {any} */
-          let intermediateValue15 = value["expiresAtIn"];
+          const intermediateValue15 = value["expiresAtIn"];
 
           if (
             intermediateValue15 === null ||
@@ -27107,7 +27051,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["expiresAtNotIn"];
+          const intermediateValue16 = value["expiresAtNotIn"];
 
           if (
             intermediateValue16 === null ||
@@ -27119,10 +27063,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap17 = {};
-            /** @type {any[]} */
-            let intermediateResult17 = [];
-            /** @type {any|any[]} */
-            let intermediateValue17 = intermediateValue16;
+            /** @type {Array<any>} */
+            const intermediateResult17 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue17 = intermediateValue16;
 
             if (!Array.isArray(intermediateValue17)) {
               intermediateErrorMap16[`$`] = {
@@ -27191,7 +27135,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult16 = undefined;
           /** @type {any} */
-          let intermediateValue16 = value["expiresAtNotIn"];
+          const intermediateValue16 = value["expiresAtNotIn"];
 
           if (
             intermediateValue16 === null ||
@@ -27288,16 +27232,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["refreshToken"].length === 32) {
-          result["refreshToken"] =
-            value["refreshToken"].slice(0, 8) +
-            "-" +
-            value["refreshToken"].slice(8, 12) +
-            "-" +
-            value["refreshToken"].slice(12, 16) +
-            "-" +
-            value["refreshToken"].slice(16, 20) +
-            "-" +
-            value["refreshToken"].slice(20);
+          result["refreshToken"] = `${value["refreshToken"].slice(
+            0,
+            8,
+          )}-${value["refreshToken"].slice(8, 12)}-${value[
+            "refreshToken"
+          ].slice(12, 16)}-${value["refreshToken"].slice(16, 20)}-${value[
+            "refreshToken"
+          ].slice(20)}`;
         } else {
           result["refreshToken"] = value["refreshToken"];
         }
@@ -27320,16 +27262,14 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
             patternExplanation: "UUID",
           };
         } else if (value["refreshTokenNotEqual"].length === 32) {
-          result["refreshTokenNotEqual"] =
-            value["refreshTokenNotEqual"].slice(0, 8) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(8, 12) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(12, 16) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(16, 20) +
-            "-" +
-            value["refreshTokenNotEqual"].slice(20);
+          result["refreshTokenNotEqual"] = `${value[
+            "refreshTokenNotEqual"
+          ].slice(0, 8)}-${value["refreshTokenNotEqual"].slice(8, 12)}-${value[
+            "refreshTokenNotEqual"
+          ].slice(12, 16)}-${value["refreshTokenNotEqual"].slice(
+            16,
+            20,
+          )}-${value["refreshTokenNotEqual"].slice(20)}`;
         } else {
           result["refreshTokenNotEqual"] = value["refreshTokenNotEqual"];
         }
@@ -27351,7 +27291,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult21 = undefined;
           /** @type {any} */
-          let intermediateValue21 = value["refreshTokenIn"];
+          const intermediateValue21 = value["refreshTokenIn"];
 
           if (
             intermediateValue21 === null ||
@@ -27363,10 +27303,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap22 = {};
-            /** @type {any[]} */
-            let intermediateResult22 = [];
-            /** @type {any|any[]} */
-            let intermediateValue22 = intermediateValue21;
+            /** @type {Array<any>} */
+            const intermediateResult22 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue22 = intermediateValue21;
 
             if (!Array.isArray(intermediateValue22)) {
               intermediateErrorMap21[`$`] = {
@@ -27396,16 +27336,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue22[i22].length === 32) {
-                    intermediateResult22[i22] =
-                      intermediateValue22[i22].slice(0, 8) +
-                      "-" +
-                      intermediateValue22[i22].slice(8, 12) +
-                      "-" +
-                      intermediateValue22[i22].slice(12, 16) +
-                      "-" +
-                      intermediateValue22[i22].slice(16, 20) +
-                      "-" +
-                      intermediateValue22[i22].slice(20);
+                    intermediateResult22[i22] = `${intermediateValue22[
+                      i22
+                    ].slice(0, 8)}-${intermediateValue22[i22].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue22[i22].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue22[i22].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue22[i22].slice(20)}`;
                   } else {
                     intermediateResult22[i22] = intermediateValue22[i22];
                   }
@@ -27435,7 +27377,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult21 = undefined;
           /** @type {any} */
-          let intermediateValue21 = value["refreshTokenIn"];
+          const intermediateValue21 = value["refreshTokenIn"];
 
           if (
             intermediateValue21 === null ||
@@ -27473,7 +27415,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult22 = undefined;
           /** @type {any} */
-          let intermediateValue22 = value["refreshTokenNotIn"];
+          const intermediateValue22 = value["refreshTokenNotIn"];
 
           if (
             intermediateValue22 === null ||
@@ -27485,10 +27427,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap23 = {};
-            /** @type {any[]} */
-            let intermediateResult23 = [];
-            /** @type {any|any[]} */
-            let intermediateValue23 = intermediateValue22;
+            /** @type {Array<any>} */
+            const intermediateResult23 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue23 = intermediateValue22;
 
             if (!Array.isArray(intermediateValue23)) {
               intermediateErrorMap22[`$`] = {
@@ -27518,16 +27460,18 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
                       patternExplanation: "UUID",
                     };
                   } else if (intermediateValue23[i23].length === 32) {
-                    intermediateResult23[i23] =
-                      intermediateValue23[i23].slice(0, 8) +
-                      "-" +
-                      intermediateValue23[i23].slice(8, 12) +
-                      "-" +
-                      intermediateValue23[i23].slice(12, 16) +
-                      "-" +
-                      intermediateValue23[i23].slice(16, 20) +
-                      "-" +
-                      intermediateValue23[i23].slice(20);
+                    intermediateResult23[i23] = `${intermediateValue23[
+                      i23
+                    ].slice(0, 8)}-${intermediateValue23[i23].slice(
+                      8,
+                      12,
+                    )}-${intermediateValue23[i23].slice(
+                      12,
+                      16,
+                    )}-${intermediateValue23[i23].slice(
+                      16,
+                      20,
+                    )}-${intermediateValue23[i23].slice(20)}`;
                   } else {
                     intermediateResult23[i23] = intermediateValue23[i23];
                   }
@@ -27557,7 +27501,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult22 = undefined;
           /** @type {any} */
-          let intermediateValue22 = value["refreshTokenNotIn"];
+          const intermediateValue22 = value["refreshTokenNotIn"];
 
           if (
             intermediateValue22 === null ||
@@ -27698,7 +27642,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult27 = undefined;
           /** @type {any} */
-          let intermediateValue27 = value["revokedAtIn"];
+          const intermediateValue27 = value["revokedAtIn"];
 
           if (
             intermediateValue27 === null ||
@@ -27710,10 +27654,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap28 = {};
-            /** @type {any[]} */
-            let intermediateResult28 = [];
-            /** @type {any|any[]} */
-            let intermediateValue28 = intermediateValue27;
+            /** @type {Array<any>} */
+            const intermediateResult28 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue28 = intermediateValue27;
 
             if (!Array.isArray(intermediateValue28)) {
               intermediateErrorMap27[`$`] = {
@@ -27782,7 +27726,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult27 = undefined;
           /** @type {any} */
-          let intermediateValue27 = value["revokedAtIn"];
+          const intermediateValue27 = value["revokedAtIn"];
 
           if (
             intermediateValue27 === null ||
@@ -27820,7 +27764,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult28 = undefined;
           /** @type {any} */
-          let intermediateValue28 = value["revokedAtNotIn"];
+          const intermediateValue28 = value["revokedAtNotIn"];
 
           if (
             intermediateValue28 === null ||
@@ -27832,10 +27776,10 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap29 = {};
-            /** @type {any[]} */
-            let intermediateResult29 = [];
-            /** @type {any|any[]} */
-            let intermediateValue29 = intermediateValue28;
+            /** @type {Array<any>} */
+            const intermediateResult29 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue29 = intermediateValue28;
 
             if (!Array.isArray(intermediateValue29)) {
               intermediateErrorMap28[`$`] = {
@@ -27904,7 +27848,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
           /** @type {any} */
           let intermediateResult28 = undefined;
           /** @type {any} */
-          let intermediateValue28 = value["revokedAtNotIn"];
+          const intermediateValue28 = value["revokedAtNotIn"];
 
           if (
             intermediateValue28 === null ||
@@ -28866,7 +28810,7 @@ export function validateStoreFileOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -28889,7 +28833,7 @@ export function validateStoreFileOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -28898,10 +28842,10 @@ export function validateStoreFileOrderByValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -28920,7 +28864,7 @@ export function validateStoreFileOrderByValidated(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -29004,7 +28948,7 @@ export function validateStoreJobOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -29027,7 +28971,7 @@ export function validateStoreJobOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -29036,10 +28980,10 @@ export function validateStoreJobOrderByValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -29058,7 +29002,7 @@ export function validateStoreJobOrderByValidated(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -29146,7 +29090,7 @@ export function validateStoreSessionStoreOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -29169,7 +29113,7 @@ export function validateStoreSessionStoreOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -29178,10 +29122,10 @@ export function validateStoreSessionStoreOrderByValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -29200,7 +29144,7 @@ export function validateStoreSessionStoreOrderByValidated(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",
@@ -29278,7 +29222,7 @@ export function validateStoreSessionStoreTokenOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -29301,7 +29245,7 @@ export function validateStoreSessionStoreTokenOrderByValidated(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -29310,10 +29254,10 @@ export function validateStoreSessionStoreTokenOrderByValidated(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap3 = {};
-        /** @type {any[]} */
-        let intermediateResult3 = [];
-        /** @type {any|any[]} */
-        let intermediateValue3 = intermediateValue2;
+        /** @type {Array<any>} */
+        const intermediateResult3 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue3 = intermediateValue2;
 
         if (!Array.isArray(intermediateValue3)) {
           intermediateErrorMap2[`$`] = {
@@ -29332,7 +29276,7 @@ export function validateStoreSessionStoreTokenOrderByValidated(value) {
               };
             } else {
               /** @type {string} */
-              let convertedString3 = intermediateValue3[i3];
+              const convertedString3 = intermediateValue3[i3];
               if (typeof convertedString3 !== "string") {
                 intermediateErrorMap3[`$.${i3}`] = {
                   key: "validator.string",

@@ -55,7 +55,7 @@ export async function exec(command, opts = {}) {
  * @since 0.1.0
  *
  * @param {string} command
- * @param {string[]} args
+ * @param {Array<string>} args
  * @param {import("child_process").SpawnOptions} [opts={}]
  * @returns {Promise<{exitCode: number}>}
  */

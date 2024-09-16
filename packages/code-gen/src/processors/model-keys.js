@@ -21,7 +21,7 @@ const primaryKeyCache = new WeakMap();
 /**
  * Cache searchable keys, based on the model.
  *
- * @type {WeakMap<object, string[]>}
+ * @type {WeakMap<object, Array<string>>}
  */
 const searchableKeyCache = new WeakMap();
 
@@ -36,7 +36,7 @@ const searchableKeyCache = new WeakMap();
  */
 export function modelKeyAddPrimary(generateContext) {
   /**
-   * @type {import("@compas/stdlib").AppError[]}
+   * @type {Array<import("@compas/stdlib").AppError>}
    */
   const errors = [];
 
@@ -156,7 +156,7 @@ export function modelKeyGetPrimary(model) {
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../generated/common/types.js").StructureObjectDefinition} model
- * @returns {string[]}
+ * @returns {Array<string>}
  */
 export function modelKeyGetSearchable(generateContext, model) {
   if (searchableKeyCache.has(model)) {

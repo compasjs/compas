@@ -1,8 +1,8 @@
 # Migrations integration
 
 Combining the [Docker integration](/docs/integrations/docker.html) and the
-[migrations features](/features/migrations.html) from `@compas/store`, Compas
-can prompt you to migrate you Postgres database when necessary.
+[migrations features](/features/migrations.html) from `@compas/store`, Compas can prompt
+you to migrate you Postgres database when necessary.
 
 ## Getting started
 
@@ -20,14 +20,14 @@ This executes a few things:
 
 ```json
 {
-  "migrations": {}
+	"migrations": {}
 }
 ```
 
 ## Config
 
-There is nothing to configure for this setup. Compas automatically prompts to
-either migrate or rebuild the database.
+There is nothing to configure for this setup. Compas automatically prompts to either
+migrate or rebuild the database.
 
 - Migrate executes the pending migrations.
 - Rebuild clears the full database and runs all migrations from scratch.

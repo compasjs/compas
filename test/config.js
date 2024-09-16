@@ -1,9 +1,9 @@
+import { destroyTestServices, injectTestServices } from "../src/testing.js";
 import {
   cleanupPostgresDatabaseTemplate,
   createTestPostgresDatabase,
   setPostgresDatabaseTemplate,
 } from "@compas/store";
-import { destroyTestServices, injectTestServices } from "../src/testing.js";
 
 export const timeout = 2000;
 

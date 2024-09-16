@@ -43,10 +43,10 @@ export function convertOpenAPISpec(defaultGroup, data) {
   /**
    * @type {{
    *   logger: Logger,
-   *   result: CompasStructure,
+   *   result: import("./generated/common/types.js").StructureStructure,
    *   defaultGroup: string,
    *   data: any,
-   *   openAPIReferences: any[],
+   *   openAPIReferences: Array<any>,
    * }}
    *
    * openAPIReferences to resolve $ref's in the document
@@ -491,7 +491,8 @@ function convertSchema(context, schema, options = {}) {
       if (schema.format === "date") {
         result.specifier = "dateOnly";
       } else if (schema.format === "time") {
-        // This is not an officially supported value. Format is free-form, so we are allowed to set it.
+        // This is not an officially supported value. Format is free-form, so we are allowed to set
+        // it.
         result.specifier = "timeOnly";
       }
     } else if (schema.format === "binary") {

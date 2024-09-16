@@ -167,12 +167,12 @@ export function modelPartialUpdateTypes(generateContext) {
       };
 
       const originalField =
-        model.keys[modelKey].type === "reference"
-          ? structureResolveReference(
-              generateContext.structure,
-              model.keys[modelKey],
-            )
-          : model.keys[modelKey];
+        model.keys[modelKey].type === "reference" ?
+          structureResolveReference(
+            generateContext.structure,
+            model.keys[modelKey],
+          )
+        : model.keys[modelKey];
 
       if (originalField.type === "number") {
         for (const atomicField of [
@@ -184,8 +184,9 @@ export function modelPartialUpdateTypes(generateContext) {
           typePartial.keys[modelKey].values.unshift(
             new ObjectType()
               .keys({
-                [atomicField]: originalField.validator.floatingPoint
-                  ? new NumberType().float()
+                [atomicField]:
+                  originalField.validator.floatingPoint ?
+                    new NumberType().float()
                   : new NumberType(),
               })
               .build(),
@@ -323,9 +324,9 @@ export function modelPartialGetOrderByTypes(generateContext, model) {
       (modelKey === "createdAt" || modelKey === "updatedAt");
 
     orderBySpecType.keys[modelKey] =
-      isOptional && !isSystemField
-        ? orderByOptionalField.build()
-        : orderByField.build();
+      isOptional && !isSystemField ?
+        orderByOptionalField.build()
+      : orderByField.build();
   }
 
   return {

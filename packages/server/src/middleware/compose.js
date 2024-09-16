@@ -10,7 +10,7 @@
  *
  * @since 0.1.0
  *
- * @param {import("koa").Middleware[]} middleware
+ * @param {Array<import("koa").Middleware>} middleware
  * @returns {import("koa").Middleware}
  */
 export function compose(middleware) {

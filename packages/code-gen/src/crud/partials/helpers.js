@@ -8,15 +8,15 @@ function partialEndWithNewline(input) {
 }
 
 /**
- * @param {string|string[]|(string|string[])[]} input
+ * @param {string | Array<string> | Array<(string | Array<string>)>} input
  */
 export const partialAsString = (input) =>
-  Array.isArray(input)
-    ? input
-        .flat(Infinity)
-        .map((it) => {
-          // @ts-expect-error
-          return partialEndWithNewline(it);
-        })
-        .join("")
-    : partialEndWithNewline(input);
+  Array.isArray(input) ?
+    input
+      .flat(Infinity)
+      .map((it) => {
+        // @ts-expect-error
+        return partialEndWithNewline(it);
+      })
+      .join("")
+  : partialEndWithNewline(input);

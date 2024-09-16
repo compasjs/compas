@@ -59,7 +59,7 @@ export const createCompasFlags = new Map([
  * extract a package to simplify this.
  *
  * @param {Map<string, any>} availableFlags
- * @param {string[]} flagArgs
+ * @param {Array<string>} flagArgs
  * @returns {import("@compas/stdlib").Either<any, { message: string }>}
  */
 export function argParserParse(availableFlags, flagArgs) {
@@ -86,17 +86,16 @@ export function argParserParse(availableFlags, flagArgs) {
     if (isNil(flagDefinition)) {
       return {
         error: {
-          message: `Unknown flag: '${rawFlag.join(
-            "=",
-          )}'.\n\n${genericErrorMessage}`,
+          message: `Unknown flag: '${rawFlag.join("=")}'.\n\n${genericErrorMessage}`,
         },
       };
     }
 
     const nextInput = peek();
-    const rawValue = isNil(rawFlag[1])
-      ? nextInput.startsWith("--") || nextInput === "-h"
-        ? undefined
+    const rawValue =
+      isNil(rawFlag[1]) ?
+        nextInput.startsWith("--") || nextInput === "-h" ?
+          undefined
         : next()
       : rawFlag[1];
 

@@ -48,12 +48,12 @@ import { sentry } from "./middleware/sentry.js";
  * @typedef {object} CorsOptions
  * @property {string|((ctx: Koa.Context) => (string|undefined))} [origin]
  *   'Access-Control-Allow-Origin', defaults to the 'Origin' header.
- * @property {string|string[]|undefined} [exposeHeaders] 'Access-Control-Expose-Headers'
+ * @property {string | Array<string> | undefined} [exposeHeaders] 'Access-Control-Expose-Headers'
  * @property {string|number|undefined} [maxAge] 'Access-Control-Max-Age' in seconds
  * @property {boolean|undefined} [credentials] 'Access-Control-Allow-Credentials'
- * @property {string|string[]|undefined} [allowMethods] 'Access-Control-Allow-Methods',
+ * @property {string | Array<string> | undefined} [allowMethods] 'Access-Control-Allow-Methods',
  *   defaults to ["DELETE", "GET", "PUT", "POST", "PATCH", "HEAD", "OPTIONS"]
- * @property {string|string[]|undefined} [allowHeaders] 'Access-Control-Allow-Headers'
+ * @property {string | Array<string> | undefined} [allowHeaders] 'Access-Control-Allow-Headers'
  */
 
 /**

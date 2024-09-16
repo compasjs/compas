@@ -7,7 +7,7 @@ import { structureResolveReference } from "./structure.js";
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
- * @param {(string|number)[]} accessPath
+ * @param {Array<(string | number)>} accessPath
  * @param {any} [defaultValue]
  * @returns {any}
  */

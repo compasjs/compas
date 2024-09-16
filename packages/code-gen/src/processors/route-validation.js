@@ -13,7 +13,7 @@ import { typeDefinitionTraverse } from "./type-definition-traverse.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function routeValidation(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   for (const route of structureRoutes(generateContext)) {
@@ -145,7 +145,7 @@ function routeValidationBodyWithFiles(generateContext, route) {
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} field
  * @param {string} partialError
- * @param {string[]} allowedTypes
+ * @param {Array<string>} allowedTypes
  * @param {Set<any>} handledRefs
  */
 function routeValidationConformAllowedTypes(

@@ -40,9 +40,9 @@ export async function templateCheckIfExists(logger, options) {
           `https://github.com/${options.template.repository}/blob/${
             options.template.ref ? options.template.ref : "-"
           }/${
-            options.template.path
-              ? `${options.template.path}/package.json`
-              : "package.json"
+            options.template.path ?
+              `${options.template.path}/package.json`
+            : "package.json"
           }`,
           {
             method: "HEAD",
@@ -133,8 +133,9 @@ export async function templateGetAndExtractStream(logger, options) {
       // @ts-expect-error It still errors?
       file: tmpFile,
       cwd: options.outputDirectory,
-      strip: options.template.path
-        ? normalize(options.template.path).split("/").length + 1
+      strip:
+        options.template.path ?
+          normalize(options.template.path).split("/").length + 1
         : 1,
     },
     [dirToExtract],

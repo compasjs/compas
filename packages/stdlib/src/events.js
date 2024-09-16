@@ -9,7 +9,7 @@ import { _compasSentryExport } from "./sentry.js";
  * @property {number} startTime
  * @property {number} [stopTime]
  * @property {number} [abortedTime]
- * @property {InsightEventSpan[]} children
+ * @property {Array<InsightEventSpan>} children
  */
 
 /**

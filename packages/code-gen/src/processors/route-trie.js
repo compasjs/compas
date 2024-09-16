@@ -9,7 +9,7 @@ import { structureRoutes } from "./routes.js";
  * @typedef {object} RouteTrie
  * @property {import("../generated/common/types.js").StructureRouteDefinition} [route]
  * @property {keyof typeof RoutePrio} prio
- * @property {RouteTrie[]} children
+ * @property {Array<RouteTrie>} children
  * @property {RouteTrie} [parent]
  * @property {string} path
  * @property {string} [paramName]
@@ -39,7 +39,7 @@ const RoutePrio = {
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function routeTrieBuild(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
   const trie = trieCreateNode("");
 
@@ -168,11 +168,10 @@ function trieCreateNode(path, route) {
   /** @type {RouteTrie} */
   const node = {
     children: [],
-    prio: path.includes("*")
-      ? RoutePrio.WILDCARD
-      : path.includes(":")
-        ? RoutePrio.PARAM
-        : RoutePrio.STATIC,
+    prio:
+      path.includes("*") ? RoutePrio.WILDCARD
+      : path.includes(":") ? RoutePrio.PARAM
+      : RoutePrio.STATIC,
     path,
     route,
   };
@@ -188,7 +187,7 @@ function trieCreateNode(path, route) {
  * Add a route to the trie
  *
  * @param {RouteTrie} trie
- * @param {string[]} pathSegments
+ * @param {Array<string>} pathSegments
  * @param {RouteTrie["route"]} route
  */
 function trieAddRoute(trie, pathSegments, route) {
@@ -213,9 +212,7 @@ function trieAddRoute(trie, pathSegments, route) {
   if (pathSegments.length === 1) {
     if (matchedChild.route) {
       throw AppError.serverError({
-        message: `Route ${stringFormatNameForError(
-          route,
-        )} and ${stringFormatNameForError(
+        message: `Route ${stringFormatNameForError(route)} and ${stringFormatNameForError(
           matchedChild.route,
         )} share the same route path & method. Make sure that each named route uses a unique path & method combination. If that is not possible for your use case, you can use wildcards ('/foo/bar/*') or params ('/foo/:bar').`,
       });

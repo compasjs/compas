@@ -4,18 +4,16 @@ import { uuid } from "@compas/stdlib";
 mainBenchFn(import.meta);
 
 bench("uuid", (b) => {
-  let y;
+  let _y;
   for (let i = 0; i < b.N; ++i) {
-    // eslint-disable-next-line no-unused-vars
-    y = uuid();
+    _y = uuid();
   }
 });
 
 bench("uuid.isValid", (b) => {
   const id = uuid();
-  let y;
+  let _y;
   for (let i = 0; i < b.N; ++i) {
-    // eslint-disable-next-line no-unused-vars
-    y = uuid.isValid(id);
+    _y = uuid.isValid(id);
   }
 });

@@ -46,9 +46,9 @@ import { query } from "./query.js";
  *   to 2 retries.
  * @property {number} [handlerTimeout] Maximum time the handler could take to
  *   fulfill a job in milliseconds. Defaults to 30 seconds.
- * @property {string[]} [includedNames] Included job names for this job worker,
+ * @property {Array<string>} [includedNames] Included job names for this job worker,
  *   ignores all other jobs.
- * @property {string[]} [excludedNames] Excluded job names for this job worker,
+ * @property {Array<string>} [excludedNames] Excluded job names for this job worker,
  *   picks up all other jobs.
  * @property {boolean} [unsafeIgnoreSorting] Improve job throughput by ignoring
  *   the 'priority' and 'scheduledAt' sort when picking up jobs.  Reducing query times if
@@ -69,11 +69,11 @@ import { query } from "./query.js";
 
 /**
  * @typedef  {object} QueueWorkerCronOptions
- * @property {{
+ * @property {Array<{
  *   name: string,
  *   priority?: number,
  *   cronExpression: string,
- * }[]} jobs Specify all needed cron jobs. You can still use the 'includedNames' and
+ * }>} jobs Specify all needed cron jobs. You can still use the 'includedNames' and
  *   'excludedNames' of the {@link QueueWorkerOptions} so your jobs are handled by a
  *   specific worker. The default priority is '4'.
  */
@@ -98,10 +98,10 @@ const queryParts = {
               ${jobWhere(where, { skipValidator: true, shortName: "j." })}
           AND NOT "isComplete"
           AND "scheduledAt" < now() ${
-            orderBy
-              ? query`ORDER BY
+            orderBy ?
+              query`ORDER BY
           ${orderBy}`
-              : query``
+            : query``
           } FOR UPDATE SKIP LOCKED
           LIMIT 1
         )
@@ -126,10 +126,10 @@ const queryParts = {
               ${jobWhere(where, { skipValidator: true, shortName: "j." })}
           AND NOT "isComplete"
           AND "scheduledAt" < now() ${
-            orderBy
-              ? query`ORDER BY
+            orderBy ?
+              query`ORDER BY
           ${orderBy}`
-              : query``
+            : query``
           } FOR UPDATE SKIP LOCKED
           LIMIT 1
         )
@@ -296,11 +296,11 @@ export function queueWorkerCreate(sql, options) {
     where.nameNotIn = opts.excludedNames;
   }
 
-  const orderBy = opts.unsafeIgnoreSorting
-    ? undefined
-    : query`"priority", "scheduledAt"`;
-  const jobTodoQuery = opts.deleteJobOnCompletion
-    ? queryParts.getJobAndDelete
+  const orderBy =
+    opts.unsafeIgnoreSorting ? undefined : query`"priority", "scheduledAt"`;
+  const jobTodoQuery =
+    opts.deleteJobOnCompletion ?
+      queryParts.getJobAndDelete
     : queryParts.getJobAndUpdate;
 
   const workers = Array.from({ length: opts.parallelCount }).map(() => ({
@@ -490,9 +490,9 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
   let handler = options.handler[job.name];
   const timeout =
     job.handlerTimeout ??
-    (typeof handler === "function"
-      ? options.handlerTimeout
-      : (handler?.timeout ?? options.handlerTimeout));
+    (typeof handler === "function" ?
+      options.handlerTimeout
+    : (handler?.timeout ?? options.handlerTimeout));
   let isJobComplete = false;
 
   // @ts-expect-error
@@ -604,7 +604,8 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
     }
 
     if (isNil(event.span.stopTime)) {
-      // Stop the root event, so even if the job failed or forgot to call eventStop. We still have a event callstack
+      // Stop the root event, so even if the job failed or forgot to call eventStop. We still have
+      // a event callstack
       eventStop(event);
     }
 

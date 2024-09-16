@@ -107,8 +107,8 @@ export function cliHelpCheckForReservedKeys(command) {
 
 /**
  *
- * @param {string[]} commandArgs
- * @param {string[]} flagArgs
+ * @param {Array<string>} commandArgs
+ * @param {Array<string>} flagArgs
  * @returns {boolean}
  */
 export function cliHelpShouldRun(commandArgs, flagArgs) {
@@ -124,7 +124,7 @@ export function cliHelpShouldRun(commandArgs, flagArgs) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("./types.js").CliResolved} cli
- * @param {string[]} userInput
+ * @param {Array<string>} userInput
  * @returns {Promise<import("@compas/stdlib").Either<string, { message: string }>>}
  */
 export async function cliHelpGetMessage(event, cli, userInput) {
@@ -156,7 +156,7 @@ export async function cliHelpGetMessage(event, cli, userInput) {
 
   const knownFlagsMap = cliParserGetKnownFlags(command.value);
 
-  /** @type {import("../generated/common/types.d.ts").CliFlagDefinition[]} */
+  /** @type {Array<import("../generated/common/types.d.ts").CliFlagDefinition>} */
   // @ts-ignore
   const knownFlags = [
     ...knownFlagsMap.values(),
@@ -220,9 +220,7 @@ ${formatTable(
   }),
 )}
 
-Run '${
-    cli.name
-  } help ${synopsis}' for more information of a specific sub command.
+Run '${cli.name} help ${synopsis}' for more information of a specific sub command.
 `;
 
   eventStop(event);

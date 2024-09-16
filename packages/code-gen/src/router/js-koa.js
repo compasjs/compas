@@ -80,14 +80,17 @@ export function jsKoaPrepareContext(
   contextNames,
 ) {
   let partial = ``;
-  partial += contextNames.paramsType
-    ? `  validatedParams: ${contextNames.paramsTypeName},\n`
+  partial +=
+    contextNames.paramsType ?
+      `  validatedParams: ${contextNames.paramsTypeName},\n`
     : "";
-  partial += contextNames.queryType
-    ? `  validatedQuery: ${contextNames.queryTypeName},\n`
+  partial +=
+    contextNames.queryType ?
+      `  validatedQuery: ${contextNames.queryTypeName},\n`
     : "";
-  partial += contextNames.bodyType
-    ? `  validatedBody: ${contextNames.bodyTypeName},\n`
+  partial +=
+    contextNames.bodyType ?
+      `  validatedBody: ${contextNames.bodyTypeName},\n`
     : "";
 
   const ctxType = new AnyType(route.group, `${route.name}Ctx`)
@@ -133,9 +136,7 @@ export function jsKoaPrepareContext(
     .implementations({
       js: {
         validatorOutputType: `(
-  ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(
-    route.name ?? "",
-  )}Ctx
+  ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(route.name ?? "")}Ctx
 ) => void | Promise<void>`,
         validatorInputType: "any",
       },
@@ -171,7 +172,7 @@ export function jsKoaPrepareContext(
 /**
  * @param {import("../file/context.js").GenerateFile} file
  * @param {string} group
- * @param {import("../generated/common/types.js").StructureRouteDefinition[]} routes
+ * @param {Array<import("../generated/common/types.js").StructureRouteDefinition>} routes
  * @param {Map<any, Record<string, string>>} contextNamesMap
  */
 export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
@@ -213,7 +214,7 @@ export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
 /**
  * @param {import("../file/context.js").GenerateFile} file
  * @param {string} group
- * @param {import("../generated/common/types.js").StructureRouteDefinition[]} routes
+ * @param {Array<import("../generated/common/types.js").StructureRouteDefinition>} routes
  */
 export function jsKoaWriteTags(file, group, routes) {
   fileWrite(file, `export const ${group}Tags = {`);
@@ -229,7 +230,7 @@ export function jsKoaWriteTags(file, group, routes) {
 
 /**
  * @param {import("../file/context.js").GenerateFile} file
- * @param {Record<string, import("../generated/common/types.js").StructureRouteDefinition[]>} routesPerGroup
+ * @param {Record<string, Array<import("../generated/common/types.js").StructureRouteDefinition>>} routesPerGroup
  * @param {Map<any, Record<string, string>>} contextNamesMap
  */
 export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
@@ -308,9 +309,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
       if (route.query) {
         fileWrite(
           file,
-          `const validatedQuery = ${
-            contextNames[`queryValidator`]
-          }(ctx.request.query);`,
+          `const validatedQuery = ${contextNames[`queryValidator`]}(ctx.request.query);`,
         );
 
         fileBlockStart(file, `if (validatedQuery.error)`);
@@ -328,9 +327,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
       if (route.body) {
         fileWrite(
           file,
-          `const validatedBody = ${
-            contextNames[`bodyValidator`]
-          }(ctx.request.body);`,
+          `const validatedBody = ${contextNames[`bodyValidator`]}(ctx.request.body);`,
         );
 
         fileBlockStart(file, `if (validatedBody.error)`);
@@ -350,9 +347,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
       if (route.response) {
         fileWrite(
           file,
-          `const validatedResponse = ${
-            contextNames[`responseValidator`]
-          }(ctx.body);`,
+          `const validatedResponse = ${contextNames[`responseValidator`]}(ctx.body);`,
         );
 
         fileBlockStart(file, `if (validatedResponse.error)`);

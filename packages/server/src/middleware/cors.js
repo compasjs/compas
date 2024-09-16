@@ -97,7 +97,6 @@ export function cors(options = {}) {
     }
   }
 
-  // eslint-disable-next-line consistent-return
   return (ctx, next) => {
     // always set vary Origin Header
     // https://github.com/rs/cors/issues/10

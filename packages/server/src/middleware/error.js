@@ -64,7 +64,8 @@ export function errorHandler(opts) {
           delete formatted.cause;
 
           if (isUnexpectedError) {
-            // Remove any possible internal details. In explicit 400's for example, info is useful to the caller.
+            // Remove any possible internal details. In explicit 400's for example, info is useful
+            // to the caller.
             delete formatted.info;
           }
         }

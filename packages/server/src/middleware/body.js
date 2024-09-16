@@ -18,7 +18,7 @@ import formidable from "formidable";
  *   '56kb'
  * @property {string|undefined} [urlencodedLimit] Max body size when parsing urlencoded,
  *   defaults to '1mb'
- * @property {string[]|undefined} [parsedMethods] The HTTP methods which enable body
+ * @property {Array<string> | undefined} [parsedMethods] The HTTP methods which enable body
  *   parsing.
  * @property {formidable.Options} [multipartOptions] Optionally specify multipart
  *   options. If no options are present, it uses the defaults from formidable and uses a
@@ -27,7 +27,7 @@ import formidable from "formidable";
  */
 
 /**
- * @type {string[]}
+ * @type {Array<string>}
  */
 const jsonTypes = [
   "application/json",

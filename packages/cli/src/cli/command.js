@@ -27,7 +27,7 @@ export function cliCommandGetRoot(command) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("./types.js").CliResolved} cli
- * @param {string[]} input
+ * @param {Array<string>} input
  * @returns {Promise<import("@compas/stdlib").Either<import("./types.js").CliResolved, {
  *   message: string }>>}
  */
@@ -77,7 +77,7 @@ export async function cliCommandDetermine(event, cli, input) {
  * @param {import("./types.js").CliResolved} cli
  * @param {import("./types.js").CliResolved} command
  * @param {Record<string, any>} flags
- * @param {string[]} userInput
+ * @param {Array<string>} userInput
  * @returns {Promise<import("@compas/stdlib").Either<import("./types.js").CliResult, {
  *   message: string }>>}
  */
@@ -103,9 +103,7 @@ export async function cliCommandExec(
 
     return {
       error: {
-        message: `Command executor is missing for '${
-          cli.name
-        } ${commandArgs.join(
+        message: `Command executor is missing for '${cli.name} ${commandArgs.join(
           " ",
         )}'. This should never happen. Please report this to the maintainers.`,
       },

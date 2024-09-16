@@ -75,9 +75,9 @@ function anyOfPreprocessDiscriminant(generateContext, type) {
 
   for (const subType of type.values) {
     const resolvedSubType =
-      subType.type === "reference"
-        ? structureResolveReference(generateContext.structure, subType)
-        : subType;
+      subType.type === "reference" ?
+        structureResolveReference(generateContext.structure, subType)
+      : subType;
 
     if (resolvedSubType.type !== "object") {
       throw AppError.serverError({

@@ -182,17 +182,16 @@ export class RouteBuilder extends TypeBuilder {
     }
 
     if (this.paramsBuilder || pathParamKeys.length > 0) {
-      const paramsResult = this.paramsBuilder
-        ? buildOrInfer(this.paramsBuilder)
+      const paramsResult =
+        this.paramsBuilder ?
+          buildOrInfer(this.paramsBuilder)
         : buildOrInfer({});
 
       if (paramsResult.type !== "object") {
         throw AppError.serverError({
           message: `\`.params()\` should be an 'T.object()'. Found '${
             paramsResult.type
-          }' in '${upperCaseFirst(result.group)}${upperCaseFirst(
-            result.name,
-          )}'`,
+          }' in '${upperCaseFirst(result.group)}${upperCaseFirst(result.name)}'`,
         });
       }
 
@@ -240,7 +239,7 @@ export class RouteBuilder extends TypeBuilder {
  * Collect all path params
  *
  * @param {string} path
- * @returns {string[]}
+ * @returns {Array<string>}
  */
 function collectPathParams(path) {
   const keys = [];
@@ -265,7 +264,7 @@ export class RouteCreator {
       this.data.path = this.data.path.slice(1);
     }
 
-    /** @type {string[]} */
+    /** @type {Array<string>} */
     this.defaultTags = [];
 
     this.queryBuilder = undefined;

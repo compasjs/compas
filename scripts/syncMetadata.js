@@ -1,6 +1,6 @@
 import { mkdir, readdir, rm, symlink } from "node:fs/promises";
-import { mainFn, spawn } from "@compas/stdlib";
 import { syncCliReference } from "../src/cli-reference.js";
+import { mainFn, spawn } from "@compas/stdlib";
 
 mainFn(import.meta, main);
 

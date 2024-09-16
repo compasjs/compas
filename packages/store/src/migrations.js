@@ -27,7 +27,7 @@ import { query } from "./query.js";
 /**
  * @typedef {object} MigrateContext
  * @property {MigrateOptions} options
- * @property {MigrationFile[]} files
+ * @property {Array<MigrationFile>} files
  * @property {import("postgres").Sql<{}>} sql
  * @property {any|undefined} [rebuild]
  * @property {any|undefined} [info]
@@ -106,15 +106,15 @@ export async function migrationsInitContext(sql, migrateOptions) {
  *
  * @param {MigrateContext} mc
  * @returns {Promise<{
- *   migrationQueue: {
+ *   migrationQueue: Array<{
  *     name: string,
  *     number: number,
  *     repeatable: boolean
- *   }[],
- *   hashChanges: {
+ *   }>,
+ *   hashChanges: Array<{
  *     name: string,
  *     number: number,
- *   }[]
+ *   }>
  * }>}
  */
 export async function migrationsGetInfo(mc) {
@@ -255,7 +255,7 @@ export async function migrationsRebuildState(mc) {
 
 /**
  * @param {MigrateContext} mc
- * @returns {MigrationFile[]}
+ * @returns {Array<MigrationFile>}
  */
 function filterMigrationsToBeApplied(mc) {
   const result = [];
@@ -392,7 +392,7 @@ async function releaseLock(sql, lockValue) {
 /**
  *
  * @param directory
- * @returns {Promise<MigrationFile[]>}
+ * @returns {Promise<Array<MigrationFile>>}
  */
 async function readMigrationsDir(directory) {
   if (!existsSync(directory)) {

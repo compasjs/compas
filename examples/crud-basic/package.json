@@ -10,14 +10,10 @@
   },
   "devDependencies": {
     "@compas/code-gen": "*",
-    "@compas/eslint-plugin": "*"
+    "@lightbase/eslint-config": "*"
   },
-  "prettier": "@compas/eslint-plugin/prettierrc",
   "exampleMetadata": {
     "generating": "compas run generate",
-    "testing": [
-      "compas migrate",
-      "compas test --serial"
-    ]
+    "testing": ["compas migrate", "compas test --serial"]
   }
 }

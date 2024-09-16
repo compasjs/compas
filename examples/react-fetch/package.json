@@ -29,8 +29,6 @@
   },
   "exampleMetadata": {
     "generating": "node ./scripts/generate.js",
-    "testing": [
-      "npm run build"
-    ]
+    "testing": ["npm run build"]
   }
 }

@@ -12,7 +12,7 @@ import { structureResolveReference } from "./structure.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function routeInvalidationsCheck(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   for (const route of structureRoutes(generateContext)) {
@@ -183,10 +183,10 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
 
         if (
           i === sourceSpecification.length - 1 && // @ts-expect-error
-          (sourceLevel?.type === "reference"
-            ? structureResolveReference(generateContext.structure, sourceLevel)
-                ?.type
-            : sourceLevel?.type) === "object"
+          (sourceLevel?.type === "reference" ?
+            structureResolveReference(generateContext.structure, sourceLevel)
+              ?.type
+          : sourceLevel?.type) === "object"
         ) {
           // The last 'key' of the source specification should not be an object
           isIncorrect = true;
@@ -195,8 +195,9 @@ function routeInvalidationProcess(generateContext, route, invalidation) {
 
         if (i !== sourceSpecification.length) {
           sourceLevel = // @ts-expect-error
-            sourceLevel?.type === "reference"
-              ? structureResolveReference(
+
+              sourceLevel?.type === "reference" ?
+                structureResolveReference(
                   generateContext.structure,
                   sourceLevel,
 

@@ -65,7 +65,7 @@ mainFn(import.meta, main);
 async function main() {
   const app = new App({ verbose: true });
 
-  let fromRemote = await loadApiStructureFromRemote(
+  const fromRemote = await loadApiStructureFromRemote(
     Axios,
     "https://some.compas.powered.backend",
   );

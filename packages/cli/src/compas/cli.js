@@ -85,7 +85,7 @@ References:
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("@compas/stdlib").Logger} logger
  * @param {import("../cli/types.js").CliResolved} cli
- * @param {string[]} userInput
+ * @param {Array<string>} userInput
  * @returns {Promise<{
  *   flags?: any,
  *   result: import("@compas/stdlib").Either<import("../cli/types.js").CliResult, { message:
@@ -212,7 +212,7 @@ export async function compasExecCli(event, logger, cli, userInput) {
  *     loadProjectConfig: boolean,
  *     loadUserConfig: boolean,
  * }} opts
- * @returns {Promise<{validateOnLoad: boolean, directory: string}[]>}
+ * @returns {Promise<Array<{validateOnLoad: boolean, directory: string}>>}
  */
 export async function getCommandDirectories(opts) {
   const result = [

@@ -85,13 +85,13 @@ export function modelSortAllKeys(generateContext) {
         const keyB = keys[b];
 
         const refA =
-          keyA.type === "reference"
-            ? structureResolveReference(generateContext.structure, keyA)
-            : undefined;
+          keyA.type === "reference" ?
+            structureResolveReference(generateContext.structure, keyA)
+          : undefined;
         const refB =
-          keyB.type === "reference"
-            ? structureResolveReference(generateContext.structure, keyB)
-            : undefined;
+          keyB.type === "reference" ?
+            structureResolveReference(generateContext.structure, keyB)
+          : undefined;
 
         // Primary key should be sorted first
         if (keyA.sql?.primary || refA?.sql?.primary) {

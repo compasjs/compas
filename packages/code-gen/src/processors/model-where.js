@@ -27,11 +27,11 @@ import { structureAddType, structureResolveReference } from "./structure.js";
 
 /**
  * @typedef {object} ModelWhereInformation
- * @property {{
+ * @property {Array<{
  *   modelKey: string,
  *   whereKey: string,
  *   variant: ModelWhereVariant
- * }[]} fields
+ * }>} fields
  */
 
 const modelWhereTypeTable = {
@@ -87,12 +87,12 @@ export function modelWhereBuildWhereInformation(generateContext) {
 
     for (const modelKey of modelKeyGetSearchable(generateContext, model)) {
       const field =
-        model.keys[modelKey].type === "reference"
-          ? structureResolveReference(
-              generateContext.structure,
-              model.keys[modelKey],
-            )
-          : model.keys[modelKey];
+        model.keys[modelKey].type === "reference" ?
+          structureResolveReference(
+            generateContext.structure,
+            model.keys[modelKey],
+          )
+        : model.keys[modelKey];
 
       const typeTable = modelWhereTypeTable[field.type] ?? [];
 

@@ -17,5 +17,5 @@
     "enable": true
   },
   "include": ["packages/**/*"],
-  "exclude": ["packages/eslint-plugin/**/*", "**/*.test.js", "**/*.bench.js"]
+  "exclude": ["**/*.test.js", "**/*.bench.js"]
 }

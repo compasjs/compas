@@ -1,7 +1,7 @@
 import { writeFile } from "node:fs/promises";
-import { newEvent } from "@compas/stdlib";
 import { cliParserGetKnownFlags } from "../packages/cli/src/cli/parser.js";
 import { compasGetCli } from "../packages/cli/src/compas/cli.js";
+import { newEvent } from "@compas/stdlib";
 
 export async function syncCliReference(logger) {
   const event = newEvent(logger);

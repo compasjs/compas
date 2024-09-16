@@ -5,7 +5,7 @@ import { AppError } from "@compas/stdlib";
 /**
  * Wrap a queryPart & validator in something that can either be used directly, or can be chained.
  *
- * @template {function} T
+ * @template {Function} T
  *
  * @param {import("@compas/store").QueryPart<any>} queryPart
  * @param {T} validator

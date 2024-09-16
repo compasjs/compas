@@ -119,7 +119,7 @@ export class Generator {
    * Select a subset of groups from this generator and set them on a new generator.
    * This includes all references that are used in the current group.
    *
-   * @param {string[]} groups
+   * @param {Array<string>} groups
    * @returns {Generator}
    */
   selectGroups(groups) {
@@ -137,7 +137,7 @@ export class Generator {
    * Select a subset of types from this generator and set them on a new generator.
    * This includes all references that are used in these types.
    *
-   * @param {{group: string, name: string}[]} typeNames
+   * @param {Array<{group: string, name: string}>} typeNames
    * @returns {Generator}
    */
   selectTypes(typeNames) {
@@ -177,7 +177,7 @@ export class Generator {
    * Generate based on the structure that is known to this generator
    *
    * @param {import("./generated/common/types.js").StructureGenerateOptionsInput} options
-   * @returns {import("./generate.js").OutputFile[]}
+   * @returns {Array<import("./generate.js").OutputFile>}
    */
   generate(options) {
     const validationResultOptions = validateStructureGenerateOptions(options);

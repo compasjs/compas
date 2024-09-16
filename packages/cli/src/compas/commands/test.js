@@ -186,8 +186,8 @@ export async function cliExecutor(logger, state) {
  * Once all files are done or in process, we request results.
  *
  * @param {import("../../testing/config.js").TestConfig} testConfig
- * @param {Worker[]} workers
- * @param {string[]} files
+ * @param {Array<Worker>} workers
+ * @param {Array<string>} files
  */
 async function runTests(testConfig, workers, files) {
   let idx = 0;
@@ -269,7 +269,7 @@ async function runTests(testConfig, workers, files) {
  * Create workers and wait till they are initialized.
  *
  * @param {number} workerCount
- * @returns {Worker[]}
+ * @returns {Array<Worker>}
  */
 function initializeWorkers(workerCount) {
   const workers = [];

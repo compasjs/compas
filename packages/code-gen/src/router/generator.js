@@ -52,7 +52,7 @@ export function routerGenerator(generateContext) {
   );
 
   const target = routerFormatTarget(generateContext);
-  /** @type {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} */
+  /** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
   const typeTargets = ["js", "jsKoaReceive"];
 
   /** @type Record<string, (import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>)[]>} */
@@ -120,11 +120,11 @@ export function routerGenerator(generateContext) {
         const type = types[prefix];
 
         const specificTargets =
-          prefix === "response"
-            ? typeTargets
-                .filter((it) => it !== "jsKoaReceive")
-                .concat(["jsKoaSend"])
-            : typeTargets;
+          prefix === "response" ?
+            typeTargets
+              .filter((it) => it !== "jsKoaReceive")
+              .concat(["jsKoaSend"])
+          : typeTargets;
 
         const resolvedRef = structureResolveReference(
           generateContext.structure,
@@ -135,15 +135,15 @@ export function routerGenerator(generateContext) {
         validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
           validatorState: "output",
           nameSuffixes:
-            prefix !== "response"
-              ? {
-                  input: "ValidatorInput",
-                  output: "Validated",
-                }
-              : {
-                  input: "RouterOutput",
-                  output: "RouterValidated",
-                },
+            prefix !== "response" ?
+              {
+                input: "ValidatorInput",
+                output: "Validated",
+              }
+            : {
+                input: "RouterOutput",
+                output: "RouterValidated",
+              },
           targets: specificTargets,
           preferInputBaseName: prefix === "response",
         });
@@ -156,15 +156,15 @@ export function routerGenerator(generateContext) {
           {
             validatorState: "output",
             nameSuffixes:
-              prefix !== "response"
-                ? {
-                    input: "ValidatorInput",
-                    output: "Validated",
-                  }
-                : {
-                    input: "RouterOutput",
-                    output: "RouterValidated",
-                  },
+              prefix !== "response" ?
+                {
+                  input: "ValidatorInput",
+                  output: "Validated",
+                }
+              : {
+                  input: "RouterOutput",
+                  output: "RouterValidated",
+                },
             targets: specificTargets,
           },
         );

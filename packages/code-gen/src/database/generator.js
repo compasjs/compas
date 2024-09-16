@@ -95,7 +95,7 @@ export function databaseGenerator(generateContext) {
   }
 
   const target = databaseFormatTarget(generateContext);
-  /** @type {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} */
+  /** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
   const typeTargets = ["js", "jsPostgres"];
 
   targetCustomSwitch(

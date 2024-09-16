@@ -37,11 +37,11 @@ export function printTestResults() {
 /**
  * Prints test results from workers and return the exit code
  *
- * @param {{
+ * @param {Array<{
  *   isFailed: boolean,
  *   assertions: { passed: number, failed: number, },
- *   failedResult: string[]
- * }[]} testResults
+ *   failedResult: Array<string>
+ * }>} testResults
  * @returns {number}
  */
 export function printTestResultsFromWorkers(testResults) {
@@ -81,7 +81,7 @@ export function printTestResultsFromWorkers(testResults) {
  * Prints a quick test summary for the provided state
  *
  * @param {import("./state.js").TestState} state
- * @param {string[]} result
+ * @param {Array<string>} result
  * @param {number} indentCount
  */
 function printTreeSummary(state, result, indentCount) {
@@ -89,7 +89,8 @@ function printTreeSummary(state, result, indentCount) {
 
   if (!state.caughtException && passed === 0 && failed === 0) {
     // When we bailed, don't print skipped tests.
-    // In a normal scenario, this can't happen, since we enforce that each test has at least a subset or an assertion
+    // In a normal scenario, this can't happen, since we enforce that each test has at least a
+    // subset or an assertion
     return;
   }
 
@@ -101,7 +102,7 @@ function printTreeSummary(state, result, indentCount) {
  * Prints information over test failures
  *
  * @param {import("./state.js").TestState} state
- * @param {string[]} result
+ * @param {Array<string>} result
  * @param {number} indentCount
  */
 export function printFailedResults(state, result, indentCount) {
@@ -181,9 +182,7 @@ export function printFailedResults(state, result, indentCount) {
           `${subIndent}Actual: (${typeof actual}) ${JSON.stringify(actual)}`,
         );
         result.push(
-          `${subIndent}Expected: (${typeof expected}) ${JSON.stringify(
-            expected,
-          )}`,
+          `${subIndent}Expected: (${typeof expected}) ${JSON.stringify(expected)}`,
         );
 
         if (typeof expected === "object") {

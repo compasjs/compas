@@ -45,10 +45,10 @@ const relationCache = new WeakMap();
  * relations is a field on the model that it belongs to.
  *
  * @param {import("../generated/common/types.js").StructureObjectDefinition} model
- * @returns {import("../generated/common/types.js").StructureRelationDefinition[]}
+ * @returns {Array<import("../generated/common/types.js").StructureRelationDefinition>}
  */
 export function modelRelationGetOwn(model) {
-  /** @type {import("../generated/common/types.js").StructureRelationDefinition[]} */
+  /** @type {Array<import("../generated/common/types.js").StructureRelationDefinition>} */
   const result = [];
 
   for (const relation of model.relations) {
@@ -65,10 +65,10 @@ export function modelRelationGetOwn(model) {
  * key on this model, which is not populated by default.
  *
  * @param {import("../generated/common/types.js").StructureObjectDefinition} model
- * @returns {import("../generated/common/types.js").StructureRelationDefinition[]}
+ * @returns {Array<import("../generated/common/types.js").StructureRelationDefinition>}
  */
 export function modelRelationGetInverse(model) {
-  /** @type {import("../generated/common/types.js").StructureRelationDefinition[]} */
+  /** @type {Array<import("../generated/common/types.js").StructureRelationDefinition>} */
   const result = [];
 
   for (const relation of model.relations) {
@@ -123,7 +123,7 @@ export function modelRelationGetInformation(relation) {
  * @returns {void}
  */
 export function modelRelationCheckAllRelations(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
   const reservedRelationNames = [
     "as",
@@ -300,9 +300,7 @@ export function modelRelationCheckAllRelations(generateContext) {
       if (reservedRelationNames.includes(relation.ownKey)) {
         errors.push(
           AppError.serverError({
-            message: `Relation name '${
-              relation.ownKey
-            }' on ${stringFormatNameForError(
+            message: `Relation name '${relation.ownKey}' on ${stringFormatNameForError(
               model,
             )} is a reserved keyword. Use another relation name.`,
           }),
@@ -323,7 +321,7 @@ export function modelRelationCheckAllRelations(generateContext) {
  * @returns {void}
  */
 export function modelRelationAddKeys(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   for (const model of structureModels(generateContext)) {

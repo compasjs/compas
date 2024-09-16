@@ -15,7 +15,7 @@ export const workerFile = new URL(
  * List available test files
  *
  * @property {import("./config.js").TestConfig} testConfig
- * @returns {Promise<string[]>}
+ * @returns {Promise<Array<string>>}
  */
 export async function testingListFiles(testConfig) {
   const files = [];
@@ -49,9 +49,8 @@ export async function testingListFiles(testConfig) {
  * @returns {Promise<number>}
  */
 export async function runTestsInProcess(testConfig) {
-  const files = testConfig.singleFileMode
-    ? []
-    : await testingListFiles(testConfig);
+  const files =
+    testConfig.singleFileMode ? [] : await testingListFiles(testConfig);
 
   if (!testConfig.singleFileMode && Array.isArray(files)) {
     for (const file of files) {

@@ -1,8 +1,8 @@
 import { match, strictEqual } from "node:assert";
 import { setTimeout } from "node:timers/promises";
-import { mainTestFn, test } from "@compas/cli";
 import { AppError } from "@compas/stdlib";
 import { runTestsRecursively } from "./runner.js";
+import { mainTestFn, test } from "@compas/cli";
 
 mainTestFn(import.meta);
 

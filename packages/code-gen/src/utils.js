@@ -59,7 +59,7 @@ export function stringFormatRelation(ownName, inverseName, ownKey, inverseKey) {
  * Other supported properties:
  * - messages: expected to be a string[]
  *
- * @param {import("@compas/stdlib").AppError[]} errors
+ * @param {Array<import("@compas/stdlib").AppError>} errors
  * @returns {void}
  */
 export function errorsThrowCombinedError(errors) {

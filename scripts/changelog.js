@@ -10,7 +10,7 @@ mainFn(import.meta, main);
  * @property {string} body Full commit body
  * @property {string|undefined} [breakingChange] Commit body breaking change or major
  *   bumps
- * @property {string[]} notes Changelog notes
+ * @property {Array<string>} notes Changelog notes
  */
 
 /**
@@ -64,7 +64,7 @@ async function main(logger) {
  *
  * @param {Logger} logger
  * @param {string} version
- * @returns {Promise<ChangelogCommit[]>}
+ * @returns {Promise<Array<ChangelogCommit>>}
  */
 async function getListOfCommitsSinceTag(logger, version) {
   const { exitCode, stdout, stderr } = await exec(
@@ -114,8 +114,8 @@ function getChangelogHeaderAndSource(changelog) {
 /**
  * Split grouped dependency updates.
  *
- * @param {ChangelogCommit[]} commits
- * @returns {ChangelogCommit[]}
+ * @param {Array<ChangelogCommit>} commits
+ * @returns {Array<ChangelogCommit>}
  */
 function splitGroupedDependencyBumps(commits) {
   const result = [];
@@ -184,8 +184,8 @@ function splitGroupedDependencyBumps(commits) {
  * Tries to combine the dependency bump commits. This is useful for things like aws-sdk
  * which can have 10 bumps in a single Compas release.
  *
- * @param {ChangelogCommit[]} commits
- * @returns {ChangelogCommit[]}
+ * @param {Array<ChangelogCommit>} commits
+ * @returns {Array<ChangelogCommit>}
  */
 function combineCommits(commits) {
   // build(deps): bump @types/node from 14.6.2 to 14.6.3
@@ -253,7 +253,7 @@ function combineCommits(commits) {
  * - Inline commit references / closes
  * - Major version bumps
  *
- * @param {ChangelogCommit[]} commits
+ * @param {Array<ChangelogCommit>} commits
  */
 function decorateCommits(commits) {
   for (const commit of commits) {
@@ -346,7 +346,7 @@ function decorateCommits(commits) {
  * Create the changelog based on the provided commits
  *
  * @param {Logger} logger
- * @param {ChangelogCommit[]} commits
+ * @param {Array<ChangelogCommit>} commits
  * @param {string} version
  * @returns {string}
  */
@@ -357,7 +357,7 @@ function makeChangelog(logger, commits, version) {
 
   const handledCommits = new Set();
   /**
-   * @returns {ChangelogCommit[]}
+   * @returns {Array<ChangelogCommit>}
    */
   const availableCommits = () =>
     commits.filter((it) => !handledCommits.has(it));
@@ -496,7 +496,7 @@ function formatHash(commit) {
  * Propose a new version based on the analyzed commits
  *
  * @param {string} version
- * @param {ChangelogCommit[]} commits
+ * @param {Array<ChangelogCommit>} commits
  * @returns {string}
  */
 function proposeVersionBump(version, commits) {
@@ -507,7 +507,10 @@ function proposeVersionBump(version, commits) {
   );
   const hasFeat = commits.find((it) => it.title.startsWith("feat"));
 
-  const type = hasBreakingChanges ? "major" : hasFeat ? "minor" : "patch";
+  const type =
+    hasBreakingChanges ? "major"
+    : hasFeat ? "minor"
+    : "patch";
   let [major, minor, patch] = version.split(".").map((it) => Number(it));
 
   if (type === "patch") {

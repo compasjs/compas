@@ -198,7 +198,8 @@ function openApiTransformParams(generateContext, openApiSpec, route) {
         if (param.specifier === "dateOnly") {
           schema.format = "date";
         } else if (param.specifier === "timeOnly") {
-          // This is not an officially supported value. Format is free-form, so we are allowed to set it.
+          // This is not an officially supported value. Format is free-form, so we are allowed to
+          // set it.
           schema.format = "time";
         }
         break;
@@ -257,9 +258,9 @@ function openApiTransformBody(generateContext, openApiSpec, route) {
         "docString",
       ]),
       content: {
-        [route.metadata?.requestBodyType === "form-data"
-          ? "multipart/form-data"
-          : "application/json"]: content,
+        [route.metadata?.requestBodyType === "form-data" ?
+          "multipart/form-data"
+        : "application/json"]: content,
       },
       required: true,
     },
@@ -305,8 +306,9 @@ function openApiTransformResponse(generateContext, openApiSpec, route) {
   };
 
   const response = {
-    description: route.response
-      ? referenceUtilsGetProperty(
+    description:
+      route.response ?
+        referenceUtilsGetProperty(
           generateContext,
           route.response,
           ["docString"],
@@ -315,8 +317,9 @@ function openApiTransformResponse(generateContext, openApiSpec, route) {
       : "",
     content: {
       "application/json": {
-        schema: route.response
-          ? // @ts-expect-error
+        schema:
+          route.response ?
+            // @ts-expect-error
             transformType(generateContext, openApiSpec, route.response)
           : {},
       },
@@ -388,7 +391,8 @@ function transformType(generateContext, openApiSpec, type) {
       if (type.specifier === "dateOnly") {
         property.format = "date";
       } else if (type.specifier === "timeOnly") {
-        // This is not an officially supported value. Format is free-form, so we are allowed to set it.
+        // This is not an officially supported value. Format is free-form, so we are allowed to set
+        // it.
         property.format = "time";
       }
 

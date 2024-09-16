@@ -96,17 +96,17 @@ export async function cliExecutor(logger, state) {
     const prettierCacheLocation = "./.cache/prettier/.cache";
 
     const prettierCommand =
-      environment.CI === "true"
-        ? ["--check"]
-        : [
-            "--write",
-            "--list-different",
-            "--cache",
-            "--cache-strategy",
-            "content",
-            "--cache-location",
-            prettierCacheLocation,
-          ];
+      environment.CI === "true" ?
+        ["--check"]
+      : [
+          "--write",
+          "--list-different",
+          "--cache",
+          "--cache-strategy",
+          "content",
+          "--cache-location",
+          prettierCacheLocation,
+        ];
 
     const { exitCode: pretty } = await spawn("npx", [
       "prettier",

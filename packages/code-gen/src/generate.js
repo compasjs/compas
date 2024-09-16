@@ -84,7 +84,7 @@ import { validatorGeneratorGenerateBaseTypes } from "./validators/generator.js";
  *
  * @param {import("./generator.js").Generator} generator
  * @param {import("./generated/common/types.js").StructureGenerateOptions} options
- * @returns {OutputFile[]}
+ * @returns {Array<OutputFile>}
  */
 export function generateExecute(generator, options) {
   const validationResultStructure = validateStructureStructure(
@@ -176,7 +176,7 @@ export function generateExecute(generator, options) {
  * Write output files if an output directory is provided
  *
  * @param {GenerateContext} generateContext
- * @param {OutputFile[]} outputFiles
+ * @param {Array<OutputFile>} outputFiles
  */
 export function generateWriteOutputFiles(generateContext, outputFiles) {
   if (isNil(generateContext.options.outputDirectory)) {

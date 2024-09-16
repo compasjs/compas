@@ -58,7 +58,7 @@ export const STORE_FILE_IMAGE_TYPES = [
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
- *   allowedContentTypes?: string[],
+ *   allowedContentTypes?: Array<string>,
  *   schedulePlaceholderImageJob?: boolean,
  *   fileTransformInPlaceOptions?: FileTransformInPlaceOptions,
  * }} options
@@ -113,9 +113,8 @@ export async function fileCreateOrUpdate(
     options.fileTransformInPlaceOptions &&
     STORE_FILE_IMAGE_TYPES.includes(props.contentType ?? "")
   ) {
-    const fileBuffer = Buffer.isBuffer(source)
-      ? source
-      : await streamToBuffer(source);
+    const fileBuffer =
+      Buffer.isBuffer(source) ? source : await streamToBuffer(source);
 
     source = await fileTransformInPlaceInternal(
       fileBuffer,
@@ -279,7 +278,7 @@ export async function fileTransformInPlace(
  *
  * @param {{
  *   bucketName: string,
- *   allowedContentTypes?: string[],
+ *   allowedContentTypes?: Array<string>,
  *   schedulePlaceholderImageJob?: boolean,
  * }} options
  * @param {Partial<import("./generated/common/types.d.ts").StoreFile> & Pick<import("./generated/common/types.d.ts").StoreFile,

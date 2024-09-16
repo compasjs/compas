@@ -206,13 +206,15 @@ export class AppError extends Error {
       // Dumping is most of the time not what the user expects, so prevent these from
       // being added to the result.
       const body =
-        typeof e.response?.data?.pipe === "function" && // @ts-ignore
-        typeof e.response?.data?._read === "function"
-          ? {
-              message:
-                "Response was a stream, which can not be serialized by AppError#format. Use a try-catch and 'streamToBuffer(e.response?.data)' to get the provided response.",
-            }
-          : e.response?.data;
+        (
+          typeof e.response?.data?.pipe === "function" && // @ts-ignore
+          typeof e.response?.data?._read === "function"
+        ) ?
+          {
+            message:
+              "Response was a stream, which can not be serialized by AppError#format. Use a try-catch and 'streamToBuffer(e.response?.data)' to get the provided response.",
+          }
+        : e.response?.data;
 
       return {
         name: e.name,

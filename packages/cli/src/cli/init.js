@@ -18,10 +18,10 @@ import { cliWatchInit } from "./watch.js";
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("../generated/common/types.d.ts").CliCommandDefinitionInput} root
  * @param {{
- *   commandDirectories: {
+ *   commandDirectories: Array<{
  *     directory: string,
  *     validateOnLoad: boolean,
- *   }[],
+ *   }>,
  * }} options
  * @returns {Promise<import("./types.js").CliResolved>}
  */
@@ -129,7 +129,7 @@ function cliInitValidateCommands(command, hasParentWithExecutor = false) {
 /**
  *
  * @param {import("./types.js").CliResolved} command
- * @param {string[]} existingFlags
+ * @param {Array<string>} existingFlags
  */
 function cliInitValidateFlags(command, existingFlags = []) {
   for (const flag of command.flags) {

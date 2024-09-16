@@ -62,9 +62,7 @@ async function main(logger) {
   logger.info(
     `Resolved template url: 'https://github.com/${
       validatedArgs.template.repository
-    }/tree/${validatedArgs.template.ref ?? "main"}/${
-      validatedArgs.template.path
-    }'`,
+    }/tree/${validatedArgs.template.ref ?? "main"}/${validatedArgs.template.path}'`,
   );
   logger.info(`Output directory: '${validatedArgs.outputDirectory}'`);
 

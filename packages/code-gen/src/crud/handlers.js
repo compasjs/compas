@@ -103,8 +103,8 @@ function crudHandlersStart(generateContext, file, crud) {
 /**
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  * @returns {{
- *   modifierDocs: string[],
- *   modifierDestructure: string[],
+ *   modifierDocs: Array<string>,
+ *   modifierDestructure: Array<string>,
  * }}
  */
 function crudHandlersGetModifiers(crud) {
@@ -156,9 +156,9 @@ function crudHandlersGetModifiers(crud) {
   if (crud.routeOptions.createRoute) {
     modifierDocs.push(
       `${crudName}CreatePreModifier?: (event: InsightEvent, ctx: ${upperCrudName}CreateCtx, builder: ${modelUniqueName}QueryBuilder${
-        relation?.subType !== "oneToOneReverse"
-          ? ""
-          : `, singleBuilder: ${modelUniqueName}QueryBuilder`
+        relation?.subType !== "oneToOneReverse" ?
+          ""
+        : `, singleBuilder: ${modelUniqueName}QueryBuilder`
       }) => void|Promise<void>,`,
     );
     modifierDestructure.push(`${crudName}CreatePreModifier,`);
@@ -239,10 +239,7 @@ function crudHandlersList(generateContext, file, crud) {
   const { primaryKeyName } = modelKeyGetPrimary(model);
 
   const data = {
-    handlerName: `${crud.group}Handlers.${crudInformationGetName(
-      crud,
-      "list",
-    )}`,
+    handlerName: `${crud.group}Handlers.${crudInformationGetName(crud, "list")}`,
     hasTransformContext: crudInformationGetHasCustomReadableType(crud),
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     countBuilder: crudQueryBuilderGet(crud, {
@@ -291,10 +288,7 @@ function crudHandlersSingle(generateContext, file, crud) {
   const { primaryKeyName } = modelKeyGetPrimary(model);
 
   const data = {
-    handlerName: `${crud.group}Handlers.${crudInformationGetName(
-      crud,
-      "single",
-    )}`,
+    handlerName: `${crud.group}Handlers.${crudInformationGetName(crud, "single")}`,
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     hasTransformContext: crudInformationGetHasCustomReadableType(crud),
     builder: crudQueryBuilderGet(crud, {
@@ -328,14 +322,12 @@ function crudHandlersCreate(generateContext, file, crud) {
   const relation = crudInformationGetRelation(crud);
 
   const data = {
-    handlerName: `${crud.group}Handlers.${crudInformationGetName(
-      crud,
-      "create",
-    )}`,
+    handlerName: `${crud.group}Handlers.${crudInformationGetName(crud, "create")}`,
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     hasTransformContext: crudInformationGetHasCustomReadableType(crud),
-    applyParams: crud.fromParent
-      ? {
+    applyParams:
+      crud.fromParent ?
+        {
           bodyKey: relation.referencedKey,
           paramsKey: crudInformationGetParamName(parent),
         }
@@ -346,15 +338,15 @@ function crudHandlersCreate(generateContext, file, crud) {
       traverseParents: false,
     }),
     oneToOneChecks:
-      relation?.subType === "oneToOneReverse"
-        ? {
-            builder: crudQueryBuilderGet(crud, {
-              includeOwnParam: true,
-              includeJoins: false,
-              traverseParents: true,
-            }),
-          }
-        : undefined,
+      relation?.subType === "oneToOneReverse" ?
+        {
+          builder: crudQueryBuilderGet(crud, {
+            includeOwnParam: true,
+            includeJoins: false,
+            traverseParents: true,
+          }),
+        }
+      : undefined,
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
@@ -382,10 +374,7 @@ function crudHandlersUpdate(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   const data = {
-    handlerName: `${crud.group}Handlers.${crudInformationGetName(
-      crud,
-      "update",
-    )}`,
+    handlerName: `${crud.group}Handlers.${crudInformationGetName(crud, "update")}`,
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     builder: crudQueryBuilderGet(crud, {
       includeOwnParam: true,
@@ -411,10 +400,7 @@ function crudHandlersDelete(generateContext, file, crud) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   const data = {
-    handlerName: `${crud.group}Handlers.${crudInformationGetName(
-      crud,
-      "delete",
-    )}`,
+    handlerName: `${crud.group}Handlers.${crudInformationGetName(crud, "delete")}`,
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
     builder: crudQueryBuilderGet(crud, {
       includeOwnParam: true,

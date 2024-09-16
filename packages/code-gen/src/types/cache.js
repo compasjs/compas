@@ -78,7 +78,7 @@ export function typesCacheGet(generateContext, type, options) {
  * Get the already used type names for the provided type.
  *
  * @param {import("../generated/common/types.js").StructureTypeSystemDefinition} type
- * @returns {string[]}
+ * @returns {Array<string>}
  */
 export function typesCacheGetUsedNames(type) {
   const subCache = typeCache.get(type);
@@ -91,7 +91,7 @@ export function typesCacheGetUsedNames(type) {
  *
  * @param {{
  *   validatorState: "input"|"output",
- *   targets: string[],
+ *   targets: Array<string>,
  *   hasOptionalityDifferences: boolean,
  * }} options
  * @returns {string}

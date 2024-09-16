@@ -79,7 +79,7 @@ export function validateCliCommandDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["name"];
+        const convertedString1 = value["name"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -108,7 +108,7 @@ export function validateCliCommandDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = value["shortDescription"];
+        const convertedString2 = value["shortDescription"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.shortDescription`] = {
             key: "validator.string",
@@ -135,7 +135,7 @@ export function validateCliCommandDefinition(value) {
         result["longDescription"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["longDescription"];
+        const convertedString3 = value["longDescription"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.longDescription`] = {
             key: "validator.string",
@@ -414,10 +414,10 @@ export function validateCliCommandDefinition(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap8 = {};
-            /** @type {any[]} */
-            let intermediateResult8 = [];
-            /** @type {any|any[]} */
-            let intermediateValue8 = value["watchSettings"]["extensions"];
+            /** @type {Array<any>} */
+            const intermediateResult8 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue8 = value["watchSettings"]["extensions"];
 
             if (!Array.isArray(intermediateValue8)) {
               errorMap[`$.watchSettings.extensions`] = {
@@ -436,7 +436,7 @@ export function validateCliCommandDefinition(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString8 = intermediateValue8[i8];
+                  const convertedString8 = intermediateValue8[i8];
                   if (typeof convertedString8 !== "string") {
                     intermediateErrorMap8[`$.${i8}`] = {
                       key: "validator.string",
@@ -475,10 +475,10 @@ export function validateCliCommandDefinition(value) {
           } else {
             /** @type {ValidatorErrorMap} */
             const intermediateErrorMap9 = {};
-            /** @type {any[]} */
-            let intermediateResult9 = [];
-            /** @type {any|any[]} */
-            let intermediateValue9 = value["watchSettings"]["ignorePatterns"];
+            /** @type {Array<any>} */
+            const intermediateResult9 = [];
+            /** @type {any | Array<any>} */
+            const intermediateValue9 = value["watchSettings"]["ignorePatterns"];
 
             if (!Array.isArray(intermediateValue9)) {
               errorMap[`$.watchSettings.ignorePatterns`] = {
@@ -497,7 +497,7 @@ export function validateCliCommandDefinition(value) {
                   };
                 } else {
                   /** @type {string} */
-                  let convertedString9 = intermediateValue9[i9];
+                  const convertedString9 = intermediateValue9[i9];
                   if (typeof convertedString9 !== "string") {
                     intermediateErrorMap9[`$.${i9}`] = {
                       key: "validator.string",
@@ -532,10 +532,10 @@ export function validateCliCommandDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap8 = {};
-        /** @type {any[]} */
-        let intermediateResult8 = [];
-        /** @type {any|any[]} */
-        let intermediateValue8 = value["subCommands"];
+        /** @type {Array<any>} */
+        const intermediateResult8 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue8 = value["subCommands"];
 
         if (!Array.isArray(intermediateValue8)) {
           errorMap[`$.subCommands`] = {
@@ -581,10 +581,10 @@ export function validateCliCommandDefinition(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap9 = {};
-        /** @type {any[]} */
-        let intermediateResult9 = [];
-        /** @type {any|any[]} */
-        let intermediateValue9 = value["flags"];
+        /** @type {Array<any>} */
+        const intermediateResult9 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue9 = value["flags"];
 
         if (!Array.isArray(intermediateValue9)) {
           errorMap[`$.flags`] = {
@@ -708,7 +708,7 @@ export function validateCliFlagDefinition(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString1 = value["name"];
+        const convertedString1 = value["name"];
         if (typeof convertedString1 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -755,7 +755,7 @@ export function validateCliFlagDefinition(value) {
         result["description"] = undefined;
       } else {
         /** @type {string} */
-        let convertedString3 = value["description"];
+        const convertedString3 = value["description"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.description`] = {
             key: "validator.string",
@@ -959,7 +959,7 @@ export function validateCliFlagDefinition(value) {
             result["value"]["specification"] = "boolean";
           } else {
             /** @type {string} */
-            let convertedString6 = value["value"]["specification"];
+            const convertedString6 = value["value"]["specification"];
             if (typeof convertedString6 !== "string") {
               errorMap[`$.value.specification`] = {
                 key: "validator.string",
@@ -1063,7 +1063,7 @@ export function validateCliCompletion(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -1111,7 +1111,7 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString3 = intermediateValue2["type"];
+            const convertedString3 = intermediateValue2["type"];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
@@ -1149,7 +1149,7 @@ export function validateCliCompletion(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -1197,7 +1197,7 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString3 = intermediateValue2["type"];
+            const convertedString3 = intermediateValue2["type"];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
@@ -1235,7 +1235,7 @@ export function validateCliCompletion(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -1287,7 +1287,7 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString3 = intermediateValue2["type"];
+            const convertedString3 = intermediateValue2["type"];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
@@ -1318,7 +1318,7 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString4 = intermediateValue2["name"];
+            const convertedString4 = intermediateValue2["name"];
             if (typeof convertedString4 !== "string") {
               intermediateErrorMap2[`$.name`] = {
                 key: "validator.string",
@@ -1341,7 +1341,7 @@ export function validateCliCompletion(value) {
             intermediateResult2["description"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString5 = intermediateValue2["description"];
+            const convertedString5 = intermediateValue2["description"];
             if (typeof convertedString5 !== "string") {
               intermediateErrorMap2[`$.description`] = {
                 key: "validator.string",
@@ -1377,7 +1377,7 @@ export function validateCliCompletion(value) {
       /** @type {any} */
       let intermediateResult2 = undefined;
       /** @type {any} */
-      let intermediateValue2 = value;
+      const intermediateValue2 = value;
 
       if (intermediateValue2 === null || intermediateValue2 === undefined) {
         intermediateErrorMap2[`$`] = {
@@ -1429,7 +1429,7 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString3 = intermediateValue2["type"];
+            const convertedString3 = intermediateValue2["type"];
             if (typeof convertedString3 !== "string") {
               intermediateErrorMap2[`$.type`] = {
                 key: "validator.string",
@@ -1460,7 +1460,7 @@ export function validateCliCompletion(value) {
             };
           } else {
             /** @type {string} */
-            let convertedString4 = intermediateValue2["specification"];
+            const convertedString4 = intermediateValue2["specification"];
             if (typeof convertedString4 !== "string") {
               intermediateErrorMap2[`$.specification`] = {
                 key: "validator.string",
@@ -1499,7 +1499,7 @@ export function validateCliCompletion(value) {
             intermediateResult2["description"] = undefined;
           } else {
             /** @type {string} */
-            let convertedString5 = intermediateValue2["description"];
+            const convertedString5 = intermediateValue2["description"];
             if (typeof convertedString5 !== "string") {
               intermediateErrorMap2[`$.description`] = {
                 key: "validator.string",

@@ -2,13 +2,12 @@ import { isNil } from "@compas/stdlib";
 import { benchLogger, state } from "./state.js";
 
 /**
- * @param {import("./state.js").BenchState[]} state
+ * @param {Array<import("./state.js").BenchState>} state
  * @returns {Promise<void>}
  */
 export async function runBenchmarks(state) {
   let i = 0;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     if (isNil(state[i])) {
       // Give a chance for async imports to run

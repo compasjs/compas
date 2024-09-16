@@ -23,8 +23,8 @@
  * @property {boolean|undefined} [hasFailure]
  * @property {string} name
  * @property {TestCallback|undefined} [callback]
- * @property {TestAssertion[]} assertions
- * @property {TestState[]} children
+ * @property {Array<TestAssertion>} assertions
+ * @property {Array<TestState>} children
  * @property {Error|undefined} [caughtException]
  */
 

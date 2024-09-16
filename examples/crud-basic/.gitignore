@@ -27,6 +27,7 @@ out
 
 # Generator output
 structure.sql
+generated
 
 # Local environment
 .env.local

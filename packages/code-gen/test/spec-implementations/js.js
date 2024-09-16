@@ -22,11 +22,11 @@ mainFn(import.meta, async (logger) => {
  * @property {number} passed
  * @property {number} skipped
  * @property {number} failed
- * @property {{
+ * @property {Array<{
  *   name: string,
  *   index: number,
- * }[]} suites
- * @property {any[]} extraLogs
+ * }>} suites
+ * @property {Array<any>} extraLogs
  */
 
 /**
@@ -150,9 +150,7 @@ function runGenerate(result, spec) {
   } catch (e) {
     result.failed++;
     result.extraLogs.push(
-      `Failed to generate ('${spec.structureDirectory}') at ${formatSpecPath(
-        result,
-      )}`,
+      `Failed to generate ('${spec.structureDirectory}') at ${formatSpecPath(result)}`,
     );
     result.extraLogs.push(AppError.format(e));
   }

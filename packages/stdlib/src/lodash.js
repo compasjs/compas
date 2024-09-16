@@ -35,7 +35,7 @@ export function isPlainObject(item) {
  * @function
  * @since 0.1.0
  *
- * @type {(target: any, ...sources: any[]) => object}
+ * @type {(target: any, ...sources: Array<any>) => object}
  * @param {object} target The destination object.
  * @param {...object} [sources] The source objects.
  * @returns {object} Returns `object`.

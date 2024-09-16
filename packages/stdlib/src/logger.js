@@ -113,8 +113,9 @@ export function loggerBuildRootInstance(destination) {
  * @returns {Logger}
  */
 export function newLogger(options) {
-  const context = options?.ctx
-    ? {
+  const context =
+    options?.ctx ?
+      {
         ...globalContext,
         ...options.ctx,
       }
@@ -212,7 +213,10 @@ export function loggerDetermineDefaultDestination() {
   let printer = environment.COMPAS_LOG_PRINTER;
 
   if (isNil(printer)) {
-    printer = isGitHubActions ? "github-actions" : isProd ? "ndjson" : "pretty";
+    printer =
+      isGitHubActions ? "github-actions"
+      : isProd ? "ndjson"
+      : "pretty";
   }
 
   if (!["github-actions", "ndjson", "pretty"].includes(printer)) {

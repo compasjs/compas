@@ -168,16 +168,14 @@ function crudTypesItem(generateContext, crud, options) {
 
     // @ts-expect-error
     crudTypesItem(generateContext, inlineCrud, {
-      name: `${upperCaseFirst(inlineCrud.fromParent?.field)}Inline${
-        options.name
-      }`,
+      name: `${upperCaseFirst(inlineCrud.fromParent?.field)}Inline${options.name}`,
       type: options.type,
     });
 
     const inlineType =
-      options.type === "readable"
-        ? crudInformationGetReadableType(inlineCrud)
-        : crudInformationGetWritableType(inlineCrud);
+      options.type === "readable" ?
+        crudInformationGetReadableType(inlineCrud)
+      : crudInformationGetWritableType(inlineCrud);
 
     if (relation.subType === "oneToMany") {
       // oneToMany always results in an array type, the other relation types return a
@@ -339,8 +337,9 @@ function crudTypesListRoute(generateContext, crud) {
     tags: [],
     invalidations: [],
     docString: `Generated list route for '${model.name}'.`,
-    params: paramsType
-      ? new ReferenceType(crud.group, paramsType.name).build()
+    params:
+      paramsType ?
+        new ReferenceType(crud.group, paramsType.name).build()
       : undefined,
     query: new ReferenceType(crud.group, queryType.name).build(),
     body: new ReferenceType(crud.group, bodyType.name).build(),
@@ -430,9 +429,9 @@ function crudTypesSingleRoute(generateContext, crud) {
   const routeName = crudInformationGetName(crud, "single");
   const routePath = crudInformationGetPath(
     crud,
-    isNil(relation) || relation.subType === "oneToMany"
-      ? `/:${crudInformationGetParamName(crud)}/single`
-      : "/single",
+    isNil(relation) || relation.subType === "oneToMany" ?
+      `/:${crudInformationGetParamName(crud)}/single`
+    : "/single",
   );
 
   const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
@@ -456,8 +455,9 @@ function crudTypesSingleRoute(generateContext, crud) {
     tags: [],
     invalidations: [],
     docString: `Generated single route for '${model.name}'.`,
-    params: paramsType
-      ? new ReferenceType(crud.group, paramsType.name).build()
+    params:
+      paramsType ?
+        new ReferenceType(crud.group, paramsType.name).build()
       : undefined,
     response: new ReferenceType(crud.group, responseType.name).build(),
   };
@@ -512,8 +512,9 @@ function crudTypesCreateRoute(generateContext, crud) {
       skipSingleRoute: true,
     }),
     docString: `Generated create route for '${model.name}'.`,
-    params: paramsType
-      ? new ReferenceType(crud.group, paramsType.name).build()
+    params:
+      paramsType ?
+        new ReferenceType(crud.group, paramsType.name).build()
       : undefined,
     body: new ReferenceType(writableType.group, writableType.name).build(),
     response: new ReferenceType(crud.group, responseType.name).build(),
@@ -546,9 +547,9 @@ function crudTypesUpdateRoute(generateContext, crud) {
   const routeName = crudInformationGetName(crud, "update");
   const routePath = crudInformationGetPath(
     crud,
-    isNil(relation) || relation.subType === "oneToMany"
-      ? `/:${crudInformationGetParamName(crud)}/update`
-      : "/update",
+    isNil(relation) || relation.subType === "oneToMany" ?
+      `/:${crudInformationGetParamName(crud)}/update`
+    : "/update",
   );
 
   const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
@@ -572,8 +573,9 @@ function crudTypesUpdateRoute(generateContext, crud) {
     tags: [],
     invalidations: crudTypesRouteInvalidations(crud),
     docString: `Generated update route for '${model.name}'.`,
-    params: paramsType
-      ? new ReferenceType(crud.group, paramsType.name).build()
+    params:
+      paramsType ?
+        new ReferenceType(crud.group, paramsType.name).build()
       : undefined,
     body: new ReferenceType(writableType.group, writableType.name).build(),
     response: new ReferenceType(crud.group, responseType.name).build(),
@@ -605,9 +607,9 @@ function crudTypesDeleteRoute(generateContext, crud) {
   const routeName = crudInformationGetName(crud, "delete");
   const routePath = crudInformationGetPath(
     crud,
-    isNil(relation) || relation.subType === "oneToMany"
-      ? `/:${crudInformationGetParamName(crud)}/delete`
-      : "/delete",
+    isNil(relation) || relation.subType === "oneToMany" ?
+      `/:${crudInformationGetParamName(crud)}/delete`
+    : "/delete",
   );
 
   const paramsType = crudTypesBuildParamsObject(crud, { includeSelf: true });
@@ -631,8 +633,9 @@ function crudTypesDeleteRoute(generateContext, crud) {
     tags: [],
     invalidations: crudTypesRouteInvalidations(crud),
     docString: `Generated delete route for '${model.name}'.`,
-    params: paramsType
-      ? new ReferenceType(crud.group, paramsType.name).build()
+    params:
+      paramsType ?
+        new ReferenceType(crud.group, paramsType.name).build()
       : undefined,
     response: new ReferenceType(crud.group, responseType.name).build(),
   };
@@ -655,7 +658,7 @@ function crudTypesDeleteRoute(generateContext, crud) {
 /**
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  * @param {{ skipSingleRoute: boolean}} [options]
- * @returns {import("../generated/common/types.d.ts").StructureRouteInvalidationDefinition[]}
+ * @returns {Array<import("../generated/common/types.d.ts").StructureRouteInvalidationDefinition>}
  */
 function crudTypesRouteInvalidations(
   crud,
@@ -663,7 +666,7 @@ function crudTypesRouteInvalidations(
     skipSingleRoute: false,
   },
 ) {
-  /** @type {import("../generated/common/types.d.ts").StructureRouteInvalidationDefinition[]} */
+  /** @type {Array<import("../generated/common/types.d.ts").StructureRouteInvalidationDefinition>} */
   const invalidations = [];
 
   if (crud.routeOptions.listRoute) {

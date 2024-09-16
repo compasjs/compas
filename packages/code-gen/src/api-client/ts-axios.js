@@ -185,9 +185,9 @@ export function tsAxiosGenerateFunction(
 
     for (const key of Object.keys(type.keys)) {
       const fieldType =
-        type.keys[key].type === "reference"
-          ? structureResolveReference(generateContext.structure, type.keys[key])
-          : type.keys[key];
+        type.keys[key].type === "reference" ?
+          structureResolveReference(generateContext.structure, type.keys[key])
+        : type.keys[key];
 
       const isOptional = referenceUtilsGetProperty(
         generateContext,

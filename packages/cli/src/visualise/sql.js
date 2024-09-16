@@ -44,9 +44,7 @@ export function formatGraphOfSql(codeGen, structure) {
           entity.name
         }:"${0}" [label="${label}"];\n`;
       } else {
-        src += `${entity.name}:"${entityKeys.indexOf(
-          relation.ownKey,
-        )}_right" -> ${
+        src += `${entity.name}:"${entityKeys.indexOf(relation.ownKey)}_right" -> ${
           relation.reference.reference.name
         }:"${0}" [label="${label}"];\n`;
       }
@@ -69,11 +67,11 @@ export function formatGraphOfSql(codeGen, structure) {
 function formatEntityTable(codeGen, entity) {
   const keys = codeGen.getSortedKeysForType(entity);
   const colorForKey = (key) =>
-    key !== codeGen.getPrimaryKeyWithType(entity).key
-      ? ["createdAt", "updatedAt", "deletedAt"].indexOf(key) !== -1
-        ? 96
-        : 92
-      : 70;
+    key !== codeGen.getPrimaryKeyWithType(entity).key ?
+      ["createdAt", "updatedAt", "deletedAt"].indexOf(key) !== -1 ?
+        96
+      : 92
+    : 70;
   const formatType = (key) => {
     // @ts-ignore
     const type = entity.keys[key].reference ?? entity.keys[key];

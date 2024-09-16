@@ -4,8 +4,8 @@ import { cliCommandGetRoot } from "./command.js";
 /**
  * Get the sub commands and flags in separate arrays
  *
- * @param {string[]} args
- * @returns {{ commandArgs: string[], flagArgs: string[] }}
+ * @param {Array<string>} args
+ * @returns {{commandArgs: Array<string>, flagArgs: Array<string>}}
  */
 export function cliParserSplitArgs(args) {
   for (let i = 0; i < args.length; ++i) {
@@ -52,7 +52,7 @@ export function cliParserGetKnownFlags(command) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("./types.js").CliResolved} cli
- * @param {string[]} args
+ * @param {Array<string>} args
  * @returns {Promise<import("@compas/stdlib").Either<import("./types.js").CliResolved, {
  *     message: string,
  * }>>}
@@ -133,7 +133,7 @@ export async function cliParserParseCommand(event, cli, args) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("./types.js").CliResolved} command
- * @param {string[]} userInput
+ * @param {Array<string>} userInput
  * @returns {Promise<import("@compas/stdlib").Either<any, { message: string }>>}
  */
 export async function cliParserParseFlags(event, command, userInput) {
@@ -170,17 +170,16 @@ export async function cliParserParseFlags(event, command, userInput) {
       return {
         error: {
           // TODO: always add help text for flags of this specific command?
-          message: `Unknown flag: '${rawFlag.join(
-            "=",
-          )}'.\n\n${genericErrorMessage}`,
+          message: `Unknown flag: '${rawFlag.join("=")}'.\n\n${genericErrorMessage}`,
         },
       };
     }
 
     const nextInput = peek();
-    const rawValue = isNil(rawFlag[1])
-      ? nextInput.startsWith("--") || nextInput === "-h"
-        ? undefined
+    const rawValue =
+      isNil(rawFlag[1]) ?
+        nextInput.startsWith("--") || nextInput === "-h" ?
+          undefined
         : next()
       : rawFlag[1];
 

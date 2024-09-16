@@ -24,9 +24,9 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
   ctx.set("Accept-Ranges", "bytes");
   ctx.set(
     "Last-Modified",
-    typeof file.updatedAt === "string"
-      ? file.updatedAt
-      : file.updatedAt.toString(),
+    typeof file.updatedAt === "string" ?
+      file.updatedAt
+    : file.updatedAt.toString(),
   );
   ctx.set("Cache-Control", options.cacheControlHeader);
   ctx.set("Content-Type", file.contentType);
@@ -120,7 +120,8 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
  * Prefers to transform the image to `image/webp` or `image/avif` if the client supports
  * it.
  *
- * The transform happens via {@link jobFileTransformImage}. When a transform is not yet possible, the original file is send out, while a transform job is inserted.
+ * The transform happens via {@link jobFileTransformImage}. When a transform is not yet possible,
+ * the original file is send out, while a transform job is inserted.
  *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
@@ -154,7 +155,9 @@ export async function fileSendTransformedImageResponse(
   const acceptsWebp = !!ctx.accepts("image/webp");
   const acceptsAvif = !!ctx.accepts("image/avif");
   const transformKey = `compas-image-transform-${
-    acceptsWebp ? "webp" : acceptsAvif ? "avif" : "none"
+    acceptsWebp ? "webp"
+    : acceptsAvif ? "avif"
+    : "none"
   }-w${w}-q${q}`;
 
   const loadedFile =
@@ -169,11 +172,10 @@ export async function fileSendTransformedImageResponse(
         options: {
           w,
           q,
-          contentType: acceptsWebp
-            ? "image/webp"
-            : acceptsAvif
-              ? "image/avif"
-              : file.contentType,
+          contentType:
+            acceptsWebp ? "image/webp"
+            : acceptsAvif ? "image/avif"
+            : file.contentType,
         },
       },
     });
@@ -202,11 +204,10 @@ export async function fileSendTransformedImageResponse(
         options: {
           w,
           q,
-          contentType: acceptsWebp
-            ? "image/webp"
-            : acceptsAvif
-              ? "image/avif"
-              : file.contentType,
+          contentType:
+            acceptsWebp ? "image/webp"
+            : acceptsAvif ? "image/avif"
+            : file.contentType,
         },
       },
     });

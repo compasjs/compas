@@ -90,8 +90,9 @@ export async function createTestPostgresDatabase(rawOpts, options = {}) {
     const sql = await newPostgresConnection({
       ...connectionOptions,
       database: name,
-      debug: options?.verboseSql
-        ? newLogger({ ctx: { type: "sql" } }).error
+      debug:
+        options?.verboseSql ?
+          newLogger({ ctx: { type: "sql" } }).error
         : undefined,
     });
 

@@ -107,9 +107,7 @@ export function jobFileGeneratePlaceholderImage(s3Client, bucketName) {
                                          "base64",
                                        )}"`}::jsonb), '{originalHeight}',
                                        ${String(metadata.height)}::jsonb),
-                                     '{originalWidth}', ${String(
-                                       metadata.width,
-                                     )}::jsonb)
+                                     '{originalWidth}', ${String(metadata.width)}::jsonb)
                 WHERE
                   id = ${file.id}`.exec(sql);
 

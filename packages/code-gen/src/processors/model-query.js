@@ -119,21 +119,19 @@ export function modelQueryResultTypes(generateContext) {
       const relationInfo = modelRelationGetInformation(relation);
 
       const joinedType =
-        relation.subType === "oneToMany"
-          ? new ArrayType().values(
-              new ReferenceType(
-                "queryResult",
-                `${relationInfo.modelOwn.group}${upperCaseFirst(
-                  relationInfo.modelOwn.name,
-                )}`,
-              ),
-            )
-          : new ReferenceType(
+        relation.subType === "oneToMany" ?
+          new ArrayType().values(
+            new ReferenceType(
               "queryResult",
               `${relationInfo.modelOwn.group}${upperCaseFirst(
                 relationInfo.modelOwn.name,
               )}`,
-            );
+            ),
+          )
+        : new ReferenceType(
+            "queryResult",
+            `${relationInfo.modelOwn.group}${upperCaseFirst(relationInfo.modelOwn.name)}`,
+          );
 
       type.keys[relationInfo.virtualKeyNameInverse] = joinedType
         .optional()

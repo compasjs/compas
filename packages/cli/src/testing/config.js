@@ -31,7 +31,7 @@ const packageJsonPath = pathJoin(process.cwd(), "package.json");
  * @property {number} randomizeRounds Randomizes the test file order after the first
  *   round
  * @property {number} parallelCount The number of test files to process in parallel
- * @property {string[]} ignoreDirectories Subdirectories to skip, when looking for all
+ * @property {Array<string>} ignoreDirectories Subdirectories to skip, when looking for all
  *   test files
  * @property {boolean} coverage Run the test while collecting coverage results.
  * @property {boolean} singleFileMode Should be set when only a single test should run

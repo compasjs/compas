@@ -38,8 +38,9 @@ export function crudEventsGenerate(generateContext) {
     return;
   }
 
-  // TODO: the types used in the generated events expect global types, handle support for global or imported types.
-  //  The types will be generated tho by for example the router generator, but that is implicitly done instead of the explicitness that we want.
+  // TODO: the types used in the generated events expect global types, handle support for global or
+  // imported types. The types will be generated tho by for example the router generator, but that
+  // is implicitly done instead of the explicitness that we want.
 
   for (const crud of structureCrud(generateContext)) {
     const file = crudEventsFile(generateContext, crud);
@@ -110,12 +111,10 @@ function crudEventsList(generateContext, file, crud) {
   const model = crudInformationGetModel(crud);
   const { primaryKeyName, primaryKeyDefinition } = modelKeyGetPrimary(model);
   const primaryKeyType =
-    primaryKeyDefinition.type === "reference"
-      ? structureResolveReference(
-          generateContext.structure,
-          primaryKeyDefinition,
-        ).type
-      : primaryKeyDefinition.type;
+    primaryKeyDefinition.type === "reference" ?
+      structureResolveReference(generateContext.structure, primaryKeyDefinition)
+        .type
+    : primaryKeyDefinition.type;
 
   importCollector.destructure("@compas/stdlib", "eventStart");
   importCollector.destructure("@compas/stdlib", "eventStop");

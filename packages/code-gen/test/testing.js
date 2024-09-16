@@ -63,7 +63,7 @@ function testGeneratorDefaultGenerateOptions(options) {
  *   generateOptions?:
  *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
- * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
+ * @param {(T: import("@compas/code-gen").TypeCreator) => (Array<(import("../src/builders/TypeBuilder.js").TypeBuilder | import("@compas/code-gen").TypeBuilderLike)>)} builders
  * @returns {void}
  */
 export function testGeneratorError(t, options, builders) {
@@ -88,9 +88,7 @@ export function testGeneratorError(t, options, builders) {
     // @ts-expect-error
     if (options.pass) {
       t.fail(
-        `Expected the input to pass. Found '${JSON.stringify(
-          AppError.format(e),
-        )}'`,
+        `Expected the input to pass. Found '${JSON.stringify(AppError.format(e))}'`,
       );
       return;
     }
@@ -146,7 +144,7 @@ export function testGeneratorError(t, options, builders) {
  *   generateOptions?:
  *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
- * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
+ * @param {(T: import("@compas/code-gen").TypeCreator) => (Array<(import("../src/builders/TypeBuilder.js").TypeBuilder | import("@compas/code-gen").TypeBuilderLike)>)} builders
  * @returns {Promise<{ value: any, error: Record<string, ValidatorErrorMap> }>}
  */
 export async function testGeneratorType(t, options, builders) {
@@ -196,7 +194,7 @@ export async function testGeneratorType(t, options, builders) {
  *   generateOptions?:
  *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
- * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
+ * @param {(T: import("@compas/code-gen").TypeCreator) => (Array<(import("../src/builders/TypeBuilder.js").TypeBuilder | import("@compas/code-gen").TypeBuilderLike)>)} builders
  * @returns {void}
  */
 export function testGeneratorStaticOutput(t, options, builders) {
@@ -237,8 +235,8 @@ export function testGeneratorStaticOutput(t, options, builders) {
  *   generateOptions?:
  *   import("../src/generated/common/types.js").StructureGenerateOptions|undefined,
  * }} options
- * @param {(T: import("@compas/code-gen").TypeCreator) => ((import("../src/builders/TypeBuilder.js").TypeBuilder|import("@compas/code-gen").TypeBuilderLike)[])} builders
- * @returns {import("../src/generate.js").OutputFile[]}
+ * @param {(T: import("@compas/code-gen").TypeCreator) => (Array<(import("../src/builders/TypeBuilder.js").TypeBuilder | import("@compas/code-gen").TypeBuilderLike)>)} builders
+ * @returns {Array<import("../src/generate.js").OutputFile>}
  */
 export function testGeneratorStaticFiles(t, options, builders) {
   const generator = new Generator(t.log);

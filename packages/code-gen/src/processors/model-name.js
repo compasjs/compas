@@ -11,7 +11,7 @@ import { structureModels } from "./models.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function modelNameValidation(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   const modelNames = {};

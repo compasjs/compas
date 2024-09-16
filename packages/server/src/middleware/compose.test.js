@@ -120,7 +120,7 @@ test("Koa Compose", (t) => {
     try {
       await compose([])({});
       t.pass();
-    } catch (e) {
+    } catch (_e) {
       t.fail("should not throw on empty array");
     }
   });
@@ -195,7 +195,7 @@ test("Koa Compose", (t) => {
         arr.push(6);
         await next();
         arr.push(7);
-      } catch (err) {
+      } catch (_err) {
         arr.push(2);
       }
       arr.push(3);

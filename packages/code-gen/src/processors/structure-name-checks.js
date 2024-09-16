@@ -10,7 +10,7 @@ import { typeDefinitionTraverse } from "./type-definition-traverse.js";
  * Sourced from
  * https://github.com/microsoft/TypeScript/blob/66ecfcbd04b8234855a673adb85e5cff3f8458d4/src/compiler/types.ts#L112
  *
- * @type {string[]}
+ * @type {Array<string>}
  */
 const reservedGroupNames = [
   // Reserved words
@@ -67,7 +67,7 @@ const reservedGroupNames = [
 /**
  * Object keys are reserved to support atomic updates in the database queries.
  *
- * @type {string[]}
+ * @type {Array<string>}
  */
 const reservedObjectKeys = [
   "$negate",
@@ -92,7 +92,7 @@ const reservedObjectKeys = [
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function structureNameChecks(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   // Check all groups names, when these are conflicting we can't generate things like;
@@ -159,7 +159,7 @@ export function structureNameCheckForGroup(group) {
  * that we support.
  *
  * @param {import("../generated/common/types.js").StructureObjectDefinition} type
- * @param {string[]} typeStack
+ * @param {Array<string>} typeStack
  */
 export function structureNameChecksForObject(type, typeStack) {
   for (const key of Object.keys(type.keys)) {
@@ -167,9 +167,7 @@ export function structureNameChecksForObject(type, typeStack) {
       throw AppError.serverError({
         message: `Object ${stringFormatNameForError(
           type,
-        )} is using a reserved key '${key}'. Found via ${typeStack.join(
-          " -> ",
-        )}`,
+        )} is using a reserved key '${key}'. Found via ${typeStack.join(" -> ")}`,
       });
     }
   }

@@ -1,9 +1,9 @@
 import { readdir, readFile } from "node:fs/promises";
-import { Generator } from "@compas/code-gen";
-import { AppError, exec } from "@compas/stdlib";
 import { applyCliStructure } from "../gen/cli.js";
 import { extendWithCodeGen } from "../gen/code-gen.js";
 import { applyStoreStructure } from "../gen/store.js";
+import { Generator } from "@compas/code-gen";
+import { AppError, exec } from "@compas/stdlib";
 
 export function generateCli(logger) {
   const generator = new Generator(logger);

@@ -166,10 +166,10 @@ export function fileContextRemoveLinePrefix(file, prefixLength) {
  * Convert files from the context to output files.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @returns {import("../generate.js").OutputFile[]}
+ * @returns {Array<import("../generate.js").OutputFile>}
  */
 export function fileContextConvertToOutputFiles(generateContext) {
-  /** @type {import("../generate.js").OutputFile[]} */
+  /** @type {Array<import("../generate.js").OutputFile>} */
   const result = [];
 
   for (const [relativePath, file] of generateContext.files.entries()) {

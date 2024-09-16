@@ -90,8 +90,9 @@ async function loadRoutes() {
         id: it.id,
         title: it.title,
         contents: it.contents,
-        headerImage: it.headerImage
-          ? fileFormatMetadata(it.headerImage, {
+        headerImage:
+          it.headerImage ?
+            fileFormatMetadata(it.headerImage, {
               url: `http://${ctx.request.host}/post/${it.id}/header-image`,
             })
           : undefined,

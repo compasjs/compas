@@ -8,8 +8,7 @@ bench("query - append simple and exec", (b) => {
   for (let i = 0; i < b.N; ++i) {
     const q = query``.append(query`foo`);
     q.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });
@@ -21,8 +20,7 @@ bench("query - append with parameter and exec", (b) => {
     const q = query``.append(query`foo ${true}`);
 
     q.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });
@@ -41,8 +39,7 @@ bench("query - append empty where clause and exec", async (b) => {
     ${sessionStoreWhere({}, { shortName: "ss.", skipValidator: true })}`);
 
     q.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });
@@ -70,8 +67,7 @@ bench("query - append where clause and exec", async (b) => {
     )}`);
 
     q.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });
@@ -89,8 +85,7 @@ bench("query - querySessionStore ", async (b) => {
     const q = querySessionStore({});
 
     q.queryPart.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });
@@ -110,8 +105,7 @@ bench("query - querySessionStore with where ", async (b) => {
     });
 
     q.queryPart.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });
@@ -132,8 +126,7 @@ bench("query - querySessionStore nested ", async (b) => {
     });
 
     q.queryPart.exec({
-      // eslint-disable-next-line no-unused-vars
-      unsafe(query, parameters) {
+      unsafe(_query, _parameters) {
         // Don't do any work here
       },
     });

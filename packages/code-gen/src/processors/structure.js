@@ -55,7 +55,7 @@ export function structureAddType(structure, type, options) {
  * ```
  *
  * @param {import("../generated/common/types.js").StructureStructure} structure
- * @returns {(import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureNamedTypeDefinition>)[]}
+ * @returns {Array<(import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureNamedTypeDefinition>)>}
  */
 export function structureNamedTypes(structure) {
   // @ts-expect-error
@@ -71,7 +71,7 @@ export function structureNamedTypes(structure) {
  * references that point to not included groups and will try to include them.
  *
  * @param {import("../generated/common/types.js").StructureStructure} structure
- * @param {string[]} groups
+ * @param {Array<string>} groups
  * @returns {import("../generated/common/types.js").StructureStructure}
  */
 export function structureExtractGroups(structure, groups) {
@@ -99,7 +99,7 @@ export function structureExtractGroups(structure, groups) {
  * @param {import("../generated/common/types.js").StructureStructure} structure
  */
 export function structureValidateReferences(structure) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   for (const namedType of structureNamedTypes(structure)) {

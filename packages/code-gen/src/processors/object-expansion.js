@@ -15,7 +15,7 @@ import { typeDefinitionTraverse } from "./type-definition-traverse.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function objectExpansionExecute(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   for (const namedType of structureNamedTypes(generateContext.structure)) {
@@ -98,9 +98,9 @@ export function objectExpansionOmit(structure, namedType) {
     (type, callback) => {
       if (type.type === "omit") {
         const referencedType =
-          type.reference.type === "reference"
-            ? structureResolveReference(structure, type.reference)
-            : type.reference;
+          type.reference.type === "reference" ?
+            structureResolveReference(structure, type.reference)
+          : type.reference;
 
         if (referencedType.type !== "object") {
           throw AppError.serverError({
@@ -176,9 +176,9 @@ export function objectExpansionPick(structure, namedType) {
     (type, callback) => {
       if (type.type === "pick") {
         const referencedType =
-          type.reference.type === "reference"
-            ? structureResolveReference(structure, type.reference)
-            : type.reference;
+          type.reference.type === "reference" ?
+            structureResolveReference(structure, type.reference)
+          : type.reference;
 
         if (referencedType.type !== "object") {
           throw AppError.serverError({

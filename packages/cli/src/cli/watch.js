@@ -87,7 +87,7 @@ You can also add a compas config file at 'config/compas.{js,json}' to specify pr
 
 /**
  *
- * @param {import("./types.js").CliResolved[]} commands
+ * @param {Array<import("./types.js").CliResolved>} commands
  */
 function cliWatchFilterCommands(commands) {
   const result = [];
@@ -175,8 +175,8 @@ export function cliWatchCheckForReservedKeys(command) {
 
 /**
  *
- * @param {string[]} commandArgs
- * @param {string[]} flagArgs
+ * @param {Array<string>} commandArgs
+ * @param {Array<string>} flagArgs
  * @returns {boolean}
  */
 export function cliWatchShouldRun(commandArgs, flagArgs) {
@@ -188,7 +188,7 @@ export function cliWatchShouldRun(commandArgs, flagArgs) {
  *
  * @param {import("@compas/stdlib").InsightEvent} event
  * @param {import("./types.js").CliResolved} cli
- * @param {string[]} userInput
+ * @param {Array<string>} userInput
  * @returns {Promise<import("@compas/stdlib").Either<string, { message: string }>>}
  */
 export async function cliWatchExec(event, cli, userInput) {

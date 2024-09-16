@@ -6,12 +6,12 @@ import { environment, exec, isNil, spawn } from "@compas/stdlib";
  *   containersForContext: {
  *     [p: string]: {
  *       createCommand: string,
- *       pullCommand: [string,string[]]
+ *       pullCommand: [string,Array<string>]
  *     }
  *   },
- *   globalContainers: string[]
+ *   globalContainers: Array<string>
  * } & {
- *   containersOnHost: string[],
+ *   containersOnHost: Array<string>,
  * }} DockerContext
  */
 
@@ -250,9 +250,7 @@ async function startContainers(logger, state, context) {
   }
 
   logger.info(
-    `Starting ${
-      Object.keys(context.containersForContext).length
-    } container(s).`,
+    `Starting ${Object.keys(context.containersForContext).length} container(s).`,
   );
 
   const { exitCode } = await spawn(`docker`, [
@@ -386,7 +384,7 @@ async function cleanContainers(logger, state, context) {
   }
 
   /**
-   * @type {string[]}
+   * @type {Array<string>}
    */
   // @ts-ignore
   const projects = state.flags.projects.map((it) =>
@@ -403,11 +401,12 @@ async function cleanContainers(logger, state, context) {
     }
   }
 
-  const psqlCommand = context.useHost
-    ? `psql --user postgres`
-    : `docker exec -i ${Object.keys(context.containersForContext).find((it) =>
+  const psqlCommand =
+    context.useHost ? `psql --user postgres` : (
+      `docker exec -i ${Object.keys(context.containersForContext).find((it) =>
         it.startsWith("compas-postgres-"),
-      )} psql --user postgres`;
+      )} psql --user postgres`
+    );
 
   const { stdout } = await exec(
     `echo "SELECT 'DROP DATABASE ' || quote_ident(datname) || ';' FROM pg_database WHERE (${projects

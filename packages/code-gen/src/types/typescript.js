@@ -498,7 +498,7 @@ function typesTypescriptFormatTypeName(generateContext, type, options) {
   }
 
   let numberedSuffix = 1;
-  // eslint-disable-next-line no-constant-condition
+
   while (true) {
     const currentName = `${withSuffix}_${numberedSuffix}`;
 

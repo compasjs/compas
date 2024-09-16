@@ -1,7 +1,7 @@
 # Compas examples
 
-Examples of how to do various tasks with Compas. These examples can be used via
-with `create-compas` to quickly start a new project.
+Examples of how to do various tasks with Compas. These examples can be used via with
+`create-compas` to quickly start a new project.
 
 ```shell
 # Via NPM
@@ -15,13 +15,13 @@ yarn create compas
 Any Compas provided template can be used via
 `npx create-compas@latest --template [template-name]`
 
-- **[default](https://github.com/compasjs/compas/tree/main/examples/default):**
-  This is the default template that is used. It contains boilerplate and
-  conventions to create your api's.
+- **[default](https://github.com/compasjs/compas/tree/main/examples/default):** This is
+  the default template that is used. It contains boilerplate and conventions to create
+  your api's.
 
-- **[with-auth](https://github.com/compasjs/compas/tree/main/examples/with-auth):**
-  Based on the default teplate, adds a basic register and loginc system, using
-  `@compas/store` powered sessions.
+- **[with-auth](https://github.com/compasjs/compas/tree/main/examples/with-auth):** Based
+  on the default teplate, adds a basic register and loginc system, using `@compas/store`
+  powered sessions.
 
 ## Synopsis
 

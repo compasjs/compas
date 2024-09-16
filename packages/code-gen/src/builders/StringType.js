@@ -123,7 +123,7 @@ export class StringType extends TypeBuilder {
   }
 
   /**
-   * @param {string[]} characterArray
+   * @param {Array<string>} characterArray
    * @returns {StringType}
    */
   disallowCharacters(characterArray) {

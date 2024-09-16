@@ -1,10 +1,10 @@
-import { spawn } from "@compas/stdlib";
 import {
   generateCli,
   generateCodeGen,
   generateExamples,
   generateStore,
 } from "../src/generate.js";
+import { spawn } from "@compas/stdlib";
 
 /**
  * @type {CliCommandDefinitionInput}

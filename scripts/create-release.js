@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
-import { environment } from "@compas/stdlib";
 import axios from "axios";
+import { environment } from "@compas/stdlib";
 
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */
 export const cliDefinition = {

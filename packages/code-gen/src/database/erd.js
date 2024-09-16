@@ -58,9 +58,9 @@ function databaseERDWriteModel(generateContext, file, model) {
   for (const key of Object.keys(model.keys)) {
     const field = model.keys[key];
     const type =
-      field.type === "reference"
-        ? structureResolveReference(generateContext.structure, field).type
-        : field.type;
+      field.type === "reference" ?
+        structureResolveReference(generateContext.structure, field).type
+      : field.type;
 
     fileWriteInline(file, `${type} ${key}`);
 

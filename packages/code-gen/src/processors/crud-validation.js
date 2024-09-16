@@ -23,7 +23,7 @@ import { structureResolveReference } from "./structure.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function crudValidation(generateContext) {
-  /** @type {import("@compas/stdlib").AppError[]} */
+  /** @type {Array<import("@compas/stdlib").AppError>} */
   const errors = [];
 
   for (const crud of structureCrud(generateContext)) {

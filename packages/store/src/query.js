@@ -16,16 +16,16 @@ import {
  *
  * @template T
  *
- * @param {TemplateStringsArray | string[]} strings
+ * @param {TemplateStringsArray | Array<string>} strings
  * @param {...(import("../types/advanced-types.d.ts").QueryPartArg
- *   | import("../types/advanced-types.d.ts").QueryPartArg[]
+ *   | Array<import("../types/advanced-types.d.ts").QueryPartArg>
  *   )} values
  * @returns {import("../types/advanced-types.d.ts").QueryPart<T>}
  */
 export function query(strings, ...values) {
-  /** @type {string[]} */
+  /** @type {Array<string>} */
   let _strings = [];
-  /** @type {QueryPartArg[]} */
+  /** @type {Array<QueryPartArg>} */
   const _values = [];
 
   const result = /** @type {QueryPart<T>} */ {
@@ -137,7 +137,7 @@ export function isQueryPart(query) {
  *
  * @param {import("../types/advanced-types.d.ts").QueryPart<any>} queryPart
  * @param {{ interpolateParameters?: boolean }} options
- * @returns {string|{ sql?: string, params?: *[] }}
+ * @returns {string | {sql?: string, params?: Array<*>}}
  */
 export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
   if (!isQueryPart(queryPart)) {
@@ -153,7 +153,7 @@ export function stringifyQueryPart(queryPart, { interpolateParameters } = {}) {
     /** @type {any} */ {
       unsafe(queryString, parameters) {
         sql = queryString.trim().replaceAll(/\s+/g, " ");
-        params = /** @type {any[]} */ parameters;
+        params = /** @type {Array<any>} */ parameters;
       },
     },
   );

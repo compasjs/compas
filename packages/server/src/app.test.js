@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { mainTestFn, test } from "@compas/cli";
 import {
   AppError,

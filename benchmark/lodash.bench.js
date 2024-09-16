@@ -4,19 +4,19 @@ import { isNil, isPlainObject } from "@compas/stdlib";
 mainBenchFn(import.meta);
 
 bench("isNil", (b) => {
-  let y;
+  let _y;
   for (let i = 0; i < b.N; ++i) {
-    y = isNil(true);
-    // eslint-disable-next-line no-unused-vars
-    y = isNil(undefined);
+    _y = isNil(true);
+
+    _y = isNil(undefined);
   }
 });
 
 bench("isPlainObject", (b) => {
-  let y;
+  let _y;
   for (let i = 0; i < b.N; ++i) {
-    y = isPlainObject({});
-    // eslint-disable-next-line no-unused-vars
-    y = isPlainObject(true);
+    _y = isPlainObject({});
+
+    _y = isPlainObject(true);
   }
 });

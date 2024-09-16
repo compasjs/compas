@@ -106,9 +106,9 @@ export async function cliExecutor(logger, state) {
   } = await import("@compas/store");
 
   const sqlOptions = await loadConnectionSettings(
-    typeof state.flags.connectionSettings === "string"
-      ? state.flags.connectionSettings
-      : undefined,
+    typeof state.flags.connectionSettings === "string" ?
+      state.flags.connectionSettings
+    : undefined,
   );
 
   if (sqlOptions.error) {

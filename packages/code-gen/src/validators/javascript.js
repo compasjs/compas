@@ -359,12 +359,12 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
       /** @type {import("../generated/common/types.d.ts").StructureObjectDefinition} */
       // @ts-expect-error
       const resolvedSubType =
-        subType.type === "reference"
-          ? structureResolveReference(
-              validatorState.generateContext.structure,
-              subType,
-            )
-          : subType;
+        subType.type === "reference" ?
+          structureResolveReference(
+            validatorState.generateContext.structure,
+            subType,
+          )
+        : subType;
 
       const oneOf = referenceUtilsGetProperty(
         validatorState.generateContext,
@@ -662,10 +662,7 @@ export function validatorJavascriptArray(file, type, validatorState) {
 
   fileWrite(
     file,
-    `${errorKey.substring(
-      0,
-      errorKey.length - 2,
-    )}$\{errorKey.substring(1)}\`] = ${
+    `${errorKey.substring(0, errorKey.length - 2)}$\{errorKey.substring(1)}\`] = ${
       validatorStateCopy.errorMapVariableName
     }[errorKey];`,
   );
@@ -1140,8 +1137,9 @@ export function validatorJavascriptNumber(file, type, validatorState) {
 
   fileBlockEnd(file);
 
-  const conditionPartial = !type.validator.floatingPoint
-    ? `|| !Number.isInteger(${intermediateVariable})`
+  const conditionPartial =
+    !type.validator.floatingPoint ?
+      `|| !Number.isInteger(${intermediateVariable})`
     : "";
   const subType = type.validator.floatingPoint ? "float" : "int";
 
@@ -1254,7 +1252,8 @@ export function validatorJavascriptObject(file, type, validatorState) {
     validatorState.outputTypeOptions.targets.includes("jsAxios") ||
     validatorState.outputTypeOptions.targets.includes("tsAxios");
 
-  // Allows api clients to skip strict validation, even if the type enforces it to prevent unnecessary breaking changes when new keys are added to the response.
+  // Allows api clients to skip strict validation, even if the type enforces it to prevent
+  // unnecessary breaking changes when new keys are added to the response.
   if (
     type.validator.strict &&
     (!isApiClientValidator ||

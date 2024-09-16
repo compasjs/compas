@@ -58,7 +58,7 @@ ${Object.entries(scriptCollection)
         },
 
         /**
-         * @returns {{ completions: import("../../generated/common/types.js").CliCompletion[] }}
+         * @returns {{completions: Array<import("../../generated/common/types.js").CliCompletion>}}
          */
         completions: () => {
           const scriptCollection = collectScripts();

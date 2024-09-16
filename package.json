@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint . --fix --cache --cache-location .cache/eslint/",
+    "lint:ci": "eslint .",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"
@@ -11,6 +13,7 @@
     "node": ">=18"
   },
   "devDependencies": {
+    "@lightbase/eslint-config": "1.0.1",
     "@types/node": "22.5.4",
     "@types/react": "18.3.5",
     "@tanstack/react-query": "5.56.2",
@@ -38,9 +41,5 @@
     "type": "git",
     "url": "git+https://github.com/compasjs/compas.git"
   },
-  "prettier": "@compas/eslint-plugin/prettierrc",
-  "workspaces": [
-    "packages/*",
-    "examples/*"
-  ]
+  "workspaces": ["packages/*", "examples/*"]
 }

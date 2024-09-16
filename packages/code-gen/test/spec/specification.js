@@ -4,7 +4,7 @@ import { specificationStructureDirectory } from "./structure.js";
  * @typedef {object} CodeGenSpecificationSuite
  * @property {"suite"} type
  * @property {string} name
- * @property {CodeGenSpecification[]} components
+ * @property {Array<CodeGenSpecification>} components
  */
 
 /**

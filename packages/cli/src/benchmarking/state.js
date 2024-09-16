@@ -16,7 +16,7 @@
  * @property {string} name
  * @property {number} N
  * @property {string} operationTimeNs
- * @property {number[]} executionTimesNs
+ * @property {Array<number>} executionTimesNs
  * @property {BenchCallback} callback
  * @property {Error|undefined} [caughtException]
  */
@@ -33,7 +33,7 @@ export let benchLogger = undefined;
 export let areBenchRunning = false;
 
 /**
- * @type {BenchState[]}
+ * @type {Array<BenchState>}
  */
 export const state = [];
 

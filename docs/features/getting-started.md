@@ -7,8 +7,8 @@ Let's start by checking the system and project requirements;
 - Yarn or NPM installed
 - Using ES Modules by adding `{ type: "module" }` in your package.json
 
-To initialize a new Compas project, execute one of the following command in a
-new directory
+To initialize a new Compas project, execute one of the following command in a new
+directory
 
 ```shell
 # Via NPM
@@ -20,8 +20,8 @@ yarn create compas
 
 :::tip
 
-Run `npx create-compas@latest --help` / `yarn create compas --help` for all the
-available options.
+Run `npx create-compas@latest --help` / `yarn create compas --help` for all the available
+options.
 
 :::
 

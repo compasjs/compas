@@ -114,7 +114,7 @@ function createMessageDispatcher(logger, testConfig, callback) {
  * Format failed result for all tests run by this worker. This is only used if one of the
  * workers reports a failure.
  *
- * @returns {string[]}
+ * @returns {Array<string>}
  */
 function getFailedResult() {
   const result = [];

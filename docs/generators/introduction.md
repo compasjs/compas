@@ -1,8 +1,8 @@
 # Code generators
 
-Compas' main feature set consists of target aware code generation. By utilizing
-a structure or specification, Compas can generate type definitions, validators,
-API clients, routers and database clients.
+Compas' main feature set consists of target aware code generation. By utilizing a
+structure or specification, Compas can generate type definitions, validators, API clients,
+routers and database clients.
 
 ## Installation
 
@@ -48,13 +48,12 @@ Or a typed Koa compatible router which can be used like:
 
 ```js
 userHandlers.list = async (ctx) => {
-  // ctx.body is typed as `string[]`
-  ctx.body = ["user 1", "user 2"];
+	// ctx.body is typed as `string[]`
+	ctx.body = ["user 1", "user 2"];
 };
 ```
 
-And a bunch more! Start discovering the Compas code generators by reading more
-about
+And a bunch more! Start discovering the Compas code generators by reading more about
 
 - [The supported targets](/generators/targets.html)
 - [Generating API client from an OpenAPI specification](/generators/importing-structure.html)

@@ -54,7 +54,7 @@ export function apiClientGenerator(generateContext) {
   const target = apiClientFormatTarget(generateContext);
   const wrapperTarget = apiClientFormatWrapperTarget(generateContext);
 
-  /** @type {import("../generated/common/types.js").StructureAnyDefinitionTarget[]} */
+  /** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
   const typeTargets = [generateContext.options.targetLanguage, target];
 
   if (distilledTargetInfo.isAxios) {

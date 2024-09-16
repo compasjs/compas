@@ -89,16 +89,12 @@ export function validateQueryResultStoreFile(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -148,7 +144,7 @@ export function validateQueryResultStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString3 = value["bucketName"];
+        const convertedString3 = value["bucketName"];
         if (typeof convertedString3 !== "string") {
           errorMap[`$.bucketName`] = {
             key: "validator.string",
@@ -170,7 +166,7 @@ export function validateQueryResultStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString4 = value["contentType"];
+        const convertedString4 = value["contentType"];
         if (typeof convertedString4 !== "string") {
           errorMap[`$.contentType`] = {
             key: "validator.string",
@@ -192,7 +188,7 @@ export function validateQueryResultStoreFile(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString5 = value["name"];
+        const convertedString5 = value["name"];
         if (typeof convertedString5 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -508,7 +504,7 @@ export function validateQueryResultStoreJob(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString6 = value["name"];
+        const convertedString6 = value["name"];
         if (typeof convertedString6 !== "string") {
           errorMap[`$.name`] = {
             key: "validator.string",
@@ -691,16 +687,12 @@ export function validateQueryResultStoreSessionStore(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -711,7 +703,7 @@ export function validateQueryResultStoreSessionStore(value) {
         };
       } else {
         /** @type {string} */
-        let convertedString2 = value["checksum"];
+        const convertedString2 = value["checksum"];
         if (typeof convertedString2 !== "string") {
           errorMap[`$.checksum`] = {
             key: "validator.string",
@@ -816,10 +808,10 @@ export function validateQueryResultStoreSessionStore(value) {
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap8 = {};
-        /** @type {any[]} */
-        let intermediateResult8 = [];
-        /** @type {any|any[]} */
-        let intermediateValue8 = value["accessTokens"];
+        /** @type {Array<any>} */
+        const intermediateResult8 = [];
+        /** @type {any | Array<any>} */
+        const intermediateValue8 = value["accessTokens"];
 
         if (!Array.isArray(intermediateValue8)) {
           errorMap[`$.accessTokens`] = {
@@ -945,16 +937,12 @@ export function validateQueryResultStoreSessionStoreToken(value) {
             patternExplanation: "UUID",
           };
         } else if (value["id"].length === 32) {
-          result["id"] =
-            value["id"].slice(0, 8) +
-            "-" +
-            value["id"].slice(8, 12) +
-            "-" +
-            value["id"].slice(12, 16) +
-            "-" +
-            value["id"].slice(16, 20) +
-            "-" +
-            value["id"].slice(20);
+          result["id"] = `${value["id"].slice(0, 8)}-${value["id"].slice(
+            8,
+            12,
+          )}-${value["id"].slice(12, 16)}-${value["id"].slice(16, 20)}-${value[
+            "id"
+          ].slice(20)}`;
         } else {
           result["id"] = value["id"];
         }
@@ -975,7 +963,7 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["session"];
+          const intermediateValue4 = value["session"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -994,16 +982,15 @@ export function validateQueryResultStoreSessionStoreToken(value) {
                 patternExplanation: "UUID",
               };
             } else if (intermediateValue4.length === 32) {
-              intermediateResult4 =
-                intermediateValue4.slice(0, 8) +
-                "-" +
-                intermediateValue4.slice(8, 12) +
-                "-" +
-                intermediateValue4.slice(12, 16) +
-                "-" +
-                intermediateValue4.slice(16, 20) +
-                "-" +
-                intermediateValue4.slice(20);
+              intermediateResult4 = `${intermediateValue4.slice(
+                0,
+                8,
+              )}-${intermediateValue4.slice(8, 12)}-${intermediateValue4.slice(
+                12,
+                16,
+              )}-${intermediateValue4.slice(16, 20)}-${intermediateValue4.slice(
+                20,
+              )}`;
             } else {
               intermediateResult4 = intermediateValue4;
             }
@@ -1022,7 +1009,7 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           /** @type {any} */
           let intermediateResult4 = undefined;
           /** @type {any} */
-          let intermediateValue4 = value["session"];
+          const intermediateValue4 = value["session"];
 
           if (intermediateValue4 === null || intermediateValue4 === undefined) {
             intermediateErrorMap4[`$`] = {
@@ -1092,7 +1079,7 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["refreshToken"];
+          const intermediateValue6 = value["refreshToken"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateResult6 = undefined;
@@ -1109,16 +1096,15 @@ export function validateQueryResultStoreSessionStoreToken(value) {
                 patternExplanation: "UUID",
               };
             } else if (intermediateValue6.length === 32) {
-              intermediateResult6 =
-                intermediateValue6.slice(0, 8) +
-                "-" +
-                intermediateValue6.slice(8, 12) +
-                "-" +
-                intermediateValue6.slice(12, 16) +
-                "-" +
-                intermediateValue6.slice(16, 20) +
-                "-" +
-                intermediateValue6.slice(20);
+              intermediateResult6 = `${intermediateValue6.slice(
+                0,
+                8,
+              )}-${intermediateValue6.slice(8, 12)}-${intermediateValue6.slice(
+                12,
+                16,
+              )}-${intermediateValue6.slice(16, 20)}-${intermediateValue6.slice(
+                20,
+              )}`;
             } else {
               intermediateResult6 = intermediateValue6;
             }
@@ -1137,7 +1123,7 @@ export function validateQueryResultStoreSessionStoreToken(value) {
           /** @type {any} */
           let intermediateResult6 = undefined;
           /** @type {any} */
-          let intermediateValue6 = value["refreshToken"];
+          const intermediateValue6 = value["refreshToken"];
 
           if (intermediateValue6 === null || intermediateValue6 === undefined) {
             intermediateErrorMap6[`$`] = {

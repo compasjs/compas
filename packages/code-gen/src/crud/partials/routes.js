@@ -35,9 +35,9 @@ ${data.handlerName} = async (ctx) => {
   }List(newEventFromEvent(ctx.event), sql, listBuilder);
   
   ${
-    data.hasTransformContext
-      ? `const transformContext = ${data.crudName}TransformContext ? await ${data.crudName}TransformContext(ctx) : undefined;`
-      : ""
+    data.hasTransformContext ?
+      `const transformContext = ${data.crudName}TransformContext ? await ${data.crudName}TransformContext(ctx) : undefined;`
+    : ""
   }
   
   ctx.body = {
@@ -67,14 +67,12 @@ ${data.handlerName} = async (ctx) => {
   }SinglePreModifier(newEventFromEvent(ctx.event), ctx, builder);
 
   
-  const item = await ${
-    data.crudName
-  }Single(newEventFromEvent(ctx.event), sql, builder);
+  const item = await ${data.crudName}Single(newEventFromEvent(ctx.event), sql, builder);
   
   ${
-    data.hasTransformContext
-      ? `const transformContext = ${data.crudName}TransformContext ? await ${data.crudName}TransformContext(ctx) : undefined;`
-      : ""
+    data.hasTransformContext ?
+      `const transformContext = ${data.crudName}TransformContext ? await ${data.crudName}TransformContext(ctx) : undefined;`
+    : ""
   }
   
   ctx.body = {
@@ -105,9 +103,9 @@ export const crudPartialRouteCreate = (data) => `
 ${data.handlerName} = async (ctx) => {
     const builder = ${data.builder};
     ${
-      data.oneToOneChecks
-        ? `const oneToOneBuilder = ${data.oneToOneChecks.builder};`
-        : ``
+      data.oneToOneChecks ?
+        `const oneToOneBuilder = ${data.oneToOneChecks.builder};`
+      : ``
     }
     ${data.crudName}CreatePreModifier && await ${
       data.crudName
@@ -116,13 +114,13 @@ ${data.handlerName} = async (ctx) => {
     });
 
   ${
-    data.applyParams
-      ? `ctx.validatedBody.${data.applyParams.bodyKey} = ctx.validatedParams.${data.applyParams.paramsKey};`
-      : ``
+    data.applyParams ?
+      `ctx.validatedBody.${data.applyParams.bodyKey} = ctx.validatedParams.${data.applyParams.paramsKey};`
+    : ``
   }
   ${
-    data.oneToOneChecks
-      ? `
+    data.oneToOneChecks ?
+      `
   try {
     const exists = await ${data.crudName}Single(newEventFromEvent(ctx.event), sql, oneToOneBuilder);
     if (exists) {
@@ -134,7 +132,7 @@ ${data.handlerName} = async (ctx) => {
     }
   }
 `
-      : ``
+    : ``
   }
   
   const item = await sql.begin(sql => ${
@@ -142,9 +140,9 @@ ${data.handlerName} = async (ctx) => {
   }Create(newEventFromEvent(ctx.event), sql, ctx.validatedBody, builder));
   
   ${
-    data.hasTransformContext
-      ? `const transformContext = ${data.crudName}TransformContext ? await ${data.crudName}TransformContext(ctx) : undefined;`
-      : ""
+    data.hasTransformContext ?
+      `const transformContext = ${data.crudName}TransformContext ? await ${data.crudName}TransformContext(ctx) : undefined;`
+    : ""
   }
 
   ctx.body = {

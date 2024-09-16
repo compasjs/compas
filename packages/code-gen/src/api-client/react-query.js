@@ -131,7 +131,8 @@ export function reactQueryGetApiClientFile(generateContext, route) {
   importCollector.destructure("../common/api-client-wrapper", "Pretty");
 
   if (distilledTargetInfo.useGlobalClients) {
-    // Import the global clients, this has affect on a bunch of the generated api's where we don't have to accept these arguments
+    // Import the global clients, this has affect on a bunch of the generated api's where we don't
+    // have to accept these arguments
     if (distilledTargetInfo.isAxios) {
       importCollector.destructure(`../common/api-client`, "axiosInstance");
     } else if (distilledTargetInfo.isFetch) {
@@ -189,12 +190,8 @@ export function reactQueryGenerateFunction(
 ) {
   const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
 
-  const hookName = `use${upperCaseFirst(route.group)}${upperCaseFirst(
-    route.name,
-  )}`;
-  const apiName = `api${upperCaseFirst(route.group)}${upperCaseFirst(
-    route.name,
-  )}`;
+  const hookName = `use${upperCaseFirst(route.group)}${upperCaseFirst(route.name)}`;
+  const apiName = `api${upperCaseFirst(route.group)}${upperCaseFirst(route.name)}`;
 
   if (route.body) {
     const body = structureResolveReference(
@@ -264,24 +261,22 @@ export function reactQueryGenerateFunction(
       contextNames.paramsTypeName,
       contextNames.queryTypeName,
       contextNames.bodyTypeName,
-      withRequestConfig
-        ? `{ requestConfig?: ${
-            distilledTargetInfo.isAxios
-              ? `AxiosRequestConfig`
-              : distilledTargetInfo.isFetch
-                ? `RequestInit`
-                : "unknown"
-          }${
-            route.response && !distilledTargetInfo.skipResponseValidation
-              ? `, skipResponseValidation?: boolean`
-              : ""
-          } }`
-        : undefined,
-      withQueryOptions
-        ? `{ queryOptions?: Omit<UseQueryOptions<${
-            contextNames.responseTypeName ?? "unknown"
-          }, AppErrorResponse, TData>, "queryFn"|"queryKey"> }`
-        : undefined,
+      withRequestConfig ?
+        `{ requestConfig?: ${
+          distilledTargetInfo.isAxios ? `AxiosRequestConfig`
+          : distilledTargetInfo.isFetch ? `RequestInit`
+          : "unknown"
+        }${
+          route.response && !distilledTargetInfo.skipResponseValidation ?
+            `, skipResponseValidation?: boolean`
+          : ""
+        } }`
+      : undefined,
+      withQueryOptions ?
+        `{ queryOptions?: Omit<UseQueryOptions<${
+          contextNames.responseTypeName ?? "unknown"
+        }, AppErrorResponse, TData>, "queryFn"|"queryKey"> }`
+      : undefined,
     ].filter((it) => !!it);
 
     if (list.length === 0) {
@@ -293,7 +288,8 @@ export function reactQueryGenerateFunction(
     const requiredKeys = reactQueryGetRequiredFields(generateContext, route);
 
     if (requiredKeys.length > 0 && !requireAllParams) {
-      // We can just wrap it in an Partial which makes all required keys optional instead of writing them all out
+      // We can just wrap it in an Partial which makes all required keys optional instead of
+      // writing them all out
 
       return `Pretty<Partial<${result}>>`;
     }
@@ -396,23 +392,18 @@ export function reactQueryGenerateFunction(
     return result;
   };
 
-  const apiInstanceArgument = distilledTargetInfo.useGlobalClients
-    ? ""
-    : distilledTargetInfo.isAxios
-      ? `axiosInstance: AxiosInstance,`
-      : distilledTargetInfo.isFetch
-        ? "fetchFn: FetchFn,"
-        : "";
-  const apiInstanceParameter = distilledTargetInfo.useGlobalClients
-    ? ""
-    : distilledTargetInfo.isAxios
-      ? "axiosInstance,"
-      : distilledTargetInfo.isFetch
-        ? "fetchFn,"
-        : "";
-  const queryClientArgument = distilledTargetInfo.useGlobalClients
-    ? ""
-    : `queryClient: QueryClient,`;
+  const apiInstanceArgument =
+    distilledTargetInfo.useGlobalClients ? ""
+    : distilledTargetInfo.isAxios ? `axiosInstance: AxiosInstance,`
+    : distilledTargetInfo.isFetch ? "fetchFn: FetchFn,"
+    : "";
+  const apiInstanceParameter =
+    distilledTargetInfo.useGlobalClients ? ""
+    : distilledTargetInfo.isAxios ? "axiosInstance,"
+    : distilledTargetInfo.isFetch ? "fetchFn,"
+    : "";
+  const queryClientArgument =
+    distilledTargetInfo.useGlobalClients ? "" : `queryClient: QueryClient,`;
 
   if (route.method === "GET" || route.idempotent) {
     fileWriteInline(
@@ -456,18 +447,12 @@ export function reactQueryGenerateFunction(
     fileWriteInline(
       file,
       `return useQuery({
-        queryKey: ${hookName}.queryKey(${
-          routeHasMandatoryInputs ? "opts" : ""
-        }),`,
+        queryKey: ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),`,
     );
     fileWrite(
       file,
       `queryFn: ({ signal }) => {
-${reactQueryCheckIfRequiredVariablesArePresent(
-  generateContext,
-  hookName,
-  route,
-)}
+${reactQueryCheckIfRequiredVariablesArePresent(generateContext, hookName, route)}
 
 opts.requestConfig ??= {};
 opts.requestConfig.signal = signal;
@@ -496,13 +481,13 @@ ${hookName}.baseKey = (): QueryKey => ["${route.group}", "${route.name}"];
  */
 ${hookName}.queryKey = (
   ${
-    routeHasMandatoryInputs
-      ? `opts: ${joinedArgumentType({
-          withQueryOptions: false,
-          withRequestConfig: false,
-          requireAllParams: false,
-        })},`
-      : ""
+    routeHasMandatoryInputs ?
+      `opts: ${joinedArgumentType({
+        withQueryOptions: false,
+        withRequestConfig: false,
+        requireAllParams: false,
+      })},`
+    : ""
   }
 ): QueryKey => [
   ...${hookName}.baseKey(),
@@ -581,13 +566,13 @@ ${hookName}.queryKey = (
 ${hookName}.invalidate = (
   ${queryClientArgument}
   ${
-    routeHasMandatoryInputs
-      ? `opts: ${joinedArgumentType({
-          withQueryOptions: false,
-          withRequestConfig: false,
-          requireAllParams: false,
-        })},`
-      : ""
+    routeHasMandatoryInputs ?
+      `opts: ${joinedArgumentType({
+        withQueryOptions: false,
+        withRequestConfig: false,
+        requireAllParams: false,
+      })},`
+    : ""
   }
 ) => queryClient.invalidateQueries({ queryKey: ${hookName}.queryKey(${
         routeHasMandatoryInputs ? "opts" : ""
@@ -600,13 +585,13 @@ ${hookName}.invalidate = (
 ${hookName}.setQueryData = (
   ${queryClientArgument}
   ${
-    routeHasMandatoryInputs
-      ? `opts: ${joinedArgumentType({
-          withQueryOptions: false,
-          withRequestConfig: false,
-          requireAllParams: false,
-        })},`
-      : ""
+    routeHasMandatoryInputs ?
+      `opts: ${joinedArgumentType({
+        withQueryOptions: false,
+        withRequestConfig: false,
+        requireAllParams: false,
+      })},`
+    : ""
   }
   data: Updater<${contextNames.responseTypeName ?? "unknown"} | undefined, ${
     contextNames.responseTypeName ?? "unknown"
@@ -766,7 +751,7 @@ function reactQueryCheckIfRequiredVariablesArePresent(
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
- * @returns {string[]}
+ * @returns {Array<string>}
  */
 function reactQueryGetRequiredFields(generateContext, route) {
   const keysAffectingEnabled = [];

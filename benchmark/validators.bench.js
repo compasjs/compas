@@ -1,11 +1,9 @@
-/* eslint-disable import/no-unresolved */
-
 import { pathToFileURL } from "node:url";
+import FastestValidator from "fastest-validator";
+import { testTemporaryDirectory } from "../src/testing.js";
 import { bench, mainBenchFn } from "@compas/cli";
 import { TypeCreator, Generator } from "@compas/code-gen";
 import { mainFn, pathJoin } from "@compas/stdlib";
-import FastestValidator from "fastest-validator";
-import { testTemporaryDirectory } from "../src/testing.js";
 
 const simpleInput = {
   foo: true,
@@ -153,65 +151,57 @@ async function main(logger) {
   );
 
   bench("compas/experimental validator simple", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = experimentalValidators.validateBenchSimple(simpleInput);
+      _y = experimentalValidators.validateBenchSimple(simpleInput);
     }
   });
 
   bench("fastest-validator validator simple", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = fastestValidatorSimple(simpleInput);
+      _y = fastestValidatorSimple(simpleInput);
     }
   });
 
   bench("compas/experimental validator nest", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = experimentalValidators.validateBenchNested(nestedInput);
+      _y = experimentalValidators.validateBenchNested(nestedInput);
     }
   });
 
   bench("fastest-validator validator nested", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = fastestValidatorNested(nestedInput);
+      _y = fastestValidatorNested(nestedInput);
     }
   });
 
   bench("compas/experimental validator nested - 100 results", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = experimentalValidators.validateBenchNested(nestedInput100);
+      _y = experimentalValidators.validateBenchNested(nestedInput100);
     }
   });
 
   bench("fastest-validator validator nested - 100 results", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = fastestValidatorNested(nestedInput100);
+      _y = fastestValidatorNested(nestedInput100);
     }
   });
 
   bench("compas/experimental validator nested - 1000 results", (b) => {
-    let y;
+    let _y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
-      y = experimentalValidators.validateBenchNested(nestedInput1000);
+      _y = experimentalValidators.validateBenchNested(nestedInput1000);
     }
   });
 
   bench("fastest-validator validator nested - 1000 results", (b) => {
     let y;
     for (let i = 0; i < b.N; ++i) {
-      // eslint-disable-next-line no-unused-vars
       y = fastestValidatorNested(nestedInput1000);
     }
 

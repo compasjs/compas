@@ -8,8 +8,9 @@ import { isProduction, newLogger } from "@compas/stdlib";
  */
 export function cliLoggerCreate(cliName) {
   const logger = newLogger({
-    ctx: !isProduction()
-      ? { type: cliName }
+    ctx:
+      !isProduction() ?
+        { type: cliName }
       : {
           type: "cli",
           application: cliName,
