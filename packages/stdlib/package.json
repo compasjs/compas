@@ -15,7 +15,7 @@
   "keywords": ["compas", "stdlib", "standard", "logger"],
   "license": "MIT",
   "dependencies": {
-    "@types/node": "22.7.0",
+    "@types/node": "22.7.2",
     "dotenv": "16.4.5",
     "lodash.merge": "4.6.2",
     "pino": "9.4.0"
