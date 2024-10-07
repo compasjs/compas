@@ -15,8 +15,8 @@
   "keywords": ["compas", "s3", "postgres", "persistence"],
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-s3": "3.664.0",
-    "@aws-sdk/lib-storage": "3.664.0",
+    "@aws-sdk/client-s3": "3.665.0",
+    "@aws-sdk/lib-storage": "3.665.0",
     "@compas/stdlib": "0.14.1",
     "crc": "4.3.2",
     "cron-parser": "^4.9.0",
