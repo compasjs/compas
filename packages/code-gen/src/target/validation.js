@@ -84,25 +84,14 @@ export function targetValidateCombinationsTypescript(generateContext) {
   }
 
   if (generateContext.options.generators.router) {
-    throw AppError.serverError({
-      message: `Compas code-gen doesn't support generating a Typescript compatible router. It currently only supports generating a Koa compatible router when the 'targetLanguage' is set to 'js'. Feel free to open a feature request on the repository (https://github.com/compasjs/compas).`,
-    });
+    // Allows all available options
   }
 
   if (generateContext.options.generators.database) {
-    throw AppError.serverError({
-      message: `Compas code-gen doesn't support generating a Typescript compatible database client. It currently only supports generating a Postgres compatible database client when the 'targetLanguage' is set to 'js'. Feel free to open a feature request on the repository (https://github.com/compasjs/compas).`,
-    });
+    // Allows all available options
   }
 
   if (generateContext.options.generators.apiClient) {
-    if (
-      generateContext.options.generators.apiClient?.target.targetRuntime ===
-      "node.js"
-    ) {
-      throw AppError.serverError({
-        message: `Compas code-gen doesn't support generating a Typescript & Node.js compatible api client. It currently only supports generating a JavaScript & Node.js compatible api client. Feel free to open a feature request on the repository (https://github.com/compasjs/compas).`,
-      });
-    }
+    // Allows all available options
   }
 }

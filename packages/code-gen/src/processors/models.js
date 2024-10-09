@@ -32,8 +32,14 @@ export function modelQueryPartType() {
     jsPostgres: {
       validatorImport: `import { isQueryPart } from "@compas/store";`,
       validatorExpression: `isQueryPart($value$)`,
-      validatorInputType: `(any|import("@compas/store").QueryPart<any>)`,
+      validatorInputType: `(import("@compas/store").QueryPart<any>)`,
       validatorOutputType: `import("@compas/store").QueryPart<any>`,
+    },
+    tsPostgres: {
+      validatorImport: `import { isQueryPart } from "@compas/store";\nimport type { QueryPart } from "@compas/store";`,
+      validatorExpression: `isQueryPart($value$)`,
+      validatorInputType: `(QueryPart)`,
+      validatorOutputType: `(QueryPart)`,
     },
   });
 }

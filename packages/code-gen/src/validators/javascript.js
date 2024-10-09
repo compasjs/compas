@@ -121,6 +121,8 @@ export function validatorJavascriptGetFile(generateContext, type) {
  /**
   * @typedef {Record<string, any|undefined>} ValidatorErrorMap
   */
+  
+const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
  `,
   );
 
@@ -1011,10 +1013,7 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  fileBlockStart(
-    file,
-    `if (typeof ${valuePath} !== "object" || Array.isArray(${valuePath}))`,
-  );
+  fileBlockStart(file, `if (!isRecord(${valuePath}))`);
   fileWrite(
     file,
     `${errorKey} = {
@@ -1048,7 +1047,7 @@ export function validatorJavascriptGeneric(file, type, validatorState) {
   fileBlockStart(file, `for (let ${keyVariable} of Object.keys(${valuePath}))`);
 
   if (validatorState.jsHasInlineTypes) {
-    fileWrite(file, `let ${resultVariable}: any = undefined;`);
+    fileWrite(file, `let ${resultVariable}: string = "";`);
     fileWrite(file, `const ${errorMapVariable}: ValidatorErrorMap = {};`);
   } else {
     fileWrite(file, `/** @type {any} */`);
@@ -1231,10 +1230,7 @@ export function validatorJavascriptObject(file, type, validatorState) {
   const resultPath = formatResultPath(validatorState);
   const errorKey = formatErrorKey(validatorState);
 
-  fileBlockStart(
-    file,
-    `if (typeof ${valuePath} !== "object" || Array.isArray(${valuePath}))`,
-  );
+  fileBlockStart(file, `if (!isRecord(${valuePath}))`);
 
   fileWrite(
     file,
@@ -1384,7 +1380,7 @@ export function validatorJavascriptReference(
       const importCollector =
         JavascriptImportCollector.getImportCollector(file);
       importCollector.destructure(
-        `../${type.reference.group}/validators`,
+        `../${type.reference.group}/validators.js`,
         `validate${referredTypeName}`,
       );
     }

@@ -10,8 +10,17 @@ import { isQueryPart, query } from "./query.js";
  *     matcherKey: string,
  *     matcherType: "equal"|"notEqual"|"in"|"notIn"|"greaterThan"|"lowerThan"|
  *                    "like"|"iLike"|"notLike"|"notILike"|
- *                    "includeNotNull"|"isNull"|"isNotNull"|
- *                    "via"|"notExists",
+ *                    "includeNotNull"|"isNull"|"isNotNull",
+ *     relation: {
+ *       entityName: string,
+ *       shortName: string,
+ *       entityKey: string,
+ *       referencedKey: string,
+ *       where: () => EntityWhere,
+ *     },
+ *   }|{
+ *     matcherKey: string,
+ *     matcherType: "via"|"notExists",
  *     relation: {
  *       entityName: string,
  *       shortName: string,
@@ -261,7 +270,7 @@ export function generatedWhereBuilderHelper(
  * The input data is validated, so we can safely access it as 'any'.
  *
  * @param {EntityUpdate} entity
- * @param {*} input
+ * @param {any} input
  * @returns {import("../types/advanced-types.d.ts").QueryPart<Array<any>>}
  */
 export function generatedUpdateHelper(entity, input) {

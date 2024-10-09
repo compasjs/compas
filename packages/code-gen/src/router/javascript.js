@@ -15,7 +15,7 @@ import { JavascriptImportCollector } from "../target/javascript.js";
 export function javascriptRouteMatcher(generateContext, trie) {
   const file = fileContextCreateGeneric(
     generateContext,
-    "common/route-matcher.js",
+    `common/route-matcher.${generateContext.options.targetLanguage === "js" ? "js" : "ts"}`,
     {
       importCollector: new JavascriptImportCollector(),
     },
@@ -30,19 +30,28 @@ export function javascriptRouteMatcher(generateContext, trie) {
     " Match the route and params, based on the provided method and path.\n",
   );
 
-  fileWrite(file, ` @param {string} method`);
-  fileWrite(file, ` @param {string} path`);
+  if (generateContext.options.targetLanguage === "js") {
+    fileWrite(file, ` @param {string} method`);
+    fileWrite(file, ` @param {string} path`);
 
-  fileWrite(
-    file,
-    ` @returns {{ route: { group: string, name: string }, params: Record<string, string> }}`,
-  );
+    fileWrite(
+      file,
+      ` @returns {{ route: { group: string, name: string }, params: Record<string, string> }}`,
+    );
+  }
 
   fileWrite(file, "/");
   fileContextRemoveLinePrefix(file, 2);
 
   // Function body
-  fileBlockStart(file, `export function routeMatcher(method, path)`);
+  if (generateContext.options.targetLanguage === "js") {
+    fileBlockStart(file, `export function routeMatcher(method, path)`);
+  } else {
+    fileBlockStart(
+      file,
+      `export function routeMatcher(method: string, path: string): undefined|{ route: { group: string, name: string }, params: Record<string, string> }`,
+    );
+  }
 
   // Input normalization
   fileBlockStart(file, `if (!path.startsWith("/"))`);

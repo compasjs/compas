@@ -1,6 +1,7 @@
 import { fileWrite } from "./write.js";
 
 const importsPlaceholder = "$$_IMPORTS_$$";
+const typeImportsPlaceholder = "$$_TYPE_IMPORTS_$$";
 
 /**
  * Add a placeholder for writing the imports when finalizing the file. Not all files have
@@ -16,6 +17,9 @@ export function fileImportsAddPlaceholder(file) {
   if (file.importCollector) {
     fileWrite(file, importsPlaceholder);
   }
+  if (file.typeImportCollector) {
+    fileWrite(file, typeImportsPlaceholder);
+  }
 }
 
 /**
@@ -28,6 +32,13 @@ export function fileImportsStringifyImports(file) {
     file.contents = file.contents.replace(
       importsPlaceholder,
       file.importCollector.toString(),
+    );
+  }
+
+  if (file.typeImportCollector) {
+    file.contents = file.contents.replace(
+      typeImportsPlaceholder,
+      file.typeImportCollector.toString(),
     );
   }
 }

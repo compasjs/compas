@@ -28,14 +28,19 @@ export function tsAxiosGenerateCommonFile(generateContext) {
     `common/api-client.ts${includeWrapper ? "x" : ""}`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector: new JavascriptImportCollector(true),
     },
   );
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
+  const typeImportCollector = JavascriptImportCollector.getImportCollector(
+    file,
+    true,
+  );
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
     importCollector.raw(`import axios from "axios"`);
-    importCollector.destructure("axios", "AxiosInstance");
+    typeImportCollector.destructure("axios", "AxiosInstance");
 
     fileWrite(
       file,
@@ -92,19 +97,23 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
     `${route.group}/apiClient.ts`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector: new JavascriptImportCollector(true),
     },
   );
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
-  importCollector.destructure("axios", "AxiosRequestConfig");
+  const typeImportCollector = JavascriptImportCollector.getImportCollector(
+    file,
+    true,
+  );
+
+  typeImportCollector.destructure("axios", "AxiosRequestConfig");
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure(`../common/api-client`, "axiosInstance");
+    importCollector.destructure(`../common/api-client.js`, "axiosInstance");
   } else {
-    importCollector.destructure("axios", "AxiosInstance");
+    typeImportCollector.destructure("axios", "AxiosInstance");
   }
-
-  importCollector.destructure("../common/api-client", "AppErrorResponse");
 
   return file;
 }

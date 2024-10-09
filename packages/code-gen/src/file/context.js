@@ -27,6 +27,7 @@ import {
  *   own imports implementation. If this property is set, {@link
  *   fileContextCreateGeneric} will reserve a spot for the imports and call `toString()`
  *   when the file is finalized.
+ * @property {{ toString(): string }} [typeImportCollector] {@link importCollector} but for type imports
  * @property {string} calculatedLinePrefix The accumulated prefix to write on new lines.
  *   Can be mutated via {@link fileContextSetIndent}, {@link fileContextAddLinePrefix}
  *   and {@link fileContextRemoveLinePrefix}

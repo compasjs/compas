@@ -26,15 +26,22 @@ import { upperCaseFirst } from "../utils.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function jsKoaGetRouterFile(generateContext) {
-  let file = fileContextGetOptional(generateContext, `common/router.js`);
+  let file = fileContextGetOptional(
+    generateContext,
+    `common/router.${generateContext.options.targetLanguage}`,
+  );
 
   if (file) {
     return file;
   }
 
-  file = fileContextCreateGeneric(generateContext, `common/router.js`, {
-    importCollector: new JavascriptImportCollector(),
-  });
+  file = fileContextCreateGeneric(
+    generateContext,
+    `common/router.${generateContext.options.targetLanguage}`,
+    {
+      importCollector: new JavascriptImportCollector(),
+    },
+  );
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
   importCollector.destructure("@compas/stdlib", "AppError");
@@ -49,15 +56,22 @@ export function jsKoaGetRouterFile(generateContext) {
  * @param {string} group
  */
 export function jsKoaGetControllerFile(generateContext, group) {
-  let file = fileContextGetOptional(generateContext, `${group}/controller.js`);
+  let file = fileContextGetOptional(
+    generateContext,
+    `${group}/controller.${generateContext.options.targetLanguage}`,
+  );
 
   if (file) {
     return file;
   }
 
-  file = fileContextCreateGeneric(generateContext, `${group}/controller.js`, {
-    importCollector: new JavascriptImportCollector(),
-  });
+  file = fileContextCreateGeneric(
+    generateContext,
+    `${group}/controller.${generateContext.options.targetLanguage}`,
+    {
+      importCollector: new JavascriptImportCollector(),
+    },
+  );
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
   importCollector.destructure("@compas/stdlib", "AppError");
@@ -93,17 +107,19 @@ export function jsKoaPrepareContext(
       `  validatedBody: ${contextNames.bodyTypeName},\n`
     : "";
 
-  const ctxType = new AnyType(route.group, `${route.name}Ctx`)
-    .implementations({
-      js: {
-        validatorOutputType: `import("koa").ExtendableContext & {
+  const ctxTypeImplementation = {
+    validatorOutputType: `import("koa").ExtendableContext & {
   event: import("@compas/stdlib").InsightEvent,
   log: import("@compas/stdlib").Logger,${
     partial.length > 0 ? `\n  ${partial.trim()}` : ""
   }
 } & { body: ${contextNames.responseTypeName ?? "any"} }`,
-        validatorInputType: "any",
-      },
+    validatorInputType: "any",
+  };
+  const ctxType = new AnyType(route.group, `${route.name}Ctx`)
+    .implementations({
+      js: ctxTypeImplementation,
+      ts: ctxTypeImplementation,
     })
     .build();
 
@@ -113,7 +129,7 @@ export function jsKoaPrepareContext(
       input: "Input",
       output: "Validated",
     },
-    targets: ["js"],
+    targets: [generateContext.options.targetLanguage],
   });
 
   // @ts-expect-error
@@ -123,7 +139,7 @@ export function jsKoaPrepareContext(
       input: "Input",
       output: "Validated",
     },
-    targets: ["js"],
+    targets: [generateContext.options.targetLanguage],
   });
 
   contextNames[`ctxType`] = typesGeneratorUseTypeName(
@@ -132,14 +148,16 @@ export function jsKoaPrepareContext(
     contextNames[`ctxTypeName`],
   );
 
-  const fnType = new AnyType(route.group, `${route.name}Fn`)
-    .implementations({
-      js: {
-        validatorOutputType: `(
+  const fnTypeImplementation = {
+    validatorOutputType: `(
   ctx: ${upperCaseFirst(route.group ?? "")}${upperCaseFirst(route.name ?? "")}Ctx
 ) => void | Promise<void>`,
-        validatorInputType: "any",
-      },
+    validatorInputType: "any",
+  };
+  const fnType = new AnyType(route.group, `${route.name}Fn`)
+    .implementations({
+      js: fnTypeImplementation,
+      ts: fnTypeImplementation,
     })
     .build();
 
@@ -149,7 +167,7 @@ export function jsKoaPrepareContext(
       input: "Input",
       output: "Validated",
     },
-    targets: ["js"],
+    targets: [generateContext.options.targetLanguage],
   });
 
   // @ts-expect-error
@@ -159,7 +177,7 @@ export function jsKoaPrepareContext(
       input: "Input",
       output: "Validated",
     },
-    targets: ["js"],
+    targets: [generateContext.options.targetLanguage],
   });
 
   contextNames[`fnType`] = typesGeneratorUseTypeName(
@@ -181,23 +199,41 @@ export function jsKoaWriteHandlers(file, group, routes, contextNamesMap) {
 
   fileWrite(file, `${group} route handlers\n`);
 
-  fileWrite(file, `@type {{`);
-  fileContextSetIndent(file, 1);
+  if (file.relativePath.endsWith(".js")) {
+    fileWrite(file, `@type {{`);
+    fileContextSetIndent(file, 1);
 
-  for (const route of routes) {
-    const contextNames = contextNamesMap.get(route) ?? {};
+    for (const route of routes) {
+      const contextNames = contextNamesMap.get(route) ?? {};
 
-    fileWrite(file, `${route.name}: ${contextNames.fnType},`);
+      fileWrite(file, `${route.name}: ${contextNames.fnType},`);
+    }
+
+    fileContextSetIndent(file, -1);
+    fileWrite(file, `}}`);
   }
-
-  fileContextSetIndent(file, -1);
-  fileWrite(file, `}}`);
 
   fileContextRemoveLinePrefix(file, 1);
   fileWrite(file, "/");
   fileContextRemoveLinePrefix(file, 2);
 
-  fileWrite(file, `export const ${group}Handlers = {`);
+  fileWrite(file, `export const ${group}Handlers`);
+
+  if (file.relativePath.endsWith(".ts")) {
+    fileWrite(file, `: {`);
+    fileContextSetIndent(file, 1);
+
+    for (const route of routes) {
+      const contextNames = contextNamesMap.get(route) ?? {};
+
+      fileWrite(file, `${route.name}: ${contextNames.fnType},`);
+    }
+
+    fileContextSetIndent(file, -1);
+    fileWrite(file, `}`);
+  }
+
+  fileWrite(file, ` = {`);
   fileContextSetIndent(file, 1);
 
   for (const route of routes) {
@@ -246,18 +282,48 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
     );
   }
 
+  if (file.relativePath.endsWith(".ts")) {
+    fileWrite(
+      file,
+      `
+type _Context = import("koa").ParameterizedContext<{}, {
+  event: import("@compas/stdlib").InsightEvent,
+  log: import("@compas/stdlib").Logger,
+  request: {
+    params: any,
+    body: any,
+    query: any,
+    files: any,
+  };
+  validatedBody: any;
+  validatedQuery: any;
+  validatedParams: any;
+}>
+    `,
+    );
+  }
+
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` * `);
   fileWrite(file, `The full router and dispatching\n`);
 
-  fileWrite(file, `@param {import("@compas/server").Middleware} bodyParser`);
-  fileWrite(file, `@returns {import("@compas/server").Middleware}`);
+  if (file.relativePath.endsWith(".js")) {
+    fileWrite(file, `@param {import("@compas/server").Middleware} bodyParser`);
+    fileWrite(file, `@returns {import("@compas/server").Middleware}`);
+  }
 
   fileContextRemoveLinePrefix(file, 1);
   fileWrite(file, `/`);
   fileContextRemoveLinePrefix(file, 2);
 
-  fileBlockStart(file, `export function router(bodyParser)`);
+  if (file.relativePath.endsWith(".js")) {
+    fileBlockStart(file, `export function router(bodyParser)`);
+  } else {
+    fileBlockStart(
+      file,
+      `export function router(bodyParser: (ctx: import("koa").Context) => Promise<void>): import("koa").Middleware`,
+    );
+  }
 
   fileWrite(file, `const routes = {`);
   fileContextSetIndent(file, 1);
@@ -270,7 +336,14 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
     for (const route of routes) {
       const contextNames = contextNamesMap.get(route) ?? {};
 
-      fileWrite(file, `${route.name}: async (params, ctx, next) => {`);
+      if (file.relativePath.endsWith(".js")) {
+        fileWrite(file, `${route.name}: async (params, ctx, next) => {`);
+      } else {
+        fileWrite(
+          file,
+          `${route.name}: async (params: Record<string, any>, ctx: _Context, next: () => Promise<void>) => {`,
+        );
+      }
       fileContextSetIndent(file, 1);
 
       fileBlockStart(file, `if (ctx.event)`);
@@ -342,7 +415,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
         fileBlockEnd(file);
       }
 
-      fileWrite(file, `await ${group}Handlers.${route.name}(ctx);`);
+      fileWrite(file, `await ${group}Handlers.${route.name}(ctx as any);`);
 
       if (route.response) {
         fileWrite(
@@ -406,6 +479,7 @@ export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
   fileBlockEnd(file);
   fileBlockEnd(file);
 
+  fileWrite(file, `// @ts-expect-error this always exists`);
   fileWrite(
     file,
     `return routes[match.route.group][match.route.name](match.params, ctx, next);`,

@@ -122,13 +122,18 @@ export function reactQueryGetApiClientFile(generateContext, route) {
     `${route.group}/reactQueries.tsx`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector: new JavascriptImportCollector(true),
     },
   );
 
   const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
   const importCollector = JavascriptImportCollector.getImportCollector(file);
+  const typeImportCollector = JavascriptImportCollector.getImportCollector(
+    file,
+    true,
+  );
 
-  importCollector.destructure("../common/api-client-wrapper", "Pretty");
+  typeImportCollector.destructure("../common/api-client-wrapper", "Pretty");
 
   if (distilledTargetInfo.useGlobalClients) {
     // Import the global clients, this has affect on a bunch of the generated api's where we don't
@@ -146,27 +151,28 @@ export function reactQueryGetApiClientFile(generateContext, route) {
     importCollector.destructure("@tanstack/react-query", "useQueryClient");
 
     if (distilledTargetInfo.isAxios) {
-      importCollector.destructure("axios", "AxiosInstance");
+      typeImportCollector.destructure("axios", "AxiosInstance");
     } else {
-      importCollector.destructure("../common/api-client", "FetchFn");
+      typeImportCollector.destructure("../common/api-client", "FetchFn");
     }
   }
 
   // Error handling
-  importCollector.destructure("../common/api-client", "AppErrorResponse");
+  typeImportCollector.destructure("../common/api-client", "AppErrorResponse");
 
   if (distilledTargetInfo.isAxios) {
-    importCollector.destructure("axios", "AxiosError");
-    importCollector.destructure("axios", "AxiosRequestConfig");
+    typeImportCollector.destructure("axios", "AxiosRequestConfig");
   }
 
   // @tanstack/react-query imports
-  importCollector.destructure("@tanstack/react-query", "QueryKey");
-  importCollector.destructure("@tanstack/react-query", "Updater");
-  importCollector.destructure("@tanstack/react-query", "UseMutationOptions");
-  importCollector.destructure("@tanstack/react-query", "UseMutationResult");
-  importCollector.destructure("@tanstack/react-query", "UseQueryOptions");
-  importCollector.destructure("@tanstack/react-query", "UseQueryResult");
+  typeImportCollector.destructure("@tanstack/react-query", "QueryKey");
+  typeImportCollector.destructure("@tanstack/react-query", "Updater");
+  typeImportCollector.destructure(
+    "@tanstack/react-query",
+    "UseMutationOptions",
+  );
+  typeImportCollector.destructure("@tanstack/react-query", "UseMutationResult");
+  typeImportCollector.destructure("@tanstack/react-query", "UseQueryOptions");
   importCollector.destructure("@tanstack/react-query", "useMutation");
   importCollector.destructure("@tanstack/react-query", "useQuery");
   importCollector.destructure("@tanstack/react-query", "QueryClient");

@@ -10,7 +10,20 @@ export class JavascriptImportCollector {
    * @param {import("../file/context.js").GenerateFile}file
    * @returns {JavascriptImportCollector}
    */
-  static getImportCollector(file) {
+  static getImportCollector(file, typeImports = false) {
+    if (typeImports) {
+      if (
+        isNil(file.typeImportCollector) ||
+        !(file.typeImportCollector instanceof JavascriptImportCollector)
+      ) {
+        throw AppError.serverError({
+          message: `File is created without a type import collector.`,
+        });
+      }
+
+      return file.typeImportCollector;
+    }
+
     if (
       isNil(file.importCollector) ||
       !(file.importCollector instanceof JavascriptImportCollector)
@@ -23,7 +36,12 @@ export class JavascriptImportCollector {
     return file.importCollector;
   }
 
-  constructor() {
+  constructor(isTypeImports = false) {
+    /**
+     * @private
+     */
+    this.isTypeImports = isTypeImports;
+
     /**
      * @private
      * @type {Map<string, Set<string>>}
@@ -75,9 +93,13 @@ export class JavascriptImportCollector {
       const isMultiline = symbols.length > 3;
 
       if (isMultiline) {
-        result.push(`import {\n  ${symbols.join(",\n  ")}\n} from "${key}";`);
+        result.push(
+          `import${this.isTypeImports ? " type" : ""} {\n  ${symbols.join(",\n  ")}\n} from "${key}";`,
+        );
       } else {
-        result.push(`import { ${symbols.join(",")} } from "${key}";`);
+        result.push(
+          `import${this.isTypeImports ? " type" : ""} { ${symbols.join(",")} } from "${key}";`,
+        );
       }
     }
 

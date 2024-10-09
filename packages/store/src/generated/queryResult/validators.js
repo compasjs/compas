@@ -10,6 +10,8 @@ import { validateStoreFileMeta } from "../store/validators.js";
  * @typedef {Record<string, any|undefined>} ValidatorErrorMap
  */
 
+const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+
 /**
  * @param {import("../common/types.js").QueryResultStoreFileInput|any} value
  * @returns {Either<import("../common/types.js").QueryResultStoreFile, ValidatorErrorMap>}
@@ -25,7 +27,7 @@ export function validateQueryResultStoreFile(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -292,7 +294,7 @@ export function validateQueryResultStoreJob(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -625,7 +627,7 @@ export function validateQueryResultStoreSessionStore(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -875,7 +877,7 @@ export function validateQueryResultStoreSessionStoreToken(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,

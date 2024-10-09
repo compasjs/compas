@@ -10,6 +10,8 @@ import { isQueryPart } from "@compas/store";
  * @typedef {Record<string, any|undefined>} ValidatorErrorMap
  */
 
+const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+
 /**
  * Postgres based file storage.
  *
@@ -27,7 +29,7 @@ export function validateStoreFile(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -294,7 +296,7 @@ export function validateStoreFileMeta(value) {
   if (value === null || value === undefined) {
     result = {};
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -517,7 +519,7 @@ export function validateStoreFileWhereValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -2234,7 +2236,7 @@ export function validateStoreFileOrderBySpec(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -2428,7 +2430,7 @@ export function validateStoreFileQueryBuilderValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -2778,7 +2780,7 @@ export function validateStoreFileInsertValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -2904,7 +2906,7 @@ export function validateStoreFileInsertPartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -3165,7 +3167,7 @@ export function validateStoreFileUpdateValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -3262,7 +3264,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -3331,10 +3333,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue3 !== "object" ||
-              Array.isArray(intermediateValue3)
-            ) {
+            if (!isRecord(intermediateValue3)) {
               intermediateErrorMap3[`$`] = {
                 key: "validator.object",
                 value: intermediateValue3,
@@ -3427,10 +3426,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue3 !== "object" ||
-              Array.isArray(intermediateValue3)
-            ) {
+            if (!isRecord(intermediateValue3)) {
               intermediateErrorMap3[`$`] = {
                 key: "validator.object",
                 value: intermediateValue3,
@@ -3523,10 +3519,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue3 !== "object" ||
-              Array.isArray(intermediateValue3)
-            ) {
+            if (!isRecord(intermediateValue3)) {
               intermediateErrorMap3[`$`] = {
                 key: "validator.object",
                 value: intermediateValue3,
@@ -3619,10 +3612,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue3 !== "object" ||
-              Array.isArray(intermediateValue3)
-            ) {
+            if (!isRecord(intermediateValue3)) {
               intermediateErrorMap3[`$`] = {
                 key: "validator.object",
                 value: intermediateValue3,
@@ -3774,10 +3764,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -3905,10 +3892,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -4036,10 +4020,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -4167,10 +4148,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -4209,10 +4187,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof intermediateValue7["$set"] !== "object" ||
-                  Array.isArray(intermediateValue7["$set"])
-                ) {
+                if (!isRecord(intermediateValue7["$set"])) {
                   intermediateErrorMap7[`$.$set`] = {
                     key: "validator.object",
                     value: intermediateValue7["$set"],
@@ -4445,10 +4420,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -4487,10 +4459,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof intermediateValue7["$remove"] !== "object" ||
-                  Array.isArray(intermediateValue7["$remove"])
-                ) {
+                if (!isRecord(intermediateValue7["$remove"])) {
                   intermediateErrorMap7[`$.$remove`] = {
                     key: "validator.object",
                     value: intermediateValue7["$remove"],
@@ -4751,10 +4720,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue8 !== "object" ||
-              Array.isArray(intermediateValue8)
-            ) {
+            if (!isRecord(intermediateValue8)) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.object",
                 value: intermediateValue8,
@@ -4833,10 +4799,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue8 !== "object" ||
-              Array.isArray(intermediateValue8)
-            ) {
+            if (!isRecord(intermediateValue8)) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.object",
                 value: intermediateValue8,
@@ -4965,10 +4928,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue9 !== "object" ||
-              Array.isArray(intermediateValue9)
-            ) {
+            if (!isRecord(intermediateValue9)) {
               intermediateErrorMap9[`$`] = {
                 key: "validator.object",
                 value: intermediateValue9,
@@ -5047,10 +5007,7 @@ export function validateStoreFileUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue9 !== "object" ||
-              Array.isArray(intermediateValue9)
-            ) {
+            if (!isRecord(intermediateValue9)) {
               intermediateErrorMap9[`$`] = {
                 key: "validator.object",
                 value: intermediateValue9,
@@ -5186,7 +5143,7 @@ export function validateStoreJob(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -5519,7 +5476,7 @@ export function validateStoreJobWhereValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -7852,7 +7809,7 @@ export function validateStoreJobOrderBySpec(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -8130,7 +8087,7 @@ export function validateStoreJobQueryBuilderValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -8486,7 +8443,7 @@ export function validateStoreJobInsertValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -8612,7 +8569,7 @@ export function validateStoreJobInsertPartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -8939,7 +8896,7 @@ export function validateStoreJobUpdateValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -9036,7 +8993,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -9106,10 +9063,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue3 !== "object" ||
-              Array.isArray(intermediateValue3)
-            ) {
+            if (!isRecord(intermediateValue3)) {
               intermediateErrorMap3[`$`] = {
                 key: "validator.object",
                 value: intermediateValue3,
@@ -9244,10 +9198,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -9340,10 +9291,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -9436,10 +9384,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -9532,10 +9477,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -9682,10 +9624,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -9778,10 +9717,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -9874,10 +9810,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -9970,10 +9903,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -10120,10 +10050,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -10216,10 +10143,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -10312,10 +10236,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -10408,10 +10329,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -10563,10 +10481,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -10694,10 +10609,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue8 !== "object" ||
-              Array.isArray(intermediateValue8)
-            ) {
+            if (!isRecord(intermediateValue8)) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.object",
                 value: intermediateValue8,
@@ -10776,10 +10688,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue8 !== "object" ||
-              Array.isArray(intermediateValue8)
-            ) {
+            if (!isRecord(intermediateValue8)) {
               intermediateErrorMap8[`$`] = {
                 key: "validator.object",
                 value: intermediateValue8,
@@ -10908,10 +10817,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue9 !== "object" ||
-              Array.isArray(intermediateValue9)
-            ) {
+            if (!isRecord(intermediateValue9)) {
               intermediateErrorMap9[`$`] = {
                 key: "validator.object",
                 value: intermediateValue9,
@@ -10950,10 +10856,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof intermediateValue9["$set"] !== "object" ||
-                  Array.isArray(intermediateValue9["$set"])
-                ) {
+                if (!isRecord(intermediateValue9["$set"])) {
                   intermediateErrorMap9[`$.$set`] = {
                     key: "validator.object",
                     value: intermediateValue9["$set"],
@@ -11186,10 +11089,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue9 !== "object" ||
-              Array.isArray(intermediateValue9)
-            ) {
+            if (!isRecord(intermediateValue9)) {
               intermediateErrorMap9[`$`] = {
                 key: "validator.object",
                 value: intermediateValue9,
@@ -11228,10 +11128,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof intermediateValue9["$remove"] !== "object" ||
-                  Array.isArray(intermediateValue9["$remove"])
-                ) {
+                if (!isRecord(intermediateValue9["$remove"])) {
                   intermediateErrorMap9[`$.$remove`] = {
                     key: "validator.object",
                     value: intermediateValue9["$remove"],
@@ -11487,10 +11384,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue10 !== "object" ||
-              Array.isArray(intermediateValue10)
-            ) {
+            if (!isRecord(intermediateValue10)) {
               intermediateErrorMap10[`$`] = {
                 key: "validator.object",
                 value: intermediateValue10,
@@ -11572,10 +11466,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue10 !== "object" ||
-              Array.isArray(intermediateValue10)
-            ) {
+            if (!isRecord(intermediateValue10)) {
               intermediateErrorMap10[`$`] = {
                 key: "validator.object",
                 value: intermediateValue10,
@@ -11710,10 +11601,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue11 !== "object" ||
-              Array.isArray(intermediateValue11)
-            ) {
+            if (!isRecord(intermediateValue11)) {
               intermediateErrorMap11[`$`] = {
                 key: "validator.object",
                 value: intermediateValue11,
@@ -11795,10 +11683,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue11 !== "object" ||
-              Array.isArray(intermediateValue11)
-            ) {
+            if (!isRecord(intermediateValue11)) {
               intermediateErrorMap11[`$`] = {
                 key: "validator.object",
                 value: intermediateValue11,
@@ -11934,7 +11819,7 @@ export function validateStoreSessionStore(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -12130,7 +12015,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -13300,10 +13185,7 @@ export function validateStoreSessionStoreWhereValidated(value) {
       ) {
         result["viaAccessTokens"] = undefined;
       } else {
-        if (
-          typeof value["viaAccessTokens"] !== "object" ||
-          Array.isArray(value["viaAccessTokens"])
-        ) {
+        if (!isRecord(value["viaAccessTokens"])) {
           errorMap[`$.viaAccessTokens`] = {
             key: "validator.object",
             value: value["viaAccessTokens"],
@@ -13463,7 +13345,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -15408,10 +15290,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
       ) {
         result["viaRefreshToken"] = undefined;
       } else {
-        if (
-          typeof value["viaRefreshToken"] !== "object" ||
-          Array.isArray(value["viaRefreshToken"])
-        ) {
+        if (!isRecord(value["viaRefreshToken"])) {
           errorMap[`$.viaRefreshToken`] = {
             key: "validator.object",
             value: value["viaRefreshToken"],
@@ -15533,10 +15412,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
       if (value["viaSession"] === null || value["viaSession"] === undefined) {
         result["viaSession"] = undefined;
       } else {
-        if (
-          typeof value["viaSession"] !== "object" ||
-          Array.isArray(value["viaSession"])
-        ) {
+        if (!isRecord(value["viaSession"])) {
           errorMap[`$.viaSession`] = {
             key: "validator.object",
             value: value["viaSession"],
@@ -15661,10 +15537,7 @@ export function validateStoreSessionStoreTokenWhereValidated(value) {
       ) {
         result["viaAccessToken"] = undefined;
       } else {
-        if (
-          typeof value["viaAccessToken"] !== "object" ||
-          Array.isArray(value["viaAccessToken"])
-        ) {
+        if (!isRecord(value["viaAccessToken"])) {
           errorMap[`$.viaAccessToken`] = {
             key: "validator.object",
             value: value["viaAccessToken"],
@@ -15964,7 +15837,7 @@ export function validateStoreSessionStoreOrderBySpec(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -16115,7 +15988,7 @@ export function validateStoreSessionStoreQueryBuilderValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -16483,7 +16356,7 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -16876,7 +16749,7 @@ export function validateStoreSessionStoreTokenOrderBySpec(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -17283,7 +17156,7 @@ export function validateStoreSessionStoreInsertValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -17411,7 +17284,7 @@ export function validateStoreSessionStoreInsertPartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -17601,7 +17474,7 @@ export function validateStoreSessionStoreUpdateValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -17702,7 +17575,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -17764,10 +17637,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue3 !== "object" ||
-              Array.isArray(intermediateValue3)
-            ) {
+            if (!isRecord(intermediateValue3)) {
               intermediateErrorMap3[`$`] = {
                 key: "validator.object",
                 value: intermediateValue3,
@@ -17895,10 +17765,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -17977,10 +17844,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -18109,10 +17973,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -18151,10 +18012,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof intermediateValue5["$set"] !== "object" ||
-                  Array.isArray(intermediateValue5["$set"])
-                ) {
+                if (!isRecord(intermediateValue5["$set"])) {
                   intermediateErrorMap5[`$.$set`] = {
                     key: "validator.object",
                     value: intermediateValue5["$set"],
@@ -18380,10 +18238,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue5 !== "object" ||
-              Array.isArray(intermediateValue5)
-            ) {
+            if (!isRecord(intermediateValue5)) {
               intermediateErrorMap5[`$`] = {
                 key: "validator.object",
                 value: intermediateValue5,
@@ -18422,10 +18277,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof intermediateValue5["$remove"] !== "object" ||
-                  Array.isArray(intermediateValue5["$remove"])
-                ) {
+                if (!isRecord(intermediateValue5["$remove"])) {
                   intermediateErrorMap5[`$.$remove`] = {
                     key: "validator.object",
                     value: intermediateValue5["$remove"],
@@ -18672,10 +18524,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -18754,10 +18603,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -18886,10 +18732,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -18968,10 +18811,7 @@ export function validateStoreSessionStoreUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -19104,7 +18944,7 @@ export function validateStoreSessionStoreToken(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -19329,7 +19169,7 @@ export function validateStoreSessionStoreTokenInsertValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -19458,7 +19298,7 @@ export function validateStoreSessionStoreTokenInsertPartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -19681,7 +19521,7 @@ export function validateStoreSessionStoreTokenUpdateValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -19782,7 +19622,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -19897,10 +19737,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -19979,10 +19816,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue4 !== "object" ||
-              Array.isArray(intermediateValue4)
-            ) {
+            if (!isRecord(intermediateValue4)) {
               intermediateErrorMap4[`$`] = {
                 key: "validator.object",
                 value: intermediateValue4,
@@ -20167,10 +20001,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -20249,10 +20080,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue6 !== "object" ||
-              Array.isArray(intermediateValue6)
-            ) {
+            if (!isRecord(intermediateValue6)) {
               intermediateErrorMap6[`$`] = {
                 key: "validator.object",
                 value: intermediateValue6,
@@ -20381,10 +20209,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -20463,10 +20288,7 @@ export function validateStoreSessionStoreTokenUpdatePartialValidated(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof intermediateValue7 !== "object" ||
-              Array.isArray(intermediateValue7)
-            ) {
+            if (!isRecord(intermediateValue7)) {
               intermediateErrorMap7[`$`] = {
                 key: "validator.object",
                 value: intermediateValue7,
@@ -20597,7 +20419,7 @@ export function validateStoreFileResponse(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -20888,7 +20710,7 @@ export function validateStoreImageTransformOptions(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -21064,7 +20886,7 @@ export function validateStoreSecureImageTransformOptions(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -21259,7 +21081,7 @@ export function validateStoreFileWhereValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -22758,7 +22580,7 @@ export function validateStoreJobWhereValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -24853,7 +24675,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -25967,10 +25789,7 @@ export function validateStoreSessionStoreWhereValidated_1(value) {
       ) {
         result["viaAccessTokens"] = undefined;
       } else {
-        if (
-          typeof value["viaAccessTokens"] !== "object" ||
-          Array.isArray(value["viaAccessTokens"])
-        ) {
+        if (!isRecord(value["viaAccessTokens"])) {
           errorMap[`$.viaAccessTokens`] = {
             key: "validator.object",
             value: value["viaAccessTokens"],
@@ -26130,7 +25949,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -27987,10 +27806,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
       ) {
         result["viaRefreshToken"] = undefined;
       } else {
-        if (
-          typeof value["viaRefreshToken"] !== "object" ||
-          Array.isArray(value["viaRefreshToken"])
-        ) {
+        if (!isRecord(value["viaRefreshToken"])) {
           errorMap[`$.viaRefreshToken`] = {
             key: "validator.object",
             value: value["viaRefreshToken"],
@@ -28112,10 +27928,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
       if (value["viaSession"] === null || value["viaSession"] === undefined) {
         result["viaSession"] = undefined;
       } else {
-        if (
-          typeof value["viaSession"] !== "object" ||
-          Array.isArray(value["viaSession"])
-        ) {
+        if (!isRecord(value["viaSession"])) {
           errorMap[`$.viaSession`] = {
             key: "validator.object",
             value: value["viaSession"],
@@ -28240,10 +28053,7 @@ export function validateStoreSessionStoreTokenWhereValidated_1(value) {
       ) {
         result["viaAccessToken"] = undefined;
       } else {
-        if (
-          typeof value["viaAccessToken"] !== "object" ||
-          Array.isArray(value["viaAccessToken"])
-        ) {
+        if (!isRecord(value["viaAccessToken"])) {
           errorMap[`$.viaAccessToken`] = {
             key: "validator.object",
             value: value["viaAccessToken"],
@@ -28403,7 +28213,7 @@ export function validateStoreFileUpdateValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -28500,7 +28310,7 @@ export function validateStoreJobUpdateValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -28597,7 +28407,7 @@ export function validateStoreSessionStoreUpdateValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -28698,7 +28508,7 @@ export function validateStoreSessionStoreTokenUpdateValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -29351,7 +29161,7 @@ export function validateStoreFileQueryBuilderValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -29536,7 +29346,7 @@ export function validateStoreJobQueryBuilderValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -29723,7 +29533,7 @@ export function validateStoreSessionStoreQueryBuilderValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -29933,7 +29743,7 @@ export function validateStoreSessionStoreTokenQueryBuilderValidated_1(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,

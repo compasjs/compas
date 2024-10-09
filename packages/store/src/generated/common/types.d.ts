@@ -78,27 +78,27 @@ export type StoreFileInput = {
 };
 
 export type StoreFileWhere = {
-  "$raw"?: (any|import("@compas/store").QueryPart<any>)|undefined;
+  "$raw"?: (import("@compas/store").QueryPart<any>)|undefined;
   "$or"?: (StoreFileWhere)[]|undefined;
   "id"?: string|undefined;
   "idNotEqual"?: string|undefined;
   "idIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "idNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "bucketName"?: string|undefined;
   "bucketNameNotEqual"?: string|undefined;
   "bucketNameIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "bucketNameNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "bucketNameLike"?: string|undefined;
   "bucketNameILike"?: string|undefined;
@@ -107,11 +107,11 @@ export type StoreFileWhere = {
   "createdAtNotEqual"?: Date|string|number|undefined;
   "createdAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAtGreaterThan"?: Date|string|number|undefined;
   "createdAtLowerThan"?: Date|string|number|undefined;
@@ -119,11 +119,11 @@ export type StoreFileWhere = {
   "updatedAtNotEqual"?: Date|string|number|undefined;
   "updatedAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "updatedAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "updatedAtGreaterThan"?: Date|string|number|undefined;
   "updatedAtLowerThan"?: Date|string|number|undefined;
@@ -182,7 +182,7 @@ export type StoreFileWhereValidated = {
 };
 
 export type StoreFileOrderBy = 
-  |(any|import("@compas/store").QueryPart<any>)
+  |(import("@compas/store").QueryPart<any>)
   |("id"|"bucketName"|"createdAt"|"updatedAt")[];
 
 export type StoreFileOrderBySpec = {
@@ -512,17 +512,17 @@ export type StoreJobInput = {
 };
 
 export type StoreJobWhere = {
-  "$raw"?: (any|import("@compas/store").QueryPart<any>)|undefined;
+  "$raw"?: (import("@compas/store").QueryPart<any>)|undefined;
   "$or"?: (StoreJobWhere)[]|undefined;
   "id"?: number|undefined;
   "idNotEqual"?: number|undefined;
   "idIn"?: 
     |(number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "idNotIn"?: 
     |(number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "idGreaterThan"?: number|undefined;
   "idLowerThan"?: number|undefined;
@@ -533,11 +533,11 @@ export type StoreJobWhere = {
   "nameNotEqual"?: string|undefined;
   "nameIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "nameNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "nameLike"?: string|undefined;
   "nameILike"?: string|undefined;
@@ -546,11 +546,11 @@ export type StoreJobWhere = {
   "scheduledAtNotEqual"?: Date|string|number|undefined;
   "scheduledAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "scheduledAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "scheduledAtGreaterThan"?: Date|string|number|undefined;
   "scheduledAtLowerThan"?: Date|string|number|undefined;
@@ -560,11 +560,11 @@ export type StoreJobWhere = {
   "createdAtNotEqual"?: Date|string|number|undefined;
   "createdAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAtGreaterThan"?: Date|string|number|undefined;
   "createdAtLowerThan"?: Date|string|number|undefined;
@@ -572,11 +572,11 @@ export type StoreJobWhere = {
   "updatedAtNotEqual"?: Date|string|number|undefined;
   "updatedAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "updatedAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "updatedAtGreaterThan"?: Date|string|number|undefined;
   "updatedAtLowerThan"?: Date|string|number|undefined;
@@ -654,7 +654,7 @@ export type StoreJobWhereValidated = {
 };
 
 export type StoreJobOrderBy = 
-  |(any|import("@compas/store").QueryPart<any>)
+  |(import("@compas/store").QueryPart<any>)
   |("id"|"isComplete"|"name"|"scheduledAt"|"createdAt"|"updatedAt")[];
 
 export type StoreJobOrderBySpec = {
@@ -1084,37 +1084,37 @@ export type StoreSessionStoreInput = {
 };
 
 export type StoreSessionStoreTokenWhere = {
-  "$raw"?: (any|import("@compas/store").QueryPart<any>)|undefined;
+  "$raw"?: (import("@compas/store").QueryPart<any>)|undefined;
   "$or"?: (StoreSessionStoreTokenWhere)[]|undefined;
   "id"?: string|undefined;
   "idNotEqual"?: string|undefined;
   "idIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "idNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "session"?: string|undefined;
   "sessionNotEqual"?: string|undefined;
   "sessionIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "sessionNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "expiresAt"?: Date|string|number|undefined;
   "expiresAtNotEqual"?: Date|string|number|undefined;
   "expiresAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "expiresAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "expiresAtGreaterThan"?: Date|string|number|undefined;
   "expiresAtLowerThan"?: Date|string|number|undefined;
@@ -1122,11 +1122,11 @@ export type StoreSessionStoreTokenWhere = {
   "refreshTokenNotEqual"?: string|undefined;
   "refreshTokenIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "refreshTokenNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "refreshTokenIsNull"?: boolean|"true"|"false"|undefined;
   "refreshTokenIsNotNull"?: boolean|"true"|"false"|undefined;
@@ -1134,11 +1134,11 @@ export type StoreSessionStoreTokenWhere = {
   "revokedAtNotEqual"?: Date|string|number|undefined;
   "revokedAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "revokedAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "revokedAtGreaterThan"?: Date|string|number|undefined;
   "revokedAtLowerThan"?: Date|string|number|undefined;
@@ -1163,27 +1163,27 @@ export type StoreSessionStoreTokenWhere = {
 };
 
 export type StoreSessionStoreWhere = {
-  "$raw"?: (any|import("@compas/store").QueryPart<any>)|undefined;
+  "$raw"?: (import("@compas/store").QueryPart<any>)|undefined;
   "$or"?: (StoreSessionStoreWhere)[]|undefined;
   "id"?: string|undefined;
   "idNotEqual"?: string|undefined;
   "idIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "idNotIn"?: 
     |(string)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAt"?: Date|string|number|undefined;
   "createdAtNotEqual"?: Date|string|number|undefined;
   "createdAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "createdAtGreaterThan"?: Date|string|number|undefined;
   "createdAtLowerThan"?: Date|string|number|undefined;
@@ -1191,11 +1191,11 @@ export type StoreSessionStoreWhere = {
   "updatedAtNotEqual"?: Date|string|number|undefined;
   "updatedAtIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "updatedAtNotIn"?: 
     |(Date|string|number)[]
-    |(any|import("@compas/store").QueryPart<any>)
+    |(import("@compas/store").QueryPart<any>)
     |undefined;
   "updatedAtGreaterThan"?: Date|string|number|undefined;
   "updatedAtLowerThan"?: Date|string|number|undefined;
@@ -1332,7 +1332,7 @@ export type StoreSessionStoreWhereValidated = {
 };
 
 export type StoreSessionStoreOrderBy = 
-  |(any|import("@compas/store").QueryPart<any>)
+  |(import("@compas/store").QueryPart<any>)
   |("id"|"createdAt"|"updatedAt")[];
 
 export type StoreSessionStoreOrderBySpec = {
@@ -1347,7 +1347,7 @@ export type StoreSessionStoreReturning =
   |undefined;
 
 export type StoreSessionStoreTokenOrderBy = 
-  |(any|import("@compas/store").QueryPart<any>)
+  |(import("@compas/store").QueryPart<any>)
   |("id"|"session"|"expiresAt"|"refreshToken"|"revokedAt")[];
 
 export type StoreSessionStoreTokenOrderBySpec = {

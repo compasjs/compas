@@ -1,3 +1,4 @@
+import { fileImplementations } from "../processors/file-implementations.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { typeDefinitionTraverse } from "../processors/type-definition-traverse.js";
 
@@ -10,13 +11,8 @@ import { typeDefinitionTraverse } from "../processors/type-definition-traverse.j
 const typeTargetCache = new WeakMap();
 
 /** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
-const fileTargets = [
-  "jsAxiosNode",
-  "jsKoaReceive",
-  "jsKoaSend",
-  "tsAxiosBrowser",
-  "tsAxiosReactNative",
-];
+// @ts-expect-error Don't care about this error
+const fileTargets = Object.keys(fileImplementations);
 
 /**
  * Recursively check which targets are used by the provided type, including the

@@ -7,7 +7,7 @@
  */
 
 /**
- * @template T
+ * @template [T=any]
  * @typedef {import("./types/advanced-types.js").QueryPart<T>} QueryPart
  */
 

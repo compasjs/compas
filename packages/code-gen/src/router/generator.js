@@ -1,4 +1,4 @@
-import { AppError, noop } from "@compas/stdlib";
+import { AppError } from "@compas/stdlib";
 import { routeTrieGet } from "../processors/route-trie.js";
 import { structureRoutes } from "../processors/routes.js";
 import { structureResolveReference } from "../processors/structure.js";
@@ -33,8 +33,6 @@ import {
  * - target specific controller
  * - types & validations
  *
- * TODO: throw when TS is used with the router
- *
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function routerGenerator(generateContext) {
@@ -46,14 +44,17 @@ export function routerGenerator(generateContext) {
     generateContext,
     {
       js: javascriptRouteMatcher,
-      ts: noop,
+      ts: javascriptRouteMatcher,
     },
     [generateContext, routeTrieGet(generateContext)],
   );
 
   const target = routerFormatTarget(generateContext);
   /** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
-  const typeTargets = ["js", "jsKoaReceive"];
+  const typeTargets =
+    generateContext.options.targetLanguage === "js" ?
+      ["js", "jsKoaReceive"]
+    : ["ts", "tsKoaReceive"];
 
   /** @type Record<string, (import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>)[]>} */
   const routesPerGroup = {};
@@ -69,7 +70,7 @@ export function routerGenerator(generateContext) {
   const routerFile = targetCustomSwitch(
     {
       jsKoa: jsKoaGetRouterFile,
-      tsKoa: noop,
+      tsKoa: jsKoaGetRouterFile,
     },
     target,
     [generateContext],
@@ -89,7 +90,7 @@ export function routerGenerator(generateContext) {
     const file = targetCustomSwitch(
       {
         jsKoa: jsKoaGetControllerFile,
-        tsKoa: noop,
+        tsKoa: jsKoaGetControllerFile,
       },
       target,
       [generateContext, group],
@@ -120,10 +121,14 @@ export function routerGenerator(generateContext) {
         const type = types[prefix];
 
         const specificTargets =
-          prefix === "response" ?
+          prefix === "response" && typeTargets.includes("js") ?
             typeTargets
               .filter((it) => it !== "jsKoaReceive")
               .concat(["jsKoaSend"])
+          : prefix === "response" && typeTargets.includes("ts") ?
+            typeTargets
+              .filter((it) => it !== "tsKoaReceive")
+              .concat(["tsKoaSend"])
           : typeTargets;
 
         const resolvedRef = structureResolveReference(
@@ -191,7 +196,7 @@ export function routerGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsKoa: jsKoaPrepareContext,
-          tsKoa: noop,
+          tsKoa: jsKoaPrepareContext,
         },
         target,
         [
@@ -208,7 +213,7 @@ export function routerGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsKoa: jsKoaWriteHandlers,
-        tsKoa: noop,
+        tsKoa: jsKoaWriteHandlers,
       },
       target,
       [file, group, routes, nameMap],
@@ -217,7 +222,7 @@ export function routerGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsKoa: jsKoaWriteTags,
-        tsKoa: noop,
+        tsKoa: jsKoaWriteTags,
       },
       target,
       [file, group, routes],
@@ -227,7 +232,7 @@ export function routerGenerator(generateContext) {
   targetCustomSwitch(
     {
       jsKoa: jsKoaBuildRouterFile,
-      tsKoa: noop,
+      tsKoa: jsKoaBuildRouterFile,
     },
     target,
     [routerFile, routesPerGroup, nameMap],
@@ -236,7 +241,7 @@ export function routerGenerator(generateContext) {
   targetCustomSwitch(
     {
       jsKoa: jsKoaRegisterCompasStructureRoute,
-      tsKoa: noop,
+      tsKoa: jsKoaRegisterCompasStructureRoute,
     },
     target,
     [generateContext, routerFile],

@@ -53,7 +53,7 @@ const jsonTypes = [
  * https://github.com/dlau/koa-body/blob/a6ca8c78015e326154269d272410a11bf40e1a07/LICENSE
  *
  * @param {BodyOptions} [opts={}] Options that will be passed to koa-body
- * @returns {import("koa").Middleware}
+ * @returns {(ctx: import("koa").Context) => Promise<void>}
  */
 export function createBodyParser(opts = {}) {
   opts.json ??= true;
@@ -76,7 +76,7 @@ export function createBodyParser(opts = {}) {
   opts.multipartOptions.maxTotalFileSize ??=
     opts.multipartOptions.maxFileSize * 5;
 
-  return async function (ctx, next) {
+  return async function (ctx) {
     let bodyResult;
     // only parse the body on specifically chosen methods
     // @ts-ignore
@@ -151,9 +151,5 @@ export function createBodyParser(opts = {}) {
 
     // @ts-expect-error
     ctx.request.body = bodyResult;
-
-    if (typeof next === "function") {
-      return next();
-    }
   };
 }

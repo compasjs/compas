@@ -1,4 +1,4 @@
-import { AppError, noop } from "@compas/stdlib";
+import { AppError } from "@compas/stdlib";
 import { structureModels } from "../processors/models.js";
 import { targetCustomSwitch } from "../target/switcher.js";
 import { typesCacheGet } from "../types/cache.js";
@@ -22,6 +22,18 @@ import {
   jsPostgresGenerateWhere,
 } from "./js-postgres.js";
 import { databasePostgresWriteDDL } from "./postgres.js";
+import {
+  tsPostgresCreateFile,
+  tsPostgresGenerateCount,
+  tsPostgresGenerateDelete,
+  tsPostgresGenerateInsert,
+  tsPostgresGenerateOrderBy,
+  tsPostgresGenerateQueryBuilder,
+  tsPostgresGenerateUpdate,
+  tsPostgresGenerateUpsertOnPrimaryKey,
+  tsPostgresGenerateUtils,
+  tsPostgresGenerateWhere,
+} from "./ts-postgres.js";
 
 /**
  * @typedef {{
@@ -96,12 +108,15 @@ export function databaseGenerator(generateContext) {
 
   const target = databaseFormatTarget(generateContext);
   /** @type {Array<import("../generated/common/types.js").StructureAnyDefinitionTarget>} */
-  const typeTargets = ["js", "jsPostgres"];
+  const typeTargets =
+    generateContext.options.targetLanguage === "js" ?
+      ["js", "jsPostgres"]
+    : ["ts", "tsPostgres"];
 
   targetCustomSwitch(
     {
       jsPostgres: jsPostgresGenerateUtils,
-      tsPostgres: noop,
+      tsPostgres: tsPostgresGenerateUtils,
     },
     target,
     [generateContext],
@@ -112,7 +127,7 @@ export function databaseGenerator(generateContext) {
     const file = targetCustomSwitch(
       {
         jsPostgres: jsPostgresCreateFile,
-        tsPostgres: noop,
+        tsPostgres: tsPostgresCreateFile,
       },
       target,
       [generateContext, model],
@@ -229,7 +244,7 @@ export function databaseGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsPostgres: jsPostgresGenerateWhere,
-        tsPostgres: noop,
+        tsPostgres: tsPostgresGenerateWhere,
       },
       target,
       [generateContext, file, model, contextNames],
@@ -238,7 +253,7 @@ export function databaseGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsPostgres: jsPostgresGenerateOrderBy,
-        tsPostgres: noop,
+        tsPostgres: tsPostgresGenerateOrderBy,
       },
       target,
       [generateContext, file, model, contextNames],
@@ -247,7 +262,7 @@ export function databaseGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsPostgres: jsPostgresGenerateCount,
-        tsPostgres: noop,
+        tsPostgres: tsPostgresGenerateCount,
       },
       target,
       [generateContext, file, model, contextNames],
@@ -257,7 +272,7 @@ export function databaseGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsPostgres: jsPostgresGenerateInsert,
-          tsPostgres: noop,
+          tsPostgres: tsPostgresGenerateInsert,
         },
         target,
         [generateContext, file, model, contextNames],
@@ -266,7 +281,7 @@ export function databaseGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsPostgres: jsPostgresGenerateUpsertOnPrimaryKey,
-          tsPostgres: noop,
+          tsPostgres: tsPostgresGenerateUpsertOnPrimaryKey,
         },
         target,
         [generateContext, file, model, contextNames],
@@ -275,7 +290,7 @@ export function databaseGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsPostgres: jsPostgresGenerateUpdate,
-          tsPostgres: noop,
+          tsPostgres: tsPostgresGenerateUpdate,
         },
         target,
         [generateContext, file, model, contextNames],
@@ -284,7 +299,7 @@ export function databaseGenerator(generateContext) {
       targetCustomSwitch(
         {
           jsPostgres: jsPostgresGenerateDelete,
-          tsPostgres: noop,
+          tsPostgres: tsPostgresGenerateDelete,
         },
         target,
         [generateContext, file, model, contextNames],
@@ -294,7 +309,7 @@ export function databaseGenerator(generateContext) {
     targetCustomSwitch(
       {
         jsPostgres: jsPostgresGenerateQueryBuilder,
-        tsPostgres: noop,
+        tsPostgres: tsPostgresGenerateQueryBuilder,
       },
       target,
       [generateContext, file, model, contextNames],

@@ -9,6 +9,8 @@
  * @typedef {Record<string, any|undefined>} ValidatorErrorMap
  */
 
+const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+
 /**
  * @param {import("../common/types.js").CliCommandDefinitionInput|any} value
  * @returns {Either<import("../common/types.js").CliCommandDefinition, ValidatorErrorMap>}
@@ -24,7 +26,7 @@ export function validateCliCommandDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -162,10 +164,7 @@ export function validateCliCommandDefinition(value) {
           isWatchable: false,
         };
       } else {
-        if (
-          typeof value["modifiers"] !== "object" ||
-          Array.isArray(value["modifiers"])
-        ) {
+        if (!isRecord(value["modifiers"])) {
           errorMap[`$.modifiers`] = {
             key: "validator.object",
             value: value["modifiers"],
@@ -291,10 +290,7 @@ export function validateCliCommandDefinition(value) {
       ) {
         result["dynamicValue"] = {};
       } else {
-        if (
-          typeof value["dynamicValue"] !== "object" ||
-          Array.isArray(value["dynamicValue"])
-        ) {
+        if (!isRecord(value["dynamicValue"])) {
           errorMap[`$.dynamicValue`] = {
             key: "validator.object",
             value: value["dynamicValue"],
@@ -371,10 +367,7 @@ export function validateCliCommandDefinition(value) {
           ignorePatterns: [".cache", "coverage", "node_modules"],
         };
       } else {
-        if (
-          typeof value["watchSettings"] !== "object" ||
-          Array.isArray(value["watchSettings"])
-        ) {
+        if (!isRecord(value["watchSettings"])) {
           errorMap[`$.watchSettings`] = {
             key: "validator.object",
             value: value["watchSettings"],
@@ -661,7 +654,7 @@ export function validateCliFlagDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -786,10 +779,7 @@ export function validateCliFlagDefinition(value) {
           isInternal: false,
         };
       } else {
-        if (
-          typeof value["modifiers"] !== "object" ||
-          Array.isArray(value["modifiers"])
-        ) {
+        if (!isRecord(value["modifiers"])) {
           errorMap[`$.modifiers`] = {
             key: "validator.object",
             value: value["modifiers"],
@@ -912,10 +902,7 @@ export function validateCliFlagDefinition(value) {
       if (value["value"] === null || value["value"] === undefined) {
         result["value"] = { specification: "boolean" };
       } else {
-        if (
-          typeof value["value"] !== "object" ||
-          Array.isArray(value["value"])
-        ) {
+        if (!isRecord(value["value"])) {
           errorMap[`$.value`] = {
             key: "validator.object",
             value: value["value"],
@@ -1070,10 +1057,7 @@ export function validateCliCompletion(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof intermediateValue2 !== "object" ||
-          Array.isArray(intermediateValue2)
-        ) {
+        if (!isRecord(intermediateValue2)) {
           intermediateErrorMap2[`$`] = {
             key: "validator.object",
             value: intermediateValue2,
@@ -1156,10 +1140,7 @@ export function validateCliCompletion(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof intermediateValue2 !== "object" ||
-          Array.isArray(intermediateValue2)
-        ) {
+        if (!isRecord(intermediateValue2)) {
           intermediateErrorMap2[`$`] = {
             key: "validator.object",
             value: intermediateValue2,
@@ -1242,10 +1223,7 @@ export function validateCliCompletion(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof intermediateValue2 !== "object" ||
-          Array.isArray(intermediateValue2)
-        ) {
+        if (!isRecord(intermediateValue2)) {
           intermediateErrorMap2[`$`] = {
             key: "validator.object",
             value: intermediateValue2,
@@ -1384,10 +1362,7 @@ export function validateCliCompletion(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof intermediateValue2 !== "object" ||
-          Array.isArray(intermediateValue2)
-        ) {
+        if (!isRecord(intermediateValue2)) {
           intermediateErrorMap2[`$`] = {
             key: "validator.object",
             value: intermediateValue2,

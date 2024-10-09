@@ -26,7 +26,7 @@ export function validatorTypescriptGetNameAndImport(
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   importCollector.destructure(
-    `../${type.group}/validators`,
+    `../${type.group}/validators.js`,
     `validate${outputTypeName}`,
   );
 
@@ -60,7 +60,10 @@ export function validatorTypescriptGetFile(generateContext, type) {
     `
 type Either<T, E> = { value: T; error?: never }|{ value?: never; error: E };
 
-type ValidatorErrorMap = Record<string, any|undefined>;`,
+type ValidatorErrorMap = Record<string, any|undefined>;
+
+const isRecord = (v: unknown): v is Record<string, any> => !!v && typeof v === "object" && !Array.isArray(v);
+`,
   );
 
   return file;

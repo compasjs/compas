@@ -9,6 +9,8 @@
  * @typedef {Record<string, any|undefined>} ValidatorErrorMap
  */
 
+const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+
 /**
  * @param {import("../common/types.js").StructureAnyDefinitionInput|any} value
  * @returns {Either<import("../common/types.js").StructureAnyDefinition, ValidatorErrorMap>}
@@ -24,7 +26,7 @@ export function validateStructureAnyDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -309,7 +311,7 @@ export function validateStructureAnyDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -410,10 +412,7 @@ export function validateStructureAnyDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -456,10 +455,7 @@ export function validateStructureAnyDefinition(value) {
       if (value["targets"] === null || value["targets"] === undefined) {
         result["targets"] = undefined;
       } else {
-        if (
-          typeof value["targets"] !== "object" ||
-          Array.isArray(value["targets"])
-        ) {
+        if (!isRecord(value["targets"])) {
           errorMap[`$.targets`] = {
             key: "validator.generic",
           };
@@ -509,10 +505,7 @@ export function validateStructureAnyDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof value["targets"][genericKeyResult10] !== "object" ||
-                  Array.isArray(value["targets"][genericKeyResult10])
-                ) {
+                if (!isRecord(value["targets"][genericKeyResult10])) {
                   errorMap[`$.targets.${genericKeyResult10}`] = {
                     key: "validator.object",
                     value: value["targets"][genericKeyResult10],
@@ -765,8 +758,11 @@ export function validateStructureAnyDefinitionTarget(value) {
         convertedString0 !== "js" &&
         convertedString0 !== "ts" &&
         convertedString0 !== "jsKoaReceive" &&
+        convertedString0 !== "tsKoaReceive" &&
         convertedString0 !== "jsKoaSend" &&
+        convertedString0 !== "tsKoaSend" &&
         convertedString0 !== "jsPostgres" &&
+        convertedString0 !== "tsPostgres" &&
         convertedString0 !== "jsAxios" &&
         convertedString0 !== "tsAxios" &&
         convertedString0 !== "jsAxiosNode" &&
@@ -784,8 +780,11 @@ export function validateStructureAnyDefinitionTarget(value) {
             "js",
             "ts",
             "jsKoaReceive",
+            "tsKoaReceive",
             "jsKoaSend",
+            "tsKoaSend",
             "jsPostgres",
+            "tsPostgres",
             "jsAxios",
             "tsAxios",
             "jsAxiosNode",
@@ -825,7 +824,7 @@ export function validateStructureAnyOfDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -1110,7 +1109,7 @@ export function validateStructureAnyOfDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -1209,10 +1208,7 @@ export function validateStructureAnyOfDefinition(value) {
       if (value["validator"] === null || value["validator"] === undefined) {
         result["validator"] = {};
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -1524,7 +1520,7 @@ export function validateStructureArrayDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -1809,7 +1805,7 @@ export function validateStructureArrayDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -1910,10 +1906,7 @@ export function validateStructureArrayDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -2071,7 +2064,7 @@ export function validateStructureBooleanDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -2356,7 +2349,7 @@ export function validateStructureBooleanDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -2457,10 +2450,7 @@ export function validateStructureBooleanDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -2545,7 +2535,7 @@ export function validateStructureCrudDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -2836,7 +2826,7 @@ export function validateStructureCrudDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -2935,10 +2925,7 @@ export function validateStructureCrudDefinition(value) {
       if (value["validator"] === null || value["validator"] === undefined) {
         result["validator"] = {};
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -2990,10 +2977,7 @@ export function validateStructureCrudDefinition(value) {
       if (value["fromParent"] === null || value["fromParent"] === undefined) {
         result["fromParent"] = undefined;
       } else {
-        if (
-          typeof value["fromParent"] !== "object" ||
-          Array.isArray(value["fromParent"])
-        ) {
+        if (!isRecord(value["fromParent"])) {
           errorMap[`$.fromParent`] = {
             key: "validator.object",
             value: value["fromParent"],
@@ -3033,10 +3017,7 @@ export function validateStructureCrudDefinition(value) {
           ) {
             result["fromParent"]["options"] = undefined;
           } else {
-            if (
-              typeof value["fromParent"]["options"] !== "object" ||
-              Array.isArray(value["fromParent"]["options"])
-            ) {
+            if (!isRecord(value["fromParent"]["options"])) {
               errorMap[`$.fromParent.options`] = {
                 key: "validator.object",
                 value: value["fromParent"]["options"],
@@ -3086,10 +3067,7 @@ export function validateStructureCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["routeOptions"] !== "object" ||
-          Array.isArray(value["routeOptions"])
-        ) {
+        if (!isRecord(value["routeOptions"])) {
           errorMap[`$.routeOptions`] = {
             key: "validator.object",
             value: value["routeOptions"],
@@ -3249,10 +3227,7 @@ export function validateStructureCrudDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["fieldOptions"] !== "object" ||
-          Array.isArray(value["fieldOptions"])
-        ) {
+        if (!isRecord(value["fieldOptions"])) {
           errorMap[`$.fieldOptions`] = {
             key: "validator.object",
             value: value["fieldOptions"],
@@ -3271,10 +3246,7 @@ export function validateStructureCrudDefinition(value) {
           ) {
             result["fieldOptions"]["readable"] = undefined;
           } else {
-            if (
-              typeof value["fieldOptions"]["readable"] !== "object" ||
-              Array.isArray(value["fieldOptions"]["readable"])
-            ) {
+            if (!isRecord(value["fieldOptions"]["readable"])) {
               errorMap[`$.fieldOptions.readable`] = {
                 key: "validator.object",
                 value: value["fieldOptions"]["readable"],
@@ -3433,10 +3405,7 @@ export function validateStructureCrudDefinition(value) {
           ) {
             result["fieldOptions"]["writable"] = undefined;
           } else {
-            if (
-              typeof value["fieldOptions"]["writable"] !== "object" ||
-              Array.isArray(value["fieldOptions"]["writable"])
-            ) {
+            if (!isRecord(value["fieldOptions"]["writable"])) {
               errorMap[`$.fieldOptions.writable`] = {
                 key: "validator.object",
                 value: value["fieldOptions"]["writable"],
@@ -3703,7 +3672,7 @@ export function validateStructureReferenceDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -3938,7 +3907,7 @@ export function validateStructureReferenceDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -4037,10 +4006,7 @@ export function validateStructureReferenceDefinition(value) {
       if (value["validator"] === null || value["validator"] === undefined) {
         result["validator"] = {};
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -4055,10 +4021,7 @@ export function validateStructureReferenceDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["reference"] !== "object" ||
-          Array.isArray(value["reference"])
-        ) {
+        if (!isRecord(value["reference"])) {
           errorMap[`$.reference`] = {
             key: "validator.object",
             value: value["reference"],
@@ -4174,7 +4137,7 @@ export function validateStructureDateDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -4459,7 +4422,7 @@ export function validateStructureDateDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -4560,10 +4523,7 @@ export function validateStructureDateDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -4773,7 +4733,7 @@ export function validateStructureExtendDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -5060,7 +5020,7 @@ export function validateStructureExtendDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -5159,10 +5119,7 @@ export function validateStructureExtendDefinition(value) {
       if (value["validator"] === null || value["validator"] === undefined) {
         result["validator"] = {};
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -5177,7 +5134,7 @@ export function validateStructureExtendDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (typeof value["keys"] !== "object" || Array.isArray(value["keys"])) {
+        if (!isRecord(value["keys"])) {
           errorMap[`$.keys`] = {
             key: "validator.generic",
           };
@@ -5341,7 +5298,7 @@ export function validateStructureRelationDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -5538,7 +5495,7 @@ export function validateStructureFileDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -5822,7 +5779,7 @@ export function validateStructureFileDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -5923,10 +5880,7 @@ export function validateStructureFileDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -6017,7 +5971,7 @@ export function validateStructureGenericDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -6303,7 +6257,7 @@ export function validateStructureGenericDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -6402,10 +6356,7 @@ export function validateStructureGenericDefinition(value) {
       if (value["validator"] === null || value["validator"] === undefined) {
         result["validator"] = {};
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -6470,7 +6421,7 @@ export function validateStructureNumberDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -6755,7 +6706,7 @@ export function validateStructureNumberDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -6856,10 +6807,7 @@ export function validateStructureNumberDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -7096,7 +7044,7 @@ export function validateStructureObjectDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -7385,7 +7333,7 @@ export function validateStructureObjectDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -7486,10 +7434,7 @@ export function validateStructureObjectDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -7585,7 +7530,7 @@ export function validateStructureObjectDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (typeof value["keys"] !== "object" || Array.isArray(value["keys"])) {
+        if (!isRecord(value["keys"])) {
           errorMap[`$.keys`] = {
             key: "validator.generic",
           };
@@ -7691,10 +7636,7 @@ export function validateStructureObjectDefinition(value) {
       ) {
         result["queryOptions"] = undefined;
       } else {
-        if (
-          typeof value["queryOptions"] !== "object" ||
-          Array.isArray(value["queryOptions"])
-        ) {
+        if (!isRecord(value["queryOptions"])) {
           errorMap[`$.queryOptions`] = {
             key: "validator.object",
             value: value["queryOptions"],
@@ -7922,7 +7864,7 @@ export function validateStructureOmitDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -8208,7 +8150,7 @@ export function validateStructureOmitDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -8309,10 +8251,7 @@ export function validateStructureOmitDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -8475,7 +8414,7 @@ export function validateStructurePickDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -8761,7 +8700,7 @@ export function validateStructurePickDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -8862,10 +8801,7 @@ export function validateStructurePickDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -9028,7 +8964,7 @@ export function validateStructureStringDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -9313,7 +9249,7 @@ export function validateStructureStringDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -9414,10 +9350,7 @@ export function validateStructureStringDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -9794,7 +9727,7 @@ export function validateStructureUuidDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -10078,7 +10011,7 @@ export function validateStructureUuidDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -10179,10 +10112,7 @@ export function validateStructureUuidDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -10245,7 +10175,7 @@ export function validateStructureGenerateOptions(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -10321,10 +10251,7 @@ export function validateStructureGenerateOptions(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["generators"] !== "object" ||
-          Array.isArray(value["generators"])
-        ) {
+        if (!isRecord(value["generators"])) {
           errorMap[`$.generators`] = {
             key: "validator.object",
             value: value["generators"],
@@ -10375,10 +10302,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["structure"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["structure"] !== "object" ||
-              Array.isArray(value["generators"]["structure"])
-            ) {
+            if (!isRecord(value["generators"]["structure"])) {
               errorMap[`$.generators.structure`] = {
                 key: "validator.object",
                 value: value["generators"]["structure"],
@@ -10418,10 +10342,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["openApi"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["openApi"] !== "object" ||
-              Array.isArray(value["generators"]["openApi"])
-            ) {
+            if (!isRecord(value["generators"]["openApi"])) {
               errorMap[`$.generators.openApi`] = {
                 key: "validator.object",
                 value: value["generators"]["openApi"],
@@ -10466,11 +10387,7 @@ export function validateStructureGenerateOptions(value) {
                 result["generators"]["openApi"]["openApiExtensions"] = {};
               } else {
                 if (
-                  typeof value["generators"]["openApi"]["openApiExtensions"] !==
-                    "object" ||
-                  Array.isArray(
-                    value["generators"]["openApi"]["openApiExtensions"],
-                  )
+                  !isRecord(value["generators"]["openApi"]["openApiExtensions"])
                 ) {
                   errorMap[`$.generators.openApi.openApiExtensions`] = {
                     key: "validator.object",
@@ -10663,10 +10580,7 @@ export function validateStructureGenerateOptions(value) {
                 result["generators"]["openApi"]["openApiRouteExtensions"] = {};
               } else {
                 if (
-                  typeof value["generators"]["openApi"][
-                    "openApiRouteExtensions"
-                  ] !== "object" ||
-                  Array.isArray(
+                  !isRecord(
                     value["generators"]["openApi"]["openApiRouteExtensions"],
                   )
                 ) {
@@ -10765,10 +10679,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["router"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["router"] !== "object" ||
-              Array.isArray(value["generators"]["router"])
-            ) {
+            if (!isRecord(value["generators"]["router"])) {
               errorMap[`$.generators.router`] = {
                 key: "validator.object",
                 value: value["generators"]["router"],
@@ -10832,10 +10743,7 @@ export function validateStructureGenerateOptions(value) {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (
-                      typeof intermediateValue9 !== "object" ||
-                      Array.isArray(intermediateValue9)
-                    ) {
+                    if (!isRecord(intermediateValue9)) {
                       intermediateErrorMap9[`$`] = {
                         key: "validator.object",
                         value: intermediateValue9,
@@ -10951,10 +10859,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["database"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["database"] !== "object" ||
-              Array.isArray(value["generators"]["database"])
-            ) {
+            if (!isRecord(value["generators"]["database"])) {
               errorMap[`$.generators.database`] = {
                 key: "validator.object",
                 value: value["generators"]["database"],
@@ -11020,10 +10925,7 @@ export function validateStructureGenerateOptions(value) {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (
-                      typeof intermediateValue10 !== "object" ||
-                      Array.isArray(intermediateValue10)
-                    ) {
+                    if (!isRecord(intermediateValue10)) {
                       intermediateErrorMap10[`$`] = {
                         key: "validator.object",
                         value: intermediateValue10,
@@ -11178,10 +11080,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["validators"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["validators"] !== "object" ||
-              Array.isArray(value["generators"]["validators"])
-            ) {
+            if (!isRecord(value["generators"]["validators"])) {
               errorMap[`$.generators.validators`] = {
                 key: "validator.object",
                 value: value["generators"]["validators"],
@@ -11260,10 +11159,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["apiClient"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["apiClient"] !== "object" ||
-              Array.isArray(value["generators"]["apiClient"])
-            ) {
+            if (!isRecord(value["generators"]["apiClient"])) {
               errorMap[`$.generators.apiClient`] = {
                 key: "validator.object",
                 value: value["generators"]["apiClient"],
@@ -11329,10 +11225,7 @@ export function validateStructureGenerateOptions(value) {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (
-                      typeof intermediateValue12 !== "object" ||
-                      Array.isArray(intermediateValue12)
-                    ) {
+                    if (!isRecord(intermediateValue12)) {
                       intermediateErrorMap12[`$`] = {
                         key: "validator.object",
                         value: intermediateValue12,
@@ -11538,10 +11431,7 @@ export function validateStructureGenerateOptions(value) {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (
-                      typeof intermediateValue12 !== "object" ||
-                      Array.isArray(intermediateValue12)
-                    ) {
+                    if (!isRecord(intermediateValue12)) {
                       intermediateErrorMap12[`$`] = {
                         key: "validator.object",
                         value: intermediateValue12,
@@ -11742,10 +11632,7 @@ export function validateStructureGenerateOptions(value) {
                 };
               } else {
                 if (
-                  typeof value["generators"]["apiClient"][
-                    "responseValidation"
-                  ] !== "object" ||
-                  Array.isArray(
+                  !isRecord(
                     value["generators"]["apiClient"]["responseValidation"],
                   )
                 ) {
@@ -11830,10 +11717,7 @@ export function validateStructureGenerateOptions(value) {
           ) {
             result["generators"]["types"] = undefined;
           } else {
-            if (
-              typeof value["generators"]["types"] !== "object" ||
-              Array.isArray(value["generators"]["types"])
-            ) {
+            if (!isRecord(value["generators"]["types"])) {
               errorMap[`$.generators.types`] = {
                 key: "validator.object",
                 value: value["generators"]["types"],
@@ -12192,7 +12076,7 @@ export function validateStructureRouteDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -12486,7 +12370,7 @@ export function validateStructureRouteDefinition(value) {
       if (value["sql"] === null || value["sql"] === undefined) {
         result["sql"] = {};
       } else {
-        if (typeof value["sql"] !== "object" || Array.isArray(value["sql"])) {
+        if (!isRecord(value["sql"])) {
           errorMap[`$.sql`] = {
             key: "validator.object",
             value: value["sql"],
@@ -12585,10 +12469,7 @@ export function validateStructureRouteDefinition(value) {
       if (value["validator"] === null || value["validator"] === undefined) {
         result["validator"] = {};
       } else {
-        if (
-          typeof value["validator"] !== "object" ||
-          Array.isArray(value["validator"])
-        ) {
+        if (!isRecord(value["validator"])) {
           errorMap[`$.validator`] = {
             key: "validator.object",
             value: value["validator"],
@@ -12852,10 +12733,7 @@ export function validateStructureRouteDefinition(value) {
       if (value["metadata"] === null || value["metadata"] === undefined) {
         result["metadata"] = undefined;
       } else {
-        if (
-          typeof value["metadata"] !== "object" ||
-          Array.isArray(value["metadata"])
-        ) {
+        if (!isRecord(value["metadata"])) {
           errorMap[`$.metadata`] = {
             key: "validator.object",
             value: value["metadata"],
@@ -12925,7 +12803,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.object",
         value: value,
@@ -12967,10 +12845,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["target"] !== "object" ||
-          Array.isArray(value["target"])
-        ) {
+        if (!isRecord(value["target"])) {
           errorMap[`$.target`] = {
             key: "validator.object",
             value: value["target"],
@@ -13024,10 +12899,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
           key: "validator.undefined",
         };
       } else {
-        if (
-          typeof value["properties"] !== "object" ||
-          Array.isArray(value["properties"])
-        ) {
+        if (!isRecord(value["properties"])) {
           errorMap[`$.properties`] = {
             key: "validator.object",
             value: value["properties"],
@@ -13100,10 +12972,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
           ) {
             result["properties"]["specification"] = undefined;
           } else {
-            if (
-              typeof value["properties"]["specification"] !== "object" ||
-              Array.isArray(value["properties"]["specification"])
-            ) {
+            if (!isRecord(value["properties"]["specification"])) {
               errorMap[`$.properties.specification`] = {
                 key: "validator.object",
                 value: value["properties"]["specification"],
@@ -13123,11 +12992,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof value["properties"]["specification"]["params"] !==
-                    "object" ||
-                  Array.isArray(value["properties"]["specification"]["params"])
-                ) {
+                if (!isRecord(value["properties"]["specification"]["params"])) {
                   errorMap[`$.properties.specification.params`] = {
                     key: "validator.generic",
                   };
@@ -13279,11 +13144,7 @@ export function validateStructureRouteInvalidationDefinition(value) {
                   key: "validator.undefined",
                 };
               } else {
-                if (
-                  typeof value["properties"]["specification"]["query"] !==
-                    "object" ||
-                  Array.isArray(value["properties"]["specification"]["query"])
-                ) {
+                if (!isRecord(value["properties"]["specification"]["query"])) {
                   errorMap[`$.properties.specification.query`] = {
                     key: "validator.generic",
                   };
@@ -13454,7 +13315,7 @@ export function validateStructureStructure(value) {
       key: "validator.undefined",
     };
   } else {
-    if (typeof value !== "object" || Array.isArray(value)) {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
         key: "validator.generic",
       };
@@ -13501,10 +13362,7 @@ export function validateStructureStructure(value) {
               key: "validator.undefined",
             };
           } else {
-            if (
-              typeof value[genericKeyResult1] !== "object" ||
-              Array.isArray(value[genericKeyResult1])
-            ) {
+            if (!isRecord(value[genericKeyResult1])) {
               errorMap[`$.${genericKeyResult1}`] = {
                 key: "validator.generic",
               };
