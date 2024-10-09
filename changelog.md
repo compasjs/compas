@@ -4,6 +4,62 @@ editLink: false
 
 # Changelog
 
+### [v0.15.0](https://github.com/compasjs/compas/releases/tag/v0.15.0)
+
+#### Breaking changes
+
+- chore(eslint-plugin): drop package
+  [`17d132`](https://github.com/compasjs/compas/commit/17d132ed7806900188d2bc80caf9b1ff8a5ccc93)
+  - Use `@lightbase/eslint-config` instead. It is almost fully compatible, but
+    requires some migration. Please follow the
+    [migration guide](https://github.com/lightbasenl/platforms/blob/main/packages/eslint-config/MIGRATION_GUIDE.md).
+
+#### Features
+
+- feat(code-gen): support TypeScript target for router and database generators
+  [`c1739c`](https://github.com/compasjs/compas/commit/c1739c19f5f008a12b33a9c97f95b0df5fdecde5)
+
+#### Other
+
+- chore: replace ESLint setup
+  [`591faa`](https://github.com/compasjs/compas/commit/591faa4007ef84bc9d8fde7270a2b3c5f506f498)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3369](https://github.com/compasjs/compas/pull/3369))
+  [`51860b`](https://github.com/compasjs/compas/commit/51860b319cc64e331587dd4604966e58445a7f26)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3376](https://github.com/compasjs/compas/pull/3376))
+  [`ea8d44`](https://github.com/compasjs/compas/commit/ea8d44621fe2f3a10e040de8b1aad73c171e83a2)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3387](https://github.com/compasjs/compas/pull/3387))
+  [`537143`](https://github.com/compasjs/compas/commit/537143e4657b2177bb9deb80e521576dbabaca58)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.654.0 to 3.667.0
+  ([#3380](https://github.com/compasjs/compas/pull/3380),
+  [#3393](https://github.com/compasjs/compas/pull/3393),
+  [#3396](https://github.com/compasjs/compas/pull/3396),
+  [#3399](https://github.com/compasjs/compas/pull/3399),
+  [#3401](https://github.com/compasjs/compas/pull/3401),
+  [#3402](https://github.com/compasjs/compas/pull/3402),
+  [#3405](https://github.com/compasjs/compas/pull/3405))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.654.0 to 3.667.0
+  ([#3380](https://github.com/compasjs/compas/pull/3380),
+  [#3393](https://github.com/compasjs/compas/pull/3393),
+  [#3396](https://github.com/compasjs/compas/pull/3396),
+  [#3399](https://github.com/compasjs/compas/pull/3399),
+  [#3401](https://github.com/compasjs/compas/pull/3401),
+  [#3402](https://github.com/compasjs/compas/pull/3402),
+  [#3405](https://github.com/compasjs/compas/pull/3405))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.14.1](https://github.com/compasjs/compas/releases/tag/v0.14.1)
 
 #### Bug fixes
