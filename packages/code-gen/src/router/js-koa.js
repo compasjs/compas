@@ -415,7 +415,11 @@ type _Context = import("koa").ParameterizedContext<{}, {
         fileBlockEnd(file);
       }
 
-      fileWrite(file, `await ${group}Handlers.${route.name}(ctx as any);`);
+      if (file.relativePath.endsWith(".ts")) {
+        fileWrite(file, `await ${group}Handlers.${route.name}(ctx as any);`);
+      } else {
+        fileWrite(file, `await ${group}Handlers.${route.name}(ctx);`);
+      }
 
       if (route.response) {
         fileWrite(
