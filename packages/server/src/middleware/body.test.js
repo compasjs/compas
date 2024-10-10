@@ -21,15 +21,16 @@ test("server/middleware/body", async (t) => {
     },
   });
 
-  app.use(parser);
-  app.use((ctx, next) => {
+  app.use(async (ctx, next) => {
+    await parser(ctx);
     ctx.body = ctx.request.body;
 
     return next();
   });
 
-  fileApp.use(parser);
-  fileApp.use((ctx, next) => {
+  fileApp.use(async (ctx, next) => {
+    await parser(ctx);
+
     ctx.type = "application/json";
     ctx.body = JSON.stringify({ files: ctx.request.files }, null, 2);
 

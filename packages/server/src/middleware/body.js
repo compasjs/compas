@@ -89,7 +89,10 @@ export function createBodyParser(opts = {}) {
             strict: true,
             returnRawBody: false,
           });
-        } else if (opts.urlencoded && ctx.is("urlencoded")) {
+        } else if (
+          opts.urlencoded &&
+          ctx.is("application/x-www-form-urlencoded")
+        ) {
           bodyResult = await coBody.form(ctx, {
             encoding: opts.encoding,
             limit: opts.urlencodedLimit,
@@ -126,13 +129,17 @@ export function createBodyParser(opts = {}) {
       } catch (/** @type {any} */ parsingError) {
         if (parsingError instanceof SyntaxError) {
           delete parsingError.stack;
-          throw AppError.validationError("error.server.unsupportedBodyFormat", {
-            name: parsingError.name,
-            message: parsingError.message,
+          throw AppError.validationError(
+            "error.server.unsupportedBodyFormat",
+            {
+              name: parsingError.name,
+              message: parsingError.message,
 
-            // @ts-ignore
-            rawBody: parsingError.body,
-          });
+              // @ts-ignore
+              rawBody: parsingError.body,
+            },
+            parsingError,
+          );
         } else if (parsingError.message?.includes("exceeded, received")) {
           throw AppError.validationError(
             "error.server.maxFieldSize",
