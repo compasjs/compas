@@ -4,6 +4,15 @@ editLink: false
 
 # Changelog
 
+### [v0.15.1](https://github.com/compasjs/compas/releases/tag/v0.15.1)
+
+#### Bug fixes
+
+- fix(code-gen): fix regression
+  [`138b43`](https://github.com/compasjs/compas/commit/138b431f966b62cdc2e7afa0ecd744256d8ca428)
+- fix(server): handle change on body parser
+  [`817e84`](https://github.com/compasjs/compas/commit/817e84fee4a3cd5ce39bb084414f4d788a161bf0)
+
 ### [v0.15.0](https://github.com/compasjs/compas/releases/tag/v0.15.0)
 
 #### Breaking changes
