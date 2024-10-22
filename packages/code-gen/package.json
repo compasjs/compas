@@ -12,13 +12,7 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "generate",
-    "router",
-    "validation",
-    "code-gen"
-  ],
+  "keywords": ["compas", "generate", "router", "validation", "code-gen"],
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.15.1"
