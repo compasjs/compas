@@ -4,6 +4,29 @@ editLink: false
 
 # Changelog
 
+### [v0.15.2](https://github.com/compasjs/compas/releases/tag/v0.15.2)
+
+#### Features
+
+- feat(cli): optional `t` argument for `newTestEvent`
+  [`129de8`](https://github.com/compasjs/compas/commit/129de8e9e7a51681c836455db7c311ab71799b9d)
+
+#### Bug fixes
+
+- fix(code-gen): add trailing comma in multi-line imports
+  [`e7fb6a`](https://github.com/compasjs/compas/commit/e7fb6a67d2dd7a4001dfe4448d6c724c9d396dc6)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3415](https://github.com/compasjs/compas/pull/3415),
+  [#3422](https://github.com/compasjs/compas/pull/3422),
+  [#3429](https://github.com/compasjs/compas/pull/3429))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump pino from 9.4.0 to 9.5.0
+  ([#3417](https://github.com/compasjs/compas/pull/3417))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+
 ### [v0.15.1](https://github.com/compasjs/compas/releases/tag/v0.15.1)
 
 #### Bug fixes
