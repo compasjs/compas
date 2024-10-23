@@ -25,7 +25,7 @@
     "@compas/stdlib": "0.15.2",
     "crc": "4.3.2",
     "cron-parser": "^4.9.0",
-    "file-type": "19.5.0",
+    "file-type": "19.6.0",
     "is-animated": "2.0.2",
     "jws": "4.0.0",
     "mime-types": "2.1.35",
