@@ -94,11 +94,11 @@ export class JavascriptImportCollector {
 
       if (isMultiline) {
         result.push(
-          `import${this.isTypeImports ? " type" : ""} {\n  ${symbols.join(",\n  ")}\n} from "${key}";`,
+          `import${this.isTypeImports ? " type" : ""} {\n  ${symbols.join(",\n  ")},\n} from "${key}";`,
         );
       } else {
         result.push(
-          `import${this.isTypeImports ? " type" : ""} { ${symbols.join(",")} } from "${key}";`,
+          `import${this.isTypeImports ? " type" : ""} { ${symbols.join(", ")} } from "${key}";`,
         );
       }
     }

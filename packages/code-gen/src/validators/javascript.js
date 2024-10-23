@@ -548,7 +548,7 @@ export function validatorJavascriptArray(file, type, validatorState) {
     fileWrite(file, `/** @type {any|any[]} */`);
     fileWrite(
       file,
-      `let intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
+      `${type.validator.convert ? "let" : "const"} intermediateValue${validatorState.reusedVariableIndex} = ${valuePath};\n`,
     );
   }
 
