@@ -1,6 +1,6 @@
 {
   "name": "@compas/code-gen",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "Generate various boring parts of your server",
   "exports": {
     ".": {
@@ -12,10 +12,16 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": ["compas", "generate", "router", "validation", "code-gen"],
+  "keywords": [
+    "compas",
+    "generate",
+    "router",
+    "validation",
+    "code-gen"
+  ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.15.1"
+    "@compas/stdlib": "0.15.2"
   },
   "author": {
     "name": "Dirk de Visser",

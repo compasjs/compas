@@ -1,6 +1,6 @@
 {
   "name": "@compas/stdlib",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "All kinds of utility functions",
   "exports": {
     ".": {
@@ -12,7 +12,12 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": ["compas", "stdlib", "standard", "logger"],
+  "keywords": [
+    "compas",
+    "stdlib",
+    "standard",
+    "logger"
+  ],
   "license": "MIT",
   "dependencies": {
     "@types/node": "22.7.9",
