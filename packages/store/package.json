@@ -12,12 +12,7 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "s3",
-    "postgres",
-    "persistence"
-  ],
+  "keywords": ["compas", "s3", "postgres", "persistence"],
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-s3": "3.685.0",

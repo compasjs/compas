@@ -45,6 +45,7 @@ export function typesTypescriptResolveFile(generateContext) {
 export function typesTypescriptInitFile(generateContext) {
   return fileContextCreateGeneric(generateContext, "common/types.d.ts", {
     importCollector: new TypescriptImportCollector(),
+    typeImportCollector: new TypescriptImportCollector(true),
   });
 }
 

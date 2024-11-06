@@ -56,6 +56,7 @@ export function tsPostgresGenerateUtils(generateContext) {
   helperImportCollector.destructure("@compas/stdlib", "AppError");
   helperTypeImportCollector.destructure("@compas/store", "QueryPart");
   helperTypeImportCollector.destructure("@compas/store", "WrappedQueryPart");
+  helperTypeImportCollector.destructure("@compas/store", "WrappedQueryResult");
 
   fileWrite(
     helperFile,
@@ -156,7 +157,10 @@ export function tsPostgresCreateFile(generateContext, model) {
   importCollector.destructure("@compas/stdlib", "isNil");
   importCollector.destructure("@compas/stdlib", "AppError");
 
+  typeImportCollector.destructure("@compas/store", "Postgres");
+  typeImportCollector.destructure("@compas/store", "QueryPart");
   typeImportCollector.destructure("@compas/store", "WrappedQueryPart");
+  typeImportCollector.destructure("@compas/store", "WrappedQueryResult");
 
   fileWrite(file, `\nexport const ${model.name}Queries = {`);
   fileContextSetIndent(file, 1);
@@ -1119,6 +1123,9 @@ export function tsPostgresGenerateQueryBuilder(
       entityInformation: `$$(): any => ${relationInfo.modelInverse.name}QueryBuilderSpec$$`,
     });
   }
+
+  const fullTypeName = `${upperCaseFirst(model.group)}${upperCaseFirst(model.name)}`;
+
   for (const relation of inverseRelations) {
     const relationInfo = modelRelationGetInformation(relation);
 
@@ -1165,7 +1172,7 @@ export function tsPostgresGenerateQueryBuilder(
   // Function
   fileBlockStart(
     file,
-    `export function query${upperCaseFirst(model.name)}(input: ${contextNames.queryBuilderType.inputType} = {}): WrappedQueryPart<${contextNames.queryResultType.outputType}>`,
+    `export function query${upperCaseFirst(model.name)}<QueryBuilder extends ${contextNames.queryBuilderType.inputType}>(input: QueryBuilder = {}): WrappedQueryResult<${fullTypeName}QueryResolver<QueryBuilder>>`,
   );
 
   // Input validation

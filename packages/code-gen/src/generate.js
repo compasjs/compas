@@ -24,6 +24,7 @@ import {
 } from "./processors/model-partials.js";
 import {
   modelQueryBuilderTypes,
+  modelQueryRawTypes,
   modelQueryResultTypes,
 } from "./processors/model-query.js";
 import {
@@ -153,6 +154,7 @@ export function generateExecute(generator, options) {
   typesGeneratorInit(generateContext);
 
   databaseGenerator(generateContext);
+  modelQueryRawTypes(generateContext);
 
   routerGenerator(generateContext);
   apiClientGenerator(generateContext);

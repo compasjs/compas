@@ -121,7 +121,9 @@ export function validatorJavascriptGetFile(generateContext, type) {
  /**
   * @typedef {Record<string, any|undefined>} ValidatorErrorMap
   */
+
   
+// eslint-disable-next-line unused-imports/no-unused-vars
 const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
  `,
   );

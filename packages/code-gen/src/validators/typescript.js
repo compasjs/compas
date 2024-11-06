@@ -62,6 +62,7 @@ type Either<T, E> = { value: T; error?: never }|{ value?: never; error: E };
 
 type ValidatorErrorMap = Record<string, any|undefined>;
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const isRecord = (v: unknown): v is Record<string, any> => !!v && typeof v === "object" && !Array.isArray(v);
 `,
   );

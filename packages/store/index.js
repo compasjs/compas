@@ -17,13 +17,30 @@
 
 /**
  * @template Type
- * @template {undefined | "*" | Array<string>} Selector
- * @typedef {import("./types/advanced-types.js").Returning<Type, Selector>} Returning
+ * @typedef {import("./types/advanced-types.js").WrappedQueryPart<Type>} WrappedQueryPart
  */
 
 /**
  * @template Type
- * @typedef {import("./types/advanced-types.js").WrappedQueryPart<Type>} WrappedQueryPart
+ * @typedef {import("./types/advanced-types.js").WrappedQueryResult<Type>} WrappedQueryResult
+ */
+
+/**
+ * @template Base
+ * @template Expansion
+ * @typedef {import("./types/advanced-types.js").QueryBuilderDefinition<Base, Expansion>} QueryBuilderDefinition
+ */
+
+/**
+ * @template DefinitionType
+ * @template QueryBuilder
+ * @template {string} OptionalJoins
+ * @typedef {import("./types/advanced-types.js").QueryBuilderResolver<DefinitionType, QueryBuilder, OptionalJoins>} QueryBuilderResolver
+ */
+
+/**
+ * @template Expansion
+ * @typedef {import("./types/advanced-types.js").ResolveOptionalJoins<Expansion>} ResolveOptionalJoins
  */
 
 /**
