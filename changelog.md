@@ -4,6 +4,27 @@ editLink: false
 
 # Changelog
 
+### [v0.15.3](https://github.com/compasjs/compas/releases/tag/v0.15.3)
+
+#### Features
+
+- feat(code-gen,store): dynamically resolve query builder results based on the
+  passed in builder
+  [`f0f730`](https://github.com/compasjs/compas/commit/f0f73046cd263f4a486e991487552e376a70945e)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3432](https://github.com/compasjs/compas/pull/3432),
+  [#3443](https://github.com/compasjs/compas/pull/3443))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 19.5.0 to 19.6.0
+  ([#3416](https://github.com/compasjs/compas/pull/3416))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump postgres from 3.4.4 to 3.4.5
+  ([#3434](https://github.com/compasjs/compas/pull/3434))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+
 ### [v0.15.2](https://github.com/compasjs/compas/releases/tag/v0.15.2)
 
 #### Features
