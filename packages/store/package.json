@@ -4,20 +4,13 @@
   "description": "Postgres & S3-compatible wrappers for common things",
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
+      "types": "./index.d.ts",
+      "default": "./index.js"
     },
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "s3",
-    "postgres",
-    "persistence"
-  ],
+  "keywords": ["compas", "s3", "postgres", "persistence"],
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-s3": "3.688.0",

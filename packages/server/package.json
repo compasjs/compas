@@ -4,21 +4,13 @@
   "description": "Koa server and common middleware",
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
+      "types": "./index.d.ts",
+      "default": "./index.js"
     },
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "koa",
-    "api",
-    "http",
-    "backend"
-  ],
+  "keywords": ["compas", "koa", "api", "http", "backend"],
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.15.3",

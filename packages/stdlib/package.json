@@ -4,20 +4,13 @@
   "description": "All kinds of utility functions",
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
-      }
+      "types": "./index.d.ts",
+      "default": "./index.js"
     },
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "stdlib",
-    "standard",
-    "logger"
-  ],
+  "keywords": ["compas", "stdlib", "standard", "logger"],
   "license": "MIT",
   "dependencies": {
     "@types/node": "22.9.0",
