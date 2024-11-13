@@ -1,6 +1,6 @@
 {
   "name": "@compas/server",
-  "version": "0.15.3",
+  "version": "0.15.4",
   "description": "Koa server and common middleware",
   "exports": {
     ".": {
@@ -10,10 +10,16 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": ["compas", "koa", "api", "http", "backend"],
+  "keywords": [
+    "compas",
+    "koa",
+    "api",
+    "http",
+    "backend"
+  ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.15.3",
+    "@compas/stdlib": "0.15.4",
     "@types/formidable": "2.0.6",
     "@types/koa": "2.15.0",
     "co-body": "6.2.0",
