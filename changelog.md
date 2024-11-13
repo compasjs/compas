@@ -4,6 +4,26 @@ editLink: false
 
 # Changelog
 
+### [v0.15.4](https://github.com/compasjs/compas/releases/tag/v0.15.4)
+
+#### Other
+
+- chore(\*): remove extra nesting in package.json#exports field
+  [`96e238`](https://github.com/compasjs/compas/commit/96e238276bd6087b332f110408fcf9c9098ce589)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3453](https://github.com/compasjs/compas/pull/3453))
+  [`de9308`](https://github.com/compasjs/compas/commit/de93089b610f7ca65946adbd1ac756ba81c7afd9)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.688.0 to 3.689.0
+  ([#3454](https://github.com/compasjs/compas/pull/3454))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.688.0 to 3.689.0
+  ([#3454](https://github.com/compasjs/compas/pull/3454))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.15.3](https://github.com/compasjs/compas/releases/tag/v0.15.3)
 
 #### Features
