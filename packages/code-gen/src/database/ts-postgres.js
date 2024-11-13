@@ -54,6 +54,7 @@ export function tsPostgresGenerateUtils(generateContext) {
     JavascriptImportCollector.getImportCollector(indexFile);
 
   helperImportCollector.destructure("@compas/stdlib", "AppError");
+  helperTypeImportCollector.destructure("@compas/store", "Postgres");
   helperTypeImportCollector.destructure("@compas/store", "QueryPart");
   helperTypeImportCollector.destructure("@compas/store", "WrappedQueryPart");
   helperTypeImportCollector.destructure("@compas/store", "WrappedQueryResult");
@@ -1172,13 +1173,13 @@ export function tsPostgresGenerateQueryBuilder(
   // Function
   fileBlockStart(
     file,
-    `export function query${upperCaseFirst(model.name)}<QueryBuilder extends ${contextNames.queryBuilderType.inputType}>(input: QueryBuilder = {}): WrappedQueryResult<${fullTypeName}QueryResolver<QueryBuilder>>`,
+    `export function query${upperCaseFirst(model.name)}<QueryBuilder extends ${contextNames.queryBuilderType.inputType}>(input?: QueryBuilder): WrappedQueryResult<${fullTypeName}QueryResolver<QueryBuilder>>`,
   );
 
   // Input validation
   fileWrite(
     file,
-    `const { error, value: validatedInput } = ${contextNames.queryBuilderType.validatorFunction}(input);`,
+    `const { error, value: validatedInput } = ${contextNames.queryBuilderType.validatorFunction}(input ?? {});`,
   );
   fileBlockStart(file, `if (error)`);
   fileWrite(
@@ -1198,7 +1199,7 @@ export function tsPostgresGenerateQueryBuilder(
       contextNames.queryResultType.validatorFunction
     }, { hasCustomReturning: validatedInput.select?.length !== ${
       Object.keys(model.keys).length
-    }, });`,
+    }, }) as unknown as WrappedQueryResult<${fullTypeName}QueryResolver<QueryBuilder>>;`,
   );
 
   fileBlockEnd(file);
