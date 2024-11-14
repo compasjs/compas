@@ -36,10 +36,6 @@ import { crudQueryBuilderGet } from "./query-builder.js";
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function crudHandlersGenerate(generateContext) {
-  if (generateContext.options.targetLanguage !== "js") {
-    return;
-  }
-
   if (isNil(generateContext.options.generators.router?.target?.library)) {
     return;
   }
@@ -60,9 +56,14 @@ export function crudHandlersGenerate(generateContext) {
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudHandlersFile(generateContext, crud) {
-  return fileContextCreateGeneric(generateContext, `${crud.group}/crud.js`, {
-    importCollector: new JavascriptImportCollector(),
-  });
+  return fileContextCreateGeneric(
+    generateContext,
+    `${crud.group}/crud.${generateContext.options.targetLanguage}`,
+    {
+      importCollector: new JavascriptImportCollector(),
+      contents: "// @ts-nocheck\n\n",
+    },
+  );
 }
 
 /**

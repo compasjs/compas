@@ -10,13 +10,7 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "koa",
-    "api",
-    "http",
-    "backend"
-  ],
+  "keywords": ["compas", "koa", "api", "http", "backend"],
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.15.4",

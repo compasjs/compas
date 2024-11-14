@@ -29,6 +29,10 @@ export function tsAxiosGenerateCommonFile(generateContext) {
     {
       importCollector: new JavascriptImportCollector(),
       typeImportCollector: new JavascriptImportCollector(true),
+      contents:
+        generateContext.options.generators.router ?
+          `// @ts-nocheck\n\n`
+        : undefined,
     },
   );
 
@@ -73,6 +77,61 @@ export function tsAxiosGenerateCommonFile(generateContext) {
 }>;
 `,
   );
+
+  if (generateContext.options.generators.router) {
+    importCollector.destructure("@compas/stdlib", "AppError");
+    importCollector.destructure("@compas/stdlib", "streamToBuffer");
+
+    fileWrite(
+      file,
+      `/**
+ * Adds an interceptor to the provided Axios instance, wrapping any error in an AppError.
+ * This allows directly testing against an error key or property.
+ */
+export function axiosInterceptErrorAndWrapWithAppError(axiosInstance: AxiosInstance) {
+  axiosInstance.interceptors.response.use(undefined, async (error) => {
+    // Validator error
+    if (AppError.instanceOf(error)) {
+      // If it is an AppError already, it most likely is thrown by the response
+      // validators. So we rethrow it as is.
+      throw error;
+    }
+
+    if (typeof error?.response?.data?.pipe === "function") {
+      const buffer = await streamToBuffer(error.response.data);
+      try {
+        error.response.data = JSON.parse(buffer.toString("utf-8"));
+      } catch {
+        // Unknown error
+        throw new AppError(
+          \`response.error\`,
+          error.response?.status ?? 500,
+          {
+            message:
+              "Could not decode the response body for further information.",
+          },
+          error,
+        );
+      }
+    }
+
+    // Server AppError
+    const { key, info } = error.response?.data ?? {};
+    if (typeof key === "string" && !!info && typeof info === "object") {
+      throw new AppError(key, error.response.status, info, error);
+    }
+
+    // Unknown error
+    throw new AppError(
+      \`response.error\`,
+      error.response?.status ?? 500,
+      AppError.format(error),
+    );
+  });
+}
+`,
+    );
+  }
 }
 
 /**

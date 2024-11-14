@@ -30,10 +30,6 @@ import {
  * @param {import("../generate.js").GenerateContext} generateContext
  */
 export function crudEventsGenerate(generateContext) {
-  if (generateContext.options.targetLanguage !== "js") {
-    return;
-  }
-
   if (isNil(generateContext.options.generators.router?.target?.library)) {
     return;
   }
@@ -96,9 +92,14 @@ function crudEventsGenerateForType(generateContext, file, crud) {
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureCrudDefinition>} crud
  */
 function crudEventsFile(generateContext, crud) {
-  return fileContextCreateGeneric(generateContext, `${crud.group}/events.js`, {
-    importCollector: new JavascriptImportCollector(),
-  });
+  return fileContextCreateGeneric(
+    generateContext,
+    `${crud.group}/events.${generateContext.options.targetLanguage}`,
+    {
+      importCollector: new JavascriptImportCollector(),
+      contents: "// @ts-nocheck\n\n",
+    },
+  );
 }
 
 /**

@@ -9,10 +9,7 @@
   "bin": {
     "create-compas": "src/create-compas.js"
   },
-  "keywords": [
-    "compas",
-    "create"
-  ],
+  "keywords": ["compas", "create"],
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.15.4",

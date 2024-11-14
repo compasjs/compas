@@ -38,7 +38,7 @@ export function tsPostgresGenerateUtils(generateContext) {
 
   const indexFile = fileContextCreateGeneric(
     generateContext,
-    "common/database.js",
+    "common/database.ts",
     {
       importCollector: new JavascriptImportCollector(),
       typeImportCollector: new JavascriptImportCollector(true),

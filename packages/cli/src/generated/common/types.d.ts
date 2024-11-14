@@ -95,3 +95,5 @@ export type CliCompletion =
     "specification": "boolean"|"number"|"string"|"booleanOrString";
     "description"?: string|undefined;
   };
+
+

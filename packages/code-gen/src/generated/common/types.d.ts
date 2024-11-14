@@ -1389,3 +1389,5 @@ export type StructureTypeDefinitionInput =
   |StructureReferenceDefinitionInput
   |StructureRelationDefinitionInput
   |StructureRouteInvalidationDefinitionInput;
+
+
