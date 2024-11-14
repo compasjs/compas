@@ -4,6 +4,24 @@ editLink: false
 
 # Changelog
 
+### [v0.15.5](https://github.com/compasjs/compas/releases/tag/v0.15.5)
+
+#### Bug fixes
+
+- fix(code-gen): various type issues in the TS postgres generator
+  [`de3d2f`](https://github.com/compasjs/compas/commit/de3d2f3f856afacdd1d7069c514a0f2315803435)
+- fix(code-gen): more fixes for backend TypeScript targets
+  [`2a45b2`](https://github.com/compasjs/compas/commit/2a45b24dc7fe4964116f0c71b8f1cf520b7a14c7)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.689.0 to 3.691.0
+  ([#3456](https://github.com/compasjs/compas/pull/3456))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.689.0 to 3.691.0
+  ([#3456](https://github.com/compasjs/compas/pull/3456))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.15.4](https://github.com/compasjs/compas/releases/tag/v0.15.4)
 
 #### Other
