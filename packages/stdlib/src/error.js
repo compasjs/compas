@@ -15,7 +15,7 @@ export class AppError extends Error {
    * @param {string} key
    * @param {number} status
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [cause]
+   * @param {unknown} [cause]
    */
   constructor(key, status, info, cause) {
     let errMessage = info?.message ?? info?.type ?? "";
@@ -32,6 +32,9 @@ export class AppError extends Error {
     this.key = key;
     this.status = status;
     this.info = info || {};
+
+    /** @type {Error} */
+    // @ts-expect-error force cast
     this.cause = cause;
 
     Object.setPrototypeOf(this, AppError.prototype);
@@ -64,7 +67,7 @@ export class AppError extends Error {
 
   /**
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [error]
+   * @param {unknown} [error]
    * @returns {AppError}
    */
   static notFound(info = {}, error = undefined) {
@@ -73,7 +76,7 @@ export class AppError extends Error {
 
   /**
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [error]
+   * @param {unknown} [error]
    * @returns {AppError}
    */
   static notImplemented(info = {}, error = undefined) {
@@ -82,7 +85,7 @@ export class AppError extends Error {
 
   /**
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [error]
+   * @param {unknown} [error]
    * @returns {AppError}
    */
   static serverError(info = {}, error = undefined) {
@@ -92,7 +95,7 @@ export class AppError extends Error {
   /**
    * @param {string} key
    * @param {Record<string, any>} [info={}]
-   * @param {Error} [error]
+   * @param {unknown} [error]
    * @returns {AppError}
    */
   static validationError(key, info = {}, error = undefined) {

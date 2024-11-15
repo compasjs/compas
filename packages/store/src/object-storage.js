@@ -81,7 +81,7 @@ export async function objectStorageEnsureBucket(s3Client, options) {
       throw AppError.serverError(
         {
           message: "Could not create S3 bucket",
-        }, // @ts-expect-error
+        },
         e,
       );
     }
