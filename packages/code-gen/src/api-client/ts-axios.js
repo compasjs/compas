@@ -174,6 +174,14 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
     typeImportCollector.destructure("axios", "AxiosInstance");
   }
 
+  if (
+    generateContext.options.generators.apiClient?.target.targetRuntime ===
+    "node.js"
+  ) {
+    importCollector.destructure("@compas/stdlib", "AppError");
+    importCollector.raw(`import FormData from "form-data";`);
+  }
+
   return file;
 }
 
@@ -220,7 +228,17 @@ export function tsAxiosGenerateFunction(
   }
 
   // Allow overwriting any request config
-  args.push(`requestConfig?: AxiosRequestConfig`);
+  if (
+    generateContext.options.generators.apiClient?.target.targetRuntime ===
+      "node.js" &&
+    route.response
+  ) {
+    args.push(
+      `requestConfig?: AxiosRequestConfig & { skipResponseValidation?: boolean }`,
+    );
+  } else {
+    args.push(`requestConfig?: AxiosRequestConfig`);
+  }
 
   fileContextRemoveLinePrefix(file, 3);
   fileWrite(file, ` */`);
@@ -336,7 +354,37 @@ export function tsAxiosGenerateFunction(
   fileContextSetIndent(file, -1);
   fileWrite(file, `});`);
 
-  fileWrite(file, `return response.data;`);
+  if (
+    route.response &&
+    generateContext.options.generators.apiClient?.target.targetRuntime ===
+      "node.js"
+  ) {
+    fileBlockStart(file, `if (requestConfig?.skipResponseValidation)`);
+    fileWrite(file, `return response.data;`);
+    fileBlockEnd(file);
+
+    fileWrite(
+      file,
+      `const { value, error } = ${contextNames.responseValidator}(response.data);`,
+    );
+    fileBlockStart(file, `if (error)`);
+
+    fileWrite(
+      file,
+      `throw AppError.validationError("validator.error", {
+  route: { group: "${route.group}", name: "${route.name}", },
+  error,
+});`,
+    );
+
+    fileBlockEnd(file);
+
+    fileBlockStart(file, `else`);
+    fileWrite(file, `return value;`);
+    fileBlockEnd(file);
+  } else {
+    fileWrite(file, `return response.data;`);
+  }
 
   fileBlockEnd(file);
 
