@@ -4,6 +4,31 @@ editLink: false
 
 # Changelog
 
+### [v0.15.6](https://github.com/compasjs/compas/releases/tag/v0.15.6)
+
+#### Features
+
+- feat(code-gen): include validators when targetting Node.js with ts-axios
+  [`5c9f89`](https://github.com/compasjs/compas/commit/5c9f89101bb7950795b39da1cef23481f15c6355)
+
+#### Bug fixes
+
+- fix(stdlib): type input of AppError#cause as unknown
+  [`8ed577`](https://github.com/compasjs/compas/commit/8ed57783289cc08289aaa890088184df3a2656a6)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3462](https://github.com/compasjs/compas/pull/3462))
+  [`b649df`](https://github.com/compasjs/compas/commit/b649df6c62cfeba76fc56f97114d193f68531bf9)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.696.0 to 3.697.0
+  ([#3465](https://github.com/compasjs/compas/pull/3465))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.696.0 to 3.697.0
+  ([#3465](https://github.com/compasjs/compas/pull/3465))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.15.5](https://github.com/compasjs/compas/releases/tag/v0.15.5)
 
 #### Bug fixes
