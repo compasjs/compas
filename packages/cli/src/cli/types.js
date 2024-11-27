@@ -20,4 +20,4 @@
  * }} CliResolved
  */
 
-export default {};
+export {};
