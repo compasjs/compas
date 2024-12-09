@@ -99,16 +99,6 @@ export function logMiddleware(app, options) {
       const routeName = ctx.event.name;
       const isMatchedRoute = routeName.startsWith("router.");
 
-      if (_compasSentryExport.metrics?.increment) {
-        const compasRouteName = isMatchedRoute ? routeName : "<unmatched>";
-        _compasSentryExport.metrics.increment("compas.route.name", 1, {
-          tags: {
-            compasRouteName,
-          },
-          unit: "none",
-        });
-      }
-
       if (span) {
         if (!isMatchedRoute) {
           // Discard sampled spans which don't match a route.

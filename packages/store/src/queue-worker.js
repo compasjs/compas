@@ -431,15 +431,6 @@ function queueWorkerRun(
         const [job] = await jobTodoQuery(where, orderBy).exec(sql);
 
         if (!job?.id) {
-          if (_compasSentryExport?.metrics?.increment) {
-            _compasSentryExport.metrics.increment("compas.queue.job", 1, {
-              tags: {
-                compasQueueJob: "<waiting worker>",
-              },
-              unit: "none",
-            });
-          }
-
           return {
             didHandleJob: false,
           };
@@ -528,15 +519,6 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
           forceTransaction: true,
         },
         async () => {
-          if (_sentry?.metrics?.increment) {
-            _sentry.metrics.increment("compas.queue.job", 1, {
-              tags: {
-                compasQueueJob: job.name,
-              },
-              unit: "none",
-            });
-          }
-
           return await exec();
         },
       );
