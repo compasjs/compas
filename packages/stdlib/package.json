@@ -19,7 +19,7 @@
     "pino": "9.5.0"
   },
   "devDependencies": {
-    "@sentry/node": "^8.36.0"
+    "@sentry/node": "^8.45.1"
   },
   "author": {
     "name": "Dirk de Visser",
