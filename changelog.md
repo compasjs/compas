@@ -4,6 +4,33 @@ editLink: false
 
 # Changelog
 
+### [v0.15.7](https://github.com/compasjs/compas/releases/tag/v0.15.7)
+
+#### Bug fixes
+
+- fix(code-gen): correctly add ts-nocheck on crud files, use input type for
+  `ctx.body` in router generator
+  [`6ef73d`](https://github.com/compasjs/compas/commit/6ef73d4e3d03a82ee8b338f94253f7194fa466a9)
+
+#### Other
+
+- chore(sentry): remove deprecated metrics
+  [`bfb1a5`](https://github.com/compasjs/compas/commit/bfb1a5c8a0a207d99b2efa250f738412b777c460)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group a bunch of times.
+  ([#3469](https://github.com/compasjs/compas/pull/3469),
+  [#3488](https://github.com/compasjs/compas/pull/3488),
+  [#3504](https://github.com/compasjs/compas/pull/3504),
+  [#3523](https://github.com/compasjs/compas/pull/3523))
+- build(deps): bump c8 from 10.1.2 to 10.1.3
+  ([#3496](https://github.com/compasjs/compas/pull/3496))
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump pino from 9.5.0 to 9.6.0
+  ([#3516](https://github.com/compasjs/compas/pull/3516))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+
 ### [v0.15.6](https://github.com/compasjs/compas/releases/tag/v0.15.6)
 
 #### Features
