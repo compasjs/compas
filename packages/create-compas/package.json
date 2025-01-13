@@ -1,6 +1,6 @@
 {
   "name": "create-compas",
-  "version": "0.15.6",
+  "version": "0.15.7",
   "description": "Create compas based applications",
   "exports": {
     "./package.json": "./package.json"
@@ -9,10 +9,13 @@
   "bin": {
     "create-compas": "src/create-compas.js"
   },
-  "keywords": ["compas", "create"],
+  "keywords": [
+    "compas",
+    "create"
+  ],
   "license": "MIT",
   "dependencies": {
-    "@compas/stdlib": "0.15.6",
+    "@compas/stdlib": "0.15.7",
     "tar": "7.4.3"
   },
   "author": {
