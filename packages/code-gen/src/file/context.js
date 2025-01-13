@@ -70,10 +70,10 @@ export function fileContextCreateGeneric(
     inlineCommentPrefix: "// ",
 
     ...options,
+    contents: options.contents ?? "",
 
     // Always start with empty contents
     relativePath,
-    contents: "",
     calculatedLinePrefix: "",
     lineState: {
       hasWrittenLinePrefix: false,
