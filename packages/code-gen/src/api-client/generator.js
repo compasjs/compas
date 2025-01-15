@@ -141,8 +141,8 @@ export function apiClientGenerator(generateContext) {
         validatorGeneratorGenerateValidator(generateContext, typeRef, {
           validatorState: "output",
           nameSuffixes: {
-            input: "Input",
-            output: "Validated",
+            input: "RouterOutput",
+            output: "RouterValidated",
           },
           targets: typeTargets,
         });

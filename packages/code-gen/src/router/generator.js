@@ -138,7 +138,7 @@ export function routerGenerator(generateContext) {
 
         // @ts-expect-error
         validatorGeneratorGenerateValidator(generateContext, resolvedRef, {
-          validatorState: "output",
+          validatorState: prefix === "response" ? "input" : "output",
           nameSuffixes:
             prefix !== "response" ?
               {
