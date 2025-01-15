@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.15.8](https://github.com/compasjs/compas/releases/tag/v0.15.8)
+
+#### Bug fixes
+
+- fix(code-gen): select correct response validators in router and api client
+  [`f01ab6`](https://github.com/compasjs/compas/commit/f01ab62a1de4986b0ff03f11c871b1cf1080ab6a)
+
 ### [v0.15.7](https://github.com/compasjs/compas/releases/tag/v0.15.7)
 
 #### Bug fixes
