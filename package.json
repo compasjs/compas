@@ -41,5 +41,6 @@
     "type": "git",
     "url": "git+https://github.com/compasjs/compas.git"
   },
-  "workspaces": ["packages/*", "examples/*"]
+  "workspaces": ["packages/*", "examples/*"],
+  "packageManager": "^npm@10.9.0"
 }
