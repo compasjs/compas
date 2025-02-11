@@ -10,12 +10,7 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "stdlib",
-    "standard",
-    "logger"
-  ],
+  "keywords": ["compas", "stdlib", "standard", "logger"],
   "license": "MIT",
   "dependencies": {
     "@types/node": "22.13.1",
@@ -24,7 +19,7 @@
     "pino": "9.6.0"
   },
   "devDependencies": {
-    "@sentry/node": "^8.36.0"
+    "@sentry/node": "* "
   },
   "author": {
     "name": "Dirk de Visser",
