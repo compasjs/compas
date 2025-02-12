@@ -53,6 +53,7 @@ export class AppError extends Error {
   }
 
   /**
+   * @this {void}
    * @param {*} value
    * @returns {value is AppError}
    */
@@ -66,6 +67,7 @@ export class AppError extends Error {
   }
 
   /**
+   * @this {void}
    * @param {Record<string, any>} [info={}]
    * @param {unknown} [error]
    * @returns {AppError}
@@ -75,6 +77,7 @@ export class AppError extends Error {
   }
 
   /**
+   * @this {void}
    * @param {Record<string, any>} [info={}]
    * @param {unknown} [error]
    * @returns {AppError}
@@ -84,6 +87,7 @@ export class AppError extends Error {
   }
 
   /**
+   * @this {void}
    * @param {Record<string, any>} [info={}]
    * @param {unknown} [error]
    * @returns {AppError}
@@ -93,6 +97,7 @@ export class AppError extends Error {
   }
 
   /**
+   * @this {void}
    * @param {string} key
    * @param {Record<string, any>} [info={}]
    * @param {unknown} [error]
@@ -105,6 +110,7 @@ export class AppError extends Error {
   /**
    * Format any error skipping the stack automatically for nested errors
    *
+   * @this {void}
    * @param {AppError | Error | undefined | null | {} | string | number | boolean |
    *   Function | unknown} [e]
    * @returns {Record<string, any>}
