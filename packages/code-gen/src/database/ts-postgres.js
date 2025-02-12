@@ -19,6 +19,7 @@ import { structureModels } from "../processors/models.js";
 import { referenceUtilsGetProperty } from "../processors/reference-utils.js";
 import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
+import { typesGeneratorUseTypeName } from "../types/generator.js";
 import { upperCaseFirst } from "../utils.js";
 
 /**
@@ -1126,6 +1127,12 @@ export function tsPostgresGenerateQueryBuilder(
   }
 
   const fullTypeName = `${upperCaseFirst(model.group)}${upperCaseFirst(model.name)}`;
+
+  typesGeneratorUseTypeName(
+    generateContext,
+    file,
+    `${fullTypeName}QueryResolver`,
+  );
 
   for (const relation of inverseRelations) {
     const relationInfo = modelRelationGetInformation(relation);
