@@ -526,7 +526,10 @@ export function typesTypescriptUseTypeName(generateContext, file, name) {
   }
 
   const importCollector = TypescriptImportCollector.getImportCollector(file);
-  importCollector.destructure(`../common/types`, name);
+  importCollector.destructure(
+    `../common/types${generateContext.options.generators.router || generateContext.options.generators.apiClient?.target.targetRuntime === "node.js" ? ".js" : ""}`,
+    name,
+  );
 
   return name;
 }
