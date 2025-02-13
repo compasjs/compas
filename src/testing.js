@@ -74,9 +74,7 @@ export async function injectTestServices() {
 
     tracesSampleRate: 1,
     normalizeDepth: 0,
-    registerEsmLoaderHooks: {
-      include: [/^node:.+$/],
-    },
+    registerEsmLoaderHooks: true,
   });
 }
 
