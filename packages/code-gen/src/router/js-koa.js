@@ -269,7 +269,12 @@ export function jsKoaWriteTags(file, group, routes) {
   }
 
   fileContextSetIndent(file, -1);
-  fileWrite(file, `};\n`);
+
+  if (file.relativePath.endsWith(".js")) {
+    fileWrite(file, `};\n`);
+  } else {
+    fileWrite(file, `} as const;\n`);
+  }
 }
 
 /**
