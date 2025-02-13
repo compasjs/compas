@@ -4,6 +4,51 @@ editLink: false
 
 # Changelog
 
+### [v0.16.0](https://github.com/compasjs/compas/releases/tag/v0.16.0)
+
+#### Features
+
+- feat(stdlib): mark static methods of AppError with `this: void`
+  [`5558e8`](https://github.com/compasjs/compas/commit/5558e89c608e13cd343fac8a2c0e17c7b96ad620)
+
+#### Bug fixes
+
+- fix(code-gen): correct type imports in non-bundler envs
+  [`c9052c`](https://github.com/compasjs/compas/commit/c9052c56a76ebaa822fc8fc1ded786082bde0c5e)
+- fix(code-gen): add missing import for QueryResolver types
+  [`8adff2`](https://github.com/compasjs/compas/commit/8adff226191b2e148ebfdb2dc00610a278d40864)
+
+#### Other
+
+- chore(stdlib): verify Sentry v9 changes
+  [`466389`](https://github.com/compasjs/compas/commit/466389101cdd7d8a1ee071340f421c24ea52c3b8)
+- chore(stdlib): correct wildcard version for Sentry
+  [`f7c173`](https://github.com/compasjs/compas/commit/f7c173a0711fc69d598fcc76cf57d802aed45114)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.738.0 to 3.744.0
+  ([#3560](https://github.com/compasjs/compas/pull/3560),
+  [#3566](https://github.com/compasjs/compas/pull/3566),
+  [#3570](https://github.com/compasjs/compas/pull/3570),
+  [#3571](https://github.com/compasjs/compas/pull/3571))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.738.0 to 3.744.0
+  ([#3560](https://github.com/compasjs/compas/pull/3560),
+  [#3566](https://github.com/compasjs/compas/pull/3566),
+  [#3570](https://github.com/compasjs/compas/pull/3570),
+  [#3571](https://github.com/compasjs/compas/pull/3571))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump dotenv from 16.4.5 to 16.4.7
+  ([#3487](https://github.com/compasjs/compas/pull/3487))
+- build(deps): bump koa from 2.15.3 to 2.15.4
+  ([#3574](https://github.com/compasjs/compas/pull/3574))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump file-type from 19.6.0 to 20.1.0
+  ([#3569](https://github.com/compasjs/compas/pull/3569))
+  - Major version bump
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+
 ### [v0.15.8](https://github.com/compasjs/compas/releases/tag/v0.15.8)
 
 #### Bug fixes
