@@ -40,6 +40,10 @@ export function jsKoaGetRouterFile(generateContext) {
     `common/router.${generateContext.options.targetLanguage}`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector:
+        generateContext.options.targetLanguage === "ts" ?
+          new JavascriptImportCollector(true)
+        : undefined,
     },
   );
 
@@ -70,6 +74,10 @@ export function jsKoaGetControllerFile(generateContext, group) {
     `${group}/controller.${generateContext.options.targetLanguage}`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector:
+        generateContext.options.targetLanguage === "ts" ?
+          new JavascriptImportCollector(true)
+        : undefined,
     },
   );
 

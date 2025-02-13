@@ -18,6 +18,10 @@ export function javascriptRouteMatcher(generateContext, trie) {
     `common/route-matcher.${generateContext.options.targetLanguage === "js" ? "js" : "ts"}`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector:
+        generateContext.options.targetLanguage === "ts" ?
+          new JavascriptImportCollector(true)
+        : undefined,
     },
   );
 

@@ -53,6 +53,10 @@ export function validatorTypescriptGetFile(generateContext, type) {
 
   const file = fileContextCreateGeneric(generateContext, relativePath, {
     importCollector: new JavascriptImportCollector(),
+    typeImportCollector:
+      generateContext.options.targetLanguage === "ts" ?
+        new JavascriptImportCollector(true)
+      : undefined,
   });
 
   fileWrite(
