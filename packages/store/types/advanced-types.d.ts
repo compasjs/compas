@@ -100,7 +100,7 @@ type OmitKeysThatExtend<T, Select> = {
 
 type ConvertNeverAndUndefined<T> =
 	OmitKeysThatExtend<OmitKeysThatExtend<T, never>, undefined>
-	& Partial<PickKeysThatExtend<T, undefined>>;
+	& Partial<PickKeysThatExtend<OmitKeysThatExtend<T, never>, undefined>>;
 
 type QueryBuilderSpecialKeys =
 	| "offset"
