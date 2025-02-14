@@ -151,6 +151,7 @@ export function tsFetchGetApiClientFile(generateContext, route) {
     `${route.group}/apiClient.ts`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector: new JavascriptImportCollector(true),
     },
   );
 

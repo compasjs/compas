@@ -14,8 +14,9 @@
   },
   "devDependencies": {
     "@lightbase/eslint-config": "3.1.0",
-    "@types/node": "22.13.1",
-    "@types/react": "19.0.8",
+    "@types/lodash": "*",
+    "@types/node": "*",
+    "@types/react": "*",
     "@tanstack/react-query": "5.66.0",
     "axios": "1.7.9",
     "fastest-validator": "1.19.0",
