@@ -346,7 +346,14 @@ export function tsAxiosGenerateFunction(
     structureResolveReference(generateContext.structure, route.response)
       .type === "file"
   ) {
-    fileWrite(file, `responseType: "blob",`);
+    if (
+      generateContext.options.generators.apiClient?.target.targetRuntime ===
+      "node.js"
+    ) {
+      fileWrite(file, `responseType: "stream",`);
+    } else {
+      fileWrite(file, `responseType: "blob",`);
+    }
   }
 
   fileWrite(file, `...requestConfig,`);
