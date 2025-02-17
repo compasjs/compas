@@ -235,7 +235,7 @@ export function modelQueryRawTypes(generateContext) {
     if (generateContext.options.targetLanguage === "ts") {
       fileWriteRaw(
         file,
-        `${exportPrefix} type QueryDefinition${name} = QueryBuilderDefinition<${name}, QueryExpansion${name}>;\n`,
+        `${exportPrefix} interface QueryDefinition${name} { base: ${name}; expansion: QueryExpansion${name}; }\n`,
       );
       fileWriteRaw(
         file,
