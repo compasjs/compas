@@ -357,7 +357,7 @@ export function tsPostgresGenerateWhere(
   // Function
   fileBlockStart(
     file,
-    `export function ${model.name}Where(where: ${contextNames.whereType.inputType}, options: { skipValidator?: boolean, shortName?: string } = {}): QueryPart`,
+    `export function ${model.name}Where(where: ${contextNames.whereType.inputType} = {}, options: { skipValidator?: boolean, shortName?: string } = {}): QueryPart`,
   );
 
   fileWrite(file, `options.shortName ??= "${model.shortName}."`);
@@ -370,7 +370,7 @@ export function tsPostgresGenerateWhere(
 
   fileWrite(
     file,
-    `const { error, value } = ${contextNames.whereType.validatorFunction}(where ?? {});`,
+    `const { error, value } = ${contextNames.whereType.validatorFunction}(where);`,
   );
 
   fileBlockStart(file, `if (error)`);
@@ -524,7 +524,7 @@ export function tsPostgresGenerateCount(
   // Function
   fileBlockStart(
     file,
-    `async function ${model.name}Count(sql: Postgres, where: ${contextNames.whereType.inputType}): Promise<number>`,
+    `async function ${model.name}Count(sql: Postgres, where?: ${contextNames.whereType.inputType}): Promise<number>`,
   );
 
   fileWrite(
