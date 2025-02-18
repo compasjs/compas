@@ -18,8 +18,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@aws-sdk/client-s3": "3.744.0",
-    "@aws-sdk/lib-storage": "3.744.0",
+    "@aws-sdk/client-s3": "3.750.0",
+    "@aws-sdk/lib-storage": "3.750.0",
     "@compas/stdlib": "0.16.0",
     "crc": "4.3.2",
     "cron-parser": "^4.9.0",
