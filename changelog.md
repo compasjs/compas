@@ -4,6 +4,45 @@ editLink: false
 
 # Changelog
 
+### [v0.16.1](https://github.com/compasjs/compas/releases/tag/v0.16.1)
+
+#### Features
+
+- feat(code-gen): generate type imports for all types
+  [`45cc0d`](https://github.com/compasjs/compas/commit/45cc0d6542cfd06d2cd7507585e5951f109b6f0c)
+- feat(code-gen): generate route tags `as const`
+  [`2f297a`](https://github.com/compasjs/compas/commit/2f297a653bbd60da52c6afbaa522e4f6c89dc862)
+- feat(code-gen): generate interfaces for QueryDefinitions
+  [`0ee9c4`](https://github.com/compasjs/compas/commit/0ee9c47babf87dfb017f69bddd6b207a930c49fc)
+- feat(code-gen): inline query builder types
+  [`55ed0c`](https://github.com/compasjs/compas/commit/55ed0cf797e82abde4426cb792c63a1a721c9912)
+
+#### Bug fixes
+
+- fix(store): fully omit not-joined relations when resolving query builder types
+  [`f79df2`](https://github.com/compasjs/compas/commit/f79df276665a21b646dcc5d5439e10403da18097)
+- fix(code-gen): use response streams in TS axios Node.js client
+  [`757882`](https://github.com/compasjs/compas/commit/757882c355c18f82a6ff2f37137e78ff9ccf81a0)
+- fix(store): query resolver now handles one-to-many expansions in optional
+  joins
+  [`f31ef0`](https://github.com/compasjs/compas/commit/f31ef026a6f904e93c7f178f47459cd175ca1654)
+- fix(code-gen): generate where-parameter as optional in count and delete
+  queries
+  [`970424`](https://github.com/compasjs/compas/commit/970424e7e2f7444a34915b274a3b0099e23e2800)
+
+#### Other
+
+- chore(code-gen): fix TS spec tests + enable the routeMatcher specs
+  [`d1c271`](https://github.com/compasjs/compas/commit/d1c27123be7a864a4c40aaaade5c185e5d2ea303)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#3582](https://github.com/compasjs/compas/pull/3582))
+  [`284aa4`](https://github.com/compasjs/compas/commit/284aa4c6b9b8a7dc95006b0065a81322d070035c)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.16.0](https://github.com/compasjs/compas/releases/tag/v0.16.0)
 
 #### Features
