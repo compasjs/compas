@@ -357,6 +357,20 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
   // Fast track validators with discriminant. This also gives much better error objects.
   if (type.validator.discriminant) {
+    fileBlockStart(file, `if (!isRecord(${valuePath}))`);
+
+    fileWrite(
+      file,
+      `${errorKey} = {
+  key: "validator.object",
+  value: ${valuePath},
+  foundType: typeof ${valuePath},
+};`,
+    );
+
+    fileBlockEnd(file);
+    fileBlockStart(file, "else");
+
     const matchableValues = [];
 
     for (const subType of type.values) {
@@ -380,7 +394,7 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
       fileBlockStart(
         file,
-        `if (${valuePath}.${type.validator.discriminant} === "${oneOf}")`,
+        `if (typeof value === "object" && "${type.validator.discriminant}" in ${valuePath} && ${valuePath}.${type.validator.discriminant} === "${oneOf}")`,
       );
 
       validatorState.skipFirstNilCheck = true;
@@ -409,6 +423,9 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
   allowedValues: ${JSON.stringify(matchableValues)},
 };`,
     );
+    fileBlockEnd(file);
+
+    // isRecord end
     fileBlockEnd(file);
 
     return;
