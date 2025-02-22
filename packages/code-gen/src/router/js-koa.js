@@ -369,7 +369,11 @@ type _Context = import("koa").ParameterizedContext<{}, {
       fileWrite(file, `ctx.request.params = params;`);
 
       if (route.body || route.query) {
-        fileWrite(file, `await bodyParser(ctx);`);
+        if (file.relativePath.endsWith(".ts")) {
+          fileWrite(file, `await bodyParser(ctx as any);`);
+        } else {
+          fileWrite(file, `await bodyParser(ctx);`);
+        }
       }
 
       if (route.params) {
