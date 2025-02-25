@@ -359,7 +359,7 @@ type ResolveBaseResult<
     PickSelected<
       Omit<
         Base,
-        Exclude<keyof QueryBuilder, QueryBuilderSpecialKeys> | OptionalJoins
+        (keyof QueryBuilder) | OptionalJoins
       >,
       QueryBuilder
     >
