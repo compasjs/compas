@@ -4,6 +4,27 @@ editLink: false
 
 # Changelog
 
+### [v0.16.2](https://github.com/compasjs/compas/releases/tag/v0.16.2)
+
+#### Features
+
+- feat(code-gen): add '@ts-nocheck' to generated validator files
+  [`c6988e`](https://github.com/compasjs/compas/commit/c6988ee9cd8a2cc57307d31c99f7d7d0fb33216f)
+- feat(code-gen): small optimization around resolving optional joins
+  [`d751e3`](https://github.com/compasjs/compas/commit/d751e363c9b0d1b4fbadb390c9d3d7027306cca9)
+
+#### Bug fixes
+
+- fix(code-gen): cast ctx to bodyParser call in Koa router
+  [`e7656f`](https://github.com/compasjs/compas/commit/e7656f6044deec7a2ae8ffc97f56ddacd2655bc6)
+- fix(code-gen): correctly type anyOf discriminant validators
+  [`20ca92`](https://github.com/compasjs/compas/commit/20ca92aa9646ec8270346bf8db09bc4e8a63fdd2)
+
+#### Other
+
+- chore(code-gen): minor optimization
+  [`0dfa1f`](https://github.com/compasjs/compas/commit/0dfa1f57a1c7b6c61990859150cfaeb991213a0a)
+
 ### [v0.16.1](https://github.com/compasjs/compas/releases/tag/v0.16.1)
 
 #### Features
