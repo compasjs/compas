@@ -22,6 +22,10 @@ export function javascriptRouteMatcher(generateContext, trie) {
         generateContext.options.targetLanguage === "ts" ?
           new JavascriptImportCollector(true)
         : undefined,
+      additionToGeneratedByComment:
+        generateContext.options.targetLanguage === "ts" ?
+          "@ts-nocheck"
+        : undefined,
     },
   );
 

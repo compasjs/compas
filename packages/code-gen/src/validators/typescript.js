@@ -57,6 +57,8 @@ export function validatorTypescriptGetFile(generateContext, type) {
       generateContext.options.targetLanguage === "ts" ?
         new JavascriptImportCollector(true)
       : undefined,
+
+    additionToGeneratedByComment: "@ts-nocheck",
   });
 
   fileWrite(
