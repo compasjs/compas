@@ -267,7 +267,7 @@ type QueryBuilderSpecialKeys =
 /**
  * Max value for which optional joins are resolved.
  */
-type ResolveJoinDepth = 4;
+type ResolveJoinDepth = 3;
 
 type InferExpansionForOptionalJoins<Expansion> = Exclude<Expansion extends {
                                                                      expansion: infer Result;
@@ -444,7 +444,7 @@ export type QueryBuilderResolver<
 
 /// End Query builder resolver types
 /// ================================
-   `,
+`,
     );
   }
 
@@ -463,7 +463,11 @@ export type QueryBuilderResolver<
       );
       fileWriteRaw(
         file,
-        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilderInput, const OptionalJoins extends ResolveOptionalJoins<QueryExpansion${name}> = never> = QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
+        `${exportPrefix} type ${name}OptionalJoins = ResolveOptionalJoins<QueryExpansion${name}>;\n`,
+      );
+      fileWriteRaw(
+        file,
+        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilderInput, const OptionalJoins extends ${name}OptionalJoins = never> = QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
       );
     } else if (generateContext.options.targetLanguage === "js") {
       fileWriteRaw(
