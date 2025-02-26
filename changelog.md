@@ -4,6 +4,17 @@ editLink: false
 
 # Changelog
 
+### [v0.16.3](https://github.com/compasjs/compas/releases/tag/v0.16.3)
+
+#### Features
+
+- feat(code-gen): improve TS perf to skip assigning the `where` variable again
+  with the validated value
+  [`3d360c`](https://github.com/compasjs/compas/commit/3d360c84584ebeea1fb743af5f565707b2729ecd)
+- feat(code-gen): don't duplicate implementations for custom types when not
+  needed
+  [`3ddbc7`](https://github.com/compasjs/compas/commit/3ddbc7adc5ed572ead827edd0a206c000c78fbb5)
+
 ### [v0.16.2](https://github.com/compasjs/compas/releases/tag/v0.16.2)
 
 #### Features
