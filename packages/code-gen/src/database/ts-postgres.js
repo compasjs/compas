@@ -380,7 +380,10 @@ export function tsPostgresGenerateWhere(
   );
   fileBlockEnd(file);
 
-  fileWrite(file, `where = value`);
+  fileWrite(
+    file,
+    `return generatedWhereBuilderHelper(${model.name}WhereSpec as any, value, options.shortName);`,
+  );
 
   fileBlockEnd(file);
 
