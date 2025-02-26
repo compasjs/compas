@@ -29,13 +29,13 @@ export function structureModels(generateContext) {
  */
 export function modelQueryPartType() {
   return new AnyType().implementations({
-    jsPostgres: {
+    js: {
       validatorImport: `import { isQueryPart } from "@compas/store";`,
       validatorExpression: `isQueryPart($value$)`,
       validatorInputType: `(import("@compas/store").QueryPart<any>)`,
       validatorOutputType: `import("@compas/store").QueryPart<any>`,
     },
-    tsPostgres: {
+    ts: {
       validatorImport: `import { isQueryPart } from "@compas/store";\nimport type { QueryPart } from "@compas/store";`,
       validatorExpression: `isQueryPart($value$)`,
       validatorInputType: `(import("@compas/store").QueryPart)`,

@@ -195,8 +195,6 @@ function getQueryDefinitionReference(group, name) {
   return new AnyType().implementations({
     js: implementation,
     ts: implementation,
-    jsPostgres: implementation,
-    tsPostgres: implementation,
   });
 }
 
@@ -229,23 +227,17 @@ type _ResolveType<T> = { [K in keyof T]: T[K] } & {};
 /**
  * Utility type to resolve the base + expansion of an entity.
  */
-export type QueryBuilderDefinition<Base, Expansion> = {
+interface QueryBuilderDefinition<Base, Expansion> {
   base: Base;
   expansion: Expansion;
-};
-
-type PickKeysThatExtend<T, Select> = {
-  [K in keyof T as T[K] extends Select ? K : never]: T[K];
-};
-
-type OmitKeysThatExtend<T, Select> = {
-  [K in keyof T as T[K] extends Select ? never : K]: T[K];
-};
+}
 
 /**
  * Omit never values
  */
-type OmitNever<T> = OmitKeysThatExtend<T, never>;
+type OmitNever<T> = {
+  [K in keyof T as T[K] extends never ? never : K]: T[K];
+};
 
 /**
  * Apply Partial if the type can be undefined.
@@ -427,15 +419,13 @@ export type QueryBuilderResolver<
                 [K in Exclude<
                   Exclude<keyof Expansion, QueryBuilderSpecialKeys>,
                   number | symbol
-                >]: _ResolveType<
-                  ResolveExpansionKey<
+                >]: ResolveExpansionKey<
                     K,
                     Base,
                     Expansion,
                     QueryBuilder,
                     OptionalJoins
-                  >
-                >;
+                  >;
               }>
             >
           >
@@ -467,7 +457,7 @@ export type QueryBuilderResolver<
       );
       fileWriteRaw(
         file,
-        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilderInput, const OptionalJoins extends ${name}OptionalJoins = never> = QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
+        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilder, const OptionalJoins extends ${name}OptionalJoins = never> = QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
       );
     } else if (generateContext.options.targetLanguage === "js") {
       fileWriteRaw(
@@ -476,7 +466,7 @@ export type QueryBuilderResolver<
       );
       fileWriteRaw(
         file,
-        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilderInput, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansion${name}> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
+        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilder, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansion${name}> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
       );
     }
   }
