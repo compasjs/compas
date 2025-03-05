@@ -161,7 +161,9 @@ export function validateQueryExpansionStoreSessionStore(value) {
         value["accessTokens"] === null ||
         value["accessTokens"] === undefined
       ) {
-        result["accessTokens"] = undefined;
+        errorMap[`$.accessTokens`] = {
+          key: "validator.undefined",
+        };
       } else {
         /** @type {ValidatorErrorMap} */
         const intermediateErrorMap2 = {};
@@ -271,7 +273,9 @@ export function validateQueryExpansionStoreSessionStoreToken(value) {
         result["session"] = value["session"];
       }
       if (value["accessToken"] === null || value["accessToken"] === undefined) {
-        result["accessToken"] = undefined;
+        errorMap[`$.accessToken`] = {
+          key: "validator.undefined",
+        };
       } else {
         result["accessToken"] = value["accessToken"];
       }

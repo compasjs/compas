@@ -1329,174 +1329,246 @@ export function validateStructureTypeSystemDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (value.type === "any") {
-      const refResult0 = validateStructureAnyDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "anyOf") {
-      const refResult0 = validateStructureAnyOfDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "array") {
-      const refResult0 = validateStructureArrayDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "boolean") {
-      const refResult0 = validateStructureBooleanDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "crud") {
-      const refResult0 = validateStructureCrudDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "date") {
-      const refResult0 = validateStructureDateDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "extend") {
-      const refResult0 = validateStructureExtendDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "file") {
-      const refResult0 = validateStructureFileDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "generic") {
-      const refResult0 = validateStructureGenericDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "number") {
-      const refResult0 = validateStructureNumberDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "object") {
-      const refResult0 = validateStructureObjectDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "omit") {
-      const refResult0 = validateStructureOmitDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "pick") {
-      const refResult0 = validateStructurePickDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "reference") {
-      const refResult0 = validateStructureReferenceDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "string") {
-      const refResult0 = validateStructureStringDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "uuid") {
-      const refResult0 = validateStructureUuidDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
-        key: "validator.anyOf",
-        discriminant: "type",
-        foundValue: value.type,
-        allowedValues: [
-          "any",
-          "anyOf",
-          "array",
-          "boolean",
-          "crud",
-          "date",
-          "extend",
-          "file",
-          "generic",
-          "number",
-          "object",
-          "omit",
-          "pick",
-          "reference",
-          "string",
-          "uuid",
-        ],
+        key: "validator.object",
+        value: value,
+        foundType: typeof value,
       };
+    } else {
+      if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "any"
+      ) {
+        const refResult0 = validateStructureAnyDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "anyOf"
+      ) {
+        const refResult0 = validateStructureAnyOfDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "array"
+      ) {
+        const refResult0 = validateStructureArrayDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "boolean"
+      ) {
+        const refResult0 = validateStructureBooleanDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "crud"
+      ) {
+        const refResult0 = validateStructureCrudDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "date"
+      ) {
+        const refResult0 = validateStructureDateDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "extend"
+      ) {
+        const refResult0 = validateStructureExtendDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "file"
+      ) {
+        const refResult0 = validateStructureFileDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "generic"
+      ) {
+        const refResult0 = validateStructureGenericDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "number"
+      ) {
+        const refResult0 = validateStructureNumberDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "object"
+      ) {
+        const refResult0 = validateStructureObjectDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "omit"
+      ) {
+        const refResult0 = validateStructureOmitDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "pick"
+      ) {
+        const refResult0 = validateStructurePickDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "reference"
+      ) {
+        const refResult0 = validateStructureReferenceDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "string"
+      ) {
+        const refResult0 = validateStructureStringDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "uuid"
+      ) {
+        const refResult0 = validateStructureUuidDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else {
+        errorMap[`$`] = {
+          key: "validator.anyOf",
+          discriminant: "type",
+          foundValue: value.type,
+          allowedValues: [
+            "any",
+            "anyOf",
+            "array",
+            "boolean",
+            "crud",
+            "date",
+            "extend",
+            "file",
+            "generic",
+            "number",
+            "object",
+            "omit",
+            "pick",
+            "reference",
+            "string",
+            "uuid",
+          ],
+        };
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
@@ -11885,174 +11957,246 @@ export function validateStructureNamedTypeDefinition(value) {
       key: "validator.undefined",
     };
   } else {
-    if (value.type === "any") {
-      const refResult0 = validateStructureAnyDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "anyOf") {
-      const refResult0 = validateStructureAnyOfDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "array") {
-      const refResult0 = validateStructureArrayDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "boolean") {
-      const refResult0 = validateStructureBooleanDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "crud") {
-      const refResult0 = validateStructureCrudDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "date") {
-      const refResult0 = validateStructureDateDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "extend") {
-      const refResult0 = validateStructureExtendDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "file") {
-      const refResult0 = validateStructureFileDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "generic") {
-      const refResult0 = validateStructureGenericDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "number") {
-      const refResult0 = validateStructureNumberDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "object") {
-      const refResult0 = validateStructureObjectDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "omit") {
-      const refResult0 = validateStructureOmitDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "pick") {
-      const refResult0 = validateStructurePickDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "route") {
-      const refResult0 = validateStructureRouteDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "string") {
-      const refResult0 = validateStructureStringDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else if (value.type === "uuid") {
-      const refResult0 = validateStructureUuidDefinition(value);
-
-      if (refResult0.error) {
-        for (const errorKey of Object.keys(refResult0.error)) {
-          errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
-        }
-      }
-      result = refResult0.value;
-    } else {
+    if (!isRecord(value)) {
       errorMap[`$`] = {
-        key: "validator.anyOf",
-        discriminant: "type",
-        foundValue: value.type,
-        allowedValues: [
-          "any",
-          "anyOf",
-          "array",
-          "boolean",
-          "crud",
-          "date",
-          "extend",
-          "file",
-          "generic",
-          "number",
-          "object",
-          "omit",
-          "pick",
-          "route",
-          "string",
-          "uuid",
-        ],
+        key: "validator.object",
+        value: value,
+        foundType: typeof value,
       };
+    } else {
+      if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "any"
+      ) {
+        const refResult0 = validateStructureAnyDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "anyOf"
+      ) {
+        const refResult0 = validateStructureAnyOfDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "array"
+      ) {
+        const refResult0 = validateStructureArrayDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "boolean"
+      ) {
+        const refResult0 = validateStructureBooleanDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "crud"
+      ) {
+        const refResult0 = validateStructureCrudDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "date"
+      ) {
+        const refResult0 = validateStructureDateDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "extend"
+      ) {
+        const refResult0 = validateStructureExtendDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "file"
+      ) {
+        const refResult0 = validateStructureFileDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "generic"
+      ) {
+        const refResult0 = validateStructureGenericDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "number"
+      ) {
+        const refResult0 = validateStructureNumberDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "object"
+      ) {
+        const refResult0 = validateStructureObjectDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "omit"
+      ) {
+        const refResult0 = validateStructureOmitDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "pick"
+      ) {
+        const refResult0 = validateStructurePickDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "route"
+      ) {
+        const refResult0 = validateStructureRouteDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "string"
+      ) {
+        const refResult0 = validateStructureStringDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else if (
+        typeof value === "object" &&
+        "type" in value &&
+        value.type === "uuid"
+      ) {
+        const refResult0 = validateStructureUuidDefinition(value);
+
+        if (refResult0.error) {
+          for (const errorKey of Object.keys(refResult0.error)) {
+            errorMap[`$${errorKey.substring(1)}`] = refResult0.error[errorKey];
+          }
+        }
+        result = refResult0.value;
+      } else {
+        errorMap[`$`] = {
+          key: "validator.anyOf",
+          discriminant: "type",
+          foundValue: value.type,
+          allowedValues: [
+            "any",
+            "anyOf",
+            "array",
+            "boolean",
+            "crud",
+            "date",
+            "extend",
+            "file",
+            "generic",
+            "number",
+            "object",
+            "omit",
+            "pick",
+            "route",
+            "string",
+            "uuid",
+          ],
+        };
+      }
     }
   }
   if (Object.keys(errorMap).length > 0) {
