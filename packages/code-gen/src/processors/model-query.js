@@ -172,8 +172,14 @@ export function modelQueryResultTypes(generateContext) {
             relationInfo.modelOwn.name,
           );
 
+      if (relation.subType === "oneToOneReverse" && relation.isOptional) {
+        // oneToMany's are never optional, since they then return an empty array. A oneToOne is
+        // only optional if the owning side says so.
+        joinedExpansionType.optional();
+      }
+
       expansionType.keys[relationInfo.virtualKeyNameInverse] =
-        joinedExpansionType.optional().build();
+        joinedExpansionType.build();
     }
 
     structureAddType(generateContext.structure, type, {
@@ -430,7 +436,7 @@ export type QueryBuilderResolver<
             >
           >
       >
-    : never;
+    : DefinitionType extends undefined ? undefined : never;
 
 /// End Query builder resolver types
 /// ================================

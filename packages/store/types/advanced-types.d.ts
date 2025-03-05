@@ -297,4 +297,4 @@ export type QueryBuilderResolver<
 						>
 					>
       >
-    : never;
+    : DefinitionType extends undefined ? undefined : never;
