@@ -4,6 +4,37 @@ editLink: false
 
 # Changelog
 
+### [v0.16.4](https://github.com/compasjs/compas/releases/tag/v0.16.4)
+
+#### Bug fixes
+
+- fix(code-gen): propagate optional relations correctly when resolving query
+  results
+  [`d17039`](https://github.com/compasjs/compas/commit/d170399205f2c3b84a1d42062459d97cb2637460)
+
+#### Other
+
+- chore: sync metadata
+  [`41eb24`](https://github.com/compasjs/compas/commit/41eb249d918a8d6324824649f0707794eab4e6bc)
+
+#### Dependency updates
+
+- build(deps): bump recast from 0.23.9 to 0.23.11
+  ([#3600](https://github.com/compasjs/compas/pull/3600))
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- build(deps): bump koa from 2.15.4 to 2.16.0
+  ([#3598](https://github.com/compasjs/compas/pull/3598))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.750.0 to 3.758.0
+  ([#3597](https://github.com/compasjs/compas/pull/3597))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.750.0 to 3.758.0
+  ([#3597](https://github.com/compasjs/compas/pull/3597))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 20.1.0 to 20.4.0
+  ([#3596](https://github.com/compasjs/compas/pull/3596))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+
 ### [v0.16.3](https://github.com/compasjs/compas/releases/tag/v0.16.3)
 
 #### Features
