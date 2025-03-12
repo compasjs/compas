@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.16.5](https://github.com/compasjs/compas/releases/tag/v0.16.5)
+
+#### Bug fixes
+
+- fix(store): correctly remove unused file transforms
+  [`b07993`](https://github.com/compasjs/compas/commit/b07993b11ff74e775c1663029787de10170d8688)
+
 ### [v0.16.4](https://github.com/compasjs/compas/releases/tag/v0.16.4)
 
 #### Bug fixes
