@@ -343,7 +343,7 @@ async function fileCheckContentType(options, props, source) {
 export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
   // Delete transformations where the original is already removed
   await queries.fileDelete(sql, {
-    $raw: query`meta->>'transformedFromOriginal' IS NOT NULL AND NOT EXISTS (SELECT FROM "file" f2 WHERE f2.id = (meta->>'transformedFromOriginal')::uuid)`,
+    $raw: query`meta->>'transformedFromOriginal' IS NOT NULL AND NOT EXISTS (SELECT FROM "file" f2 WHERE f2.id = (f.meta->>'transformedFromOriginal')::uuid)`,
   });
 
   const objectsInStore = (
@@ -355,6 +355,8 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
     }).execRaw(sql)
   ).map((it) => it.id);
 
+  // S3 supports up to 1000 deletions in a single request
+  const maxSetSize = 999;
   const deletingSet = [];
 
   for await (const part of objectStorageListObjects(s3Client, {
@@ -379,22 +381,17 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
     return;
   }
 
-  // S3 supports up to 1000 deletions in a single request
-  const maxSetSize = 999;
-  const deleteCommands = [];
-
   while (deletingSet.length) {
-    deleteCommands.push({
-      Bucket: options.bucketName,
-      Delete: {
-        Objects: deletingSet.splice(0, maxSetSize),
-      },
-    });
+    await s3Client.send(
+      new DeleteObjectsCommand({
+        Bucket: options.bucketName,
+        Delete: {
+          Objects: deletingSet.splice(0, maxSetSize),
+          Quiet: true,
+        },
+      }),
+    );
   }
-
-  await Promise.all(
-    deleteCommands.map((it) => s3Client.send(new DeleteObjectsCommand(it))),
-  );
 }
 
 /**
