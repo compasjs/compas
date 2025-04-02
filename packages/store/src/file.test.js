@@ -156,7 +156,7 @@ test("store/file", (t) => {
         filenameForModule(import.meta),
       );
 
-      t.equal(file.contentType, "application/javascript");
+      t.equal(file.contentType, "text/javascript");
       t.ok(file.contentLength > 100);
     });
 
@@ -173,7 +173,7 @@ test("store/file", (t) => {
         createReadStream(filenameForModule(import.meta)),
       );
 
-      t.equal(file.contentType, "application/javascript");
+      t.equal(file.contentType, "text/javascript");
       t.ok(file.contentLength > 100);
     });
 
