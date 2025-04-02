@@ -109,57 +109,6 @@ jobs:
             cache-artifact-test-${{ matrix.node }}-${{ matrix.postgresVersion }}
           path: .cache/
 
-  coverage:
-    permissions:
-      contents: read
-    timeout-minutes: 15
-    strategy:
-      matrix:
-        node: [20]
-        postgresVersion: [15]
-    runs-on: ubuntu-latest
-    env:
-      CI: true
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v4.0.3
-        with:
-          node-version: ${{ matrix.node }}
-          cache: "npm"
-          cache-dependency-path: "**/package.json"
-
-      - name: Install dependencies
-        run: |
-          npm install
-
-      - name: Generate and migrate
-        run: |
-          npx compas docker up --postgres-version ${{ matrix.postgresVersion }}
-          npx compas generate --skip-lint
-          npx compas migrate
-
-      - name: Run compas test --coverage
-        run: |
-          npx compas test --coverage
-
-      - name: Persist debug artifacts
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name:
-            cache-artifact-coverage-${{ matrix.node }}-${{
-            matrix.postgresVersion }}
-          path: .cache/
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./coverage
-
   sync-website:
     if: ${{ github.event.ref == 'refs/heads/main' }}
     permissions:
