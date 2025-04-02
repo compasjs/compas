@@ -4,6 +4,33 @@ editLink: false
 
 # Changelog
 
+### [v0.17.0](https://github.com/compasjs/compas/releases/tag/v0.17.0)
+
+#### Other
+
+- chore: drop coverage CI action
+  [`a18463`](https://github.com/compasjs/compas/commit/a18463b17fc621c8509ee682205167f4fbe57dbe)
+
+#### Dependency updates
+
+- build(deps): bump file-type from 20.4.0 to 20.4.1
+  ([#3612](https://github.com/compasjs/compas/pull/3612))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.758.0 to 3.779.0
+  ([#3617](https://github.com/compasjs/compas/pull/3617),
+  [#3621](https://github.com/compasjs/compas/pull/3621),
+  [#3629](https://github.com/compasjs/compas/pull/3629))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.758.0 to 3.779.0
+  ([#3617](https://github.com/compasjs/compas/pull/3617),
+  [#3621](https://github.com/compasjs/compas/pull/3621),
+  [#3629](https://github.com/compasjs/compas/pull/3629))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump mime-types from 2.1.35 to 3.0.1
+  ([#3624](https://github.com/compasjs/compas/pull/3624))
+  - Major version bump
+  - [Release notes](https://github.com/jshttp/mime-types/releases)
+
 ### [v0.16.5](https://github.com/compasjs/compas/releases/tag/v0.16.5)
 
 #### Bug fixes
