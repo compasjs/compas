@@ -21,7 +21,7 @@
     "axios": "1.8.4",
     "fastest-validator": "1.19.0",
     "lodash": "~4.17.21",
-    "meriyah": "6.0.5",
+    "meriyah": "6.0.6",
     "react": "*",
     "typescript": "5.8.3",
     "vitepress": "1.6.3"
