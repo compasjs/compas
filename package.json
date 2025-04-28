@@ -17,7 +17,7 @@
     "@types/lodash": "*",
     "@types/node": "*",
     "@types/react": "*",
-    "@tanstack/react-query": "5.74.4",
+    "@tanstack/react-query": "5.74.7",
     "axios": "1.9.0",
     "fastest-validator": "1.19.0",
     "lodash": "~4.17.21",
