@@ -19,7 +19,7 @@
     "@types/react": "*",
     "@tanstack/react-query": "5.74.7",
     "axios": "1.9.0",
-    "fastest-validator": "1.19.0",
+    "fastest-validator": "1.19.1",
     "lodash": "~4.17.21",
     "meriyah": "6.0.6",
     "react": "*",
