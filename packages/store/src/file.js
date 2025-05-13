@@ -66,7 +66,7 @@ export const STORE_FILE_IMAGE_TYPES = [
  * }} options
  * @param {Omit<Partial<import("./generated/common/types.d.ts").StoreFile>, "name"|"meta"> & {
  *   name: string;
- *   meta: T;
+ *   meta?: T;
  * }} props
  * @param {import("stream").Readable|string|Buffer} source
  * @returns {Promise<import("./generated/common/types.d.ts").StoreFile>}
