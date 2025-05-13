@@ -17,7 +17,7 @@
     "@types/formidable": "2.0.6",
     "@types/koa": "2.15.0",
     "co-body": "6.2.0",
-    "formidable": "2.1.1",
+    "formidable": "2.1.5",
     "keygrip": "1.1.0",
     "koa": "2.16.1"
   },
