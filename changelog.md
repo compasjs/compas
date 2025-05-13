@@ -4,6 +4,63 @@ editLink: false
 
 # Changelog
 
+### [v0.18.0](https://github.com/compasjs/compas/releases/tag/v0.18.0)
+
+#### Features
+
+- feat(store): accept a custom `StoreFileMeta` as generic argument on
+  `fileCreateOrUpdate`
+  [`803d29`](https://github.com/compasjs/compas/commit/803d295dfad7315704caad73d476ec0a091aac60)
+
+#### Bug fixes
+
+- fix(store): handle case while refreshing session tokens where the access token
+  is already removed
+  [`187f08`](https://github.com/compasjs/compas/commit/187f083787e9d3f5fe07634edd21db6a08960e31)
+- fix(store): log unrecoverable job errors
+  [`84a37d`](https://github.com/compasjs/compas/commit/84a37d06fdcb6d0d462a30966d033a0df8894728)
+
+#### Other
+
+- chore: bump node versions in CI
+  [`5979f1`](https://github.com/compasjs/compas/commit/5979f1d60124f012147be5e914c30cee84c78ef3)
+- chore: bump formidable to 2.1.5
+  [`7f6589`](https://github.com/compasjs/compas/commit/7f6589582d1b5a3d0c73470b2281c295b4776f35)
+
+#### Dependency updates
+
+- build(deps): bump koa from 2.16.0 to 2.16.1 in /packages/server in the
+  npm_and_yarn group across 1 directory
+  ([#3641](https://github.com/compasjs/compas/pull/3641))
+  [`1ba6ea`](https://github.com/compasjs/compas/commit/1ba6eae57e04270cd79553373b417f20a9a7c013)
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump @lightbase/eslint-config from 3.2.1 to 3.2.2
+- build(deps): bump sharp from 0.33.5 to 0.34.1
+  ([#3638](https://github.com/compasjs/compas/pull/3638))
+  - Major version bump
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump dotenv from 16.4.7 to 16.5.0
+  ([#3644](https://github.com/compasjs/compas/pull/3644))
+- build(deps): bump @aws-sdk/client-s3 from 3.782.0 to 3.802.0
+  ([#3643](https://github.com/compasjs/compas/pull/3643),
+  [#3649](https://github.com/compasjs/compas/pull/3649),
+  [#3652](https://github.com/compasjs/compas/pull/3652),
+  [#3657](https://github.com/compasjs/compas/pull/3657),
+  [#3660](https://github.com/compasjs/compas/pull/3660),
+  [#3665](https://github.com/compasjs/compas/pull/3665))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.782.0 to 3.802.0
+  ([#3643](https://github.com/compasjs/compas/pull/3643),
+  [#3649](https://github.com/compasjs/compas/pull/3649),
+  [#3652](https://github.com/compasjs/compas/pull/3652),
+  [#3657](https://github.com/compasjs/compas/pull/3657),
+  [#3660](https://github.com/compasjs/compas/pull/3660),
+  [#3665](https://github.com/compasjs/compas/pull/3665))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 20.4.1 to 20.5.0
+  ([#3654](https://github.com/compasjs/compas/pull/3654))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+
 ### [v0.17.0](https://github.com/compasjs/compas/releases/tag/v0.17.0)
 
 #### Other
