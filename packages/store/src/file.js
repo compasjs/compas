@@ -54,6 +54,8 @@ export const STORE_FILE_IMAGE_TYPES = [
  * in a high-throughput scenario you may want to schedule a job which calls
  * {@link fileTransformInPlace} instead of passing this option directly.
  *
+ * @template {import("./generated/common/types.d.ts").StoreFileMetaInput} T
+ *
  * @param {import("postgres").Sql} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
@@ -62,8 +64,10 @@ export const STORE_FILE_IMAGE_TYPES = [
  *   schedulePlaceholderImageJob?: boolean,
  *   fileTransformInPlaceOptions?: FileTransformInPlaceOptions,
  * }} options
- * @param {Partial<import("./generated/common/types.d.ts").StoreFile> & Pick<import("./generated/common/types.d.ts").StoreFile,
- *   "name">} props
+ * @param {Omit<Partial<import("./generated/common/types.d.ts").StoreFile>, "name"|"meta"> & {
+ *   name: string;
+ *   meta: T;
+ * }} props
  * @param {import("stream").Readable|string|Buffer} source
  * @returns {Promise<import("./generated/common/types.d.ts").StoreFile>}
  */
@@ -103,6 +107,7 @@ export async function fileCreateOrUpdate(
   }
 
   props.bucketName = options.bucketName;
+  // @ts-expect-error this is fine!
   props.meta = props.meta ?? {};
 
   if (typeof source === "string") {
