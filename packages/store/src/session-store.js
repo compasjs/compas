@@ -365,7 +365,7 @@ export async function sessionStoreRefreshTokens(
     },
     where: {
       // @ts-ignore
-      idIn: [storeToken.id, storeToken.accessToken.id],
+      idIn: [storeToken.id, storeToken.accessToken?.id].filter((it) => !!it),
     },
   });
 
