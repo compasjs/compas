@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.18.1](https://github.com/compasjs/compas/releases/tag/v0.18.1)
+
+#### Bug fixes
+
+- fix(store): make `meta` optionally typed
+  [`cfe0a9`](https://github.com/compasjs/compas/commit/cfe0a9efced7d83927ea43a118619071cfbc42f9)
+
 ### [v0.18.0](https://github.com/compasjs/compas/releases/tag/v0.18.0)
 
 #### Features
