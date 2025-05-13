@@ -451,6 +451,21 @@ function queueWorkerRun(
           didHandleJob: true,
         };
       })
+      .catch((e) => {
+        if (_compasSentryExport) {
+          _compasSentryExport.captureException(e);
+        }
+
+        logger.error({
+          type: "job_unhandled_error",
+          error: AppError.format(e),
+        });
+
+        return {
+          // It tried to but failed. Slow down intentionally, before reattempting the next pick up.
+          didHandleJob: false,
+        };
+      })
       .then(({ didHandleJob }) => {
         if (!didHandleJob) {
           worker.currentPromise = setTimeout(options.pollInterval);
