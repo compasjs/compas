@@ -18,7 +18,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@types/node": "22.15.18",
+    "@types/node": "22.15.19",
     "dotenv": "16.5.0",
     "lodash.merge": "4.6.2",
     "pino": "9.6.0"
