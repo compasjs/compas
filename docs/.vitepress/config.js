@@ -233,51 +233,6 @@ function getHomeSidebar() {
 			],
 		},
 
-		{
-			text: "Docs (alpha)",
-			collapsed: true,
-			items: [
-				{
-					text: "What is Compas?",
-					link: "/docs/what-is-compas.html",
-				},
-				{
-					text: "Getting started",
-					link: "/docs/getting-started.html",
-				},
-				{
-					text: "Actions and defaults",
-					link: "/docs/actions-and-defaults.html",
-				},
-				{
-					text: "Workspaces",
-					link: "/docs/workspaces.html",
-				},
-				{
-					text: "Integrations",
-					collapsed: false,
-					items: [
-						{
-							text: "Lint",
-							link: "/docs/integrations/lint.html",
-						},
-						{
-							text: "Docker",
-							link: "/docs/integrations/docker.html",
-						},
-						{
-							text: "Migrations",
-							link: "/docs/integrations/migrations.html",
-						},
-					],
-				},
-				{
-					text: "Continuous Integration",
-					link: "/docs/continuous-integration.html",
-				},
-			],
-		},
-
 		getExamplesSidebar(),
 
 		{
