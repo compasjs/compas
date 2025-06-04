@@ -62,14 +62,14 @@ the second argument of this function for all available options and their default
 
 Some specific options include:
 
-- `includeNames` / `excludeNames`: let this queue worker only pick up specific jobs. This
-  allows you to scale queue workers independently.
+- `includedNames` / `excludedNames`: let this queue worker only pick up specific jobs.
+  This allows you to scale queue workers independently.
 - `deleteJobOnCompletion`: by default, the queue keeps history of the processed jobs. For
   high-volume queues, it is generally considered more efficient to delete jobs on
   completion. If you want to keep a history of jobs for a few days, you can use `false`
   and instead use [`jobQueueCleanup`](#jobqueuecleanup).
 - `unsafeIngoreSorting`: Ignore priority and scheduled based sorting. This is useful in
-  combination with `includeNames` to create a higher throughput queue, with no guarantees
+  combination with `includedNames` to create a higher throughput queue, with no guarantees
   of the order in which jobs are picked up.
 
 ### queueWorkerAddJob
