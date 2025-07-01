@@ -76,8 +76,11 @@ export function mainFn(meta, cb) {
   }
 
   // Load .env.local first, since existing values in `process.env` are not overwritten.
-  dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
-  dotenv.config();
+  dotenv.config({
+    path: path.resolve(process.cwd(), ".env.local"),
+    quiet: true,
+  });
+  dotenv.config({ quiet: true });
 
   refreshEnvironmentCache();
 
