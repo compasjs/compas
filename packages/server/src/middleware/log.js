@@ -164,9 +164,45 @@ export function logMiddleware(app, options) {
       logInfoAndEndTrace(ctx, startTime, responseLength);
       return;
     } else if (ctx.body && ctx.body.readable) {
-      const body = ctx.body;
+      const body = ctx.body; // The original s3Stream
       counter = new StreamLength();
-      ctx.body = body.pipe(counter).on("error", ctx.onerror);
+
+      // A cleanup function to remove all listeners we're about to add.
+      const cleanup = () => {
+        body.removeListener("error", onError);
+        counter.removeListener("error", onError);
+        counter.removeListener("finish", onFinish);
+        counter.removeListener("close", onClose);
+      };
+
+      const onError = (err) => {
+        // If either stream has an error, destroy the other.
+        if (!body.destroyed) body.destroy();
+        if (!counter.destroyed) counter.destroy(err); // Pass error to propagate
+        cleanup();
+      };
+
+      const onFinish = () => {
+        // Cleanup listeners to prevent listener leaks.
+        cleanup();
+      };
+
+      const onClose = () => {
+        // This handles the client abort. The counter was closed prematurely.
+        // We must destroy the source and clean up.
+        if (!body.destroyed) {
+          body.destroy();
+        }
+        cleanup();
+      };
+
+      // Attach all the listeners
+      body.on("error", onError);
+      counter.on("error", onError);
+      counter.on("finish", onFinish);
+      counter.on("close", onClose);
+
+      ctx.body = body.pipe(counter);
       await bodyCloseOrFinish(ctx);
     }
 
