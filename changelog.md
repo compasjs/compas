@@ -4,6 +4,24 @@ editLink: false
 
 # Changelog
 
+### [v0.19.1](https://github.com/compasjs/compas/releases/tag/v0.19.1)
+
+#### Bug fixes
+
+- fix(server): add explicit resource cleanup in the wrapped response streams
+  [`46b8af`](https://github.com/compasjs/compas/commit/46b8af70150282676a401fdfec5e6017f8681e27)
+
+#### Dependency updates
+
+- build(deps): bump dotenv from 17.0.0 to 17.0.1
+  ([#3735](https://github.com/compasjs/compas/pull/3735))
+- build(deps): bump @aws-sdk/client-s3 from 3.840.0 to 3.842.0
+  ([#3737](https://github.com/compasjs/compas/pull/3737))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.840.0 to 3.842.0
+  ([#3737](https://github.com/compasjs/compas/pull/3737))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+
 ### [v0.19.0](https://github.com/compasjs/compas/releases/tag/v0.19.0)
 
 #### Other
