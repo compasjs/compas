@@ -4,6 +4,34 @@ editLink: false
 
 # Changelog
 
+### [v0.19.2](https://github.com/compasjs/compas/releases/tag/v0.19.2)
+
+#### Features
+
+- feat(server): add `ctx.request.rawBody` when parsing JSON or url encoded forms
+  [`37880f`](https://github.com/compasjs/compas/commit/37880ff87e6bb0b7efe3c4c4914ae94c351cd59e)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.842.0 to 3.850.0
+  ([#3741](https://github.com/compasjs/compas/pull/3741),
+  [#3747](https://github.com/compasjs/compas/pull/3747),
+  [#3749](https://github.com/compasjs/compas/pull/3749),
+  [#3751](https://github.com/compasjs/compas/pull/3751))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.842.0 to 3.850.0
+  ([#3741](https://github.com/compasjs/compas/pull/3741),
+  [#3747](https://github.com/compasjs/compas/pull/3747),
+  [#3749](https://github.com/compasjs/compas/pull/3749),
+  [#3751](https://github.com/compasjs/compas/pull/3751))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump dotenv from 17.0.1 to 17.2.1
+  ([#3743](https://github.com/compasjs/compas/pull/3743),
+  [#3755](https://github.com/compasjs/compas/pull/3755))
+- build(deps): bump sharp from 0.34.2 to 0.34.3
+  ([#3745](https://github.com/compasjs/compas/pull/3745))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+
 ### [v0.19.1](https://github.com/compasjs/compas/releases/tag/v0.19.1)
 
 #### Bug fixes
