@@ -78,27 +78,34 @@ export function createBodyParser(opts = {}) {
 
   return async function (ctx) {
     let bodyResult;
+    let rawBodyResult;
     // only parse the body on specifically chosen methods
     // @ts-ignore
     if (opts.parsedMethods.includes(ctx.method.toUpperCase())) {
       try {
         if (opts.json && ctx.is(jsonTypes)) {
-          bodyResult = await coBody.json(ctx, {
+          const result = await coBody.json(ctx, {
             encoding: opts.encoding,
             limit: opts.jsonLimit,
             strict: true,
-            returnRawBody: false,
+            returnRawBody: true,
           });
+
+          bodyResult = result.parsed;
+          rawBodyResult = result.raw;
         } else if (
           opts.urlencoded &&
           ctx.is("application/x-www-form-urlencoded")
         ) {
-          bodyResult = await coBody.form(ctx, {
+          const result = await coBody.form(ctx, {
             encoding: opts.encoding,
             limit: opts.urlencodedLimit,
             queryString: opts.queryString,
-            returnRawBody: false,
+            returnRawBody: true,
           });
+
+          bodyResult = result.parsed;
+          rawBodyResult = result.raw;
         } else if (opts.text && ctx.is("text/*")) {
           bodyResult = await coBody.text(ctx, {
             encoding: opts.encoding,
@@ -158,5 +165,7 @@ export function createBodyParser(opts = {}) {
 
     // @ts-expect-error
     ctx.request.body = bodyResult;
+    // @ts-expect-error
+    ctx.request.rawBody = rawBodyResult;
   };
 }
