@@ -1,6 +1,6 @@
 {
   "name": "@compas/stdlib",
-  "version": "0.19.1",
+  "version": "0.19.2",
   "description": "All kinds of utility functions",
   "exports": {
     ".": {
