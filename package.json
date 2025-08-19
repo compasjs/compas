@@ -23,7 +23,7 @@
     "lodash": "~4.17.21",
     "meriyah": "6.1.4",
     "react": "*",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vitepress": "1.6.3"
   },
   "author": {
