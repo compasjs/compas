@@ -17,7 +17,7 @@ jobs:
       CI: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4.0.3
@@ -47,7 +47,7 @@ jobs:
       CI: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4.0.3
@@ -78,7 +78,7 @@ jobs:
       CI: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4.0.3
@@ -123,7 +123,7 @@ jobs:
       CI: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4.0.3
@@ -164,7 +164,7 @@ jobs:
         language: ["javascript"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
