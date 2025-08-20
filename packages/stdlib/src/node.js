@@ -31,10 +31,14 @@ export function pathJoin(...paths) {
 export async function exec(command, opts = {}) {
   try {
     const promise = internalExec(command, { encoding: "utf8", ...opts });
-    const { stdout, stderr } = await promise;
+
+    const { stdout, stderr } =
+      /** @type {{ stdout: string, stderr: string }} */ await promise;
 
     return {
+      // @ts-expect-error
       stdout,
+      // @ts-expect-error
       stderr,
       exitCode: promise.child.exitCode ?? 0,
     };
