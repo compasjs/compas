@@ -15,11 +15,11 @@
   "dependencies": {
     "@compas/stdlib": "0.19.2",
     "@types/formidable": "2.0.6",
-    "@types/koa": "2.15.0",
+    "@types/koa": "3.0.0",
     "co-body": "6.2.0",
     "formidable": "2.1.5",
     "keygrip": "1.1.0",
-    "koa": "2.16.2"
+    "koa": "3.0.1"
   },
   "author": {
     "name": "Dirk de Visser",
