@@ -4,6 +4,33 @@ editLink: false
 
 # Changelog
 
+### [v0.19.3](https://github.com/compasjs/compas/releases/tag/v0.19.3)
+
+#### Other
+
+- chore: fix type issues
+  [`b9a207`](https://github.com/compasjs/compas/commit/b9a207a78354897ae830e0468e518f3c94029f69)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.850.0 to 3.876.0
+  ([#3757](https://github.com/compasjs/compas/pull/3757),
+  [#3773](https://github.com/compasjs/compas/pull/3773),
+  [#3775](https://github.com/compasjs/compas/pull/3775),
+  [#3776](https://github.com/compasjs/compas/pull/3776),
+  [#3778](https://github.com/compasjs/compas/pull/3778))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.850.0 to 3.876.0
+  ([#3757](https://github.com/compasjs/compas/pull/3757),
+  [#3773](https://github.com/compasjs/compas/pull/3773),
+  [#3775](https://github.com/compasjs/compas/pull/3775),
+  [#3776](https://github.com/compasjs/compas/pull/3776),
+  [#3778](https://github.com/compasjs/compas/pull/3778))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump koa from 2.16.1 to 2.16.2
+- build(deps): bump dotenv from 17.2.1 to 17.2.2
+  ([#3780](https://github.com/compasjs/compas/pull/3780))
+
 ### [v0.19.2](https://github.com/compasjs/compas/releases/tag/v0.19.2)
 
 #### Features
