@@ -28,7 +28,7 @@
     "jws": "4.0.0",
     "mime-types": "3.0.1",
     "postgres": "3.4.7",
-    "sharp": "0.34.3"
+    "sharp": "0.34.4"
   },
   "author": {
     "name": "Dirk de Visser",
