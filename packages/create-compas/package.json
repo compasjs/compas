@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.19.3",
-    "tar": "7.4.3"
+    "tar": "7.4.4"
   },
   "author": {
     "name": "Dirk de Visser",
