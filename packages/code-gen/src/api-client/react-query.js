@@ -798,7 +798,7 @@ function reactQueryWriteInvalidations(file, route) {
   fileWrite(file, `const originalOnSuccess = options.onSuccess;`);
   fileBlockStart(
     file,
-    `options.onSuccess = async (data, variables, context) => `,
+    `options.onSuccess = async (data, variables, ...args) => `,
   );
 
   for (const invalidation of route.invalidations) {
@@ -849,7 +849,7 @@ function reactQueryWriteInvalidations(file, route) {
   }
 
   fileBlockStart(file, `if (typeof originalOnSuccess === "function")`);
-  fileWrite(file, `return await originalOnSuccess(data, variables, context);`);
+  fileWrite(file, `return await originalOnSuccess(data, variables, ...args);`);
 
   fileBlockEnd(file);
   fileBlockEnd(file);
