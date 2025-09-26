@@ -4,6 +4,60 @@ editLink: false
 
 # Changelog
 
+### [v0.19.4](https://github.com/compasjs/compas/releases/tag/v0.19.4)
+
+#### Features
+
+- feat(code-gen): support generating valid files when using Node.js type
+  stripping features
+  [`628f1b`](https://github.com/compasjs/compas/commit/628f1b1aa9c727f9aa1df1a3c1e4658df87d7f19)
+
+#### Bug fixes
+
+- fix(code-gen): handle extra parameter in `useMutation` success callback
+  [`bec622`](https://github.com/compasjs/compas/commit/bec6229038360f24c24b231d9e1cc5507fa2d5fe)
+
+#### Dependency updates
+
+- build(deps): bump actions/setup-node from 4 to 5
+  ([#3782](https://github.com/compasjs/compas/pull/3782))
+  [`2994a8`](https://github.com/compasjs/compas/commit/2994a867ce9d609c21cdac61ba4ea8fdbbcee2d6)
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.876.0 to 3.895.0
+  ([#3784](https://github.com/compasjs/compas/pull/3784),
+  [#3788](https://github.com/compasjs/compas/pull/3788),
+  [#3791](https://github.com/compasjs/compas/pull/3791),
+  [#3792](https://github.com/compasjs/compas/pull/3792),
+  [#3795](https://github.com/compasjs/compas/pull/3795),
+  [#3797](https://github.com/compasjs/compas/pull/3797),
+  [#3801](https://github.com/compasjs/compas/pull/3801),
+  [#3804](https://github.com/compasjs/compas/pull/3804),
+  [#3808](https://github.com/compasjs/compas/pull/3808),
+  [#3809](https://github.com/compasjs/compas/pull/3809),
+  [#3813](https://github.com/compasjs/compas/pull/3813))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.876.0 to 3.895.0
+  ([#3784](https://github.com/compasjs/compas/pull/3784),
+  [#3788](https://github.com/compasjs/compas/pull/3788),
+  [#3791](https://github.com/compasjs/compas/pull/3791),
+  [#3792](https://github.com/compasjs/compas/pull/3792),
+  [#3795](https://github.com/compasjs/compas/pull/3795),
+  [#3797](https://github.com/compasjs/compas/pull/3797),
+  [#3801](https://github.com/compasjs/compas/pull/3801),
+  [#3804](https://github.com/compasjs/compas/pull/3804),
+  [#3808](https://github.com/compasjs/compas/pull/3808),
+  [#3809](https://github.com/compasjs/compas/pull/3809),
+  [#3813](https://github.com/compasjs/compas/pull/3813))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump sharp from 0.34.3 to 0.34.4
+  ([#3807](https://github.com/compasjs/compas/pull/3807))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump tar from 7.4.3 to 7.5.1
+  ([#3811](https://github.com/compasjs/compas/pull/3811),
+  [#3815](https://github.com/compasjs/compas/pull/3815))
+  - [Release notes](https://github.com/isaacs/node-tar/releases)
+- build(deps): bump pino from 9.7.0 to 9.11.0
+
 ### [v0.19.3](https://github.com/compasjs/compas/releases/tag/v0.19.3)
 
 #### Other
