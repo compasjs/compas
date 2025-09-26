@@ -1,4 +1,4 @@
-import { pino } from "pino";
+import { pino, destination } from "pino";
 import { environment, isProduction } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil, isPlainObject, merge } from "./lodash.js";
@@ -36,7 +36,7 @@ let globalDestination = undefined;
 /**
  * @type {import("pino").Logger}
  */
-let rootInstance = loggerBuildRootInstance(pino.destination(1));
+let rootInstance = loggerBuildRootInstance(destination(1));
 
 /**
  * Deeply update the global logger context. This only affects newly created loggers
