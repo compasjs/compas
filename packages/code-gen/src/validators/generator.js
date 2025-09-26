@@ -122,7 +122,7 @@ export function validatorGetNameAndImport(
       js: validatorJavascriptGetNameAndImport,
       ts: validatorTypescriptGetNameAndImport,
     },
-    [file, type, outputTypeName],
+    [generateContext, file, type, outputTypeName],
   );
 }
 

@@ -117,7 +117,7 @@ export const queries = {
 ${structureModels(generateContext)
   .map((it) => {
     indexImportCollector.destructure(
-      `../database/${it.name}.js`,
+      `../database/${it.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
       `${it.name}Queries`,
     );
 
@@ -152,7 +152,10 @@ export function tsPostgresCreateFile(generateContext, model) {
     true,
   );
 
-  importCollector.destructure("../common/database-helpers.js", "wrapQueryPart");
+  importCollector.destructure(
+    `../common/database-helpers.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    "wrapQueryPart",
+  );
   importCollector.destructure("@compas/store", "query");
   importCollector.destructure("@compas/store", "generatedWhereBuilderHelper");
   importCollector.destructure("@compas/store", "generatedUpdateHelper");
@@ -262,7 +265,7 @@ export function tsPostgresGenerateWhere(
 
     if (!isSelfReferencing) {
       importCollector.destructure(
-        `./${relationInfo.modelInverse.name}.js`,
+        `./${relationInfo.modelInverse.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
         `${relationInfo.modelInverse.name}WhereSpec`,
       );
     }
@@ -291,7 +294,7 @@ export function tsPostgresGenerateWhere(
 
     if (!isSelfReferencing) {
       importCollector.destructure(
-        `./${relationInfo.modelOwn.name}.js`,
+        `./${relationInfo.modelOwn.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
         `${relationInfo.modelOwn.name}WhereSpec`,
       );
     }
@@ -1114,7 +1117,7 @@ export function tsPostgresGenerateQueryBuilder(
 
     if (relationInfo.modelOwn !== relationInfo.modelInverse) {
       importCollector.destructure(
-        `./${relationInfo.modelInverse.name}.js`,
+        `./${relationInfo.modelInverse.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
         `${relationInfo.modelInverse.name}QueryBuilderSpec`,
       );
     }
@@ -1142,7 +1145,7 @@ export function tsPostgresGenerateQueryBuilder(
 
     if (relationInfo.modelOwn !== relationInfo.modelInverse) {
       importCollector.destructure(
-        `./${relationInfo.modelOwn.name}.js`,
+        `./${relationInfo.modelOwn.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
         `${relationInfo.modelOwn.name}QueryBuilderSpec`,
       );
     }

@@ -169,7 +169,10 @@ export function tsAxiosGetApiClientFile(generateContext, route) {
   typeImportCollector.destructure("axios", "AxiosRequestConfig");
 
   if (generateContext.options.generators.apiClient?.target.globalClient) {
-    importCollector.destructure(`../common/api-client.js`, "axiosInstance");
+    importCollector.destructure(
+      `../common/api-client.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+      "axiosInstance",
+    );
   } else {
     typeImportCollector.destructure("axios", "AxiosInstance");
   }

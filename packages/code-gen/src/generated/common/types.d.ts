@@ -923,6 +923,11 @@ export type StructureGenerateOptions = {
   "targetLanguage": "js"|"ts";
   
   /**
+   * Output '.ts' extension in imports for use with Node.js new type stripping features.
+   */
+  "forceTsExtensionImports"?: boolean|undefined;
+  
+  /**
    * Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.
    */
   "outputDirectory"?: string|undefined;
@@ -1077,6 +1082,11 @@ export type StructureGenerateOptions = {
  */
 export type StructureGenerateOptionsInput = {
   "targetLanguage": "js"|"ts";
+  
+  /**
+   * Output '.ts' extension in imports for use with Node.js new type stripping features.
+   */
+  "forceTsExtensionImports"?: boolean|"true"|"false"|undefined;
   
   /**
    * Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.

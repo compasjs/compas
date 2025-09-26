@@ -266,12 +266,24 @@ function crudHandlersList(generateContext, file, crud) {
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
-  importCollector.destructure("./events.js", `${data.crudName}Count`);
-  importCollector.destructure("./events.js", `${data.crudName}List`);
-  importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Count`,
+  );
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}List`,
+  );
+  importCollector.destructure(
+    `./controller.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${crud.group}Handlers`,
+  );
 
   if (!crudInformationGetHasCustomReadableType(crud)) {
-    importCollector.destructure("./events.js", `${data.crudName}Transform`);
+    importCollector.destructure(
+      `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+      `${data.crudName}Transform`,
+    );
   }
 
   fileWrite(file, crudPartialRouteList(data));
@@ -301,11 +313,20 @@ function crudHandlersSingle(generateContext, file, crud) {
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
-  importCollector.destructure("./events.js", `${data.crudName}Single`);
-  importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Single`,
+  );
+  importCollector.destructure(
+    `./controller.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${crud.group}Handlers`,
+  );
 
   if (!crudInformationGetHasCustomReadableType(crud)) {
-    importCollector.destructure("./events.js", `${data.crudName}Transform`);
+    importCollector.destructure(
+      `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+      `${data.crudName}Transform`,
+    );
   }
 
   fileWrite(file, crudPartialRouteSingle(data));
@@ -351,11 +372,20 @@ function crudHandlersCreate(generateContext, file, crud) {
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
-  importCollector.destructure("./events.js", `${data.crudName}Create`);
-  importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Create`,
+  );
+  importCollector.destructure(
+    `./controller.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${crud.group}Handlers`,
+  );
 
   if (!crudInformationGetHasCustomReadableType(crud)) {
-    importCollector.destructure("./events.js", `${data.crudName}Transform`);
+    importCollector.destructure(
+      `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+      `${data.crudName}Transform`,
+    );
   }
 
   if (relation?.subType === "oneToOneReverse") {
@@ -385,9 +415,18 @@ function crudHandlersUpdate(generateContext, file, crud) {
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
-  importCollector.destructure("./events.js", `${data.crudName}Update`);
-  importCollector.destructure("./events.js", `${data.crudName}Single`);
-  importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Update`,
+  );
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Single`,
+  );
+  importCollector.destructure(
+    `./controller.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${crud.group}Handlers`,
+  );
 
   fileWrite(file, crudPartialRouteUpdate(data));
 }
@@ -411,9 +450,18 @@ function crudHandlersDelete(generateContext, file, crud) {
   };
 
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
-  importCollector.destructure("./events.js", `${data.crudName}Delete`);
-  importCollector.destructure("./events.js", `${data.crudName}Single`);
-  importCollector.destructure("./controller.js", `${crud.group}Handlers`);
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Delete`,
+  );
+  importCollector.destructure(
+    `./events.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${data.crudName}Single`,
+  );
+  importCollector.destructure(
+    `./controller.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `${crud.group}Handlers`,
+  );
 
   fileWrite(file, crudPartialRouteDelete(data));
 }

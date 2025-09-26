@@ -10256,6 +10256,7 @@ export function validateStructureGenerateOptions(value) {
     } else {
       result = {
         targetLanguage: undefined,
+        forceTsExtensionImports: undefined,
         outputDirectory: undefined,
         generators: undefined,
       };
@@ -10292,28 +10293,55 @@ export function validateStructureGenerateOptions(value) {
         }
       }
       if (
+        value["forceTsExtensionImports"] === null ||
+        value["forceTsExtensionImports"] === undefined
+      ) {
+        result["forceTsExtensionImports"] = undefined;
+      } else {
+        if (
+          value["forceTsExtensionImports"] === true ||
+          value["forceTsExtensionImports"] === "true" ||
+          value["forceTsExtensionImports"] === 1 ||
+          value["forceTsExtensionImports"] === "1"
+        ) {
+          result["forceTsExtensionImports"] = true;
+        } else if (
+          value["forceTsExtensionImports"] === false ||
+          value["forceTsExtensionImports"] === "false" ||
+          value["forceTsExtensionImports"] === 0 ||
+          value["forceTsExtensionImports"] === "0"
+        ) {
+          result["forceTsExtensionImports"] = false;
+        } else {
+          errorMap[`$.forceTsExtensionImports`] = {
+            key: "validator.type",
+            expectedType: "boolean",
+          };
+        }
+      }
+      if (
         value["outputDirectory"] === null ||
         value["outputDirectory"] === undefined
       ) {
         result["outputDirectory"] = undefined;
       } else {
         /** @type {string} */
-        const convertedString2 = value["outputDirectory"];
-        if (typeof convertedString2 !== "string") {
+        const convertedString3 = value["outputDirectory"];
+        if (typeof convertedString3 !== "string") {
           errorMap[`$.outputDirectory`] = {
             key: "validator.string",
           };
         } else {
-          if (convertedString2.length === 0) {
+          if (convertedString3.length === 0) {
             result["outputDirectory"] = undefined;
           } else {
-            if (convertedString2.length < 1) {
+            if (convertedString3.length < 1) {
               errorMap[`$.outputDirectory`] = {
                 key: "validator.length",
                 minLength: 1,
               };
             } else {
-              result["outputDirectory"] = convertedString2;
+              result["outputDirectory"] = convertedString3;
             }
           }
         }
@@ -10331,7 +10359,7 @@ export function validateStructureGenerateOptions(value) {
           };
         } else {
           /** @type {Set<string>} */
-          const knownKeys3 = new Set([
+          const knownKeys4 = new Set([
             "structure",
             "openApi",
             "router",
@@ -10342,13 +10370,13 @@ export function validateStructureGenerateOptions(value) {
           ]);
           for (const key of Object.keys(value["generators"])) {
             if (
-              !knownKeys3.has(key) &&
+              !knownKeys4.has(key) &&
               value["generators"][key] !== null &&
               value["generators"][key] !== undefined
             ) {
-              const expectedKeys = [...knownKeys3];
+              const expectedKeys = [...knownKeys4];
               const foundKeys = Object.keys(value["generators"]);
-              const unknownKeys = foundKeys.filter((it) => !knownKeys3.has(it));
+              const unknownKeys = foundKeys.filter((it) => !knownKeys4.has(it));
               errorMap[`$.generators`] = {
                 key: "validator.keys",
                 unknownKeys,
@@ -10382,19 +10410,19 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys4 = new Set([]);
+              const knownKeys5 = new Set([]);
               for (const key of Object.keys(value["generators"]["structure"])) {
                 if (
-                  !knownKeys4.has(key) &&
+                  !knownKeys5.has(key) &&
                   value["generators"]["structure"][key] !== null &&
                   value["generators"]["structure"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys4];
+                  const expectedKeys = [...knownKeys5];
                   const foundKeys = Object.keys(
                     value["generators"]["structure"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys4.has(it),
+                    (it) => !knownKeys5.has(it),
                   );
                   errorMap[`$.generators.structure`] = {
                     key: "validator.keys",
@@ -10422,20 +10450,20 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys5 = new Set([
+              const knownKeys6 = new Set([
                 "openApiExtensions",
                 "openApiRouteExtensions",
               ]);
               for (const key of Object.keys(value["generators"]["openApi"])) {
                 if (
-                  !knownKeys5.has(key) &&
+                  !knownKeys6.has(key) &&
                   value["generators"]["openApi"][key] !== null &&
                   value["generators"]["openApi"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys5];
+                  const expectedKeys = [...knownKeys6];
                   const foundKeys = Object.keys(value["generators"]["openApi"]);
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys5.has(it),
+                    (it) => !knownKeys6.has(it),
                   );
                   errorMap[`$.generators.openApi`] = {
                     key: "validator.keys",
@@ -10471,7 +10499,7 @@ export function validateStructureGenerateOptions(value) {
                   };
                 } else {
                   /** @type {Set<string>} */
-                  const knownKeys6 = new Set([
+                  const knownKeys7 = new Set([
                     "version",
                     "title",
                     "description",
@@ -10480,7 +10508,7 @@ export function validateStructureGenerateOptions(value) {
                     value["generators"]["openApi"]["openApiExtensions"],
                   )) {
                     if (
-                      !knownKeys6.has(key) &&
+                      !knownKeys7.has(key) &&
                       value["generators"]["openApi"]["openApiExtensions"][
                         key
                       ] !== null &&
@@ -10488,12 +10516,12 @@ export function validateStructureGenerateOptions(value) {
                         key
                       ] !== undefined
                     ) {
-                      const expectedKeys = [...knownKeys6];
+                      const expectedKeys = [...knownKeys7];
                       const foundKeys = Object.keys(
                         value["generators"]["openApi"]["openApiExtensions"],
                       );
                       const unknownKeys = foundKeys.filter(
-                        (it) => !knownKeys6.has(it),
+                        (it) => !knownKeys7.has(it),
                       );
                       errorMap[`$.generators.openApi.openApiExtensions`] = {
                         key: "validator.keys",
@@ -10523,23 +10551,23 @@ export function validateStructureGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    const convertedString7 =
+                    const convertedString8 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "version"
                       ];
-                    if (typeof convertedString7 !== "string") {
+                    if (typeof convertedString8 !== "string") {
                       errorMap[
                         `$.generators.openApi.openApiExtensions.version`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString7.length === 0) {
+                      if (convertedString8.length === 0) {
                         result["generators"]["openApi"]["openApiExtensions"][
                           "version"
                         ] = undefined;
                       } else {
-                        if (convertedString7.length < 1) {
+                        if (convertedString8.length < 1) {
                           errorMap[
                             `$.generators.openApi.openApiExtensions.version`
                           ] = {
@@ -10549,7 +10577,7 @@ export function validateStructureGenerateOptions(value) {
                         } else {
                           result["generators"]["openApi"]["openApiExtensions"][
                             "version"
-                          ] = convertedString7;
+                          ] = convertedString8;
                         }
                       }
                     }
@@ -10567,22 +10595,22 @@ export function validateStructureGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    const convertedString8 =
+                    const convertedString9 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "title"
                       ];
-                    if (typeof convertedString8 !== "string") {
+                    if (typeof convertedString9 !== "string") {
                       errorMap[`$.generators.openApi.openApiExtensions.title`] =
                         {
                           key: "validator.string",
                         };
                     } else {
-                      if (convertedString8.length === 0) {
+                      if (convertedString9.length === 0) {
                         result["generators"]["openApi"]["openApiExtensions"][
                           "title"
                         ] = undefined;
                       } else {
-                        if (convertedString8.length < 1) {
+                        if (convertedString9.length < 1) {
                           errorMap[
                             `$.generators.openApi.openApiExtensions.title`
                           ] = {
@@ -10592,7 +10620,7 @@ export function validateStructureGenerateOptions(value) {
                         } else {
                           result["generators"]["openApi"]["openApiExtensions"][
                             "title"
-                          ] = convertedString8;
+                          ] = convertedString9;
                         }
                       }
                     }
@@ -10610,23 +10638,23 @@ export function validateStructureGenerateOptions(value) {
                     ] = undefined;
                   } else {
                     /** @type {string} */
-                    const convertedString9 =
+                    const convertedString10 =
                       value["generators"]["openApi"]["openApiExtensions"][
                         "description"
                       ];
-                    if (typeof convertedString9 !== "string") {
+                    if (typeof convertedString10 !== "string") {
                       errorMap[
                         `$.generators.openApi.openApiExtensions.description`
                       ] = {
                         key: "validator.string",
                       };
                     } else {
-                      if (convertedString9.length === 0) {
+                      if (convertedString10.length === 0) {
                         result["generators"]["openApi"]["openApiExtensions"][
                           "description"
                         ] = undefined;
                       } else {
-                        if (convertedString9.length < 1) {
+                        if (convertedString10.length < 1) {
                           errorMap[
                             `$.generators.openApi.openApiExtensions.description`
                           ] = {
@@ -10636,7 +10664,7 @@ export function validateStructureGenerateOptions(value) {
                         } else {
                           result["generators"]["openApi"]["openApiExtensions"][
                             "description"
-                          ] = convertedString9;
+                          ] = convertedString10;
                         }
                       }
                     }
@@ -10662,47 +10690,47 @@ export function validateStructureGenerateOptions(value) {
                 } else {
                   result["generators"]["openApi"]["openApiRouteExtensions"] =
                     {};
-                  for (const genericKeyInput7 of Object.keys(
+                  for (const genericKeyInput8 of Object.keys(
                     value["generators"]["openApi"]["openApiRouteExtensions"],
                   )) {
                     /** @type {any} */
-                    let genericKeyResult8 = undefined;
+                    let genericKeyResult9 = undefined;
                     /** @type {ValidatorErrorMap} */
-                    const genericKeyErrorMap9 = {};
+                    const genericKeyErrorMap10 = {};
                     if (
-                      genericKeyInput7 === null ||
-                      genericKeyInput7 === undefined
+                      genericKeyInput8 === null ||
+                      genericKeyInput8 === undefined
                     ) {
-                      genericKeyErrorMap9[`$`] = {
+                      genericKeyErrorMap10[`$`] = {
                         key: "validator.undefined",
                       };
                     } else {
                       /** @type {string} */
-                      const convertedString10 = genericKeyInput7;
-                      if (typeof convertedString10 !== "string") {
-                        genericKeyErrorMap9[`$`] = {
+                      const convertedString11 = genericKeyInput8;
+                      if (typeof convertedString11 !== "string") {
+                        genericKeyErrorMap10[`$`] = {
                           key: "validator.string",
                         };
                       } else {
-                        if (convertedString10.length < 1) {
-                          genericKeyErrorMap9[`$`] = {
+                        if (convertedString11.length < 1) {
+                          genericKeyErrorMap10[`$`] = {
                             key: "validator.length",
                             minLength: 1,
                           };
                         } else {
-                          genericKeyResult8 = convertedString10;
+                          genericKeyResult9 = convertedString11;
                         }
                       }
                     }
-                    if (Object.keys(genericKeyErrorMap9).length !== 0) {
+                    if (Object.keys(genericKeyErrorMap10).length !== 0) {
                       if (
                         errorMap[`$.generators.openApi.openApiRouteExtensions`]
                       ) {
                         errorMap[
                           `$.generators.openApi.openApiRouteExtensions`
                         ].inputs.push({
-                          key: genericKeyInput7,
-                          errors: genericKeyErrorMap9,
+                          key: genericKeyInput8,
+                          errors: genericKeyErrorMap10,
                         });
                       } else {
                         errorMap[
@@ -10711,8 +10739,8 @@ export function validateStructureGenerateOptions(value) {
                           key: "validator.generic",
                           inputs: [
                             {
-                              key: genericKeyInput7,
-                              errors: genericKeyErrorMap9,
+                              key: genericKeyInput8,
+                              errors: genericKeyErrorMap10,
                             },
                           ],
                         };
@@ -10721,23 +10749,23 @@ export function validateStructureGenerateOptions(value) {
                       if (
                         value["generators"]["openApi"][
                           "openApiRouteExtensions"
-                        ][genericKeyResult8] === null ||
+                        ][genericKeyResult9] === null ||
                         value["generators"]["openApi"][
                           "openApiRouteExtensions"
-                        ][genericKeyResult8] === undefined
+                        ][genericKeyResult9] === undefined
                       ) {
                         errorMap[
-                          `$.generators.openApi.openApiRouteExtensions.${genericKeyResult8}`
+                          `$.generators.openApi.openApiRouteExtensions.${genericKeyResult9}`
                         ] = {
                           key: "validator.undefined",
                         };
                       } else {
                         result["generators"]["openApi"][
                           "openApiRouteExtensions"
-                        ][genericKeyResult8] =
+                        ][genericKeyResult9] =
                           value["generators"]["openApi"][
                             "openApiRouteExtensions"
-                          ][genericKeyResult8];
+                          ][genericKeyResult9];
                       }
                     }
                   }
@@ -10759,17 +10787,17 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys6 = new Set(["target", "exposeApiStructure"]);
+              const knownKeys7 = new Set(["target", "exposeApiStructure"]);
               for (const key of Object.keys(value["generators"]["router"])) {
                 if (
-                  !knownKeys6.has(key) &&
+                  !knownKeys7.has(key) &&
                   value["generators"]["router"][key] !== null &&
                   value["generators"]["router"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys6];
+                  const expectedKeys = [...knownKeys7];
                   const foundKeys = Object.keys(value["generators"]["router"]);
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys6.has(it),
+                    (it) => !knownKeys7.has(it),
                   );
                   errorMap[`$.generators.router`] = {
                     key: "validator.keys",
@@ -10793,49 +10821,49 @@ export function validateStructureGenerateOptions(value) {
                   key: "validator.undefined",
                 };
               } else {
-                let hasAnyOfMatch7 = false;
+                let hasAnyOfMatch8 = false;
                 errorMap[`$.generators.router.target`] = {
                   key: "validator.anyOf",
                   errors: [],
                 };
-                if (!hasAnyOfMatch7) {
+                if (!hasAnyOfMatch8) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap9 = {};
+                  const intermediateErrorMap10 = {};
                   /** @type {any} */
-                  let intermediateResult9 = undefined;
+                  let intermediateResult10 = undefined;
                   /** @type {any} */
-                  const intermediateValue9 =
+                  const intermediateValue10 =
                     value["generators"]["router"]["target"];
 
                   if (
-                    intermediateValue9 === null ||
-                    intermediateValue9 === undefined
+                    intermediateValue10 === null ||
+                    intermediateValue10 === undefined
                   ) {
-                    intermediateErrorMap9[`$`] = {
+                    intermediateErrorMap10[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (!isRecord(intermediateValue9)) {
-                      intermediateErrorMap9[`$`] = {
+                    if (!isRecord(intermediateValue10)) {
+                      intermediateErrorMap10[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue9,
-                        foundType: typeof intermediateValue9,
+                        value: intermediateValue10,
+                        foundType: typeof intermediateValue10,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys9 = new Set(["library"]);
-                      for (const key of Object.keys(intermediateValue9)) {
+                      const knownKeys10 = new Set(["library"]);
+                      for (const key of Object.keys(intermediateValue10)) {
                         if (
-                          !knownKeys9.has(key) &&
-                          intermediateValue9[key] !== null &&
-                          intermediateValue9[key] !== undefined
+                          !knownKeys10.has(key) &&
+                          intermediateValue10[key] !== null &&
+                          intermediateValue10[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys9];
-                          const foundKeys = Object.keys(intermediateValue9);
+                          const expectedKeys = [...knownKeys10];
+                          const foundKeys = Object.keys(intermediateValue10);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys9.has(it),
+                            (it) => !knownKeys10.has(it),
                           );
-                          intermediateErrorMap9[`$`] = {
+                          intermediateErrorMap10[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -10844,50 +10872,51 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult9 = { library: undefined };
+                      intermediateResult10 = { library: undefined };
 
                       if (
-                        intermediateValue9["library"] === null ||
-                        intermediateValue9["library"] === undefined
+                        intermediateValue10["library"] === null ||
+                        intermediateValue10["library"] === undefined
                       ) {
-                        intermediateErrorMap9[`$.library`] = {
+                        intermediateErrorMap10[`$.library`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        const convertedString10 = intermediateValue9["library"];
-                        if (typeof convertedString10 !== "string") {
-                          intermediateErrorMap9[`$.library`] = {
+                        const convertedString11 =
+                          intermediateValue10["library"];
+                        if (typeof convertedString11 !== "string") {
+                          intermediateErrorMap10[`$.library`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString10.length < 1) {
-                            intermediateErrorMap9[`$.library`] = {
+                          if (convertedString11.length < 1) {
+                            intermediateErrorMap10[`$.library`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
-                          } else if (convertedString10 !== "koa") {
-                            intermediateErrorMap9[`$.library`] = {
+                          } else if (convertedString11 !== "koa") {
+                            intermediateErrorMap10[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["koa"],
-                              foundValue: convertedString10,
+                              foundValue: convertedString11,
                             };
                           } else {
-                            intermediateResult9["library"] = convertedString10;
+                            intermediateResult10["library"] = convertedString11;
                           }
                         }
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap9).length > 0) {
+                  if (Object.keys(intermediateErrorMap10).length > 0) {
                     errorMap[`$.generators.router.target`].errors.push(
-                      intermediateErrorMap9,
+                      intermediateErrorMap10,
                     );
                   } else {
-                    hasAnyOfMatch7 = true;
+                    hasAnyOfMatch8 = true;
                     delete errorMap[`$.generators.router.target`];
                     result["generators"]["router"]["target"] =
-                      intermediateResult9;
+                      intermediateResult10;
                   }
                 }
               }
@@ -10939,19 +10968,19 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys7 = new Set(["target", "includeEntityDiagram"]);
+              const knownKeys8 = new Set(["target", "includeEntityDiagram"]);
               for (const key of Object.keys(value["generators"]["database"])) {
                 if (
-                  !knownKeys7.has(key) &&
+                  !knownKeys8.has(key) &&
                   value["generators"]["database"][key] !== null &&
                   value["generators"]["database"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys7];
+                  const expectedKeys = [...knownKeys8];
                   const foundKeys = Object.keys(
                     value["generators"]["database"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys7.has(it),
+                    (it) => !knownKeys8.has(it),
                   );
                   errorMap[`$.generators.database`] = {
                     key: "validator.keys",
@@ -10975,49 +11004,49 @@ export function validateStructureGenerateOptions(value) {
                   key: "validator.undefined",
                 };
               } else {
-                let hasAnyOfMatch8 = false;
+                let hasAnyOfMatch9 = false;
                 errorMap[`$.generators.database.target`] = {
                   key: "validator.anyOf",
                   errors: [],
                 };
-                if (!hasAnyOfMatch8) {
+                if (!hasAnyOfMatch9) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap10 = {};
+                  const intermediateErrorMap11 = {};
                   /** @type {any} */
-                  let intermediateResult10 = undefined;
+                  let intermediateResult11 = undefined;
                   /** @type {any} */
-                  const intermediateValue10 =
+                  const intermediateValue11 =
                     value["generators"]["database"]["target"];
 
                   if (
-                    intermediateValue10 === null ||
-                    intermediateValue10 === undefined
+                    intermediateValue11 === null ||
+                    intermediateValue11 === undefined
                   ) {
-                    intermediateErrorMap10[`$`] = {
+                    intermediateErrorMap11[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (!isRecord(intermediateValue10)) {
-                      intermediateErrorMap10[`$`] = {
+                    if (!isRecord(intermediateValue11)) {
+                      intermediateErrorMap11[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue10,
-                        foundType: typeof intermediateValue10,
+                        value: intermediateValue11,
+                        foundType: typeof intermediateValue11,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys10 = new Set(["dialect", "includeDDL"]);
-                      for (const key of Object.keys(intermediateValue10)) {
+                      const knownKeys11 = new Set(["dialect", "includeDDL"]);
+                      for (const key of Object.keys(intermediateValue11)) {
                         if (
-                          !knownKeys10.has(key) &&
-                          intermediateValue10[key] !== null &&
-                          intermediateValue10[key] !== undefined
+                          !knownKeys11.has(key) &&
+                          intermediateValue11[key] !== null &&
+                          intermediateValue11[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys10];
-                          const foundKeys = Object.keys(intermediateValue10);
+                          const expectedKeys = [...knownKeys11];
+                          const foundKeys = Object.keys(intermediateValue11);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys10.has(it),
+                            (it) => !knownKeys11.has(it),
                           );
-                          intermediateErrorMap10[`$`] = {
+                          intermediateErrorMap11[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -11026,65 +11055,65 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult10 = {
+                      intermediateResult11 = {
                         dialect: undefined,
                         includeDDL: undefined,
                       };
 
                       if (
-                        intermediateValue10["dialect"] === null ||
-                        intermediateValue10["dialect"] === undefined
+                        intermediateValue11["dialect"] === null ||
+                        intermediateValue11["dialect"] === undefined
                       ) {
-                        intermediateErrorMap10[`$.dialect`] = {
+                        intermediateErrorMap11[`$.dialect`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        const convertedString11 =
-                          intermediateValue10["dialect"];
-                        if (typeof convertedString11 !== "string") {
-                          intermediateErrorMap10[`$.dialect`] = {
+                        const convertedString12 =
+                          intermediateValue11["dialect"];
+                        if (typeof convertedString12 !== "string") {
+                          intermediateErrorMap11[`$.dialect`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString11.length < 1) {
-                            intermediateErrorMap10[`$.dialect`] = {
+                          if (convertedString12.length < 1) {
+                            intermediateErrorMap11[`$.dialect`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
-                          } else if (convertedString11 !== "postgres") {
-                            intermediateErrorMap10[`$.dialect`] = {
+                          } else if (convertedString12 !== "postgres") {
+                            intermediateErrorMap11[`$.dialect`] = {
                               key: "validator.oneOf",
                               allowedValues: ["postgres"],
-                              foundValue: convertedString11,
+                              foundValue: convertedString12,
                             };
                           } else {
-                            intermediateResult10["dialect"] = convertedString11;
+                            intermediateResult11["dialect"] = convertedString12;
                           }
                         }
                       }
                       if (
-                        intermediateValue10["includeDDL"] === null ||
-                        intermediateValue10["includeDDL"] === undefined
+                        intermediateValue11["includeDDL"] === null ||
+                        intermediateValue11["includeDDL"] === undefined
                       ) {
-                        intermediateResult10["includeDDL"] = false;
+                        intermediateResult11["includeDDL"] = false;
                       } else {
                         if (
-                          intermediateValue10["includeDDL"] === true ||
-                          intermediateValue10["includeDDL"] === "true" ||
-                          intermediateValue10["includeDDL"] === 1 ||
-                          intermediateValue10["includeDDL"] === "1"
+                          intermediateValue11["includeDDL"] === true ||
+                          intermediateValue11["includeDDL"] === "true" ||
+                          intermediateValue11["includeDDL"] === 1 ||
+                          intermediateValue11["includeDDL"] === "1"
                         ) {
-                          intermediateResult10["includeDDL"] = true;
+                          intermediateResult11["includeDDL"] = true;
                         } else if (
-                          intermediateValue10["includeDDL"] === false ||
-                          intermediateValue10["includeDDL"] === "false" ||
-                          intermediateValue10["includeDDL"] === 0 ||
-                          intermediateValue10["includeDDL"] === "0"
+                          intermediateValue11["includeDDL"] === false ||
+                          intermediateValue11["includeDDL"] === "false" ||
+                          intermediateValue11["includeDDL"] === 0 ||
+                          intermediateValue11["includeDDL"] === "0"
                         ) {
-                          intermediateResult10["includeDDL"] = false;
+                          intermediateResult11["includeDDL"] = false;
                         } else {
-                          intermediateErrorMap10[`$.includeDDL`] = {
+                          intermediateErrorMap11[`$.includeDDL`] = {
                             key: "validator.type",
                             expectedType: "boolean",
                           };
@@ -11092,15 +11121,15 @@ export function validateStructureGenerateOptions(value) {
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap10).length > 0) {
+                  if (Object.keys(intermediateErrorMap11).length > 0) {
                     errorMap[`$.generators.database.target`].errors.push(
-                      intermediateErrorMap10,
+                      intermediateErrorMap11,
                     );
                   } else {
-                    hasAnyOfMatch8 = true;
+                    hasAnyOfMatch9 = true;
                     delete errorMap[`$.generators.database.target`];
                     result["generators"]["database"]["target"] =
-                      intermediateResult10;
+                      intermediateResult11;
                   }
                 }
               }
@@ -11160,21 +11189,21 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys8 = new Set(["includeBaseTypes"]);
+              const knownKeys9 = new Set(["includeBaseTypes"]);
               for (const key of Object.keys(
                 value["generators"]["validators"],
               )) {
                 if (
-                  !knownKeys8.has(key) &&
+                  !knownKeys9.has(key) &&
                   value["generators"]["validators"][key] !== null &&
                   value["generators"]["validators"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys8];
+                  const expectedKeys = [...knownKeys9];
                   const foundKeys = Object.keys(
                     value["generators"]["validators"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys8.has(it),
+                    (it) => !knownKeys9.has(it),
                   );
                   errorMap[`$.generators.validators`] = {
                     key: "validator.keys",
@@ -11239,19 +11268,19 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys9 = new Set(["target", "responseValidation"]);
+              const knownKeys10 = new Set(["target", "responseValidation"]);
               for (const key of Object.keys(value["generators"]["apiClient"])) {
                 if (
-                  !knownKeys9.has(key) &&
+                  !knownKeys10.has(key) &&
                   value["generators"]["apiClient"][key] !== null &&
                   value["generators"]["apiClient"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys9];
+                  const expectedKeys = [...knownKeys10];
                   const foundKeys = Object.keys(
                     value["generators"]["apiClient"],
                   );
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys9.has(it),
+                    (it) => !knownKeys10.has(it),
                   );
                   errorMap[`$.generators.apiClient`] = {
                     key: "validator.keys",
@@ -11275,54 +11304,54 @@ export function validateStructureGenerateOptions(value) {
                   key: "validator.undefined",
                 };
               } else {
-                let hasAnyOfMatch10 = false;
+                let hasAnyOfMatch11 = false;
                 errorMap[`$.generators.apiClient.target`] = {
                   key: "validator.anyOf",
                   errors: [],
                 };
-                if (!hasAnyOfMatch10) {
+                if (!hasAnyOfMatch11) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap12 = {};
+                  const intermediateErrorMap13 = {};
                   /** @type {any} */
-                  let intermediateResult12 = undefined;
+                  let intermediateResult13 = undefined;
                   /** @type {any} */
-                  const intermediateValue12 =
+                  const intermediateValue13 =
                     value["generators"]["apiClient"]["target"];
 
                   if (
-                    intermediateValue12 === null ||
-                    intermediateValue12 === undefined
+                    intermediateValue13 === null ||
+                    intermediateValue13 === undefined
                   ) {
-                    intermediateErrorMap12[`$`] = {
+                    intermediateErrorMap13[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (!isRecord(intermediateValue12)) {
-                      intermediateErrorMap12[`$`] = {
+                    if (!isRecord(intermediateValue13)) {
+                      intermediateErrorMap13[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue12,
-                        foundType: typeof intermediateValue12,
+                        value: intermediateValue13,
+                        foundType: typeof intermediateValue13,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys12 = new Set([
+                      const knownKeys13 = new Set([
                         "library",
                         "targetRuntime",
                         "includeWrapper",
                         "globalClient",
                       ]);
-                      for (const key of Object.keys(intermediateValue12)) {
+                      for (const key of Object.keys(intermediateValue13)) {
                         if (
-                          !knownKeys12.has(key) &&
-                          intermediateValue12[key] !== null &&
-                          intermediateValue12[key] !== undefined
+                          !knownKeys13.has(key) &&
+                          intermediateValue13[key] !== null &&
+                          intermediateValue13[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys12];
-                          const foundKeys = Object.keys(intermediateValue12);
+                          const expectedKeys = [...knownKeys13];
+                          const foundKeys = Object.keys(intermediateValue13);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys12.has(it),
+                            (it) => !knownKeys13.has(it),
                           );
-                          intermediateErrorMap12[`$`] = {
+                          intermediateErrorMap13[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -11331,7 +11360,7 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult12 = {
+                      intermediateResult13 = {
                         library: undefined,
                         targetRuntime: undefined,
                         includeWrapper: undefined,
@@ -11339,135 +11368,135 @@ export function validateStructureGenerateOptions(value) {
                       };
 
                       if (
-                        intermediateValue12["library"] === null ||
-                        intermediateValue12["library"] === undefined
+                        intermediateValue13["library"] === null ||
+                        intermediateValue13["library"] === undefined
                       ) {
-                        intermediateErrorMap12[`$.library`] = {
+                        intermediateErrorMap13[`$.library`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        const convertedString13 =
-                          intermediateValue12["library"];
-                        if (typeof convertedString13 !== "string") {
-                          intermediateErrorMap12[`$.library`] = {
+                        const convertedString14 =
+                          intermediateValue13["library"];
+                        if (typeof convertedString14 !== "string") {
+                          intermediateErrorMap13[`$.library`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString13.length < 1) {
-                            intermediateErrorMap12[`$.library`] = {
+                          if (convertedString14.length < 1) {
+                            intermediateErrorMap13[`$.library`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
-                          } else if (convertedString13 !== "axios") {
-                            intermediateErrorMap12[`$.library`] = {
+                          } else if (convertedString14 !== "axios") {
+                            intermediateErrorMap13[`$.library`] = {
                               key: "validator.oneOf",
                               allowedValues: ["axios"],
-                              foundValue: convertedString13,
+                              foundValue: convertedString14,
                             };
                           } else {
-                            intermediateResult12["library"] = convertedString13;
+                            intermediateResult13["library"] = convertedString14;
                           }
                         }
                       }
                       if (
-                        intermediateValue12["targetRuntime"] === null ||
-                        intermediateValue12["targetRuntime"] === undefined
+                        intermediateValue13["targetRuntime"] === null ||
+                        intermediateValue13["targetRuntime"] === undefined
                       ) {
-                        intermediateErrorMap12[`$.targetRuntime`] = {
+                        intermediateErrorMap13[`$.targetRuntime`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
-                        const convertedString14 =
-                          intermediateValue12["targetRuntime"];
-                        if (typeof convertedString14 !== "string") {
-                          intermediateErrorMap12[`$.targetRuntime`] = {
+                        const convertedString15 =
+                          intermediateValue13["targetRuntime"];
+                        if (typeof convertedString15 !== "string") {
+                          intermediateErrorMap13[`$.targetRuntime`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString14.length < 1) {
-                            intermediateErrorMap12[`$.targetRuntime`] = {
+                          if (convertedString15.length < 1) {
+                            intermediateErrorMap13[`$.targetRuntime`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
                           } else if (
-                            convertedString14 !== "node.js" &&
-                            convertedString14 !== "browser" &&
-                            convertedString14 !== "react-native"
+                            convertedString15 !== "node.js" &&
+                            convertedString15 !== "browser" &&
+                            convertedString15 !== "react-native"
                           ) {
-                            intermediateErrorMap12[`$.targetRuntime`] = {
+                            intermediateErrorMap13[`$.targetRuntime`] = {
                               key: "validator.oneOf",
                               allowedValues: [
                                 "node.js",
                                 "browser",
                                 "react-native",
                               ],
-                              foundValue: convertedString14,
+                              foundValue: convertedString15,
                             };
                           } else {
-                            intermediateResult12["targetRuntime"] =
-                              convertedString14;
+                            intermediateResult13["targetRuntime"] =
+                              convertedString15;
                           }
                         }
                       }
                       if (
-                        intermediateValue12["includeWrapper"] === null ||
-                        intermediateValue12["includeWrapper"] === undefined
+                        intermediateValue13["includeWrapper"] === null ||
+                        intermediateValue13["includeWrapper"] === undefined
                       ) {
-                        intermediateResult12["includeWrapper"] = undefined;
+                        intermediateResult13["includeWrapper"] = undefined;
                       } else {
                         /** @type {string} */
-                        const convertedString15 =
-                          intermediateValue12["includeWrapper"];
-                        if (typeof convertedString15 !== "string") {
-                          intermediateErrorMap12[`$.includeWrapper`] = {
+                        const convertedString16 =
+                          intermediateValue13["includeWrapper"];
+                        if (typeof convertedString16 !== "string") {
+                          intermediateErrorMap13[`$.includeWrapper`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString15.length === 0) {
-                            intermediateResult12["includeWrapper"] = undefined;
+                          if (convertedString16.length === 0) {
+                            intermediateResult13["includeWrapper"] = undefined;
                           } else {
-                            if (convertedString15.length < 1) {
-                              intermediateErrorMap12[`$.includeWrapper`] = {
+                            if (convertedString16.length < 1) {
+                              intermediateErrorMap13[`$.includeWrapper`] = {
                                 key: "validator.length",
                                 minLength: 1,
                               };
-                            } else if (convertedString15 !== "react-query") {
-                              intermediateErrorMap12[`$.includeWrapper`] = {
+                            } else if (convertedString16 !== "react-query") {
+                              intermediateErrorMap13[`$.includeWrapper`] = {
                                 key: "validator.oneOf",
                                 allowedValues: ["react-query"],
-                                foundValue: convertedString15,
+                                foundValue: convertedString16,
                               };
                             } else {
-                              intermediateResult12["includeWrapper"] =
-                                convertedString15;
+                              intermediateResult13["includeWrapper"] =
+                                convertedString16;
                             }
                           }
                         }
                       }
                       if (
-                        intermediateValue12["globalClient"] === null ||
-                        intermediateValue12["globalClient"] === undefined
+                        intermediateValue13["globalClient"] === null ||
+                        intermediateValue13["globalClient"] === undefined
                       ) {
-                        intermediateResult12["globalClient"] = false;
+                        intermediateResult13["globalClient"] = false;
                       } else {
                         if (
-                          intermediateValue12["globalClient"] === true ||
-                          intermediateValue12["globalClient"] === "true" ||
-                          intermediateValue12["globalClient"] === 1 ||
-                          intermediateValue12["globalClient"] === "1"
+                          intermediateValue13["globalClient"] === true ||
+                          intermediateValue13["globalClient"] === "true" ||
+                          intermediateValue13["globalClient"] === 1 ||
+                          intermediateValue13["globalClient"] === "1"
                         ) {
-                          intermediateResult12["globalClient"] = true;
+                          intermediateResult13["globalClient"] = true;
                         } else if (
-                          intermediateValue12["globalClient"] === false ||
-                          intermediateValue12["globalClient"] === "false" ||
-                          intermediateValue12["globalClient"] === 0 ||
-                          intermediateValue12["globalClient"] === "0"
+                          intermediateValue13["globalClient"] === false ||
+                          intermediateValue13["globalClient"] === "false" ||
+                          intermediateValue13["globalClient"] === 0 ||
+                          intermediateValue13["globalClient"] === "0"
                         ) {
-                          intermediateResult12["globalClient"] = false;
+                          intermediateResult13["globalClient"] = false;
                         } else {
-                          intermediateErrorMap12[`$.globalClient`] = {
+                          intermediateErrorMap13[`$.globalClient`] = {
                             key: "validator.type",
                             expectedType: "boolean",
                           };
@@ -11475,60 +11504,60 @@ export function validateStructureGenerateOptions(value) {
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap12).length > 0) {
+                  if (Object.keys(intermediateErrorMap13).length > 0) {
                     errorMap[`$.generators.apiClient.target`].errors.push(
-                      intermediateErrorMap12,
+                      intermediateErrorMap13,
                     );
                   } else {
-                    hasAnyOfMatch10 = true;
+                    hasAnyOfMatch11 = true;
                     delete errorMap[`$.generators.apiClient.target`];
                     result["generators"]["apiClient"]["target"] =
-                      intermediateResult12;
+                      intermediateResult13;
                   }
                 }
-                if (!hasAnyOfMatch10) {
+                if (!hasAnyOfMatch11) {
                   /** @type {ValidatorErrorMap} */
-                  const intermediateErrorMap12 = {};
+                  const intermediateErrorMap13 = {};
                   /** @type {any} */
-                  let intermediateResult12 = undefined;
+                  let intermediateResult13 = undefined;
                   /** @type {any} */
-                  const intermediateValue12 =
+                  const intermediateValue13 =
                     value["generators"]["apiClient"]["target"];
 
                   if (
-                    intermediateValue12 === null ||
-                    intermediateValue12 === undefined
+                    intermediateValue13 === null ||
+                    intermediateValue13 === undefined
                   ) {
-                    intermediateErrorMap12[`$`] = {
+                    intermediateErrorMap13[`$`] = {
                       key: "validator.undefined",
                     };
                   } else {
-                    if (!isRecord(intermediateValue12)) {
-                      intermediateErrorMap12[`$`] = {
+                    if (!isRecord(intermediateValue13)) {
+                      intermediateErrorMap13[`$`] = {
                         key: "validator.object",
-                        value: intermediateValue12,
-                        foundType: typeof intermediateValue12,
+                        value: intermediateValue13,
+                        foundType: typeof intermediateValue13,
                       };
                     } else {
                       /** @type {Set<string>} */
-                      const knownKeys12 = new Set([
+                      const knownKeys13 = new Set([
                         "library",
                         "targetRuntime",
                         "includeWrapper",
                         "globalClient",
                       ]);
-                      for (const key of Object.keys(intermediateValue12)) {
+                      for (const key of Object.keys(intermediateValue13)) {
                         if (
-                          !knownKeys12.has(key) &&
-                          intermediateValue12[key] !== null &&
-                          intermediateValue12[key] !== undefined
+                          !knownKeys13.has(key) &&
+                          intermediateValue13[key] !== null &&
+                          intermediateValue13[key] !== undefined
                         ) {
-                          const expectedKeys = [...knownKeys12];
-                          const foundKeys = Object.keys(intermediateValue12);
+                          const expectedKeys = [...knownKeys13];
+                          const foundKeys = Object.keys(intermediateValue13);
                           const unknownKeys = foundKeys.filter(
-                            (it) => !knownKeys12.has(it),
+                            (it) => !knownKeys13.has(it),
                           );
-                          intermediateErrorMap12[`$`] = {
+                          intermediateErrorMap13[`$`] = {
                             key: "validator.keys",
                             unknownKeys,
                             expectedKeys,
@@ -11537,7 +11566,7 @@ export function validateStructureGenerateOptions(value) {
                           break;
                         }
                       }
-                      intermediateResult12 = {
+                      intermediateResult13 = {
                         library: undefined,
                         targetRuntime: undefined,
                         includeWrapper: undefined,
@@ -11545,135 +11574,135 @@ export function validateStructureGenerateOptions(value) {
                       };
 
                       if (
-                        intermediateValue12["library"] === null ||
-                        intermediateValue12["library"] === undefined
+                        intermediateValue13["library"] === null ||
+                        intermediateValue13["library"] === undefined
                       ) {
-                        intermediateErrorMap12[`$.library`] = {
-                          key: "validator.undefined",
-                        };
-                      } else {
-                        /** @type {string} */
-                        const convertedString13 =
-                          intermediateValue12["library"];
-                        if (typeof convertedString13 !== "string") {
-                          intermediateErrorMap12[`$.library`] = {
-                            key: "validator.string",
-                          };
-                        } else {
-                          if (convertedString13.length < 1) {
-                            intermediateErrorMap12[`$.library`] = {
-                              key: "validator.length",
-                              minLength: 1,
-                            };
-                          } else if (convertedString13 !== "fetch") {
-                            intermediateErrorMap12[`$.library`] = {
-                              key: "validator.oneOf",
-                              allowedValues: ["fetch"],
-                              foundValue: convertedString13,
-                            };
-                          } else {
-                            intermediateResult12["library"] = convertedString13;
-                          }
-                        }
-                      }
-                      if (
-                        intermediateValue12["targetRuntime"] === null ||
-                        intermediateValue12["targetRuntime"] === undefined
-                      ) {
-                        intermediateErrorMap12[`$.targetRuntime`] = {
+                        intermediateErrorMap13[`$.library`] = {
                           key: "validator.undefined",
                         };
                       } else {
                         /** @type {string} */
                         const convertedString14 =
-                          intermediateValue12["targetRuntime"];
+                          intermediateValue13["library"];
                         if (typeof convertedString14 !== "string") {
-                          intermediateErrorMap12[`$.targetRuntime`] = {
+                          intermediateErrorMap13[`$.library`] = {
                             key: "validator.string",
                           };
                         } else {
                           if (convertedString14.length < 1) {
-                            intermediateErrorMap12[`$.targetRuntime`] = {
+                            intermediateErrorMap13[`$.library`] = {
+                              key: "validator.length",
+                              minLength: 1,
+                            };
+                          } else if (convertedString14 !== "fetch") {
+                            intermediateErrorMap13[`$.library`] = {
+                              key: "validator.oneOf",
+                              allowedValues: ["fetch"],
+                              foundValue: convertedString14,
+                            };
+                          } else {
+                            intermediateResult13["library"] = convertedString14;
+                          }
+                        }
+                      }
+                      if (
+                        intermediateValue13["targetRuntime"] === null ||
+                        intermediateValue13["targetRuntime"] === undefined
+                      ) {
+                        intermediateErrorMap13[`$.targetRuntime`] = {
+                          key: "validator.undefined",
+                        };
+                      } else {
+                        /** @type {string} */
+                        const convertedString15 =
+                          intermediateValue13["targetRuntime"];
+                        if (typeof convertedString15 !== "string") {
+                          intermediateErrorMap13[`$.targetRuntime`] = {
+                            key: "validator.string",
+                          };
+                        } else {
+                          if (convertedString15.length < 1) {
+                            intermediateErrorMap13[`$.targetRuntime`] = {
                               key: "validator.length",
                               minLength: 1,
                             };
                           } else if (
-                            convertedString14 !== "node.js" &&
-                            convertedString14 !== "browser" &&
-                            convertedString14 !== "react-native"
+                            convertedString15 !== "node.js" &&
+                            convertedString15 !== "browser" &&
+                            convertedString15 !== "react-native"
                           ) {
-                            intermediateErrorMap12[`$.targetRuntime`] = {
+                            intermediateErrorMap13[`$.targetRuntime`] = {
                               key: "validator.oneOf",
                               allowedValues: [
                                 "node.js",
                                 "browser",
                                 "react-native",
                               ],
-                              foundValue: convertedString14,
+                              foundValue: convertedString15,
                             };
                           } else {
-                            intermediateResult12["targetRuntime"] =
-                              convertedString14;
+                            intermediateResult13["targetRuntime"] =
+                              convertedString15;
                           }
                         }
                       }
                       if (
-                        intermediateValue12["includeWrapper"] === null ||
-                        intermediateValue12["includeWrapper"] === undefined
+                        intermediateValue13["includeWrapper"] === null ||
+                        intermediateValue13["includeWrapper"] === undefined
                       ) {
-                        intermediateResult12["includeWrapper"] = undefined;
+                        intermediateResult13["includeWrapper"] = undefined;
                       } else {
                         /** @type {string} */
-                        const convertedString15 =
-                          intermediateValue12["includeWrapper"];
-                        if (typeof convertedString15 !== "string") {
-                          intermediateErrorMap12[`$.includeWrapper`] = {
+                        const convertedString16 =
+                          intermediateValue13["includeWrapper"];
+                        if (typeof convertedString16 !== "string") {
+                          intermediateErrorMap13[`$.includeWrapper`] = {
                             key: "validator.string",
                           };
                         } else {
-                          if (convertedString15.length === 0) {
-                            intermediateResult12["includeWrapper"] = undefined;
+                          if (convertedString16.length === 0) {
+                            intermediateResult13["includeWrapper"] = undefined;
                           } else {
-                            if (convertedString15.length < 1) {
-                              intermediateErrorMap12[`$.includeWrapper`] = {
+                            if (convertedString16.length < 1) {
+                              intermediateErrorMap13[`$.includeWrapper`] = {
                                 key: "validator.length",
                                 minLength: 1,
                               };
-                            } else if (convertedString15 !== "react-query") {
-                              intermediateErrorMap12[`$.includeWrapper`] = {
+                            } else if (convertedString16 !== "react-query") {
+                              intermediateErrorMap13[`$.includeWrapper`] = {
                                 key: "validator.oneOf",
                                 allowedValues: ["react-query"],
-                                foundValue: convertedString15,
+                                foundValue: convertedString16,
                               };
                             } else {
-                              intermediateResult12["includeWrapper"] =
-                                convertedString15;
+                              intermediateResult13["includeWrapper"] =
+                                convertedString16;
                             }
                           }
                         }
                       }
                       if (
-                        intermediateValue12["globalClient"] === null ||
-                        intermediateValue12["globalClient"] === undefined
+                        intermediateValue13["globalClient"] === null ||
+                        intermediateValue13["globalClient"] === undefined
                       ) {
-                        intermediateResult12["globalClient"] = false;
+                        intermediateResult13["globalClient"] = false;
                       } else {
                         if (
-                          intermediateValue12["globalClient"] === true ||
-                          intermediateValue12["globalClient"] === "true" ||
-                          intermediateValue12["globalClient"] === 1 ||
-                          intermediateValue12["globalClient"] === "1"
+                          intermediateValue13["globalClient"] === true ||
+                          intermediateValue13["globalClient"] === "true" ||
+                          intermediateValue13["globalClient"] === 1 ||
+                          intermediateValue13["globalClient"] === "1"
                         ) {
-                          intermediateResult12["globalClient"] = true;
+                          intermediateResult13["globalClient"] = true;
                         } else if (
-                          intermediateValue12["globalClient"] === false ||
-                          intermediateValue12["globalClient"] === "false" ||
-                          intermediateValue12["globalClient"] === 0 ||
-                          intermediateValue12["globalClient"] === "0"
+                          intermediateValue13["globalClient"] === false ||
+                          intermediateValue13["globalClient"] === "false" ||
+                          intermediateValue13["globalClient"] === 0 ||
+                          intermediateValue13["globalClient"] === "0"
                         ) {
-                          intermediateResult12["globalClient"] = false;
+                          intermediateResult13["globalClient"] = false;
                         } else {
-                          intermediateErrorMap12[`$.globalClient`] = {
+                          intermediateErrorMap13[`$.globalClient`] = {
                             key: "validator.type",
                             expectedType: "boolean",
                           };
@@ -11681,15 +11710,15 @@ export function validateStructureGenerateOptions(value) {
                       }
                     }
                   }
-                  if (Object.keys(intermediateErrorMap12).length > 0) {
+                  if (Object.keys(intermediateErrorMap13).length > 0) {
                     errorMap[`$.generators.apiClient.target`].errors.push(
-                      intermediateErrorMap12,
+                      intermediateErrorMap13,
                     );
                   } else {
-                    hasAnyOfMatch10 = true;
+                    hasAnyOfMatch11 = true;
                     delete errorMap[`$.generators.apiClient.target`];
                     result["generators"]["apiClient"]["target"] =
-                      intermediateResult12;
+                      intermediateResult13;
                   }
                 }
               }
@@ -11797,20 +11826,20 @@ export function validateStructureGenerateOptions(value) {
               };
             } else {
               /** @type {Set<string>} */
-              const knownKeys10 = new Set([
+              const knownKeys11 = new Set([
                 "includeBaseTypes",
                 "declareGlobalTypes",
               ]);
               for (const key of Object.keys(value["generators"]["types"])) {
                 if (
-                  !knownKeys10.has(key) &&
+                  !knownKeys11.has(key) &&
                   value["generators"]["types"][key] !== null &&
                   value["generators"]["types"][key] !== undefined
                 ) {
-                  const expectedKeys = [...knownKeys10];
+                  const expectedKeys = [...knownKeys11];
                   const foundKeys = Object.keys(value["generators"]["types"]);
                   const unknownKeys = foundKeys.filter(
-                    (it) => !knownKeys10.has(it),
+                    (it) => !knownKeys11.has(it),
                   );
                   errorMap[`$.generators.types`] = {
                     key: "validator.keys",

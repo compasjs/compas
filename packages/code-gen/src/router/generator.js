@@ -235,7 +235,7 @@ export function routerGenerator(generateContext) {
       tsKoa: jsKoaBuildRouterFile,
     },
     target,
-    [routerFile, routesPerGroup, nameMap],
+    [generateContext, routerFile, routesPerGroup, nameMap],
   );
 
   targetCustomSwitch(

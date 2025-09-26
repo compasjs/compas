@@ -278,19 +278,28 @@ export function jsKoaWriteTags(file, group, routes) {
 }
 
 /**
+ * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {Record<string, Array<import("../generated/common/types.js").StructureRouteDefinition>>} routesPerGroup
  * @param {Map<any, Record<string, string>>} contextNamesMap
  */
-export function jsKoaBuildRouterFile(file, routesPerGroup, contextNamesMap) {
+export function jsKoaBuildRouterFile(
+  generateContext,
+  file,
+  routesPerGroup,
+  contextNamesMap,
+) {
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
-  importCollector.destructure("./route-matcher.js", "routeMatcher");
+  importCollector.destructure(
+    `./route-matcher.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    "routeMatcher",
+  );
   importCollector.destructure("@compas/stdlib", "eventRename");
 
   for (const group of Object.keys(routesPerGroup)) {
     importCollector.destructure(
-      `../${group}/controller.js`,
+      `../${group}/controller.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
       `${group}Handlers`,
     );
   }

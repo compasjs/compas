@@ -2125,6 +2125,15 @@
           "type": "string",
           "oneOf": ["js", "ts"]
         },
+        "forceTsExtensionImports": {
+          "docString": "\n        Output '.ts' extension in imports for use with Node.js new type stripping features.\n        ",
+          "isOptional": true,
+          "validator": {
+            "allowNull": false
+          },
+          "sql": {},
+          "type": "boolean"
+        },
         "outputDirectory": {
           "docString": "Where to write the files to. If no directory is provided, a list of in memory files with contents is returned from the {@link Generator.generate} call.",
           "isOptional": true,

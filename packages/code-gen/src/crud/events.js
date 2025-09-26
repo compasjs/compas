@@ -120,7 +120,7 @@ function crudEventsList(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "eventStart");
   importCollector.destructure("@compas/stdlib", "eventStop");
   importCollector.destructure(
-    `../database/${model.name}.js`,
+    `../database/${model.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
     `query${upperCaseFirst(model.name)}`,
   );
 
@@ -151,7 +151,7 @@ function crudEventsSingle(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "eventStart");
   importCollector.destructure("@compas/stdlib", "eventStop");
   importCollector.destructure(
-    `../database/${model.name}.js`,
+    `../database/${model.name}.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
     `query${upperCaseFirst(model.name)}`,
   );
 
@@ -178,7 +178,10 @@ function crudEventsCreate(generateContext, file, crud) {
   importCollector.destructure("@compas/stdlib", "eventStart");
   importCollector.destructure("@compas/stdlib", "eventStop");
   importCollector.destructure("@compas/stdlib", "newEventFromEvent");
-  importCollector.destructure(`../common/database.js`, `queries`);
+  importCollector.destructure(
+    `../common/database.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `queries`,
+  );
 
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
@@ -206,7 +209,10 @@ function crudEventsUpdate(generateContext, file, crud) {
 
   importCollector.destructure("@compas/stdlib", "eventStart");
   importCollector.destructure("@compas/stdlib", "eventStop");
-  importCollector.destructure(`../common/database.js`, `queries`);
+  importCollector.destructure(
+    `../common/database.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `queries`,
+  );
 
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),
@@ -234,7 +240,10 @@ function crudEventsDelete(generateContext, file, crud) {
 
   importCollector.destructure("@compas/stdlib", "eventStart");
   importCollector.destructure("@compas/stdlib", "eventStop");
-  importCollector.destructure(`../common/database.js`, `queries`);
+  importCollector.destructure(
+    `../common/database.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
+    `queries`,
+  );
 
   const data = {
     crudName: crud.group + upperCaseFirst(crudInformationGetName(crud, "")),

@@ -51,6 +51,9 @@ export function extendWithCodeGen(generator) {
     T.object("generateOptions")
       .keys({
         targetLanguage: T.string().oneOf("js", "ts"),
+        forceTsExtensionImports: T.bool().optional().docs(`
+        Output '.ts' extension in imports for use with Node.js new type stripping features.
+        `),
 
         outputDirectory: T.string()
           .optional()

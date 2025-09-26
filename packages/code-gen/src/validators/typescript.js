@@ -10,7 +10,7 @@ import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesGeneratorUseTypeName } from "../types/generator.js";
 
 /**
- *
+ * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types.d.ts").NamedType<
  *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
@@ -19,6 +19,7 @@ import { typesGeneratorUseTypeName } from "../types/generator.js";
  * @returns {string}
  */
 export function validatorTypescriptGetNameAndImport(
+  generateContext,
   file,
   type,
   outputTypeName,
@@ -26,7 +27,7 @@ export function validatorTypescriptGetNameAndImport(
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   importCollector.destructure(
-    `../${type.group}/validators.js`,
+    `../${type.group}/validators.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
     `validate${outputTypeName}`,
   );
 

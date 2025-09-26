@@ -132,7 +132,7 @@ const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
 }
 
 /**
- *
+ * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types.d.ts").NamedType<
  *   import("../generated/common/types.d.ts").StructureTypeSystemDefinition
@@ -141,6 +141,7 @@ const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
  * @returns {string}
  */
 export function validatorJavascriptGetNameAndImport(
+  generateContext,
   file,
   type,
   outputTypeName,
@@ -148,7 +149,7 @@ export function validatorJavascriptGetNameAndImport(
   const importCollector = JavascriptImportCollector.getImportCollector(file);
 
   importCollector.destructure(
-    `../${type.group}/validators.js`,
+    `../${type.group}/validators.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
     `validate${outputTypeName}`,
   );
 
@@ -1399,7 +1400,7 @@ export function validatorJavascriptReference(
       const importCollector =
         JavascriptImportCollector.getImportCollector(file);
       importCollector.destructure(
-        `../${type.reference.group}/validators.js`,
+        `../${type.reference.group}/validators.${generateContext.options.forceTsExtensionImports ? "ts" : "js"}`,
         `validate${referredTypeName}`,
       );
     }

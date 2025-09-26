@@ -28,12 +28,17 @@ export function reactQueryGenerateCommonFile(generateContext) {
     `common/api-client-wrapper.tsx`,
     {
       importCollector: new JavascriptImportCollector(),
+      typeImportCollector: new JavascriptImportCollector(true),
     },
   );
 
   file.contents = `"use client";\n\n${file.contents}`;
 
   const importCollector = JavascriptImportCollector.getImportCollector(file);
+  const typeImportCollector = JavascriptImportCollector.getImportCollector(
+    file,
+    true,
+  );
 
   fileWrite(file, `export type Pretty<T> = { [K in keyof T]: T[K] } & {};`);
 
@@ -43,11 +48,11 @@ export function reactQueryGenerateCommonFile(generateContext) {
 
   importCollector.raw(`import React from "react";`);
   importCollector.destructure("react", "createContext");
-  importCollector.destructure("react", "PropsWithChildren");
+  typeImportCollector.destructure("react", "PropsWithChildren");
   importCollector.destructure("react", "useContext");
 
   if (distilledTargetInfo.isAxios) {
-    importCollector.destructure("axios", "AxiosInstance");
+    typeImportCollector.destructure("axios", "AxiosInstance");
 
     fileWrite(
       file,
@@ -73,7 +78,7 @@ export const useApi = () => {
 };`,
     );
   } else if (distilledTargetInfo.isFetch) {
-    importCollector.destructure("./api-client", "FetchFn");
+    typeImportCollector.destructure("./api-client", "FetchFn");
     fileWrite(
       file,
       `
