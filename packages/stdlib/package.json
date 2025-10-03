@@ -21,7 +21,7 @@
     "@types/node": "24.6.1",
     "dotenv": "17.2.3",
     "lodash.merge": "4.6.2",
-    "pino": "9.12.0"
+    "pino": "9.13.0"
   },
   "devDependencies": {
     "@sentry/node": "*"
