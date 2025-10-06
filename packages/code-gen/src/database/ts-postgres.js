@@ -596,7 +596,10 @@ export function tsPostgresGenerateInsert(
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
-  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+  fileWrite(
+    file,
+    ` Internal compat helper to insert a record in the '${model.name}' table\n`,
+  );
   fileWrite(file, `/`);
   fileContextRemoveLinePrefix(file, 2);
 
@@ -968,7 +971,7 @@ export function tsPostgresGenerateUpdate(
   // Doc block
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
-  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+  fileWrite(file, ` Update a record in the '${model.name}' table\n`);
   fileWrite(file, `/`);
   fileContextRemoveLinePrefix(file, 2);
 

@@ -608,7 +608,10 @@ export function jsPostgresGenerateInsert(
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
 
-  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+  fileWrite(
+    file,
+    ` Internal compat helper to insert a record in the '${model.name}' table\n`,
+  );
 
   fileWrite(file, ` @param {${contextNames.insertType.inputType}} input`);
   fileWrite(
@@ -1002,7 +1005,7 @@ export function jsPostgresGenerateUpdate(
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
 
-  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+  fileWrite(file, ` Update a record in the '${model.name}' table\n`);
 
   fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
   fileWrite(file, ` @param {${contextNames.updateType.inputType}} update`);
@@ -1084,7 +1087,7 @@ export function jsPostgresGenerateDelete(
   fileWrite(file, `/**`);
   fileContextAddLinePrefix(file, ` *`);
 
-  fileWrite(file, ` Insert a record in the '${model.name}' table\n`);
+  fileWrite(file, ` Delete a record in the '${model.name}' table\n`);
 
   fileWrite(file, ` @param {import("@compas/store").Postgres} sql`);
   fileWrite(file, ` @param {${contextNames.whereType.inputType}} [where]`);
