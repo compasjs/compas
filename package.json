@@ -10,7 +10,7 @@
     "docs:serve": "vitepress serve docs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "devDependencies": {
     "@lightbase/eslint-config": "3.4.0",

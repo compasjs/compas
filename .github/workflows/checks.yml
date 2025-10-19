@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [22]
+        node: [24]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -41,7 +41,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [22]
+        node: [24]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -71,8 +71,8 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [20, 22, 24]
-        postgresVersion: [12, 14, 16]
+        node: [24, 25]
+        postgresVersion: [16, 17]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -116,7 +116,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node: [22]
+        node: [24]
         postgresVersion: [14]
     runs-on: ubuntu-latest
     env:

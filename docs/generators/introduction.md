@@ -6,7 +6,7 @@ routers and database clients.
 
 ## Installation
 
-Compas requires at least Node.js 18 or higher.
+Compas requires at least Node.js 24 or higher.
 
 ```shell
 npm install --save-dev --save-exact @compas/code-gen  # npm
@@ -41,7 +41,7 @@ paths:
 Compas can generate a Typescript API client with the following signature:
 
 ```ts
-declare function apiUserList(axiosInstance: AxiosInstance): Promise<string[]>;
+declare function apiUserList(axiosInstance: AxiosInstance): Promise<Array<string>>;
 ```
 
 Or a typed Koa compatible router which can be used like:

@@ -36,8 +36,8 @@ using Compas.
 
 ## Requirements
 
-- Node.js >= 16
-- Yarn 1.x.x / NPM
+- Node.js >= 24
+- NPM
 
 ## Why
 
