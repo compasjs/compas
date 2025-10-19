@@ -1,16 +1,7 @@
 # CRUD basics
 
 This project is created using the
-[crud-inline](https://github.com/compasjs/compas/tree/main/examples/crud-inline)
-template via [create-compas](https://www.npmjs.com/package/create-compas).
-
-```shell
-# Via NPM
-npx create-compas@latest --template crud-inline
-
-# Or with Yarn
-yarn create compas --template crud-inline
-```
+[crud-inline](https://github.com/compasjs/compas/tree/main/examples/crud-inline) template.
 
 ## Getting started
 

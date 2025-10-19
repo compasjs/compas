@@ -12,10 +12,4 @@ export default defineConfig(
   {
     ignores: ["examples/**", "docs/**", "**/*.d.ts", "**/*.md/**/*.json5"],
   },
-  {
-    files: ["**/benchmark/**.js"],
-    rules: {
-      "no-console": "off",
-    },
-  },
 );

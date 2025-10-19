@@ -39,14 +39,7 @@ export const cliDefinition = {
  * @returns {Promise<import("@compas/cli").CliResult>}
  */
 async function cliExecutor(logger, state) {
-  const packages = [
-    "stdlib",
-    "cli",
-    "code-gen",
-    "server",
-    "store",
-    "create-compas",
-  ];
+  const packages = ["stdlib", "cli", "code-gen", "server", "store"];
 
   checkVersionFormat(state.flags.version);
   checkOtpFormat(state.flags.otp);

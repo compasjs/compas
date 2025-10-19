@@ -7,7 +7,7 @@ export let environment = {};
 
 /**
  * This should only be necessary when you or a package mutates the environment variables.
- * The `mainFn` / `mainTestFn` / `mainBenchFn` / ... will call this function by default
+ * The `mainFn` and `mainTestFn` will call this function by default
  * after loading your `.env` file.
  *
  * Accessing an environment variable via `process.env.XXXX` is relatively slow compared

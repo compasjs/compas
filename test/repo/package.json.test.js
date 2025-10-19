@@ -10,7 +10,7 @@ test("repo/package.json - imports", (t) => {
   for (let pkg of readdirSync("./packages", {
     encoding: "utf-8",
   })) {
-    if (pkg !== "compas" && pkg !== "create-compas") {
+    if (pkg !== "compas") {
       pkg = `@compas/${pkg}`;
     }
 

@@ -36,9 +36,6 @@ coverage
 /packages/*/test-generated/*
 /test/tmp
 
-# Benchmark output on CI
-/benchmark_output.txt
-
 # .env file for docs build
 /docs/.env
 /docs/.vitepress/cache

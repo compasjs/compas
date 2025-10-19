@@ -199,8 +199,8 @@ function getHomeSidebar() {
 					link: "/features/config-files.html",
 				},
 				{
-					text: "Testing and benchmarking",
-					link: "/features/test-and-bench-runner.html",
+					text: "Testing",
+					link: "/features/test-runner.html",
 				},
 				{
 					text: "HTTP server",

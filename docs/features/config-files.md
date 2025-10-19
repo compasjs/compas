@@ -2,10 +2,9 @@
 
 ## Environment variables
 
-Compas lets you forget loading your `.env` files. All main entry points (`mainFn`,
-`mainTestFn` and `mainBenchFn`) will load both the `.env` and `.env.local` files
-automatically. The loader that is used is provided by the
-[dotenv](https://www.npmjs.com/package/dotenv) package.
+Compas lets you forget loading your `.env` files. All main entry points (`mainFn` and
+`mainTestFn`) will load both the `.env` and `.env.local` files automatically. The loader
+that is used is provided by the [dotenv](https://www.npmjs.com/package/dotenv) package.
 
 Compas advises to check in a ready to go `.env.example` in your version control or
 preferably when using all Compas provided tooling, just a `.env` file without any actual

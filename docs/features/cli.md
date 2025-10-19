@@ -93,16 +93,16 @@ Let's create two files. Both exporting a constant and calling `mainFn`:
 
 ```js
 // src/a.js
-import { mainFn } from "@compas/stdlib";
+import { a } from "./a.js";
 import { b } from "./b.js";
+import { mainFn } from "@compas/stdlib";
+
+// src/b.js
+import { mainFn } from "@compas/stdlib";
 
 mainFn(import.meta, (logger) => logger.info({ message: "Hello from a.js", b }));
 
 export const a = true;
-
-// src/b.js
-import { mainFn } from "@compas/stdlib";
-import { a } from "./a.js";
 
 mainFn(import.meta, (logger) => logger.info({ message: "Hello from b.js.", a }));
 
@@ -136,14 +136,13 @@ called when you start your program with `node ./src/b.js`.
 
 ## Environment
 
-The `mainFn` function from `@compas/stdlib`, and by extension `mainTestFn` and
-`mainBenchFn`, automatically loads the `.env.local` and `.env` files in the root of the
-project. The idea is that the `.env` contains default values for a quick development
-setup, so a new person on the team can just clone the project and run it directly. The
-`.env.local` values take precedence over values defined the `.env` file, and should be
-`.gitingore`'d. This is useful when your particular dev setup is somehow different, ie
-your not using the `compas docker` based Postgres instance, but need to connect to a
-different Postgres instance.
+The `mainFn` function from `@compas/stdlib`, and by extension `mainTestFn`, automatically
+loads the `.env.local` and `.env` files in the root of the project. The idea is that the
+`.env` contains default values for a quick development setup, so a new person on the team
+can just clone the project and run it directly. The `.env.local` values take precedence
+over values defined the `.env` file, and should be `.gitingore`'d. This is useful when
+your particular dev setup is somehow different, ie your not using the `compas docker`
+based Postgres instance, but need to connect to a different Postgres instance.
 
 It is expected that production values for these environment variables are injected by the
 hosting method of choice.

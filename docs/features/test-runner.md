@@ -1,4 +1,4 @@
-# Testing and benchmarking
+# Testing
 
 ::: tip
 
@@ -96,7 +96,8 @@ const doesNotThrow = () => {};
 test("Function that throws", async (t) => {
 	try {
 		await throws();
-		// If the function doesn't throw, no assertion is done, which results in a test failure by the runner.
+		// If the function doesn't throw, no assertion is done, which results in a test failure by the
+		// runner.
 	} catch (e) {
 		// A logger from @compas/stdlib is available
 		t.log.error(e);
@@ -107,7 +108,8 @@ test("Function that throws", async (t) => {
 test("Function that does not throw", async (t) => {
 	doesNotThrow();
 	t.pass("The function did not throw!");
-	// If the function does throw, the test runner catches the error and fails this test with the caught exception.
+	// If the function does throw, the test runner catches the error and fails this test with the
+	// caught exception.
 });
 ```
 

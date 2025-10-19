@@ -122,7 +122,7 @@ async function writeJSConfig() {
           enable: true,
         },
         include: ["**/*.js"],
-        exclude: ["**/*.test.js", "**/*.bench.js"],
+        exclude: ["**/*.test.js"],
       },
       null,
       2,

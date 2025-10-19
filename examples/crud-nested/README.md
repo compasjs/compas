@@ -1,16 +1,7 @@
 # CRUD basics
 
 This project is created using the
-[crud-nested](https://github.com/compasjs/compas/tree/main/examples/crud-nested)
-template via [create-compas](https://www.npmjs.com/package/create-compas).
-
-```shell
-# Via NPM
-npx create-compas@latest --template crud-nested
-
-# Or with Yarn
-yarn create compas --template crud-nested
-```
+[crud-nested](https://github.com/compasjs/compas/tree/main/examples/crud-nested) template.
 
 ## Getting started
 
