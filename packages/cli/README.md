@@ -5,8 +5,8 @@
     <img src="https://packagephobia.com/badge?p=@compas/cli" alt="Install size">
   </a>
 
-  <a href="https://github.com/compasjs/compas/actions/workflows/main-checks.yml" target="_blank">
-    <img src="https://github.com/compasjs/compas/actions/workflows/main-checks.yml/badge.svg" alt="CI status badge">
+  <a href="https://github.com/compasjs/compas/actions/workflows/checks.yml" target="_blank">
+    <img src="https://github.com/compasjs/compas/actions/workflows/checks.yml/badge.svg" alt="CI status badge">
   </a>
   <a href="https://codecov.io/gh/compasjs/compas" target="_blank">
     <img src="https://codecov.io/gh/compasjs/compas/branch/main/graph/badge.svg?token=81D84CV04U" alt="Codecov status">
