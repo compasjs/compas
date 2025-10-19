@@ -17,3 +17,10 @@
 
 A Koa powered server with common utilities. Take a look at the
 [documentation](https://compasjs.com/getting-started.html).
+
+## Maintenance mode
+
+Compas is in maintenance mode. The packages will be maintained for the
+foreseeable future. New features might be added, but some will also be dropped
+in favor of other ecosystem-available libraries. Please don't start new projects
+using Compas.

@@ -3,6 +3,12 @@
 This project is created using the
 [react-fetch](https://github.com/compasjs/compas/tree/main/examples/react-fetch) template.
 
+## Maintenance mode
+
+Compas is in maintenance mode. The packages will be maintained for the foreseeable future.
+New features might be added, but some will also be dropped in favor of other
+ecosystem-available libraries. Please don't start new projects using Compas.
+
 ## Getting started
 
 - Generate the API client and React query wrappers

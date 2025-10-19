@@ -255,7 +255,7 @@ function fileInsert(sql, insert, _options = {}) {
 }
 
 /**
- * Insert a record in the 'file' table
+ * Internal compat helper to insert a record in the 'file' table
  *
  * @param {import("../common/types.js").StoreFileInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreFile>}
@@ -449,7 +449,7 @@ const fileUpdateSpec = {
 };
 
 /**
- * Insert a record in the 'file' table
+ * Update a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreFileUpdate} update
@@ -486,7 +486,7 @@ function fileUpdateInternal(input) {
 }
 
 /**
- * Insert a record in the 'file' table
+ * Delete a record in the 'file' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreFileWhere} [where]

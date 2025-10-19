@@ -319,7 +319,7 @@ function jobInsert(sql, insert, _options = {}) {
 }
 
 /**
- * Insert a record in the 'job' table
+ * Internal compat helper to insert a record in the 'job' table
  *
  * @param {import("../common/types.js").StoreJobInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreJob>}
@@ -529,7 +529,7 @@ const jobUpdateSpec = {
 };
 
 /**
- * Insert a record in the 'job' table
+ * Update a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreJobUpdate} update
@@ -566,7 +566,7 @@ function jobUpdateInternal(input) {
 }
 
 /**
- * Insert a record in the 'job' table
+ * Delete a record in the 'job' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreJobWhere} [where]

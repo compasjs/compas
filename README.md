@@ -18,6 +18,13 @@
 All common components for creating backends, tooling and more in opinionated
 packages; from describing the api structure to testing the end result.
 
+## Maintenance mode
+
+Compas is in maintenance mode. The packages will be maintained for the
+foreseeable future. New features might be added, but some will also be dropped
+in favor of other ecosystem-available libraries. Please don't start new projects
+using Compas.
+
 ## Features
 
 - Code generators for routers, validators, SQL queries, API clients and more

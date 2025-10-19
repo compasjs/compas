@@ -337,7 +337,7 @@ function sessionStoreTokenInsert(sql, insert, _options = {}) {
 }
 
 /**
- * Insert a record in the 'sessionStoreToken' table
+ * Internal compat helper to insert a record in the 'sessionStoreToken' table
  *
  * @param {import("../common/types.js").StoreSessionStoreTokenInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreSessionStoreToken>}
@@ -506,7 +506,7 @@ const sessionStoreTokenUpdateSpec = {
 };
 
 /**
- * Insert a record in the 'sessionStoreToken' table
+ * Update a record in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreSessionStoreTokenUpdate} update
@@ -543,7 +543,7 @@ function sessionStoreTokenUpdateInternal(input) {
 }
 
 /**
- * Insert a record in the 'sessionStoreToken' table
+ * Delete a record in the 'sessionStoreToken' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreSessionStoreTokenWhere} [where]

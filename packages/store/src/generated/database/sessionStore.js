@@ -255,7 +255,7 @@ function sessionStoreInsert(sql, insert, _options = {}) {
 }
 
 /**
- * Insert a record in the 'sessionStore' table
+ * Internal compat helper to insert a record in the 'sessionStore' table
  *
  * @param {import("../common/types.js").StoreSessionStoreInsert} input
  * @returns {import("@compas/store").WrappedQueryPart<import("../common/types.js").StoreSessionStore>}
@@ -426,7 +426,7 @@ const sessionStoreUpdateSpec = {
 };
 
 /**
- * Insert a record in the 'sessionStore' table
+ * Update a record in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreSessionStoreUpdate} update
@@ -463,7 +463,7 @@ function sessionStoreUpdateInternal(input) {
 }
 
 /**
- * Insert a record in the 'sessionStore' table
+ * Delete a record in the 'sessionStore' table
  *
  * @param {import("@compas/store").Postgres} sql
  * @param {import("../common/types.js").StoreSessionStoreWhere} [where]
