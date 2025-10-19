@@ -49,6 +49,7 @@ coverage
 **.d.ts
 !advanced-types.d.ts
 !common/types.d.ts
+tsconfig.tsbuildinfo
 
 # Examples
 # Ignore any generated output of examples

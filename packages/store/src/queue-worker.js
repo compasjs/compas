@@ -5,6 +5,7 @@ import {
   eventStart,
   eventStop,
   isNil,
+  asyncLocalStorageLogger,
   newEvent,
   newLogger,
 } from "@compas/stdlib";
@@ -560,8 +561,15 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
     try {
       // @ts-expect-error
       await sql.savepoint(async (sql) => {
-        // @ts-expect-error
-        await handler(event, sql, job);
+        await asyncLocalStorageLogger.run(
+          {
+            log: event.log,
+          },
+          async () => {
+            // @ts-expect-error
+            await handler(event, sql, job);
+          },
+        );
       });
 
       isJobComplete = true;

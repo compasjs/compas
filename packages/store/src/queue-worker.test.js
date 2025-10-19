@@ -1,6 +1,6 @@
 import { setImmediate } from "node:timers/promises";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
-import { AppError, isNil } from "@compas/stdlib";
+import { AppError, contextAwarelogger, isNil } from "@compas/stdlib";
 import { sql } from "../../../src/testing.js";
 import { queryJob } from "./generated/database/job.js";
 import { queries } from "./generated.js";
@@ -178,7 +178,9 @@ test("store/queue-worker", (t) => {
     t.test("success behavior", async (t) => {
       const qw = queueWorkerCreate(sql, {
         handler: {
-          test: () => {},
+          test: () => {
+            contextAwarelogger.info("test");
+          },
         },
       });
 

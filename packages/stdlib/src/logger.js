@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import { pino, destination } from "pino";
 import { environment, isProduction } from "./env.js";
 import { AppError } from "./error.js";
@@ -37,6 +38,43 @@ let globalDestination = undefined;
  * @type {import("pino").Logger}
  */
 let rootInstance = loggerBuildRootInstance(destination(1));
+
+/**
+ * Control the ALS for the logger.
+ *
+ * @type {AsyncLocalStorage<{ log: Logger }>}
+ */
+export const asyncLocalStorageLogger = new AsyncLocalStorage();
+
+/**
+ * Log via the current async local logger.
+ *
+ * All Compas internal usages
+ *
+ * @type {Logger}
+ */
+export const contextAwarelogger = {
+  info: (...args) => {
+    const store = asyncLocalStorageLogger.getStore();
+    if (store) {
+      store.log.info(...args);
+    } else {
+      throw new Error(
+        `No logger found in AsyncLocalStorage. Did you forget to call 'asyncLocalStorageLogger.run()'?`,
+      );
+    }
+  },
+  error: (...args) => {
+    const store = asyncLocalStorageLogger.getStore();
+    if (store) {
+      store.log.info(...args);
+    } else {
+      throw new Error(
+        `No logger found in AsyncLocalStorage. Did you forget to call 'asyncLocalStorageLogger.run()'?`,
+      );
+    }
+  },
+};
 
 /**
  * Deeply update the global logger context. This only affects newly created loggers

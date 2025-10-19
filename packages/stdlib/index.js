@@ -81,6 +81,8 @@ export {
   loggerGetPrettyPrinter,
   loggerExtendGlobalContext,
   loggerDetermineDefaultDestination,
+  asyncLocalStorageLogger,
+  contextAwarelogger,
 } from "./src/logger.js";
 
 export { bytesToHumanReadable, printProcessMemoryUsage } from "./src/memory.js";

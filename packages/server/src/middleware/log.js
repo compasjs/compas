@@ -5,6 +5,7 @@ import {
   eventStart,
   eventStop,
   isNil,
+  asyncLocalStorageLogger,
   newEvent,
   newLogger,
   uuid,
@@ -149,7 +150,9 @@ export function logMiddleware(app, options) {
       eventStart(ctx.event, `${ctx.method}.${ctx.path}`);
     }
 
-    await next();
+    await asyncLocalStorageLogger.run({ log: ctx.log }, async () => {
+      await next();
+    });
 
     let counter;
 

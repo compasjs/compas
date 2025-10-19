@@ -227,6 +227,10 @@ function getHomeSidebar() {
 					link: "/features/file-handling.html",
 				},
 				{
+					text: "Async Local Storage",
+					link: "/features/async-local-storage.html",
+				},
+				{
 					text: "Extending the CLI",
 					link: "/features/extending-the-cli.html",
 				},
