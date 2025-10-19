@@ -173,9 +173,10 @@ export function mainFn(meta, cb) {
  *
  * @param {ImportMeta} meta
  * @returns {string}
+ * @deprecated use `import.meta.filename`.
  */
 export function filenameForModule(meta) {
-  return fileURLToPath(meta.url);
+  return meta.filename;
 }
 
 /**
@@ -185,9 +186,10 @@ export function filenameForModule(meta) {
  *
  * @param {ImportMeta} meta
  * @returns {string}
+ * @deprecated Use `import.meta.dirname`.
  */
 export function dirnameForModule(meta) {
-  return path.dirname(filenameForModule(meta));
+  return meta.dirname;
 }
 
 /**
