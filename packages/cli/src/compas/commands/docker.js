@@ -84,7 +84,7 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
       value: {
         specification: "number",
         validator: (value) => {
-          const versions = [12, 13, 14, 15, 16];
+          const versions = [12, 13, 14, 15, 16, 17, 18];
           const isValid = versions.includes(value);
 
           if (isValid) {
