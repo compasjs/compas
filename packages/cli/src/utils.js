@@ -36,7 +36,10 @@ function collectUserScripts() {
       if (
         !item.endsWith(".js") &&
         !item.endsWith(".mjs") &&
-        !item.endsWith(".cjs")
+        !item.endsWith(".cjs") &&
+        !item.endsWith(".ts") &&
+        !item.endsWith(".mts") &&
+        !item.endsWith(".cts")
       ) {
         continue;
       }

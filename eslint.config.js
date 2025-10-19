@@ -8,6 +8,7 @@ export default defineConfig(
         printWidth: 80,
       },
     },
+    typescript: false,
   },
   {
     ignores: ["examples/**", "docs/**", "**/*.d.ts", "**/*.md/**/*.json5"],
