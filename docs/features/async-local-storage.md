@@ -4,6 +4,12 @@ Various features from Compas are also registered in an AsyncLocalStorage context
 them job or api request aware. This document describes the different available systems and
 how they integrate automatically or can be integrated manually.
 
+::: info
+
+These API's are experimental and subject to change.
+
+:::
+
 ## Logger
 
 The stdlib provided [Logger](/features/logger-and-events.html) also exports a
@@ -16,6 +22,9 @@ currently active via `asyncLocalStorageLogger`.
 - The logger is automatically populated based on `event.log` in the Queue worker handlers.
 
 **Manual integration**:
+
+Manual integration is possible by wrapping a piece of code in a `AsyncLocalStorage#run`
+function.
 
 ```ts
 import { asyncLocalStorageLogger } from "@compas/stdlib";
