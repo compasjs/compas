@@ -72,7 +72,9 @@ import { sentry } from "./middleware/sentry.js";
  * @param {GetAppOptions} [opts={}]
  */
 export function getApp(opts = {}) {
-  const app = new Koa();
+  const app = new Koa({
+    asyncLocalStorage: true,
+  });
   app.proxy = opts.proxy === undefined ? isProduction() : opts.proxy;
 
   if (opts.disableHealthRoute !== true) {
