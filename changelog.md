@@ -4,6 +4,98 @@ editLink: false
 
 # Changelog
 
+### [v0.20.0](https://github.com/compasjs/compas/releases/tag/v0.20.0)
+
+#### Breaking changes
+
+- chore(create-compas): drop package
+  [`09cadf`](https://github.com/compasjs/compas/commit/09cadf84ceb7fbd0748fc30edca916255e83dc16)
+  Package unsupported.
+- chore: require Node.js 24 or higher
+  [`a955ef`](https://github.com/compasjs/compas/commit/a955ef571eb5969d8492b8929ef5f0b8737f9c6b)
+  Compas now requires Node.js 24 or higher. This allows us to deprecate various
+  features which are now available at runtime.
+- feat(stdlib): deprecate `filenameForModule` and `dirnameForModule`
+  [`813691`](https://github.com/compasjs/compas/commit/81369167ddca3f0aabf2e1272a27eaf8980cf353)
+  Use `import.meta.filename` and `import.meta.dirname` instead.
+- chore(server): bump Koa to v3
+  [`e0ec89`](https://github.com/compasjs/compas/commit/e0ec89da9d96517c148a3e95ea5ce82a45fe0f6d)
+  See the
+  [migration guide](https://github.com/koajs/koa/blob/master/docs/migration-v2-to-v3.md)
+  for relevant changes. Compas always enables `asyncLocalStorage`, so
+  `app.currentContext` can be used.
+
+#### Features
+
+- feat(cli): support running `.ts` scripts in `compas run`
+  [`d69609`](https://github.com/compasjs/compas/commit/d696094dd78055989b6026d4f5a9720643a9a4f2)
+- feat(cli): add support for pulling Docker Postgres 17 and 18
+  [`a03fc5`](https://github.com/compasjs/compas/commit/a03fc5bed6971b5f520ab845cadceae29914a62d)
+- feat(stdlib): introduce `contextAwareLogger` and `asyncLocalStorageLogger`
+  [`5f658f`](https://github.com/compasjs/compas/commit/5f658fa3565e7acba3523665b484f56ee38e1665)
+  - Note, experimental! See the
+    [docs](https://compasjs.com/features/async-local-storage.html) for more
+    information.
+
+#### Other
+
+- chore(code-gen): better comments on crud query helpers
+  [`cb4e0f`](https://github.com/compasjs/compas/commit/cb4e0f11d51fe7d3e2ece3d1310f98e73949e9f8)
+- chore(cli): drop benchmarks
+  [`a5b630`](https://github.com/compasjs/compas/commit/a5b63091d3413658dd4a12fa63a51806a0c9784b)
+- chore: maintenance mode of all packages
+  [`fc3c39`](https://github.com/compasjs/compas/commit/fc3c393a7e295ccd0295891e394f6f89402a8b36)
+- chore: update CI status badge
+  [`6a314f`](https://github.com/compasjs/compas/commit/6a314f57efafc8f3b064b9536e4bc7ee25ff8d34)
+- chore(docs): experimental async-local-storage.md
+  [`8f88f2`](https://github.com/compasjs/compas/commit/8f88f2cc1d203bb70ccbaec71d329160d4aa359d)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/lib-storage from 3.901.0 to 3.903.0 in the aws-sdk
+  group ([#3825](https://github.com/compasjs/compas/pull/3825))
+  [`4b8d0f`](https://github.com/compasjs/compas/commit/4b8d0fdc4375626d6fbdaff74ead7ab1be6148af)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.903.0 to 3.905.0 in the aws-sdk
+  group ([#3828](https://github.com/compasjs/compas/pull/3828))
+  [`779e1a`](https://github.com/compasjs/compas/commit/779e1a8e76f854adfb670564e8542df737e7dcdb)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump github/codeql-action from 3 to 4
+  ([#3829](https://github.com/compasjs/compas/pull/3829))
+  [`e40414`](https://github.com/compasjs/compas/commit/e40414277e41c0cc06a1a0e667404e7b1353b2ac)
+  - [Release notes](https://github.com/github/codeql-action/releases)
+- build(deps): bump pino from 9.11.0 to 10.1.0
+  ([#3816](https://github.com/compasjs/compas/pull/3816),
+  [#3824](https://github.com/compasjs/compas/pull/3824),
+  [#3826](https://github.com/compasjs/compas/pull/3826),
+  [#3842](https://github.com/compasjs/compas/pull/3842))
+  - Major version bump
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.896.0 to 3.914.0
+  ([#3817](https://github.com/compasjs/compas/pull/3817),
+  [#3822](https://github.com/compasjs/compas/pull/3822),
+  [#3830](https://github.com/compasjs/compas/pull/3830),
+  [#3831](https://github.com/compasjs/compas/pull/3831),
+  [#3833](https://github.com/compasjs/compas/pull/3833),
+  [#3837](https://github.com/compasjs/compas/pull/3837),
+  [#3838](https://github.com/compasjs/compas/pull/3838),
+  [#3841](https://github.com/compasjs/compas/pull/3841),
+  [#3846](https://github.com/compasjs/compas/pull/3846))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.896.0 to 3.914.0
+  ([#3817](https://github.com/compasjs/compas/pull/3817),
+  [#3822](https://github.com/compasjs/compas/pull/3822),
+  [#3830](https://github.com/compasjs/compas/pull/3830),
+  [#3831](https://github.com/compasjs/compas/pull/3831),
+  [#3833](https://github.com/compasjs/compas/pull/3833),
+  [#3837](https://github.com/compasjs/compas/pull/3837),
+  [#3838](https://github.com/compasjs/compas/pull/3838),
+  [#3841](https://github.com/compasjs/compas/pull/3841),
+  [#3846](https://github.com/compasjs/compas/pull/3846))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump dotenv from 17.2.2 to 17.2.3
+  ([#3818](https://github.com/compasjs/compas/pull/3818))
+
 ### [v0.19.4](https://github.com/compasjs/compas/releases/tag/v0.19.4)
 
 #### Features
