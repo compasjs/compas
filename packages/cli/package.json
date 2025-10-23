@@ -13,15 +13,7 @@
   "bin": {
     "compas": "src/compas/index.js"
   },
-  "keywords": [
-    "compas",
-    "cli",
-    "lint",
-    "test",
-    "help",
-    "docker",
-    "coverage"
-  ],
+  "keywords": ["compas", "cli", "lint", "test", "help", "docker", "coverage"],
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.20.0",

@@ -143,7 +143,7 @@ export function loggerBuildRootInstance(destination) {
 
 /**
  * Create a new logger instance. The provided `ctx` will shallowly overwrite the global
- * context that is set via {@see loggerExtendGlobalContext}.
+ * context that is set via { loggerExtendGlobalContext}.
  *
  * The logger uses the transport or destination set via
  *
