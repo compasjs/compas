@@ -18,7 +18,7 @@
     "@types/node": "24.9.2",
     "@types/react": "*",
     "@tanstack/react-query": "5.90.5",
-    "axios": "1.13.1",
+    "axios": "1.13.2",
     "lodash": "~4.17.21",
     "meriyah": "6.1.4",
     "react": "*",
