@@ -11,7 +11,7 @@
   "devDependencies": {
     "@compas/code-gen": "*",
     "@lightbase/eslint-config": "*",
-    "axios": "1.13.1"
+    "axios": "1.13.2"
   },
   "exampleMetadata": {
     "generating": "compas generate",
