@@ -4,6 +4,67 @@ editLink: false
 
 # Changelog
 
+### [v0.20.1](https://github.com/compasjs/compas/releases/tag/v0.20.1)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.914.0 to 3.943.0
+  ([#3848](https://github.com/compasjs/compas/pull/3848),
+  [#3849](https://github.com/compasjs/compas/pull/3849),
+  [#3852](https://github.com/compasjs/compas/pull/3852),
+  [#3855](https://github.com/compasjs/compas/pull/3855),
+  [#3858](https://github.com/compasjs/compas/pull/3858),
+  [#3859](https://github.com/compasjs/compas/pull/3859),
+  [#3866](https://github.com/compasjs/compas/pull/3866),
+  [#3868](https://github.com/compasjs/compas/pull/3868),
+  [#3870](https://github.com/compasjs/compas/pull/3870),
+  [#3872](https://github.com/compasjs/compas/pull/3872),
+  [#3874](https://github.com/compasjs/compas/pull/3874),
+  [#3876](https://github.com/compasjs/compas/pull/3876),
+  [#3878](https://github.com/compasjs/compas/pull/3878),
+  [#3879](https://github.com/compasjs/compas/pull/3879),
+  [#3881](https://github.com/compasjs/compas/pull/3881),
+  [#3884](https://github.com/compasjs/compas/pull/3884),
+  [#3885](https://github.com/compasjs/compas/pull/3885),
+  [#3889](https://github.com/compasjs/compas/pull/3889))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.914.0 to 3.943.0
+  ([#3848](https://github.com/compasjs/compas/pull/3848),
+  [#3849](https://github.com/compasjs/compas/pull/3849),
+  [#3852](https://github.com/compasjs/compas/pull/3852),
+  [#3855](https://github.com/compasjs/compas/pull/3855),
+  [#3858](https://github.com/compasjs/compas/pull/3858),
+  [#3859](https://github.com/compasjs/compas/pull/3859),
+  [#3866](https://github.com/compasjs/compas/pull/3866),
+  [#3868](https://github.com/compasjs/compas/pull/3868),
+  [#3870](https://github.com/compasjs/compas/pull/3870),
+  [#3872](https://github.com/compasjs/compas/pull/3872),
+  [#3874](https://github.com/compasjs/compas/pull/3874),
+  [#3876](https://github.com/compasjs/compas/pull/3876),
+  [#3878](https://github.com/compasjs/compas/pull/3878),
+  [#3879](https://github.com/compasjs/compas/pull/3879),
+  [#3881](https://github.com/compasjs/compas/pull/3881),
+  [#3884](https://github.com/compasjs/compas/pull/3884),
+  [#3885](https://github.com/compasjs/compas/pull/3885),
+  [#3889](https://github.com/compasjs/compas/pull/3889))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump koa from 3.0.3 to 3.1.1
+  ([#3854](https://github.com/compasjs/compas/pull/3854))
+  - [Release notes](https://github.com/koajs/koa/releases)
+- build(deps): bump sharp from 0.34.4 to 0.34.5
+  ([#3864](https://github.com/compasjs/compas/pull/3864))
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump file-type from 21.0.0 to 21.1.1
+  ([#3867](https://github.com/compasjs/compas/pull/3867),
+  [#3880](https://github.com/compasjs/compas/pull/3880))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump mime-types from 3.0.1 to 3.0.2
+  ([#3883](https://github.com/compasjs/compas/pull/3883))
+  - [Release notes](https://github.com/jshttp/mime-types/releases)
+- build(deps): bump jws from 4.0.0 to 4.0.1
+  ([#3891](https://github.com/compasjs/compas/pull/3891))
+  - [Release notes](https://github.com/brianloveswords/node-jws/releases)
+
 ### [v0.20.0](https://github.com/compasjs/compas/releases/tag/v0.20.0)
 
 #### Breaking changes
