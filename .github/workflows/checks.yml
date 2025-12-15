@@ -102,7 +102,7 @@ jobs:
           npx compas test
 
       - name: Persist debug artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: failure()
         with:
           name:
