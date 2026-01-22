@@ -19,7 +19,7 @@
     "@types/react": "*",
     "@tanstack/react-query": "5.90.19",
     "axios": "1.13.2",
-    "lodash": "~4.17.21",
+    "lodash": "~4.17.23",
     "meriyah": "7.0.0",
     "react": "*",
     "typescript": "5.9.3",
