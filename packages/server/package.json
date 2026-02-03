@@ -14,10 +14,10 @@
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.20.1",
-    "@types/formidable": "2.0.6",
+    "@types/formidable": "3.4.6",
     "@types/koa": "3.0.1",
     "co-body": "6.2.0",
-    "formidable": "2.1.5",
+    "formidable": "3.4.0",
     "keygrip": "1.1.0",
     "koa": "3.1.1"
   },
