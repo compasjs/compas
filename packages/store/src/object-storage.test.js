@@ -4,7 +4,7 @@ import {
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import { mainTestFn, test } from "@compas/cli";
-import { isNil, streamToBuffer, uuid } from "@compas/stdlib";
+import { isNil, isProduction, streamToBuffer, uuid } from "@compas/stdlib";
 import {
   objectStorageCreateClient,
   objectStorageEnsureBucket,
@@ -56,6 +56,13 @@ test("store/object-storage", (t) => {
 
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       const headCommandResult = await client.send(
@@ -77,6 +84,13 @@ test("store/object-storage", (t) => {
       await objectStorageEnsureBucket(client, {
         bucketName,
         locationConstraint: location,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       const headCommandResult = await client.send(
@@ -94,6 +108,13 @@ test("store/object-storage", (t) => {
 
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       const headCommandResult = await client.send(
@@ -125,6 +146,13 @@ test("store/object-storage", (t) => {
       );
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
       await objectStorageRemoveBucket(client, {
         bucketName,
@@ -144,6 +172,13 @@ test("store/object-storage", (t) => {
       );
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       await client.send(
@@ -171,6 +206,13 @@ test("store/object-storage", (t) => {
       );
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       await client.send(
@@ -216,6 +258,13 @@ test("store/object-storage", (t) => {
       );
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       await client.send(
@@ -270,6 +319,13 @@ test("store/object-storage", (t) => {
       );
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       await client.send(
@@ -299,6 +355,13 @@ test("store/object-storage", (t) => {
       );
       await objectStorageEnsureBucket(client, {
         bucketName,
+        createBucketOverrides:
+          !isProduction() ?
+            {
+              // Versitygw doesn't support bucket ACLs
+              ACL: undefined,
+            }
+          : {},
       });
 
       await client.send(

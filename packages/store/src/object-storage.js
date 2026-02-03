@@ -45,7 +45,8 @@ export function objectStorageCreateClient(config) {
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
- *   locationConstraint?: import("@aws-sdk/client-s3").BucketLocationConstraint
+ *   locationConstraint?: import("@aws-sdk/client-s3").BucketLocationConstraint,
+ *   createBucketOverrides?: Partial<import("@aws-sdk/client-s3").CreateBucketCommandInput>,
  * }} options
  * @returns {Promise<void>}
  */
@@ -94,6 +95,7 @@ export async function objectStorageEnsureBucket(s3Client, options) {
       CreateBucketConfiguration: {
         LocationConstraint: options.locationConstraint,
       },
+      ...options.createBucketOverrides,
     }),
   );
 

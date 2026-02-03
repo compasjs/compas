@@ -1,6 +1,6 @@
 import { mkdir, rm } from "node:fs/promises";
 import { threadId } from "node:worker_threads";
-import { compasWithSentry, uuid } from "@compas/stdlib";
+import { compasWithSentry, isProduction, uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
   objectStorageCreateClient,
@@ -45,6 +45,13 @@ export async function injectTestServices() {
   await objectStorageEnsureBucket(s3Client, {
     bucketName: testBucketName,
     locationConstraint: "eu-central-1",
+    createBucketOverrides:
+      !isProduction() ?
+        {
+          // Some local S3 emulators don't support bucket ACLs
+          ACL: undefined,
+        }
+      : {},
   });
 
   // Check the offset between system time and Postgres (Docker VM) time.

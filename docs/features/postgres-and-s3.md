@@ -118,38 +118,7 @@ Connecting to our local Minio instance requires just a big one-liner;
 const s3Client = objectStorageCreateClient(
 	isProduction() ?
 		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		/* Use AWS docs for recommended credentials usage */
-		{
-			/* Use AWS docs for recommended credentials usage */
-		}
+		{}
 	:	objectStorageGetDevelopmentConfig(),
 );
 ```
@@ -160,6 +129,12 @@ A client is no good without a bucket, so let's create one;
 await objectStorageEnsureBucket(s3Client, {
 	bucketName: "my-bucket",
 	locationConstraint: "eu-central-1",
+
+	// Some S3-compatible interfaces don't support ACL, especially not for local development.
+	//  createBucketOverrides:
+	//     !isProduction() ?
+	//       { ACL: undefined, }
+	//     : {},
 });
 ```
 

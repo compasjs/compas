@@ -69,6 +69,12 @@ export async function initializeTestServices() {
   await objectStorageEnsureBucket(s3Client, {
     bucketName,
     locationConstraint: "eu-central-1",
+    createBucketOverrides: !isProduction()
+      ? {
+          // Some local S3 emulators don't support bucket ACLs
+          ACL: undefined,
+        }
+      : {},
   });
 
   await createAppAndLoadControllers();
