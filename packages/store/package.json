@@ -1,6 +1,6 @@
 {
   "name": "@compas/store",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "description": "Postgres & S3-compatible wrappers for common things",
   "exports": {
     ".": {
@@ -10,12 +10,17 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": ["compas", "s3", "postgres", "persistence"],
+  "keywords": [
+    "compas",
+    "s3",
+    "postgres",
+    "persistence"
+  ],
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-s3": "3.981.0",
     "@aws-sdk/lib-storage": "3.981.0",
-    "@compas/stdlib": "0.20.1",
+    "@compas/stdlib": "0.20.2",
     "crc": "4.3.2",
     "cron-parser": "^4.9.0",
     "file-type": "21.3.0",
