@@ -4,6 +4,10 @@ editLink: false
 
 # Changelog
 
+### [v0.20.3](https://github.com/compasjs/compas/releases/tag/v0.20.3)
+
+- chore: fix publish?
+
 ### [v0.20.2](https://github.com/compasjs/compas/releases/tag/v0.20.2)
 
 #### Features
