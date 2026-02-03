@@ -110,6 +110,7 @@ function generateApplication(logger) {
           targetRuntime: "node.js",
         },
       },
+      openApi: {},
     },
   });
 }

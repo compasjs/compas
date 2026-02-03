@@ -500,14 +500,10 @@ function openApiGetCompasVersion() {
   const localPackageJson = JSON.parse(
     readFileSync(
       // take on of the packages for reference
-      pathJoin(process.cwd(), "./package.json"),
+      pathJoin(import.meta.dirname, "../..", "./package.json"),
       "utf-8",
     ),
   );
 
-  return (
-    localPackageJson.dependencies?.["@compas/code-gen"] ??
-    localPackageJson.devDependencies?.["@compas/code-gen"] ??
-    "0.0.1"
-  );
+  return localPackageJson.version ?? "0.0.1";
 }
