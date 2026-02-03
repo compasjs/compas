@@ -4,6 +4,82 @@ editLink: false
 
 # Changelog
 
+### [v0.20.2](https://github.com/compasjs/compas/releases/tag/v0.20.2)
+
+#### Features
+
+- feat(store): allow CreateBucket overrides
+  [`0da46e`](https://github.com/compasjs/compas/commit/0da46ea0ad3d32668a4ec01a57097d8e62e770d2)
+
+#### Bug fixes
+
+- fix(code-gen): retrieve installed Compas version consistently for OpenAPI spec
+  [`af8136`](https://github.com/compasjs/compas/commit/af81363764e9d614bc92f6e7a7407e035372ca4e)
+
+#### Dependency updates
+
+- build(deps): bump actions/upload-artifact from 5 to 6
+  ([#3899](https://github.com/compasjs/compas/pull/3899))
+  [`009c49`](https://github.com/compasjs/compas/commit/009c49ddc51117bdcfcd55d6cf699dc726d0346d)
+  - [Release notes](https://github.com/actions/upload-artifact/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.943.0 to 3.981.0
+  ([#3893](https://github.com/compasjs/compas/pull/3893),
+  [#3894](https://github.com/compasjs/compas/pull/3894),
+  [#3896](https://github.com/compasjs/compas/pull/3896),
+  [#3902](https://github.com/compasjs/compas/pull/3902),
+  [#3903](https://github.com/compasjs/compas/pull/3903),
+  [#3905](https://github.com/compasjs/compas/pull/3905),
+  [#3906](https://github.com/compasjs/compas/pull/3906),
+  [#3912](https://github.com/compasjs/compas/pull/3912),
+  [#3913](https://github.com/compasjs/compas/pull/3913),
+  [#3915](https://github.com/compasjs/compas/pull/3915),
+  [#3916](https://github.com/compasjs/compas/pull/3916),
+  [#3919](https://github.com/compasjs/compas/pull/3919),
+  [#3921](https://github.com/compasjs/compas/pull/3921),
+  [#3923](https://github.com/compasjs/compas/pull/3923),
+  [#3926](https://github.com/compasjs/compas/pull/3926),
+  [#3928](https://github.com/compasjs/compas/pull/3928),
+  [#3931](https://github.com/compasjs/compas/pull/3931),
+  [#3934](https://github.com/compasjs/compas/pull/3934),
+  [#3935](https://github.com/compasjs/compas/pull/3935),
+  [#3940](https://github.com/compasjs/compas/pull/3940),
+  [#3942](https://github.com/compasjs/compas/pull/3942),
+  [#3944](https://github.com/compasjs/compas/pull/3944))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.943.0 to 3.981.0
+  ([#3893](https://github.com/compasjs/compas/pull/3893),
+  [#3894](https://github.com/compasjs/compas/pull/3894),
+  [#3896](https://github.com/compasjs/compas/pull/3896),
+  [#3902](https://github.com/compasjs/compas/pull/3902),
+  [#3903](https://github.com/compasjs/compas/pull/3903),
+  [#3905](https://github.com/compasjs/compas/pull/3905),
+  [#3906](https://github.com/compasjs/compas/pull/3906),
+  [#3912](https://github.com/compasjs/compas/pull/3912),
+  [#3913](https://github.com/compasjs/compas/pull/3913),
+  [#3915](https://github.com/compasjs/compas/pull/3915),
+  [#3916](https://github.com/compasjs/compas/pull/3916),
+  [#3919](https://github.com/compasjs/compas/pull/3919),
+  [#3921](https://github.com/compasjs/compas/pull/3921),
+  [#3923](https://github.com/compasjs/compas/pull/3923),
+  [#3926](https://github.com/compasjs/compas/pull/3926),
+  [#3928](https://github.com/compasjs/compas/pull/3928),
+  [#3931](https://github.com/compasjs/compas/pull/3931),
+  [#3934](https://github.com/compasjs/compas/pull/3934),
+  [#3935](https://github.com/compasjs/compas/pull/3935),
+  [#3940](https://github.com/compasjs/compas/pull/3940),
+  [#3942](https://github.com/compasjs/compas/pull/3942),
+  [#3944](https://github.com/compasjs/compas/pull/3944))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 21.1.1 to 21.3.0
+  ([#3911](https://github.com/compasjs/compas/pull/3911))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump pino from 10.1.0 to 10.3.0
+  ([#3918](https://github.com/compasjs/compas/pull/3918),
+  [#3924](https://github.com/compasjs/compas/pull/3924),
+  [#3930](https://github.com/compasjs/compas/pull/3930),
+  [#3936](https://github.com/compasjs/compas/pull/3936))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+
 ### [v0.20.1](https://github.com/compasjs/compas/releases/tag/v0.20.1)
 
 #### Dependency updates
