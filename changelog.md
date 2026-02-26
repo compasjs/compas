@@ -4,6 +4,54 @@ editLink: false
 
 # Changelog
 
+### [v0.21.0](https://github.com/compasjs/compas/releases/tag/v0.21.0)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.981.0 to 3.998.0
+  ([#3945](https://github.com/compasjs/compas/pull/3945),
+  [#3947](https://github.com/compasjs/compas/pull/3947),
+  [#3951](https://github.com/compasjs/compas/pull/3951),
+  [#3954](https://github.com/compasjs/compas/pull/3954),
+  [#3956](https://github.com/compasjs/compas/pull/3956),
+  [#3958](https://github.com/compasjs/compas/pull/3958),
+  [#3960](https://github.com/compasjs/compas/pull/3960),
+  [#3962](https://github.com/compasjs/compas/pull/3962),
+  [#3963](https://github.com/compasjs/compas/pull/3963),
+  [#3964](https://github.com/compasjs/compas/pull/3964),
+  [#3965](https://github.com/compasjs/compas/pull/3965),
+  [#3968](https://github.com/compasjs/compas/pull/3968),
+  [#3970](https://github.com/compasjs/compas/pull/3970))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.981.0 to 3.998.0
+  ([#3945](https://github.com/compasjs/compas/pull/3945),
+  [#3947](https://github.com/compasjs/compas/pull/3947),
+  [#3951](https://github.com/compasjs/compas/pull/3951),
+  [#3954](https://github.com/compasjs/compas/pull/3954),
+  [#3956](https://github.com/compasjs/compas/pull/3956),
+  [#3958](https://github.com/compasjs/compas/pull/3958),
+  [#3960](https://github.com/compasjs/compas/pull/3960),
+  [#3962](https://github.com/compasjs/compas/pull/3962),
+  [#3963](https://github.com/compasjs/compas/pull/3963),
+  [#3964](https://github.com/compasjs/compas/pull/3964),
+  [#3965](https://github.com/compasjs/compas/pull/3965),
+  [#3968](https://github.com/compasjs/compas/pull/3968),
+  [#3970](https://github.com/compasjs/compas/pull/3970))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump dotenv from 17.2.3 to 17.3.1
+  ([#3949](https://github.com/compasjs/compas/pull/3949),
+  [#3961](https://github.com/compasjs/compas/pull/3961))
+- build(deps): bump pino from 10.3.0 to 10.3.1
+  ([#3955](https://github.com/compasjs/compas/pull/3955))
+  - [Release notes](https://github.com/pinojs/pino/releases)
+- build(deps): bump c8 from 10.1.3 to 11.0.0
+  ([#3969](https://github.com/compasjs/compas/pull/3969))
+  - Major version bump
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump koa from 3.1.1 to 3.1.2
+  ([#3971](https://github.com/compasjs/compas/pull/3971))
+  - [Release notes](https://github.com/koajs/koa/releases)
+
 ### [v0.20.3](https://github.com/compasjs/compas/releases/tag/v0.20.3)
 
 - chore: fix publish?
