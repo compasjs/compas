@@ -123,7 +123,7 @@ export function validatorJavascriptGetFile(generateContext, type) {
   */
 
   
-// eslint-disable-next-line unused-imports/no-unused-vars
+// eslint-disable-next-line no-unused-vars
 const isRecord = (v) => !!v && typeof v === "object" && !Array.isArray(v);
  `,
   );

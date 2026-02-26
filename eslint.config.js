@@ -11,6 +11,22 @@ export default defineConfig(
     typescript: false,
   },
   {
+    rules: {
+      "no-unused-vars": [
+        "error",
+        {
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_",
+          caughtErrors: "all",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
+  {
     ignores: ["examples/**", "docs/**", "**/*.d.ts", "**/*.md/**/*.json5"],
   },
 );
