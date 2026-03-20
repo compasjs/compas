@@ -13,7 +13,7 @@
     "node": ">=24"
   },
   "devDependencies": {
-    "@lightbase/eslint-config": "4.2.1",
+    "@lightbase/eslint-config": "4.3.0",
     "@types/lodash": "*",
     "@types/node": "25.5.0",
     "@types/react": "*",
