@@ -4,6 +4,53 @@ editLink: false
 
 # Changelog
 
+### [v0.21.1](https://github.com/compasjs/compas/releases/tag/v0.21.1)
+
+#### Dependency updates
+
+- build(deps): bump actions/upload-artifact from 6 to 7
+  ([#3973](https://github.com/compasjs/compas/pull/3973))
+  [`50f9e7`](https://github.com/compasjs/compas/commit/50f9e73bdac1af28b0309bad42c9e2916425e5d4)
+  - [Release notes](https://github.com/actions/upload-artifact/releases)
+- build(deps): bump file-type from 21.3.1 to 21.3.2 in /packages/store in the
+  npm_and_yarn group across 1 directory
+  ([#3987](https://github.com/compasjs/compas/pull/3987))
+  [`750c72`](https://github.com/compasjs/compas/commit/750c7207f0b78e26902f5c187e571d490cc6dd67)
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump @aws-sdk/client-s3 from 3.998.0 to 3.1014.0
+  ([#3974](https://github.com/compasjs/compas/pull/3974),
+  [#3976](https://github.com/compasjs/compas/pull/3976),
+  [#3979](https://github.com/compasjs/compas/pull/3979),
+  [#3980](https://github.com/compasjs/compas/pull/3980),
+  [#3984](https://github.com/compasjs/compas/pull/3984),
+  [#3985](https://github.com/compasjs/compas/pull/3985),
+  [#3988](https://github.com/compasjs/compas/pull/3988),
+  [#3991](https://github.com/compasjs/compas/pull/3991),
+  [#3993](https://github.com/compasjs/compas/pull/3993),
+  [#3994](https://github.com/compasjs/compas/pull/3994),
+  [#3997](https://github.com/compasjs/compas/pull/3997),
+  [#4000](https://github.com/compasjs/compas/pull/4000))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.998.0 to 3.1014.0
+  ([#3974](https://github.com/compasjs/compas/pull/3974),
+  [#3976](https://github.com/compasjs/compas/pull/3976),
+  [#3979](https://github.com/compasjs/compas/pull/3979),
+  [#3980](https://github.com/compasjs/compas/pull/3980),
+  [#3984](https://github.com/compasjs/compas/pull/3984),
+  [#3985](https://github.com/compasjs/compas/pull/3985),
+  [#3988](https://github.com/compasjs/compas/pull/3988),
+  [#3991](https://github.com/compasjs/compas/pull/3991),
+  [#3993](https://github.com/compasjs/compas/pull/3993),
+  [#3994](https://github.com/compasjs/compas/pull/3994),
+  [#3997](https://github.com/compasjs/compas/pull/3997),
+  [#4000](https://github.com/compasjs/compas/pull/4000))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump file-type from 21.3.0 to 21.3.4
+  ([#3982](https://github.com/compasjs/compas/pull/3982),
+  [#3992](https://github.com/compasjs/compas/pull/3992),
+  [#4002](https://github.com/compasjs/compas/pull/4002))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+
 ### [v0.21.0](https://github.com/compasjs/compas/releases/tag/v0.21.0)
 
 #### Dependency updates
