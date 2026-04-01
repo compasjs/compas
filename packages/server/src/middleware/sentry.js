@@ -35,13 +35,10 @@ export function sentry() {
     return _sentry.withIsolationScope(async () => {
       return await _sentry.startSpanManual(
         {
-          op: "http.server",
-          name: "http",
-          attributes: {
-            "http.request.method": ctx.method,
-            "http.request.url": ctx.url,
-          },
-          forceTransaction: true,
+          op: "function",
+
+          // We rename this when ending the request to the route name.
+          name: `${ctx.method} ${ctx.url}`,
         },
         async () => {
           return await next();

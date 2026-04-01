@@ -88,7 +88,7 @@ export function logMiddleware(app, options) {
       if (_compasSentryExport) {
         const span = _compasSentryExport.getActiveSpan();
         if (span) {
-          span.updateName(ctx.event.name);
+          _compasSentryExport.updateSpanName(span, ctx.event.name);
         }
       }
 
