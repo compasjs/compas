@@ -24,6 +24,10 @@ import { cliWatchExec } from "../cli/watch.js";
  *     loadUserConfig: boolean,
  *   }
  * }} options
+ * @returns {Promise<{
+ *   logger: import("@compas/stdlib").Logger;
+ *   cli: import("../cli/types.js").CliResolved;
+ * }>}
  */
 export async function compasGetCli(event, options) {
   eventStart(event, "compas.getCli");

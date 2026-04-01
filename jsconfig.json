@@ -5,7 +5,6 @@
     "module": "NodeNext",
     "checkJs": true,
     "maxNodeModuleJsDepth": 0,
-    "baseUrl": "./",
     "strict": true,
     "noImplicitAny": false,
     "declaration": true,

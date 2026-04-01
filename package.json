@@ -13,7 +13,7 @@
     "node": ">=24"
   },
   "devDependencies": {
-    "@lightbase/eslint-config": "4.3.0",
+    "@lightbase/eslint-config": "4.3.1",
     "@types/lodash": "*",
     "@types/node": "25.5.0",
     "@types/react": "*",
@@ -22,7 +22,7 @@
     "lodash": "~4.17.23",
     "meriyah": "7.1.0",
     "react": "*",
-    "typescript": "5.9.3",
+    "typescript": "6.0.2",
     "vitepress": "1.6.4"
   },
   "author": {
