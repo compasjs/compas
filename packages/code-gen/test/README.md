@@ -106,6 +106,6 @@ t.test("static files list", (t) => {
 
 ## E2E tests
 
-For execution of the generated code that does not belong in target beaviour
+For execution of the generated code that does not belong in target behaviour
 tests or generator tests, we have E2E tests. We write these in the form of
 examples, showing a minimal e2e flow of various features.

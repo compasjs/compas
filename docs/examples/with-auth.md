@@ -1,1 +1,0 @@
-../../examples/with-auth/README.md

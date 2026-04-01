@@ -61,7 +61,7 @@ import { _compasSentryExport } from "./sentry.js";
  *   //   ]
  *   // }
  * @typedef {object} InsightEvent
- * @property {import("@compas/stdlib").Logger} log
+ * @property {import("./logger.js").Logger} log
  * @property {AbortSignal} [signal]
  * @property {InsightEvent} [rootEvent]
  * @property {string} [name]

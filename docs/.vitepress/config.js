@@ -58,11 +58,6 @@ export default defineConfig({
 				activeMatch: "/generators|features|references/",
 			},
 			{
-				text: "Examples",
-				link: "/examples.html",
-				activeMatch: "/example/",
-			},
-			{
 				text: "Changelog",
 				link: "/changelog",
 			},
@@ -237,8 +232,6 @@ function getHomeSidebar() {
 			],
 		},
 
-		getExamplesSidebar(),
-
 		{
 			text: "References",
 			collapsed: true,
@@ -258,25 +251,6 @@ function getHomeSidebar() {
 			],
 		},
 	];
-}
-
-function getExamplesSidebar() {
-	const files = readdirSync("./docs/examples");
-
-	return {
-		text: "Examples",
-		collapsed: true,
-		items: [
-			{
-				text: "Introduction",
-				link: "/examples.html",
-			},
-			...files.map((it) => ({
-				text: it.slice(0, 1).toUpperCase() + it.slice(1, -3).replace("-", " "),
-				link: `/examples/${it.replace(".md", ".html")}`,
-			})),
-		],
-	};
 }
 
 function getReleaseNotesSidebar() {

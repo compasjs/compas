@@ -1,1 +1,0 @@
-../../examples/crud-inline/README.md

@@ -27,6 +27,6 @@ export default defineConfig(
     },
   },
   {
-    ignores: ["examples/**", "docs/**", "**/*.d.ts", "**/*.md/**/*.json5"],
+    ignores: ["docs/**", "**/*.d.ts", "**/*.md/**/*.json5"],
   },
 );

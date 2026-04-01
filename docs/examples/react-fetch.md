@@ -1,1 +1,0 @@
-../../examples/react-fetch/README.md

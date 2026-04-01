@@ -24,7 +24,7 @@ Global configuration can be applied to the test runners via a 'test/config.js' f
 A global timeout can be configured by setting 'export const timeout = 2500;'. The value is specified in milliseconds.
 There is also a global 'setup' and 'teardown' function that can be exported from the 'test/config.js' file. They may return a Promise.
 
-To prevent flaky tests, '--randomize-rounds' can be used. This shuffles the order in which the tests are started. And prevents dependencies between test files. Making it easier to run a single test file via for examples 'compas run ./path/to/file.test.js'.
+To prevent flaky tests, '--randomize-rounds' can be used. This shuffles the order in which the tests are started. And prevents dependencies between test files. Making it easier to run a single test file via for example 'compas run ./path/to/file.test.js'.
 
 Collecting and processing coverage information is done using C8. Use one of the supported configuration files by C8 to alter its behaviour. See https://www.npmjs.com/package/c8 for more information.
 `,

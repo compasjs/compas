@@ -1,7 +1,6 @@
 import {
   generateCli,
   generateCodeGen,
-  generateExamples,
   generateStore,
 } from "../src/generate.js";
 import { spawn } from "@compas/stdlib";
@@ -41,7 +40,6 @@ async function cliExecutor(logger, state) {
   generateCli(logger);
   generateCodeGen(logger);
   generateStore(logger);
-  await generateExamples(logger, state);
 
   if (state.flags.skipLint !== true) {
     await spawn("compas", ["lint"]);
