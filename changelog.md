@@ -4,6 +4,47 @@ editLink: false
 
 # Changelog
 
+### [v0.22.0](https://github.com/compasjs/compas/releases/tag/v0.22.0)
+
+#### Features
+
+- feat(server): use Sentry's Koa span as the HTTP span
+  [`7baadc`](https://github.com/compasjs/compas/commit/7baadc480937b325c82955e598750ee8c38cdf7d)
+
+#### Bug fixes
+
+- fix(store): capture unregistered job information for unhandled cron jobs
+  [`103f2b`](https://github.com/compasjs/compas/commit/103f2ba819d56589129be228879f4f6bd833fe9d)
+
+#### Other
+
+- chore(examples): drop examples
+  [`7b5f87`](https://github.com/compasjs/compas/commit/7b5f87210fdcbe4f79b4c1954d655ec9ede7ace9)
+- deps-dev: bump TypeScript v6
+  [`8e58c5`](https://github.com/compasjs/compas/commit/8e58c5ae51b168a833c2640b1063774238d5f728)
+- chore: fix broken website links
+  [`4624a2`](https://github.com/compasjs/compas/commit/4624a2af751283cbbb52595d4b71479d4b8142bb)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.1014.0 to 3.1021.0
+  ([#4003](https://github.com/compasjs/compas/pull/4003),
+  [#4006](https://github.com/compasjs/compas/pull/4006),
+  [#4008](https://github.com/compasjs/compas/pull/4008),
+  [#4011](https://github.com/compasjs/compas/pull/4011),
+  [#4012](https://github.com/compasjs/compas/pull/4012))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.1014.0 to 3.1021.0
+  ([#4003](https://github.com/compasjs/compas/pull/4003),
+  [#4006](https://github.com/compasjs/compas/pull/4006),
+  [#4008](https://github.com/compasjs/compas/pull/4008),
+  [#4011](https://github.com/compasjs/compas/pull/4011),
+  [#4012](https://github.com/compasjs/compas/pull/4012))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump koa from 3.1.2 to 3.2.0
+  ([#4010](https://github.com/compasjs/compas/pull/4010))
+  - [Release notes](https://github.com/koajs/koa/releases)
+
 ### [v0.21.1](https://github.com/compasjs/compas/releases/tag/v0.21.1)
 
 #### Dependency updates
