@@ -517,7 +517,10 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
 
     if (_compasSentryExport && isCronJob) {
       _compasSentryExport.captureException(
-        new Error("No handler registered for the job."),
+        AppError.serverError({
+          message: "No handler registered for the job.",
+          job,
+        }),
       );
     }
 
