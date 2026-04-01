@@ -15,7 +15,8 @@ npm install @compas/cli @compas/code-gen @compas/server @compas/stdlib @compas/s
 
 :::tip
 
-Check out the [example projects](/examples).
+Check out the (deprecated)
+[example projects](https://github.com/compasjs/compas/tree/815df3bff3baa4da4a2e801c160be48d5d2e8ec0/examples).
 
 :::
 

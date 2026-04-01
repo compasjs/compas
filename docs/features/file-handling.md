@@ -1,8 +1,9 @@
 # File handling
 
 Compas also comes with various utilities across the stack to handle files in a consistent
-way. See the [file-handling](/examples/file-handling.html) example for a project
-implementing this.
+way. See the
+[old file-handling](https://github.com/compasjs/compas/tree/815df3bff3baa4da4a2e801c160be48d5d2e8ec0/examples/file-handling)
+example for a project implementing this.
 
 ## Generated router & validators
 
@@ -55,7 +56,7 @@ error will be thrown if the inferred content type is not one of the allowed cont
  *
  * @param {InsightEvent} event
  * @param {AppSaveFileFiles} files
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 export async function appSaveFile(event, files) {
 	eventStart(event, "app.saveFile");
