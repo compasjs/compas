@@ -1,4 +1,5 @@
 import { createReadStream } from "node:fs";
+import { Readable } from "node:stream";
 import { DeleteObjectsCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import {
@@ -308,10 +309,10 @@ async function fileCheckContentType(options, props, source) {
     typeof source?._read === "function"
   ) {
     // @ts-ignore
-    const sourceWithFileType = await fileTypeStream(source);
+    const sourceWithFileType = await fileTypeStream(Readable.toWeb(source));
 
     // Set source to the new pass through stream created by `fileTypeStream`
-    source = sourceWithFileType;
+    source = Readable.fromWeb(sourceWithFileType);
     contentType = sourceWithFileType.fileType?.mime;
   }
 

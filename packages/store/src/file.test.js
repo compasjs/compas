@@ -1,4 +1,5 @@
 import { createReadStream } from "node:fs";
+import { stat } from "node:fs/promises";
 import { HeadObjectCommand } from "@aws-sdk/client-s3";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import {
@@ -176,6 +177,42 @@ test("store/file", (t) => {
       t.equal(file.contentType, "text/javascript");
       t.ok(file.contentLength > 100);
     });
+
+    t.test(
+      "source type stream — content type deduced from magic bytes",
+      async (t) => {
+        // The name has a misleading extension, so the only way to end up with
+        // "image/jpeg" is through magic-byte detection on the stream itself
+        // (`fileTypeStream` in `fileCheckContentType`).
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+            allowedContentTypes: ["image/jpeg"],
+          },
+          {
+            name: "image.unknown",
+          },
+          createReadStream(imagePath),
+        );
+
+        t.equal(file.contentType, "image/jpeg");
+
+        const buffer = await streamToBuffer(
+          await objectStorageGetObjectStream(s3Client, {
+            bucketName: file.bucketName,
+            objectKey: file.id,
+          }),
+        );
+
+        // Confirms the pass-through stream produced by `fileTypeStream` was
+        // forwarded to S3 in full, not just the sniffed prefix.
+        const sourceSize = (await stat(imagePath)).size;
+        t.equal(buffer.length, sourceSize);
+        t.equal(file.contentLength, sourceSize);
+      },
+    );
 
     t.test("allowedContentTypes", (t) => {
       t.test("fail", async (t) => {
