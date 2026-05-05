@@ -1,5 +1,5 @@
 /**
- * @typedef {import("postgres").Sql<{}>} Postgres
+ * @typedef {import("postgres").Sql<{}>|import("postgres").TransactionSql<{}>} Postgres
  */
 
 /**
@@ -22,25 +22,29 @@
 
 /**
  * @template Type
- * @typedef {import("./types/advanced-types.js").WrappedQueryResult<Type>} WrappedQueryResult
+ * @typedef {import("./types/advanced-types.js").WrappedQueryResult<Type>}
+ *   WrappedQueryResult
  */
 
 /**
  * @template Base
  * @template Expansion
- * @typedef {import("./types/advanced-types.js").QueryBuilderDefinition<Base, Expansion>} QueryBuilderDefinition
+ * @typedef {import("./types/advanced-types.js").QueryBuilderDefinition<Base, Expansion>}
+ *   QueryBuilderDefinition
  */
 
 /**
  * @template DefinitionType
  * @template QueryBuilder
  * @template {string} OptionalJoins
- * @typedef {import("./types/advanced-types.js").QueryBuilderResolver<DefinitionType, QueryBuilder, OptionalJoins>} QueryBuilderResolver
+ * @typedef {import("./types/advanced-types.js").QueryBuilderResolver<DefinitionType,
+ *   QueryBuilder, OptionalJoins>} QueryBuilderResolver
  */
 
 /**
  * @template Expansion
- * @typedef {import("./types/advanced-types.js").ResolveOptionalJoins<Expansion>} ResolveOptionalJoins
+ * @typedef {import("./types/advanced-types.js").ResolveOptionalJoins<Expansion>}
+ *   ResolveOptionalJoins
  */
 
 /**

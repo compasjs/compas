@@ -335,7 +335,7 @@ export function queueWorkerCreate(sql, options) {
 }
 
 /**
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {QueueWorkerCronOptions["jobs"]} jobs
  */
 async function queueWorkerRemoveUnknownCronJobs(sql, jobs) {
@@ -351,7 +351,7 @@ async function queueWorkerRemoveUnknownCronJobs(sql, jobs) {
  * Try to update a cron job with the new expression and priority. Creates a new job if no
  * record is updated.
  *
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {QueueWorkerCronOptions["jobs"][0]} job
  * @returns {Promise<void>}
  */
@@ -487,7 +487,7 @@ function queueWorkerRun(
 
 /**
  * @param {import("@compas/stdlib").Logger} logger
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {QueueWorkerInternalOptions} options
  * @param {import("./generated/common/types.d.ts").StoreJob} job
  */

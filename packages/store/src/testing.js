@@ -8,7 +8,7 @@ import {
 /**
  * If set, new databases are derived from this database
  *
- * @type {import("@compas/store").Postgres|undefined}
+ * @type {import("postgres").Sql<{}>|undefined}
  */
 let testDatabase = undefined;
 
@@ -61,7 +61,7 @@ export async function cleanupPostgresDatabaseTemplate() {
  *   verboseSql?: boolean
  * }} [options] If verboseSql is true, creates a new logger and prints all
  *   queries.
- * @returns {Promise<import("@compas/store").Postgres>}
+ * @returns {Promise<import("postgres").Sql<{}>>}
  */
 export async function createTestPostgresDatabase(rawOpts, options = {}) {
   const connectionOptions = buildAndCheckOpts(rawOpts);
