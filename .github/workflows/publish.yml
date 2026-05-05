@@ -1,0 +1,42 @@
+name: Publish packages to npm on tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "npm"
+          cache-dependency-path: "**/package.json"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate sources and types
+        run: |
+          npx compas generate --skip-lint
+          npx compas run types
+
+      - name: Publish packages
+        run: |
+          set -euo pipefail
+          for pkg in stdlib cli code-gen server store; do
+            echo "Publishing @compas/${pkg}"
+            (cd "packages/${pkg}" && npm publish --access public --provenance)
+          done

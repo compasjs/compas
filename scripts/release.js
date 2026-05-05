@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { AppError, environment, exec, pathJoin, spawn } from "@compas/stdlib";
+import { AppError, exec, pathJoin, spawn } from "@compas/stdlib";
 
 /** @type {import("@compas/cli").CliCommandDefinitionInput} */
 export const cliDefinition = {
@@ -10,17 +10,6 @@ export const cliDefinition = {
       name: "version",
       rawName: "--version",
       description: "New version number like v1.3.4",
-      modifiers: {
-        isRequired: true,
-      },
-      value: {
-        specification: "string",
-      },
-    },
-    {
-      name: "otp",
-      rawName: "--otp",
-      description: "OTP for your logged in NPM account",
       modifiers: {
         isRequired: true,
       },
@@ -42,7 +31,6 @@ async function cliExecutor(logger, state) {
   const packages = ["stdlib", "cli", "code-gen", "server", "store"];
 
   checkVersionFormat(state.flags.version);
-  checkOtpFormat(state.flags.otp);
   await checkCleanWorkingDirectory();
 
   for (const pkg of packages) {
@@ -66,16 +54,9 @@ async function cliExecutor(logger, state) {
   await spawn("git", ["push"]);
   await spawn("git", ["push", "origin", state.flags.version]);
 
-  for (const pkg of packages) {
-    await spawn("npm", ["publish", "--access", "public"], {
-      cwd: pathJoin(process.cwd(), "packages/", pkg),
-      env: {
-        ...environment,
-        npm_config_registry: undefined,
-        npm_config_otp: state.flags.otp,
-      },
-    });
-  }
+  logger.info(
+    `Pushed ${state.flags.version}. The publish workflow will build and publish all packages to npm.`,
+  );
 
   return {
     exitStatus: "passed",
@@ -117,19 +98,6 @@ function checkVersionFormat(version) {
   if (!/^v\d+\.\d+\.\d+$/gi.test(version)) {
     throw AppError.serverError({
       message: "Invalid version format",
-      version,
-    });
-  }
-}
-
-/**
- * @param {string} version
- * @returns {void}
- */
-function checkOtpFormat(version) {
-  if (!/^\d{3,}$/gi.test(version)) {
-    throw AppError.serverError({
-      message: "Invalid otp format",
       version,
     });
   }

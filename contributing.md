@@ -57,8 +57,6 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 
 ### Publishing
 
-- Ensure you are logged in to npm with `npm whoami`, when logged out;
-  `npm login`
 - Ensure you have the `main`-branch checked out, and are completely up-to-date
 - Write to the changelog
   - Run `compas run changelog`
@@ -68,11 +66,15 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
 - Sync metadata: `compas run syncMetadata`, this will sync the changelog to the
   docs folder and regenerate the api reference.
 - Commit with `chore: prepare release for vX.X.X` and push to main
-- Run `compas release --version vX.x.X --otp 111111`. This will build & publish
-  all packages
-  - Specify the new version
-  - Check packages it will publish and send `y`
-  - Give a new OTP every time it is asked.
+- Run `compas release --version vX.X.X`. This bumps versions across the
+  workspace, regenerates types, commits, tags, and pushes the tag.
+- Once the tag is on GitHub, the `Publish packages to npm on tag` workflow
+  publishes all packages to npm with provenance, and the
+  `Create a release on tag` workflow drafts the GitHub release. No manual npm
+  login or OTP entry is needed.
+  - Auth uses npm trusted publishing (OIDC), configured per package on
+    npmjs.com to trust this repo's `publish.yml` workflow. No npm token is
+    stored in the repo.
 
 ### WebStorm
 
