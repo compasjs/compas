@@ -4,6 +4,13 @@ editLink: false
 
 # Changelog
 
+### [v0.23.1](https://github.com/compasjs/compas/releases/tag/v0.23.1)
+
+#### Bug fixes
+
+- fix(store): accept wider Sql type
+  [`db3c83`](https://github.com/compasjs/compas/commit/db3c83d8857d696a36cfee55d242189a11eda7bb)
+
 ### [v0.23.0](https://github.com/compasjs/compas/releases/tag/v0.23.0)
 
 #### Breaking changes
