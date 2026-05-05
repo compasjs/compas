@@ -383,6 +383,41 @@ test("store/file", (t) => {
         t.equal(e.name, "NotFound");
       }
     });
+
+    t.test("removes orphans, keeps tracked files", async (t) => {
+      const orphanIds = [uuid(), uuid(), uuid()];
+      const keptId = uuid();
+
+      for (const fileId of [...orphanIds, keptId]) {
+        await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          { bucketName: testBucketName },
+          { id: fileId, name: "image.png" },
+          imagePath,
+        );
+      }
+
+      await queries.fileDelete(sql, { idIn: orphanIds });
+
+      await fileSyncDeletedWithObjectStorage(sql, s3Client, {
+        bucketName: testBucketName,
+      });
+
+      for (const orphanId of orphanIds) {
+        try {
+          await s3Client.send(
+            new HeadObjectCommand({
+              Key: orphanId,
+              Bucket: testBucketName,
+            }),
+          );
+          t.fail(`orphan ${orphanId} still present in S3`);
+        } catch (e) {
+          t.equal(e.name, "NotFound");
+        }
+      }
+    });
   });
 
   t.test("fileFormatMetadata", (t) => {
