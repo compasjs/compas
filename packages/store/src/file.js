@@ -1,4 +1,5 @@
 import { createReadStream } from "node:fs";
+import { Readable } from "node:stream";
 import { DeleteObjectsCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import {
@@ -308,10 +309,10 @@ async function fileCheckContentType(options, props, source) {
     typeof source?._read === "function"
   ) {
     // @ts-ignore
-    const sourceWithFileType = await fileTypeStream(source);
+    const sourceWithFileType = await fileTypeStream(Readable.toWeb(source));
 
     // Set source to the new pass through stream created by `fileTypeStream`
-    source = sourceWithFileType;
+    source = Readable.fromWeb(sourceWithFileType);
     contentType = sourceWithFileType.fileType?.mime;
   }
 
@@ -351,18 +352,34 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
     $raw: query`meta->>'transformedFromOriginal' IS NOT NULL AND NOT EXISTS (SELECT FROM "file" f2 WHERE f2.id = (f.meta->>'transformedFromOriginal')::uuid)`,
   });
 
-  const objectsInStore = (
-    await queryFile({
-      select: ["id"],
-      where: {
-        bucketName: options.bucketName,
-      },
-    }).execRaw(sql)
-  ).map((it) => it.id);
+  const objectsInStore = new Set(
+    (
+      await queryFile({
+        select: ["id"],
+        where: {
+          bucketName: options.bucketName,
+        },
+      }).execRaw(sql)
+    ).map((it) => it.id),
+  );
 
   // S3 supports up to 1000 deletions in a single request
-  const maxSetSize = 999;
-  const deletingSet = [];
+  const maxSetSize = 1000;
+  let pending = [];
+
+  const flush = async () => {
+    if (pending.length === 0) return;
+    await s3Client.send(
+      new DeleteObjectsCommand({
+        Bucket: options.bucketName,
+        Delete: {
+          Objects: pending,
+          Quiet: true,
+        },
+      }),
+    );
+    pending = [];
+  };
 
   for await (const part of objectStorageListObjects(s3Client, {
     bucketName: options.bucketName,
@@ -372,31 +389,19 @@ export async function fileSyncDeletedWithObjectStorage(sql, s3Client, options) {
         continue;
       }
 
-      if (objectsInStore.includes(obj.Key)) {
+      if (objectsInStore.has(obj.Key)) {
         continue;
       }
 
-      deletingSet.push({
-        Key: obj.Key,
-      });
+      pending.push({ Key: obj.Key });
+
+      if (pending.length >= maxSetSize) {
+        await flush();
+      }
     }
   }
 
-  if (deletingSet.length === 0) {
-    return;
-  }
-
-  while (deletingSet.length) {
-    await s3Client.send(
-      new DeleteObjectsCommand({
-        Bucket: options.bucketName,
-        Delete: {
-          Objects: deletingSet.splice(0, maxSetSize),
-          Quiet: true,
-        },
-      }),
-    );
-  }
+  await flush();
 }
 
 /**
