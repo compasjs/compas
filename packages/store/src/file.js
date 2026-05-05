@@ -57,7 +57,7 @@ export const STORE_FILE_IMAGE_TYPES = [
  *
  * @template {import("./generated/common/types.d.ts").StoreFileMetaInput} T
  *
- * @param {import("postgres").Sql} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,
@@ -221,7 +221,7 @@ async function fileTransformInPlaceInternal(fileBuffer, operations) {
  * - Rotating the image
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("./generated/common/types.d.ts").StoreFile} file
  * @param {FileTransformInPlaceOptions} operations
@@ -339,7 +339,7 @@ async function fileCheckContentType(options, props, source) {
  * function, all files that don't exist in the database will be removed from the S3
  * bucket
  *
- * @param {import("postgres").Sql} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
  *   bucketName: string,

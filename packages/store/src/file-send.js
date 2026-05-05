@@ -123,7 +123,7 @@ export async function fileSendResponse(s3Client, ctx, file, options) {
  * The transform happens via {@link jobFileTransformImage}. When a transform is not yet possible,
  * the original file is send out, while a transform job is inserted.
  *
- * @param {import("postgres").Sql} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {import("koa").Context} ctx
  * @param {import("./generated/common/types.d.ts").StoreFile} file

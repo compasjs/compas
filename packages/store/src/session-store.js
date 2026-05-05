@@ -24,7 +24,7 @@ import { queueWorkerAddJob } from "./queue-worker.js";
  * fields.
  *
  * @typedef {object} SessionStoreSettings
- * @property {(sql: import("postgres").Sql<{}>, session:
+ * @property {(sql: import("../index.js").Postgres, session:
  *   import("./generated/common/types.d.ts").QueryResultStoreSessionStore) => (Promise<{
  *   accessTokenMaxAgeInSeconds: number, refreshTokenMaxAgeInSeconds: number,
  * }>|{
@@ -49,7 +49,7 @@ export const SESSION_STORE_POTENTIAL_LEAKED_SESSION_JOB_NAME = `compas.sessionSt
  * Store a new session, and returns a access & refresh token pair
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {any} sessionData
  * @returns {Promise<Either<{
@@ -92,7 +92,7 @@ export async function sessionStoreCreate(
  * Get a session from the provided access token string
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} [accessTokenString]
  * @returns {Promise<Either<{session:
@@ -178,7 +178,7 @@ export async function sessionStoreGet(
  * If the hash of the data is the same as `hash`, this function call is ignored.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
@@ -223,7 +223,7 @@ export async function sessionStoreUpdate(event, sql, session) {
  * Revoke all tokens related to the session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<void>>}
  */
@@ -275,7 +275,7 @@ export async function sessionStoreInvalidate(event, sql, session) {
  * and an `compas.store.sessionHijackDetected` event is created.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {string} [refreshTokenString]
  * @returns {Promise<Either<{
@@ -388,7 +388,7 @@ export async function sessionStoreRefreshTokens(
  * hints on session stealing. A good default may be 45 days.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {number} maxRevokedAgeInDays
  * @param {number} [maxSessionLifetimeInDays]
  * @returns {Promise<void>}
@@ -446,7 +446,7 @@ export async function sessionStoreCleanupExpiredSessions(
  * condition, the backend doesn't trip over it.
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {string} sessionId
  * @returns {Promise<void>}
  */
@@ -507,7 +507,7 @@ export async function sessionStoreReportAndRevokeLeakedSession(
  * Create a new token pair for the provided session
  *
  * @param {import("@compas/stdlib").InsightEvent} event
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {SessionStoreSettings} sessionSettings
  * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @returns {Promise<Either<{
@@ -753,7 +753,7 @@ export async function sessionStoreVerifyAndDecodeJWT(
 /**
  * Resolve token lifetimes for the provided session.
  *
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {import("./generated/common/types.d.ts").QueryResultStoreSessionStore} session
  * @param {SessionStoreSettings} settings
  * @returns {Promise<{

@@ -72,9 +72,9 @@ Debug that file as if you debug whatever other Node.js script. E.g in Webstorm:
   publishes all packages to npm with provenance, and the
   `Create a release on tag` workflow drafts the GitHub release. No manual npm
   login or OTP entry is needed.
-  - Auth uses npm trusted publishing (OIDC), configured per package on
-    npmjs.com to trust this repo's `publish.yml` workflow. No npm token is
-    stored in the repo.
+  - Auth uses npm trusted publishing (OIDC), configured per package on npmjs.com
+    to trust this repo's `publish.yml` workflow. No npm token is stored in the
+    repo.
 
 ### WebStorm
 

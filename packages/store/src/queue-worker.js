@@ -146,7 +146,7 @@ const JOB_TYPE_CRON = "compas.queue.cronJob";
  * the behavior of the queue. Use {@link queueWorkerRegisterCronJobs} to specify
  * recurring jobs.
  *
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {{
  *   name: string,
  *   priority?: number,
