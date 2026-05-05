@@ -318,7 +318,7 @@ async function runMigration(sql, migration) {
 }
 
 /**
- * @param {import("postgres").Sql<{}>} sql
+ * @param {import("../index.js").Postgres} sql
  * @param {MigrationFile} migration
  */
 function runInsert(sql, migration) {

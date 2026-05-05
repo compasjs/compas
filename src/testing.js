@@ -10,7 +10,7 @@ import {
 } from "@compas/store";
 
 /**
- * @type {import("@compas/store").Postgres}
+ * @type {import("postgres").Sql<{}>}
  */
 export let sql;
 
