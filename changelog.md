@@ -4,6 +4,81 @@ editLink: false
 
 # Changelog
 
+### [v0.23.0](https://github.com/compasjs/compas/releases/tag/v0.23.0)
+
+#### Breaking changes
+
+- build(deps): bump postgres from 3.4.7 to 3.4.9
+  - Has some TypeScript breaking changes. See
+    [this comment](https://github.com/porsager/postgres/issues/1163) for
+    details.
+
+#### Bug fixes
+
+- fix(store): flush file deletion batches while iterating in `jobFileCleanup`
+  ([#4058](https://github.com/compasjs/compas/pull/4058))
+  [`e30789`](https://github.com/compasjs/compas/commit/e307896218f62d693b7cf2dfabae8690e48f7f4d)
+
+#### Other
+
+- chore(publish): release packages from CI
+  [`6bff8c`](https://github.com/compasjs/compas/commit/6bff8cebf57d7112ad05192697d57167df788d9b)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.1022.0 to 3.1042.0
+  ([#4018](https://github.com/compasjs/compas/pull/4018),
+  [#4019](https://github.com/compasjs/compas/pull/4019),
+  [#4024](https://github.com/compasjs/compas/pull/4024),
+  [#4025](https://github.com/compasjs/compas/pull/4025),
+  [#4027](https://github.com/compasjs/compas/pull/4027),
+  [#4031](https://github.com/compasjs/compas/pull/4031),
+  [#4034](https://github.com/compasjs/compas/pull/4034),
+  [#4035](https://github.com/compasjs/compas/pull/4035),
+  [#4037](https://github.com/compasjs/compas/pull/4037),
+  [#4040](https://github.com/compasjs/compas/pull/4040),
+  [#4041](https://github.com/compasjs/compas/pull/4041),
+  [#4043](https://github.com/compasjs/compas/pull/4043),
+  [#4044](https://github.com/compasjs/compas/pull/4044),
+  [#4046](https://github.com/compasjs/compas/pull/4046),
+  [#4048](https://github.com/compasjs/compas/pull/4048),
+  [#4050](https://github.com/compasjs/compas/pull/4050),
+  [#4051](https://github.com/compasjs/compas/pull/4051),
+  [#4052](https://github.com/compasjs/compas/pull/4052),
+  [#4055](https://github.com/compasjs/compas/pull/4055))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.1022.0 to 3.1042.0
+  ([#4018](https://github.com/compasjs/compas/pull/4018),
+  [#4019](https://github.com/compasjs/compas/pull/4019),
+  [#4024](https://github.com/compasjs/compas/pull/4024),
+  [#4025](https://github.com/compasjs/compas/pull/4025),
+  [#4027](https://github.com/compasjs/compas/pull/4027),
+  [#4031](https://github.com/compasjs/compas/pull/4031),
+  [#4034](https://github.com/compasjs/compas/pull/4034),
+  [#4035](https://github.com/compasjs/compas/pull/4035),
+  [#4037](https://github.com/compasjs/compas/pull/4037),
+  [#4040](https://github.com/compasjs/compas/pull/4040),
+  [#4041](https://github.com/compasjs/compas/pull/4041),
+  [#4043](https://github.com/compasjs/compas/pull/4043),
+  [#4044](https://github.com/compasjs/compas/pull/4044),
+  [#4046](https://github.com/compasjs/compas/pull/4046),
+  [#4048](https://github.com/compasjs/compas/pull/4048),
+  [#4050](https://github.com/compasjs/compas/pull/4050),
+  [#4051](https://github.com/compasjs/compas/pull/4051),
+  [#4052](https://github.com/compasjs/compas/pull/4052),
+  [#4055](https://github.com/compasjs/compas/pull/4055))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump dotenv from 17.4.0 to 17.4.2
+  ([#4022](https://github.com/compasjs/compas/pull/4022),
+  [#4033](https://github.com/compasjs/compas/pull/4033))
+- build(deps): bump file-type from 21.3.4 to 22.0.1
+  ([#4030](https://github.com/compasjs/compas/pull/4030))
+  - Major version bump
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump postgres from 3.4.7 to 3.4.9
+  ([#4021](https://github.com/compasjs/compas/pull/4021))
+  - [Release notes](https://github.com/porsager/postgres/releases)
+
 ### [v0.22.0](https://github.com/compasjs/compas/releases/tag/v0.22.0)
 
 #### Features
