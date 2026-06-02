@@ -4,6 +4,41 @@ editLink: false
 
 # Changelog
 
+### [v0.23.2](https://github.com/compasjs/compas/releases/tag/v0.23.2)
+
+#### Bug fixes
+
+- fix(store): special handle svg detection
+  [`6d18da`](https://github.com/compasjs/compas/commit/6d18da0509d78bea6e3f6a6d5ca6388942be5969)
+
+#### Dependency updates
+
+- build(deps): bump @aws-sdk/client-s3 from 3.1042.0 to 3.1052.0
+  ([#4059](https://github.com/compasjs/compas/pull/4059),
+  [#4060](https://github.com/compasjs/compas/pull/4060),
+  [#4061](https://github.com/compasjs/compas/pull/4061),
+  [#4065](https://github.com/compasjs/compas/pull/4065),
+  [#4067](https://github.com/compasjs/compas/pull/4067),
+  [#4069](https://github.com/compasjs/compas/pull/4069),
+  [#4072](https://github.com/compasjs/compas/pull/4072),
+  [#4075](https://github.com/compasjs/compas/pull/4075),
+  [#4076](https://github.com/compasjs/compas/pull/4076))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.1042.0 to 3.1052.0
+  ([#4059](https://github.com/compasjs/compas/pull/4059),
+  [#4060](https://github.com/compasjs/compas/pull/4060),
+  [#4061](https://github.com/compasjs/compas/pull/4061),
+  [#4065](https://github.com/compasjs/compas/pull/4065),
+  [#4067](https://github.com/compasjs/compas/pull/4067),
+  [#4069](https://github.com/compasjs/compas/pull/4069),
+  [#4072](https://github.com/compasjs/compas/pull/4072),
+  [#4075](https://github.com/compasjs/compas/pull/4075),
+  [#4076](https://github.com/compasjs/compas/pull/4076))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump koa from 3.2.0 to 3.2.1
+  ([#4077](https://github.com/compasjs/compas/pull/4077))
+  - [Release notes](https://github.com/koajs/koa/releases)
+
 ### [v0.23.1](https://github.com/compasjs/compas/releases/tag/v0.23.1)
 
 #### Bug fixes
