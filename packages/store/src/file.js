@@ -278,6 +278,57 @@ export async function fileTransformInPlace(
   eventStop(event);
 }
 
+const STORE_CONTENT_TYPE_SAMPLE_SIZE = 4100;
+
+/**
+ * Read the leading bytes of a file, used for content-type sniffing.
+ *
+ * @param {string} filePath
+ * @returns {Promise<Buffer>}
+ */
+async function fileReadContentTypeSample(filePath) {
+  return await streamToBuffer(
+    createReadStream(filePath, {
+      start: 0,
+      end: STORE_CONTENT_TYPE_SAMPLE_SIZE - 1,
+    }),
+  );
+}
+
+/**
+ * Sniff whether the provided bytes represent an SVG document.
+ *
+ * `file-type` has no reliable SVG magic-byte signature, so SVG is detected from
+ * its textual content: an `<svg` root element, allowing a leading BOM, whitespace,
+ * an XML declaration, a DOCTYPE and comments before it.
+ *
+ * @param {Buffer} buffer
+ * @returns {boolean}
+ */
+function fileSampleIsSvg(buffer) {
+  if (!buffer || buffer.length === 0) {
+    return false;
+  }
+
+  let text = buffer
+    .toString("utf-8", 0, STORE_CONTENT_TYPE_SAMPLE_SIZE)
+    // eslint-disable-next-line no-irregular-whitespace
+    .replace(/^﻿/, "")
+    .trimStart();
+
+  let previous;
+  do {
+    previous = text;
+    text = text
+      .replace(/^<\?xml[\s\S]*?\?>/i, "")
+      .replace(/^<!DOCTYPE[\s\S]*?>/i, "")
+      .replace(/^<!--[\s\S]*?-->/, "")
+      .trimStart();
+  } while (text !== previous);
+
+  return /^<svg[\s/>]/i.test(text);
+}
+
 /**
  * Infer the contentType and check against the allowed content types.
  * This checks the magic bytes of the provided source to deduce the content type.
@@ -297,13 +348,16 @@ export async function fileTransformInPlace(
  */
 async function fileCheckContentType(options, props, source) {
   let contentType = undefined;
+  let svgSample = undefined;
 
   if (source instanceof Uint8Array || source instanceof ArrayBuffer) {
     const result = await fileTypeFromBuffer(source);
     contentType = result?.mime;
+    svgSample = Buffer.isBuffer(source) ? source : Buffer.from(source);
   } else if (typeof source === "string") {
     const result = await fileTypeFromFile(source);
     contentType = result?.mime;
+    svgSample = await fileReadContentTypeSample(source);
   } else if (
     typeof source?.pipe === "function" && // @ts-ignore
     typeof source?._read === "function"
@@ -314,6 +368,22 @@ async function fileCheckContentType(options, props, source) {
     // Set source to the new pass through stream created by `fileTypeStream`
     source = Readable.fromWeb(sourceWithFileType);
     contentType = sourceWithFileType.fileType?.mime;
+  }
+
+  // `file-type` detects via magic bytes and has no reliable SVG signature: SVGs
+  // without an XML prolog resolve to `undefined`, while SVGs with a `<?xml ?>`
+  // prolog are misdetected as `application/xml`. Both cases skip the image
+  // pipeline below (and the SVG -> PNG transform in `fileCreateOrUpdate`). When a
+  // content sample is available, sniff it so SVGs are labeled correctly. Streams
+  // carry no cheap sample and keep relying on `file-type` + the filename fallback.
+  if (
+    svgSample &&
+    (isNil(contentType) ||
+      contentType === "application/xml" ||
+      contentType === "text/xml") &&
+    fileSampleIsSvg(svgSample)
+  ) {
+    contentType = "image/svg+xml";
   }
 
   contentType = contentType ?? mime.lookup(props.name) ?? "*/*";

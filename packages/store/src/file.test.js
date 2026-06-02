@@ -268,6 +268,148 @@ test("store/file", (t) => {
       });
     });
 
+    t.test("svg content type detection", (t) => {
+      // `file-type` has no SVG magic-byte signature: SVGs with an `<?xml ?>`
+      // prolog are seen as `application/xml` and those without resolve to
+      // `undefined`. Both must be sniffed from their content (`fileSampleIsSvg`)
+      // so they end up labeled `image/svg+xml`.
+      const svgWithProlog = Buffer.from(
+        `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16"/></svg>`,
+        "utf-8",
+      );
+      const svgWithoutProlog = Buffer.from(
+        `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16"/></svg>`,
+        "utf-8",
+      );
+
+      t.test("buffer source with xml prolog", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          // The misleading extension means the only way to arrive at
+          // `image/svg+xml` is through content sniffing, not `mime.lookup`.
+          {
+            name: "drawing.unknown",
+          },
+          svgWithProlog,
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+      });
+
+      t.test("buffer source without prolog", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "drawing.unknown",
+          },
+          svgWithoutProlog,
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+      });
+
+      t.test("file path source", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "drawing.unknown",
+          },
+          "./__fixtures__/store/drawing.svg",
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+      });
+
+      t.test("non-svg xml is not misdetected", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "feed.unknown",
+          },
+          Buffer.from(
+            `<?xml version="1.0"?>\n<rss version="2.0"><channel/></rss>`,
+            "utf-8",
+          ),
+        );
+
+        t.equal(file.contentType, "application/xml");
+      });
+
+      t.test("sniffed svg enters the image pipeline", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+            fileTransformInPlaceOptions: {
+              stripMetadata: true,
+            },
+          },
+          {
+            name: "drawing.unknown",
+          },
+          svgWithProlog,
+        );
+
+        // Being recognized as an image means the transform ran, rasterizing the
+        // svg to a png.
+        t.equal(file.contentType, "image/png");
+      });
+
+      t.test("allowedContentTypes — allowed", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+            allowedContentTypes: ["image/svg+xml"],
+          },
+          {
+            name: "drawing.unknown",
+          },
+          svgWithProlog,
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+      });
+
+      t.test("allowedContentTypes — rejected", async (t) => {
+        try {
+          await fileCreateOrUpdate(
+            sql,
+            s3Client,
+            {
+              bucketName: testBucketName,
+              allowedContentTypes: ["image/png"],
+            },
+            {
+              name: "drawing.unknown",
+            },
+            svgWithProlog,
+          );
+          t.fail("should reject the sniffed svg+xml content type");
+        } catch (e) {
+          t.equal(e.key, "file.createOrUpdate.invalidContentType");
+        }
+      });
+    });
+
     t.test("schedulePlaceholderImageJob", async (t) => {
       const file = await fileCreateOrUpdate(
         sql,
