@@ -10,22 +10,16 @@
     "./package.json": "./package.json"
   },
   "type": "module",
-  "keywords": [
-    "compas",
-    "koa",
-    "api",
-    "http",
-    "backend"
-  ],
+  "keywords": ["compas", "koa", "api", "http", "backend"],
   "license": "MIT",
   "dependencies": {
     "@compas/stdlib": "0.23.2",
-    "@types/formidable": "2.0.6",
-    "@types/koa": "3.0.3",
-    "co-body": "6.2.0",
-    "formidable": "2.1.5",
-    "keygrip": "1.1.0",
-    "koa": "3.2.1"
+    "@types/formidable": "^2.0.6",
+    "@types/koa": "^3.0.3",
+    "co-body": "^6.2.0",
+    "formidable": "^2.1.5",
+    "keygrip": "^1.1.0",
+    "koa": "^3.2.1"
   },
   "author": {
     "name": "Dirk de Visser",

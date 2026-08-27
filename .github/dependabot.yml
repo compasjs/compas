@@ -6,7 +6,8 @@ updates:
       interval: daily
       time: "04:15"
     open-pull-requests-limit: 10
-    versioning-strategy: increase
+    # Published dependencies use ranges, so only releases outside a range need a PR.
+    versioning-strategy: increase-if-necessary
     groups:
       aws-sdk:
         patterns:
