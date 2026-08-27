@@ -311,6 +311,7 @@ export function reactQueryGenerateFunction(
   const parameterListWithExtraction = ({
     prefix,
     withRequestConfig,
+    withSignal = false,
     defaultToNull,
   }) => {
     let result = "";
@@ -396,7 +397,9 @@ export function reactQueryGenerateFunction(
         .join(", ")} }, `;
     }
 
-    if (withRequestConfig) {
+    if (withRequestConfig && withSignal) {
+      result += `{ ...${prefix}?.requestConfig, signal }`;
+    } else if (withRequestConfig) {
       result += `${prefix}?.requestConfig`;
     }
 
@@ -453,7 +456,11 @@ export function reactQueryGenerateFunction(
     }
 
     fileWrite(file, `const options = opts?.queryOptions ?? {};`);
-    reactQueryWriteIsEnabled(generateContext, file, route);
+    const hasEnabledCondition = reactQueryWriteIsEnabled(
+      generateContext,
+      file,
+      route,
+    );
 
     fileWriteInline(
       file,
@@ -465,17 +472,15 @@ export function reactQueryGenerateFunction(
       `queryFn: ({ signal }) => {
 ${reactQueryCheckIfRequiredVariablesArePresent(generateContext, hookName, route)}
 
-opts.requestConfig ??= {};
-opts.requestConfig.signal = signal;
-
 return ${apiName}(${apiInstanceParameter}
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: true,
+    withSignal: true,
     defaultToNull: false,
   })}
   );
-}, ...options });`,
+}, ...options${hasEnabledCondition ? ", enabled" : ""} });`,
     );
 
     fileBlockEnd(file);
@@ -666,14 +671,14 @@ ${hookName}.setQueryData = (
       }
     }
 
-    if (route.invalidations) {
+    const hasMutationInvalidations = route.invalidations.length > 0;
+
+    if (hasMutationInvalidations) {
       if (!distilledTargetInfo.useGlobalClients) {
         fileWrite(file, `const queryClient = useQueryClient();`);
       }
-    }
 
-    if (route.invalidations.length > 0) {
-      // Write out the invalidatiosn
+      fileWrite(file, `let mutationOptions = options;`);
       fileBlockStart(file, `if (hookOptions.invalidateQueries)`);
       reactQueryWriteInvalidations(file, route);
       fileBlockEnd(file);
@@ -688,7 +693,7 @@ ${hookName}.setQueryData = (
     withRequestConfig: true,
     defaultToNull: false,
   })}
-), ...options });
+), ...${hasMutationInvalidations ? "mutationOptions" : "options"} });
 `,
     );
 
@@ -698,11 +703,13 @@ ${hookName}.setQueryData = (
 }
 
 /**
- * Write out the dependencies for this query to be enabled
+ * Write out the dependencies for this query to be enabled. Returns whether an `enabled`
+ * const was written.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
+ * @returns {boolean}
  */
 function reactQueryWriteIsEnabled(generateContext, file, route) {
   const keysAffectingEnabled = reactQueryGetRequiredFields(
@@ -710,24 +717,25 @@ function reactQueryWriteIsEnabled(generateContext, file, route) {
     route,
   );
 
-  if (keysAffectingEnabled.length > 0) {
-    fileWrite(file, `options.enabled = (`);
-    fileContextSetIndent(file, 1);
-
-    fileWrite(
-      file,
-      `options.enabled === true || (options.enabled !== false &&`,
-    );
-    fileWrite(
-      file,
-      keysAffectingEnabled
-        .map((it) => `${it} !== undefined && ${it} !== null`)
-        .join("&&\n"),
-    );
-
-    fileContextSetIndent(file, -1);
-    fileWrite(file, `));`);
+  if (keysAffectingEnabled.length === 0) {
+    return false;
   }
+
+  fileWrite(file, `const enabled = (`);
+  fileContextSetIndent(file, 1);
+
+  fileWrite(file, `options.enabled === true || (options.enabled !== false &&`);
+  fileWrite(
+    file,
+    keysAffectingEnabled
+      .map((it) => `${it} !== undefined && ${it} !== null`)
+      .join("&&\n"),
+  );
+
+  fileContextSetIndent(file, -1);
+  fileWrite(file, `));`);
+
+  return true;
 }
 
 /**
@@ -800,10 +808,9 @@ function reactQueryGetRequiredFields(generateContext, route) {
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
  */
 function reactQueryWriteInvalidations(file, route) {
-  fileWrite(file, `const originalOnSuccess = options.onSuccess;`);
   fileBlockStart(
     file,
-    `options.onSuccess = async (data, variables, ...args) => `,
+    `const onSuccess: NonNullable<typeof options.onSuccess> = async (data, variables, ...args) => `,
   );
 
   for (const invalidation of route.invalidations) {
@@ -853,9 +860,10 @@ function reactQueryWriteInvalidations(file, route) {
     fileWrite(file, `] });`);
   }
 
-  fileBlockStart(file, `if (typeof originalOnSuccess === "function")`);
-  fileWrite(file, `return await originalOnSuccess(data, variables, ...args);`);
+  fileBlockStart(file, `if (typeof options.onSuccess === "function")`);
+  fileWrite(file, `return await options.onSuccess(data, variables, ...args);`);
 
   fileBlockEnd(file);
   fileBlockEnd(file);
+  fileWrite(file, `mutationOptions = { ...options, onSuccess };`);
 }
