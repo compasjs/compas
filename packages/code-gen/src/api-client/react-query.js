@@ -202,6 +202,9 @@ export function reactQueryGenerateFunction(
   const distilledTargetInfo = apiClientDistilledTargetInfo(generateContext);
 
   const hookName = `use${upperCaseFirst(route.group)}${upperCaseFirst(route.name)}`;
+  // Helpers (queryKey, prefetch, ...) are plain exported functions instead of statics on the
+  // hook; referencing a hook as a value trips rules-of-hooks / React Compiler lints.
+  const fnBaseName = `${route.group}${upperCaseFirst(route.name)}`;
   const apiName = `api${upperCaseFirst(route.group)}${upperCaseFirst(route.name)}`;
 
   if (route.body) {
@@ -465,7 +468,7 @@ export function reactQueryGenerateFunction(
     fileWriteInline(
       file,
       `return useQuery({
-        queryKey: ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),`,
+        queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),`,
     );
     fileWrite(
       file,
@@ -488,14 +491,14 @@ return ${apiName}(${apiInstanceParameter}
     fileWrite(
       file,
       `/**
- * Base key used by ${hookName}.queryKey()
+ * Base key used by ${fnBaseName}QueryKey()
  */
-${hookName}.baseKey = (): QueryKey => ["${route.group}", "${route.name}"];
+export const ${fnBaseName}BaseKey = (): QueryKey => ["${route.group}", "${route.name}"];
 
 /**
  * Query key used by ${hookName}
  */
-${hookName}.queryKey = (
+export const ${fnBaseName}QueryKey = (
   ${
     routeHasMandatoryInputs ?
       `opts: ${joinedArgumentType({
@@ -506,7 +509,7 @@ ${hookName}.queryKey = (
     : ""
   }
 ): QueryKey => [
-  ...${hookName}.baseKey(),
+  ...${fnBaseName}BaseKey(),
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: false,
@@ -517,7 +520,7 @@ ${hookName}.queryKey = (
 /**
  * Fetch ${hookName} via the queryClient and return the result
  */
- ${hookName}.fetch = (
+ export const ${fnBaseName}Fetch = (
   ${queryClientArgument}
   ${apiInstanceArgument}
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
@@ -527,11 +530,11 @@ ${hookName}.queryKey = (
   })}
  ) => {
   return queryClient.fetchQuery({
-    queryKey: ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
+    queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),
     queryFn: () => {
     ${reactQueryCheckIfRequiredVariablesArePresent(
       generateContext,
-      `${hookName}.fetchQuery`,
+      `${fnBaseName}Fetch`,
       route,
     )}
   return ${apiName}(
@@ -547,7 +550,7 @@ ${hookName}.queryKey = (
 /**
  * Prefetch ${hookName} via the queryClient
  */
- ${hookName}.prefetch = (
+ export const ${fnBaseName}Prefetch = (
   ${queryClientArgument}
   ${apiInstanceArgument}
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
@@ -557,11 +560,11 @@ ${hookName}.queryKey = (
   })},
  ) => {
   return queryClient.prefetchQuery({
-    queryKey: ${hookName}.queryKey(${routeHasMandatoryInputs ? "opts" : ""}),
+    queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),
     queryFn: () => {
   ${reactQueryCheckIfRequiredVariablesArePresent(
     generateContext,
-    `${hookName}.prefetchQuery`,
+    `${fnBaseName}Prefetch`,
     route,
   )}
 
@@ -579,7 +582,7 @@ ${hookName}.queryKey = (
 /**
  * Invalidate ${hookName} via the queryClient
  */
-${hookName}.invalidate = (
+export const ${fnBaseName}Invalidate = (
   ${queryClientArgument}
   ${
     routeHasMandatoryInputs ?
@@ -590,7 +593,7 @@ ${hookName}.invalidate = (
       })},`
     : ""
   }
-) => queryClient.invalidateQueries({ queryKey: ${hookName}.queryKey(${
+) => queryClient.invalidateQueries({ queryKey: ${fnBaseName}QueryKey(${
         routeHasMandatoryInputs ? "opts" : ""
       }) });
   
@@ -598,7 +601,7 @@ ${hookName}.invalidate = (
 /**
  * Set query data for ${hookName} via the queryClient
  */
-${hookName}.setQueryData = (
+export const ${fnBaseName}SetQueryData = (
   ${queryClientArgument}
   ${
     routeHasMandatoryInputs ?
@@ -615,11 +618,11 @@ ${hookName}.setQueryData = (
 ) => {
   ${reactQueryCheckIfRequiredVariablesArePresent(
     generateContext,
-    `${hookName}.setQueryData`,
+    `${fnBaseName}SetQueryData`,
     route,
   )}
 
-  return queryClient.setQueryData(${hookName}.queryKey(${
+  return queryClient.setQueryData(${fnBaseName}QueryKey(${
     routeHasMandatoryInputs ? "opts" : ""
   }), data);
 }`,
