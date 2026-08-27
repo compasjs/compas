@@ -39,7 +39,7 @@ export function watcherKillProcess(process, signal) {
  * Run watcher with the provided chokidar options, calling the hooks
  *
  * @param {{
- *   chokidarOptions: import("chokidar").WatchOptions,
+ *   chokidarOptions: import("chokidar").ChokidarOptions,
  *   hooks: {
  *     onRestart: () => void,
  *   }
@@ -118,7 +118,7 @@ export async function watcherRun({ chokidarOptions, hooks }) {
  *
  * @param {import("@compas/stdlib").Logger} logger
  * @param {{
- *   chokidarOptions: import("chokidar").WatchOptions,
+ *   chokidarOptions: import("chokidar").ChokidarOptions,
  *   spawnArguments: [
  *     string,
  *     ReadonlyArray<string>,

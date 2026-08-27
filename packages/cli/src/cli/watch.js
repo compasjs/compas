@@ -275,7 +275,7 @@ export async function cliWatchExec(event, cli, userInput) {
 /**
  *
  * @param {...import("./types.js").CliResolved["watchSettings"]} settings
- * @returns {import("chokidar").WatchOptions}
+ * @returns {import("chokidar").ChokidarOptions}
  */
 function cliWatchGetChokidarOpts(...settings) {
   const patternArray = [/(^|[/\\])\../];
