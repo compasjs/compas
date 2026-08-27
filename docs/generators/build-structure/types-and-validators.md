@@ -29,8 +29,8 @@ generator.generate({
 });
 ```
 
-Calling this script should give you `src/generated/common/types.d.ts` with two types
-defined;
+Calling this script should give you `src/generated/common/types.ts` (`types.d.ts` when
+`targetLanguage` is `js`) with two types defined;
 
 ```ts
 // Concatenation of 'MyFlowName' and 'MyType'

@@ -26,27 +26,48 @@ import {
 import { typesOptionalityIsOptional } from "./optionality.js";
 
 /**
- * Resolve the `types.d.ts` output file.
+ * Path of the shared types file. TypeScript projects get a regular `.ts` file so it is
+ * type-checked (declaration files are skipped by `skipLibCheck`) and can be imported with an
+ * explicit `.ts` extension; JavaScript projects keep the declaration file.
+ *
+ * @param {import("../generate.js").GenerateContext} generateContext
+ * @returns {string}
+ */
+function typesTypescriptFileName(generateContext) {
+  return generateContext.options.targetLanguage === "ts" ?
+      "common/types.ts"
+    : "common/types.d.ts";
+}
+
+/**
+ * Resolve the shared types output file.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function typesTypescriptResolveFile(generateContext) {
-  return fileContextGet(generateContext, "common/types.d.ts");
+  return fileContextGet(
+    generateContext,
+    typesTypescriptFileName(generateContext),
+  );
 }
 
 /**
- * Create the `types.d.ts` output file. The base settings of the
+ * Create the shared types output file. The base settings of the
  * {@link import("../file/context.js").GenerateFile} align with the Typescript output.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
  * @returns {import("../file/context.js").GenerateFile}
  */
 export function typesTypescriptInitFile(generateContext) {
-  return fileContextCreateGeneric(generateContext, "common/types.d.ts", {
-    importCollector: new TypescriptImportCollector(),
-    typeImportCollector: new TypescriptImportCollector(true),
-  });
+  return fileContextCreateGeneric(
+    generateContext,
+    typesTypescriptFileName(generateContext),
+    {
+      importCollector: new TypescriptImportCollector(),
+      typeImportCollector: new TypescriptImportCollector(true),
+    },
+  );
 }
 
 /**
