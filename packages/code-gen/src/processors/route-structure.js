@@ -7,6 +7,7 @@ import {
 } from "../builders/index.js";
 import { Generator } from "../generator.js";
 import { openApiBuildFile } from "../open-api/generator.js";
+import { escapeTemplateLiteral } from "../utils.js";
 import { structureRoutes } from "./routes.js";
 import { structureAddType, structureNamedTypes } from "./structure.js";
 
@@ -63,29 +64,30 @@ export function routeStructureCreate(generateContext) {
 
   routeStructureCache.set(
     generateContext,
-    JSON.stringify(routesOnlyGenerator.internalStructure).replace(
-      /([`\\])/gm,
-      (v) => `\\${v}`,
+    escapeTemplateLiteral(
+      JSON.stringify(routesOnlyGenerator.internalStructure),
     ),
   );
   openApiStructureCache.set(
     generateContext,
-    JSON.stringify(
-      openApiBuildFile({
-        structure: routesOnlyGenerator.internalStructure,
-        log: generateContext.log,
-        files: new Map(),
-        options: {
-          targetLanguage: "js",
-          generators: {
-            openApi: {
-              openApiExtensions: {},
-              openApiRouteExtensions: {},
+    escapeTemplateLiteral(
+      JSON.stringify(
+        openApiBuildFile({
+          structure: routesOnlyGenerator.internalStructure,
+          log: generateContext.log,
+          files: new Map(),
+          options: {
+            targetLanguage: "js",
+            generators: {
+              openApi: {
+                openApiExtensions: {},
+                openApiRouteExtensions: {},
+              },
             },
           },
-        },
-      }),
-    ).replace(/([`\\])/gm, (v) => `\\${v}`),
+        }),
+      ),
+    ),
   );
 
   structureAddType(

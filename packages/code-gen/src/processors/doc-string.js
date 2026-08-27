@@ -2,7 +2,8 @@ import { structureNamedTypes } from "./structure.js";
 import { typeDefinitionTraverse } from "./type-definition-traverse.js";
 
 /**
- * Escape `\` and `*` characters in doc strings. Also removes the indentation if it
+ * Escape `\` characters and neutralise `*\/` sequences in doc strings, since the doc
+ * strings are emitted inside generated block comments. Also removes the indentation if it
  * exists on all lines in the input.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
@@ -13,10 +14,9 @@ export function docStringCleanup(generateContext) {
       namedType,
       (type, callback) => {
         if ("docString" in type && type.docString) {
-          const src = (type.docString ?? "").replace(
-            /([*\\])/gm,
-            (v) => `\\${v}`,
-          );
+          const src = (type.docString ?? "")
+            .replace(/\\/g, "\\\\")
+            .replace(/\*\//g, "*\\/");
 
           type.docString = normalizeIndentationAndTrim(src);
 

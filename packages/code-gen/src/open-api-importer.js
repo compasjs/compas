@@ -546,7 +546,21 @@ function convertSchema(context, schema, options = {}) {
     Array.isArray(schema.enum) &&
     (schema.type === "string" || schema.type === "number")
   ) {
-    result.oneOf = [...schema.enum];
+    const oneOf = schema.enum.filter(
+      (it) =>
+        typeof it === schema.type &&
+        (schema.type === "string" || Number.isFinite(it)),
+    );
+
+    if (oneOf.length !== schema.enum.length) {
+      context.logger.info(
+        `Ignoring enum values that are not of type '${schema.type}'.`,
+      );
+    }
+
+    if (oneOf.length > 0) {
+      result.oneOf = oneOf;
+    }
   }
 
   if (!isNil(schema.default)) {

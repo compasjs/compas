@@ -15,6 +15,7 @@ import { structureResolveReference } from "../processors/structure.js";
 import { JavascriptImportCollector } from "../target/javascript.js";
 import { typesCacheGet } from "../types/cache.js";
 import { typesGeneratorUseTypeName } from "../types/generator.js";
+import { escapeTemplateLiteral } from "../utils.js";
 import { validatorGeneratorGenerateBody } from "./generator.js";
 
 /**
@@ -32,7 +33,7 @@ function formatValuePath(validatorState) {
         result += validatorState.inputVariableName;
         break;
       case "stringKey":
-        result += `["${path.key}"]`;
+        result += `[${JSON.stringify(path.key)}]`;
         break;
       case "dynamicKey":
         result += `[${path.key}]`;
@@ -56,7 +57,7 @@ function formatResultPath(validatorState) {
     if (path.type === "root") {
       result += validatorState.outputVariableName;
     } else if (path.type === "stringKey") {
-      result += `["${path.key}"]`;
+      result += `[${JSON.stringify(path.key)}]`;
     } else if (path.type === "dynamicKey") {
       result += `[${path.key}]`;
     }
@@ -78,7 +79,7 @@ function formatErrorKey(validatorState) {
     if (path.type === "root") {
       result += `$`;
     } else if (path.type === "stringKey") {
-      result += `.${path.key}`;
+      result += `.${escapeTemplateLiteral(path.key)}`;
     } else if (path.type === "dynamicKey") {
       result += `.$\{${path.key}}`;
     }
@@ -395,7 +396,7 @@ export function validatorJavascriptAnyOf(file, type, validatorState) {
 
       fileBlockStart(
         file,
-        `if (typeof value === "object" && "${type.validator.discriminant}" in ${valuePath} && ${valuePath}.${type.validator.discriminant} === "${oneOf}")`,
+        `if (typeof value === "object" && "${type.validator.discriminant}" in ${valuePath} && ${valuePath}.${type.validator.discriminant} === ${JSON.stringify(oneOf)})`,
       );
 
       validatorState.skipFirstNilCheck = true;
@@ -1287,7 +1288,7 @@ export function validatorJavascriptObject(file, type, validatorState) {
 
     fileContextSetIndent(file, 1);
     for (const key of Object.keys(type.keys)) {
-      fileWrite(file, `"${key}",`);
+      fileWrite(file, `${JSON.stringify(key)},`);
     }
     fileContextSetIndent(file, -1);
     fileWrite(file, `]);`);
@@ -1324,7 +1325,7 @@ export function validatorJavascriptObject(file, type, validatorState) {
   fileWrite(
     file,
     `${resultPath} = { ${Object.keys(type.keys)
-      .map((it) => `"${it}": undefined,`)
+      .map((it) => `${JSON.stringify(it)}: undefined,`)
       .join(" ")}};\n`,
   );
 
@@ -1550,7 +1551,7 @@ export function validatorJavascriptString(file, type, validatorState) {
 
   if (type.oneOf) {
     const condition = type.oneOf
-      .map((it) => `${intermediateVariable} !== "${it}"`)
+      .map((it) => `${intermediateVariable} !== ${JSON.stringify(it)}`)
       .join(" && ");
 
     fileWrite(file, `if (${condition}) {`);

@@ -18,6 +18,14 @@ const spec = JSON.parse(readFileSync("./specs/openapi.json", "utf-8"));
 generator.addStructure(loadApiStructureFromOpenAPI("pet", spec));
 ```
 
+::: warning Specifications are trusted input
+Values from the specification — enum values, property names, route paths, descriptions —
+end up in the generated source, which your application executes. Compas escapes the values
+it emits, but it does not sandbox the document. Review a third-party specification (or
+remote structure) before generating from it, and prefer generating from a copy committed to
+your repository over fetching it at generate time.
+:::
+
 ## Compas (remote) structure
 
 Loading a Compas structure works almost the same as loading an OpenAPI specification.

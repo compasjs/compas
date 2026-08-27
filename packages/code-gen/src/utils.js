@@ -83,3 +83,13 @@ export function errorsThrowCombinedError(errors) {
     messages,
   });
 }
+
+/**
+ * Escape a string for verbatim use inside a generated template literal.
+ *
+ * @param {string} input
+ * @returns {string}
+ */
+export function escapeTemplateLiteral(input) {
+  return input.replace(/[`\\]|\$\{/g, (v) => `\\${v}`);
+}

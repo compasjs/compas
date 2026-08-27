@@ -2,6 +2,9 @@ import { AppError, isNil, isPlainObject } from "@compas/stdlib";
 import { convertOpenAPISpec } from "./open-api-importer.js";
 
 /**
+ * Load the structure of a Compas based backend. The structure is trusted input: values from
+ * it end up in generated source that your application executes.
+ *
  * @param {import("axios").AxiosInstance} Axios
  * @param {string} url
  * @returns {Promise<any>}
@@ -19,7 +22,9 @@ export async function loadApiStructureFromRemote(Axios, url) {
 }
 
 /**
- * Convert an OpenAPI 3 JSON spec to a Compas compatible structure
+ * Convert an OpenAPI 3 JSON spec to a Compas compatible structure. The spec is trusted
+ * input: values from it end up in generated source that your application executes, so review
+ * third-party documents before generating from them.
  *
  * @param {string} name
  * @param {Record<string, any>} spec

@@ -423,9 +423,9 @@ export function typesTypescriptFormatType(
       );
 
       if (subIsOptional) {
-        fileWriteInline(file, `"${key}"?: `);
+        fileWriteInline(file, `${JSON.stringify(key)}?: `);
       } else {
-        fileWriteInline(file, `"${key}": `);
+        fileWriteInline(file, `${JSON.stringify(key)}: `);
       }
 
       typesTypescriptFormatType(generateContext, file, type.keys[key], options);
@@ -441,9 +441,10 @@ export function typesTypescriptFormatType(
     }
   } else if (type.type === "string") {
     if (type.oneOf) {
-      fileWriteInline(file, `"`);
-      fileWriteInline(file, type.oneOf.join(`"|"`));
-      fileWriteInline(file, `"`);
+      fileWriteInline(
+        file,
+        type.oneOf.map((it) => JSON.stringify(it)).join("|"),
+      );
     } else {
       fileWriteInline(file, `string`);
     }
