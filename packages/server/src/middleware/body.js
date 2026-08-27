@@ -37,6 +37,23 @@ const jsonTypes = [
 ];
 
 /**
+ * formidable 3 always yields arrays. Single values are unwrapped so multipart bodies keep
+ * the scalar shape that the generated validators expect; only repeated fields stay arrays.
+ *
+ * @template T
+ * @param {Record<string, Array<T> | undefined>} input
+ * @returns {Record<string, T | Array<T> | undefined>}
+ */
+function unwrapSingleValues(input) {
+  return Object.fromEntries(
+    Object.entries(input).map(([key, value]) => [
+      key,
+      Array.isArray(value) && value.length === 1 ? value[0] : value,
+    ]),
+  );
+}
+
+/**
  * Koa body parsers. Supports json, text, urlencoded & multipart bodies.
  *
  * Based on co-body & formidable.
@@ -121,12 +138,13 @@ export function createBodyParser(opts = {}) {
                 return;
               }
 
-              bodyResult = { ...fields, ...files };
+              const unwrappedFiles = unwrapSingleValues(files);
+              bodyResult = { ...unwrapSingleValues(fields), ...unwrappedFiles };
 
               // @ts-expect-error
               //
               // Compat with code-gen
-              ctx.request.files = files;
+              ctx.request.files = unwrappedFiles;
 
               // @ts-expect-error
               resolve();

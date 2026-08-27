@@ -5,13 +5,13 @@ export const fileImplementations = {
   jsKoaReceive: {
     validatorInputType: "any",
     validatorOutputType: `import("formidable").File`,
-    validatorImport: `import formidable from "formidable";`,
+    validatorImport: `import * as formidable from "formidable";`,
     validatorExpression: `$value$ instanceof formidable.File`,
   },
   tsKoaReceive: {
     validatorInputType: "any",
     validatorOutputType: `import("formidable").File`,
-    validatorImport: `import formidable from "formidable";`,
+    validatorImport: `import * as formidable from "formidable";`,
     validatorExpression: `$value$ instanceof formidable.File`,
   },
   jsKoaSend: {

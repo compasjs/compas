@@ -32,7 +32,11 @@ test("server/middleware/body", async (t) => {
     await parser(ctx);
 
     ctx.type = "application/json";
-    ctx.body = JSON.stringify({ files: ctx.request.files }, null, 2);
+    ctx.body = JSON.stringify(
+      { files: ctx.request.files, body: ctx.request.body },
+      null,
+      2,
+    );
 
     return next();
   });
@@ -127,6 +131,9 @@ test("server/middleware/body", async (t) => {
       createReadStream("./__fixtures__/server/image.png"),
       "image.png",
     );
+    body.append("name", "single");
+    body.append("tag", "first");
+    body.append("tag", "second");
 
     const { data } = await fileClient.request({
       url: "/",
@@ -137,6 +144,9 @@ test("server/middleware/body", async (t) => {
 
     t.ok(data.files);
     t.equal(data.files.image.size, 284);
+    t.equal(data.body.image.size, 284);
+    t.equal(data.body.name, "single");
+    t.deepEqual(data.body.tag, ["first", "second"]);
   });
 
   t.test("file payload too big", async (t) => {
