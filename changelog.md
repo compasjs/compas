@@ -4,6 +4,170 @@ editLink: false
 
 # Changelog
 
+### [v0.24.0](https://github.com/compasjs/compas/releases/tag/v0.24.0)
+
+#### Breaking changes
+
+- feat(code-gen): generate react-query helpers as standalone exports
+  [`16264b`](https://github.com/compasjs/compas/commit/16264b4616879ad3954c2035d7a4e714c376a43d)
+  the react-query wrapper no longer attaches helpers to the generated hooks.
+  Replace the statics with the new exports from the same `reactQueries` file:
+
+  - `useFooBar.baseKey()` -> `fooBarBaseKey()`
+  - `useFooBar.queryKey(opts)` -> `fooBarQueryKey(opts)`
+  - `useFooBar.fetch(queryClient, api, opts)` ->
+    `fooBarFetch(queryClient, api, opts)`
+  - `useFooBar.prefetch(queryClient, api, opts)` ->
+    `fooBarPrefetch(queryClient, api, opts)`
+  - `useFooBar.invalidate(queryClient, opts)` ->
+    `fooBarInvalidate(queryClient, opts)`
+  - `useFooBar.setQueryData(queryClient, opts, data)` ->
+    `fooBarSetQueryData(queryClient, opts, data)`
+
+- feat(code-gen): emit common/types.ts for the TypeScript target
+  [`2ebd88`](https://github.com/compasjs/compas/commit/2ebd889233a680eb3744a0adfa8979fdd8a5b3a8)
+  with `targetLanguage: "ts"` the shared types file is `common/types.ts`. Remove
+  the stale `common/types.d.ts` from the output directory (or regenerate into a
+  clean directory) and update any import that spells out `common/types.d.ts`.
+- feat(cli): default to PostgreSQL 16 and support 14-18
+  [`c7a34f`](https://github.com/compasjs/compas/commit/c7a34fb3e318f5e605c16d17d5c4483408c9389b)
+  `compas docker up` starts `compas-postgres-16` unless `--postgres-version` is
+  passed, and versions 12 and 13 are no longer accepted. Existing
+  `compas-postgres-12`/`-13` containers and volumes are left in place but
+  unused; remove them with `compas docker clean` or keep using them with an
+  explicit `--postgres-version` until you have migrated your local data.
+- build(deps): bump formidable from 2.1.5 to 3.5.4
+  - Major version bump
+  - `@compas/server` depends on formidable 3. `multipartOptions` now takes
+    formidable 3 options (`multiples` is gone, `enabledPlugins` takes plugin
+    functions), repeated multipart fields are delivered as arrays instead of
+    last-one-wins, and code generated with this version requires
+    `@compas/server` from this release for file uploads.
+
+#### Bug fixes
+
+- fix(code-gen): escape spec-provided values in generated validators and types
+  [`386f50`](https://github.com/compasjs/compas/commit/386f50cb69ceac178c9ef3744602dcf372b74cc9)
+- fix(stdlib): resolve symlinked entrypoints for pnpm bin shims
+  [`76e547`](https://github.com/compasjs/compas/commit/76e547dead4e7a62213ebd5c395fb6801c96d076)
+- fix(code-gen,store): emit valid OptionalJoins type parameters
+  [`71f453`](https://github.com/compasjs/compas/commit/71f4536ade495a95a164b3f0932b6b3b0ddb13dc)
+- fix(code-gen): stop mutating caller-provided react-query options
+  [`a6ba16`](https://github.com/compasjs/compas/commit/a6ba160706f4399ded143d3cb39a5bf22181ee85)
+
+#### Dependency updates
+
+- build(deps): bump the aws-sdk group across 1 directory with 2 updates
+  ([#4091](https://github.com/compasjs/compas/pull/4091))
+  [`a1084f`](https://github.com/compasjs/compas/commit/a1084f3480ac5f314d32e7b75b408ea0e42a019c)
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump actions/checkout from 6 to 7
+  ([#4097](https://github.com/compasjs/compas/pull/4097))
+  [`01556f`](https://github.com/compasjs/compas/commit/01556f77de889da96292ece76f14585d01234c1b)
+  - [Release notes](https://github.com/actions/checkout/releases)
+- build(deps): bump github/codeql-action from 4 to 4.37.3
+  ([#4140](https://github.com/compasjs/compas/pull/4140))
+  [`79659f`](https://github.com/compasjs/compas/commit/79659f240f25c7e5a4fbc4165d8262cdc8023674)
+- build(deps): bump actions/setup-node from 6 to 7
+  ([#4123](https://github.com/compasjs/compas/pull/4123))
+  [`8e1154`](https://github.com/compasjs/compas/commit/8e115406ce8c13d1bacda8d59f692b6bd20c7b33)
+  - [Release notes](https://github.com/actions/setup-node/releases)
+- build(deps): use caret ranges for third-party dependencies
+  [`c1614a`](https://github.com/compasjs/compas/commit/c1614a0b4fb801d237dde2518044100081e5c840)
+- build(deps): bump @aws-sdk/client-s3 from 3.1052.0 to 3.1116.0
+  ([#4079](https://github.com/compasjs/compas/pull/4079),
+  [#4080](https://github.com/compasjs/compas/pull/4080),
+  [#4083](https://github.com/compasjs/compas/pull/4083),
+  [#4084](https://github.com/compasjs/compas/pull/4084),
+  [#4086](https://github.com/compasjs/compas/pull/4086),
+  [#4087](https://github.com/compasjs/compas/pull/4087),
+  [#4088](https://github.com/compasjs/compas/pull/4088),
+  [#4094](https://github.com/compasjs/compas/pull/4094),
+  [#4095](https://github.com/compasjs/compas/pull/4095),
+  [#4096](https://github.com/compasjs/compas/pull/4096),
+  [#4098](https://github.com/compasjs/compas/pull/4098),
+  [#4099](https://github.com/compasjs/compas/pull/4099),
+  [#4102](https://github.com/compasjs/compas/pull/4102),
+  [#4108](https://github.com/compasjs/compas/pull/4108),
+  [#4109](https://github.com/compasjs/compas/pull/4109),
+  [#4110](https://github.com/compasjs/compas/pull/4110),
+  [#4113](https://github.com/compasjs/compas/pull/4113),
+  [#4115](https://github.com/compasjs/compas/pull/4115),
+  [#4116](https://github.com/compasjs/compas/pull/4116),
+  [#4117](https://github.com/compasjs/compas/pull/4117),
+  [#4120](https://github.com/compasjs/compas/pull/4120),
+  [#4121](https://github.com/compasjs/compas/pull/4121),
+  [#4124](https://github.com/compasjs/compas/pull/4124),
+  [#4125](https://github.com/compasjs/compas/pull/4125),
+  [#4127](https://github.com/compasjs/compas/pull/4127),
+  [#4128](https://github.com/compasjs/compas/pull/4128),
+  [#4130](https://github.com/compasjs/compas/pull/4130),
+  [#4132](https://github.com/compasjs/compas/pull/4132),
+  [#4133](https://github.com/compasjs/compas/pull/4133),
+  [#4135](https://github.com/compasjs/compas/pull/4135),
+  [#4137](https://github.com/compasjs/compas/pull/4137),
+  [#4142](https://github.com/compasjs/compas/pull/4142),
+  [#4155](https://github.com/compasjs/compas/pull/4155))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump @aws-sdk/lib-storage from 3.1052.0 to 3.1116.0
+  ([#4079](https://github.com/compasjs/compas/pull/4079),
+  [#4080](https://github.com/compasjs/compas/pull/4080),
+  [#4083](https://github.com/compasjs/compas/pull/4083),
+  [#4084](https://github.com/compasjs/compas/pull/4084),
+  [#4086](https://github.com/compasjs/compas/pull/4086),
+  [#4087](https://github.com/compasjs/compas/pull/4087),
+  [#4088](https://github.com/compasjs/compas/pull/4088),
+  [#4094](https://github.com/compasjs/compas/pull/4094),
+  [#4095](https://github.com/compasjs/compas/pull/4095),
+  [#4096](https://github.com/compasjs/compas/pull/4096),
+  [#4098](https://github.com/compasjs/compas/pull/4098),
+  [#4099](https://github.com/compasjs/compas/pull/4099),
+  [#4102](https://github.com/compasjs/compas/pull/4102),
+  [#4108](https://github.com/compasjs/compas/pull/4108),
+  [#4109](https://github.com/compasjs/compas/pull/4109),
+  [#4110](https://github.com/compasjs/compas/pull/4110),
+  [#4113](https://github.com/compasjs/compas/pull/4113),
+  [#4115](https://github.com/compasjs/compas/pull/4115),
+  [#4116](https://github.com/compasjs/compas/pull/4116),
+  [#4117](https://github.com/compasjs/compas/pull/4117),
+  [#4120](https://github.com/compasjs/compas/pull/4120),
+  [#4121](https://github.com/compasjs/compas/pull/4121),
+  [#4124](https://github.com/compasjs/compas/pull/4124),
+  [#4125](https://github.com/compasjs/compas/pull/4125),
+  [#4127](https://github.com/compasjs/compas/pull/4127),
+  [#4128](https://github.com/compasjs/compas/pull/4128),
+  [#4130](https://github.com/compasjs/compas/pull/4130),
+  [#4132](https://github.com/compasjs/compas/pull/4132),
+  [#4133](https://github.com/compasjs/compas/pull/4133),
+  [#4135](https://github.com/compasjs/compas/pull/4135),
+  [#4137](https://github.com/compasjs/compas/pull/4137),
+  [#4142](https://github.com/compasjs/compas/pull/4142),
+  [#4155](https://github.com/compasjs/compas/pull/4155))
+  - [Release notes](https://github.com/aws/aws-sdk-js-v3/releases)
+- build(deps): bump sharp from 0.34.5 to 0.35.3
+  ([#4092](https://github.com/compasjs/compas/pull/4092),
+  [#4101](https://github.com/compasjs/compas/pull/4101),
+  [#4111](https://github.com/compasjs/compas/pull/4111))
+  - Major version bump
+  - [Release notes](https://github.com/lovell/sharp/releases)
+- build(deps): bump recast from 0.23.11 to 0.24.0
+  ([#4106](https://github.com/compasjs/compas/pull/4106),
+  [#4149](https://github.com/compasjs/compas/pull/4149))
+  - Major version bump
+  - [Release notes](https://github.com/benjamn/recast/releases)
+- build(deps): bump c8 from 11.0.0 to 12.0.0
+  ([#4126](https://github.com/compasjs/compas/pull/4126))
+  - Major version bump
+  - [Release notes](https://github.com/bcoe/c8/releases)
+- build(deps): bump github/codeql-action from 4.37.3 to 4.37.8
+  ([#4154](https://github.com/compasjs/compas/pull/4154))
+  - [Release notes](https://github.com/github/codeql-action/releases)
+- build(deps): bump file-type from 22.0.1 to 22.0.2
+  ([#4151](https://github.com/compasjs/compas/pull/4151))
+  - [Release notes](https://github.com/sindresorhus/file-type/releases)
+- build(deps): bump chokidar from 3.6.0 to 5.0.0
+  - Major version bump
+
 ### [v0.23.2](https://github.com/compasjs/compas/releases/tag/v0.23.2)
 
 #### Bug fixes
