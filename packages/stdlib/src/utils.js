@@ -1,4 +1,4 @@
-import { lstatSync, realpathSync } from "node:fs";
+import { realpathSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { setFlagsFromString } from "node:v8";
@@ -204,11 +204,11 @@ export function isMainFnAndReturnName(meta) {
 
   let scriptPath = process.argv[1];
 
-  // Support following symbolic links for node_modules/.bin items
-  const scriptStat = lstatSync(scriptPath);
-  if (scriptStat.isSymbolicLink()) {
-    scriptPath = realpathSync(scriptPath);
-  }
+  // Resolve symlinks anywhere in the path, not just when the file itself is a
+  // symlink. pnpm's bin shims execute the entrypoint via the symlinked package
+  // directory (node_modules/.bin/../<pkg>/...), while import.meta.url resolves to
+  // the real path under node_modules/.pnpm, so mainFn would silently never run.
+  scriptPath = realpathSync(scriptPath);
   const scriptPathExt = path.extname(scriptPath);
   if (scriptPathExt) {
     return {
