@@ -287,7 +287,7 @@ export type ResolveOptionalJoins<
 > = Depth["length"] extends ResolveJoinDepth
   ? never
   : {
-        [K in keyof ResolvedExpansion]: K extends string
+        [K in keyof ResolvedExpansion]-?: K extends string
           ? Prefix extends "" // Base case
             ?
                 | \`$\{K}\`
@@ -304,7 +304,7 @@ export type ResolveOptionalJoins<
                     [unknown, ...Depth]
                   >
           : never;
-      }[keyof ResolvedExpansion];
+      }[keyof ResolvedExpansion] | "";
 
 /**
  * Split the input string on the first '.'-char.
@@ -463,7 +463,7 @@ export type QueryBuilderResolver<
       );
       fileWriteRaw(
         file,
-        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilder, const OptionalJoins extends ${name}OptionalJoins = never> = QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
+        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilder, OptionalJoins extends ${name}OptionalJoins = ""> = QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
       );
     } else if (generateContext.options.targetLanguage === "js") {
       fileWriteRaw(
@@ -472,7 +472,7 @@ export type QueryBuilderResolver<
       );
       fileWriteRaw(
         file,
-        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilder, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansion${name}> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
+        `${exportPrefix} type ${name}QueryResolver<QueryBuilder extends ${name}QueryBuilder, OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansion${name}> = ""> = import("@compas/store").QueryBuilderResolver<QueryDefinition${name}, QueryBuilder, OptionalJoins>;\n\n`,
       );
     }
   }

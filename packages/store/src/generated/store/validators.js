@@ -11803,7 +11803,7 @@ export function validateStoreJobUpdatePartialValidated(value) {
 }
 
 /**
- * Session data store, used by 'sessionStore\*' functions.
+ * Session data store, used by 'sessionStore*' functions.
  *
  * @param {import("../common/types.js").StoreSessionStoreInput|any} value
  * @returns {Either<import("../common/types.js").StoreSessionStore, ValidatorErrorMap>}

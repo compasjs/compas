@@ -144,7 +144,7 @@ export type ResolveOptionalJoins<
       ? ResolveOptionalJoins<Expansion[0]["expansion"], Prefix, Depth>
       : Expansion extends object
         ? {
-            [K in keyof Expansion]: K extends string
+            [K in keyof Expansion]-?: K extends string
               ? Prefix extends "" // Base case
                 ?
                     | `${K}`
@@ -161,7 +161,7 @@ export type ResolveOptionalJoins<
                         [unknown, ...Depth]
                       >
               : never;
-          }[keyof Expansion]
+          }[keyof Expansion] | ""
         : never;
 
 /**

@@ -1013,7 +1013,7 @@ export type StoreSessionStoreToken = {
 };
 
 /**
- * Session data store, used by 'sessionStore\*' functions.
+ * Session data store, used by 'sessionStore*' functions.
  */
 export type StoreSessionStore = {
   
@@ -1061,7 +1061,7 @@ export type StoreSessionStoreTokenInput = {
 };
 
 /**
- * Session data store, used by 'sessionStore\*' functions.
+ * Session data store, used by 'sessionStore*' functions.
  */
 export type StoreSessionStoreInput = {
   
@@ -1777,16 +1777,16 @@ export type StoreSessionStoreTokenUpdateValidated = {
 };
 
 export type QueryDefinitionStoreFile = import("@compas/store").QueryBuilderDefinition<StoreFile, QueryExpansionStoreFile>;
-export type StoreFileQueryResolver<QueryBuilder extends StoreFileQueryBuilder, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreFile> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreFile, QueryBuilder, OptionalJoins>;
+export type StoreFileQueryResolver<QueryBuilder extends StoreFileQueryBuilder, OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreFile> = ""> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreFile, QueryBuilder, OptionalJoins>;
 
 export type QueryDefinitionStoreJob = import("@compas/store").QueryBuilderDefinition<StoreJob, QueryExpansionStoreJob>;
-export type StoreJobQueryResolver<QueryBuilder extends StoreJobQueryBuilder, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreJob> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreJob, QueryBuilder, OptionalJoins>;
+export type StoreJobQueryResolver<QueryBuilder extends StoreJobQueryBuilder, OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreJob> = ""> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreJob, QueryBuilder, OptionalJoins>;
 
 export type QueryDefinitionStoreSessionStore = import("@compas/store").QueryBuilderDefinition<StoreSessionStore, QueryExpansionStoreSessionStore>;
-export type StoreSessionStoreQueryResolver<QueryBuilder extends StoreSessionStoreQueryBuilder, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreSessionStore> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreSessionStore, QueryBuilder, OptionalJoins>;
+export type StoreSessionStoreQueryResolver<QueryBuilder extends StoreSessionStoreQueryBuilder, OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreSessionStore> = ""> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreSessionStore, QueryBuilder, OptionalJoins>;
 
 export type QueryDefinitionStoreSessionStoreToken = import("@compas/store").QueryBuilderDefinition<StoreSessionStoreToken, QueryExpansionStoreSessionStoreToken>;
-export type StoreSessionStoreTokenQueryResolver<QueryBuilder extends StoreSessionStoreTokenQueryBuilder, const OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreSessionStoreToken> = never> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreSessionStoreToken, QueryBuilder, OptionalJoins>;
+export type StoreSessionStoreTokenQueryResolver<QueryBuilder extends StoreSessionStoreTokenQueryBuilder, OptionalJoins extends import("@compas/store").ResolveOptionalJoins<QueryExpansionStoreSessionStoreToken> = ""> = import("@compas/store").QueryBuilderResolver<QueryDefinitionStoreSessionStoreToken, QueryBuilder, OptionalJoins>;
 
 export type StoreFileResponse = {
   "id": string;
