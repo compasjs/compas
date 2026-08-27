@@ -79,7 +79,7 @@ Execute the specified code-mod.
 Manage common docker components.
 
 Manages a single PostgreSQL and Minio container for use in all your local projects. It can
-switch between multiple PostgreSQL versions (12-16 are supported via --postgres-version),
+switch between multiple PostgreSQL versions (14-18 are supported via --postgres-version),
 however only a single version can be 'up' at a time.
 
 PostgreSQL credentials:
@@ -100,7 +100,7 @@ Don't use this command and secrets for your production deployment.
 
 | Option             | Description                                                                                                                              |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number)                                                                          |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
 | --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
 | -h, --help         | Display information about the current command. (boolean)                                                                                 |
 
@@ -110,7 +110,7 @@ Start the managed containers.
 
 | Option             | Description                                                                                                                              |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number)                                                                          |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
 | --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
 | -h, --help         | Display information about the current command. (boolean)                                                                                 |
 
@@ -123,7 +123,7 @@ and stops any PostgreSQL container started by this CLI, ignoring `--postgres-ver
 
 | Option             | Description                                                                                                                              |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number)                                                                          |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
 | --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
 | -h, --help         | Display information about the current command. (boolean)                                                                                 |
 
@@ -141,7 +141,7 @@ If no value is passed, it defaults to 'process.env.APP_NAME'.
 | Option             | Description                                                                                                                              |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | --project          | Specify the project(s) to remove. If no value is passed, the current project is read from `environment.APP_NAME`. (booleanOrString[])    |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 12. (number)                                                                          |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
 | --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
 | -h, --help         | Display information about the current command. (boolean)                                                                                 |
 

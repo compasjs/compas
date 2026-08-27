@@ -72,7 +72,7 @@ jobs:
     strategy:
       matrix:
         node: [24, 25]
-        postgresVersion: [16, 17]
+        postgresVersion: [16, 18]
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -117,7 +117,6 @@ jobs:
     strategy:
       matrix:
         node: [24]
-        postgresVersion: [14]
     runs-on: ubuntu-latest
     env:
       CI: true

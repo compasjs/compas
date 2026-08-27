@@ -22,7 +22,7 @@ export const cliDefinition = {
   name: "docker",
   shortDescription: "Manage common docker components.",
   longDescription: `Manages a single PostgreSQL and Minio container for use in all your local projects.
-It can switch between multiple PostgreSQL versions (12-16 are supported via --postgres-version), however only a single version can be 'up' at a time.
+It can switch between multiple PostgreSQL versions (14-18 are supported via --postgres-version), however only a single version can be 'up' at a time.
 
 PostgreSQL credentials:
 > postgresql://postgres:postgres@127.0.0.1:5432/postgres
@@ -80,11 +80,11 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
     {
       name: "postgresVersion",
       rawName: "--postgres-version",
-      description: "Specify the PostgreSQL version to use. Defaults to 12.",
+      description: "Specify the PostgreSQL version to use. Defaults to 16.",
       value: {
         specification: "number",
         validator: (value) => {
-          const versions = [12, 13, 14, 15, 16, 17, 18];
+          const versions = [14, 15, 16, 17, 18];
           const isValid = versions.includes(value);
 
           if (isValid) {
@@ -122,7 +122,7 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
 export async function cliExecutor(logger, state) {
   const useHost =
     state.flags.useHost ?? environment.COMPAS_SKIP_DOCKER === "true";
-  const postgresVersion = state.flags.postgresVersion ?? "12";
+  const postgresVersion = state.flags.postgresVersion ?? "16";
 
   // @ts-expect-error
   const context = getContainerInformation(postgresVersion, useHost);
