@@ -439,7 +439,9 @@ async function fileCheckContentType(options, props, source) {
     contentType = "image/svg+xml";
   }
 
-  contentType = contentType ?? mime.lookup(props.name) ?? "*/*";
+  // `mime.lookup` returns `false` for unknown or extension-less names, which `??`
+  // would pass through as the content type.
+  contentType = contentType ?? (mime.lookup(props.name) || "*/*");
 
   if (
     Array.isArray(options.allowedContentTypes) &&

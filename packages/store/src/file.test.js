@@ -546,6 +546,49 @@ test("store/file", (t) => {
       });
     });
 
+    t.test("content type fallback", (t) => {
+      // Plain text has no magic bytes and `mime.lookup` has nothing to go on
+      // without an extension, so neither detection step yields a content type.
+      const unknownBytes = Buffer.from("just some plain text", "utf-8");
+
+      t.test("extension-less name stores the wildcard", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "README",
+          },
+          unknownBytes,
+        );
+
+        t.equal(file.contentType, "*/*");
+      });
+
+      t.test("allowedContentTypes reports the wildcard", async (t) => {
+        try {
+          await fileCreateOrUpdate(
+            sql,
+            s3Client,
+            {
+              bucketName: testBucketName,
+              allowedContentTypes: ["image/png"],
+            },
+            {
+              name: "README",
+            },
+            unknownBytes,
+          );
+          t.fail("should reject the unknown content type");
+        } catch (e) {
+          t.equal(e.key, "file.createOrUpdate.invalidContentType");
+          t.equal(e.info.found, "*/*");
+        }
+      });
+    });
+
     t.test("schedulePlaceholderImageJob", async (t) => {
       const file = await fileCreateOrUpdate(
         sql,
