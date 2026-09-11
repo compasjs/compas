@@ -296,6 +296,55 @@ async function fileReadContentTypeSample(filePath) {
 }
 
 /**
+ * Read the leading bytes of a stream, used for content-type sniffing. The consumed
+ * bytes are replayed by the returned stream, so the full body stays intact for
+ * whoever reads it next.
+ *
+ * @param {import("stream").Readable} stream
+ * @returns {Promise<{ sample: Buffer, stream: import("stream").Readable }>}
+ */
+async function fileReadStreamContentTypeSample(stream) {
+  const iterator = stream[Symbol.asyncIterator]();
+  const chunks = [];
+  let sampleLength = 0;
+
+  while (sampleLength < STORE_CONTENT_TYPE_SAMPLE_SIZE) {
+    const { value, done } = await iterator.next();
+    if (done) {
+      break;
+    }
+
+    const chunk = Buffer.isBuffer(value) ? value : Buffer.from(value);
+    chunks.push(chunk);
+    sampleLength += chunk.length;
+  }
+
+  return {
+    sample: Buffer.concat(chunks),
+    stream: Readable.from(
+      (async function* () {
+        try {
+          yield* chunks;
+
+          for (;;) {
+            const { value, done } = await iterator.next();
+            if (done) {
+              return;
+            }
+
+            yield value;
+          }
+        } finally {
+          // Destroying the replay stream early should tear down the source as well.
+          await iterator.return?.();
+        }
+      })(),
+      { objectMode: false },
+    ),
+  };
+}
+
+/**
  * Sniff whether the provided bytes represent an SVG document.
  *
  * `file-type` has no reliable SVG magic-byte signature, so SVG is detected from
@@ -362,8 +411,13 @@ async function fileCheckContentType(options, props, source) {
     typeof source?.pipe === "function" && // @ts-ignore
     typeof source?._read === "function"
   ) {
-    // @ts-ignore
-    const sourceWithFileType = await fileTypeStream(Readable.toWeb(source));
+    const sampled = await fileReadStreamContentTypeSample(source);
+    svgSample = sampled.sample;
+
+    const sourceWithFileType = await fileTypeStream(
+      // @ts-ignore
+      Readable.toWeb(sampled.stream),
+    );
 
     // Set source to the new pass through stream created by `fileTypeStream`
     source = Readable.fromWeb(sourceWithFileType);
@@ -372,10 +426,9 @@ async function fileCheckContentType(options, props, source) {
 
   // `file-type` detects via magic bytes and has no reliable SVG signature: SVGs
   // without an XML prolog resolve to `undefined`, while SVGs with a `<?xml ?>`
-  // prolog are misdetected as `application/xml`. Both cases skip the image
-  // pipeline below (and the SVG -> PNG transform in `fileCreateOrUpdate`). When a
-  // content sample is available, sniff it so SVGs are labeled correctly. Streams
-  // carry no cheap sample and keep relying on `file-type` + the filename fallback.
+  // prolog are misdetected as `application/xml`. Both cases would skip the image
+  // pipeline (and the SVG -> PNG transform in `fileCreateOrUpdate`), so sniff the
+  // content sample instead.
   if (
     svgSample &&
     (isNil(contentType) ||

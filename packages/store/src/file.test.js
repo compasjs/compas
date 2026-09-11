@@ -1,5 +1,6 @@
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
+import { Readable } from "node:stream";
 import { HeadObjectCommand } from "@aws-sdk/client-s3";
 import { mainTestFn, newTestEvent, test } from "@compas/cli";
 import {
@@ -27,6 +28,36 @@ import { objectStorageGetObjectStream } from "./object-storage.js";
 import { query } from "./query.js";
 
 mainTestFn(import.meta);
+
+/**
+ * Stream a buffer in small chunks, so content sniffing has to gather its sample
+ * across multiple reads.
+ *
+ * @param {Buffer} buffer
+ * @param {number} [chunkSize]
+ * @returns {Readable}
+ */
+function bufferToChunkedStream(buffer, chunkSize = 16) {
+  const chunks = [];
+  for (let i = 0; i < buffer.length; i += chunkSize) {
+    chunks.push(buffer.subarray(i, i + chunkSize));
+  }
+
+  return Readable.from(chunks, { objectMode: false });
+}
+
+/**
+ * @param {import("./generated/common/types.d.ts").StoreFile} file
+ * @returns {Promise<Buffer>}
+ */
+async function storedObject(file) {
+  return await streamToBuffer(
+    await objectStorageGetObjectStream(s3Client, {
+      bucketName: file.bucketName,
+      objectKey: file.id,
+    }),
+  );
+}
 
 test("store/file", (t) => {
   // const imagePath = "./docs/public/favicon/favicon-16x16.png";
@@ -331,6 +362,111 @@ test("store/file", (t) => {
 
         t.equal(file.contentType, "image/svg+xml");
       });
+
+      t.test("stream source with xml prolog", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "drawing.unknown",
+          },
+          bufferToChunkedStream(svgWithProlog),
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+        t.equal(file.contentLength, svgWithProlog.length);
+        t.equal((await storedObject(file)).length, svgWithProlog.length);
+      });
+
+      t.test("stream source without prolog", async (t) => {
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "drawing.unknown",
+          },
+          bufferToChunkedStream(svgWithoutProlog),
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+        t.equal(file.contentLength, svgWithoutProlog.length);
+        t.equal((await storedObject(file)).length, svgWithoutProlog.length);
+      });
+
+      t.test("stream source larger than the sniffed sample", async (t) => {
+        // Well past the sample size, so both the bytes consumed for sniffing and
+        // the remainder of the stream have to reach S3.
+        const largeSvg = Buffer.from(
+          `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">${`<rect width="16" height="16"/>`.repeat(400)}</svg>`,
+          "utf-8",
+        );
+
+        const file = await fileCreateOrUpdate(
+          sql,
+          s3Client,
+          {
+            bucketName: testBucketName,
+          },
+          {
+            name: "drawing.unknown",
+          },
+          bufferToChunkedStream(largeSvg, 1024),
+        );
+
+        t.equal(file.contentType, "image/svg+xml");
+        t.equal(file.contentLength, largeSvg.length);
+        t.ok((await storedObject(file)).equals(largeSvg));
+      });
+
+      t.test(
+        "stream source with xml prolog enters the image pipeline",
+        async (t) => {
+          const file = await fileCreateOrUpdate(
+            sql,
+            s3Client,
+            {
+              bucketName: testBucketName,
+              fileTransformInPlaceOptions: {
+                stripMetadata: true,
+              },
+            },
+            {
+              name: "drawing.unknown",
+            },
+            bufferToChunkedStream(svgWithProlog),
+          );
+
+          t.equal(file.contentType, "image/png");
+        },
+      );
+
+      t.test(
+        "stream source without prolog enters the image pipeline",
+        async (t) => {
+          const file = await fileCreateOrUpdate(
+            sql,
+            s3Client,
+            {
+              bucketName: testBucketName,
+              fileTransformInPlaceOptions: {
+                stripMetadata: true,
+              },
+            },
+            {
+              name: "drawing.unknown",
+            },
+            bufferToChunkedStream(svgWithoutProlog),
+          );
+
+          t.equal(file.contentType, "image/png");
+        },
+      );
 
       t.test("non-svg xml is not misdetected", async (t) => {
         const file = await fileCreateOrUpdate(
