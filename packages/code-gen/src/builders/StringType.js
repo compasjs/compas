@@ -134,9 +134,11 @@ export class StringType extends TypeBuilder {
     }
 
     for (const char of characterArray) {
-      if (char.length === 0 || char.length > 2) {
+      // Count code points, not UTF-16 units: a single emoji is one character while
+      // two ASCII characters (e.g. an escaped backslash pair) are not.
+      if (typeof char !== "string" || [...char].length !== 1) {
         throw new TypeError(
-          `T.string().disallowCharacters() needs an array with single character strings as values. Found '${char}' with length ${char.length}.`,
+          `T.string().disallowCharacters() needs an array with single character strings as values. Found ${JSON.stringify(char)}.`,
         );
       }
     }
