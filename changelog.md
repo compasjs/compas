@@ -4,6 +4,24 @@ editLink: false
 
 # Changelog
 
+### [v0.25.0](https://github.com/compasjs/compas/releases/tag/v0.25.0)
+
+#### Bug fixes
+
+- fix(store): sniff streamed sources for the svg+xml content type
+  [`e0ef52`](https://github.com/compasjs/compas/commit/e0ef52ca29de9a1464ff35a64701809547584195)
+- fix(store): store `*/*` for names without a known extension
+  [`fe9a84`](https://github.com/compasjs/compas/commit/fe9a848fcdab9e2a71066745a0aa7dc6cdaf0e55)
+- fix(code-gen): reject multi-character disallowCharacters entries
+  [`595a71`](https://github.com/compasjs/compas/commit/595a71554b565d42c37b66a8acdfc0dc3bfa556e)
+
+#### Dependency updates
+
+- build(deps): bump is-animated from 2.0.2 to 3.0.0
+  ([#4165](https://github.com/compasjs/compas/pull/4165))
+  - Major version bump
+  - [Release notes](https://github.com/FRSOURCE/is-animated/releases)
+
 ### [v0.24.0](https://github.com/compasjs/compas/releases/tag/v0.24.0)
 
 #### Breaking changes
