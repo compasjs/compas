@@ -21,15 +21,17 @@ import { environment, exec, isNil, spawn } from "@compas/stdlib";
 export const cliDefinition = {
   name: "docker",
   shortDescription: "Manage common docker components.",
-  longDescription: `Manages a single PostgreSQL and Minio container for use in all your local projects.
+  longDescription: `Manages a single PostgreSQL and S3 container for use in all your local projects.
 It can switch between multiple PostgreSQL versions (14-18 are supported via --postgres-version), however only a single version can be 'up' at a time.
 
 PostgreSQL credentials:
 > postgresql://postgres:postgres@127.0.0.1:5432/postgres
 
-Minio credentials:
+S3 is provided by versitygw on http://127.0.0.1:9000 in the 'eu-central-1' region. It replaces the Minio container used by older versions of this command, but keeps its credentials:
 - ACCESS_KEY: minio
 - SECRET_KEY: minio123
+
+Note that versitygw doesn't support bucket ACL's, so pass 'createBucketOverrides: { ACL: undefined }' to 'objectStorageEnsureBucket' outside of production.
 
 You can prevent Docker usage, but still use commands like 'compas docker clean' with either the '--use-host' flag or by setting 'COMPAS_SKIP_DOCKER=true' in your environment.
 
@@ -104,7 +106,7 @@ The flag is repeatable, so multiple projects can be cleaned at the same time. If
       name: "useHost",
       rawName: "--use-host",
       description:
-        "Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true.",
+        "Skip Docker altogether and assume that Postgres and S3 are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true.",
       value: {
         specification: "boolean",
       },
@@ -460,9 +462,13 @@ function getContainerInformation(postgresVersion, useHost) {
         pullCommand: ["docker", ["pull", `postgres:${postgresVersion}`]],
         createCommand: `docker create -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e PGDATA=/var/lib/postgresql/data/pgdata -v compas-postgres-${postgresVersion}:/var/lib/postgresql/data/pgdata -p 5432:5432 --name compas-postgres-${postgresVersion} postgres:${postgresVersion}`,
       },
-      "compas-minio": {
-        pullCommand: ["docker", ["pull", "minio/minio"]],
-        createCommand: `docker create -e MINIO_ACCESS_KEY=minio -e MINIO_SECRET_KEY=minio123  -v compas-minio:/data -p 9000:9000 --name compas-minio minio/minio server /data`,
+      // The posix backend keeps object metadata in extended attributes, so /data needs a
+      // volume on a filesystem that supports them. The region passed via '-r' is
+      // validated against CreateBucket's LocationConstraint, so it has to stay in sync
+      // with 'objectStorageGetDevelopmentConfig'.
+      "compas-s3": {
+        pullCommand: ["docker", ["pull", "versity/versitygw:v1.8.0"]],
+        createCommand: `docker create -e ROOT_ACCESS_KEY=minio -e ROOT_SECRET_KEY=minio123 -v compas-s3:/data -p 9000:9000 --name compas-s3 versity/versitygw:v1.8.0 -p :9000 -r eu-central-1 posix /data`,
       },
     },
     globalContainers: [
@@ -471,7 +477,13 @@ function getContainerInformation(postgresVersion, useHost) {
       "compas-postgres-14",
       "compas-postgres-15",
       "compas-postgres-16",
+      "compas-postgres-17",
+      "compas-postgres-18",
+
+      // Kept so 'down' and 'clean' still stop and remove the Minio container that this
+      // command created before it switched to versitygw.
       "compas-minio",
+      "compas-s3",
     ],
     containersOnHost: [],
   };

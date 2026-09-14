@@ -20,8 +20,9 @@ compas docker up
 ```
 
 As you may have seen in the output, it does not only start a PostgreSQL container, but
-also a Minio container. Minio is a S3 compatible document store, which can be used for
-saving files.
+also a [versitygw](https://github.com/versity/versitygw) container. Versitygw is a S3
+compatible document store, which can be used for saving files. It listens on
+`http://127.0.0.1:9000` and serves the `eu-central-1` region.
 
 Some other docker commands provided by `@compas/cli`:
 
@@ -32,6 +33,26 @@ compas docker down
 compas docker clean
 # Cleanup project specific databases
 compas docker clean --project [name]
+```
+
+::: tip
+
+Older versions of Compas started a Minio container instead. Both `compas docker down` and
+`compas docker clean` still stop and remove that one, so a single `compas docker up` is
+enough to switch over. The access key and secret didn't change, but the objects that were
+stored in Minio don't carry over.
+
+:::
+
+Without Docker, you can run both services on the host and pass `--use-host` (or set
+`COMPAS_SKIP_DOCKER=true`). Grab a
+[versitygw release](https://github.com/versity/versitygw/releases) and point it at a
+directory;
+
+```shell
+mkdir -p /tmp/compas-s3
+ROOT_ACCESS_KEY=minio ROOT_SECRET_KEY=minio123 \
+  versitygw -p :9000 -r eu-central-1 posix /tmp/compas-s3
 ```
 
 ## Setup @compas/store
@@ -61,10 +82,10 @@ POSTGRES_PASSWORD=postgres
 
 Let's break it down a bit. `APP_NAME` is used in various places, but most importantly, it
 is the default name for your database, file bucket and logs. Then we have some PostgreSQL
-connection configuration, kept as simple as possible. For the S3 connection to Minio we
-don't need to configure anything. Compas provides a function to use the default connection
-settings in development. For production you should use one of the recommended ways as per
-the
+connection configuration, kept as simple as possible. For the S3 connection to versitygw
+we don't need to configure anything. Compas provides a function to use the default
+connection settings in development. For production you should use one of the recommended
+ways as per the
 [AWS SDK docs](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/setting-credentials-node.html).
 
 And lastly we need to install `@compas/store`:
@@ -112,7 +133,7 @@ node ./scripts/database.js
 
 ## Connecting to S3
 
-Connecting to our local Minio instance requires just a big one-liner;
+Connecting to our local versitygw instance requires just a big one-liner;
 
 ```js
 const s3Client = objectStorageCreateClient(
@@ -130,12 +151,17 @@ await objectStorageEnsureBucket(s3Client, {
 	bucketName: "my-bucket",
 	locationConstraint: "eu-central-1",
 
-	// Some S3-compatible interfaces don't support ACL, especially not for local development.
-	//  createBucketOverrides:
-	//     !isProduction() ?
-	//       { ACL: undefined, }
-	//     : {},
+	// Versitygw, like various other S3-compatible interfaces, doesn't support bucket ACL's.
+	createBucketOverrides:
+		!isProduction() ?
+			{
+				ACL: undefined,
+			}
+		:	{},
 });
 ```
+
+Note that the `locationConstraint` should match the region that versitygw is started with;
+`eu-central-1` for the container created by `compas docker up`.
 
 Now we are ready to roll.

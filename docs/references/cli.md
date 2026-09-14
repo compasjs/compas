@@ -78,7 +78,7 @@ Execute the specified code-mod.
 
 Manage common docker components.
 
-Manages a single PostgreSQL and Minio container for use in all your local projects. It can
+Manages a single PostgreSQL and S3 container for use in all your local projects. It can
 switch between multiple PostgreSQL versions (14-18 are supported via --postgres-version),
 however only a single version can be 'up' at a time.
 
@@ -86,10 +86,15 @@ PostgreSQL credentials:
 
 > postgresql://postgres:postgres@127.0.0.1:5432/postgres
 
-Minio credentials:
+S3 is provided by versitygw on http://127.0.0.1:9000 in the 'eu-central-1' region. It
+replaces the Minio container used by older versions of this command, but keeps its
+credentials:
 
 - ACCESS_KEY: minio
 - SECRET_KEY: minio123
+
+Note that versitygw doesn't support bucket ACL's, so pass 'createBucketOverrides: { ACL:
+undefined }' to 'objectStorageEnsureBucket' outside of production.
 
 You can prevent Docker usage, but still use commands like 'compas docker clean' with
 either the '--use-host' flag or by setting 'COMPAS_SKIP_DOCKER=true' in your environment.
@@ -98,21 +103,21 @@ either the '--use-host' flag or by setting 'COMPAS_SKIP_DOCKER=true' in your env
 
 Don't use this command and secrets for your production deployment.
 
-| Option             | Description                                                                                                                              |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
-| --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
-| -h, --help         | Display information about the current command. (boolean)                                                                                 |
+| Option             | Description                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                       |
+| --use-host         | Skip Docker altogether and assume that Postgres and S3 are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
+| -h, --help         | Display information about the current command. (boolean)                                                                              |
 
 ### `compas docker up`
 
 Start the managed containers.
 
-| Option             | Description                                                                                                                              |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
-| --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
-| -h, --help         | Display information about the current command. (boolean)                                                                                 |
+| Option             | Description                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                       |
+| --use-host         | Skip Docker altogether and assume that Postgres and S3 are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
+| -h, --help         | Display information about the current command. (boolean)                                                                              |
 
 ### `compas docker down`
 
@@ -121,11 +126,11 @@ Stop the managed containers.
 Stop any of the containers that could possibly be started by this CLI. It ignores context
 and stops any PostgreSQL container started by this CLI, ignoring `--postgres-version`.
 
-| Option             | Description                                                                                                                              |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
-| --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
-| -h, --help         | Display information about the current command. (boolean)                                                                                 |
+| Option             | Description                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                       |
+| --use-host         | Skip Docker altogether and assume that Postgres and S3 are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
+| -h, --help         | Display information about the current command. (boolean)                                                                              |
 
 ### `compas docker clean`
 
@@ -138,12 +143,12 @@ By passing '--project', it can clean up PostgreSQL databases without having to r
 containers. The flag is repeatable, so multiple projects can be cleaned at the same time.
 If no value is passed, it defaults to 'process.env.APP_NAME'.
 
-| Option             | Description                                                                                                                              |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| --project          | Specify the project(s) to remove. If no value is passed, the current project is read from `environment.APP_NAME`. (booleanOrString[])    |
-| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                          |
-| --use-host         | Skip Docker altogether and assume that Postgres and Minio are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
-| -h, --help         | Display information about the current command. (boolean)                                                                                 |
+| Option             | Description                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| --project          | Specify the project(s) to remove. If no value is passed, the current project is read from `environment.APP_NAME`. (booleanOrString[]) |
+| --postgres-version | Specify the PostgreSQL version to use. Defaults to 16. (number)                                                                       |
+| --use-host         | Skip Docker altogether and assume that Postgres and S3 are enabled on the host. Alternatively, set COMPAS_SKIP_DOCKER=true. (boolean) |
+| -h, --help         | Display information about the current command. (boolean)                                                                              |
 
 ## `compas init`
 

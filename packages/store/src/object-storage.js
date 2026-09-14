@@ -11,7 +11,7 @@ import { AppError, isNil } from "@compas/stdlib";
 
 /**
  * Get the development config that works with the default `compas docker up` created
- * Minio container.
+ * versitygw container.
  *
  * Only use this container and default config when `!isProduction()`!
  *
@@ -41,6 +41,10 @@ export function objectStorageCreateClient(config) {
 
 /**
  * Check if the supplied bucketName exists, else create it in the (optional) location.
+ *
+ * The bucket is created with a 'private' ACL. The versitygw container started by `compas
+ * docker up` doesn't support bucket ACL's, so pass `createBucketOverrides: { ACL:
+ * undefined }` when not in production.
  *
  * @param {import("@aws-sdk/client-s3").S3Client} s3Client
  * @param {{
