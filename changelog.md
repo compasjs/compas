@@ -4,6 +4,20 @@ editLink: false
 
 # Changelog
 
+### [v0.26.0](https://github.com/compasjs/compas/releases/tag/v0.26.0)
+
+#### Breaking changes
+
+- feat(cli): use versitygw instead of Minio for the local S3 container
+  [`36006c`](https://github.com/compasjs/compas/commit/36006c5a3a913c333144a4bc566ad336fe3465a0)
+  `minio/minio` is no longer pullable from Docker Hub, so `compas docker up`
+  fails on earlier versions. It now starts versitygw instead. The endpoint and
+  credentials are unchanged, but versitygw doesn't support bucket ACL's, so pass
+  `createBucketOverrides: { ACL: undefined }` to `objectStorageEnsureBucket`
+  outside of production. The objects in the `compas-minio` volume don't carry
+  over; `compas docker clean` removes that container and volume once you no
+  longer need them.
+
 ### [v0.25.0](https://github.com/compasjs/compas/releases/tag/v0.25.0)
 
 #### Bug fixes
