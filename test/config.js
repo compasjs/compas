@@ -1,4 +1,8 @@
-import { destroyTestServices, injectTestServices } from "../src/testing.js";
+import {
+  destroyTestServices,
+  injectTestSentry,
+  injectTestServices,
+} from "../src/testing.js";
 import {
   cleanupPostgresDatabaseTemplate,
   createTestPostgresDatabase,
@@ -8,6 +12,8 @@ import {
 export const timeout = 2000;
 
 export async function setup() {
+  injectTestSentry();
+
   const sql = await createTestPostgresDatabase();
   await setPostgresDatabaseTemplate(sql);
 

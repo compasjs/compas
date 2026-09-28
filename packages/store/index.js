@@ -66,7 +66,7 @@ export {
   generatedQueryBuilderHelper,
 } from "./src/generator-helpers.js";
 
-export { newPostgresConnection, postgres } from "./src/postgres.js";
+export { newPostgresConnection } from "./src/postgres.js";
 
 export {
   objectStorageGetDevelopmentConfig,

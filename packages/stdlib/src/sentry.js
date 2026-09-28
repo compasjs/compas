@@ -1,3 +1,5 @@
+import { AppError } from "./error.js";
+
 /**
  * The Sentry version that all Compas packages use if set via {@link compasWithSentry}.
  *
@@ -6,71 +8,82 @@
 export let _compasSentryExport = undefined;
 
 /**
- * Send queries executed via `query` from @compas/store as a sentry span.
+ * Let Compas enrich what Sentry already instruments. Requires `@sentry/node` v11 or
+ * higher. Sentry owns the request and query spans, Compas adds the parts that only it
+ * knows about:
  *
- * @type {boolean}
- */
-export let _compasSentryEnableQuerySpans = false;
-
-/**
- * Enable Sentry support. This comes with the following changes:
+ * - Server: names the `http.server` span after the matched route of the generated
+ *   router, for example `GET /user/:id`, and sets `http.route` and `compas.route`.
+ *   Unknown errors and `AppError.serverError`'s from the error handler are captured.
+ * - Store: each job handled by the QueueWorker gets its own root span with a
+ *   `queue.process` op. Handler errors are captured.
+ * - Stdlib: errors that reach the handlers installed by `mainFn` are captured, and
+ *   Sentry is flushed before the process exits.
  *
- * Stdlib:
- * - Logger: both info and error logs are added as breadcrumbs to the current active
- * span.
- * - Event: Events are propagated to Sentry as (inactive) spans.
- *     Meaning that further logs are not necessarily correlated to the correct event.
- *     The final event callstack is not logged.
+ * Call `Sentry.init()` and this function before creating a Postgres connection via
+ * `newPostgresConnection` or `createTestPostgresDatabase`. `@compas/store` imports
+ * `postgres` lazily, so Sentry's default `postgresJsIntegration` can instrument it
+ * without any `node` loader flags. An application that imports `postgres` itself
+ * before `Sentry.init()` won't get query spans.
  *
- * Server:
- * - Starts a new root span for each incoming request.
- * - Tries to name it based on the finalized name of `ctx.event`.
- *     This is most likely in the format `router.foo.bar` for matched routes by the
- * generated router.
- * - Uses the sentry-trace header when provided.
- *     Note that if a custom list of `allowHeaders` is provided in the CORS options,
- *     'sentry-trace' and 'baggage' should be allowed as well.
- * - If the error handler retrieves an unknown or AppError.serverError, it is reported as
- * an uncaught exception. It is advised to set 'normalizeDepth' to '0' in your Sentry
- * config, and to enable the 'extraErrorDataIntegration' integration.
+ * Logs are not sent to Sentry by default. Add `Sentry.pinoIntegration()` to the
+ * integrations to ship all Compas logs. String messages are used as the log body,
+ * structured messages get 'See attributes' as body and are searchable via the
+ * `message` attribute.
  *
- * Store:
- * - Starts a new root span for each handled Job in the QueueWorker
- *     The span name is based on the job name. Unhandled errors are captured as
- * exceptions.
- * - Supports passing queries to Sentry as spans. Requires {@link
- * opts.sendQueriesAsSpans} to be set.
+ * Configure `Sentry.koaIntegration()` to ignore middleware layers. Otherwise, each
+ * middleware added by `getApp` shows up as a nested, unnamed 'middleware' span if Koa
+ * happens to be imported after `Sentry.init()`.
  *
- * All:
- * - All error logs in Compas package code are captured as exceptions.
+ * Sentry v11 sends spans while the request is still running, so requests can't be
+ * dropped based on their response or matched route. Use `tracesSampler` instead. If a
+ * custom list of `allowHeaders` is provided in the CORS options, 'sentry-trace' and
+ * 'baggage' should be allowed as well.
  *
+ * @example
+ *   import * as Sentry from "@sentry/node";
+ *
+ *   mainFn(import.meta, async (logger) => {
+ *     Sentry.init({
+ *       dsn: environment.SENTRY_DSN,
+ *       tracesSampler: ({ attributes, inheritOrSampleWith }) => {
+ *         if (
+ *           attributes?.["url.path"] === "/_health" ||
+ *           attributes?.["http.request.method"] === "OPTIONS" ||
+ *           attributes?.["http.request.method"] === "HEAD"
+ *         ) {
+ *           return 0;
+ *         }
+ *
+ *         return inheritOrSampleWith(0.1);
+ *       },
+ *
+ *       // Include the custom AppError properties with captured errors.
+ *       normalizeDepth: 0,
+ *       integrations: [
+ *         Sentry.extraErrorDataIntegration({ depth: 30 }),
+ *         Sentry.koaIntegration({ ignoreLayersType: ["middleware"] }),
+ *
+ *         // Optional, ship all logs to Sentry.
+ *         Sentry.pinoIntegration(),
+ *       ],
+ *     });
+ *     compasWithSentry(Sentry);
+ *
+ *     const sql = await newPostgresConnection();
+ *     // ...
+ *   });
  * @param {typeof import("@sentry/node")} instance
- * @param {{
- *   sendQueriesAsSpans?: boolean
- * }} [opts]
+ * @returns {void}
  */
-export function compasWithSentry(instance, { sendQueriesAsSpans } = {}) {
-  _compasSentryExport = instance;
-  _compasSentryEnableQuerySpans = sendQueriesAsSpans ?? false;
-
-  _compasSentryExport.getIsolationScope().addEventProcessor((event) => {
-    if (event.extra?.["_compas.skip-event"]) {
-      return null;
-    }
-
-    return event;
-  });
-}
-
-/**
- * @see https://github.com/getsentry/sentry-javascript/blob/8bec42e0285ee301e8fc9bcaf02046daf48e0495/packages/core/src/utils/spanUtils.ts#L103
- */
-export function sentrySpanIsSampled(span) {
-  if (!span) {
-    return false;
+export function compasWithSentry(instance) {
+  const major = Number(instance?.SDK_VERSION?.split(".")[0]);
+  if (!(major >= 11)) {
+    throw AppError.serverError({
+      message: "Compas requires @sentry/node v11 or higher.",
+      version: instance?.SDK_VERSION,
+    });
   }
 
-  const { traceFlags } = span.spanContext();
-
-  return Boolean(traceFlags & 0x1);
+  _compasSentryExport = instance;
 }

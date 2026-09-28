@@ -533,9 +533,18 @@ async function queueWorkerExecuteJob(logger, sql, options, job) {
     await _sentry.withIsolationScope(async () => {
       return await _sentry.startSpan(
         {
-          op: "queue.task",
+          op: "queue.process",
           name: job.name,
           forceTransaction: true,
+          attributes: {
+            "messaging.system": "compas",
+            "messaging.destination.name": job.name,
+            "messaging.message.id": String(job.id),
+            "messaging.message.retry.count": job.retryCount,
+            "messaging.message.receive.latency":
+              Date.now() - new Date(job.scheduledAt).getTime(),
+            "compas.job.is_cron": isCronJob,
+          },
         },
         async () => {
           return await exec();

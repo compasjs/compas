@@ -1,6 +1,5 @@
 import { AppError } from "./error.js";
 import { isNil } from "./lodash.js";
-import { _compasSentryExport } from "./sentry.js";
 
 /**
  * @typedef {object} InsightEventSpan
@@ -66,7 +65,6 @@ import { _compasSentryExport } from "./sentry.js";
  * @property {InsightEvent} [rootEvent]
  * @property {string} [name]
  * @property {InsightEventSpan} span
- * @property {import("@sentry/node").Span} [_compasSentrySpan]
  */
 
 /**
@@ -94,8 +92,6 @@ function InsightEventConstructor(logger, signal) {
       abortedTime: undefined,
       children: [],
     },
-
-    _compasSentrySpan: undefined,
   };
 }
 
@@ -124,10 +120,6 @@ export function newEvent(logger, signal) {
 export function newEventFromEvent(event) {
   if (event.signal?.aborted) {
     event.span.abortedTime = Date.now();
-
-    if (event._compasSentrySpan) {
-      event._compasSentrySpan.end();
-    }
 
     throw AppError.serverError({
       message: "Operation aborted",
@@ -160,19 +152,8 @@ export function eventStart(event, name) {
   event.span.name = name;
   event.span.startTime = Date.now();
 
-  if (typeof _compasSentryExport?.startInactiveSpan === "function") {
-    event._compasSentrySpan = _compasSentryExport.startInactiveSpan({
-      op: "function",
-      name: name,
-    });
-  }
-
   if (event.signal?.aborted) {
     event.span.abortedTime = Date.now();
-
-    if (event._compasSentrySpan) {
-      event._compasSentrySpan.end();
-    }
 
     throw AppError.serverError({
       message: "Operation aborted",
@@ -194,16 +175,8 @@ export function eventRename(event, name) {
   event.name = name;
   event.span.name = name;
 
-  if (event._compasSentrySpan) {
-    event._compasSentrySpan.updateName(name);
-  }
-
   if (event.signal?.aborted) {
     event.span.abortedTime = Date.now();
-
-    if (event._compasSentrySpan) {
-      event._compasSentrySpan.end();
-    }
 
     throw AppError.serverError({
       message: "Operation aborted",
@@ -225,10 +198,6 @@ export function eventStop(event) {
 
   if (event.span.startTime && event.span.stopTime) {
     event.span.duration = event.span.stopTime - event.span.startTime;
-  }
-
-  if (event._compasSentrySpan) {
-    event._compasSentrySpan.end();
   }
   if (isNil(event.rootEvent)) {
     event.log.info({

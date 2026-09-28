@@ -4,7 +4,7 @@ import { environment, isProduction } from "./env.js";
 import { AppError } from "./error.js";
 import { isNil, isPlainObject, merge } from "./lodash.js";
 import { loggerWriteGithubActions, loggerWritePretty } from "./log-writers.js";
-import { _compasSentryExport, sentrySpanIsSampled } from "./sentry.js";
+import { _compasSentryExport } from "./sentry.js";
 
 /**
  * @typedef {object} Logger
@@ -163,75 +163,25 @@ export function newLogger(options) {
     context,
   });
 
-  if (typeof _compasSentryExport?.addBreadcrumb === "function") {
-    let addedContextAsBreadcrumb = false;
+  return {
+    info: (message) => childLogger.info({ message }, sentryLogBody(message)),
+    error: (message) => childLogger.error({ message }, sentryLogBody(message)),
+  };
+}
 
-    return {
-      info: (message) => {
-        childLogger.info({ message });
-
-        if (!sentrySpanIsSampled(_compasSentryExport?.getActiveSpan?.())) {
-          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs
-          // from showing up in a random span.
-          return;
-        }
-
-        if (!addedContextAsBreadcrumb) {
-          _compasSentryExport?.addBreadcrumb({
-            category: context.type,
-            data: {
-              ...context,
-            },
-            level: "info",
-            type: "default",
-          });
-          addedContextAsBreadcrumb = true;
-        }
-
-        _compasSentryExport?.addBreadcrumb({
-          category: context.type,
-          data: typeof message === "string" ? undefined : message,
-          message: typeof message === "string" ? message : undefined,
-          level: "info",
-          type: "default",
-        });
-      },
-      error: (message) => {
-        childLogger.error({ message });
-
-        if (!sentrySpanIsSampled(_compasSentryExport?.getActiveSpan?.())) {
-          // Don't add breadcrumbs if we don't have a span. This prevents unmatched logs
-          // from showing up in a random span.
-          return;
-        }
-
-        if (!addedContextAsBreadcrumb) {
-          _compasSentryExport?.addBreadcrumb({
-            category: "log",
-            data: {
-              ...context,
-            },
-            level: "info",
-            type: "default",
-          });
-          addedContextAsBreadcrumb = true;
-        }
-
-        _compasSentryExport?.addBreadcrumb({
-          category: "log",
-          data: typeof message === "string" ? undefined : message,
-          message: typeof message === "string" ? message : undefined,
-          level: "error",
-          type: "error",
-        });
-      },
-    };
+/**
+ * Sentry's Pino integration uses pino's `msg` as the log body, which Compas doesn't set.
+ * Only add it when that integration is enabled, so other log output is unchanged.
+ *
+ * @param {any} message
+ * @returns {string|undefined}
+ */
+function sentryLogBody(message) {
+  if (!_compasSentryExport?.getClient()?.getIntegrationByName("Pino")) {
+    return undefined;
   }
 
-  return {
-    info: (message) => childLogger.info({ message }),
-    error: (message) => childLogger.error({ message }),
-  };
+  return typeof message === "string" ? message : "See attributes";
 }
 
 /**

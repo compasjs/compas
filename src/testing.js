@@ -1,5 +1,6 @@
 import { mkdir, rm } from "node:fs/promises";
 import { threadId } from "node:worker_threads";
+import * as Sentry from "@sentry/node";
 import { compasWithSentry, isProduction, uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
@@ -33,6 +34,43 @@ export const testBucketName = uuid();
 export let testTemporaryDirectory = ".cache/tmp";
 
 /**
+ * Everything the Sentry SDK sent in this worker.
+ *
+ * @type {Array<import("@sentry/core").Envelope>}
+ */
+export const testSentryEnvelopes = [];
+
+/**
+ * Init Sentry with a transport that collects envelopes in {@link testSentryEnvelopes}.
+ * Should be called before the first Postgres connection is created.
+ *
+ * @returns {void}
+ */
+export function injectTestSentry() {
+  Sentry.init({
+    dsn: "https://public@sentry.example.com/1",
+    transport: () => ({
+      send: (envelope) => {
+        testSentryEnvelopes.push(envelope);
+        return Promise.resolve({});
+      },
+      flush: () => Promise.resolve(true),
+    }),
+    tracesSampleRate: 1,
+    normalizeDepth: 0,
+    integrations: [
+      Sentry.extraErrorDataIntegration({
+        depth: 30,
+      }),
+      Sentry.koaIntegration({ ignoreLayersType: ["middleware"] }),
+      Sentry.pinoIntegration(),
+    ],
+  });
+
+  compasWithSentry(Sentry);
+}
+
+/**
  * Inject services that can be used in tests across this repo.
  *
  * @returns {Promise<void>}
@@ -64,25 +102,6 @@ export async function injectTestServices() {
 
   testTemporaryDirectory = `.cache/tmp/${threadId}`;
   await mkdir(testTemporaryDirectory, { recursive: true });
-
-  compasWithSentry(await import("@sentry/node"), { sendQueriesAsSpans: true });
-  const { init, extraErrorDataIntegration } = await import("@sentry/node");
-  init({
-    // debug: true,
-
-    dsn: "foo@bar",
-
-    integrations: [
-      // Include custom AppError properties.
-      extraErrorDataIntegration({
-        depth: 30,
-      }),
-    ],
-
-    tracesSampleRate: 1,
-    normalizeDepth: 0,
-    registerEsmLoaderHooks: true,
-  });
 }
 
 /**

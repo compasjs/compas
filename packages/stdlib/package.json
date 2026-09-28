@@ -24,7 +24,15 @@
     "pino": "^10.3.1"
   },
   "devDependencies": {
-    "@sentry/node": "*"
+    "@sentry/node": "^11.0.0"
+  },
+  "peerDependencies": {
+    "@sentry/node": ">=11"
+  },
+  "peerDependenciesMeta": {
+    "@sentry/node": {
+      "optional": true
+    }
   },
   "author": {
     "name": "Dirk de Visser",

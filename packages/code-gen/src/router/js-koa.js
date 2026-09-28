@@ -118,7 +118,8 @@ export function jsKoaPrepareContext(
   const ctxTypeImplementation = {
     validatorOutputType: `import("koa").ExtendableContext & {
   event: import("@compas/stdlib").InsightEvent,
-  log: import("@compas/stdlib").Logger,${
+  log: import("@compas/stdlib").Logger,
+  matchedRoute: { name: string, path: string },${
     partial.length > 0 ? `\n  ${partial.trim()}` : ""
   }
 } & { body: ${contextNames.responseTypeName ?? "any"} }`,
@@ -311,6 +312,7 @@ export function jsKoaBuildRouterFile(
 type _Context = import("koa").ParameterizedContext<{}, {
   event: import("@compas/stdlib").InsightEvent,
   log: import("@compas/stdlib").Logger,
+  matchedRoute: { name: string, path: string },
   request: {
     params: any,
     body: any,
@@ -368,11 +370,18 @@ type _Context = import("koa").ParameterizedContext<{}, {
       }
       fileContextSetIndent(file, 1);
 
-      fileBlockStart(file, `if (ctx.event)`);
+      const routeName = `router.${route.group}.${route.name}`;
+      const routePath = `/${route.path
+        .split("/")
+        .filter((it) => it.length > 0)
+        .join("/")}`;
+
       fileWrite(
         file,
-        `eventRename(ctx.event, "router.${route.group}.${route.name}");`,
+        `ctx.matchedRoute = { name: "${routeName}", path: "${routePath}" };`,
       );
+      fileBlockStart(file, `if (ctx.event)`);
+      fileWrite(file, `eventRename(ctx.event, "${routeName}");`);
       fileBlockEnd(file);
 
       fileWrite(file, `ctx.request.params = params;`);
