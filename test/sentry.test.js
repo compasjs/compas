@@ -233,7 +233,11 @@ test("sentry", (t) => {
     newLogger({ ctx: { type: "sentry-test" } }).error({ id });
 
     const logs = await flushAndCollectLogs();
-    const log = logs.find((it) => it.attributes.message?.includes(id));
+    const log = logs.find(
+      (it) =>
+        typeof it.attributes.message === "string" &&
+        it.attributes.message.includes(id),
+    );
 
     t.equal(log?.level, "error");
     t.equal(log?.body, "See attributes");
