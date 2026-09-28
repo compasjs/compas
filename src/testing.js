@@ -92,13 +92,15 @@ export async function injectTestServices() {
       : {},
   });
 
-  // Check the offset between system time and Postgres (Docker VM) time.
-  // sql.systemTimeOffset is the amount of milliseconds system is ahead of Docker
-  const [result] =
-    await sql`SELECT now() AS db, ${new Date()}::timestamptz AS js`;
+  // sql.systemTimeOffset is the amount of milliseconds system is ahead of Postgres. Tests
+  // schedule jobs at `Date.now() - offset`, which must never be in the future for
+  // Postgres, or the queue worker skips them. Measuring against the end of the request
+  // guarantees that, and a warm connection keeps the overestimation to a single round
+  // trip.
+  await sql`SELECT 1`;
+  const [result] = await sql`SELECT now() AS db`;
   // @ts-expect-error
-  sql.systemTimeOffset =
-    new Date(result.js).getTime() - new Date(result.db).getTime();
+  sql.systemTimeOffset = Date.now() - new Date(result.db).getTime();
 
   testTemporaryDirectory = `.cache/tmp/${threadId}`;
   await mkdir(testTemporaryDirectory, { recursive: true });
