@@ -1,10 +1,6 @@
 // @ts-nocheck
 
-import {
-  _compasSentryEnableQuerySpans,
-  _compasSentryExport,
-  isNil,
-} from "@compas/stdlib";
+import { isNil } from "@compas/stdlib";
 
 /**
  * Format and append query parts, and execute the final result in a safe way.
@@ -90,23 +86,6 @@ export function query(strings, ...values) {
     // Strip out undefined values
     /** @type {NonNullable<QueryPartArg>} */
     const parameters = _values.filter((it) => it !== undefined);
-
-    if (
-      typeof _compasSentryExport?.startSpan === "function" &&
-      _compasSentryEnableQuerySpans
-    ) {
-      return await _compasSentryExport.startSpan(
-        {
-          op: "db.query",
-          name: str,
-          attributes: {
-            "db.system": "postgresql",
-          },
-          onlyIfParent: true,
-        },
-        () => sql.unsafe(str, parameters),
-      );
-    }
 
     return await sql.unsafe(str, parameters);
   }

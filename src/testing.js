@@ -1,5 +1,6 @@
 import { mkdir, rm } from "node:fs/promises";
 import { threadId } from "node:worker_threads";
+import * as Sentry from "@sentry/node";
 import { compasWithSentry, isProduction, uuid } from "@compas/stdlib";
 import {
   createTestPostgresDatabase,
@@ -33,6 +34,43 @@ export const testBucketName = uuid();
 export let testTemporaryDirectory = ".cache/tmp";
 
 /**
+ * Everything the Sentry SDK sent in this worker.
+ *
+ * @type {Array<import("@sentry/core").Envelope>}
+ */
+export const testSentryEnvelopes = [];
+
+/**
+ * Init Sentry with a transport that collects envelopes in {@link testSentryEnvelopes}.
+ * Should be called before the first Postgres connection is created.
+ *
+ * @returns {void}
+ */
+export function injectTestSentry() {
+  Sentry.init({
+    dsn: "https://public@sentry.example.com/1",
+    transport: () => ({
+      send: (envelope) => {
+        testSentryEnvelopes.push(envelope);
+        return Promise.resolve({});
+      },
+      flush: () => Promise.resolve(true),
+    }),
+    tracesSampleRate: 1,
+    normalizeDepth: 0,
+    integrations: [
+      Sentry.extraErrorDataIntegration({
+        depth: 30,
+      }),
+      Sentry.koaIntegration({ ignoreLayersType: ["middleware"] }),
+      Sentry.pinoIntegration(),
+    ],
+  });
+
+  compasWithSentry(Sentry);
+}
+
+/**
  * Inject services that can be used in tests across this repo.
  *
  * @returns {Promise<void>}
@@ -54,35 +92,18 @@ export async function injectTestServices() {
       : {},
   });
 
-  // Check the offset between system time and Postgres (Docker VM) time.
-  // sql.systemTimeOffset is the amount of milliseconds system is ahead of Docker
-  const [result] =
-    await sql`SELECT now() AS db, ${new Date()}::timestamptz AS js`;
+  // sql.systemTimeOffset is the amount of milliseconds system is ahead of Postgres. Tests
+  // schedule jobs at `Date.now() - offset`, which must never be in the future for
+  // Postgres, or the queue worker skips them. Measuring against the end of the request
+  // guarantees that, and a warm connection keeps the overestimation to a single round
+  // trip.
+  await sql`SELECT 1`;
+  const [result] = await sql`SELECT now() AS db`;
   // @ts-expect-error
-  sql.systemTimeOffset =
-    new Date(result.js).getTime() - new Date(result.db).getTime();
+  sql.systemTimeOffset = Date.now() - new Date(result.db).getTime();
 
   testTemporaryDirectory = `.cache/tmp/${threadId}`;
   await mkdir(testTemporaryDirectory, { recursive: true });
-
-  compasWithSentry(await import("@sentry/node"), { sendQueriesAsSpans: true });
-  const { init, extraErrorDataIntegration } = await import("@sentry/node");
-  init({
-    // debug: true,
-
-    dsn: "foo@bar",
-
-    integrations: [
-      // Include custom AppError properties.
-      extraErrorDataIntegration({
-        depth: 30,
-      }),
-    ],
-
-    tracesSampleRate: 1,
-    normalizeDepth: 0,
-    registerEsmLoaderHooks: true,
-  });
 }
 
 /**

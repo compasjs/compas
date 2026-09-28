@@ -85,39 +85,23 @@ export function logMiddleware(app, options) {
       ctx.method !== "OPTIONS" &&
       ctx.method !== "HEAD"
     ) {
-      if (_compasSentryExport) {
-        const span = _compasSentryExport.getActiveSpan();
-        if (span) {
-          _compasSentryExport.updateSpanName(span, ctx.event.name);
-        }
-      }
-
       eventStop(ctx.event);
     }
-
-    if (_compasSentryExport) {
-      const span = _compasSentryExport.getActiveSpan();
-      const routeName = ctx.event.name;
-      const isMatchedRoute = routeName.startsWith("router.");
-
-      if (span) {
-        if (!isMatchedRoute) {
-          // Discard sampled spans which don't match a route.
-          _compasSentryExport.setExtra("_compas.skip-event", true);
-        }
-
-        span.setStatus(
-          _compasSentryExport.getSpanStatusFromHttpCode(ctx.status),
-        );
-        span.setAttributes({
-          "http.query": ctx.validatedQuery,
-          "http.response.status_code": ctx.status,
-          "http.response.content_length": length,
-        });
-        span.end();
-      }
-    }
   }
+
+  // Named on assignment by the generated router, so spans that end before the response,
+  // like queries in the route handler, already carry the route as their segment name.
+  Object.defineProperty(app.context, "matchedRoute", {
+    configurable: true,
+    enumerable: true,
+    get() {
+      return this._matchedRoute;
+    },
+    set(value) {
+      this._matchedRoute = value;
+      sentryNameRootSpan(this);
+    },
+  });
 
   // Log stream errors after the headers are sent
   const logger = newLogger({
@@ -211,6 +195,41 @@ export function logMiddleware(app, options) {
 
     logInfoAndEndTrace(ctx, startTime, isNil(counter) ? 0 : counter.length);
   };
+}
+
+/**
+ * Name the `http.server` span created by Sentry after the route matched by the
+ * generated router.
+ *
+ * @param {import("koa").Context} ctx
+ */
+function sentryNameRootSpan(ctx) {
+  if (!_compasSentryExport || !ctx.matchedRoute) {
+    return;
+  }
+
+  const activeSpan = _compasSentryExport.getActiveSpan();
+  if (!activeSpan) {
+    return;
+  }
+
+  const rootSpan = _compasSentryExport.getRootSpan(activeSpan);
+  if (
+    _compasSentryExport.spanToJSON(rootSpan).attributes?.["sentry.op"] !==
+    "http.server"
+  ) {
+    return;
+  }
+
+  _compasSentryExport.updateSpanName(
+    rootSpan,
+    `${ctx.method} ${ctx.matchedRoute.path}`,
+  );
+  rootSpan.setAttributes({
+    "sentry.segment.name.source": "route",
+    "http.route": ctx.matchedRoute.path,
+    "compas.route": ctx.matchedRoute.name,
+  });
 }
 
 /**

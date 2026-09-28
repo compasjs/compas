@@ -95,8 +95,4 @@ export {
   newEventFromEvent,
 } from "./src/events.js";
 
-export {
-  _compasSentryExport,
-  compasWithSentry,
-  _compasSentryEnableQuerySpans,
-} from "./src/sentry.js";
+export { _compasSentryExport, compasWithSentry } from "./src/sentry.js";

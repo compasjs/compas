@@ -5,7 +5,6 @@ import { defaultHeaders } from "./middleware/headers.js";
 import { healthHandler } from "./middleware/health.js";
 import { logMiddleware } from "./middleware/log.js";
 import { notFoundHandler } from "./middleware/notFound.js";
-import { sentry } from "./middleware/sentry.js";
 
 /**
  * @typedef {ReturnType<getApp>} KoaApplication
@@ -80,8 +79,6 @@ export function getApp(opts = {}) {
   if (opts.disableHealthRoute !== true) {
     app.use(healthHandler());
   }
-
-  app.use(sentry());
 
   app.use(logMiddleware(app, opts.logOptions ?? {}));
   app.use(errorHandler(opts.errorOptions ?? {}));

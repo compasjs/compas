@@ -1,12 +1,11 @@
 import { environment, isNil, isProduction, merge } from "@compas/stdlib";
-import postgres from "postgres";
 
 /**
  * @param {import("postgres").Options|undefined} opts
  * @returns {import("postgres").Options}
  */
 export function buildAndCheckOpts(opts) {
-  const finalOpts = /** @type {postgres.Options} */ merge(
+  const finalOpts = /** @type {import("postgres").Options} */ merge(
     {
       connection: {
         application_name: environment.APP_NAME,
@@ -93,6 +92,7 @@ export async function newPostgresConnection(opts) {
     setImmediate(() => oldConnection.end());
   }
 
+  const postgres = await importPostgres();
   return postgres(environment.POSTGRES_URI ?? connectionOpts, connectionOpts);
 }
 
@@ -123,6 +123,7 @@ export async function createDatabaseIfNotExists(
     database: maintenanceDatabase ?? undefined,
   };
   if (!sql) {
+    const postgres = await importPostgres();
     sql = postgres(environment.POSTGRES_URI ?? opts, opts);
   }
   const [db] = await sql`
@@ -149,4 +150,13 @@ export async function createDatabaseIfNotExists(
   return sql;
 }
 
-export { postgres };
+/**
+ * Imported on first use, so Sentry's diagnostics-channel injection registered by
+ * `Sentry.init()` can still instrument it.
+ *
+ * @returns {Promise<typeof import("postgres")>}
+ */
+async function importPostgres() {
+  const { default: postgres } = await import("postgres");
+  return postgres;
+}
