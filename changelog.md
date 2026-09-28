@@ -4,6 +4,39 @@ editLink: false
 
 # Changelog
 
+### [v0.27.0](https://github.com/compasjs/compas/releases/tag/v0.27.0)
+
+#### Breaking changes
+
+- feat(stdlib,server,store,code-gen): support Sentry v11
+  ([#4177](https://github.com/compasjs/compas/pull/4177))
+  [`f13b7a`](https://github.com/compasjs/compas/commit/f13b7addc1e4783a496ccc6f66b343c7d9d44a7e)
+  - Compas requires `@sentry/node` v11 or higher, and `compasWithSentry` throws
+    on older versions. Follow the example on `compasWithSentry` for the
+    recommended `Sentry.init()` options.
+  - `compasWithSentry` no longer accepts options. `sendQueriesAsSpans` is
+    removed, since Sentry's default `postgresJsIntegration` traces all queries.
+    Call `Sentry.init()` and `compasWithSentry` before `newPostgresConnection`,
+    otherwise queries are not traced.
+  - Insight events no longer create spans, and the logger no longer adds
+    breadcrumbs. Add `Sentry.pinoIntegration()` to ship logs to Sentry instead.
+  - Request spans are Sentry's `http.server` spans named after the matched
+    route, for example `GET /user/:id` instead of `router.user.single`. The old
+    name is available on the `compas.route` attribute. Queue job spans use the
+    `queue.process` op instead of `queue.task`. Update alerts or dashboards that
+    filter on the old names.
+  - `@compas/store` no longer re-exports `postgres`. Import it from `postgres`
+    directly, after `Sentry.init()` if its queries should be traced.
+
+#### Dependency updates
+
+- build(deps): bump github/codeql-action from 4.37.8 to 4.38.1
+  ([#4170](https://github.com/compasjs/compas/pull/4170))
+  - [Release notes](https://github.com/github/codeql-action/releases)
+- build(deps): bump dotenv from 17.4.2 to 18.0.0
+  ([#4173](https://github.com/compasjs/compas/pull/4173))
+  - Major version bump
+
 ### [v0.26.0](https://github.com/compasjs/compas/releases/tag/v0.26.0)
 
 #### Breaking changes
