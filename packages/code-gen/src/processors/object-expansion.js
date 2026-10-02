@@ -130,10 +130,6 @@ export function objectExpansionOmit(structure, namedType) {
           ...referencedType.keys,
         };
 
-        newType.validator = {
-          allowNull: false,
-          strict: true,
-        };
         newType.enableQueries = false;
         newType.relations = [];
 
@@ -205,11 +201,6 @@ export function objectExpansionPick(structure, namedType) {
 
         newType.type = "object";
         newType.keys = {};
-
-        newType.validator = {
-          allowNull: false,
-          strict: true,
-        };
 
         newType.enableQueries = false;
         newType.relations = [];
