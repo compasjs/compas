@@ -415,7 +415,9 @@ export function generatedUpdateHelper(entity, input) {
   );
 
   if (input.returning === "*") {
-    strings.push(` RETURNING *`);
+    strings.push(
+      ` RETURNING ${entity.columns.map((it) => `"${it}"`).join(", ")}`,
+    );
     args.push(undefined);
   } else if (Array.isArray(input.returning)) {
     strings.push(

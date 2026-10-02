@@ -284,7 +284,7 @@ await queries.userUpdate(sql, {
 	},
 });
 
-// Return all columns
+// Return all columns known in the structure
 await queries.userUpdate(sql, {
 	where: {
 		id: user.id,
