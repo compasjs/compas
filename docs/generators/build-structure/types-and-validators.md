@@ -276,7 +276,7 @@ representing milliseconds since Unix epoch.
 ```ts
 T.date();
 
-T.date().dateOnly(); // Accepts yyyy-MM-dd only
+T.date().dateOnly(); // Accepts existing calendar dates as yyyy-MM-dd, e.g. rejects 2026-02-30
 T.date().timeOnly(); // Accepts HH:mm(:ss(.SSS))
 
 T.date().min(new Date(2023, 0, 1)); // Only accept dates after 2023-01-01

@@ -516,6 +516,148 @@ export const codeGenSpecification = {
         },
         {
           type: "suite",
+          name: "dateOnly",
+          components: [
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2026-01-31"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2026-04-30"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2024-02-29"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2000-02-29"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("0001-01-01"),
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2026-02-30"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2026-04-31"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2023-02-29"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("1900-02-29"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("0000-01-01"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2026-13-01"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify("2026-1-01"),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+            {
+              type: "validator",
+              generatedType: {
+                group: "validator",
+                name: "dateOnly",
+              },
+              input: JSON.stringify(20260101),
+              assertValidatorError: {
+                key: "$",
+                errorKey: "validator.pattern",
+              },
+            },
+          ],
+        },
+        {
+          type: "suite",
           name: "object",
           components: [
             {

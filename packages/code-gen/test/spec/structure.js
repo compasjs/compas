@@ -79,6 +79,8 @@ function specificationExtendWithValidators(generator) {
       .values(T.array().values(true).convert())
       .convert(),
 
+    T.date("dateOnly").dateOnly(),
+
     T.object("object").keys({
       foo: true,
     }),

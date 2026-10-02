@@ -779,10 +779,12 @@ export function validatorJavascriptDate(file, type, validatorState) {
   const errorKey = formatErrorKey(validatorState);
 
   if (type.specifier === "dateOnly") {
+    // Encodes days per month and Gregorian leap years, and rejects year 0000 like Postgres.
+    // Not using `new Date()`: it silently rolls 2026-02-30 over to March 2 and is ~20x slower.
     fileWrite(file, fileFormatInlineComment(file, `yyyy-MM-dd`));
     fileBlockStart(
       file,
-      `if (typeof ${valuePath} !== "string" || !(/^\\d{4}-((0[1-9])|(1[0-2]))-((0[1-9])|([1-2][0-9])|(3[0-1]))$/gi).test(${valuePath}))`,
+      `if (typeof ${valuePath} !== "string" || !(/^(?!0000)(?:\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|02-(?:0[1-9]|1\\d|2[0-8]))|(?:\\d\\d(?:0[48]|[2468][048]|[13579][26])|(?:[02468][048]|[13579][26])00)-02-29)$/).test(${valuePath}))`,
     );
 
     fileWrite(
