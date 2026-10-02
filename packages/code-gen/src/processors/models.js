@@ -23,6 +23,19 @@ export function structureModels(generateContext) {
 }
 
 /**
+ * Let models ignore unknown top-level keys, so a migration that adds a column doesn't
+ * break deploys still running the previous structure. Nested objects keep their own
+ * strictness.
+ *
+ * @param {import("../generate.js").GenerateContext} generateContext
+ */
+export function modelLooseTopLevel(generateContext) {
+  for (const model of structureModels(generateContext)) {
+    model.validator.strict = false;
+  }
+}
+
+/**
  * Return a new generic any type for custom query parts
  *
  * @returns {import("../builders/AnyType.js").AnyType}

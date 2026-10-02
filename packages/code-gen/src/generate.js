@@ -40,6 +40,7 @@ import {
   modelWhereBuildWhereInformation,
   modelWhereBuildWhereTypes,
 } from "./processors/model-where.js";
+import { modelLooseTopLevel } from "./processors/models.js";
 import { objectExpansionExecute } from "./processors/object-expansion.js";
 import { routeInvalidationsCheck } from "./processors/route-invalidation.js";
 import { routeStructureCreate } from "./processors/route-structure.js";
@@ -118,6 +119,7 @@ export function generateExecute(generator, options) {
   objectExpansionExecute(generateContext);
 
   modelNameValidation(generateContext);
+  modelLooseTopLevel(generateContext);
 
   modelKeyAddPrimary(generateContext);
   modelKeyAddDateKeys(generateContext);

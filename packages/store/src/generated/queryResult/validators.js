@@ -34,35 +34,6 @@ export function validateQueryResultStoreFile(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "contentLength",
-        "bucketName",
-        "contentType",
-        "name",
-        "meta",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (
-          !knownKeys0.has(key) &&
-          value[key] !== null &&
-          value[key] !== undefined
-        ) {
-          const expectedKeys = [...knownKeys0];
-          const foundKeys = Object.keys(value);
-          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
-          errorMap[`$`] = {
-            key: "validator.keys",
-            unknownKeys,
-            expectedKeys,
-            foundKeys,
-          };
-          break;
-        }
-      }
       result = {
         id: undefined,
         contentLength: undefined,
@@ -301,37 +272,6 @@ export function validateQueryResultStoreJob(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "isComplete",
-        "handlerTimeout",
-        "priority",
-        "retryCount",
-        "name",
-        "scheduledAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (
-          !knownKeys0.has(key) &&
-          value[key] !== null &&
-          value[key] !== undefined
-        ) {
-          const expectedKeys = [...knownKeys0];
-          const foundKeys = Object.keys(value);
-          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
-          errorMap[`$`] = {
-            key: "validator.keys",
-            unknownKeys,
-            expectedKeys,
-            foundKeys,
-          };
-          break;
-        }
-      }
       result = {
         id: undefined,
         isComplete: undefined,
@@ -634,34 +574,6 @@ export function validateQueryResultStoreSessionStore(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "checksum",
-        "revokedAt",
-        "data",
-        "createdAt",
-        "updatedAt",
-        "accessTokens",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (
-          !knownKeys0.has(key) &&
-          value[key] !== null &&
-          value[key] !== undefined
-        ) {
-          const expectedKeys = [...knownKeys0];
-          const foundKeys = Object.keys(value);
-          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
-          errorMap[`$`] = {
-            key: "validator.keys",
-            unknownKeys,
-            expectedKeys,
-            foundKeys,
-          };
-          break;
-        }
-      }
       result = {
         id: undefined,
         checksum: undefined,
@@ -884,34 +796,6 @@ export function validateQueryResultStoreSessionStoreToken(value) {
         foundType: typeof value,
       };
     } else {
-      /** @type {Set<string>} */
-      const knownKeys0 = new Set([
-        "id",
-        "session",
-        "expiresAt",
-        "refreshToken",
-        "revokedAt",
-        "createdAt",
-        "accessToken",
-      ]);
-      for (const key of Object.keys(value)) {
-        if (
-          !knownKeys0.has(key) &&
-          value[key] !== null &&
-          value[key] !== undefined
-        ) {
-          const expectedKeys = [...knownKeys0];
-          const foundKeys = Object.keys(value);
-          const unknownKeys = foundKeys.filter((it) => !knownKeys0.has(it));
-          errorMap[`$`] = {
-            key: "validator.keys",
-            unknownKeys,
-            expectedKeys,
-            foundKeys,
-          };
-          break;
-        }
-      }
       result = {
         id: undefined,
         session: undefined,

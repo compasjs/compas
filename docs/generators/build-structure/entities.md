@@ -219,3 +219,32 @@ T.object("user")
 All generated queries will ignore soft deletes by default, except when specifically
 included. The exception is for generated delete queries. These will not ignore already
 soft deleted records, and always hard delete them.
+
+## Unknown columns
+
+During a rolling deploy, the migrations of the new release could already have added a
+column while the previous release is still serving requests. The generated queries always
+select an explicit list of columns, so they never run in to that column. And when a row
+does contain it, for example via a custom `SELECT *` that is validated with the generated
+validator, the entity ignores keys it doesn't know instead of returning a `validator.keys`
+error.
+
+This only applies to the top level of the entity. Nested objects, like JSONB columns, stay
+strict. Use `.loose()` on them if they should accept unknown keys as well.
+
+```ts
+T.object("post")
+	.keys({
+		title: T.string(),
+		metadata: T.object()
+			.keys({
+				hasCoverImage: T.bool(),
+			})
+			// Accept keys written by a newer release
+			.loose(),
+	})
+	.enableQueries({});
+```
+
+Note that this also applies when an entity is used directly as a route body or response.
+Unknown top-level keys are then removed from the validated value instead of rejected.

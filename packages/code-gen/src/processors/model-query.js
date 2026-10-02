@@ -90,11 +90,13 @@ export function modelQueryResultTypes(generateContext) {
       .keys({})
       .build();
 
+    // Rows may contain columns added by a migration for a newer structure.
     const type = new ObjectType(
       "queryResult",
       model.group + upperCaseFirst(model.name),
     )
       .keys({})
+      .loose()
       .build();
 
     type.keys = {
