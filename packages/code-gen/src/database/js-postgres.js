@@ -211,12 +211,12 @@ export function jsPostgresGenerateWhere(
         false,
       );
 
-    const dateOnly =
-      fieldType === "date" && // @ts-expect-error
-      model.keys[info.modelKey].specifier === "date";
-    const timeOnly =
-      fieldType === "date" && // @ts-expect-error
-      model.keys[info.modelKey].specifier === "time";
+    const dateSpecifier =
+      fieldType === "date" ?
+        referenceUtilsGetProperty(generateContext, model.keys[info.modelKey], [
+          "specifier",
+        ])
+      : undefined;
 
     if (isNil(fieldSpecs[info.modelKey])) {
       fieldSpecs[info.modelKey] = {
@@ -225,8 +225,8 @@ export function jsPostgresGenerateWhere(
           fieldType === "number" && !isFloat ? "int"
           : fieldType === "number" && isFloat ? "float"
           : fieldType === "string" ? "varchar"
-          : fieldType === "date" && dateOnly ? "date"
-          : fieldType === "date" && timeOnly ? "time"
+          : dateSpecifier === "dateOnly" ? "date"
+          : dateSpecifier === "timeOnly" ? "time"
           : fieldType === "date" ? "timestamptz"
           : "uuid",
         matchers: [],
