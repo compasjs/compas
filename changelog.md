@@ -4,6 +4,34 @@ editLink: false
 
 # Changelog
 
+### [v0.28.0](https://github.com/compasjs/compas/releases/tag/v0.28.0)
+
+#### Breaking changes
+
+- feat(code-gen): ignore unknown top-level keys on models and query results
+  [`011287`](https://github.com/compasjs/compas/commit/011287ecf6c7838d1707bea5b263033a38df2652)
+  - Model validators and the `queryResult` validators strip unknown top-level
+    keys instead of returning a `validator.keys` error. This also applies when a
+    model is used directly as a route body or response.
+
+#### Bug fixes
+
+- fix(code-gen): reject non-existent calendar dates in dateOnly validators
+  [`ae1ac8`](https://github.com/compasjs/compas/commit/ae1ac853ab6bbe06c373e4e7b282fb978a698ea3)
+- fix(code-gen): cast In/NotIn on dateOnly and timeOnly columns to their own
+  type
+  [`16c256`](https://github.com/compasjs/compas/commit/16c256f0bb3e024b0021f1076acd6713d3377d94)
+- fix(store): list the columns instead of RETURNING \* in generated updates
+  [`e51e46`](https://github.com/compasjs/compas/commit/e51e466f8f73914cab6a80a9210b4ebf9d53a0a3)
+- fix(code-gen): keep `.loose()` and `.allowNull()` on pick and omit types
+  [`f90d2f`](https://github.com/compasjs/compas/commit/f90d2face512f78fb629aea4efae62614dcdca00)
+
+#### Dependency updates
+
+- build(deps): bump github/codeql-action from 4.38.1 to 4.38.2
+  ([#4176](https://github.com/compasjs/compas/pull/4176))
+  - [Release notes](https://github.com/github/codeql-action/releases)
+
 ### [v0.27.0](https://github.com/compasjs/compas/releases/tag/v0.27.0)
 
 #### Breaking changes
