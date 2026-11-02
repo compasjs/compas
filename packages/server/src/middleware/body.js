@@ -44,12 +44,16 @@ const jsonTypes = [
  * @param {Record<string, Array<T> | undefined>} input
  * @returns {Record<string, T | Array<T> | undefined>}
  */
+const dangerousKeys = new Set(["__proto__", "constructor", "prototype"]);
+
 function unwrapSingleValues(input) {
   return Object.fromEntries(
-    Object.entries(input).map(([key, value]) => [
-      key,
-      Array.isArray(value) && value.length === 1 ? value[0] : value,
-    ]),
+    Object.entries(input)
+      .filter(([key]) => !dangerousKeys.has(key))
+      .map(([key, value]) => [
+        key,
+        Array.isArray(value) && value.length === 1 ? value[0] : value,
+      ]),
   );
 }
 
