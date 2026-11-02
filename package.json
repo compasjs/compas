@@ -15,7 +15,7 @@
   "devDependencies": {
     "@lightbase/eslint-config": "4.4.0",
     "@types/lodash": "*",
-    "@types/node": "26.6.5",
+    "@types/node": "26.6.6",
     "@types/react": "*",
     "@tanstack/react-query": "5.104.5",
     "axios": "1.20.0",
