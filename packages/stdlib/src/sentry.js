@@ -8,9 +8,9 @@ import { AppError } from "./error.js";
 export let _compasSentryExport = undefined;
 
 /**
- * Let Compas enrich what Sentry already instruments. Requires `@sentry/node` v11 or
- * higher. Sentry owns the request and query spans, Compas adds the parts that only it
- * knows about:
+ * Let Compas enrich what Sentry already instruments. Requires `@sentry/node` v11.11 or
+ * higher, the first version that instruments postgres v4. Sentry owns the request and
+ * query spans, Compas adds the parts that only it knows about:
  *
  * - Server: names the `http.server` span after the matched route of the generated
  *   router, for example `GET /user/:id`, and sets `http.route` and `compas.route`.
@@ -21,10 +21,11 @@ export let _compasSentryExport = undefined;
  *   Sentry is flushed before the process exits.
  *
  * Call `Sentry.init()` and this function before creating a Postgres connection via
- * `newPostgresConnection` or `createTestPostgresDatabase`. `@compas/store` imports
- * `postgres` lazily, so Sentry's default `postgresJsIntegration` can instrument it
- * without any `node` loader flags. An application that imports `postgres` itself
- * before `Sentry.init()` won't get query spans.
+ * `newPostgresConnection` or `createTestPostgresDatabase`. Sentry's default
+ * `postgresJsIntegration` adds the query spans. postgres v4 publishes tracing channels
+ * for it. For postgres v3, `@compas/store` imports `postgres` lazily, so Sentry can
+ * instrument it without any `node` loader flags; an application on v3 that imports
+ * `postgres` itself before `Sentry.init()` won't get query spans.
  *
  * Logs are not sent to Sentry by default. Add `Sentry.pinoIntegration()` to the
  * integrations to ship all Compas logs. String messages are used as the log body,
@@ -77,10 +78,10 @@ export let _compasSentryExport = undefined;
  * @returns {void}
  */
 export function compasWithSentry(instance) {
-  const major = Number(instance?.SDK_VERSION?.split(".")[0]);
-  if (!(major >= 11)) {
+  const [major, minor] = (instance?.SDK_VERSION ?? "").split(".").map(Number);
+  if (!(major > 11 || (major === 11 && minor >= 11))) {
     throw AppError.serverError({
-      message: "Compas requires @sentry/node v11 or higher.",
+      message: "Compas requires @sentry/node v11.11 or higher.",
       version: instance?.SDK_VERSION,
     });
   }

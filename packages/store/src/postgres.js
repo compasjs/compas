@@ -151,10 +151,11 @@ export async function createDatabaseIfNotExists(
 }
 
 /**
- * Imported on first use, so Sentry's diagnostics-channel injection registered by
- * `Sentry.init()` can still instrument it.
+ * Imported on first use, so the code injection that `Sentry.init()` registers for
+ * postgres v3 can still instrument it. v4 publishes its own tracing channels, which
+ * Sentry subscribes to regardless of import order.
  *
- * @returns {Promise<typeof import("postgres")>}
+ * The return type is inferred, because v3 and v4 type the default export differently.
  */
 async function importPostgres() {
   const { default: postgres } = await import("postgres");
