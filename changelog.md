@@ -4,6 +4,43 @@ editLink: false
 
 # Changelog
 
+### [v0.29.0](https://github.com/compasjs/compas/releases/tag/v0.29.0)
+
+#### Breaking changes
+
+- feat(store,stdlib): support postgres v4
+  [`669295`](https://github.com/compasjs/compas/commit/6692953b82fb658e0dba5b2ddef3b7bd923ff295)
+  - `@compas/store` supports postgres v4 and installs it unless your app depends
+    on v3 itself. Add `postgres@^3` to your dependencies to stay on v3. v4 lets
+    the server decide the type of each parameter: a `Date` compared with a
+    `timestamp` or `date` column is taken as UTC, and a `Date` where the query
+    doesn't decide the type, as in `date_trunc('day', ${date})`, needs a cast.
+    Pass `infer: true` to `newPostgresConnection` to keep v3's behaviour. See
+    the
+    [postgres upgrade guide](https://github.com/porsager/postgres#upgrading-from-v3)
+    for the other changes, like the removal of `sql.array()`.
+  - Compas requires `@sentry/node` v11.11 or higher, the first version that
+    traces postgres v4 queries. `compasWithSentry` throws on older versions.
+- feat(code-gen): generate react-query helpers on `queryOptions()` and
+  `queryClient.query()` ([#4209](https://github.com/compasjs/compas/pull/4209))
+  [`1112cd`](https://github.com/compasjs/compas/commit/1112cdd4f9e1d9348bd50cdb8efa8e54de7b1578)
+  - The generated react-query wrapper requires `@tanstack/react-query` 5.102 or
+    higher, the first version with `queryClient.query()`. It also requires
+    TypeScript 5.4 or higher, since the generated query options rely on
+    narrowing `opts` inside the query function.
+
+#### Dependency updates
+
+- build(deps): bump github/codeql-action from 4.38.2 to 4.39.3
+  ([#4184](https://github.com/compasjs/compas/pull/4184),
+  [#4192](https://github.com/compasjs/compas/pull/4192),
+  [#4201](https://github.com/compasjs/compas/pull/4201))
+  - [Release notes](https://github.com/github/codeql-action/releases)
+- build(deps): bump chokidar from 5.0.0 to 6.0.0
+  ([#4191](https://github.com/compasjs/compas/pull/4191))
+  - Major version bump
+  - [Release notes](https://github.com/paulmillr/chokidar/releases)
+
 ### [v0.28.0](https://github.com/compasjs/compas/releases/tag/v0.28.0)
 
 #### Breaking changes
