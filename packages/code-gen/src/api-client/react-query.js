@@ -4,7 +4,6 @@ import {
   fileContextCreateGeneric,
   fileContextGetOptional,
   fileContextRemoveLinePrefix,
-  fileContextSetIndent,
 } from "../file/context.js";
 import { fileFormatInlineComment } from "../file/docs.js";
 import { fileWrite, fileWriteInline } from "../file/write.js";
@@ -170,6 +169,7 @@ export function reactQueryGetApiClientFile(generateContext, route) {
   }
 
   // @tanstack/react-query imports
+  typeImportCollector.destructure("@tanstack/react-query", "DataTag");
   typeImportCollector.destructure("@tanstack/react-query", "QueryKey");
   typeImportCollector.destructure("@tanstack/react-query", "Updater");
   typeImportCollector.destructure(
@@ -181,6 +181,25 @@ export function reactQueryGetApiClientFile(generateContext, route) {
   importCollector.destructure("@tanstack/react-query", "useMutation");
   importCollector.destructure("@tanstack/react-query", "useQuery");
   importCollector.destructure("@tanstack/react-query", "QueryClient");
+  importCollector.destructure("@tanstack/react-query", "environmentManager");
+  importCollector.destructure("@tanstack/react-query", "noop");
+  importCollector.destructure("@tanstack/react-query", "queryOptions");
+  importCollector.destructure("@tanstack/react-query", "skipToken");
+
+  fileWrite(
+    file,
+    `/**
+ * Whether every required input is set, narrowing \`opts\` so a query function created after
+ * the check can pass them on.
+ */
+function hasRequiredInputs<T extends object, K extends keyof T>(
+  opts: T,
+  ...keys: Array<K>
+): opts is T & { [P in K]-?: NonNullable<T[P]> } {
+  return keys.every((key) => opts[key] !== undefined && opts[key] !== null);
+}
+`,
+  );
 
   return file;
 }
@@ -401,7 +420,7 @@ export function reactQueryGenerateFunction(
     }
 
     if (withRequestConfig && withSignal) {
-      result += `{ ...${prefix}?.requestConfig, signal }`;
+      result += `{ ...${prefix}?.requestConfig, ...(environmentManager.isServer() ? {} : { signal }) }`;
     } else if (withRequestConfig) {
       result += `${prefix}?.requestConfig`;
     }
@@ -423,13 +442,19 @@ export function reactQueryGenerateFunction(
     distilledTargetInfo.useGlobalClients ? "" : `queryClient: QueryClient,`;
 
   if (route.method === "GET" || route.idempotent) {
-    fileWriteInline(
-      file,
-      `export function ${hookName}<TData = ${contextNames.responseTypeName}>(`,
-    );
-
     // When no arguments are required, the whole opts object is optional
     const routeHasMandatoryInputs = route.params || route.query || route.body;
+    const responseType = contextNames.responseTypeName ?? "unknown";
+    const queryKeyType = `DataTag<QueryKey, ${responseType}, AppErrorResponse>`;
+    const requiredFieldsPresent = reactQueryRequiredFieldsPresent(
+      generateContext,
+      route,
+    );
+
+    fileWriteInline(
+      file,
+      `export function ${hookName}<TData = ${responseType}>(`,
+    );
 
     fileWrite(file, `opts: `);
     fileWrite(
@@ -441,7 +466,6 @@ export function reactQueryGenerateFunction(
       }),
     );
 
-    // When no arguments are required, the whole opts object is optional
     if (routeHasMandatoryInputs) {
       fileBlockStart(file, `)`);
     } else {
@@ -458,32 +482,11 @@ export function reactQueryGenerateFunction(
       }
     }
 
-    fileWrite(file, `const options = opts?.queryOptions ?? {};`);
-    const hasEnabledCondition = reactQueryWriteIsEnabled(
-      generateContext,
-      file,
-      route,
-    );
-
-    fileWriteInline(
-      file,
-      `return useQuery({
-        queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),`,
-    );
     fileWrite(
       file,
-      `queryFn: ({ signal }) => {
-${reactQueryCheckIfRequiredVariablesArePresent(generateContext, hookName, route)}
-
-return ${apiName}(${apiInstanceParameter}
-  ${parameterListWithExtraction({
-    prefix: "opts",
-    withRequestConfig: true,
-    withSignal: true,
-    defaultToNull: false,
-  })}
-  );
-}, ...options${hasEnabledCondition ? ", enabled" : ""} });`,
+      `// Only the key and function: the options are typed for the unselected response, the hook for TData.
+const { queryKey, queryFn } = ${fnBaseName}QueryOptions(${apiInstanceParameter} opts);
+return useQuery({ queryKey, queryFn, ...opts?.queryOptions });`,
     );
 
     fileBlockEnd(file);
@@ -496,7 +499,8 @@ return ${apiName}(${apiInstanceParameter}
 export const ${fnBaseName}BaseKey = (): QueryKey => ["${route.group}", "${route.name}"];
 
 /**
- * Query key used by ${hookName}
+ * Query key used by ${hookName}, tagged with its response type so \`getQueryData\` and
+ * \`setQueryData\` are typed.
  */
 export const ${fnBaseName}QueryKey = (
   ${
@@ -508,19 +512,48 @@ export const ${fnBaseName}QueryKey = (
       })},`
     : ""
   }
-): QueryKey => [
+): ${queryKeyType} => [
   ...${fnBaseName}BaseKey(),
   ${parameterListWithExtraction({
     prefix: "opts",
     withRequestConfig: false,
     defaultToNull: true,
   })}
-];
+] as QueryKey as ${queryKeyType};
 
 /**
- * Fetch ${hookName} via the queryClient and return the result
+ * Query options used by ${hookName}, for \`useQuery\`, \`useSuspenseQuery\` and
+ * \`queryClient.query\`. The abort signal is only passed in the browser: Next.js request
+ * memoization skips any fetch that has one, and a server render may fetch the same GET
+ * from more than one place.${
+   requiredFieldsPresent ?
+     " The query is skipped until all required inputs are set."
+   : ""
+ }
  */
- export const ${fnBaseName}Fetch = (
+export const ${fnBaseName}QueryOptions = (
+  ${apiInstanceArgument}
+  opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
+    withQueryOptions: false,
+    withRequestConfig: true,
+    requireAllParams: false,
+  })},
+) => queryOptions<${responseType}, AppErrorResponse, ${responseType}, QueryKey>({
+  queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),
+  queryFn: ${requiredFieldsPresent ? `${requiredFieldsPresent} ? ` : ""}({ signal }) => ${apiName}(${apiInstanceParameter}
+    ${parameterListWithExtraction({
+      prefix: "opts",
+      withRequestConfig: true,
+      withSignal: true,
+      defaultToNull: false,
+    })}
+  )${requiredFieldsPresent ? " : skipToken" : ""},
+});
+
+/**
+ * Fetch ${hookName} via the queryClient and return the result.
+ */
+export const ${fnBaseName}Fetch = (
   ${queryClientArgument}
   ${apiInstanceArgument}
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
@@ -528,29 +561,13 @@ export const ${fnBaseName}QueryKey = (
     withRequestConfig: true,
     requireAllParams: false,
   })}
- ) => {
-  return queryClient.fetchQuery({
-    queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),
-    queryFn: () => {
-    ${reactQueryCheckIfRequiredVariablesArePresent(
-      generateContext,
-      `${fnBaseName}Fetch`,
-      route,
-    )}
-  return ${apiName}(
-   ${apiInstanceParameter}
-  ${parameterListWithExtraction({
-    prefix: "opts",
-    withRequestConfig: true,
-    defaultToNull: false,
-  })}
-  ); }, });
-}
+) => queryClient.query(${fnBaseName}QueryOptions(${apiInstanceParameter} opts));
 
 /**
- * Prefetch ${hookName} via the queryClient
+ * Prefetch ${hookName} via the queryClient. Never rejects; a failed prefetch leaves the
+ * query to fetch again once it is observed.
  */
- export const ${fnBaseName}Prefetch = (
+export const ${fnBaseName}Prefetch = (
   ${queryClientArgument}
   ${apiInstanceArgument}
   opts${routeHasMandatoryInputs ? "" : "?"}: ${joinedArgumentType({
@@ -558,26 +575,7 @@ export const ${fnBaseName}QueryKey = (
     withRequestConfig: true,
     requireAllParams: false,
   })},
- ) => {
-  return queryClient.prefetchQuery({
-    queryKey: ${fnBaseName}QueryKey(${routeHasMandatoryInputs ? "opts" : ""}),
-    queryFn: () => {
-  ${reactQueryCheckIfRequiredVariablesArePresent(
-    generateContext,
-    `${fnBaseName}Prefetch`,
-    route,
-  )}
-
-  return ${apiName}(
-     ${apiInstanceParameter}
-     ${parameterListWithExtraction({
-       prefix: "opts",
-       withRequestConfig: true,
-       defaultToNull: false,
-     })}
-  );
-}, });
-}
+): Promise<void> => ${fnBaseName}Fetch(${distilledTargetInfo.useGlobalClients ? "" : "queryClient, "}${apiInstanceParameter} opts).then(noop, noop);
 
 /**
  * Invalidate ${hookName} via the queryClient
@@ -612,9 +610,7 @@ export const ${fnBaseName}SetQueryData = (
       })},`
     : ""
   }
-  data: Updater<${contextNames.responseTypeName ?? "unknown"} | undefined, ${
-    contextNames.responseTypeName ?? "unknown"
-  }>,
+  data: Updater<${responseType} | undefined, ${responseType}>,
 ) => {
   ${reactQueryCheckIfRequiredVariablesArePresent(
     generateContext,
@@ -706,39 +702,23 @@ export const ${fnBaseName}SetQueryData = (
 }
 
 /**
- * Write out the dependencies for this query to be enabled. Returns whether an `enabled`
- * const was written.
+ * The expression that is true once every required input is set, or undefined when the
+ * route has no required inputs.
  *
  * @param {import("../generate.js").GenerateContext} generateContext
- * @param {import("../file/context.js").GenerateFile} file
  * @param {import("../../types/advanced-types.d.ts").NamedType<import("../generated/common/types.d.ts").StructureRouteDefinition>} route
- * @returns {boolean}
+ * @returns {string|undefined}
  */
-function reactQueryWriteIsEnabled(generateContext, file, route) {
-  const keysAffectingEnabled = reactQueryGetRequiredFields(
-    generateContext,
-    route,
-  );
+function reactQueryRequiredFieldsPresent(generateContext, route) {
+  const requiredFields = reactQueryGetRequiredFields(generateContext, route);
 
-  if (keysAffectingEnabled.length === 0) {
-    return false;
+  if (requiredFields.length === 0) {
+    return undefined;
   }
 
-  fileWrite(file, `const enabled = (`);
-  fileContextSetIndent(file, 1);
-
-  fileWrite(file, `options.enabled === true || (options.enabled !== false &&`);
-  fileWrite(
-    file,
-    keysAffectingEnabled
-      .map((it) => `${it} !== undefined && ${it} !== null`)
-      .join("&&\n"),
-  );
-
-  fileContextSetIndent(file, -1);
-  fileWrite(file, `));`);
-
-  return true;
+  return `hasRequiredInputs(opts, ${requiredFields
+    .map((it) => it.slice("opts[".length, -1))
+    .join(", ")})`;
 }
 
 /**
@@ -760,7 +740,7 @@ function reactQueryCheckIfRequiredVariablesArePresent(
     return `if (${requiredFields
       .map((it) => `${it} === undefined || ${it} === null`)
       .join("||\n")}) {
-      throw new Error("Not all required variables where provided to '${hookName}'. This happens when you manually set 'queryOptions.enabled' or when you use 'refetch'. Both skip the generated 'queryOptions.enabled'. Make sure that all necessary arguments are set.");
+      throw new Error("Not all required variables where provided to '${hookName}'. Make sure that all necessary arguments are set.");
 }
 `;
   }
